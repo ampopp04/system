@@ -1,0 +1,72 @@
+{
+  "v": "4.0",
+  "policies" : {
+   "create" : "perUser"
+  },
+  "workspace": {
+    "defaultEnv": "gradle",
+    "environments": [
+      {
+        "name": "gradle",
+        "machineConfigs": [
+          {
+            "limits": {
+              "ram": 1000
+            },
+            "name": "ws-machine",
+            "type": "docker",
+            "source": {
+              "location": "http://beta.codenvy.com/api/recipe/recipe21erxaydy9nnlduc/script",
+              "type": "recipe"
+            },
+            "dev": true
+          }
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "links": [],
+        "name": "console-java-gradle",
+        "attributes": {
+          "language": [
+            "java"
+          ]
+        },
+        "type": "java",
+        "source": {
+          "location": "https://github.com/che-samples/console-java-gradle.git",
+          "type": "git",
+          "parameters": {}
+        },
+        "modules": [],
+        "path": "/console-java-gradle",
+        "problems": [],
+        "mixins": [
+          "git"
+        ]
+      }
+    ],
+    "name": "gradle",
+    "attributes": {},
+    "commands": [
+      {
+        "commandLine": "cd ${current.project.path} && gradle build",
+        "name": "build",
+        "attributes": {
+          "previewUrl": ""
+        },
+        "type": "custom"
+      },
+      {
+        "commandLine": "cd ${current.project.path} && gradle build && java -jar build/libs/*.jar",
+        "name": "run",
+        "attributes": {
+          "previewUrl": ""
+        },
+        "type": "custom"
+      }
+    ],
+    "links": []
+  }
+}
