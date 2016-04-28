@@ -17,7 +17,7 @@ test {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'com.system.HelloWorld'
+        attributes 'Main-Class': 'com.system.SystemRunner'
     }
 }
 
