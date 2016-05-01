@@ -1,3 +1,5 @@
+System Project
+
 This project uses Gradle. The pom.xml is only for Maven that is required by Codenvy
 
 # Commands
