@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.system.SystemRunnerTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2016-05-02T19:15:41" hostname="d13f6241be57" time="0.0">
+<testsuite name="com.system.SystemRunnerTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2016-05-02T20:21:04" hostname="d13f6241be57" time="0.0">
   <properties/>
   <testcase name="testApp" classname="com.system.SystemRunnerTests" time="0.0"/>
   <system-out><![CDATA[Test Case 1

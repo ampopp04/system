@@ -2,14 +2,14 @@
 
 ##############################################################################
 ##
-##  runner start up script for UN*X
+##  Gradle start up script for UN*X
 ##
 ##############################################################################
 
-# Add default JVM options here. You can also use JAVA_OPTS and RUNNER_OPTS to pass JVM options to this script.
+# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 DEFAULT_JVM_OPTS=""
 
-APP_NAME="runner"
+APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
 
 # Use the maximum available, or set MAX_FD != -1 to use that value.
@@ -42,6 +42,11 @@ case "`uname`" in
     ;;
 esac
 
+# For Cygwin, ensure paths are in UNIX format before anything is touched.
+if $cygwin ; then
+    [ -n "$JAVA_HOME" ] && JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
+fi
+
 # Attempt to set APP_HOME
 # Resolve links: $0 may be a link
 PRG="$0"
@@ -56,11 +61,11 @@ while [ -h "$PRG" ] ; do
     fi
 done
 SAVED="`pwd`"
-cd "`dirname \"$PRG\"`/.." >/dev/null
+cd "`dirname \"$PRG\"`/" >&-
 APP_HOME="`pwd -P`"
-cd "$SAVED" >/dev/null
+cd "$SAVED" >&-
 
-CLASSPATH=$APP_HOME/lib/runner.jar:$APP_HOME/lib/core-util.jar:$APP_HOME/lib/commons-lang-2.4.jar:$APP_HOME/lib/junit-4.12.jar:$APP_HOME/lib/hamcrest-core-1.3.jar
+CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
 
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
@@ -109,7 +114,6 @@ fi
 if $cygwin ; then
     APP_HOME=`cygpath --path --mixed "$APP_HOME"`
     CLASSPATH=`cygpath --path --mixed "$CLASSPATH"`
-    JAVACMD=`cygpath --unix "$JAVACMD"`
 
     # We build the pattern for arguments to be converted via cygpath
     ROOTDIRSRAW=`find -L / -maxdepth 1 -mindepth 1 -type d 2>/dev/null`
@@ -150,11 +154,11 @@ if $cygwin ; then
     esac
 fi
 
-# Split up the JVM_OPTS And RUNNER_OPTS values into an array, following the shell quoting and substitution rules
+# Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules
 function splitJvmOpts() {
     JVM_OPTS=("$@")
 }
-eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $RUNNER_OPTS
+eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS
+JVM_OPTS[${#JVM_OPTS[*]}]="-Dorg.gradle.appname=$APP_BASE_NAME"
 
-
-exec "$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" com.system.SystemRunner "$@"
+exec "$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
