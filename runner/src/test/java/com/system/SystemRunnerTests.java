@@ -1,6 +1,6 @@
 package com.system;
 
-import org.junit.*;
+import org.junit.Test;
 
 public class SystemRunnerTests {
 
