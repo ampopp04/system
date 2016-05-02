@@ -1,0 +1,5 @@
+include 'core-build'
+include 'core-util'
+include 'runner'
+
+rootProject.buildFileName = 'core-build/build.gradle'

@@ -1,0 +1,18 @@
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    
+    test {
+    	testLogging.showStandardStreams = true
+    	testLogging {
+    		events "passed", "skipped", "failed"
+    	}
+    }
+    
+    repositories {
+        mavenCentral()                                                                        
+    }
+}

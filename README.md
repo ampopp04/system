@@ -1,13 +1,9 @@
 System Project
 
-This project uses Gradle. The pom.xml is only for Maven that is required by Codenvy
+This project is configure to support Maven and Gradle.
 
-# Commands
-
-| #       | Command           | 
-| :------------- |:------------- |
-| 1      | `cd ${current.project.path} && gradle build && java -jar build/libs/*.jar` |
-
-# App output
-
-App output is streamed into a console. Note that if your app expects user input, do not use command but execute jars in the terminal directly.
+To run the main within Runner simply add a Maven command. 
+Title it Run and set command line to 
+    clean install && java -jar ${current.project.path}/target/*jar-with-dependencies.jar
+    
+To build the project with Maven simply use the standard maven command and title it Build
