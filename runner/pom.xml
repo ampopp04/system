@@ -14,6 +14,7 @@
     <groupId>system</groupId>
     <artifactId>runner</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
     
     <!-- project dependencies -->
     <dependencies>
@@ -23,5 +24,43 @@
             <version>1.0</version>
         </dependency>
     </dependencies>
+    
+     <!-- Plugins - Build Executable JAR with dependencies -->
+    <build>
+        <plugins>
+    
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <!-- nothing here -->
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.system.SystemRunner</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+        </plugins>
+    </build>
     
 </project>
