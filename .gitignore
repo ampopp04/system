@@ -11,3 +11,7 @@ hs_err_pid*
 # Maven
 log/
 target/
+build/
+
+*/build/
+*/target/
