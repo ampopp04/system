@@ -22,4 +22,12 @@ public class CollectionUtilsTest {
       
       assertNotNull(CollectionUtils.getIterator(stringList));
     }
+    
+        @Test
+    public void iteratorExists1Test(){
+      List<String> stringList = new ArrayList<>();
+      stringList.add("test1");
+      
+      assertNotNull(CollectionUtils.getIterator(stringList));
+    }
 }
