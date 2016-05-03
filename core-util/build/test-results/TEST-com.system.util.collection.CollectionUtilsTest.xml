@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.system.util.collection.CollectionUtilsTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2016-05-02T20:21:02" hostname="d13f6241be57" time="0.0">
-  <properties/>
-  <testcase name="iteratorNotNullTest" classname="com.system.util.collection.CollectionUtilsTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
