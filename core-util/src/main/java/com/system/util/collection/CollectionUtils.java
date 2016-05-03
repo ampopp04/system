@@ -7,7 +7,7 @@ public class CollectionUtils {
     /**
      * Retrieve iterator from a collection. This will perform a null check.
      */
-    public static Iterator<?> getIterator(Collection<?> collection){
+    public static <E> Iterator<E> getIterator(Collection<E> collection){
         return collection == null ? Collections.emptyIterator() : collection.iterator();
     }
 }
