@@ -61,6 +61,6 @@ public class CollectionUtilsTest {
         for (; iterator.hasNext(); ++i)
             iterator.next();
 
-        assertEquals(1, i);
+        assertEquals(2, i);
     }
 }
