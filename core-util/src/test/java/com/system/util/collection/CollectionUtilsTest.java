@@ -47,4 +47,20 @@ public class CollectionUtilsTest {
 
         assertEquals(1, i);
     }
+    
+    @Test
+    public void iteratorSize2Test() {
+        List<String> stringList = new ArrayList<>();
+        stringList.add("test1");
+        stringList.add("test2");
+
+        Iterator<String> iterator = CollectionUtils.getIterator(stringList);
+        assertNotNull(iterator);
+
+        int i = 0;
+        for (; iterator.hasNext(); ++i)
+            iterator.next();
+
+        assertEquals(1, i);
+    }
 }
