@@ -9,7 +9,7 @@ Maven Configuration
         
     To build the project with Maven simply use the standard maven command and title it Build
     
-Gradlew
+Gradle
     To run the main within Runner simply add a Custom command.
     Name it Gradle Run with command line 
         cd ${current.project.path} && ./gradlew run
