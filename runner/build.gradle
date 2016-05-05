@@ -1,7 +1,17 @@
-apply plugin: 'application'
+apply plugin: 'spring-boot'
 
-mainClassName = 'com.system.SystemRunner'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.3.RELEASE")
+    }
+}
 
 dependencies {
-    compile project(':core-util')
+    compile project(':core-inversion')
+    
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
 }

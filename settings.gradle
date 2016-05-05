@@ -1,5 +1,7 @@
 include 'core-build'
 include 'core-util'
+include 'core-logging'
+include 'core-inversion'
 include 'runner'
 
 rootProject.buildFileName = 'core-build/build.gradle'

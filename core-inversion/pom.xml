@@ -4,17 +4,23 @@
 
     <!-- parent coordinates -->
     <parent>
-        <groupId>com.system</groupId>
-        <artifactId>system</artifactId>
-        <version>1.0</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.3.3.RELEASE</version>
     </parent>
+
 
     <!-- project dependencies -->
     <dependencies>
         <dependency>
             <groupId>system</groupId>
-            <artifactId>core-util</artifactId>
+            <artifactId>core-logging</artifactId>
             <version>1.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 
@@ -23,5 +29,7 @@
     <artifactId>core-inversion</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
+
+
     
 </project>
