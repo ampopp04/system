@@ -1,3 +1,4 @@
+# Java Files #
 *.class
 
 # Package Files #
@@ -5,13 +6,15 @@
 *.war
 *.ear
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Virtual Machine Crash Logs #
 hs_err_pid*
 
-# Maven
+# Gradle Files #
+.gradle
 log/
 target/
 build/
 
-*/build/
-*/target/
+# IntelliJ Files #
+*.iml
+.idea
