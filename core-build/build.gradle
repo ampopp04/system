@@ -1,19 +1,27 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.3.RELEASE")
+    }
+}
+
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'maven'
-    
+
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-    
+
     test {
-    	testLogging.showStandardStreams = true
-    	testLogging {
-    		events "passed", "skipped", "failed"
-    	}
+        testLogging.showStandardStreams = true
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
     }
-    
+
     repositories {
-        mavenCentral()                                                                        
+        mavenCentral()
     }
 }
 
