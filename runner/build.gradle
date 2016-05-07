@@ -3,5 +3,6 @@ bootRepackage {
 }
 
 dependencies {
-    compile project(':core-inversion')
+    compile project(':system-security')
+    compile project(':core-ui')
 }
