@@ -1,0 +1,12 @@
+if(project.name.endsWith(INVERSION_PROJECT_POSTFIX)){
+    project(project.path){
+        apply plugin: 'application'
+        apply plugin: 'com.bmuschko.docker-java-application'
+
+        docker {
+            javaApplication {
+                baseImage = 'dockerfile/java:oracle-java8'
+            }
+        }
+    }
+}

@@ -1,6 +1,7 @@
 bootRepackage {
     mainClass = 'com.system.SystemRunner'
 }
+mainClassName = 'com.system.SystemRunner'
 
 dependencies {
     compile project(':system-security')
