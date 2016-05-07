@@ -4,9 +4,8 @@ if(project.name.endsWith(INVERSION_PROJECT_POSTFIX)){
         apply plugin: 'com.bmuschko.docker-java-application'
 
         docker {
-            javaApplication {
-                baseImage = 'dockerfile/java:oracle-java8'
-            }
+            url = 'https://192.168.59.103:2376'
+            certPath = new File(System.properties['user.home'], '.boot2docker/certs/boot2docker-vm')
         }
     }
 }
