@@ -23,30 +23,29 @@ Ext.require('Ext.data.validator.Email');
 
 Ext.define('System.Application', {
     extend: 'Ext.app.Application',
-    
+
     name: 'System',
 
     glyphFontFamily: 'FontAwesome',
 
-    requires: [
-    ],
+    requires: [],
 
     enableQuickTips: true,
 
-    views: [
-    ],
+    views: [],
 
-    controllers: [
-    ],
+    controllers: [],
 
-    stores: [
-    ],
+    stores: [],
 
-    defaultToken : 'home',
-    
+    defaultToken: 'home',
+
     launch: function () {
 
-        Ext.widget('login-dialog', {renderTo: Ext.getBody(),bodyCls : "background-image:url('js/lib/resources/images/background/background1.jpg');"});
+        Ext.widget('login-dialog', {
+            renderTo: Ext.getBody(),
+            bodyCls: "background-image:url('js/lib/resources/images/background/background1.jpg');"
+        });
     },
 
     init: function () {

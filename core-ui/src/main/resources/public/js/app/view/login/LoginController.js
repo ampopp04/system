@@ -8,21 +8,21 @@ Ext.define('System.view.login.LoginController', {
         'System.util.SessionMonitor'
     ],
 
-    onTextFieldSpecialKey: function(field, e, options){
+    onTextFieldSpecialKey: function (field, e, options) {
         if (e.getKey() === e.ENTER) {
             this.doLogin();
         }
     },
 
-    onTextFieldKeyPress: function(field, e, options){
+    onTextFieldKeyPress: function (field, e, options) {
 
         var charCode = e.getCharCode(),
             me = this;
 
-        if((e.shiftKey && charCode >= 97 && charCode <= 122) ||
-            (!e.shiftKey && charCode >= 65 && charCode <= 90)){
+        if ((e.shiftKey && charCode >= 97 && charCode <= 122) ||
+            (!e.shiftKey && charCode >= 65 && charCode <= 90)) {
 
-            if(me.capslockTooltip === undefined){
+            if (me.capslockTooltip === undefined) {
                 me.capslockTooltip = Ext.widget('capslocktooltip');
             }
 
@@ -30,25 +30,25 @@ Ext.define('System.view.login.LoginController', {
 
         } else {
 
-            if(me.capslockTooltip !== undefined){
+            if (me.capslockTooltip !== undefined) {
                 me.capslockTooltip.hide();
             }
         }
     },
 
-    onButtonClickCancel: function(button, e, options){
+    onButtonClickCancel: function (button, e, options) {
         this.lookupReference('form').reset();
     },
 
-    onButtonClickSubmit: function(button, e, options){
+    onButtonClickSubmit: function (button, e, options) {
         var me = this;
 
-        if (me.lookupReference('form').isValid()){
-           me.doLogin();
+        if (me.lookupReference('form').isValid()) {
+            me.doLogin();
         }
     },
 
-    doLogin: function() {
+    doLogin: function () {
 
         var me = this,
             form = me.lookupReference('form');
@@ -64,7 +64,7 @@ Ext.define('System.view.login.LoginController', {
         });
     },
 
-    onLoginFailure: function(form, action) {
+    onLoginFailure: function (form, action) {
 
         this.getView().unmask();
 
@@ -72,7 +72,7 @@ Ext.define('System.view.login.LoginController', {
         System.util.Util.handleFormFailure(action);
     },
 
-    onLoginSuccess: function(form, action) {
+    onLoginSuccess: function (form, action) {
         var view = this.getView();
         view.unmask();
         view.close();

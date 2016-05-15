@@ -4,7 +4,7 @@ Ext.define('System.controller.tab.panel.ReorderableTabPanelController', {
 
     counter: 0,
 
-    onAddTabClick: function() {
+    onAddTabClick: function () {
         var tabPanel = this.getView(),
             counter = ++this.counter,
             tab = tabPanel.add({

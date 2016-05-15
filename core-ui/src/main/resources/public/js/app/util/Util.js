@@ -4,15 +4,15 @@ Ext.define('System.util.Util', {
         'Ext.window.Toast'
     ],
 
-    statics : {
+    statics: {
 
         required: '<span style="color:red;font-weight:bold" data-qtip="Required"> *</span>',
 
-        decodeJSON : function (text) {
+        decodeJSON: function (text) {
 
             var result = Ext.JSON.decode(text, true);
 
-            if (!result){
+            if (!result) {
                 result = {};
                 result.success = false;
                 result.msg = text;
@@ -24,14 +24,14 @@ Ext.define('System.util.Util', {
         showErrorMsg: function (text) {
 
             Ext.Msg.show({
-                title:'Error!',
+                title: 'Error!',
                 msg: text,
                 icon: Ext.Msg.ERROR,
                 buttons: Ext.Msg.OK
             });
         },
 
-        handleFormFailure: function(action){
+        handleFormFailure: function (action) {
 
             var me = this,
                 result = System.util.Util.decodeJSON(action.response.responseText);
@@ -48,7 +48,7 @@ Ext.define('System.util.Util', {
             }
         },
 
-        showToast: function(text) {
+        showToast: function (text) {
             Ext.toast({
                 html: text,
                 closable: false,

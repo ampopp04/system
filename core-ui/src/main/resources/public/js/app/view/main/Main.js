@@ -21,15 +21,15 @@ Ext.define('System.view.main.Main', {
         type: 'border'
     },
 
-     style:'background-image: none; background-color: #F5F5F5;',
+    style: 'background-image: none; background-color: #F5F5F5;',
 
     items: [
-    {
+        {
             xtype: 'appheader',
             region: 'north'
         },
         {
-        region: 'center',
-        xtype: 'reorderable-tab-panel'
-    }]
+            region: 'center',
+            xtype: 'reorderable-tab-panel'
+        }]
 });

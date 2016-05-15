@@ -1,21 +1,21 @@
- Ext.define('System.view.main.Footer', {
-     extend: 'Ext.container.Container',
-     xtype: 'appfooter',
+Ext.define('System.view.main.Footer', {
+    extend: 'Ext.container.Container',
+    xtype: 'appfooter',
 
-     cls: 'app-footer',
+    cls: 'app-footer',
 
-     height: 30,
+    height: 30,
 
-     layout: 'center',
+    layout: 'center',
 
-     items: [
-         {
-             xtype: 'component',
-             width: 350,
-             componentCls: 'app-footer-title',
-             bind: {
-                 html: '{footer}'
-             }
-         }
-     ]
- });
+    items: [
+        {
+            xtype: 'component',
+            width: 350,
+            componentCls: 'app-footer-title',
+            bind: {
+                html: '{footer}'
+            }
+        }
+    ]
+});

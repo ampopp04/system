@@ -7,10 +7,10 @@ Ext.define('System.view.main.MainController', {
         'System.util.Util'
     ],
 
-    init: function() {
+    init: function () {
     },
 
-    onLogout: function(button, e, options){
+    onLogout: function (button, e, options) {
 
         var me = this;
         Ext.Ajax.request({
@@ -21,7 +21,7 @@ Ext.define('System.view.main.MainController', {
         });
     },
 
-    onLogoutSuccess: function(conn, response, options, eOpts){
+    onLogoutSuccess: function (conn, response, options, eOpts) {
         var result = System.util.Util.decodeJSON(conn.responseText);
 
         if (result.success) {
@@ -34,7 +34,7 @@ Ext.define('System.view.main.MainController', {
         }
     },
 
-    onLogoutFailure: function(conn, response, options, eOpts){
+    onLogoutFailure: function (conn, response, options, eOpts) {
         System.util.Util.showErrorMsg(conn.responseText);
     }
 });

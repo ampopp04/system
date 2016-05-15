@@ -29,11 +29,11 @@ Ext.define('System.util.Glyphs', {
         svg: 'xf1c9'
     },
 
-    constructor: function(config) {
+    constructor: function (config) {
         this.initConfig(config);
     },
 
-    getGlyph : function(glyph) {
+    getGlyph: function (glyph) {
         var me = this,
             font = me.getWebFont();
         if (typeof me.config[glyph] === 'undefined') {
