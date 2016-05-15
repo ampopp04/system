@@ -2,7 +2,6 @@
 @import "flagIcons";
 @import "iconColors";
 @import "fix";
-
 @import "ux/statusbar";
 
 /** loading screen */
@@ -20,7 +19,8 @@
   background: {
     color: transparent;
     position: top center;
-  };
+  }
+;
 }
 
 .x-message-box .x-window-body .x-box-inner {

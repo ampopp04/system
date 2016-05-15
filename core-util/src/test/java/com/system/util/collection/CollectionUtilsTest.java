@@ -1,13 +1,13 @@
 package com.system.util.collection;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class CollectionUtilsTest {
 
@@ -47,7 +47,7 @@ public class CollectionUtilsTest {
 
         assertEquals(1, i);
     }
-    
+
     @Test
     public void iteratorSize2Test() {
         List<String> stringList = new ArrayList<>();
