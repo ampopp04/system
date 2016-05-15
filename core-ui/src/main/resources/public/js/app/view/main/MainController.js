@@ -8,7 +8,6 @@ Ext.define('System.view.main.MainController', {
     ],
 
     init: function() {
-        System.app.createController('Root');
     },
 
     onLogout: function(button, e, options){

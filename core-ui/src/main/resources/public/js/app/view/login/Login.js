@@ -4,8 +4,7 @@ Ext.define('System.view.login.Login', {
     xtype: 'login-dialog',
 
     requires: [
-        'System.view.login.LoginController',
-        'System.view.locale.Translation'
+        'System.view.login.LoginController'
     ],
 
     controller: 'login',
@@ -17,7 +16,7 @@ Ext.define('System.view.login.Login', {
         type: 'fit'
     },
     iconCls: 'fa fa-key fa-lg',
-    title: translations.login,
+    title: 'Login',
     closeAction: 'hide',
     closable: false,
 
@@ -42,14 +41,14 @@ Ext.define('System.view.login.Login', {
             items: [
                 {
                     name: 'username',
-                    fieldLabel: translations.user,
+                    fieldLabel: 'username',
                     maxLength: 25,
                     value: 'apopp'
                 },
                 {
                     inputType: 'password',
                     name: 'password',
-                    fieldLabel: translations.password,
+                    fieldLabel: 'password',
                     id: 'password',
                     maxLength: 15,
                     value: 'password',
@@ -65,15 +64,12 @@ Ext.define('System.view.login.Login', {
                     dock: 'bottom',
                     items: [
                         {
-                            xtype: 'translation'
-                        },
-                        {
                             xtype: 'tbfill'
                         },
                         {
                             xtype: 'button',
                             iconCls: 'fa fa-times fa-lg',
-                            text: translations.cancel,
+                            text: 'Cancel',
                             listeners: {
                                 click: 'onButtonClickCancel'
                             }
@@ -83,7 +79,7 @@ Ext.define('System.view.login.Login', {
                             itemId: 'submit',
                             formBind: true,
                             iconCls: 'fa fa-sign-in fa-lg',
-                            text: translations.submit,
+                            text: 'Submit',
                             listeners: {
                                 click: 'onButtonClickSubmit'
                             }
