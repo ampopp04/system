@@ -4,7 +4,7 @@
  * sr_RS (ex: sr_CS, sr_YU)
  * 12 May 2007
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Јануар", "Фебруар", "Март", "Април", "Мај", "Јун", "Јул", "Август", "Септембар", "Октобар", "Новембар", "Децембар"];
@@ -106,7 +106,7 @@ Ext.define("Ext.locale.sr_RS.form.field.Date", {
 Ext.define("Ext.locale.sr_RS.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Учитавам..."
     });
@@ -143,10 +143,10 @@ Ext.define("Ext.locale.sr_RS.window.MessageBox", {
         cancel: "Одустани",
         yes: "Да",
         no: "Не"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.sr_RS.Component", {	
+Ext.define("Ext.locale.sr_RS.Component", {
     override: "Ext.Component"
 });

@@ -6,41 +6,41 @@
  */
 Ext.define('Ext.form.action.DirectAction', {
     extend: 'Ext.Mixin',
-    
+
     mixinConfig: {
         id: 'directaction'
     },
-    
-    resolveMethod: function(type) {
+
+    resolveMethod: function (type) {
         var me = this,
             form = me.form,
             api = form.api,
             fn;
-        
+
         //<debug>
         if (!api) {
             Ext.raise("Cannot resolve Ext Direct API method for " + type +
-                            " action; form " + form.id + " has no api object defined");
+                " action; form " + form.id + " has no api object defined");
         }
         //</debug>
-        
+
         fn = api[type];
-        
+
         if (typeof fn !== 'function') {
             //<debug>
             var fnName = fn;
             //</debug>
-            
+
             api[type] = fn = Ext.direct.Manager.parseMethod(fn);
-            
+
             //<debug>
             if (!Ext.isFunction(fn)) {
                 Ext.raise("Cannot resolve Ext Direct API method " + fnName +
-                                " for " + type + " action");
+                    " for " + type + " action");
             }
             //</debug>
         }
-        
+
         return fn;
     }
 });

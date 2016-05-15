@@ -1,4 +1,4 @@
-describe("Ext.event.gesture.Drag", function() {
+describe("Ext.event.gesture.Drag", function () {
     var helper = Ext.testHelper,
         recognizer = Ext.event.gesture.Drag.instance,
         minDistance = recognizer.getMinDistance(),
@@ -29,26 +29,26 @@ describe("Ext.event.gesture.Drag", function() {
         }
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         targetEl = Ext.getBody().createChild({});
         dragstartHandler = jasmine.createSpy();
         dragHandler = jasmine.createSpy();
         dragendHandler = jasmine.createSpy();
         dragcancelHandler = jasmine.createSpy();
 
-        dragstartHandler.andCallFake(function(event) {
+        dragstartHandler.andCallFake(function (event) {
             dragstartEvent = event;
         });
 
-        dragHandler.andCallFake(function(event) {
+        dragHandler.andCallFake(function (event) {
             dragEvent = event;
         });
 
-        dragendHandler.andCallFake(function(event) {
+        dragendHandler.andCallFake(function (event) {
             dragendEvent = event;
         });
 
-        dragcancelHandler.andCallFake(function(event) {
+        dragcancelHandler.andCallFake(function (event) {
             dragcancelEvent = event;
         });
 
@@ -58,19 +58,19 @@ describe("Ext.event.gesture.Drag", function() {
         targetEl.on('dragcancel', dragcancelHandler);
     });
 
-    afterEach(function() {
+    afterEach(function () {
         targetEl.destroy();
     });
 
-    it("should fire dragstart, drag, and dragend when the distance exceeds minDistance", function() {
-        runs(function() {
-            start({ id: 1, x: 100, y: 101 });
-            move({ id: 1, x: 99, y: 101 - minDistance });
+    it("should fire dragstart, drag, and dragend when the distance exceeds minDistance", function () {
+        runs(function () {
+            start({id: 1, x: 100, y: 101});
+            move({id: 1, x: 99, y: 101 - minDistance});
         });
 
         waitsForAnimation();
 
-        runs(function() {
+        runs(function () {
             expect(dragstartHandler).toHaveBeenCalled();
             expect(dragHandler).toHaveBeenCalled();
 
@@ -108,12 +108,12 @@ describe("Ext.event.gesture.Drag", function() {
                 previousDeltaY: 0
             });
 
-            move({ id: 1, x: 97, y: 100 - minDistance });
+            move({id: 1, x: 97, y: 100 - minDistance});
         });
 
         waitsForAnimation();
 
-        runs(function() {
+        runs(function () {
             expect(dragHandler.callCount).toBe(2);
 
             expectInfo(dragEvent, {
@@ -133,12 +133,12 @@ describe("Ext.event.gesture.Drag", function() {
                 previousDeltaY: -minDistance
             });
 
-            end({ id: 1, x: 96, y: 99 - minDistance });
+            end({id: 1, x: 96, y: 99 - minDistance});
         });
 
         waitsForAnimation();
 
-        runs(function() {
+        runs(function () {
             expect(dragendHandler).toHaveBeenCalled();
 
             expectInfo(dragendEvent, {
@@ -161,16 +161,16 @@ describe("Ext.event.gesture.Drag", function() {
     });
 
 
-    it("should not fire dragstart, drag, and dragend when the distance is less than minDistance", function() {
-        runs(function() {
-            start({ id: 1, x: 100, y: 101 });
-            move({ id: 1, x: 99, y: 99 + minDistance });
-            end({ id: 1, x: 99, y: 99 + minDistance });
+    it("should not fire dragstart, drag, and dragend when the distance is less than minDistance", function () {
+        runs(function () {
+            start({id: 1, x: 100, y: 101});
+            move({id: 1, x: 99, y: 99 + minDistance});
+            end({id: 1, x: 99, y: 99 + minDistance});
         });
 
         waitsForAnimation();
 
-        runs(function() {
+        runs(function () {
             expect(dragstartHandler).not.toHaveBeenCalled();
             expect(dragHandler).not.toHaveBeenCalled();
             expect(dragendHandler).not.toHaveBeenCalled();
@@ -178,30 +178,30 @@ describe("Ext.event.gesture.Drag", function() {
     });
 
     if (Ext.supports.Touch) {
-        it("should fire dragcancel and not dragend if the touch is canceled after dragstart", function() {
-            runs(function() {
-                start({ id: 1, x: 100, y: 101 });
-                move({ id: 1, x: 99, y: 101 - minDistance });
+        it("should fire dragcancel and not dragend if the touch is canceled after dragstart", function () {
+            runs(function () {
+                start({id: 1, x: 100, y: 101});
+                move({id: 1, x: 99, y: 101 - minDistance});
             });
 
             waitsForAnimation();
 
-            runs(function() {
+            runs(function () {
                 expect(dragstartHandler).toHaveBeenCalled();
                 expect(dragHandler).toHaveBeenCalled();
-                move({ id: 1, x: 97, y: 100 - minDistance });
+                move({id: 1, x: 97, y: 100 - minDistance});
             });
 
             waitsForAnimation();
 
-            runs(function() {
+            runs(function () {
                 expect(dragHandler.callCount).toBe(2);
-                cancel({ id: 1, x: 96, y: 99 - minDistance });
+                cancel({id: 1, x: 96, y: 99 - minDistance});
             });
 
             waitsForAnimation();
 
-            runs(function() {
+            runs(function () {
                 expect(dragendHandler).not.toHaveBeenCalled();
                 expect(dragcancelHandler).toHaveBeenCalled();
 
@@ -225,24 +225,24 @@ describe("Ext.event.gesture.Drag", function() {
         });
     }
 
-    it("should have the correct e.target if the mouse is moved off of the target", function() {
-        runs(function() {
-            start({ id: 1, x: 500, y: 300 });
-            helper.touchMove(document.body, { id: 1, x: 200, y: 700 });
+    it("should have the correct e.target if the mouse is moved off of the target", function () {
+        runs(function () {
+            start({id: 1, x: 500, y: 300});
+            helper.touchMove(document.body, {id: 1, x: 200, y: 700});
         });
 
         waitsForAnimation();
 
-        runs(function() {
+        runs(function () {
             expect(dragEvent.target).toBe(targetEl.dom);
-            end({ id: 1, x: 200, y: 700 });
+            end({id: 1, x: 200, y: 700});
         });
 
         waitsForAnimation();
     });
 
     function makeRemoveSuite(useRemoveChild) {
-        describe("when the target element is removed from the dom mid-drag " + (useRemoveChild ? "(using removeChild)" : "(using innerHTML)"), function() {
+        describe("when the target element is removed from the dom mid-drag " + (useRemoveChild ? "(using removeChild)" : "(using innerHTML)"), function () {
             var parent, target, firingTarget;
 
             function removeTarget() {
@@ -253,7 +253,7 @@ describe("Ext.event.gesture.Drag", function() {
                 }
             }
 
-            beforeEach(function() {
+            beforeEach(function () {
                 parent = Ext.getBody().createChild({
                     id: 'parent'
                 });
@@ -278,74 +278,74 @@ describe("Ext.event.gesture.Drag", function() {
                 }
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 parent.destroy();
                 target.destroy();
             });
 
-            it("should recover gracefully when the listener is attached above the target", function() {
-                runs(function() {
+            it("should recover gracefully when the listener is attached above the target", function () {
+                runs(function () {
                     parent.on('drag', dragHandler);
                     parent.on('dragend', dragendHandler);
 
-                    start({ id: 1, x: 100, y: 100 }, target);
-                    move({ id: 1, x: 100, y: 100 + minDistance }, target);
+                    start({id: 1, x: 100, y: 100}, target);
+                    move({id: 1, x: 100, y: 100 + minDistance}, target);
                 });
 
                 waitsForAnimation();
 
-                runs(function() {
+                runs(function () {
                     expect(dragHandler.callCount).toBe(1);
                     removeTarget();
-                    move({ id: 1, x: 120, y: 150 + minDistance }, firingTarget);
+                    move({id: 1, x: 120, y: 150 + minDistance}, firingTarget);
                 });
 
                 waitsForAnimation();
 
-                runs(function() {
+                runs(function () {
                     expect(dragHandler.callCount).toBe(2);
                     expect(dragEvent.target).toBe(target.dom);
 
-                    end({ id: 1, x: 120, y: 150 + minDistance }, firingTarget);
+                    end({id: 1, x: 120, y: 150 + minDistance}, firingTarget);
                 });
 
                 waitsForAnimation();
 
-                runs(function() {
+                runs(function () {
                     expect(dragendHandler).toHaveBeenCalled();
                     expect(dragendEvent.target).toBe(target.dom);
                 });
             });
 
-            it("should recover gracefully when the listener is attached to the target", function() {
-                runs(function() {
+            it("should recover gracefully when the listener is attached to the target", function () {
+                runs(function () {
                     target.on('drag', dragHandler);
                     target.on('dragend', dragendHandler);
 
-                    start({ id: 1, x: 100, y: 100 }, target);
-                    move({ id: 1, x: 100, y: 100 + minDistance }, target);
+                    start({id: 1, x: 100, y: 100}, target);
+                    move({id: 1, x: 100, y: 100 + minDistance}, target);
                 });
 
                 waitsForAnimation();
 
-                runs(function() {
+                runs(function () {
                     expect(dragHandler.callCount).toBe(1);
                     removeTarget();
-                    move({ id: 1, x: 120, y: 150 + minDistance }, firingTarget);
+                    move({id: 1, x: 120, y: 150 + minDistance}, firingTarget);
                 });
 
                 waitsForAnimation();
 
-                runs(function() {
+                runs(function () {
                     expect(dragHandler.callCount).toBe(2);
                     expect(dragEvent.target).toBe(target.dom);
 
-                    end({ id: 1, x: 120, y: 150 + minDistance }, firingTarget);
+                    end({id: 1, x: 120, y: 150 + minDistance}, firingTarget);
                 });
 
                 waitsForAnimation();
 
-                runs(function() {
+                runs(function () {
                     expect(dragendHandler).toHaveBeenCalled();
                     expect(dragendEvent.target).toBe(target.dom);
                 });

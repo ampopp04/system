@@ -1,23 +1,23 @@
-describe("Ext.dom.Layer", function() {
+describe("Ext.dom.Layer", function () {
     var layer;
 
-    afterEach(function() {
+    afterEach(function () {
         layer.destroy();
     });
 
-    it("should create a div by default", function() {
+    it("should create a div by default", function () {
         layer = new Ext.dom.Layer();
 
         expect(layer.dom.tagName).toBe('DIV');
     });
 
-    it("should have the x-layer cls", function() {
+    it("should have the x-layer cls", function () {
         layer = new Ext.dom.Layer();
 
         expect(layer).toHaveCls('x-layer');
     });
 
-    it("should accept a domhelper config as its element", function() {
+    it("should accept a domhelper config as its element", function () {
         layer = new Ext.dom.Layer({
             dh: {
                 tag: 'p',
@@ -29,13 +29,13 @@ describe("Ext.dom.Layer", function() {
         expect(layer).toHaveCls('today-is-the-greatest-day-Ive-ever-known');
     });
 
-    it("should append the layer to document.body", function() {
+    it("should append the layer to document.body", function () {
         layer = new Ext.dom.Layer();
 
         expect(layer.dom.parentNode).toBe(document.body);
     });
 
-    it("should allow the parent node to be configured", function() {
+    it("should allow the parent node to be configured", function () {
         var parent = Ext.getBody().createChild();
         layer = new Ext.dom.Layer({
             parentEl: parent
@@ -46,13 +46,13 @@ describe("Ext.dom.Layer", function() {
         parent.destroy();
     });
 
-    it("should not create a shadow by default", function() {
+    it("should not create a shadow by default", function () {
         layer = new Ext.dom.Layer();
 
         expect(layer.shadow).toBeUndefined();
     });
 
-    it("should create a shadow if shadow is true", function() {
+    it("should create a shadow if shadow is true", function () {
         layer = new Ext.dom.Layer({
             shadow: true
         });
@@ -61,7 +61,7 @@ describe("Ext.dom.Layer", function() {
         expect(layer.shadow.mode).toBe('drop');
     });
 
-    it("should create a shadow using a shadow mode", function() {
+    it("should create a shadow using a shadow mode", function () {
         layer = new Ext.dom.Layer({
             shadow: 'sides'
         });
@@ -70,13 +70,13 @@ describe("Ext.dom.Layer", function() {
         expect(layer.shadow.mode).toBe('sides');
     });
 
-    it("should not create a shim by default", function() {
+    it("should not create a shim by default", function () {
         layer = new Ext.dom.Layer();
 
         expect(layer.shim).toBeUndefined();
     });
 
-    it("should create a shim if shim is true", function() {
+    it("should create a shim if shim is true", function () {
         layer = new Ext.dom.Layer({
             shim: true
         });
@@ -84,7 +84,7 @@ describe("Ext.dom.Layer", function() {
         expect(layer.shim instanceof Ext.dom.Shim).toBe(true);
     });
 
-    it("should accept a cls", function() {
+    it("should accept a cls", function () {
         layer = new Ext.dom.Layer({
             cls: 'ohyeah'
         });
@@ -92,7 +92,7 @@ describe("Ext.dom.Layer", function() {
         expect(layer).toHaveCls('ohyeah');
     });
 
-    it("should accept a shadowOffset", function() {
+    it("should accept a shadowOffset", function () {
         layer = new Ext.dom.Layer({
             shadow: true,
             shadowOffset: 9999
@@ -101,13 +101,13 @@ describe("Ext.dom.Layer", function() {
         expect(layer.shadow.offset).toBe(9999);
     });
 
-    it("should use css visibility to hide", function() {
+    it("should use css visibility to hide", function () {
         layer = new Ext.dom.Layer();
 
         expect(layer.getVisibilityMode()).toBe(Ext.Element.VISIBILITY);
     });
 
-    it("should use display to hide if useDisplay is true", function() {
+    it("should use display to hide if useDisplay is true", function () {
         layer = new Ext.dom.Layer({
             useDisplay: true
         });
@@ -115,7 +115,7 @@ describe("Ext.dom.Layer", function() {
         expect(layer.getVisibilityMode()).toBe(Ext.Element.DISPLAY);
     });
 
-    it("should configure the visibility mode using hideMode:'display'", function() {
+    it("should configure the visibility mode using hideMode:'display'", function () {
         layer = new Ext.dom.Layer({
             hideMode: 'display'
         });
@@ -123,7 +123,7 @@ describe("Ext.dom.Layer", function() {
         expect(layer.getVisibilityMode()).toBe(Ext.Element.DISPLAY);
     });
 
-    it("should configure the visibility mode using hideMode:'visibility'", function() {
+    it("should configure the visibility mode using hideMode:'visibility'", function () {
         layer = new Ext.dom.Layer({
             hideMode: 'visibility'
         });
@@ -131,7 +131,7 @@ describe("Ext.dom.Layer", function() {
         expect(layer.getVisibilityMode()).toBe(Ext.Element.VISIBILITY);
     });
 
-    it("should configure the visibility mode using hideMode:'offsets'", function() {
+    it("should configure the visibility mode using hideMode:'offsets'", function () {
         layer = new Ext.dom.Layer({
             hideMode: 'offsets'
         });

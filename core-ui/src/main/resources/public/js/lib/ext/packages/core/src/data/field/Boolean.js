@@ -25,8 +25,8 @@ Ext.define('Ext.data.field.Boolean', {
         }
         return this.trueRe.test(String(v));
     },
-    
-    getType: function() {
+
+    getType: function () {
         return 'bool';
     }
 });

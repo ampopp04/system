@@ -51,7 +51,7 @@ Ext.define('Ext.app.bind.Multi', {
         var me = this,
             trackStatics = options && options.trackStatics;
 
-        me.callParent([ owner, callback, scope, options ]);
+        me.callParent([owner, callback, scope, options]);
 
         me.bindings = [];
         me.literal = descriptor.$literal;
@@ -68,7 +68,7 @@ Ext.define('Ext.app.bind.Multi', {
         // We started at missing == 1 so that no immediate callbacks would hit 0 before
         // adding all bindings... so now we decrement by 1 to balance things and see if
         // we are at 0.
-        if (! --me.missing && !me.scheduled) {
+        if (!--me.missing && !me.scheduled) {
             me.schedule();
         }
     },
@@ -86,7 +86,7 @@ Ext.define('Ext.app.bind.Multi', {
             owner = me.owner,
             bindings = me.bindings,
             method = me.literal ? (descriptor.reference ? 'bindEntity' : 'bindExpression')
-                                : 'bind',
+                : 'bind',
             binding, depth;
 
         ++me.missing;
@@ -197,7 +197,7 @@ Ext.define('Ext.app.bind.Multi', {
     },
 
     isLoading: function () {
-        for (var bindings = this.bindings, n = bindings.length; n-- > 0; ) {
+        for (var bindings = this.bindings, n = bindings.length; n-- > 0;) {
             if (bindings[n].isLoading()) {
                 return true;
             }
@@ -206,11 +206,11 @@ Ext.define('Ext.app.bind.Multi', {
         return false;
     },
 
-    isBindingStatic: function(binding) {
+    isBindingStatic: function (binding) {
         return binding.isTemplateBinding && binding.isStatic;
     },
 
-    isStatic: function() {
+    isStatic: function () {
         var bindings = this.bindings,
             len = bindings.length,
             i, binding;
@@ -224,7 +224,7 @@ Ext.define('Ext.app.bind.Multi', {
         return true;
     },
 
-    pruneStaticKeys: function() {
+    pruneStaticKeys: function () {
         var value = Ext.apply({}, this.lastValue),
             keys = this.staticKeys,
             len = keys.length,
@@ -243,7 +243,7 @@ Ext.define('Ext.app.bind.Multi', {
     refresh: function () {
         // @TODO
     },
-    
+
     privates: {
         sort: function () {
             this.scheduler.sortItems(this.bindings);

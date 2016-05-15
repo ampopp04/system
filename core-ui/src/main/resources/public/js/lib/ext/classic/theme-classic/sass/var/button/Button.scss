@@ -1,15 +1,15 @@
 /** @class Ext.button.Button */
 //
 
-$button-small-font-size: dynamic(ceil($font-size * .9));  //11px
-$button-medium-font-size: dynamic(ceil($font-size * .9));  //11px
-$button-large-font-size: dynamic(ceil($font-size * .9));  //11px
+$button-small-font-size: dynamic(ceil($font-size * .9)); //11px
+$button-medium-font-size: dynamic(ceil($font-size * .9)); //11px
+$button-large-font-size: dynamic(ceil($font-size * .9)); //11px
 
-$button-default-base-color: dynamic(adjust-color($neutral-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%));  //F7F7F7
-$button-default-base-color-over: dynamic(adjust-color($base-color, $hue: -6.667deg, $saturation: 44.444%, $lightness: 10.588%));  //E4F3FF
+$button-default-base-color: dynamic(adjust-color($neutral-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%)); //F7F7F7
+$button-default-base-color-over: dynamic(adjust-color($base-color, $hue: -6.667deg, $saturation: 44.444%, $lightness: 10.588%)); //E4F3FF
 $button-default-base-color-focus: dynamic($button-default-base-color);
-$button-default-base-color-pressed: dynamic(adjust-color($base-color, $hue: -0.725deg, $saturation: -9.556%, $lightness: -3.725%));  //B6CBE4
-$button-default-base-color-disabled: dynamic(adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%));  //F7F7F7
+$button-default-base-color-pressed: dynamic(adjust-color($base-color, $hue: -0.725deg, $saturation: -9.556%, $lightness: -3.725%)); //B6CBE4
+$button-default-base-color-disabled: dynamic(adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%)); //F7F7F7
 
 $button-default-border-color: dynamic(adjust-color($button-default-base-color, $hue: 0deg, $saturation: 0%, $lightness: -18.039%));
 $button-default-border-color-over: dynamic(adjust-color($button-default-base-color-over, $hue: 8.177deg, $saturation: -28.283%, $lightness: -12.745%));

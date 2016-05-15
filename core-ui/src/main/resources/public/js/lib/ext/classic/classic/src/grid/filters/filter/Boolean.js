@@ -1,13 +1,13 @@
 /**
  * The boolean grid filter allows you to create a filter selection that limits results
- * to values matching true or false.  The filter can be set programmatically or via 
- * user input with a configurable {@link Ext.form.field.Radio radio field} in the filter section 
+ * to values matching true or false.  The filter can be set programmatically or via
+ * user input with a configurable {@link Ext.form.field.Radio radio field} in the filter section
  * of the column header.
- * 
+ *
  * Boolean filters use unique radio group IDs, so you may utilize more than one.
  *
  * Example Boolean Filter Usage:
- * 
+ *
  *     @example
  *     var shows = Ext.create('Ext.data.Store', {
  *         fields: ['id','show', 'visible'],
@@ -20,7 +20,7 @@
  *             {id: 5, show: 'Star Wars: Christmas Special', visible: false}
  *         ]
  *     });
- *   
+ *
  *     Ext.create('Ext.grid.Panel', {
  *         renderTo: Ext.getBody(),
  *         title: 'Sci-Fi Television',
@@ -47,7 +47,7 @@
  *                 noText: 'False'
  *             }
  *         }]
- *     });  
+ *     });
  */
 Ext.define('Ext.grid.filters.filter.Boolean', {
     extend: 'Ext.grid.filters.filter.SingleFilter',

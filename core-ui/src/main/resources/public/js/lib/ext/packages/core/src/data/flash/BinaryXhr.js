@@ -1,59 +1,59 @@
 /**
  *
  * Simulates an XMLHttpRequest object's methods and properties as returned
- * form the flash polyfill plugin. Used in submitting binary data in browsers that do 
+ * form the flash polyfill plugin. Used in submitting binary data in browsers that do
  * not support doing so from JavaScript.
  * NOTE: By default this will look for the flash object in the ext directory. When packaging and deploying the app, copy the <tt>ext/plugins</tt> directory and its contents to your root directory. For custom deployments where just the <tt>FlashPlugin.swf</tt> file gets copied (e.g. to <tt>/resources/FlashPlugin.swf</tt>), make sure to notify the framework of the location of the plugin before making the first attempt to post binary data, e.g. in the <tt>launch</tt> method of your app do:
  * <pre><code>
-Ext.flashPluginPath="/resources/FlashPlugin.swf";
+ Ext.flashPluginPath="/resources/FlashPlugin.swf";
  </code></pre>
  *
  * @private
  */
 Ext.define('Ext.data.flash.BinaryXhr', {
-    
+
     statics: {
         /**
          * Called by the flash plugin once it's installed and open for business.
          * @private
          */
-        flashPluginActivated: function() {
+        flashPluginActivated: function () {
             Ext.data.flash.BinaryXhr.flashPluginActive = true;
             Ext.data.flash.BinaryXhr.flashPlugin = document.getElementById("ext-flash-polyfill");
             Ext.GlobalEvents.fireEvent("flashready"); // let all pending connections know
         },
-        
+
         /**
          * Set to <tt>trut</tt> once the plugin registers and is active.
          * @private
          */
         flashPluginActive: false,
-        
+
         /**
          * Flag to avoid installing the plugin twice.
          * @private
          */
         flashPluginInjected: false,
-        
+
         /**
          * Counts IDs for new connections.
          * @private
          */
-        
+
         connectionIndex: 1,
-        
+
         /**
          * Plcaeholder for active connections.
          * @private
          */
         liveConnections: {},
-        
+
         /**
          * Reference to the actual plugin, once activated.
          * @private
          */
         flashPlugin: null,
-        
+
         /**
          * Called by the flash plugin once the state of one of the active connections changes.
          * @param {Number/number} javascriptId the ID of the connection.
@@ -61,47 +61,47 @@ Ext.define('Ext.data.flash.BinaryXhr', {
          * @param {Object} data optional object containing the returned data, error and status codes.
          * @private
          */
-        onFlashStateChange: function(javascriptId, state, data) {
+        onFlashStateChange: function (javascriptId, state, data) {
             var connection;
             // Identify the request this is for
             connection = this.liveConnections[Number(javascriptId)]; // Make sure its a native number
             if (connection) {
                 connection.onFlashStateChange(state, data);
-            } 
+            }
             //<debug>
             else {
                 Ext.warn.log("onFlashStateChange for unknown connection ID: " + javascriptId);
             }
             //</debug>
         },
-        
+
         /**
          * Adds the BinaryXhr object to the tracked connection list and assigns it an ID
          * @param {Ext.data.flash.BinaryXhr} conn the connection to register
          * @return {Number} id
          * @private
          */
-        registerConnection: function(conn) {
+        registerConnection: function (conn) {
             var i = this.connectionIndex;
             this.conectionIndex = this.connectionIndex + 1;
             this.liveConnections[i] = conn;
             return i;
         },
-        
+
         /**
          * Injects the flash polyfill plugin to allow posting binary data.
          * This is done in two steps: First we load the javascript loader for flash objects, then we call it to inject the flash object.
          * @private
          */
-        injectFlashPlugin: function() {
+        injectFlashPlugin: function () {
             var me = this,
                 flashLoaderPath, flashObjectPath;
-                // Generate the following HTML set of tags:
-               // + '<div id="ext-flash-polyfill">'
-               // + '<p>To view this page ensure that Adobe Flash Player version 11.1.0 or greater is installed, and that the FlashPlugin.swf file was correctly placed in the /resources directory.</p>'
-                //+ '<a href="http://www.adobe.com/go/getflashplayer"><img src="' + window.location.protocol + '//www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /></a>'
-                //+ '</div>'
-            
+            // Generate the following HTML set of tags:
+            // + '<div id="ext-flash-polyfill">'
+            // + '<p>To view this page ensure that Adobe Flash Player version 11.1.0 or greater is installed, and that the FlashPlugin.swf file was correctly placed in the /resources directory.</p>'
+            //+ '<a href="http://www.adobe.com/go/getflashplayer"><img src="' + window.location.protocol + '//www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /></a>'
+            //+ '</div>'
+
             me.flashPolyfillEl = Ext.getBody().appendChild({
                 id: 'ext-flash-polyfill',
                 cn: [
@@ -122,9 +122,9 @@ Ext.define('Ext.data.flash.BinaryXhr', {
                     }
                 ]
             });
-            
+
             // Now load the flash-loading script
-            
+
             flashLoaderPath = [Ext.Loader.getPath('Ext.data.Connection'), '../../../plugins/flash/swfobject.js'].join('/');
             flashObjectPath = "/plugins/flash/FlashPlugin.swf";
             //<debug>
@@ -135,8 +135,8 @@ Ext.define('Ext.data.flash.BinaryXhr', {
             }
             //console.log('LOADING Flash plugin from: ' + flashObjectPath);
             Ext.Loader.loadScript({
-                url:flashLoaderPath,
-                onLoad: function() {
+                url: flashLoaderPath,
+                onLoad: function () {
                     // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
                     var swfVersionStr = "11.4.0";
                     // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
@@ -152,12 +152,12 @@ Ext.define('Ext.data.flash.BinaryXhr', {
                     attributes.name = "polyfill";
                     attributes.align = "middle";
                     swfobject.embedSWF(
-                        flashObjectPath, "ext-flash-polyfill", 
+                        flashObjectPath, "ext-flash-polyfill",
                         "0", "0", // no size so it's not visible. 
-                        swfVersionStr, xiSwfUrlStr, 
+                        swfVersionStr, xiSwfUrlStr,
                         flashvars, params, attributes);
                 },
-                onError: function() {
+                onError: function () {
                     //<debug>
                     Ext.raise("Could not load flash-loader file swfobject.js from " + flashLoader);
                     //</debug>
@@ -168,35 +168,35 @@ Ext.define('Ext.data.flash.BinaryXhr', {
             Ext.data.flash.BinaryXhr.flashPluginInjected = true;
         }
     },
-    
+
     /**
      * @property {number} readyState The connection's simulated readyState. Note that the only supported values are 0, 1 and 4. States 2 and 3 will never be reported.
      */
     readyState: 0,
-    
+
     /**
      * @property {number} status Connection status code returned by flash or the server.
      */
     status: 0,
-    
-    
+
+
     /**
      * Status text (if any) returned by flash or the server.
      */
     statusText: "",
-    
+
     /**
      * @property {Array} responseBytes The binary bytes returned.
      */
     responseBytes: null,
-    
+
     /**
      * An ID representing this connection with flash.
      * @private
      */
     javascriptId: null,
-    
-    
+
+
     /**
      * Creates a new instance of BinaryXhr.
      */
@@ -265,7 +265,7 @@ Ext.define('Ext.data.flash.BinaryXhr', {
         me.async = async !== false;
         me.user = user;
         me.password = password;
-        
+
         //<debug>
         if (!me.async) {
             Ext.raise("Binary posts are only supported in async mode: " + url);
@@ -296,15 +296,15 @@ Ext.define('Ext.data.flash.BinaryXhr', {
             this.onFlashReady();
         }
     },
-    
+
     /**
      * Called by send, or once flash is loaded, to actually send the bytes.
      * @private
      */
-    onFlashReady: function() {
+    onFlashReady: function () {
         var me = this, req, status;
         me.javascriptId = Ext.data.flash.BinaryXhr.registerConnection(me);
-        
+
         // Create the request object we're sending to flash
         req = {
             method: me.method, // ignored since we always POST binary data
@@ -351,7 +351,7 @@ Ext.define('Ext.data.flash.BinaryXhr', {
     parseData: function (data) {
         var me = this;
         // parse data and set up variables so that listeners can use this XHR
-        this.status = data.status || 0; 
+        this.status = data.status || 0;
         // we get back no response headers, so fake what we know:
         me.responseHeaders = {};
         if (me.mimeType) {
@@ -378,7 +378,7 @@ Ext.define('Ext.data.flash.BinaryXhr', {
      * @param {Object} data optional data object.
      * @private
      */
-    onFlashStateChange: function(state, data) {
+    onFlashStateChange: function (state, data) {
         var me = this;
         if (state == 4) {
             // parse data and prepare for handing back to initiator
@@ -388,5 +388,5 @@ Ext.define('Ext.data.flash.BinaryXhr', {
         }
         me.setReadyState(state); // notify all listeners
     }
-    
+
 });

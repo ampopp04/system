@@ -1,6 +1,6 @@
-describe("Ext.layout.component.field.FieldContainer", function() {
-    
-    it("should account for left/right any padding supplied by the fieldBodyCls", function() {
+describe("Ext.layout.component.field.FieldContainer", function () {
+
+    it("should account for left/right any padding supplied by the fieldBodyCls", function () {
         var fc = Ext.create('Ext.form.FieldContainer', {
             renderTo: Ext.getBody(),
             hideLabel: true,
@@ -24,8 +24,8 @@ describe("Ext.layout.component.field.FieldContainer", function() {
         expect(fc.items.last().getWidth()).toBe(149);
         fc.destroy();
     });
-    
-    it("should account for top/bottom any padding supplied by the fieldBodyCls", function() {
+
+    it("should account for top/bottom any padding supplied by the fieldBodyCls", function () {
         var fc = Ext.create('Ext.form.FieldContainer', {
             renderTo: Ext.getBody(),
             hideLabel: true,
@@ -47,7 +47,7 @@ describe("Ext.layout.component.field.FieldContainer", function() {
         fc.destroy();
     });
 
-    it("should correctly measure content height when its container layout is hbox", function() {
+    it("should correctly measure content height when its container layout is hbox", function () {
         // EXTJSIV-12665
         var panel = Ext.widget({
             xtype: 'panel',
@@ -72,7 +72,7 @@ describe("Ext.layout.component.field.FieldContainer", function() {
         panel.destroy();
     });
 
-    it("should shrink wrap liquid layout children when using a box layout", function() {
+    it("should shrink wrap liquid layout children when using a box layout", function () {
         var fc = Ext.widget({
             xtype: 'fieldcontainer',
             renderTo: document.body,
@@ -89,13 +89,13 @@ describe("Ext.layout.component.field.FieldContainer", function() {
         fc.destroy();
     });
 
-    it("should publish the correct inner width for the layout of its items", function() {
+    it("should publish the correct inner width for the layout of its items", function () {
         var fc = Ext.widget({
             renderTo: document.body,
             xtype: 'fieldcontainer',
             width: 500,
             fieldLabel: 'Label',
-            msgTarget : 'side',
+            msgTarget: 'side',
             layout: 'hbox',
             items: [{
                 flex: 1,
@@ -120,14 +120,14 @@ describe("Ext.layout.component.field.FieldContainer", function() {
         fc.destroy();
     });
 
-    it("should publish the correct inner height for the layout of its items", function() {
+    it("should publish the correct inner height for the layout of its items", function () {
         var fc = Ext.widget({
             renderTo: document.body,
             xtype: 'fieldcontainer',
             height: 200,
             fieldLabel: 'Label',
             labelAlign: 'top',
-            msgTarget : 'under',
+            msgTarget: 'under',
             layout: 'vbox',
             items: [{
                 flex: 1,

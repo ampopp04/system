@@ -2,7 +2,7 @@ describe('Ext.draw.Point', function () {
     var proto = Ext.draw.Point.prototype,
         precision = 12; // first 12 decimal points should match
 
-    it('should be isPoint', function() {
+    it('should be isPoint', function () {
         expect(proto.isPoint).toBeTruthy();
     });
 
@@ -97,7 +97,7 @@ describe('Ext.draw.Point', function () {
 
     describe('add', function () {
         it('should return a new point which x/y values are sums of respective ' +
-        'coordinates of this point and the given point', function () {
+            'coordinates of this point and the given point', function () {
             var p1 = new Ext.draw.Point(2, 3),
                 p2 = new Ext.draw.Point(-4, 5),
                 p = p1.add(p2);
@@ -110,8 +110,8 @@ describe('Ext.draw.Point', function () {
 
     describe('sub', function () {
         it('should return a new point which x/y values are the difference between ' +
-        'the respective coordinates of this point (minuend) ' +
-        'and the given point (subtrahend)', function () {
+            'the respective coordinates of this point (minuend) ' +
+            'and the given point (subtrahend)', function () {
             var p1 = new Ext.draw.Point(2, 3),
                 p2 = new Ext.draw.Point(-4, 5),
                 p = p1.sub(p2);
@@ -124,7 +124,7 @@ describe('Ext.draw.Point', function () {
 
     describe('mul', function () {
         it('should return a new point which x/y values are the product of multiplication of ' +
-        'coordinates of this point by a specified value', function () {
+            'coordinates of this point by a specified value', function () {
             var p = new Ext.draw.Point(2, 3),
                 mp = p.mul(3);
 
@@ -136,7 +136,7 @@ describe('Ext.draw.Point', function () {
 
     describe('div', function () {
         it('should return a new point which x/y values are the product of division of ' +
-        'coordinates of this point by a specified value', function () {
+            'coordinates of this point by a specified value', function () {
             var p = new Ext.draw.Point(2, 3),
                 dp = p.div(2);
 
@@ -162,7 +162,7 @@ describe('Ext.draw.Point', function () {
 
     describe('equals', function () {
         it('should check if the respective coordinates of this point ' +
-        'and provided point are equal', function () {
+            'and provided point are equal', function () {
             var p1 = new Ext.draw.Point(2, 0),
                 p2 = new Ext.draw.Point({x: 2, y: 0}),
                 isEqual = p1.equals(p2);
@@ -173,7 +173,7 @@ describe('Ext.draw.Point', function () {
 
     describe('rotate', function () {
         it('should rotate the point (around origin and an arbitrary point) ' +
-        'by a specified angle', function () {
+            'by a specified angle', function () {
             var p = new Ext.draw.Point(1, 0),
                 center = new Ext.draw.Point(0, 1),
                 degrees = 45,
@@ -190,7 +190,7 @@ describe('Ext.draw.Point', function () {
 
     describe('transform', function () {
         it('should transform a point from one coordinate system to another ' +
-        'given a transformation matrix or its elements', function () {
+            'given a transformation matrix or its elements', function () {
             var p = new Ext.draw.Point(2, 0),
                 matrix = new Ext.draw.Matrix(),
                 tp;

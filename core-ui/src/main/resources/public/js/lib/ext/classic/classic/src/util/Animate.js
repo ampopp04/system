@@ -201,10 +201,10 @@ Ext.define('Ext.util.Animate', {
     mixinId: 'animate',
 
     requires: [
-        'Ext.fx.Manager', 
+        'Ext.fx.Manager',
         'Ext.fx.Anim'
     ],
-    
+
     isAnimate: true,
 
     /**
@@ -270,7 +270,7 @@ Ext.define('Ext.util.Animate', {
      * Note that the {@link Ext.fx.Anim#to to} config is required.
      * @return {Object} this
      */
-    animate: function(animObj) {
+    animate: function (animObj) {
         var me = this;
         if (Ext.fx.Manager.hasFxBlock(me.id)) {
             return me;
@@ -283,7 +283,7 @@ Ext.define('Ext.util.Animate', {
      * @private
      * Process the passed fx configuration.
      */
-    anim: function(config) {
+    anim: function (config) {
         if (!Ext.isObject(config)) {
             return (config) ? {} : false;
         }
@@ -301,15 +301,15 @@ Ext.define('Ext.util.Animate', {
             paused: true
         }, config);
     },
-    
+
     /**
      * @private
      * Get animation properties
      */
-    getAnimationProps: function() {
+    getAnimationProps: function () {
         var me = this,
             layout = me.layout;
-        
+
         return layout && layout.animate ? layout.animate : {};
     },
 
@@ -327,7 +327,7 @@ Ext.define('Ext.util.Animate', {
      * that haven't started yet.
      * @return {Ext.dom.Element} The Element
      */
-    stopAnimation: function() {
+    stopAnimation: function () {
         Ext.fx.Manager.stopAnimation(this.id);
         return this;
     },
@@ -337,7 +337,7 @@ Ext.define('Ext.util.Animate', {
      * of {@link #sequenceFx}.
      * @return {Object} this
      */
-    syncFx: function() {
+    syncFx: function () {
         Ext.fx.Manager.setFxDefaults(this.id, {
             concurrent: true
         });
@@ -349,7 +349,7 @@ Ext.define('Ext.util.Animate', {
      * opposite of {@link #syncFx}.
      * @return {Object} this
      */
-    sequenceFx: function() {
+    sequenceFx: function () {
         Ext.fx.Manager.setFxDefaults(this.id, {
             concurrent: false
         });
@@ -367,7 +367,7 @@ Ext.define('Ext.util.Animate', {
      * Returns the current animation if this object has any effects actively running or queued, else returns false.
      * @return {Ext.fx.Anim/Boolean} Anim if element has active effects, else false
      */
-    getActiveAnimation: function() {
+    getActiveAnimation: function () {
         return Ext.fx.Manager.getActiveAnimation(this.id);
     }
 });

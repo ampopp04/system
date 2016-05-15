@@ -1,29 +1,29 @@
-describe("Ext.container.Container", function() {
+describe("Ext.container.Container", function () {
     var ct, realConsole;
 
     var fakeConsole = {
-        dir: function(s) {
+        dir: function (s) {
             return s;
         },
-        log: function(s) {
+        log: function (s) {
             return s;
         },
-        error: function(s) {
+        error: function (s) {
             return s;
         },
-        warn: function(s) {
+        warn: function (s) {
             return s;
         }
     };
 
-    beforeEach(function(){
+    beforeEach(function () {
         realConsole = Ext.global.console;
 
         // mock the console to avoid logging to the real console during the tests
         Ext.global.console = fakeConsole;
     });
 
-    afterEach(function(){
+    afterEach(function () {
         ct = Ext.destroy(ct);
         Ext.global.console = realConsole;
     });
@@ -38,8 +38,8 @@ describe("Ext.container.Container", function() {
         return ct;
     }
 
-    describe("Floating descendants",function() {
-        it("should find floating descentants using down(), not child()", function() {
+    describe("Floating descendants", function () {
+        it("should find floating descentants using down(), not child()", function () {
             ct = Ext.create('Ext.window.Window', {
                 bodyPadding: 5,
                 layout: 'fit',
@@ -63,8 +63,8 @@ describe("Ext.container.Container", function() {
             expect(ct.down('window')).not.toBeNull();
         });
 
-        describe("layouts", function() {
-            it("should allow floater layouts to run when the container has one queued", function() {
+        describe("layouts", function () {
+            it("should allow floater layouts to run when the container has one queued", function () {
                 var w = new Ext.window.Window({
                     width: 200,
                     height: 200
@@ -90,11 +90,11 @@ describe("Ext.container.Container", function() {
         })
     });
 
-    describe("onRender sequence", function() {
-        beforeEach(function() {
+    describe("onRender sequence", function () {
+        beforeEach(function () {
             spyOn(Ext.Component.prototype, "onRender").andCallThrough();
         });
-        it("should call onRender passing parentNode and position", function() {
+        it("should call onRender passing parentNode and position", function () {
             makeContainer({
                 renderTo: document.body,
                 items: {
@@ -109,20 +109,20 @@ describe("Ext.container.Container", function() {
     });
 
 
-    describe("reading items", function(){
-        it("should have item count 0 if items is ommitted", function(){
+    describe("reading items", function () {
+        it("should have item count 0 if items is ommitted", function () {
             makeContainer();
             expect(ct.items.getCount()).toEqual(0);
         });
 
-        it("should have an item count 0 if an empty array is specified", function(){
+        it("should have an item count 0 if an empty array is specified", function () {
             makeContainer({
                 items: []
             });
             expect(ct.items.getCount()).toEqual(0);
         });
 
-        it("should handle adding a single item configuration", function(){
+        it("should handle adding a single item configuration", function () {
             makeContainer({
                 items: {
                     itemId: 'first'
@@ -132,7 +132,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.first().itemId).toEqual('first');
         });
 
-        it("should handle an array of items", function(){
+        it("should handle an array of items", function () {
             makeContainer({
                 items: [{
                     itemId: 'item1'
@@ -145,10 +145,10 @@ describe("Ext.container.Container", function() {
             expect(ct.items.last().itemId).toEqual('item2');
         });
 
-        describe("subclassing", function() {
+        describe("subclassing", function () {
             var Cls, items;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 items = [{
                     itemId: 'item1'
                 }, {
@@ -158,14 +158,14 @@ describe("Ext.container.Container", function() {
                 }];
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 items = null;
             });
 
-            it("should be able to apply items in initComponent", function() {
+            it("should be able to apply items in initComponent", function () {
                 Cls = Ext.define(null, {
                     extend: 'Ext.container.Container',
-                    initComponent: function() {
+                    initComponent: function () {
                         Ext.apply(this, {items: items});
                         this.callParent();
                     }
@@ -174,10 +174,10 @@ describe("Ext.container.Container", function() {
                 expect(ct.items.getCount()).toBe(3);
             });
 
-            it("should be able to applyIf items in initComponent", function() {
+            it("should be able to applyIf items in initComponent", function () {
                 Cls = Ext.define(null, {
                     extend: 'Ext.container.Container',
-                    initComponent: function() {
+                    initComponent: function () {
                         Ext.applyIf(this, {items: items});
                         this.callParent();
                     }
@@ -188,8 +188,8 @@ describe("Ext.container.Container", function() {
         });
     });
 
-    describe("defaultType", function(){
-        it("should use panel if one isn't specified", function(){
+    describe("defaultType", function () {
+        it("should use panel if one isn't specified", function () {
             makeContainer({
                 items: [{
                     itemId: 'item'
@@ -198,7 +198,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.first() instanceof Ext.Panel).toBeTruthy();
         });
 
-        it("should use a specified default type", function(){
+        it("should use a specified default type", function () {
             makeContainer({
                 defaultType: 'container',
                 items: [{
@@ -209,10 +209,10 @@ describe("Ext.container.Container", function() {
         });
     });
 
-    describe("getComponent", function(){
+    describe("getComponent", function () {
         var a, b, c, d, cmp;
-        
-        beforeEach(function(){
+
+        beforeEach(function () {
             a = new Ext.Component({
                 itemId: 'a'
             });
@@ -230,62 +230,62 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        afterEach(function(){
+        afterEach(function () {
             Ext.destroy(a, b, c, d, cmp);
             a = b = c = d = cmp = null;
         });
 
-        it("should return undefined if id is not found", function(){
+        it("should return undefined if id is not found", function () {
             expect(ct.getComponent('foo')).not.toBeDefined();
         });
 
-        it("should return undefined if index is not found", function(){
+        it("should return undefined if index is not found", function () {
             expect(ct.getComponent(100)).not.toBeDefined();
         });
 
-        it("should return undefined if instance is not found", function(){
+        it("should return undefined if instance is not found", function () {
             cmp = new Ext.Component();
-            
+
             expect(ct.getComponent(cmp)).not.toBeDefined();
         });
 
-        it("should find a passed instance", function(){
+        it("should find a passed instance", function () {
             expect(ct.getComponent(b)).toEqual(b);
         });
 
-        it("should find a passed index", function(){
+        it("should find a passed index", function () {
             expect(ct.getComponent(2)).toEqual(c);
         });
 
-        it("should find by id", function(){
+        it("should find by id", function () {
             expect(ct.getComponent('d')).toEqual(d);
         });
 
-        describe("with floaters", function(){
+        describe("with floaters", function () {
             var floater;
-            beforeEach(function(){
+            beforeEach(function () {
                 floater = new Ext.Component({
                     floating: true,
                     itemId: 'floater'
                 });
             });
 
-            afterEach(function(){
+            afterEach(function () {
                 floater = null;
             });
 
-            it("should not get a floater by index", function(){
+            it("should not get a floater by index", function () {
                 ct.removeAll();
                 ct.add(floater);
                 expect(ct.getComponent(0)).toBeUndefined();
             });
 
-            it("should be able to get a floater by id", function(){
+            it("should be able to get a floater by id", function () {
                 ct.add(floater);
                 expect(ct.getComponent('floater')).toBe(floater);
             });
 
-            it('should get a component via the instance', function(){
+            it('should get a component via the instance', function () {
                 ct.add(floater);
                 expect(ct.getComponent(floater)).toBe(floater);
             });
@@ -293,15 +293,15 @@ describe("Ext.container.Container", function() {
         });
     });
 
-    describe("add", function(){
+    describe("add", function () {
 
-        it("should return the added item", function(){
+        it("should return the added item", function () {
             makeContainer();
             var c = new Ext.Component();
             expect(ct.add(c)).toEqual(c);
         });
 
-        it("should accept a single item", function(){
+        it("should accept a single item", function () {
             makeContainer();
             var c = ct.add({
                 itemId: 'foo'
@@ -310,7 +310,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.first()).toEqual(c);
         });
 
-        it("should be able to be called sequentiallly", function(){
+        it("should be able to be called sequentiallly", function () {
             makeContainer();
             var a = ct.add({}), b = ct.add({}), c = ct.add({});
 
@@ -320,7 +320,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.last()).toEqual(c);
         });
 
-        it("should accept an array of items", function(){
+        it("should accept an array of items", function () {
             makeContainer();
             var a = new Ext.Component(),
                 b = new Ext.Component(),
@@ -336,7 +336,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.last()).toEqual(c);
         });
 
-        it("should accept n parameters, similar to array", function(){
+        it("should accept n parameters, similar to array", function () {
             makeContainer();
             var a = new Ext.Component(),
                 b = new Ext.Component(),
@@ -355,7 +355,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.last()).toEqual(d);
         });
 
-        it("should fire the beforeadd event", function(){
+        it("should fire the beforeadd event", function () {
             makeContainer();
             var o = {
                 fn: Ext.emptyFn
@@ -367,9 +367,9 @@ describe("Ext.container.Container", function() {
             expect(o.fn).wasCalled();
         });
 
-        it("should cancel if beforeadd returns false", function(){
+        it("should cancel if beforeadd returns false", function () {
             makeContainer();
-            ct.on('beforeadd', function(){
+            ct.on('beforeadd', function () {
                 return false;
             });
             var cmp = ct.add({});
@@ -377,7 +377,7 @@ describe("Ext.container.Container", function() {
             cmp.destroy();
         });
 
-        it("should fire the add event", function(){
+        it("should fire the add event", function () {
             makeContainer();
             var o = {
                 fn: Ext.emptyFn
@@ -392,7 +392,7 @@ describe("Ext.container.Container", function() {
             expect(o.fn.calls[0].args[2]).toBe(0);
         });
 
-        it("should fire the add event for floating items", function() {
+        it("should fire the add event for floating items", function () {
             makeContainer();
             var o = {
                     fn: Ext.emptyFn
@@ -412,21 +412,21 @@ describe("Ext.container.Container", function() {
 
     });
 
-    describe("insert", function(){
+    describe("insert", function () {
 
-        it("should return the component instance", function(){
+        it("should return the component instance", function () {
             makeContainer();
             var c = new Ext.Component();
             expect(ct.insert(0, c)).toEqual(c);
         });
 
-        it("should insert to the first spot when empty", function(){
+        it("should insert to the first spot when empty", function () {
             makeContainer();
             var c = ct.insert(0, {});
             expect(ct.items.first()).toEqual(c);
         });
 
-        it("should be able to be called sequentially", function(){
+        it("should be able to be called sequentially", function () {
             makeContainer();
             var a = new Ext.Component(), b = new Ext.Component(), c = new Ext.Component();
 
@@ -439,7 +439,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.last()).toEqual(c);
         });
 
-        it("should insert to the lowest possible index if the specified index is too high", function(){
+        it("should insert to the lowest possible index if the specified index is too high", function () {
             makeContainer({
                 items: [{}, {}, {}]
             });
@@ -447,7 +447,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.last()).toEqual(c);
         });
 
-        it("should insert at at the end if we use -1", function(){
+        it("should insert at at the end if we use -1", function () {
             makeContainer({
                 items: [{}, {}, {}]
             });
@@ -455,7 +455,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.last()).toEqual(c);
         });
 
-        it("should put the item into the correct position", function(){
+        it("should put the item into the correct position", function () {
             makeContainer({
                 items: [{}, {}, {}]
             });
@@ -463,7 +463,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.getAt(1)).toEqual(c);
         });
 
-        it("should accept an array", function(){
+        it("should accept an array", function () {
             makeContainer({
                 items: [{}, {}, {}]
             });
@@ -475,7 +475,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.getAt(3)).toEqual(c);
         });
 
-        it("should move a component if it already exists, not insert/add", function(){
+        it("should move a component if it already exists, not insert/add", function () {
             var a = new Ext.Component(),
                 b = new Ext.Component(),
                 c = new Ext.Component(),
@@ -487,7 +487,7 @@ describe("Ext.container.Container", function() {
                 items: [a, b, c, d, e]
             });
 
-            ct.on('add', function(){
+            ct.on('add', function () {
                 called = true;
             });
 
@@ -497,9 +497,9 @@ describe("Ext.container.Container", function() {
         });
     });
 
-    describe("moving items", function() {
-        describe("move", function(){
-            it("should return false if the index doesn't exist in the container", function(){
+    describe("moving items", function () {
+        describe("move", function () {
+            it("should return false if the index doesn't exist in the container", function () {
                 makeContainer({
                     items: [{}, {}, {}]
                 });
@@ -507,18 +507,18 @@ describe("Ext.container.Container", function() {
                 expect(ct.move(4, 1)).toBe(false);
             });
 
-            it("should return false if the component doesn't exist in the container", function(){
+            it("should return false if the component doesn't exist in the container", function () {
                 makeContainer({
                     items: [{}, {}, {}]
                 });
                 var c = new Ext.Component();
 
                 expect(ct.move(c, 1)).toBe(false);
-                
+
                 c.destroy();
             });
 
-            it("should move components by index", function(){
+            it("should move components by index", function () {
                 var a = new Ext.Component(),
                     b = new Ext.Component(),
                     c = new Ext.Component(),
@@ -532,7 +532,7 @@ describe("Ext.container.Container", function() {
                 expect(ct.items.indexOf(e)).toBe(1);
             });
 
-            it("should move components by instance", function(){
+            it("should move components by instance", function () {
                 var a = new Ext.Component(),
                     b = new Ext.Component(),
                     c = new Ext.Component(),
@@ -546,7 +546,7 @@ describe("Ext.container.Container", function() {
                 expect(ct.items.indexOf(c)).toBe(1);
             });
 
-            it("should limit the index to the item size", function() {
+            it("should limit the index to the item size", function () {
                 var a = new Ext.Component(),
                     b = new Ext.Component();
 
@@ -564,8 +564,8 @@ describe("Ext.container.Container", function() {
                 expect(args[3]).toBe(1);
             });
 
-            describe("events", function() {
-                it("should fire the move event and pass the container, the item, fromIdx & toIdx", function() {
+            describe("events", function () {
+                it("should fire the move event and pass the container, the item, fromIdx & toIdx", function () {
                     var spy = jasmine.createSpy(),
                         c = new Ext.Component(),
                         args;
@@ -583,7 +583,7 @@ describe("Ext.container.Container", function() {
                     expect(args[3]).toBe(0);
                 });
 
-                it("should not fire the move event if the fromIdx === toIdx", function() {
+                it("should not fire the move event if the fromIdx === toIdx", function () {
                     var spy = jasmine.createSpy();
 
                     makeContainer({
@@ -596,27 +596,27 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("moveBefore", function() {
+        describe("moveBefore", function () {
             var ref, c;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 ref = new Ext.Component();
                 c = new Ext.Component();
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 Ext.destroy(c, ref);
                 c = ref = null;
             });
 
-            it("should be able to add a component instance that does not exist in the container", function() {
+            it("should be able to add a component instance that does not exist in the container", function () {
                 makeContainer([ref]);
                 expect(ct.moveBefore(c, ref)).toBe(c);
                 expect(ct.items.getAt(0)).toBe(c);
                 expect(ct.items.getAt(1)).toBe(ref);
             });
 
-            it("should be able to add a component config and return it", function() {
+            it("should be able to add a component config and return it", function () {
                 makeContainer([ref]);
                 var fromCfg = ct.moveBefore({
                     xtype: 'panel',
@@ -626,12 +626,12 @@ describe("Ext.container.Container", function() {
                 expect(fromCfg.getTitle()).toBe('Foo');
             });
 
-            it("should return the moved item", function() {
+            it("should return the moved item", function () {
                 makeContainer({}, ref, {}, c);
                 expect(ct.moveBefore(c, ref)).toBe(c);
             });
 
-            it("should be able to add items from another container", function() {
+            it("should be able to add items from another container", function () {
                 var other = new Ext.container.Container({
                     items: c
                 });
@@ -642,45 +642,45 @@ describe("Ext.container.Container", function() {
                 expect(other.items.indexOf(c)).toBe(-1);
                 expect(ct.items.getAt(0)).toBe(c);
                 expect(ct.items.getAt(1)).toBe(ref);
-                
+
                 other.destroy();
             });
 
-            it("should be able to move existing items in a container", function() {
+            it("should be able to move existing items in a container", function () {
                 makeContainer([{}, {}, ref, {}, {}, {}, c, {}, {}]);
                 expect(ct.moveBefore(c, ref)).toBe(c);
                 expect(ct.items.getAt(2)).toBe(c);
                 expect(ct.items.getAt(3)).toBe(ref);
             });
 
-            describe("with the item not in the container", function() {
-                it("should move to the end if the before reference is null", function() {
+            describe("with the item not in the container", function () {
+                it("should move to the end if the before reference is null", function () {
                     makeContainer([{}, {}, {}, {}]);
                     expect(ct.moveBefore(c, null)).toBe(c);
                     expect(ct.items.getAt(4)).toBe(c);
                 });
 
-                it("should be able to move before the first item", function() {
+                it("should be able to move before the first item", function () {
                     makeContainer([ref, {}, {}, {}]);
                     expect(ct.moveBefore(c, ref)).toBe(c);
                     expect(ct.items.getAt(0)).toBe(c);
                     expect(ct.items.getAt(1)).toBe(ref);
                 });
 
-                it("should be able to move before the last item", function() {
+                it("should be able to move before the last item", function () {
                     makeContainer([{}, {}, {}, ref]);
                     expect(ct.moveBefore(c, ref)).toBe(c);
                     expect(ct.items.getAt(3)).toBe(c);
                     expect(ct.items.getAt(4)).toBe(ref);
                 });
 
-                it("should be able to add to an empty container", function() {
+                it("should be able to add to an empty container", function () {
                     makeContainer([]);
                     expect(ct.moveBefore(c, null)).toBe(c);
                     expect(ct.items.getAt(0)).toBe(c);
                 });
 
-                it("should be able to move into the middle of the container", function() {
+                it("should be able to move into the middle of the container", function () {
                     makeContainer([{}, {}, {}, ref, {}, {}, {}]);
                     expect(ct.moveBefore(c, ref)).toBe(c);
                     expect(ct.items.getAt(3)).toBe(c);
@@ -688,41 +688,41 @@ describe("Ext.container.Container", function() {
                 });
             });
 
-            describe("with the item in the container", function() {
-                it("should do nothing if the reference is the component", function() {
+            describe("with the item in the container", function () {
+                it("should do nothing if the reference is the component", function () {
                     makeContainer([{}, c, {}]);
                     expect(ct.moveBefore(c, c)).toBe(c);
                     expect(ct.items.getAt(1)).toBe(c);
                 });
 
-                it("should move to the end if the before reference is null", function() {
+                it("should move to the end if the before reference is null", function () {
                     makeContainer([c, {}, {}, {}, {}]);
                     expect(ct.moveBefore(c, null)).toBe(c);
                     expect(ct.items.getAt(4)).toBe(c);
                 });
 
-                it("should be able to move before the first item", function() {
+                it("should be able to move before the first item", function () {
                     makeContainer([ref, {}, c, {}, {}]);
                     expect(ct.moveBefore(c, ref)).toBe(c);
                     expect(ct.items.getAt(0)).toBe(c);
                     expect(ct.items.getAt(1)).toBe(ref);
                 });
 
-                it("should be able to move before the last item", function() {
+                it("should be able to move before the last item", function () {
                     makeContainer([{}, c, {}, {}, ref]);
                     expect(ct.moveBefore(c, ref)).toBe(c);
                     expect(ct.items.getAt(3)).toBe(c);
                     expect(ct.items.getAt(4)).toBe(ref);
                 });
 
-                it("should be able to move into the middle of the container when before the reference", function() {
+                it("should be able to move into the middle of the container when before the reference", function () {
                     makeContainer([{}, c, {}, {}, ref, {}, {}, {}]);
                     expect(ct.moveBefore(c, ref)).toBe(c);
                     expect(ct.items.getAt(3)).toBe(c);
                     expect(ct.items.getAt(4)).toBe(ref);
                 });
 
-                it("should be able to move into the middle of the container when after the reference", function() {
+                it("should be able to move into the middle of the container when after the reference", function () {
                     makeContainer([{}, {}, {}, ref, {}, {}, c, {}]);
                     expect(ct.moveBefore(c, ref)).toBe(c);
                     expect(ct.items.getAt(3)).toBe(c);
@@ -730,26 +730,26 @@ describe("Ext.container.Container", function() {
                 });
             });
 
-            describe("events", function() {
+            describe("events", function () {
                 var spy;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     spy = jasmine.createSpy();
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     spy = null;
                 });
 
-                describe("item exists in the container", function() {
-                    it("should not fire the remove event", function() {
+                describe("item exists in the container", function () {
+                    it("should not fire the remove event", function () {
                         makeContainer([{}, ref, {}, {}, c]);
                         ct.on('remove', spy);
                         ct.moveBefore(c, ref);
                         expect(spy).not.toHaveBeenCalled();
                     });
 
-                    it("should fire the childmove event & pass the container, component, prevIndex & newIndex", function() {
+                    it("should fire the childmove event & pass the container, component, prevIndex & newIndex", function () {
                         makeContainer([{}, ref, {}, {}, c]);
                         ct.on('childmove', spy);
                         ct.moveBefore(c, ref);
@@ -761,28 +761,28 @@ describe("Ext.container.Container", function() {
                     });
                 });
 
-                describe("item exists in another container", function() {
+                describe("item exists in another container", function () {
                     var other;
 
-                    beforeEach(function() {
+                    beforeEach(function () {
                         other = new Ext.container.Container({
                             items: c
                         });
                     });
 
-                    afterEach(function() {
+                    afterEach(function () {
                         other.destroy();
                         other = null;
                     });
 
-                    it("should fire the remove event on the other container", function() {
+                    it("should fire the remove event on the other container", function () {
                         makeContainer([{}, ref, {}]);
                         other.on('remove', spy);
                         ct.moveBefore(c, ref);
                         expect(spy.callCount).toBe(1);
                     });
 
-                    it("should fire the add event & pass the container, component, & index", function() {
+                    it("should fire the add event & pass the container, component, & index", function () {
                         makeContainer([{}, ref, {}]);
                         ct.on('add', spy);
                         ct.moveBefore(c, ref);
@@ -793,8 +793,8 @@ describe("Ext.container.Container", function() {
                     });
                 });
 
-                describe("new item", function() {
-                    it("should fire the add event & pass the container, component, & index", function() {
+                describe("new item", function () {
+                    it("should fire the add event & pass the container, component, & index", function () {
                         makeContainer([{}, ref, {}]);
                         ct.on('add', spy);
                         ct.moveBefore(c, ref);
@@ -807,27 +807,27 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("moveAfter", function() {
+        describe("moveAfter", function () {
             var ref, c;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 ref = new Ext.Component();
                 c = new Ext.Component();
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 Ext.destroy(c, ref);
                 c = ref = null;
             });
 
-            it("should be able to add a component instance that does not exist in the container", function() {
+            it("should be able to add a component instance that does not exist in the container", function () {
                 makeContainer([ref]);
                 expect(ct.moveAfter(c, ref)).toBe(c);
                 expect(ct.items.getAt(1)).toBe(c);
                 expect(ct.items.getAt(0)).toBe(ref);
             });
 
-            it("should be able to add a component config and return it", function() {
+            it("should be able to add a component config and return it", function () {
                 makeContainer([ref]);
                 var fromCfg = ct.moveAfter({
                     xtype: 'panel',
@@ -837,12 +837,12 @@ describe("Ext.container.Container", function() {
                 expect(fromCfg.getTitle()).toBe('Foo');
             });
 
-            it("should return the moved item", function() {
+            it("should return the moved item", function () {
                 makeContainer({}, ref, {}, c);
                 expect(ct.moveAfter(c, ref)).toBe(c);
             });
 
-            it("should be able to add items from another container", function() {
+            it("should be able to add items from another container", function () {
                 var other = new Ext.container.Container({
                     items: c
                 });
@@ -853,45 +853,45 @@ describe("Ext.container.Container", function() {
                 expect(other.items.indexOf(c)).toBe(-1);
                 expect(ct.items.getAt(1)).toBe(c);
                 expect(ct.items.getAt(0)).toBe(ref);
-                
+
                 other.destroy();
             });
 
-            it("should be able to move existing items in a container", function() {
+            it("should be able to move existing items in a container", function () {
                 makeContainer([{}, {}, ref, {}, {}, {}, c, {}, {}]);
                 expect(ct.moveAfter(c, ref)).toBe(c);
                 expect(ct.items.getAt(3)).toBe(c);
                 expect(ct.items.getAt(2)).toBe(ref);
             });
 
-            describe("with the item not in the container", function() {
-                it("should move to the start if the after reference is null", function() {
+            describe("with the item not in the container", function () {
+                it("should move to the start if the after reference is null", function () {
                     makeContainer([{}, {}, {}, {}]);
                     expect(ct.moveAfter(c, null)).toBe(c);
                     expect(ct.items.getAt(0)).toBe(c);
                 });
 
-                it("should be able to move after the first item", function() {
+                it("should be able to move after the first item", function () {
                     makeContainer([ref, {}, {}, {}]);
                     expect(ct.moveAfter(c, ref)).toBe(c);
                     expect(ct.items.getAt(1)).toBe(c);
                     expect(ct.items.getAt(0)).toBe(ref);
                 });
 
-                it("should be able to move after the last item", function() {
+                it("should be able to move after the last item", function () {
                     makeContainer([{}, {}, {}, ref]);
                     expect(ct.moveAfter(c, ref)).toBe(c);
                     expect(ct.items.getAt(4)).toBe(c);
                     expect(ct.items.getAt(3)).toBe(ref);
                 });
 
-                it("should be able to add to an empty container", function() {
+                it("should be able to add to an empty container", function () {
                     makeContainer([]);
                     expect(ct.moveAfter(c, null)).toBe(c);
                     expect(ct.items.getAt(0)).toBe(c);
                 });
 
-                it("should be able to move into the middle of the container", function() {
+                it("should be able to move into the middle of the container", function () {
                     makeContainer([{}, {}, {}, ref, {}, {}, {}]);
                     expect(ct.moveAfter(c, ref)).toBe(c);
                     expect(ct.items.getAt(4)).toBe(c);
@@ -899,41 +899,41 @@ describe("Ext.container.Container", function() {
                 });
             });
 
-            describe("with the item in the container", function() {
-                it("should move to the start if the after reference is null", function() {
+            describe("with the item in the container", function () {
+                it("should move to the start if the after reference is null", function () {
                     makeContainer([{}, {}, c, {}, {}]);
                     expect(ct.moveAfter(c, null)).toBe(c);
                     expect(ct.items.getAt(0)).toBe(c);
                 });
 
-                it("should do nothing if the reference is the component", function() {
+                it("should do nothing if the reference is the component", function () {
                     makeContainer([{}, c, {}]);
                     expect(ct.moveAfter(c, c)).toBe(c);
                     expect(ct.items.getAt(1)).toBe(c);
                 });
 
-                it("should be able to move after the first item", function() {
+                it("should be able to move after the first item", function () {
                     makeContainer([ref, {}, c, {}, {}]);
                     expect(ct.moveAfter(c, ref)).toBe(c);
                     expect(ct.items.getAt(1)).toBe(c);
                     expect(ct.items.getAt(0)).toBe(ref);
                 });
 
-                it("should be able to move after the last item", function() {
+                it("should be able to move after the last item", function () {
                     makeContainer([{}, c, {}, {}, ref]);
                     expect(ct.moveAfter(c, ref)).toBe(c);
                     expect(ct.items.getAt(4)).toBe(c);
                     expect(ct.items.getAt(3)).toBe(ref);
                 });
 
-                it("should be able to move into the middle of the container when before the reference", function() {
+                it("should be able to move into the middle of the container when before the reference", function () {
                     makeContainer([{}, c, {}, {}, ref, {}, {}, {}]);
                     expect(ct.moveAfter(c, ref)).toBe(c);
                     expect(ct.items.getAt(4)).toBe(c);
                     expect(ct.items.getAt(3)).toBe(ref);
                 });
 
-                it("should be able to move into the middle of the container when after the reference", function() {
+                it("should be able to move into the middle of the container when after the reference", function () {
                     makeContainer([{}, {}, {}, ref, {}, {}, c, {}]);
                     expect(ct.moveAfter(c, ref)).toBe(c);
                     expect(ct.items.getAt(4)).toBe(c);
@@ -941,26 +941,26 @@ describe("Ext.container.Container", function() {
                 });
             });
 
-            describe("events", function() {
+            describe("events", function () {
                 var spy;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     spy = jasmine.createSpy();
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     spy = null;
                 });
 
-                describe("item exists in the container", function() {
-                    it("should not fire the remove event", function() {
+                describe("item exists in the container", function () {
+                    it("should not fire the remove event", function () {
                         makeContainer([{}, ref, {}, {}, c]);
                         ct.on('remove', spy);
                         ct.moveAfter(c, ref);
                         expect(spy).not.toHaveBeenCalled();
                     });
 
-                    it("should fire the childmove event & pass the container, component, prevIndex & newIndex", function() {
+                    it("should fire the childmove event & pass the container, component, prevIndex & newIndex", function () {
                         makeContainer([{}, ref, {}, {}, c]);
                         ct.on('childmove', spy);
                         ct.moveAfter(c, ref);
@@ -972,28 +972,28 @@ describe("Ext.container.Container", function() {
                     });
                 });
 
-                describe("item exists in another container", function() {
+                describe("item exists in another container", function () {
                     var other;
 
-                    beforeEach(function() {
+                    beforeEach(function () {
                         other = new Ext.container.Container({
                             items: c
                         });
                     });
 
-                    afterEach(function() {
+                    afterEach(function () {
                         other.destroy();
                         other = null;
                     });
 
-                    it("should fire the remove event on the other container", function() {
+                    it("should fire the remove event on the other container", function () {
                         makeContainer([{}, ref, {}]);
                         other.on('remove', spy);
                         ct.moveAfter(c, ref);
                         expect(spy.callCount).toBe(1);
                     });
 
-                    it("should fire the add event & pass the container, component, & index", function() {
+                    it("should fire the add event & pass the container, component, & index", function () {
                         makeContainer([{}, ref, {}]);
                         ct.on('add', spy);
                         ct.moveAfter(c, ref);
@@ -1004,8 +1004,8 @@ describe("Ext.container.Container", function() {
                     });
                 });
 
-                describe("new item", function() {
-                    it("should fire the add event & pass the container, component, & index", function() {
+                describe("new item", function () {
+                    it("should fire the add event & pass the container, component, & index", function () {
                         makeContainer([{}, ref, {}]);
                         ct.on('add', spy);
                         ct.moveAfter(c, ref);
@@ -1019,7 +1019,7 @@ describe("Ext.container.Container", function() {
         });
     });
 
-    describe("remove", function() {
+    describe("remove", function () {
 
         function makeContainer(items) {
             ct = new Ext.container.Container({
@@ -1029,7 +1029,7 @@ describe("Ext.container.Container", function() {
         }
 
         var a, b, c;
-        beforeEach(function(){
+        beforeEach(function () {
             a = new Ext.Component({
                 itemId: 'item1'
             });
@@ -1037,7 +1037,7 @@ describe("Ext.container.Container", function() {
             c = new Ext.Component();
         });
 
-        afterEach(function(){
+        afterEach(function () {
             a.destroy();
             b.destroy();
             c.destroy();
@@ -1045,10 +1045,10 @@ describe("Ext.container.Container", function() {
 
         });
 
-        describe("Removing during a layout", function() {
-            it("Should cancel a component's layout when the component is removed and destroyed", function() {
+        describe("Removing during a layout", function () {
+            it("Should cancel a component's layout when the component is removed and destroyed", function () {
                 // Override afterRender, and remove & destroy the first child component immediately after the second one has rendered
-                b.afterRender = Ext.Function.createSequence(b.afterRender, function() {
+                b.afterRender = Ext.Function.createSequence(b.afterRender, function () {
                     ct.remove(a, true);
                 });
                 makeContainer([a]);
@@ -1070,9 +1070,9 @@ describe("Ext.container.Container", function() {
                 ct.destroy();
             });
 
-            it("Should cancel a component's layout when the component is removed and not destroyed", function() {
+            it("Should cancel a component's layout when the component is removed and not destroyed", function () {
                 // Override afterRender, and remove the first child component immediately after the second one has rendered
-                b.afterRender = Ext.Function.createSequence(b.afterRender, function() {
+                b.afterRender = Ext.Function.createSequence(b.afterRender, function () {
                     ct.remove(a, false);
                 });
                 makeContainer([a]);
@@ -1095,37 +1095,37 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("if the component isn't in the container", function(){
+        describe("if the component isn't in the container", function () {
             var cmp;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 makeContainer();
                 cmp = new Ext.Component();
                 ct.remove(cmp);
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 Ext.destroy(cmp);
                 cmp = null;
             });
 
-            it("should not remove", function(){
+            it("should not remove", function () {
                 expect(ct.items.getCount()).toEqual(3);
             });
         });
 
-        describe("if the container is empty", function() {
-            beforeEach(function() {
+        describe("if the container is empty", function () {
+            beforeEach(function () {
                 makeContainer([]);
                 ct.remove(a);
             });
 
-            it("should do nothing if the container is empty", function(){
+            it("should do nothing if the container is empty", function () {
                 expect(ct.items.getCount()).toEqual(0);
             });
         });
 
-        it("should remove a floater", function(){
+        it("should remove a floater", function () {
             makeContainer();
             var floater = new Ext.Component({
                 floating: true
@@ -1135,30 +1135,30 @@ describe("Ext.container.Container", function() {
             expect(floater.destroyed).toBe(true);
         });
 
-        it("should return the removed item", function(){
+        it("should return the removed item", function () {
             makeContainer();
             expect(ct.remove(b)).toEqual(b);
         });
 
-        it("should be able to remove by instance", function(){
+        it("should be able to remove by instance", function () {
             makeContainer();
             ct.remove(a);
             expect(ct.items.getCount()).toEqual(2);
         });
 
-        it("should be able to remove by index", function(){
+        it("should be able to remove by index", function () {
             makeContainer();
             ct.remove(1);
             expect(ct.items.getCount()).toEqual(2);
         });
 
-        it("should be able to remove by id", function(){
+        it("should be able to remove by id", function () {
             makeContainer();
             ct.remove('item1');
             expect(ct.items.getCount()).toEqual(2);
         });
 
-        it("should be able to be called sequentially", function(){
+        it("should be able to be called sequentially", function () {
             makeContainer();
             ct.remove(a);
             ct.remove(b);
@@ -1166,14 +1166,14 @@ describe("Ext.container.Container", function() {
             expect(ct.items.first()).toEqual(c);
         });
 
-        it("should leave items in the correct order", function(){
+        it("should leave items in the correct order", function () {
             makeContainer();
             ct.remove(1);
             expect(ct.items.first()).toEqual(a);
             expect(ct.items.last()).toEqual(c);
         });
 
-        it("should fire beforeremove", function(){
+        it("should fire beforeremove", function () {
             makeContainer();
             var o = {
                 fn: Ext.emptyFn
@@ -1185,9 +1185,9 @@ describe("Ext.container.Container", function() {
             expect(o.fn).wasCalled();
         });
 
-        it("should cancel the remove if beforeremove returns false", function(){
+        it("should cancel the remove if beforeremove returns false", function () {
             makeContainer();
-            ct.on('beforeremove', function(){
+            ct.on('beforeremove', function () {
                 return false;
             });
             ct.remove(a);
@@ -1195,7 +1195,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.first()).toEqual(a);
         });
 
-        it("should fire the remove event", function(){
+        it("should fire the remove event", function () {
             makeContainer();
             var o = {
                 fn: Ext.emptyFn
@@ -1207,7 +1207,7 @@ describe("Ext.container.Container", function() {
             expect(o.fn).wasCalled();
         });
 
-        it("should use container autoDestroy as a default", function(){
+        it("should use container autoDestroy as a default", function () {
             makeContainer();
             ct.remove(a);
             expect(a.destroyed).toBeTruthy();
@@ -1216,7 +1216,7 @@ describe("Ext.container.Container", function() {
             expect(b.destroyed).toBeFalsy();
         });
 
-        it("should respect the autoDestroy paramater", function(){
+        it("should respect the autoDestroy paramater", function () {
             makeContainer();
             ct.autoDestroy = false;
             ct.remove(a, true);
@@ -1226,14 +1226,14 @@ describe("Ext.container.Container", function() {
             expect(b.destroyed).toBeFalsy();
         });
 
-        it("should move the component to the detachedBody when removed and not destroyed", function(){
+        it("should move the component to the detachedBody when removed and not destroyed", function () {
             makeContainer();
             ct.render(Ext.getBody());
             ct.remove(a, false);
             expect(a.el.dom.parentNode).not.toBe(ct.el.dom);
         });
 
-        it("should respect the detachOnRemove config option", function(){
+        it("should respect the detachOnRemove config option", function () {
             makeContainer();
             ct.detachOnRemove = false;
             ct.render(Ext.getBody());
@@ -1241,7 +1241,7 @@ describe("Ext.container.Container", function() {
             expect(a.el.dom.parentNode).toBe(ct.layout.innerCt.dom);
         });
 
-        it("should remove childEls from the cache by id", function(){
+        it("should remove childEls from the cache by id", function () {
             makeContainer({
                 xtype: 'textfield',
                 id: 'text1'
@@ -1252,7 +1252,7 @@ describe("Ext.container.Container", function() {
             expect(Ext.cache['text1-inputEl']).toBe(undefined);
         });
 
-        it("should remove childEls from the cache by inputId", function(){
+        it("should remove childEls from the cache by inputId", function () {
             makeContainer({
                 xtype: 'textfield',
                 inputId: 'foo',
@@ -1265,7 +1265,7 @@ describe("Ext.container.Container", function() {
         });
     });
 
-    describe("removeAll", function(){
+    describe("removeAll", function () {
         var a, b, c;
 
         function makeContainer(items) {
@@ -1275,7 +1275,7 @@ describe("Ext.container.Container", function() {
             });
         }
 
-        beforeEach(function(){
+        beforeEach(function () {
             a = new Ext.Component({
                 itemId: 'item1'
             });
@@ -1283,26 +1283,26 @@ describe("Ext.container.Container", function() {
             c = new Ext.Component();
         });
 
-        afterEach(function(){
+        afterEach(function () {
             a.destroy();
             b.destroy();
             c.destroy();
             a = b = c = null;
         });
 
-        it("should do nothing if the container is empty", function(){
+        it("should do nothing if the container is empty", function () {
             makeContainer([]);
             ct.removeAll();
             expect(ct.items.getCount()).toEqual(0);
         });
 
-        it("should remove all the items", function(){
+        it("should remove all the items", function () {
             makeContainer();
             ct.removeAll();
             expect(ct.items.getCount()).toEqual(0);
         });
 
-        it("should remove all floating components", function(){
+        it("should remove all floating components", function () {
             var floater = new Ext.Component({
                 floating: true
             });
@@ -1312,7 +1312,7 @@ describe("Ext.container.Container", function() {
             expect(floater.destroyed).toBe(true);
         });
 
-        it("should return the removed items", function(){
+        it("should return the removed items", function () {
             var result;
             makeContainer();
 
@@ -1323,7 +1323,7 @@ describe("Ext.container.Container", function() {
             expect(result[2]).toEqual(c);
         });
 
-        it("should include floating items in the return statement", function(){
+        it("should include floating items in the return statement", function () {
             var floater = new Ext.Component({
                 floating: true
             }), result;
@@ -1333,7 +1333,7 @@ describe("Ext.container.Container", function() {
             expect(result[3]).toBe(floater);
         });
 
-        it("should destroy items if autoDestroy is true", function(){
+        it("should destroy items if autoDestroy is true", function () {
             makeContainer();
             ct.removeAll(true);
             expect(a.destroyed).toBeTruthy();
@@ -1341,7 +1341,7 @@ describe("Ext.container.Container", function() {
             expect(c.destroyed).toBeTruthy();
         });
 
-        it("should not destroy items if autoDestroy is false", function(){
+        it("should not destroy items if autoDestroy is false", function () {
             makeContainer();
             ct.removeAll(false);
             expect(a.destroyed).toBeFalsy();
@@ -1349,7 +1349,7 @@ describe("Ext.container.Container", function() {
             expect(c.destroyed).toBeFalsy();
         });
 
-        it("should remove childEls from the cache by id", function(){
+        it("should remove childEls from the cache by id", function () {
             makeContainer({
                 xtype: 'textfield',
                 id: 'text1'
@@ -1360,7 +1360,7 @@ describe("Ext.container.Container", function() {
             expect(Ext.cache['text1-inputEl']).toBe(undefined);
         });
 
-        it("should remove childEls from the cache by inputId", function(){
+        it("should remove childEls from the cache by inputId", function () {
             makeContainer({
                 xtype: 'textfield',
                 inputId: 'foo'
@@ -1372,9 +1372,9 @@ describe("Ext.container.Container", function() {
         });
     });
 
-    describe("defaults", function(){
-        describe("using proper configs", function() {
-            beforeEach(function() {
+    describe("defaults", function () {
+        describe("using proper configs", function () {
+            beforeEach(function () {
                 Ext.define('spec.Cmp', {
                     extend: 'Ext.Component',
                     xtype: 'spec.cmp',
@@ -1384,11 +1384,11 @@ describe("Ext.container.Container", function() {
                 });
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 Ext.undefine('spec.Cmp');
             });
 
-            it("should apply default to component config", function() {
+            it("should apply default to component config", function () {
                 ct = makeContainer({
                     defaults: {
                         foo: 1
@@ -1401,7 +1401,7 @@ describe("Ext.container.Container", function() {
                 expect(ct.items.getAt(0).getFoo()).toBe(1);
             });
 
-            it("should apply default to component instance", function() {
+            it("should apply default to component instance", function () {
                 var cmp = new spec.Cmp();
 
                 spyOn(cmp, 'setFoo').andCallThrough();
@@ -1417,7 +1417,7 @@ describe("Ext.container.Container", function() {
                 expect(cmp.getFoo()).toBe(1);
             });
 
-            it("should not apply default to component config if property exists in config", function() {
+            it("should not apply default to component config if property exists in config", function () {
                 ct = makeContainer({
                     defaults: {
                         foo: 1
@@ -1431,7 +1431,7 @@ describe("Ext.container.Container", function() {
                 expect(ct.items.getAt(0).getFoo()).toBe(2);
             });
 
-            it("should not apply default to component instance if config is already set on the instance", function() {
+            it("should not apply default to component instance if config is already set on the instance", function () {
                 var cmp = new spec.Cmp({
                     foo: 2
                 });
@@ -1450,19 +1450,19 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("using old-style configs", function() {
-            beforeEach(function() {
+        describe("using old-style configs", function () {
+            beforeEach(function () {
                 Ext.define('spec.Cmp', {
                     extend: 'Ext.Component',
                     xtype: 'spec.cmp'
                 });
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 Ext.undefine('spec.Cmp');
             });
 
-            it("should apply default to component config", function() {
+            it("should apply default to component config", function () {
                 ct = makeContainer({
                     defaults: {
                         foo: 1
@@ -1475,7 +1475,7 @@ describe("Ext.container.Container", function() {
                 expect(ct.items.getAt(0).foo).toBe(1);
             });
 
-            it("should apply default to component instance", function() {
+            it("should apply default to component instance", function () {
                 var cmp = new spec.Cmp();
 
                 ct = makeContainer({
@@ -1488,7 +1488,7 @@ describe("Ext.container.Container", function() {
                 expect(cmp.foo).toBe(1);
             });
 
-            it("should not apply default to component config if property exists in config", function() {
+            it("should not apply default to component config if property exists in config", function () {
                 ct = makeContainer({
                     defaults: {
                         foo: 1
@@ -1502,7 +1502,7 @@ describe("Ext.container.Container", function() {
                 expect(ct.items.getAt(0).foo).toBe(2);
             });
 
-            it("should not apply default to component instance if config is already set on the instance", function() {
+            it("should not apply default to component instance if config is already set on the instance", function () {
                 var cmp = new spec.Cmp({
                     foo: 2
                 });
@@ -1518,9 +1518,9 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        it("should accept a defaults function", function(){
+        it("should accept a defaults function", function () {
             makeContainer({
-                defaults: function(){
+                defaults: function () {
                     return {
                         disabled: true
                     };
@@ -1531,7 +1531,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.last().disabled).toBeTruthy();
         });
 
-        it("should not apply defaults to component instances", function(){
+        it("should not apply defaults to component instances", function () {
             makeContainer({
                 items: new Ext.Component({
                     disabled: false
@@ -1543,7 +1543,7 @@ describe("Ext.container.Container", function() {
             expect(ct.items.first().disabled).toBe(false);
         });
 
-        it("should only apply defaults to configs if they don't exist", function(){
+        it("should only apply defaults to configs if they don't exist", function () {
             makeContainer({
                 items: {
                     disabled: false
@@ -1559,8 +1559,8 @@ describe("Ext.container.Container", function() {
     });
 
     // the intent here is not to test ComponentQuery, just that the API calls the appropriate methods
-    describe("ComponentQuery", function(){
-        beforeEach(function(){
+    describe("ComponentQuery", function () {
+        beforeEach(function () {
             ct = new Ext.container.Container({
                 items: [{
                     foo: 1,
@@ -1592,25 +1592,27 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("query", function(){
-            it("should return all items if the selector is empty", function(){
+        describe("query", function () {
+            it("should return all items if the selector is empty", function () {
                 var arr = [];
+
                 function buildItems(root) {
-                    root.items.each(function(item){
+                    root.items.each(function (item) {
                         arr.push(item);
                         buildItems(item);
                     });
                 }
+
                 buildItems(ct);
                 expect(ct.query()).toEqual(arr);
             });
 
-            it("should return an empty array for no matches", function(){
+            it("should return an empty array for no matches", function () {
                 var arr = ct.query('list');
                 expect(arr).toEqual([]);
             });
 
-            it("should return a filled array with matches", function(){
+            it("should return a filled array with matches", function () {
                 var arr = ct.query('#child1');
                 expect(arr).toEqual([Ext.getCmp('child1')]);
                 arr = ct.query('[foo=1] #child1');
@@ -1827,13 +1829,14 @@ describe("Ext.container.Container", function() {
         });
     });
 
-    describe("queryBy", function(){
-        it("should return no items if the container is empty", function(){
+    describe("queryBy", function () {
+        it("should return no items if the container is empty", function () {
             makeContainer();
-            expect(ct.queryBy(function(){})).toEqual([]);
+            expect(ct.queryBy(function () {
+            })).toEqual([]);
         });
 
-        it("should default the scope to the current component", function(){
+        it("should default the scope to the current component", function () {
             var scopes = [],
                 c1 = new Ext.Component(),
                 c2 = new Ext.Component(),
@@ -1843,13 +1846,13 @@ describe("Ext.container.Container", function() {
                 items: [c1, c2, c3]
             });
 
-            ct.queryBy(function(c){
+            ct.queryBy(function (c) {
                 scopes.push(c);
             });
             expect(scopes).toEqual([c1, c2, c3]);
         });
 
-        it("should use the specified scope", function(){
+        it("should use the specified scope", function () {
             var o = {},
                 c1 = new Ext.Component(),
                 scope;
@@ -1857,14 +1860,14 @@ describe("Ext.container.Container", function() {
             makeContainer({
                 items: c1
             });
-            ct.queryBy(function(){
+            ct.queryBy(function () {
                 scope = this;
             }, o);
 
             expect(scope).toBe(o);
         });
 
-        it("should only exclude items if the return value is false", function(){
+        it("should only exclude items if the return value is false", function () {
             var c1 = new Ext.Component(),
                 c2 = new Ext.Component(),
                 c3 = new Ext.Component();
@@ -1872,12 +1875,12 @@ describe("Ext.container.Container", function() {
             makeContainer({
                 items: [c1, c2, c3]
             });
-            expect(ct.queryBy(function(c){
+            expect(ct.queryBy(function (c) {
 
             })).toEqual([c1, c2, c3]);
         });
 
-        it("should exclude items if the return value is false", function(){
+        it("should exclude items if the return value is false", function () {
             var c1 = new Ext.Component(),
                 c2 = new Ext.Component(),
                 c3 = new Ext.Component();
@@ -1885,12 +1888,12 @@ describe("Ext.container.Container", function() {
             makeContainer({
                 items: [c1, c2, c3]
             });
-            expect(ct.queryBy(function(c){
+            expect(ct.queryBy(function (c) {
                 return c !== c2;
             })).toEqual([c1, c3]);
         });
 
-        it("should retrieve items in nested containers", function(){
+        it("should retrieve items in nested containers", function () {
             var c1 = new Ext.Component(),
                 c2 = new Ext.Container({
                     items: c1
@@ -1902,13 +1905,13 @@ describe("Ext.container.Container", function() {
             makeContainer({
                 items: c3
             });
-            expect(ct.queryBy(function(c){
+            expect(ct.queryBy(function (c) {
                 return c === c1;
             })).toEqual([c1]);
         });
     });
 
-    it("should destroy any child items on destroy", function(){
+    it("should destroy any child items on destroy", function () {
         var a = new Ext.Component(),
             b = new Ext.Component(),
             c = new Ext.Component({
@@ -1923,7 +1926,7 @@ describe("Ext.container.Container", function() {
         expect(c.destroyed).toBe(true);
     });
 
-    describe("enable/disable", function() {
+    describe("enable/disable", function () {
         var disableFn,
             a, b, c, a1, a2, a3, b1, b2, b3;
 
@@ -1931,13 +1934,13 @@ describe("Ext.container.Container", function() {
             extend: 'Ext.container.Container',
 
             privates: {
-                getChildItemsToDisable: function() {
+                getChildItemsToDisable: function () {
                     return disableFn.call(this);
                 }
             }
         });
 
-        beforeEach(function() {
+        beforeEach(function () {
             Ext.define('spec.Custom', {
                 extend: 'Ext.Component',
                 alias: 'widget.custom',
@@ -1946,39 +1949,39 @@ describe("Ext.container.Container", function() {
                 onDisableCount: 0,
                 onEnableCount: 0,
 
-                initComponent: function() {
+                initComponent: function () {
                     this.on({
                         scope: this,
-                        enable: function() {
+                        enable: function () {
                             ++this.enableCount;
                         },
-                        disable: function() {
+                        disable: function () {
                             ++this.disableCount;
                         }
                     });
                     this.callParent();
-                },  
+                },
 
-                onDisable: function() {
+                onDisable: function () {
                     ++this.onDisableCount;
                     this.callParent(arguments);
                 },
 
-                onEnable: function() {
+                onEnable: function () {
                     ++this.onEnableCount;
                     this.callParent(arguments);
                 }
             });
 
-            disableFn = function() {
+            disableFn = function () {
                 return this.query('custom');
             };
         });
 
-        afterEach(function() {
+        afterEach(function () {
             Ext.undefine('spec.Custom');
             a1 = a2 = a3 = b1 = b2 = b3 = a = b = c = disableFn = null;
-        }); 
+        });
 
         function makeDisableCt(cfg) {
             cfg = Ext.apply({
@@ -2000,7 +2003,7 @@ describe("Ext.container.Container", function() {
 
         function makeItems(ids, ct) {
             var ret = [];
-            Ext.Array.forEach(ids, function(id) {
+            Ext.Array.forEach(ids, function (id) {
                 ret.push({
                     xtype: 'custom',
                     itemId: id
@@ -2058,20 +2061,20 @@ describe("Ext.container.Container", function() {
         }
 
         function expectDisableEvent() {
-           var len = arguments.length,
+            var len = arguments.length,
                 count = arguments[0],
                 i;
 
             for (i = 1; i < len; ++i) {
                 expect(arguments[i].disableCount).toBe(count);
-            } 
+            }
         }
 
         // In thests tests whenever referring to children, this means
         // children that match the childItemsToDisable
-        describe("via configuration", function() {
-            describe("candidates to disable", function() {
-                it("should disable children", function() {
+        describe("via configuration", function () {
+            describe("candidates to disable", function () {
+                it("should disable children", function () {
                     makeDisableCt({
                         disabled: true,
                         items: makeItems(['a', 'b', 'c'])
@@ -2079,8 +2082,8 @@ describe("Ext.container.Container", function() {
                     expectDisabled(a, b, c);
                 });
 
-                it("should only disable matching children", function() {
-                    disableFn = function() {
+                it("should only disable matching children", function () {
+                    disableFn = function () {
                         return this.query('#a,#c');
                     };
                     makeDisableCt({
@@ -2091,7 +2094,7 @@ describe("Ext.container.Container", function() {
                     expectEnabled(b);
                 });
 
-                it("should disable children deeply", function() {
+                it("should disable children deeply", function () {
                     makeDisableCt({
                         disabled: true,
                         items: [{
@@ -2107,8 +2110,8 @@ describe("Ext.container.Container", function() {
                     expectDisabled(a1, a2, a3, b1, b2, b3);
                 });
 
-                it("should only disable matching deep children", function() {
-                    disableFn = function() {
+                it("should only disable matching deep children", function () {
+                    disableFn = function () {
                         return this.query('#a1,#a3,#b2');
                     }
                     makeDisableCt({
@@ -2127,7 +2130,7 @@ describe("Ext.container.Container", function() {
                     expectEnabled(a2, b1, b3);
                 });
 
-                it("should not disable non-matching containers", function() {
+                it("should not disable non-matching containers", function () {
                     makeDisableCt({
                         disabled: true,
                         items: [{
@@ -2144,8 +2147,8 @@ describe("Ext.container.Container", function() {
                 });
             });
 
-            describe("events/template methods", function() {
-                it("should not fire the disable event", function() {
+            describe("events/template methods", function () {
+                it("should not fire the disable event", function () {
                     makeDisableCt({
                         disabled: true,
                         items: [{
@@ -2161,7 +2164,7 @@ describe("Ext.container.Container", function() {
                     expectOnDisabled(0, a1, a2, a3, b1, b2, b3);
                 });
 
-                it("should not call onDisable until rendered", function() {
+                it("should not call onDisable until rendered", function () {
                     makeDisableCt({
                         disabled: true,
                         items: [{
@@ -2181,9 +2184,9 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("enable", function() {
-            describe("before render", function() {
-                beforeEach(function() {
+        describe("enable", function () {
+            describe("before render", function () {
+                beforeEach(function () {
                     makeDisableCt({
                         disabled: true,
                         items: [{
@@ -2198,24 +2201,24 @@ describe("Ext.container.Container", function() {
                     });
                 });
 
-                it("should enable child components", function() {
+                it("should enable child components", function () {
                     expectDisabled(a1, a2, a3, b1, b2, b3);
                     ct.enable();
                     expectEnabled(a1, a2, a3, b1, b2, b3);
                 });
 
-                describe("events/template methods", function() {
-                    it("should fire the enable event", function() {
+                describe("events/template methods", function () {
+                    it("should fire the enable event", function () {
                         ct.enable();
                         expectEnableEvent(1, a1, a2, a3, b1, b2, b3);
                     });
 
-                    it("should not fire the enable event with silent: true", function() {
+                    it("should not fire the enable event with silent: true", function () {
                         ct.enable(true);
                         expectEnableEvent(0, a1, a2, a3, b1, b2, b3);
                     });
 
-                    it("should not call onEnable", function() {
+                    it("should not call onEnable", function () {
                         ct.enable();
                         expectOnEnabled(0, a1, a2, a3, b1, b2, b3);
                         ct.render(Ext.getBody());
@@ -2224,8 +2227,8 @@ describe("Ext.container.Container", function() {
                 });
             });
 
-            describe("after render", function() {
-                beforeEach(function() {
+            describe("after render", function () {
+                beforeEach(function () {
                     makeDisableCt({
                         renderTo: Ext.getBody(),
                         disabled: true,
@@ -2241,24 +2244,24 @@ describe("Ext.container.Container", function() {
                     });
                 });
 
-                it("should enable child components", function() {
+                it("should enable child components", function () {
                     expectDisabled(a1, a2, a3, b1, b2, b3);
                     ct.enable();
                     expectEnabled(a1, a2, a3, b1, b2, b3);
                 });
 
-                describe("events/template methods", function() {
-                    it("should fire the enable event", function() {
+                describe("events/template methods", function () {
+                    it("should fire the enable event", function () {
                         ct.enable();
                         expectEnableEvent(1, a1, a2, a3, b1, b2, b3);
                     });
 
-                    it("should not fire the enable event with silent: true", function() {
+                    it("should not fire the enable event with silent: true", function () {
                         ct.enable(true);
                         expectEnableEvent(0, a1, a2, a3, b1, b2, b3);
                     });
 
-                    it("should call onEnable", function() {
+                    it("should call onEnable", function () {
                         ct.enable();
                         expectOnEnabled(1, a1, a2, a3, b1, b2, b3);
                     });
@@ -2266,9 +2269,9 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("disable", function() {
-            describe("before render", function() {
-                beforeEach(function() {
+        describe("disable", function () {
+            describe("before render", function () {
+                beforeEach(function () {
                     makeDisableCt({
                         items: [{
                             xtype: 'container',
@@ -2282,24 +2285,24 @@ describe("Ext.container.Container", function() {
                     });
                 });
 
-                it("should disable child components", function() {
+                it("should disable child components", function () {
                     expectEnabled(a1, a2, a3, b1, b2, b3);
                     ct.disable();
                     expectDisabled(a1, a2, a3, b1, b2, b3);
                 });
 
-                describe("events/template methods", function() {
-                    it("should fire the disable event", function() {
+                describe("events/template methods", function () {
+                    it("should fire the disable event", function () {
                         ct.disable();
                         expectDisableEvent(1, a1, a2, a3, b1, b2, b3);
                     });
 
-                    it("should not fire the disable event with silent: true", function() {
+                    it("should not fire the disable event with silent: true", function () {
                         ct.disable(true);
                         expectDisableEvent(0, a1, a2, a3, b1, b2, b3);
                     });
 
-                    it("should not call onDisable until rendering", function() {
+                    it("should not call onDisable until rendering", function () {
                         ct.disable();
                         expectOnDisabled(0, a1, a2, a3, b1, b2, b3);
                         ct.render(Ext.getBody());
@@ -2308,8 +2311,8 @@ describe("Ext.container.Container", function() {
                 });
             });
 
-            describe("after render", function() {
-                beforeEach(function() {
+            describe("after render", function () {
+                beforeEach(function () {
                     makeDisableCt({
                         renderTo: Ext.getBody(),
                         items: [{
@@ -2324,24 +2327,24 @@ describe("Ext.container.Container", function() {
                     });
                 });
 
-                it("should disable child components", function() {
+                it("should disable child components", function () {
                     expectEnabled(a1, a2, a3, b1, b2, b3);
                     ct.disable();
                     expectDisabled(a1, a2, a3, b1, b2, b3);
                 });
 
-                describe("events/template methods", function() {
-                    it("should fire the disable event", function() {
+                describe("events/template methods", function () {
+                    it("should fire the disable event", function () {
                         ct.disable();
                         expectDisableEvent(1, a1, a2, a3, b1, b2, b3);
                     });
 
-                    it("should not fire the disable event with silent: true", function() {
+                    it("should not fire the disable event with silent: true", function () {
                         ct.disable(true);
                         expectDisableEvent(0, a1, a2, a3, b1, b2, b3);
                     });
 
-                    it("should call onDisable", function() {
+                    it("should call onDisable", function () {
                         ct.disable();
                         expectOnDisabled(1, a1, a2, a3, b1, b2, b3);
                     });
@@ -2349,8 +2352,8 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("masking", function() {
-            it("should only mask the top level component", function() {
+        describe("masking", function () {
+            it("should only mask the top level component", function () {
                 makeDisableCt({
                     renderTo: Ext.getBody(),
                     disabled: true,
@@ -2366,9 +2369,9 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("child state", function() {
-            describe("child disabled before container", function() {
-                it("should keep the child disabled state", function() {
+        describe("child state", function () {
+            describe("child disabled before container", function () {
+                it("should keep the child disabled state", function () {
                     makeDisableCt({
                         items: [{
                             itemId: 'a'
@@ -2387,8 +2390,8 @@ describe("Ext.container.Container", function() {
                 });
             });
 
-            describe("child disabled after container", function() {
-                it("should keep the child disabled state", function() {
+            describe("child disabled after container", function () {
+                it("should keep the child disabled state", function () {
                     makeDisableCt({
                         items: [{
                             itemId: 'a'
@@ -2407,8 +2410,8 @@ describe("Ext.container.Container", function() {
                 });
             });
 
-            describe("child disabled before being added to container", function() {
-                it("should keep the child disabled state", function() {
+            describe("child disabled before being added to container", function () {
+                it("should keep the child disabled state", function () {
                     makeDisableCt();
                     ct.disable();
 
@@ -2428,30 +2431,33 @@ describe("Ext.container.Container", function() {
         });
     });
 
-    describe('afterrender event', function(){
+    describe('afterrender event', function () {
         var mock,
             fireEventSpy;
-        beforeEach(function(){
-            mock = {handler: function(){}};
+        beforeEach(function () {
+            mock = {
+                handler: function () {
+                }
+            };
             fireEventSpy = spyOn(mock, 'handler');
         });
 
-        it('should fire "afterrender" after render', function(){
+        it('should fire "afterrender" after render', function () {
             expect(fireEventSpy.callCount).toEqual(0);
 
             makeContainer({
-                listeners:{afterrender:mock.handler},
+                listeners: {afterrender: mock.handler},
                 renderTo: Ext.getBody()
             });
 
             expect(fireEventSpy.callCount).toEqual(1);
         });
 
-        it('should fire "afterrender" after render, with no items', function(){
+        it('should fire "afterrender" after render, with no items', function () {
             expect(fireEventSpy.callCount).toEqual(0);
 
             makeContainer({
-                listeners:{afterrender:mock.handler},
+                listeners: {afterrender: mock.handler},
                 renderTo: Ext.getBody(),
                 items: []
             });
@@ -2459,13 +2465,13 @@ describe("Ext.container.Container", function() {
             expect(fireEventSpy.callCount).toEqual(1);
         });
 
-        it('should fire "afterrender" only once with one item', function(){
+        it('should fire "afterrender" only once with one item', function () {
             expect(fireEventSpy.callCount).toEqual(0);
 
             makeContainer({
-                listeners:{afterrender:mock.handler},
+                listeners: {afterrender: mock.handler},
                 renderTo: Ext.getBody(),
-                items: [{},{},{}]
+                items: [{}, {}, {}]
             });
 
             expect(fireEventSpy.callCount).toEqual(1);
@@ -2478,41 +2484,41 @@ describe("Ext.container.Container", function() {
 
         beforeEach(function () {
             container = new Ext.container.Container({
-                items : [
+                items: [
                     {
-                        xtype      : 'textfield',
-                        fieldLabel : 'Name',
-                        name       : 'name'
+                        xtype: 'textfield',
+                        fieldLabel: 'Name',
+                        name: 'name'
                     },
                     {
-                        xtype      : 'textfield',
-                        fieldLabel : 'Email',
-                        name       : 'email',
-                        vtype      : 'email'
+                        xtype: 'textfield',
+                        fieldLabel: 'Email',
+                        name: 'email',
+                        vtype: 'email'
                     },
                     {
-                        xtype      : 'numberfield',
-                        fieldLabel : 'Age',
-                        name       : 'age'
+                        xtype: 'numberfield',
+                        fieldLabel: 'Age',
+                        name: 'age'
                     },
                     {
-                        xtype      : 'textfield',
-                        fieldLabel : 'Country',
-                        name       : 'country'
+                        xtype: 'textfield',
+                        fieldLabel: 'Country',
+                        name: 'country'
                     },
                     {
-                        xtype      : 'textareafield',
-                        fieldLabel : 'Bio',
-                        labelAlign : 'top',
-                        name       : 'bio'
+                        xtype: 'textareafield',
+                        fieldLabel: 'Bio',
+                        labelAlign: 'top',
+                        name: 'bio'
                     }
                 ]
             });
 
             age = container.getComponent(2);
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             container.destroy();
             container = null;
         });
@@ -2521,15 +2527,15 @@ describe("Ext.container.Container", function() {
             expect(container.nextChild(age)).toBe(container.getComponent(3));
         });
 
-        it('should return the next child using a selector', function() {
+        it('should return the next child using a selector', function () {
             expect(container.nextChild(age, 'field[name=bio]')).toBe(container.getComponent(4));
         });
 
-        it("should return null if there is no child", function() {
+        it("should return null if there is no child", function () {
             expect(container.nextChild(null, 'field[name=bio]')).toBeNull();
         });
 
-        it("should return null if there are no matches", function() {
+        it("should return null if there are no matches", function () {
             expect(container.nextChild(age, 'madeupxtype')).toBeNull();
         });
     });
@@ -2539,41 +2545,41 @@ describe("Ext.container.Container", function() {
 
         beforeEach(function () {
             container = new Ext.container.Container({
-                items : [
+                items: [
                     {
-                        xtype      : 'textfield',
-                        fieldLabel : 'Name',
-                        name       : 'name'
+                        xtype: 'textfield',
+                        fieldLabel: 'Name',
+                        name: 'name'
                     },
                     {
-                        xtype      : 'textfield',
-                        fieldLabel : 'Email',
-                        name       : 'email',
-                        vtype      : 'email'
+                        xtype: 'textfield',
+                        fieldLabel: 'Email',
+                        name: 'email',
+                        vtype: 'email'
                     },
                     {
-                        xtype      : 'numberfield',
-                        fieldLabel : 'Age',
-                        name       : 'age'
+                        xtype: 'numberfield',
+                        fieldLabel: 'Age',
+                        name: 'age'
                     },
                     {
-                        xtype      : 'textfield',
-                        fieldLabel : 'Country',
-                        name       : 'country'
+                        xtype: 'textfield',
+                        fieldLabel: 'Country',
+                        name: 'country'
                     },
                     {
-                        xtype      : 'textareafield',
-                        fieldLabel : 'Bio',
-                        labelAlign : 'top',
-                        name       : 'bio'
+                        xtype: 'textareafield',
+                        fieldLabel: 'Bio',
+                        labelAlign: 'top',
+                        name: 'bio'
                     }
                 ]
             });
 
             age = container.getComponent(2);
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             container.destroy();
             container = null;
         });
@@ -2586,23 +2592,23 @@ describe("Ext.container.Container", function() {
             expect(container.prevChild(age, 'field[name=name]')).toBe(container.getComponent(0));
         });
 
-        it("should return null if there is no child", function() {
+        it("should return null if there is no child", function () {
             expect(container.prevChild(null, 'field[name=name]')).toBeNull();
         });
 
-        it("should return null if there are no matches", function() {
+        it("should return null if there are no matches", function () {
             expect(container.prevChild(age, 'madeupxtype')).toBeNull();
         });
     });
 
-    describe('render', function() {
-        it('should allow a child item to veto its render', function() {
+    describe('render', function () {
+        it('should allow a child item to veto its render', function () {
             var container = Ext.create('Ext.Container', {
                 renderTo: document.body,
                 items: [{
                     xtype: 'component',
                     listeners: {
-                        beforerender: function() {
+                        beforerender: function () {
                             return false;
                         }
                     }
@@ -2615,7 +2621,7 @@ describe("Ext.container.Container", function() {
             container.destroy();
         });
 
-        it('should only perform one layout on render', function() {
+        it('should only perform one layout on render', function () {
             var container = new Ext.panel.Panel({
                 title: 'Panel',
                 items: [{
@@ -2623,7 +2629,7 @@ describe("Ext.container.Container", function() {
                     columns: [{text: 'Col1', dataIndex: 'field1'}],
                     store: {
                         fields: ['field1'],
-                        data: [{field1: 'value1'},{field1: 'value2'}],
+                        data: [{field1: 'value1'}, {field1: 'value2'}],
                         autoDestroy: true
                     },
                     width: 200
@@ -2632,7 +2638,7 @@ describe("Ext.container.Container", function() {
                     columns: [{text: 'Col1', dataIndex: 'field1'}],
                     store: {
                         fields: ['field1'],
-                        data: [{field1: 'value1'},{field1: 'value2'}],
+                        data: [{field1: 'value1'}, {field1: 'value2'}],
                         autoDestroy: true
                     },
                     width: 200
@@ -2644,32 +2650,32 @@ describe("Ext.container.Container", function() {
         });
 
         // Even with no variableRowHeight setting, view refreshes cause a layout when height is not configured.
-        it('should perform three layouts in total if embedded views are shrinkwrap height', function() {
+        it('should perform three layouts in total if embedded views are shrinkwrap height', function () {
             var container = new Ext.panel.Panel({
-                title: 'Panel',
-                items: [{
-                    xtype: 'gridpanel',
-                    columns: [{text: 'Col1', dataIndex: 'field1'}],
-                    store: {
-                        fields: ['field1'],
-                        data: [{field1: 'value1'},{field1: 'value2'}],
-                        autoDestroy: true
-                    },
-                    width: 200
-                }, {
-                    xtype: 'gridpanel',
-                    columns: [{text: 'Col1', dataIndex: 'field1'}],
-                    store: {
-                        fields: ['field1'],
-                        data: [{field1: 'value1'},{field1: 'value2'}],
-                        autoDestroy: true
-                    },
-                    width: 200
-                }],
-                renderTo: Ext.getBody()
-            }),
-            v1 = container.getComponent(0).view,
-            v2 = container.getComponent(1).view;
+                    title: 'Panel',
+                    items: [{
+                        xtype: 'gridpanel',
+                        columns: [{text: 'Col1', dataIndex: 'field1'}],
+                        store: {
+                            fields: ['field1'],
+                            data: [{field1: 'value1'}, {field1: 'value2'}],
+                            autoDestroy: true
+                        },
+                        width: 200
+                    }, {
+                        xtype: 'gridpanel',
+                        columns: [{text: 'Col1', dataIndex: 'field1'}],
+                        store: {
+                            fields: ['field1'],
+                            data: [{field1: 'value1'}, {field1: 'value2'}],
+                            autoDestroy: true
+                        },
+                        width: 200
+                    }],
+                    renderTo: Ext.getBody()
+                }),
+                v1 = container.getComponent(0).view,
+                v2 = container.getComponent(1).view;
             v1.refresh();
             v2.refresh();
 
@@ -2680,34 +2686,34 @@ describe("Ext.container.Container", function() {
 
         // The one layout here is the initial one.
         // With no variableRowHeight setting, view refreshes do NOT causes a layout when height is configured.
-        it('should only perform one layout in total if embedded views do deferred refreshes and variableRowHeight is NOT set', function() {
+        it('should only perform one layout in total if embedded views do deferred refreshes and variableRowHeight is NOT set', function () {
             var container = new Ext.panel.Panel({
-                title: 'Panel',
-                items: [{
-                    xtype: 'gridpanel',
-                    columns: [{text: 'Col1', dataIndex: 'field1'}],
-                    store: {
-                        fields: ['field1'],
-                        data: [{field1: 'value1'},{field1: 'value2'}],
-                        autoDestroy: true
-                    },
-                    width: 200,
-                    height: 100
-                }, {
-                    xtype: 'gridpanel',
-                    columns: [{text: 'Col1', dataIndex: 'field1'}],
-                    store: {
-                        fields: ['field1'],
-                        data: [{field1: 'value1'},{field1: 'value2'}],
-                        autoDestroy: true
-                    },
-                    width: 200,
-                    height: 100
-                }],
-                renderTo: Ext.getBody()
-            }),
-            v1 = container.getComponent(0).view,
-            v2 = container.getComponent(1).view;
+                    title: 'Panel',
+                    items: [{
+                        xtype: 'gridpanel',
+                        columns: [{text: 'Col1', dataIndex: 'field1'}],
+                        store: {
+                            fields: ['field1'],
+                            data: [{field1: 'value1'}, {field1: 'value2'}],
+                            autoDestroy: true
+                        },
+                        width: 200,
+                        height: 100
+                    }, {
+                        xtype: 'gridpanel',
+                        columns: [{text: 'Col1', dataIndex: 'field1'}],
+                        store: {
+                            fields: ['field1'],
+                            data: [{field1: 'value1'}, {field1: 'value2'}],
+                            autoDestroy: true
+                        },
+                        width: 200,
+                        height: 100
+                    }],
+                    renderTo: Ext.getBody()
+                }),
+                v1 = container.getComponent(0).view,
+                v2 = container.getComponent(1).view;
             v1.refresh();
             v2.refresh();
 
@@ -2720,35 +2726,35 @@ describe("Ext.container.Container", function() {
 
         // Three layouts here include the initial one, and then one caused by each data refresh
         // With variableRowHeight as true, view refresh causes a layout
-        it('should only perform two grid layouts in total if embedded views have variableRowHeight', function() {
+        it('should only perform two grid layouts in total if embedded views have variableRowHeight', function () {
             var container = new Ext.panel.Panel({
-                title: 'Panel',
-                items: [{
-                    xtype: 'gridpanel',
-                    variableRowHeight: true,
-                    columns: [{text: 'Col1', dataIndex: 'field1'}],
-                    store: {
-                        fields: ['field1'],
-                        data: [{field1: 'value1'},{field1: 'value2'}],
-                        autoDestroy: true
-                    },
-                    width: 200,
-                    height: 100
-                }, {
-                    xtype: 'gridpanel',
-                    columns: [{text: 'Col1', dataIndex: 'field1', variableRowHeight: true}],
-                    store: {
-                        fields: ['field1'],
-                        data: [{field1: 'value1'},{field1: 'value2'}],
-                        autoDestroy: true
-                    },
-                    width: 200,
-                    height: 100
-                }],
-                renderTo: Ext.getBody()
-            }),
-            v1 = container.getComponent(0).view,
-            v2 = container.getComponent(1).view;
+                    title: 'Panel',
+                    items: [{
+                        xtype: 'gridpanel',
+                        variableRowHeight: true,
+                        columns: [{text: 'Col1', dataIndex: 'field1'}],
+                        store: {
+                            fields: ['field1'],
+                            data: [{field1: 'value1'}, {field1: 'value2'}],
+                            autoDestroy: true
+                        },
+                        width: 200,
+                        height: 100
+                    }, {
+                        xtype: 'gridpanel',
+                        columns: [{text: 'Col1', dataIndex: 'field1', variableRowHeight: true}],
+                        store: {
+                            fields: ['field1'],
+                            data: [{field1: 'value1'}, {field1: 'value2'}],
+                            autoDestroy: true
+                        },
+                        width: 200,
+                        height: 100
+                    }],
+                    renderTo: Ext.getBody()
+                }),
+                v1 = container.getComponent(0).view,
+                v2 = container.getComponent(1).view;
             v1.refresh();
             v2.refresh();
 
@@ -2761,7 +2767,7 @@ describe("Ext.container.Container", function() {
         });
     });
 
-    describe("hierarchy state", function() {
+    describe("hierarchy state", function () {
         var aCfg, a, b, c, fa, fb, fc, fd, fe, ff, fg, fh, fi, fj;
 
         function createHierarchy(cfg) {
@@ -2881,12 +2887,12 @@ describe("Ext.container.Container", function() {
             }
         }
 
-        afterEach(function() {
+        afterEach(function () {
             // These should be destroyed by being children of a, but lets be sure here
             Ext.destroy(a, b, c, fa, fb, fc, fd, fe, ff, fg, fh, fi, fj);
         });
 
-        it("should chain the hierarchy state of descendants", function() {
+        it("should chain the hierarchy state of descendants", function () {
             createHierarchy();
             var state = a.getInherited();
             state.foo = 1;
@@ -2896,9 +2902,9 @@ describe("Ext.container.Container", function() {
             expect(fb.getInherited().foo).toBe(1);
         });
 
-        describe("moving to from visible, expanded parent to visible, expanded parent", function() {
+        describe("moving to from visible, expanded parent to visible, expanded parent", function () {
             var parent;
-            beforeEach(function() {
+            beforeEach(function () {
                 createHierarchy();
                 parent = Ext.widget({
                     xtype: 'panel',
@@ -2908,11 +2914,11 @@ describe("Ext.container.Container", function() {
                 parent.getInherited().foo = 1;
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 parent.destroy();
             });
 
-            it("should chain the hierarchy state to the new parent", function() {
+            it("should chain the hierarchy state to the new parent", function () {
                 expect(b.getInherited().foo).toBe(1);
                 expect(c.getInherited().foo).toBe(1);
                 expect(fa.getInherited().foo).toBe(1);
@@ -2921,7 +2927,7 @@ describe("Ext.container.Container", function() {
 
         function createHierarchySuite(mode) {
             var oppositeMode, hideOrCollapse, showOrExpand;
-                
+
             if (mode === 'hidden') {
                 oppositeMode = 'visible';
                 hideOrCollapse = 'hide';
@@ -2932,14 +2938,14 @@ describe("Ext.container.Container", function() {
                 showOrExpand = 'expand';
             }
 
-            describe("hierarchical " + ((mode === 'hidden') ? 'hiding' : 'collapsing'), function() {
+            describe("hierarchical " + ((mode === 'hidden') ? 'hiding' : 'collapsing'), function () {
                 // hierarchically hiding floaters when an ancestor is hidden or collapsed
 
-                beforeEach(function() {
+                beforeEach(function () {
                     createHierarchy();
                 });
 
-                it("should set " + mode + " in the hierarchy state", function() {
+                it("should set " + mode + " in the hierarchy state", function () {
                     a[hideOrCollapse]();
                     expect(b.getInherited()[mode]).toBe(true);
                     expect(c.getInherited()[mode]).toBe(true);
@@ -2947,7 +2953,7 @@ describe("Ext.container.Container", function() {
                     expect(fb.getInherited()[mode]).toBe(true);
                 });
 
-                it("should hide floating descendant", function() {
+                it("should hide floating descendant", function () {
                     var onHide = jasmine.createSpy(),
                         onBeforeHide = jasmine.createSpy();
 
@@ -2966,7 +2972,7 @@ describe("Ext.container.Container", function() {
                     expect(fa.el.isVisible()).toBe(false);
                 });
 
-                it("should not hide hidden floating descendant", function() {
+                it("should not hide hidden floating descendant", function () {
                     spyOn(fb, 'hide').andCallThrough();
 
                     a[hideOrCollapse]();
@@ -2976,7 +2982,7 @@ describe("Ext.container.Container", function() {
                     expect(fb.el.isVisible()).toBe(false);
                 });
 
-                it("should not allow beforehide to veto the hierarchical hide of a floating descendant", function() {
+                it("should not allow beforehide to veto the hierarchical hide of a floating descendant", function () {
                     var onHide = jasmine.createSpy(),
                         onBeforeHide = jasmine.createSpy().andReturn(false);
 
@@ -2996,7 +3002,7 @@ describe("Ext.container.Container", function() {
                 });
 
                 if (mode === 'hidden') {
-                    it("should hide floater that is a child of a collapse-immune child", function() {
+                    it("should hide floater that is a child of a collapse-immune child", function () {
                         var onHide = jasmine.createSpy(),
                             onBeforeHide = jasmine.createSpy();
 
@@ -3015,7 +3021,7 @@ describe("Ext.container.Container", function() {
                         expect(fg.el.isVisible()).toBe(false);
                     });
                 } else {
-                    it("should not hide floater that is a child of a collapse-immune child", function() {
+                    it("should not hide floater that is a child of a collapse-immune child", function () {
                         spyOn(fg, 'hide').andCallThrough();
 
                         a.collapse();
@@ -3026,7 +3032,7 @@ describe("Ext.container.Container", function() {
                     });
                 }
 
-                it("should not hide hidden floater that is a child of a collapse-immune child", function() {
+                it("should not hide hidden floater that is a child of a collapse-immune child", function () {
                     spyOn(fh, 'hide').andCallThrough();
 
                     a[hideOrCollapse]();
@@ -3036,27 +3042,27 @@ describe("Ext.container.Container", function() {
                     expect(fh.el.isVisible()).toBe(false);
                 });
 
-                it("should hide floater that is a child of a collapse-immune grandchild", function() {
-                        var onHide = jasmine.createSpy(),
-                            onBeforeHide = jasmine.createSpy();
+                it("should hide floater that is a child of a collapse-immune grandchild", function () {
+                    var onHide = jasmine.createSpy(),
+                        onBeforeHide = jasmine.createSpy();
 
-                        spyOn(fi, 'hide').andCallThrough();
-                        fi.on('beforehide', onBeforeHide);
-                        fi.on('hide', onHide);
-                        spyOn(fi, 'afterHide').andCallThrough();
+                    spyOn(fi, 'hide').andCallThrough();
+                    fi.on('beforehide', onBeforeHide);
+                    fi.on('hide', onHide);
+                    spyOn(fi, 'afterHide').andCallThrough();
 
-                        a[hideOrCollapse]();
+                    a[hideOrCollapse]();
 
-                        expect(fi.hide).toHaveBeenCalled();
-                        expect(onBeforeHide).toHaveBeenCalled();
-                        expect(onHide).toHaveBeenCalled();
-                        expect(fi.afterHide).toHaveBeenCalled();
-                        expect(fi.hidden).toBe(true);
-                        expect(fi.el.isVisible()).toBe(false);
+                    expect(fi.hide).toHaveBeenCalled();
+                    expect(onBeforeHide).toHaveBeenCalled();
+                    expect(onHide).toHaveBeenCalled();
+                    expect(fi.afterHide).toHaveBeenCalled();
+                    expect(fi.hidden).toBe(true);
+                    expect(fi.el.isVisible()).toBe(false);
 
                 });
 
-                it("should not hide hidden floater that is a child of a collapse-immune grandchild", function() {
+                it("should not hide hidden floater that is a child of a collapse-immune grandchild", function () {
                     spyOn(fj, 'hide').andCallThrough();
 
                     a[hideOrCollapse]();
@@ -3067,12 +3073,12 @@ describe("Ext.container.Container", function() {
                 });
             });
 
-            
+
             function createShowExpandSuite(initialRenderHiddenOrCollapsed) {
-                describe("hierarchical " + ((mode === 'hidden') ? 'showing' : 'expanding') + " (parent " + (initialRenderHiddenOrCollapsed ? ("initially rendered " + mode) : (mode + " after inital render")) + ")", function() {
+                describe("hierarchical " + ((mode === 'hidden') ? 'showing' : 'expanding') + " (parent " + (initialRenderHiddenOrCollapsed ? ("initially rendered " + mode) : (mode + " after inital render")) + ")", function () {
                     // hierarchically showing floaters when an ancestor is shown or expanded
 
-                    beforeEach(function() {
+                    beforeEach(function () {
                         var cfg;
 
                         if (initialRenderHiddenOrCollapsed) {
@@ -3087,7 +3093,7 @@ describe("Ext.container.Container", function() {
                         }
                     });
 
-                    it("should remove " + mode + " from the hierarchy state", function() {
+                    it("should remove " + mode + " from the hierarchy state", function () {
                         a[showOrExpand]();
                         expect(mode in b.getInherited()).toBe(false);
                         expect(mode in c.getInherited()).toBe(false);
@@ -3095,7 +3101,7 @@ describe("Ext.container.Container", function() {
                         expect(mode in fb.getInherited()).toBe(mode === 'hidden' ? true : false);
                     });
 
-                    it("should show hierarchically hidden floating descendant", function() {
+                    it("should show hierarchically hidden floating descendant", function () {
                         var onShow = jasmine.createSpy(),
                             onBeforeShow = jasmine.createSpy();
 
@@ -3114,7 +3120,7 @@ describe("Ext.container.Container", function() {
                         expect(fa.el.isVisible()).toBe(true);
                     });
 
-                    it("should not show explicitly hidden floating descendant", function() {
+                    it("should not show explicitly hidden floating descendant", function () {
                         spyOn(fb, 'show').andCallThrough();
 
                         a[showOrExpand]();
@@ -3128,7 +3134,7 @@ describe("Ext.container.Container", function() {
                         }
                     });
 
-                    it("should allow beforeshow to veto the show of a hierarchically hidden floating descendant", function() {
+                    it("should allow beforeshow to veto the show of a hierarchically hidden floating descendant", function () {
                         var onShow = jasmine.createSpy(),
                             onBeforeShow = jasmine.createSpy().andReturn(false);
 
@@ -3151,7 +3157,7 @@ describe("Ext.container.Container", function() {
                         }
                     });
 
-                    it("should defer the show of an explicitly hidden floating descendant whose show method was called while hierarchically hidden", function() {
+                    it("should defer the show of an explicitly hidden floating descendant whose show method was called while hierarchically hidden", function () {
                         var onShow = jasmine.createSpy(),
                             onBeforeShow = jasmine.createSpy(),
                             cb = jasmine.createSpy(),
@@ -3179,7 +3185,7 @@ describe("Ext.container.Container", function() {
                         expect(cb).toHaveBeenCalled();
                     });
 
-                    it("should not show a hierarchically hidden floating descendant whose hide method was called while hierarchically hidden", function() {
+                    it("should not show a hierarchically hidden floating descendant whose hide method was called while hierarchically hidden", function () {
                         fe.hide();
                         spyOn(fe, 'show').andCallThrough();
                         a[showOrExpand]();
@@ -3192,7 +3198,7 @@ describe("Ext.container.Container", function() {
                         }
                     });
 
-                    it("should defer the show of a hierarchically hidden floating descendant whose show method was called while hierarchically hidden", function() {
+                    it("should defer the show of a hierarchically hidden floating descendant whose show method was called while hierarchically hidden", function () {
                         var onShow = jasmine.createSpy(),
                             onBeforeShow = jasmine.createSpy(),
                             cb = jasmine.createSpy(),
@@ -3221,7 +3227,7 @@ describe("Ext.container.Container", function() {
                     });
 
                     if (mode === 'hidden') {
-                        it("should show hierarchically hidden floater that is a child of a collapse-immune child", function() {
+                        it("should show hierarchically hidden floater that is a child of a collapse-immune child", function () {
                             var onShow = jasmine.createSpy(),
                                 onBeforeShow = jasmine.createSpy();
 
@@ -3240,7 +3246,7 @@ describe("Ext.container.Container", function() {
                             expect(fg.el.isVisible()).toBe(true);
                         });
                     } else {
-                        it("should not show visible floater that is a child of a collapse-immune child", function() {
+                        it("should not show visible floater that is a child of a collapse-immune child", function () {
                             spyOn(fg, 'show').andCallThrough();
 
                             a[showOrExpand]();
@@ -3251,7 +3257,7 @@ describe("Ext.container.Container", function() {
                         });
                     }
 
-                    it("should not show explicitly hidden floater that is a child of a collapse-immune child", function() {
+                    it("should not show explicitly hidden floater that is a child of a collapse-immune child", function () {
                         spyOn(fh, 'show').andCallThrough();
 
                         a[showOrExpand]();
@@ -3265,7 +3271,7 @@ describe("Ext.container.Container", function() {
                         }
                     });
 
-                    it("should show hierarchically hidden floater that is a child of a collapse-immune grandchild", function() {
+                    it("should show hierarchically hidden floater that is a child of a collapse-immune grandchild", function () {
                         var onShow = jasmine.createSpy(),
                             onBeforeShow = jasmine.createSpy();
 
@@ -3284,7 +3290,7 @@ describe("Ext.container.Container", function() {
                         expect(fi.el.isVisible()).toBe(true);
                     });
 
-                    it("should not show explicitly hidden floater that is a child of a collapse-immune grandchild", function() {
+                    it("should not show explicitly hidden floater that is a child of a collapse-immune grandchild", function () {
                         spyOn(fj, 'show').andCallThrough();
 
                         a[showOrExpand]();
@@ -3303,11 +3309,11 @@ describe("Ext.container.Container", function() {
             createShowExpandSuite();
             createShowExpandSuite(true);
 
-            describe("moving from " + oppositeMode + " parent to " + mode + " parent", function() {
+            describe("moving from " + oppositeMode + " parent to " + mode + " parent", function () {
                 // moving from visible to hidden, or from expanded to collapsed
                 var parent;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     createHierarchy();
                     parent = Ext.widget({
                         xtype: 'panel',
@@ -3317,11 +3323,11 @@ describe("Ext.container.Container", function() {
                     });
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     parent.destroy();
                 });
 
-                it("should chain the hierarchy state to the new parent", function() {
+                it("should chain the hierarchy state to the new parent", function () {
                     parent.add(b);
                     expect(b.getInherited()[mode]).toBe(true);
                     expect(c.getInherited()[mode]).toBe(true);
@@ -3329,7 +3335,7 @@ describe("Ext.container.Container", function() {
                     expect(fb.getInherited()[mode]).toBe(true);
                 });
 
-                it("should hide floating descendant", function() {
+                it("should hide floating descendant", function () {
                     var onHide = jasmine.createSpy(),
                         onBeforeHide = jasmine.createSpy();
 
@@ -3348,7 +3354,7 @@ describe("Ext.container.Container", function() {
                     expect(fa.el.isVisible()).toBe(false);
                 });
 
-                it("should not hide hidden floating descendant", function() {
+                it("should not hide hidden floating descendant", function () {
                     spyOn(fb, 'hide').andCallThrough();
 
                     parent.add(b);
@@ -3358,7 +3364,7 @@ describe("Ext.container.Container", function() {
                     expect(fb.el.isVisible()).toBe(false);
                 });
 
-                it("should not allow beforehide to veto the hierarchical hide of a floating descendant", function() {
+                it("should not allow beforehide to veto the hierarchical hide of a floating descendant", function () {
                     var onHide = jasmine.createSpy(),
                         onBeforeHide = jasmine.createSpy().andReturn(false);
 
@@ -3377,27 +3383,27 @@ describe("Ext.container.Container", function() {
                     expect(fc.el.isVisible()).toBe(false);
                 });
 
-                it("should hide floater that is a child of a hierarchically hidden collapse-immune child", function() {
-                        var onHide = jasmine.createSpy(),
-                            onBeforeHide = jasmine.createSpy();
+                it("should hide floater that is a child of a hierarchically hidden collapse-immune child", function () {
+                    var onHide = jasmine.createSpy(),
+                        onBeforeHide = jasmine.createSpy();
 
-                        spyOn(fi, 'hide').andCallThrough();
-                        fi.on('beforehide', onBeforeHide);
-                        fi.on('hide', onHide);
-                        spyOn(fi, 'afterHide').andCallThrough();
+                    spyOn(fi, 'hide').andCallThrough();
+                    fi.on('beforehide', onBeforeHide);
+                    fi.on('hide', onHide);
+                    spyOn(fi, 'afterHide').andCallThrough();
 
-                        parent.add(b);
+                    parent.add(b);
 
-                        expect(fi.hide).toHaveBeenCalled();
-                        expect(onBeforeHide).toHaveBeenCalled();
-                        expect(onHide).toHaveBeenCalled();
-                        expect(fi.afterHide).toHaveBeenCalled();
-                        expect(fi.hidden).toBe(true);
-                        expect(fi.el.isVisible()).toBe(false);
+                    expect(fi.hide).toHaveBeenCalled();
+                    expect(onBeforeHide).toHaveBeenCalled();
+                    expect(onHide).toHaveBeenCalled();
+                    expect(fi.afterHide).toHaveBeenCalled();
+                    expect(fi.hidden).toBe(true);
+                    expect(fi.el.isVisible()).toBe(false);
 
                 });
 
-                it("should not hide hidden floater that is a child of a hierarchically hidden collapse-immune child", function() {
+                it("should not hide hidden floater that is a child of a hierarchically hidden collapse-immune child", function () {
                     spyOn(fj, 'hide').andCallThrough();
 
                     parent.add(b);
@@ -3409,11 +3415,11 @@ describe("Ext.container.Container", function() {
             });
 
             function createHiddenToVisibleMoveSuite(initialRenderHiddenOrCollapsed) {
-                describe("moving from " + mode + " parent to " + oppositeMode + " (parent" + (initialRenderHiddenOrCollapsed ? ("initially rendered " + mode) : (mode + " after inital render")) + ")", function() {
+                describe("moving from " + mode + " parent to " + oppositeMode + " (parent" + (initialRenderHiddenOrCollapsed ? ("initially rendered " + mode) : (mode + " after inital render")) + ")", function () {
                     // moving from hidden to visible, or from collapsed to expanded
                     var parent;
 
-                    beforeEach(function() {
+                    beforeEach(function () {
                         var cfg;
 
                         if (initialRenderHiddenOrCollapsed) {
@@ -3432,11 +3438,11 @@ describe("Ext.container.Container", function() {
                         });
                     });
 
-                    afterEach(function() {
+                    afterEach(function () {
                         parent.destroy();
                     });
 
-                    it("should chain the hierarchy state to the new parent", function() {
+                    it("should chain the hierarchy state to the new parent", function () {
                         parent.add(b);
                         expect(mode in b.getInherited()).toBe(false);
                         expect(mode in c.getInherited()).toBe(false);
@@ -3444,7 +3450,7 @@ describe("Ext.container.Container", function() {
                         expect(mode in fb.getInherited()).toBe(mode === 'hidden' ? true : false);
                     });
 
-                    it("should show hierarchically hidden floating descendant", function() {
+                    it("should show hierarchically hidden floating descendant", function () {
                         var onShow = jasmine.createSpy(),
                             onBeforeShow = jasmine.createSpy();
 
@@ -3463,7 +3469,7 @@ describe("Ext.container.Container", function() {
                         expect(fa.el.isVisible()).toBe(true);
                     });
 
-                    it("should not show explicitly hidden floating descendant", function() {
+                    it("should not show explicitly hidden floating descendant", function () {
                         spyOn(fb, 'show').andCallThrough();
 
                         parent.add(b);
@@ -3477,7 +3483,7 @@ describe("Ext.container.Container", function() {
                         }
                     });
 
-                    it("should allow beforeshow to veto the show of a hierarchically hidden floating descendant", function() {
+                    it("should allow beforeshow to veto the show of a hierarchically hidden floating descendant", function () {
                         var onShow = jasmine.createSpy(),
                             onBeforeShow = jasmine.createSpy().andReturn(false);
 
@@ -3500,7 +3506,7 @@ describe("Ext.container.Container", function() {
                         }
                     });
 
-                    it("should defer the show of an explicitly hidden floating descendant whose show method was called while hierarchically hidden", function() {
+                    it("should defer the show of an explicitly hidden floating descendant whose show method was called while hierarchically hidden", function () {
                         var onShow = jasmine.createSpy(),
                             onBeforeShow = jasmine.createSpy(),
                             cb = jasmine.createSpy(),
@@ -3528,7 +3534,7 @@ describe("Ext.container.Container", function() {
                         expect(cb).toHaveBeenCalled();
                     });
 
-                    it("should not show a hierarchically hidden floating descendant whose hide method was called while hierarchically hidden", function() {
+                    it("should not show a hierarchically hidden floating descendant whose hide method was called while hierarchically hidden", function () {
                         fe.hide();
                         spyOn(fe, 'show').andCallThrough();
                         parent.add(b);
@@ -3541,7 +3547,7 @@ describe("Ext.container.Container", function() {
                         }
                     });
 
-                    it("should defer the show of a hierarchically hidden floating descendant whose show method was called while hierarchically hidden", function() {
+                    it("should defer the show of a hierarchically hidden floating descendant whose show method was called while hierarchically hidden", function () {
                         var onShow = jasmine.createSpy(),
                             onBeforeShow = jasmine.createSpy(),
                             cb = jasmine.createSpy(),
@@ -3569,7 +3575,7 @@ describe("Ext.container.Container", function() {
                         expect(cb).toHaveBeenCalled();
                     });
 
-                    it("should show hierarchically hidden floater that is a child of a collapse-immune grandchild", function() {
+                    it("should show hierarchically hidden floater that is a child of a collapse-immune grandchild", function () {
                         var onShow = jasmine.createSpy(),
                             onBeforeShow = jasmine.createSpy();
 
@@ -3588,7 +3594,7 @@ describe("Ext.container.Container", function() {
                         expect(fi.el.isVisible()).toBe(true);
                     });
 
-                    it("should not show explicitly hidden floater that is a child of a collapse-immune grandchild", function() {
+                    it("should not show explicitly hidden floater that is a child of a collapse-immune grandchild", function () {
                         spyOn(fj, 'show').andCallThrough();
 
                         parent.add(b);
@@ -3611,20 +3617,20 @@ describe("Ext.container.Container", function() {
         createHierarchySuite('hidden');
         createHierarchySuite('collapsed');
     });
-    
-    describe("references", function() {
-        describe("static", function() {
-            it("should not be a reference holder by default", function() {
+
+    describe("references", function () {
+        describe("static", function () {
+            it("should not be a reference holder by default", function () {
                 makeContainer({
                     items: {
                         xtype: 'component',
                         reference: 'a'
                     }
-                });    
+                });
                 expect(ct.lookupReference('foo')).toBeNull();
             });
-            
-            it("should support a direct child", function() {
+
+            it("should support a direct child", function () {
                 makeContainer({
                     referenceHolder: true,
                     items: {
@@ -3635,8 +3641,8 @@ describe("Ext.container.Container", function() {
                 });
                 expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
             });
-            
-            it("should support a deep child", function() {
+
+            it("should support a deep child", function () {
                 makeContainer({
                     referenceHolder: true,
                     items: {
@@ -3656,8 +3662,8 @@ describe("Ext.container.Container", function() {
                 });
                 expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
             });
-            
-            it("should support children at multiple depths", function() {
+
+            it("should support children at multiple depths", function () {
                 makeContainer({
                     referenceHolder: true,
                     items: [{
@@ -3672,12 +3678,12 @@ describe("Ext.container.Container", function() {
                             reference: 'b'
                         }
                     }]
-                }); 
+                });
                 expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                 expect(ct.lookupReference('b')).toBe(ct.down('#compB'));
             });
-            
-            it("should support multiple children at the same depth", function() {
+
+            it("should support multiple children at the same depth", function () {
                 makeContainer({
                     referenceHolder: true,
                     items: [{
@@ -3693,9 +3699,9 @@ describe("Ext.container.Container", function() {
                 expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                 expect(ct.lookupReference('b')).toBe(ct.down('#compB'));
             });
-            
-            it("should support multiple children down the some tree", function() {
-                    makeContainer({
+
+            it("should support multiple children down the some tree", function () {
+                makeContainer({
                     referenceHolder: true,
                     items: [{
                         xtype: 'container',
@@ -3717,8 +3723,8 @@ describe("Ext.container.Container", function() {
                 expect(ct.lookupReference('b')).toBe(ct.down('#compB'));
                 expect(ct.lookupReference('c')).toBe(ct.down('#compC'));
             });
-            
-            it("should support a reference holder not being at the root", function() {
+
+            it("should support a reference holder not being at the root", function () {
                 makeContainer({
                     items: {
                         xtype: 'container',
@@ -3736,12 +3742,12 @@ describe("Ext.container.Container", function() {
                             }
                         }
                     }
-                });  
+                });
                 var ref = ct.down('#ref');
                 expect(ref.lookupReference('a')).toBe(ref.down('#compA'));
             });
-            
-            it("should support multiple ref holders in a tree", function() {
+
+            it("should support multiple ref holders in a tree", function () {
                 makeContainer({
                     referenceHolder: true,
                     items: {
@@ -3767,8 +3773,8 @@ describe("Ext.container.Container", function() {
                 expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                 expect(ref.lookupReference('b')).toBe(ref.down('#compB'));
             });
-            
-            it("should hide inner references from outer holders", function() {
+
+            it("should hide inner references from outer holders", function () {
                 makeContainer({
                     referenceHolder: true,
                     items: {
@@ -3792,8 +3798,8 @@ describe("Ext.container.Container", function() {
                 });
                 expect(ct.lookupReference('b')).toBeNull();
             });
-            
-            it("should allow a reference holder to have a reference", function() {
+
+            it("should allow a reference holder to have a reference", function () {
                 makeContainer({
                     referenceHolder: true,
                     items: {
@@ -3808,19 +3814,19 @@ describe("Ext.container.Container", function() {
                         }
                     }
                 });
-                
+
                 var inner = ct.down('#compA');
-                
+
                 expect(inner.lookupReference('b')).toBe(inner.down('#compB'));
                 expect(ct.lookupReference('a')).toBe(inner);
             });
-            
-            describe("docking", function() {
+
+            describe("docking", function () {
                 function makePanel(cfg) {
                     ct = new Ext.panel.Panel(cfg);
                 }
-                    
-                it("should get a reference to a direct child", function() {
+
+                it("should get a reference to a direct child", function () {
                     makePanel({
                         referenceHolder: true,
                         dockedItems: {
@@ -3831,8 +3837,8 @@ describe("Ext.container.Container", function() {
                     });
                     expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                 });
-                
-                it("should get a reference to an indirect child", function() {
+
+                it("should get a reference to an indirect child", function () {
                     makePanel({
                         referenceHolder: true,
                         dockedItems: {
@@ -3847,9 +3853,9 @@ describe("Ext.container.Container", function() {
                     expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                 });
             });
-            
-            describe("chained references", function() {
-                it("should gain a reference to a deep child", function() {
+
+            describe("chained references", function () {
+                it("should gain a reference to a deep child", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: [{
@@ -3864,8 +3870,8 @@ describe("Ext.container.Container", function() {
                     });
                     expect(ct.lookupReference('parent.a')).toBe(ct.down('#compA'));
                 });
-                
-                it("should strip the > from the parent reference", function() {
+
+                it("should strip the > from the parent reference", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: [{
@@ -3880,8 +3886,8 @@ describe("Ext.container.Container", function() {
                     });
                     expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                 });
-                
-                it("should allow the parent to be reference even if there's no children", function() {
+
+                it("should allow the parent to be reference even if there's no children", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: [{
@@ -3892,8 +3898,8 @@ describe("Ext.container.Container", function() {
                     });
                     expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                 });
-                
-                it("should not setup a deep reference if the there's an intervening referenceHolder", function() {
+
+                it("should not setup a deep reference if the there's an intervening referenceHolder", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: [{
@@ -3908,8 +3914,8 @@ describe("Ext.container.Container", function() {
                     });
                     expect(ct.lookupReference('b')).toBeNull();
                 });
-                
-                it("should allow for a multiple depth reference", function() {
+
+                it("should allow for a multiple depth reference", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: [{
@@ -3936,8 +3942,8 @@ describe("Ext.container.Container", function() {
                     });
                     expect(ct.lookupReference('a.b.c.d.e')).toBe(ct.down('#compE'));
                 });
-                
-                it("should isolate references by parent", function() {
+
+                it("should isolate references by parent", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: [{
@@ -3961,8 +3967,8 @@ describe("Ext.container.Container", function() {
                     expect(ct.lookupReference('parent1.child')).toBe(ct.down('#compA'));
                     expect(ct.lookupReference('parent2.child')).toBe(ct.down('#compB'));
                 });
-                
-                it("should allow the reference holder to begin at any depth", function() {
+
+                it("should allow the reference holder to begin at any depth", function () {
                     makeContainer({
                         items: [{
                             xtype: 'container',
@@ -3991,8 +3997,8 @@ describe("Ext.container.Container", function() {
                     var inner = ct.down('#compC');
                     expect(inner.lookupReference('d.e')).toBe(ct.down('#compE'));
                 });
-                
-                it("should allow multiple references in the tree", function() {
+
+                it("should allow multiple references in the tree", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: [{
@@ -4026,14 +4032,14 @@ describe("Ext.container.Container", function() {
                     expect(ct.lookupReference('a.b.c')).toBe(ct.down('#compC'));
                     expect(ct.lookupReference('a.b.c.d')).toBeNull();
                     expect(ct.lookupReference('a.b.c.d.e')).toBeNull();
-                }); 
-                
-                describe("docking", function() {
+                });
+
+                describe("docking", function () {
                     function makePanel(cfg) {
                         ct = new Ext.panel.Panel(cfg);
                     }
 
-                    it("should get a reference to an indirect child", function() {
+                    it("should get a reference to an indirect child", function () {
                         makePanel({
                             referenceHolder: true,
                             dockedItems: {
@@ -4051,10 +4057,10 @@ describe("Ext.container.Container", function() {
                 });
             });
         });
-        
-        describe("dynamic", function() {
-            describe("adding", function() {
-                it("should gain a reference to a direct child", function() {
+
+        describe("dynamic", function () {
+            describe("adding", function () {
+                it("should gain a reference to a direct child", function () {
                     makeContainer({
                         referenceHolder: true
                     });
@@ -4064,9 +4070,9 @@ describe("Ext.container.Container", function() {
                         reference: 'a'
                     });
                     expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
-                }); 
-                
-                it("should gain a reference to an indirect child", function() {
+                });
+
+                it("should gain a reference to an indirect child", function () {
                     makeContainer({
                         referenceHolder: true
                     });
@@ -4080,40 +4086,40 @@ describe("Ext.container.Container", function() {
                     });
                     expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                 });
-                
-                it("should gain a reference to a component inside an already constructed container", function() {
+
+                it("should gain a reference to a component inside an already constructed container", function () {
                     var local = new Ext.container.Container({
                         items: {
                             xtype: 'component',
                             itemId: 'compA',
                             reference: 'a'
                         }
-                    });    
-                    
+                    });
+
                     makeContainer({
                         referenceHolder: true,
                         items: local
                     });
                     expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                 });
-                
-                it("should gain a reference to a component added to containers child", function() {
+
+                it("should gain a reference to a component added to containers child", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: {
                             xtype: 'container'
                         }
-                    });  
+                    });
                     ct.items.first().add({
                         xtype: 'component',
                         itemId: 'compA',
                         reference: 'a'
-                    });  
+                    });
                     expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                 });
-                
-                describe("chained references", function() {
-                    it("should gain a reference to an indirect child", function() {
+
+                describe("chained references", function () {
+                    it("should gain a reference to an indirect child", function () {
                         makeContainer({
                             referenceHolder: true
                         });
@@ -4129,7 +4135,7 @@ describe("Ext.container.Container", function() {
                         expect(ct.lookupReference('parent.a')).toBe(ct.down('#compA'));
                     });
 
-                    it("should gain a reference to a component inside an already constructed container", function() {
+                    it("should gain a reference to a component inside an already constructed container", function () {
                         var local = new Ext.container.Container({
                             reference: 'parent>',
                             items: {
@@ -4137,7 +4143,7 @@ describe("Ext.container.Container", function() {
                                 itemId: 'compA',
                                 reference: 'a'
                             }
-                        });    
+                        });
 
                         makeContainer({
                             referenceHolder: true,
@@ -4146,28 +4152,28 @@ describe("Ext.container.Container", function() {
                         expect(ct.lookupReference('parent.a')).toBe(ct.down('#compA'));
                     });
 
-                    it("should gain a reference to a component added to containers child", function() {
+                    it("should gain a reference to a component added to containers child", function () {
                         makeContainer({
                             referenceHolder: true,
                             items: {
                                 xtype: 'container',
                                 reference: 'parent>'
                             }
-                        });  
+                        });
                         ct.items.first().add({
                             xtype: 'component',
                             itemId: 'compA',
                             reference: 'a'
-                        });  
+                        });
                         expect(ct.lookupReference('parent.a')).toBe(ct.down('#compA'));
                     });
-                    
-                    describe("docking", function() {
+
+                    describe("docking", function () {
                         function makePanel(cfg) {
                             ct = new Ext.panel.Panel(cfg);
                         }
 
-                        it("should gain a reference to an indirect child", function() {
+                        it("should gain a reference to an indirect child", function () {
                             makePanel({
                                 referenceHolder: true
                             });
@@ -4183,7 +4189,7 @@ describe("Ext.container.Container", function() {
                             expect(ct.lookupReference('parent.a')).toBe(ct.down('#compA'));
                         });
 
-                        it("should gain a reference to a component inside an already constructed container", function() {
+                        it("should gain a reference to a component inside an already constructed container", function () {
                             var local = new Ext.container.Container({
                                 reference: 'parent>',
                                 items: {
@@ -4191,7 +4197,7 @@ describe("Ext.container.Container", function() {
                                     itemId: 'compA',
                                     reference: 'a'
                                 }
-                            });    
+                            });
 
                             makePanel({
                                 referenceHolder: true,
@@ -4200,30 +4206,30 @@ describe("Ext.container.Container", function() {
                             expect(ct.lookupReference('parent.a')).toBe(ct.down('#compA'));
                         });
 
-                        it("should gain a reference to a component added to containers child", function() {
+                        it("should gain a reference to a component added to containers child", function () {
                             makePanel({
                                 referenceHolder: true,
                                 dockedItems: {
                                     xtype: 'container',
                                     reference: 'parent>'
                                 }
-                            });  
+                            });
                             ct.getDockedItems()[0].add({
                                 xtype: 'component',
                                 itemId: 'compA',
                                 reference: 'a'
-                            });  
+                            });
                             expect(ct.lookupReference('parent.a')).toBe(ct.down('#compA'));
                         });
                     });
                 });
-                
-                describe("docking", function() {
+
+                describe("docking", function () {
                     function makePanel(cfg) {
                         ct = new Ext.panel.Panel(cfg);
                     }
-                    
-                    it("should gain a reference to a direct child", function() {
+
+                    it("should gain a reference to a direct child", function () {
                         makePanel({
                             referenceHolder: true
                         });
@@ -4233,9 +4239,9 @@ describe("Ext.container.Container", function() {
                             reference: 'a'
                         });
                         expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
-                    }); 
-                    
-                    it("should gain a reference to an indirect child", function() {
+                    });
+
+                    it("should gain a reference to an indirect child", function () {
                         makePanel({
                             referenceHolder: true
                         });
@@ -4249,55 +4255,55 @@ describe("Ext.container.Container", function() {
                         });
                         expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                     });
-                    
-                    it("should gain a reference to a component inside an already constructed container", function() {
+
+                    it("should gain a reference to a component inside an already constructed container", function () {
                         var local = new Ext.container.Container({
                             items: {
                                 xtype: 'component',
                                 itemId: 'compA',
                                 reference: 'a'
                             }
-                        });    
-                        
+                        });
+
                         makePanel({
                             referenceHolder: true,
                             dockedItems: local
                         });
                         expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                     });
-                    
-                    it("should gain a reference to a component added to containers child", function() {
+
+                    it("should gain a reference to a component added to containers child", function () {
                         makePanel({
                             referenceHolder: true,
                             dockedItems: {
                                 xtype: 'container'
                             }
-                        });  
+                        });
                         ct.getDockedItems()[0].add({
                             xtype: 'component',
                             itemId: 'compA',
                             reference: 'a'
-                        });  
+                        });
                         expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
                     });
-                });   
+                });
             });
-            
-            describe("removing", function() {
-                it("should not have a reference when removing a direct child", function() {
+
+            describe("removing", function () {
+                it("should not have a reference when removing a direct child", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: {
                             xtype: 'component',
                             reference: 'a'
                         }
-                    });    
+                    });
                     var c = ct.lookupReference('a');
                     c.destroy();
                     expect(ct.lookupReference('a')).toBeNull();
                 });
-                
-                it("should not have a reference when removing an indirect child", function() {
+
+                it("should not have a reference when removing an indirect child", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: {
@@ -4307,13 +4313,13 @@ describe("Ext.container.Container", function() {
                                 reference: 'a'
                             }
                         }
-                    });    
+                    });
                     var c = ct.lookupReference('a');
                     c.destroy();
                     expect(ct.lookupReference('a')).toBeNull();
                 });
-                
-                it("should not have a reference when removing+destroying a container that has references", function() {
+
+                it("should not have a reference when removing+destroying a container that has references", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: {
@@ -4323,14 +4329,14 @@ describe("Ext.container.Container", function() {
                                 reference: 'a'
                             }
                         }
-                    });    
+                    });
                     var c = ct.lookupReference('a');
                     var removed = ct.remove(0);
                     expect(ct.lookupReference('a')).toBeNull();
                     removed.destroy();
                 });
-                
-                it("should not have a reference when only removing a container that has references", function() {
+
+                it("should not have a reference when only removing a container that has references", function () {
                     makeContainer({
                         referenceHolder: true,
                         items: {
@@ -4340,15 +4346,15 @@ describe("Ext.container.Container", function() {
                                 reference: 'a'
                             }
                         }
-                    });    
+                    });
                     var c = ct.lookupReference('a');
                     var removed = ct.remove(0, false);
                     expect(ct.lookupReference('a')).toBeNull();
                     removed.destroy();
                 });
-                
-                describe("chained references", function() {
-                    it("should not have a reference when removing an indirect child", function() {
+
+                describe("chained references", function () {
+                    it("should not have a reference when removing an indirect child", function () {
                         makeContainer({
                             referenceHolder: true,
                             items: {
@@ -4359,13 +4365,13 @@ describe("Ext.container.Container", function() {
                                     reference: 'a'
                                 }
                             }
-                        });    
+                        });
                         var c = ct.lookupReference('parent.a');
                         c.destroy();
                         expect(ct.lookupReference('parent.a')).toBeNull();
                     });
 
-                    it("should not have a reference when removing+destroying a container that has references", function() {
+                    it("should not have a reference when removing+destroying a container that has references", function () {
                         makeContainer({
                             referenceHolder: true,
                             items: {
@@ -4376,14 +4382,14 @@ describe("Ext.container.Container", function() {
                                     reference: 'a'
                                 }
                             }
-                        });    
+                        });
                         var c = ct.lookupReference('parent.a');
                         var removed = ct.remove(0);
                         expect(ct.lookupReference('parent.a')).toBeNull();
                         removed.destroy();
                     });
 
-                    it("should not have a reference when only removing a container that has references", function() {
+                    it("should not have a reference when only removing a container that has references", function () {
                         makeContainer({
                             referenceHolder: true,
                             items: {
@@ -4394,19 +4400,19 @@ describe("Ext.container.Container", function() {
                                     reference: 'a'
                                 }
                             }
-                        });    
+                        });
                         var c = ct.lookupReference('parent.a');
                         var removed = ct.remove(0, false);
                         expect(ct.lookupReference('parent.a')).toBeNull();
                         removed.destroy();
                     });
-                    
-                    describe("docking", function() {
+
+                    describe("docking", function () {
                         function makePanel(cfg) {
                             ct = new Ext.panel.Panel(cfg);
                         }
 
-                        it("should not have a reference when removing an indirect child", function() {
+                        it("should not have a reference when removing an indirect child", function () {
                             makePanel({
                                 referenceHolder: true,
                                 dockedItems: {
@@ -4417,13 +4423,13 @@ describe("Ext.container.Container", function() {
                                         reference: 'a'
                                     }
                                 }
-                            });    
+                            });
                             var c = ct.lookupReference('parent.a');
                             c.destroy();
                             expect(ct.lookupReference('parent.a')).toBeNull();
                         });
 
-                        it("should not have a reference when removing+destroying a container that has references", function() {
+                        it("should not have a reference when removing+destroying a container that has references", function () {
                             makePanel({
                                 referenceHolder: true,
                                 dockedItems: {
@@ -4434,14 +4440,14 @@ describe("Ext.container.Container", function() {
                                         reference: 'a'
                                     }
                                 }
-                            });    
+                            });
                             var dock = ct.getDockedItems()[0];
 
                             ct.removeDocked(dock);
                             expect(ct.lookupReference('parent.a')).toBeNull();
                         });
 
-                        it("should not have a reference when only removing a container that has references", function() {
+                        it("should not have a reference when only removing a container that has references", function () {
                             makePanel({
                                 referenceHolder: true,
                                 dockedItems: {
@@ -4452,35 +4458,35 @@ describe("Ext.container.Container", function() {
                                         reference: 'a'
                                     }
                                 }
-                            });    
+                            });
                             var dock = ct.getDockedItems()[0];
 
                             var removed = ct.removeDocked(dock, false);
                             expect(ct.lookupReference('parent.a')).toBeNull();
                             removed.destroy();
-                        }); 
+                        });
                     });
                 });
-                
-                describe("docking", function() {
+
+                describe("docking", function () {
                     function makePanel(cfg) {
                         ct = new Ext.panel.Panel(cfg);
                     }
-                    
-                    it("should not have a reference when removing a direct child", function() {
+
+                    it("should not have a reference when removing a direct child", function () {
                         makePanel({
                             referenceHolder: true,
                             dockedItems: {
                                 xtype: 'component',
                                 reference: 'a'
                             }
-                        });    
+                        });
                         var c = ct.lookupReference('a');
                         c.destroy();
                         expect(ct.lookupReference('a')).toBeNull();
                     });
-                    
-                    it("should not have a reference when removing an indirect child", function() {
+
+                    it("should not have a reference when removing an indirect child", function () {
                         makePanel({
                             referenceHolder: true,
                             dockedItems: {
@@ -4490,13 +4496,13 @@ describe("Ext.container.Container", function() {
                                     reference: 'a'
                                 }
                             }
-                        });    
+                        });
                         var c = ct.lookupReference('a');
                         c.destroy();
                         expect(ct.lookupReference('a')).toBeNull();
                     });
-                    
-                    it("should not have a reference when removing+destroying a container that has references", function() {
+
+                    it("should not have a reference when removing+destroying a container that has references", function () {
                         makePanel({
                             referenceHolder: true,
                             dockedItems: {
@@ -4506,14 +4512,14 @@ describe("Ext.container.Container", function() {
                                     reference: 'a'
                                 }
                             }
-                        });    
+                        });
                         var dock = ct.getDockedItems()[0];
-                            
+
                         ct.removeDocked(dock);
                         expect(ct.lookupReference('a')).toBeNull();
                     });
-                    
-                    it("should not have a reference when only removing a container that has references", function() {
+
+                    it("should not have a reference when only removing a container that has references", function () {
                         makePanel({
                             referenceHolder: true,
                             dockedItems: {
@@ -4523,19 +4529,19 @@ describe("Ext.container.Container", function() {
                                     reference: 'a'
                                 }
                             }
-                        });    
+                        });
                         var dock = ct.getDockedItems()[0];
-                            
+
                         var removed = ct.removeDocked(dock, false);
                         expect(ct.lookupReference('a')).toBeNull();
                         removed.destroy();
-                    });    
+                    });
                 });
             });
         });
 
-        describe("setup", function() {
-            it("should not create references on the rootInheritedState if not requested", function() {
+        describe("setup", function () {
+            it("should not create references on the rootInheritedState if not requested", function () {
                 var vp = new Ext.container.Viewport({
                     referenceHolder: true
                 });
@@ -4562,23 +4568,23 @@ describe("Ext.container.Container", function() {
             });
         });
     });
-    
-    describe("view controllers", function() {
+
+    describe("view controllers", function () {
         var Controller;
-        beforeEach(function() {
+        beforeEach(function () {
             Controller = Ext.define('spec.TestController', {
                 extend: 'Ext.app.ViewController',
                 alias: 'controller.test'
             });
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             Controller = null;
             Ext.undefine('spec.TestController');
             Ext.Factory.controller.instance.clearCache();
         });
-        
-        it("should use a defined controller as a referenceHolder", function() {
+
+        it("should use a defined controller as a referenceHolder", function () {
             makeContainer({
                 controller: 'test',
                 items: {
@@ -4586,14 +4592,14 @@ describe("Ext.container.Container", function() {
                     itemId: 'compA',
                     reference: 'a'
                 }
-            });            
+            });
             expect(ct.lookupReference('a')).toBe(ct.down('#compA'));
-        });   
+        });
     });
-    
-    describe("defaultListenerScope", function() {
-        describe("static", function() {
-            it("should fire on a direct parent", function() {
+
+    describe("defaultListenerScope", function () {
+        describe("static", function () {
+            it("should fire on a direct parent", function () {
                 makeContainer({
                     defaultListenerScope: true,
                     items: {
@@ -4606,10 +4612,10 @@ describe("Ext.container.Container", function() {
                 });
                 ct.callFn = jasmine.createSpy();
                 ct.down('#compA').fireEvent('custom');
-                expect(ct.callFn).toHaveBeenCalled();    
+                expect(ct.callFn).toHaveBeenCalled();
             });
 
-            it("should fire on an indirect parent", function() {
+            it("should fire on an indirect parent", function () {
                 makeContainer({
                     defaultListenerScope: true,
                     items: {
@@ -4625,10 +4631,10 @@ describe("Ext.container.Container", function() {
                 });
                 ct.callFn = jasmine.createSpy();
                 ct.down('#compA').fireEvent('custom');
-                expect(ct.callFn).toHaveBeenCalled(); 
+                expect(ct.callFn).toHaveBeenCalled();
             });
 
-            it("should fire children in the same tree", function() {
+            it("should fire children in the same tree", function () {
                 makeContainer({
                     defaultListenerScope: true,
                     items: {
@@ -4649,10 +4655,10 @@ describe("Ext.container.Container", function() {
                 ct.callFn = jasmine.createSpy();
                 ct.down('#compA').fireEvent('custom');
                 ct.down('#compB').fireEvent('custom');
-                expect(ct.callFn.callCount).toBe(2); 
+                expect(ct.callFn.callCount).toBe(2);
             });
 
-            it("should fire when the ref holder isn't at the root", function() {
+            it("should fire when the ref holder isn't at the root", function () {
                 makeContainer({
                     items: {
                         defaultListenerScope: true,
@@ -4667,13 +4673,13 @@ describe("Ext.container.Container", function() {
                         }
                     }
                 });
-                var c = ct.down('#compA'); 
+                var c = ct.down('#compA');
                 c.callFn = jasmine.createSpy();
                 ct.down('#compB').fireEvent('custom');
-                expect(c.callFn).toHaveBeenCalled(); 
+                expect(c.callFn).toHaveBeenCalled();
             });
 
-            it("should only fire the event at the closest defaultListenerScope holder", function() {
+            it("should only fire the event at the closest defaultListenerScope holder", function () {
                 makeContainer({
                     defaultListenerScope: true,
                     items: {
@@ -4695,12 +4701,12 @@ describe("Ext.container.Container", function() {
 
                 ct.down('#compB').fireEvent('custom');
                 expect(c.callFn).toHaveBeenCalled();
-                expect(ct.callFn).not.toHaveBeenCalled(); 
+                expect(ct.callFn).not.toHaveBeenCalled();
             });
         });
-        
-        describe("dynamic", function() {
-            it("should fire on a direct parent", function() {
+
+        describe("dynamic", function () {
+            it("should fire on a direct parent", function () {
                 makeContainer({
                     defaultListenerScope: true
                 });
@@ -4717,7 +4723,7 @@ describe("Ext.container.Container", function() {
                 expect(ct.callFn).toHaveBeenCalled();
             });
 
-            it("should fire on an indirect parent", function() {
+            it("should fire on an indirect parent", function () {
                 makeContainer({
                     defaultListenerScope: true,
                     items: {
@@ -4737,7 +4743,7 @@ describe("Ext.container.Container", function() {
                 expect(ct.callFn).toHaveBeenCalled();
             });
 
-            it("should resolve a new method in a new hierarchy", function() {
+            it("should resolve a new method in a new hierarchy", function () {
                 makeContainer({
                     defaultListenerScope: true,
                     items: {
@@ -4771,7 +4777,7 @@ describe("Ext.container.Container", function() {
                 other.destroy();
             });
 
-            it("should resolve a new method in the same hierarchy", function() {
+            it("should resolve a new method in the same hierarchy", function () {
                 makeContainer({
                     defaultListenerScope: true,
                     items: {
@@ -4808,10 +4814,10 @@ describe("Ext.container.Container", function() {
         });
     });
 
-    describe("cascade", function() {
+    describe("cascade", function () {
         var spy;
 
-        beforeEach(function() {
+        beforeEach(function () {
             spy = jasmine.createSpy();
         });
 
@@ -4836,19 +4842,19 @@ describe("Ext.container.Container", function() {
             }
         }
 
-        it("should include the container as part of the calls", function() {
+        it("should include the container as part of the calls", function () {
             makeContainer();
             ct.cascade(spy);
             expectCalls([ct]);
         });
 
-        it("should return the container", function() {
+        it("should return the container", function () {
             makeContainer();
             expect(ct.cascade(spy)).toBe(ct);
         });
 
-        describe("call order", function() {
-            it("should call the container first", function() {
+        describe("call order", function () {
+            it("should call the container first", function () {
                 var a = comp(),
                     b = comp(),
                     c = comp();
@@ -4860,7 +4866,7 @@ describe("Ext.container.Container", function() {
                 expectCalls([ct, a, b, c]);
             });
 
-            it("should call children in item order", function() {
+            it("should call children in item order", function () {
                 var a = comp(),
                     b = comp(),
                     c = comp(),
@@ -4873,20 +4879,20 @@ describe("Ext.container.Container", function() {
                 expectCalls([ct, d, b, a, c]);
             });
 
-            it("should call depth first", function() {
+            it("should call depth first", function () {
                 var a1 = comp(),
                     a2 = comp(),
                     a3 = comp(),
-                    a  = wrap([a1, a2, a3]),
+                    a = wrap([a1, a2, a3]),
                     b1 = comp(),
-                    b  = wrap([b1]),
+                    b = wrap([b1]),
                     c1 = comp(),
                     c2 = comp(),
-                    c  = wrap([c1, c2]),
+                    c = wrap([c1, c2]),
                     d1 = comp(),
                     d2 = comp(),
                     d3 = comp(),
-                    d  = wrap([d1, d2, d3]);
+                    d = wrap([d1, d2, d3]);
 
                 makeContainer({
                     items: [a, b, c, d]
@@ -4902,8 +4908,8 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("scoping", function() {
-            it("should default the scope to the component", function() {
+        describe("scoping", function () {
+            it("should default the scope to the component", function () {
                 var a = comp(),
                     b = comp(),
                     c = comp();
@@ -4918,7 +4924,7 @@ describe("Ext.container.Container", function() {
                 expect(spy.calls[3].object).toBe(c);
             });
 
-            it("should use a passed scope", function() {
+            it("should use a passed scope", function () {
                 var a = comp(),
                     b = comp(),
                     c = comp(),
@@ -4935,8 +4941,8 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("args", function() {
-            it("should pass the component as the default args", function() {
+        describe("args", function () {
+            it("should pass the component as the default args", function () {
                 var a = comp(),
                     b = comp(),
                     c = comp();
@@ -4948,7 +4954,7 @@ describe("Ext.container.Container", function() {
                 expectCalls([ct, a, b, c]);
             });
 
-            it("should pass custom args and append the component", function() {
+            it("should pass custom args and append the component", function () {
                 var a = comp(),
                     b = comp(),
                     c = comp();
@@ -4964,8 +4970,8 @@ describe("Ext.container.Container", function() {
             });
         });
 
-        describe("stopping iteration", function() {
-            it("should stop iterating at the container if the callback returns false", function() {
+        describe("stopping iteration", function () {
+            it("should stop iterating at the container if the callback returns false", function () {
                 makeContainer({
                     items: [{}, {}, {}]
                 });
@@ -4974,19 +4980,19 @@ describe("Ext.container.Container", function() {
                 expect(spy.callCount).toBe(1);
             });
 
-            it("should stop iterating deeper if the callback returns false", function() {
+            it("should stop iterating deeper if the callback returns false", function () {
                 var a1 = comp(),
-                    a  = wrap([a1]),
+                    a = wrap([a1]),
                     b1 = comp(),
-                    b  = wrap([b1]),
+                    b = wrap([b1]),
                     c1 = comp(),
-                    c  = wrap([c1]);
+                    c = wrap([c1]);
 
                 makeContainer({
                     items: [a, b, c]
                 });
 
-                spy = spy.andCallFake(function() {
+                spy = spy.andCallFake(function () {
                     // Skip A
                     return this !== a;
                 });
@@ -4994,7 +5000,7 @@ describe("Ext.container.Container", function() {
                 expectCalls([ct, a, b, b1, c, c1]);
             });
 
-            it("should not stop iterating siblings if the callback returns false", function() {
+            it("should not stop iterating siblings if the callback returns false", function () {
                 var a = wrap([]),
                     b = wrap([]),
                     c = wrap([]),
@@ -5003,7 +5009,7 @@ describe("Ext.container.Container", function() {
                 makeContainer({
                     items: [a, b, c, d]
                 });
-                spy = spy.andCallFake(function() {
+                spy = spy.andCallFake(function () {
                     return this !== b;
                 });
                 ct.cascade(spy);
@@ -5011,10 +5017,10 @@ describe("Ext.container.Container", function() {
             });
         });
     });
-    
+
     // This spec is duplicated in Panel's suite; when adding something
     // really significant don't forget to copy it over there too.
-    describe("defaultFocus", function() {
+    describe("defaultFocus", function () {
         function makeCt(cfg) {
             makeContainer(Ext.apply({
                 renderTo: Ext.getBody(),
@@ -5022,11 +5028,11 @@ describe("Ext.container.Container", function() {
                 height: 100
             }, cfg));
         }
-        
-        describe("with defaultFocus", function() {
+
+        describe("with defaultFocus", function () {
             var fooCmp, barCmp;
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 makeCt({
                     items: [{
                         xtype: 'component',
@@ -5037,44 +5043,44 @@ describe("Ext.container.Container", function() {
                         html: 'bar'
                     }]
                 });
-                
+
                 fooCmp = ct.items.getAt(0);
                 barCmp = ct.items.getAt(1);
             });
-            
-            it("should return foo", function() {
+
+            it("should return foo", function () {
                 ct.defaultFocus = 'component';
-                
+
                 var focusEl = ct.getFocusEl();
-                
+
                 expect(focusEl).toBe(fooCmp);
             });
-            
-            it("should return bar", function() {
+
+            it("should return bar", function () {
                 ct.defaultFocus = '#bar';
-                
+
                 var focusEl = ct.getFocusEl();
-                
+
                 expect(focusEl).toBe(barCmp);
             });
         });
-        
-        describe("no defaultFocus", function() {
-            beforeEach(function() {
+
+        describe("no defaultFocus", function () {
+            beforeEach(function () {
                 makeCt();
             });
-            
-            it("should return targetEl when focusable", function() {
+
+            it("should return targetEl when focusable", function () {
                 ct.focusable = true;
-                
+
                 var focusEl = ct.getFocusEl();
-                
+
                 expect(focusEl).toBe(ct.getTargetEl());
             });
-            
-            it("should return undefined when not focusable", function() {
+
+            it("should return undefined when not focusable", function () {
                 var focusEl = ct.getFocusEl();
-                
+
                 expect(focusEl).toBe(undefined);
             });
         });

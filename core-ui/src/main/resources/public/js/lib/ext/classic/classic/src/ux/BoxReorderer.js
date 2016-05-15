@@ -63,11 +63,11 @@ Ext.define('Ext.ux.BoxReorderer', {
      * @param {Number} idx The index at which the Component is being dropped.
      */
 
-    constructor: function() {
+    constructor: function () {
         this.mixins.observable.constructor.apply(this, arguments);
     },
 
-    init: function(container) {
+    init: function (container) {
         var me = this;
 
         me.container = container;
@@ -75,7 +75,6 @@ Ext.define('Ext.ux.BoxReorderer', {
         // Set our animatePolicy to animate the start position (ie x for HBox, y for VBox)
         me.animatePolicy = {};
         me.animatePolicy[container.getLayout().names.x] = true;
-
 
 
         // Initialize the DD on first layout, when the innerCt has been created.
@@ -90,7 +89,7 @@ Ext.define('Ext.ux.BoxReorderer', {
      * @private
      * Clear up on Container destroy
      */
-    onContainerDestroy: function() {
+    onContainerDestroy: function () {
         var dd = this.dd;
         if (dd) {
             dd.unreg();
@@ -98,7 +97,7 @@ Ext.define('Ext.ux.BoxReorderer', {
         }
     },
 
-    onBoxReady: function() {
+    onBoxReady: function () {
         var me = this,
             layout = me.container.getLayout(),
             names = layout.names,
@@ -132,19 +131,19 @@ Ext.define('Ext.ux.BoxReorderer', {
         dd.endAttr = names.afterX;
     },
 
-    getDragCmp: function(e) {
+    getDragCmp: function (e) {
         return this.container.getChildByElement(e.getTarget(this.itemSelector, 10));
     },
 
     // check if the clicked component is reorderable
-    clickValidator: function(e) {
+    clickValidator: function (e) {
         var cmp = this.getDragCmp(e);
 
         // If cmp is null, this expression MUST be coerced to boolean so that createInterceptor is able to test it against false
         return !!(cmp && cmp.reorderable !== false);
     },
 
-    onMouseDown: function(e) {
+    onMouseDown: function (e) {
         var me = this,
             container = me.container,
             containerBox,
@@ -181,7 +180,7 @@ Ext.define('Ext.ux.BoxReorderer', {
         }
     },
 
-    startDrag: function() {
+    startDrag: function () {
         var me = this,
             dragCmp = me.dragCmp;
 
@@ -213,7 +212,7 @@ Ext.define('Ext.ux.BoxReorderer', {
      * @param {Number} newIndex The initial drop index.
      * @return {Number} The index of the reorderable component.
      */
-    findReorderable: function(newIndex) {
+    findReorderable: function (newIndex) {
         var me = this,
             items = me.container.items,
             newItem;
@@ -221,12 +220,12 @@ Ext.define('Ext.ux.BoxReorderer', {
         if (items.getAt(newIndex).reorderable === false) {
             newItem = items.getAt(newIndex);
             if (newIndex > me.startIndex) {
-                 while(newItem && newItem.reorderable === false) {
+                while (newItem && newItem.reorderable === false) {
                     newIndex++;
                     newItem = items.getAt(newIndex);
                 }
             } else {
-                while(newItem && newItem.reorderable === false) {
+                while (newItem && newItem.reorderable === false) {
                     newIndex--;
                     newItem = items.getAt(newIndex);
                 }
@@ -246,7 +245,7 @@ Ext.define('Ext.ux.BoxReorderer', {
      * Swap 2 components.
      * @param {Number} newIndex The initial drop index.
      */
-    doSwap: function(newIndex) {
+    doSwap: function (newIndex) {
         var me = this,
             items = me.container.items,
             container = me.container,
@@ -275,7 +274,7 @@ Ext.define('Ext.ux.BoxReorderer', {
         me.curIndex = newIndex;
     },
 
-    onDrag: function(e) {
+    onDrag: function (e) {
         var me = this,
             newIndex;
 
@@ -287,7 +286,7 @@ Ext.define('Ext.ux.BoxReorderer', {
 
     },
 
-    endDrag: function(e) {
+    endDrag: function (e) {
         if (e) {
             e.stopEvent();
         }
@@ -335,7 +334,7 @@ Ext.define('Ext.ux.BoxReorderer', {
      * Called after the boxes have been reflowed after the drop.
      * Re-enabled the dragged Component.
      */
-    afterBoxReflow: function() {
+    afterBoxReflow: function () {
         var me = this;
         me.dragCmp.el.setStyle('zIndex', '');
         me.dragCmp.disabled = false;
@@ -346,7 +345,7 @@ Ext.define('Ext.ux.BoxReorderer', {
      * @private
      * Calculate drop index based upon the dragEl's position.
      */
-    getNewIndex: function(pointerPos) {
+    getNewIndex: function (pointerPos) {
         var me = this,
             dragEl = me.getDragEl(),
             dragBox = Ext.fly(dragEl).getBox(),

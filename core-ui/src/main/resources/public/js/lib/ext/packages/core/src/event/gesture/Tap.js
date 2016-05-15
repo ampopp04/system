@@ -17,7 +17,7 @@ Ext.define('Ext.event.gesture.Tap', {
         moveDistance: 8
     },
 
-    onTouchStart: function(e) {
+    onTouchStart: function (e) {
         if (this.callParent([e]) === false) {
             return false;
         }
@@ -25,7 +25,7 @@ Ext.define('Ext.event.gesture.Tap', {
         this.startPoint = e.changedTouches[0].point;
     },
 
-    onTouchMove: function(e) {
+    onTouchMove: function (e) {
         var touch = e.changedTouches[0],
             point = touch.point;
 
@@ -37,23 +37,23 @@ Ext.define('Ext.event.gesture.Tap', {
         }
     },
 
-    onTouchEnd: function(e) {
+    onTouchEnd: function (e) {
         this.fire('tap', e, {
             touch: e.changedTouches[0]
         });
     },
 
-    onTouchCancel: function(e) {
+    onTouchCancel: function (e) {
         this.fire('tapcancel', e, {
             touch: e.changedTouches[0]
         });
         return false;
     },
 
-    reset: function() {
+    reset: function () {
         this.startPoint = null;
     }
-}, function(Tap) {
+}, function (Tap) {
     var gestures = Ext.manifest.gestures;
     Tap.instance = new Tap(gestures && gestures.tap);
 });

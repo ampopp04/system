@@ -11,13 +11,13 @@ Ext.define('Ext.layout.container.SegmentedButton', {
 
     _btnRowCls: Ext.baseCSSPrefix + 'segmented-button-row',
 
-    getRenderTree: function() {
+    getRenderTree: function () {
         var me = this,
             result = me.callParent(),
             i, ln;
 
         if (me.owner.getVertical()) {
-            for (i = 0, ln = result.length; i< ln; i++) {
+            for (i = 0, ln = result.length; i < ln; i++) {
                 result[i] = {
                     cls: me._btnRowCls,
                     cn: result[i]
@@ -28,13 +28,13 @@ Ext.define('Ext.layout.container.SegmentedButton', {
         return result;
     },
 
-    getItemLayoutEl: function(item) {
+    getItemLayoutEl: function (item) {
         var dom = item.el.dom;
 
         return this.owner.getVertical() ? dom.parentNode : dom;
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         // The items of a Segmented Button create an Ext.dom.Element reference
         // to their "container" element (see Ext.util.Renderable#finishRender)
         // for vertical Segmented Buttons this container ends up being the

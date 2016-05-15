@@ -1,16 +1,16 @@
-describe("Ext.app.domain.Global", function() {
+describe("Ext.app.domain.Global", function () {
     var ctrl, panel, spy;
-    
-    beforeEach(function() {
+
+    beforeEach(function () {
         spy = jasmine.createSpy();
-        ctrl = new Ext.app.Controller({ id: 'foo' });
+        ctrl = new Ext.app.Controller({id: 'foo'});
     });
-    
-    afterEach(function() {
+
+    afterEach(function () {
         spy = ctrl = panel = Ext.destroy(panel, ctrl);
     });
 
-    it("should ignore case on event names", function() {
+    it("should ignore case on event names", function () {
         ctrl.listen({
             global: {
                 foo: spy
@@ -18,32 +18,32 @@ describe("Ext.app.domain.Global", function() {
         });
 
         Ext.GlobalEvents.fireEvent('FOO');
-        
+
         expect(spy).toHaveBeenCalled();
     });
-    
-    it("listens to global events by id", function() {
+
+    it("listens to global events by id", function () {
         ctrl.listen({
             global: {
                 afterlayout: spy
             }
         });
-        
+
         panel = new Ext.panel.Panel({
             height: 100,
-            width:  100,
-            
+            width: 100,
+
             html: 'foo',
-            
+
             renderTo: Ext.getBody()
         });
-        
+
         expect(spy).toHaveBeenCalled();
     });
 
-    it("should pass the event data & default the scope to the controller", function() {
-        var data = [{ foo: 1, bar: 2}, { foo: 3, bar: 4}];
-        
+    it("should pass the event data & default the scope to the controller", function () {
+        var data = [{foo: 1, bar: 2}, {foo: 3, bar: 4}];
+
         ctrl.listen({
             global: {
                 bar: spy
@@ -51,12 +51,12 @@ describe("Ext.app.domain.Global", function() {
         });
 
         Ext.GlobalEvents.fireEvent('bar', data);
-        
+
         expect(spy.mostRecentCall.args[0]).toBe(data);
         expect(spy.mostRecentCall.object).toBe(ctrl);
     });
 
-    it("should be able to listen over multiple listen calls", function() {
+    it("should be able to listen over multiple listen calls", function () {
         var other = jasmine.createSpy();
         ctrl.listen({
             global: {
@@ -80,7 +80,7 @@ describe("Ext.app.domain.Global", function() {
         expect(spy).not.toHaveBeenCalled();
     });
 
-    it("should remove all listeners when the controller is destroyed", function() {
+    it("should remove all listeners when the controller is destroyed", function () {
         ctrl.listen({
             global: {
                 foo: spy
@@ -100,8 +100,8 @@ describe("Ext.app.domain.Global", function() {
         expect(spy).not.toHaveBeenCalled();
     });
 
-    it("should only remove listeners for the controller on unlisten", function() {
-        var ctrl2 = new Ext.app.Controller({ id: 'other' }),
+    it("should only remove listeners for the controller on unlisten", function () {
+        var ctrl2 = new Ext.app.Controller({id: 'other'}),
             other = jasmine.createSpy();
 
         ctrl.listen({

@@ -1,4 +1,4 @@
-describe('Ext.ZIndexManager', function() {
+describe('Ext.ZIndexManager', function () {
     function cancelFocus() {
         var task = Ext.focusTask;
         if (task) {
@@ -6,10 +6,10 @@ describe('Ext.ZIndexManager', function() {
         }
     }
 
-    describe('z-index stacking', function() {
+    describe('z-index stacking', function () {
         var c1, c2, c3;
 
-        beforeEach(function() {
+        beforeEach(function () {
             c1 = new Ext.window.Window({
                 title: 'c1',
                 id: 'c1',
@@ -32,11 +32,11 @@ describe('Ext.ZIndexManager', function() {
                 focusOnToFront: false
             });
         });
-        afterEach(function() {
+        afterEach(function () {
             Ext.destroy(c1, c2, c3);
         });
-        
-        it('should order the windows as they are rendered', function() {
+
+        it('should order the windows as they are rendered', function () {
             c1.show();
             c2.show();
             c3.show();
@@ -47,7 +47,7 @@ describe('Ext.ZIndexManager', function() {
             expect(c3.el.getZIndex()).toBeGreaterThan(c2.el.getZIndex());
             expect(c2.el.getZIndex()).toBeGreaterThan(c1.el.getZIndex());
         });
-        it('should re-order the windows on mousedown', function() {
+        it('should re-order the windows on mousedown', function () {
             c1.showAt(0, 0);
             c2.showAt(50, 0);
             c3.showAt(100, 0);
@@ -58,13 +58,13 @@ describe('Ext.ZIndexManager', function() {
             c1.onMouseDown({
                 target: c1.el.dom
             });
-            
+
             // Mousedown moves to top
             // Order bottom up should be c2, c3, c1
             expect(c1.el.getZIndex()).toBeGreaterThan(c3.el.getZIndex());
             expect(c3.el.getZIndex()).toBeGreaterThan(c2.el.getZIndex());
         });
-        it('should honour alwaysOnTop', function() {
+        it('should honour alwaysOnTop', function () {
             c1.setAlwaysOnTop(true);
             c1.showAt(0, 0);
             c2.showAt(50, 0);
@@ -88,7 +88,7 @@ describe('Ext.ZIndexManager', function() {
             expect(c3.el.getZIndex()).toBeGreaterThan(c2.el.getZIndex());
 
         });
-        it('should sort to the bottom of the ZIndexStack if alwaysOnTop === -1', function() {
+        it('should sort to the bottom of the ZIndexStack if alwaysOnTop === -1', function () {
             c3.setAlwaysOnTop(-1);
             c1.showAt(0, 0);
             c2.showAt(50, 0);
@@ -101,7 +101,7 @@ describe('Ext.ZIndexManager', function() {
             expect(c2.el.getZIndex()).toBeGreaterThan(c1.el.getZIndex());
             expect(c1.el.getZIndex()).toBeGreaterThan(c3.el.getZIndex());
         });
-        it('should order parents', function() {
+        it('should order parents', function () {
             // c2's ZIndexManager now manages C3's zIndex
             c2.add(c3);
 
@@ -134,7 +134,7 @@ describe('Ext.ZIndexManager', function() {
             expect(c2.el.getZIndex()).toBeGreaterThan(c1.el.getZIndex());
         });
 
-        it("should assign a z-index to a floater that is rendered visible", function() {
+        it("should assign a z-index to a floater that is rendered visible", function () {
             var c = new Ext.Component({
                 renderTo: Ext.getBody(),
                 floating: true,
@@ -146,10 +146,10 @@ describe('Ext.ZIndexManager', function() {
         });
     });
 
-    describe("modal masking", function() {
+    describe("modal masking", function () {
         var w, mask;
 
-        afterEach(function() {
+        afterEach(function () {
             Ext.destroy(w);
             mask = w = null;
         });
@@ -164,8 +164,8 @@ describe('Ext.ZIndexManager', function() {
             }));
         }
 
-        describe("mask visibility", function() {
-            beforeEach(function() {
+        describe("mask visibility", function () {
+            beforeEach(function () {
                 makeWindow();
                 mask = w.zIndexManager.mask;
             });
@@ -174,103 +174,103 @@ describe('Ext.ZIndexManager', function() {
                 return parseInt(w.zIndexManager.mask.getStyle('z-index'), 10);
             }
 
-            it("should show the mask below the floater when open", function() {
+            it("should show the mask below the floater when open", function () {
                 expect(mask.isVisible()).toBe(true);
                 expect(getMaskIndex()).toBeLessThan(w.getEl().getZIndex());
             });
 
-            it("should re-show the mask after hiding then showing", function() {
+            it("should re-show the mask after hiding then showing", function () {
                 w.hide();
                 w.show();
                 expect(mask.isVisible()).toBe(true);
             });
 
-            it("should hide the modal mask when hiding the last floater", function() {
+            it("should hide the modal mask when hiding the last floater", function () {
                 w.hide();
                 expect(mask.isVisible()).toBe(false);
             });
 
-            it("should hide the modal mask when destroying the last floater", function() {
+            it("should hide the modal mask when destroying the last floater", function () {
                 w.destroy();
                 expect(mask.isVisible()).toBe(false);
             });
         });
-        
-        describe("element tabbability", function() {
+
+        describe("element tabbability", function () {
             var btn, tabbables;
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 btn = new Ext.button.Button({
                     renderTo: Ext.getBody(),
                     text: 'foo'
                 });
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 Ext.destroy(btn);
                 btn = null;
             });
-            
-            describe("components below mask", function() {
-                beforeEach(function() {
+
+            describe("components below mask", function () {
+                beforeEach(function () {
                     makeWindow();
                 });
-                
-                it("button should become untabbable on mask show", function() {
+
+                it("button should become untabbable on mask show", function () {
                     // skipSelf = true, skipChildren = false, excludeRoot = w.el
                     tabbables = Ext.getBody().findTabbableElements({
                         skipSelf: true,
                         excludeRoot: w.el
                     });
-                    
+
                     expect(tabbables.length).toBe(0);
                 });
-                
-                it("button should become tabbable on mask hide", function() {
+
+                it("button should become tabbable on mask hide", function () {
                     w.hide();
-                    
+
                     // skipSelf = true, skipChildren = false, excludeRoot = w.el
                     tabbables = Ext.getBody().findTabbableElements({
                         skipSelf: true,
                         excludeRoot: w.el
                     });
-                    
-                    expect(tabbables).toEqual([ btn.getFocusEl().dom ]);
+
+                    expect(tabbables).toEqual([btn.getFocusEl().dom]);
                 });
-                
-                it("button should become untabbable on mask show/hide/show", function() {
+
+                it("button should become untabbable on mask show/hide/show", function () {
                     w.hide();
                     w.show();
-                    
+
                     // skipSelf = true, skipChildren = false, excludeRoot = w.el
                     tabbables = Ext.getBody().findTabbableElements({
                         skipSelf: true,
                         excludeRoot: w.el
                     });
-                    
+
                     expect(tabbables.length).toBe(0);
                 });
             });
-            
-            describe("components above mask", function() {
-                beforeEach(function() {
+
+            describe("components above mask", function () {
+                beforeEach(function () {
                     makeWindow({
                         items: [
-                            { xtype: 'textfield', fieldLabel: 'Login' },
-                            { xtype: 'textfield', fieldLabel: 'Password' }
+                            {xtype: 'textfield', fieldLabel: 'Login'},
+                            {xtype: 'textfield', fieldLabel: 'Password'}
                         ],
-                        
+
                         buttons: [
-                            { text: 'OK' }
+                            {text: 'OK'}
                         ]
                     });
                 });
-                
-                it("should keep items above the mask tabbable", function() {
+
+                it("should keep items above the mask tabbable", function () {
                     tabbables = w.getEl().findTabbableElements({
                         skipSelf: true
                     });
-                    
+
                     // 6 tababbles:
                     // - Top focus trap
                     // - Window header (it's a FocusableContainer)
@@ -283,16 +283,16 @@ describe('Ext.ZIndexManager', function() {
             });
         });
 
-        describe("mask size", function() {
+        describe("mask size", function () {
             // Not sure how to simulate a body resize here
-            it("should size the mask to the body if the manager is global", function() {
+            it("should size the mask to the body if the manager is global", function () {
                 makeWindow();
                 mask = w.zIndexManager.mask;
                 expect(mask.getSize()).toEqual(Ext.Element.getViewSize());
                 expect(mask).toHaveCls(Ext.Component.prototype.borderBoxCls);
             });
 
-            it("should set the mask to the size of the container", function() {
+            it("should set the mask to the size of the container", function () {
                 var ct = new Ext.container.Container({
                     renderTo: Ext.getBody(),
                     width: 400,
@@ -317,7 +317,7 @@ describe('Ext.ZIndexManager', function() {
             });
 
             // This currently doesn't work, but probably should
-            xit("should resize the mask when the container resizes", function() {
+            xit("should resize the mask when the container resizes", function () {
                 var ct = new Ext.container.Container({
                     renderTo: Ext.getBody(),
                     width: 400,
@@ -345,8 +345,8 @@ describe('Ext.ZIndexManager', function() {
         });
     });
 
-    describe("hideAll", function() {
-        it("should hide all visible items", function() {
+    describe("hideAll", function () {
+        it("should hide all visible items", function () {
             var a = new Ext.window.Window({
                 width: 100,
                 height: 100,
@@ -371,7 +371,7 @@ describe('Ext.ZIndexManager', function() {
             Ext.destroy(a, b, c);
         });
 
-        it("should be able to show/hide the modal mask after a hideAll call", function() {
+        it("should be able to show/hide the modal mask after a hideAll call", function () {
             var a = new Ext.window.Window({
                 width: 100,
                 height: 100,
@@ -412,8 +412,8 @@ describe('Ext.ZIndexManager', function() {
     });
 
     // testcase for https://sencha.jira.com/browse/EXTJS-14046
-    describe("picker field's pickers should stick to back if alwaysOnTop is set to -1", function() {
-        it('should keep pickers below all other floating components', function() {
+    describe("picker field's pickers should stick to back if alwaysOnTop is set to -1", function () {
+        it('should keep pickers below all other floating components', function () {
             var windowCombo,
                 combo = new Ext.form.ComboBox({
                     store: ['A', 'b', 'C'],
@@ -432,8 +432,8 @@ describe('Ext.ZIndexManager', function() {
                 window = new Ext.window.Window({
                     autoShow: true,
                     title: 'Test',
-                    x:200,
-                    y:0,
+                    x: 200,
+                    y: 0,
                     width: 400,
                     height: 400,
                     items: [
@@ -467,13 +467,13 @@ describe('Ext.ZIndexManager', function() {
             // The combo dropdown should be below the window
             combo.expand();
             expect(combo.getPicker().el.getZIndex()).toBeLessThan(window.el.getZIndex());
-            
+
             Ext.destroy(combo, dateField, window);
         });
     });
 
-    describe("bringToFront", function() {
-        it("should return false when bringing to front a non-rendered window, when passing id", function() {
+    describe("bringToFront", function () {
+        it("should return false when bringing to front a non-rendered window, when passing id", function () {
             var win = new Ext.window.Window({
                 title: 'Win',
                 id: 'theWin',
@@ -482,24 +482,24 @@ describe('Ext.ZIndexManager', function() {
             });
             expect(Ext.WindowManager.bringToFront('theWin')).toBe(false);
             win.destroy();
-        });   
+        });
     });
-    
+
     // This test would better fit a Floating test suite but it's not clear
     // where the concerns are separated since Floating code is private
     // and is supposed to be called by ZIndexManager only. So let it be here.
-    describe("focus handling", function() {
+    describe("focus handling", function () {
         var focusAndWait = jasmine.focusAndWait,
             waitForFocus = jasmine.waitForFocus,
             expectFocused = jasmine.expectFocused,
             btn, win, input1, input2;
-        
-        beforeEach(function() {
+
+        beforeEach(function () {
             btn = new Ext.button.Button({
                 renderTo: Ext.getBody(),
                 text: 'foo'
             });
-            
+
             win = new Ext.window.Window({
                 title: 'bar',
                 width: 200,
@@ -507,7 +507,7 @@ describe('Ext.ZIndexManager', function() {
                 x: 30,
                 y: 30,
                 closeAction: 'hide',
-                
+
                 items: [{
                     xtype: 'textfield',
                     itemId: 'input1'
@@ -517,59 +517,59 @@ describe('Ext.ZIndexManager', function() {
                     allowBlank: false
                 }]
             });
-            
+
             input1 = win.down('#input1');
             input2 = win.down('#input2');
-            
+
             focusAndWait(btn);
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             Ext.destroy(win, btn);
-            
+
             btn = win = input1 = input2 = null;
         });
 
-        describe("focusable floater show/hide with no animation", function() {
-            beforeEach(function() {
+        describe("focusable floater show/hide with no animation", function () {
+            beforeEach(function () {
                 win.show();
-            
+
                 waitForFocus(win);
             });
-            
-            it("should focus the window on show", function() {
+
+            it("should focus the window on show", function () {
                 expectFocused(win);
             });
-        
-            it("should focus the button back on window hide", function() {
+
+            it("should focus the button back on window hide", function () {
                 win.close();
-            
+
                 expectFocused(btn);
             });
         });
-        
-        describe("focusable floater show/hide with animation", function() {
-            beforeEach(function() {
+
+        describe("focusable floater show/hide with animation", function () {
+            beforeEach(function () {
                 win.show(btn);
-            
+
                 waitForFocus(win);
             });
-            
-            it("should focus the window on show", function() {
+
+            it("should focus the window on show", function () {
                 expectFocused(win);
             });
-        
-            it("should focus the button back on window hide", function() {
+
+            it("should focus the button back on window hide", function () {
                 win.close(btn);
-            
+
                 expectFocused(btn);
             });
         });
-        
-        describe("non-focusable floater show/hide", function() {
+
+        describe("non-focusable floater show/hide", function () {
             var panel;
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 panel = new Ext.panel.Panel({
                     floating: true,
                     title: 'floating',
@@ -579,36 +579,36 @@ describe('Ext.ZIndexManager', function() {
                     y: 30,
                     html: 'floating panel'
                 });
-                
+
                 win.show();
-                
+
                 focusAndWait(input2);
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 Ext.destroy(panel);
             });
-            
-            it("should not steal focus on floater show", function() {
+
+            it("should not steal focus on floater show", function () {
                 panel.show();
-            
+
                 expectFocused(input2);
             });
-            
-            it("should not munge focus on floater hide", function() {
+
+            it("should not munge focus on floater hide", function () {
                 panel.show();
                 panel.hide();
-                
+
                 expectFocused(input2);
             });
         });
-        
-        describe("event order", function() {
-            it("should fire floater hide event after sorting zIndexStack", function() {
+
+        describe("event order", function () {
+            it("should fire floater hide event after sorting zIndexStack", function () {
                 var oldOnCollectionSort = Ext.WindowManager.onCollectionSort,
                     events = [],
                     win;
-                
+
                 win = new Ext.window.Window({
                     title: 'foo',
                     width: 300,
@@ -617,43 +617,43 @@ describe('Ext.ZIndexManager', function() {
                     y: 10,
                     closeAction: 'hide',
                     listeners: {
-                        hide: function() {
+                        hide: function () {
                             events.push('hide');
                         }
                     }
                 }).show();
-                
+
                 // Can't use jasmine spy here because it can't be chained
-                Ext.WindowManager.onCollectionSort = function() {
+                Ext.WindowManager.onCollectionSort = function () {
                     events.push('sort');
                     oldOnCollectionSort.call(Ext.WindowManager);
                 };
-                
+
                 // Event flow is synchronous here
                 win.close();
-                
+
                 expect(events).toEqual(['sort', 'hide']);
-                
+
                 Ext.WindowManager.onCollectionSort = oldOnCollectionSort;
-                
+
                 win.destroy();
-                
+
                 win = null;
             });
         });
     });
 
-    describe('focus restoration after window drag', function() {
+    describe('focus restoration after window drag', function () {
         var win;
-        
-        afterEach(function() {
+
+        afterEach(function () {
             win.destroy();
             win = null;
         });
-        
-        it('should restore focus after showing', function() {
+
+        it('should restore focus after showing', function () {
             var xy, x, child, text;
-            
+
             win = new Ext.window.Window({
                 title: 'Test Window',
                 width: 410,
@@ -682,7 +682,7 @@ describe('Ext.ZIndexManager', function() {
 
             jasmine.waitForFocus(text);
 
-            runs(function() {
+            runs(function () {
                 expect(text.hasFocus).toBe(true);
                 // Drag the Window by the header
                 jasmine.fireMouseEvent(win.header.el, 'mousedown', x);
@@ -698,7 +698,7 @@ describe('Ext.ZIndexManager', function() {
             });
 
             jasmine.waitForFocus(text);
-            runs(function() {
+            runs(function () {
                 expect(text.hasFocus).toBe(true);
             });
         });

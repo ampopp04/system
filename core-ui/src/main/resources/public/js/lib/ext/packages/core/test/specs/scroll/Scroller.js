@@ -1,21 +1,21 @@
-describe("Ext.scroll.Scroller", function() {
+describe("Ext.scroll.Scroller", function () {
     var scroller, el;
 
-    describe("instantiation", function() {
+    describe("instantiation", function () {
         var originalSupportsTouch;
 
-        beforeEach(function() {
+        beforeEach(function () {
             el = Ext.getBody().createChild();
             originalSupportsTouch = Ext.supports.Touch;
         });
 
-        afterEach(function() {
+        afterEach(function () {
             el.destroy();
             scroller.destroy();
             Ext.supports.Touch = originalSupportsTouch;
         });
 
-        it("should create an instance of Ext.scroll.DomScroller if Ext.supports.Touch is false", function() {
+        it("should create an instance of Ext.scroll.DomScroller if Ext.supports.Touch is false", function () {
             Ext.supports.Touch = false;
             scroller = Ext.scroll.Scroller.create({
                 element: el
@@ -24,7 +24,7 @@ describe("Ext.scroll.Scroller", function() {
             expect(scroller instanceof Ext.scroll.DomScroller).toBe(true);
         });
 
-        (Ext.isIE9m ? xit : it)("should create an instance of Ext.scroll.TouchScroller if Ext.supports.Touch is true", function() {
+        (Ext.isIE9m ? xit : it)("should create an instance of Ext.scroll.TouchScroller if Ext.supports.Touch is true", function () {
             Ext.supports.Touch = true;
             scroller = Ext.scroll.Scroller.create({
                 element: el
@@ -34,14 +34,14 @@ describe("Ext.scroll.Scroller", function() {
         });
     });
 
-    describe("configuring the element", function() {
-        afterEach(function() {
+    describe("configuring the element", function () {
+        afterEach(function () {
             if (el && !el.destroyed) {
                 Ext.fly(el).destroy();
             }
         });
 
-        it("should accept an HTMLElement", function() {
+        it("should accept an HTMLElement", function () {
             el = document.createElement('div');
             document.body.appendChild(el, true);
 
@@ -53,7 +53,7 @@ describe("Ext.scroll.Scroller", function() {
             expect(scroller.getElement().dom).toBe(el);
         });
 
-        it("should accept an Element ID", function() {
+        it("should accept an Element ID", function () {
             el = document.createElement('div');
             el.id = 'theEl';
             document.body.appendChild(el, true);
@@ -66,7 +66,7 @@ describe("Ext.scroll.Scroller", function() {
             expect(scroller.getElement().dom).toBe(el);
         });
 
-        it("should accept an Ext.dom.Element", function() {
+        it("should accept an Ext.dom.Element", function () {
             el = Ext.getBody().createChild();
 
             scroller = new Ext.scroll.Scroller({
@@ -76,8 +76,8 @@ describe("Ext.scroll.Scroller", function() {
             expect(scroller.getElement()).toBe(el);
         });
 
-        it("should throw an error if element with given id not found", function() {
-            expect(function() {
+        it("should throw an error if element with given id not found", function () {
+            expect(function () {
                 scroller = new Ext.scroll.Scroller({
                     element: 'foobarelement'
                 });

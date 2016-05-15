@@ -4,7 +4,7 @@
 Ext.define('Ext.fx.runner.CssAnimation', {
     extend: 'Ext.fx.runner.Css',
 
-    constructor: function() {
+    constructor: function () {
         this.runningAnimationsMap = {};
 
         this.elementEndStates = {};
@@ -18,7 +18,7 @@ Ext.define('Ext.fx.runner.CssAnimation', {
         return this.callParent(arguments);
     },
 
-    attachListeners: function() {
+    attachListeners: function () {
         this.listenersAttached = true;
 
         Ext.getWin().on({
@@ -28,7 +28,7 @@ Ext.define('Ext.fx.runner.CssAnimation', {
         });
     },
 
-    onAnimationStart: function(e) {
+    onAnimationStart: function (e) {
         var name = e.browserEvent.animationName,
             elementId = this.animationElementMap[name],
             animation = this.runningAnimationsMap[elementId][name],
@@ -53,7 +53,7 @@ Ext.define('Ext.fx.runner.CssAnimation', {
         }
     },
 
-    onAnimationEnd: function(e) {
+    onAnimationEnd: function (e) {
         var element = e.target,
             name = e.browserEvent.animationName,
             animationElementMap = this.animationElementMap,
@@ -78,11 +78,11 @@ Ext.define('Ext.fx.runner.CssAnimation', {
         this.removeKeyframesRule(name);
     },
 
-    generateAnimationId: function() {
+    generateAnimationId: function () {
         return 'animation-' + (++this.uniqueId);
     },
 
-    run: function(animations) {
+    run: function (animations) {
         var data = {},
             elementEndStates = this.elementEndStates,
             animationElementMap = this.animationElementMap,
@@ -98,7 +98,7 @@ Ext.define('Ext.fx.runner.CssAnimation', {
 
         animations = Ext.Array.from(animations);
 
-        for (i = 0,ln = animations.length; i < ln; i++) {
+        for (i = 0, ln = animations.length; i < ln; i++) {
             animation = animations[i];
 
             animation = Ext.factory(animation, Ext.fx.Animation);
@@ -141,12 +141,12 @@ Ext.define('Ext.fx.runner.CssAnimation', {
             }
 
             data[elementId] = {
-                'animation-name'            : names,
-                'animation-duration'        : durations,
-                'animation-timing-function' : easings,
-                'animation-delay'           : delays,
-                'animation-direction'       : directions,
-                'animation-iteration-count' : iterations
+                'animation-name': names,
+                'animation-duration': durations,
+                'animation-timing-function': easings,
+                'animation-delay': delays,
+                'animation-direction': directions,
+                'animation-iteration-count': iterations
             };
 
 //            Ext.apply(data[elementId], animation.origin);
@@ -159,7 +159,7 @@ Ext.define('Ext.fx.runner.CssAnimation', {
         this.applyStyles(data);
     },
 
-    addKeyframesRule: function(name, keyframes) {
+    addKeyframesRule: function (name, keyframes) {
         var percentage, properties,
             keyframesRule,
             styleSheet, rules, styles, rulesLength, key, value;
@@ -192,12 +192,12 @@ Ext.define('Ext.fx.runner.CssAnimation', {
         return this;
     },
 
-    removeKeyframesRule: function(name) {
+    removeKeyframesRule: function (name) {
         var styleSheet = this.getStyleSheet(),
             rules = styleSheet.cssRules,
             i, ln, rule;
 
-        for (i = 0,ln = rules.length; i < ln; i++) {
+        for (i = 0, ln = rules.length; i < ln; i++) {
             rule = rules[i];
 
             if (rule.name === name) {

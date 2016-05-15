@@ -13,15 +13,15 @@ Ext.define('Ext.direct.Event', {
      * Creates new Event.
      * @param {Object} [config] Config object.
      */
-    constructor: function(config) {
+    constructor: function (config) {
         Ext.apply(this, config);
     },
-    
+
     /**
      * Return the name for this event.
      * @return {String} The name of event
      */
-    getName: function() {
+    getName: function () {
         return this.name;
     },
 
@@ -29,7 +29,7 @@ Ext.define('Ext.direct.Event', {
      * Return the raw data for this event.
      * @return {Mixed} The data from the event
      */
-    getData: function() {
+    getData: function () {
         return this.data;
     }
 });

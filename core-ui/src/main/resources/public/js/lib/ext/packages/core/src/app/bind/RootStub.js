@@ -10,7 +10,7 @@ Ext.define('Ext.app.bind.RootStub', {
     ],
 
     isRootStub: true,
-    
+
     depth: 0,
 
     createRootChild: function (name, direct) {
@@ -35,8 +35,8 @@ Ext.define('Ext.app.bind.RootStub', {
 
         return stub;
     },
-    
-    createStubChild: function(name) {
+
+    createStubChild: function (name) {
         return this.createRootChild(name, true);
     },
 
@@ -128,6 +128,6 @@ Ext.define('Ext.app.bind.RootStub', {
     },
 
     schedule: Ext.emptyFn,
-    
+
     unschedule: Ext.emptyFn
 });

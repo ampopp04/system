@@ -4,7 +4,7 @@
 Ext.define('Ext.AnimationQueue', {
     singleton: true,
 
-    constructor: function() {
+    constructor: function () {
         var me = this;
 
         me.queue = [];
@@ -32,7 +32,7 @@ Ext.define('Ext.AnimationQueue', {
      * @param {Object} [scope]
      * @param {Object} [args]
      */
-    start: function(fn, scope, args) {
+    start: function (fn, scope, args) {
         var me = this;
 
         me.queue.push(arguments);
@@ -58,13 +58,13 @@ Ext.define('Ext.AnimationQueue', {
         }
     },
 
-    watch: function() {
+    watch: function () {
         if (this.isRunning && Ext.now() - this.lastRunTime >= 500) {
             this.run();
         }
     },
 
-    run: function() {
+    run: function () {
         var me = this;
 
         if (!me.isRunning) {
@@ -106,16 +106,16 @@ Ext.define('Ext.AnimationQueue', {
     onStop: Ext.emptyFn,
     //</debug>
 
-    doStart: function() {
+    doStart: function () {
         this.animationFrameId = Ext.Function.requestAnimationFrame(this.run);
         this.lastRunTime = Ext.now();
     },
 
-    doIterate: function() {
+    doIterate: function () {
         this.animationFrameId = Ext.Function.requestAnimationFrame(this.run);
     },
 
-    doStop: function() {
+    doStop: function () {
         Ext.Function.cancelAnimationFrame(this.animationFrameId);
     },
 
@@ -125,7 +125,7 @@ Ext.define('Ext.AnimationQueue', {
      * @param {Object} [scope]
      * @param {Object} [args]
      */
-    stop: function(fn, scope, args) {
+    stop: function (fn, scope, args) {
         var me = this;
 
         if (!me.isRunning) {
@@ -156,7 +156,7 @@ Ext.define('Ext.AnimationQueue', {
         }
     },
 
-    onIdle: function(fn, scope, args) {
+    onIdle: function (fn, scope, args) {
         var listeners = this.idleQueue,
             i, ln, listener;
 
@@ -174,7 +174,7 @@ Ext.define('Ext.AnimationQueue', {
         }
     },
 
-    unIdle: function(fn, scope, args) {
+    unIdle: function (fn, scope, args) {
         var listeners = this.idleQueue,
             i, ln, listener;
 
@@ -189,12 +189,12 @@ Ext.define('Ext.AnimationQueue', {
         return false;
     },
 
-    queueTask: function(fn, scope, args) {
+    queueTask: function (fn, scope, args) {
         this.taskQueue.push(arguments);
         this.processTaskQueue();
     },
 
-    dequeueTask: function(fn, scope, args) {
+    dequeueTask: function (fn, scope, args) {
         var listeners = this.taskQueue,
             i, ln, listener;
 
@@ -208,7 +208,7 @@ Ext.define('Ext.AnimationQueue', {
         }
     },
 
-    invoke: function(listener) {
+    invoke: function (listener) {
         var fn = listener[0],
             scope = listener[1],
             args = listener[2];
@@ -223,18 +223,18 @@ Ext.define('Ext.AnimationQueue', {
         }
     },
 
-    whenIdle: function() {
+    whenIdle: function () {
         this.isIdle = true;
         this.processIdleQueue();
     },
 
-    processIdleQueue: function() {
+    processIdleQueue: function () {
         if (!this.hasOwnProperty('idleQueueTimer')) {
             this.idleQueueTimer = Ext.defer(this.processIdleQueueItem, 1, this);
         }
     },
 
-    processIdleQueueItem: function() {
+    processIdleQueueItem: function () {
         delete this.idleQueueTimer;
 
         if (!this.isIdle) {
@@ -251,13 +251,13 @@ Ext.define('Ext.AnimationQueue', {
         }
     },
 
-    processTaskQueue: function() {
+    processTaskQueue: function () {
         if (!this.hasOwnProperty('taskQueueTimer')) {
             this.taskQueueTimer = Ext.defer(this.processTaskQueueItem, 15, this);
         }
     },
 
-    processTaskQueueItem: function() {
+    processTaskQueueItem: function () {
         delete this.taskQueueTimer;
 
         var listeners = this.taskQueue,
@@ -431,8 +431,8 @@ Ext.define('Ext.AnimationQueue', {
 
 }, function () {
     /*
-        Global FPS indicator. Add ?showfps to use in any application. Note that this REQUIRES true requestAnimationFrame
-        to be accurate.
+     Global FPS indicator. Add ?showfps to use in any application. Note that this REQUIRES true requestAnimationFrame
+     to be accurate.
      */
     var paramsString = window.location.search.substr(1),
         paramsArray = paramsString.split("&");

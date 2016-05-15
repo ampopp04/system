@@ -43,28 +43,28 @@
  *
  */
 Ext.define('Ext.form.field.Hidden', {
-    extend:'Ext.form.field.Base',
+    extend: 'Ext.form.field.Base',
     alias: ['widget.hiddenfield', 'widget.hidden'],
     alternateClassName: 'Ext.form.Hidden',
 
     focusable: false,
-    inputType : 'hidden',
+    inputType: 'hidden',
     isTextInput: false,
     hideLabel: true,
     hidden: true,
-    
+
     ariaRole: 'presentation',
-    
-    initComponent: function() {
+
+    initComponent: function () {
         this.formItemCls += '-hidden';
-        this.callParent();    
+        this.callParent();
     },
-    
+
     /**
      * @private
      * Override. Treat undefined and null values as equal to an empty string value.
      */
-    isEqual: function(value1, value2) {
+    isEqual: function (value1, value2) {
         return this.isEqualAsString(value1, value2);
     },
 
@@ -73,35 +73,35 @@ Ext.define('Ext.form.field.Hidden', {
     /**
      * @hide
      */
-    setSize : Ext.emptyFn,
+    setSize: Ext.emptyFn,
 
     /**
      * @hide
      */
-    setWidth : Ext.emptyFn,
+    setWidth: Ext.emptyFn,
 
     /**
      * @hide
      */
-    setHeight : Ext.emptyFn,
+    setHeight: Ext.emptyFn,
 
     /**
      * @hide
      */
-    setPosition : Ext.emptyFn,
+    setPosition: Ext.emptyFn,
 
     /**
      * @hide
      */
-    setPagePosition : Ext.emptyFn,
+    setPagePosition: Ext.emptyFn,
 
     /**
      * @hide
      */
-    markInvalid : Ext.emptyFn,
+    markInvalid: Ext.emptyFn,
 
     /**
      * @hide
      */
-    clearInvalid : Ext.emptyFn
+    clearInvalid: Ext.emptyFn
 });

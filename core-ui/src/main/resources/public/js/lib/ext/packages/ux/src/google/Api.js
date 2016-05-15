@@ -18,18 +18,18 @@ Ext.define('Ext.ux.google.Api', {
         }
     },
 
-    onClassExtended: function(cls, data, hooks) {
+    onClassExtended: function (cls, data, hooks) {
         var onBeforeClassCreated = hooks.onBeforeCreated,
             Api = this; // the Ext.ux.google.Api class
 
-        hooks.onBeforeCreated = function(cls, data) {
+        hooks.onBeforeCreated = function (cls, data) {
             var me = this,
                 apis = [],
                 requiresGoogle = Ext.Array.from(data.requiresGoogle),
                 loadedModules = Api.loadedModules,
                 remaining = 0,
                 callback = function () {
-                    if (! --remaining) {
+                    if (!--remaining) {
                         onBeforeClassCreated.call(me, cls, data, hooks);
                     }
                     Ext.env.Ready.unblock();
@@ -47,8 +47,8 @@ Ext.define('Ext.ux.google.Api', {
 
             for (i = 0; i < length; ++i) {
                 if (Ext.isString(api = requiresGoogle[i])) {
-                    apis.push({ api: api });
-                } else if(Ext.isObject(api)) {
+                    apis.push({api: api});
+                } else if (Ext.isObject(api)) {
                     apis.push(Ext.apply({}, api));
                 }
             }
@@ -61,7 +61,7 @@ Ext.define('Ext.ux.google.Api', {
                 if (!module) {
                     ++remaining;
                     Ext.env.Ready.block();
-                    loadedModules[name] = module = [ callback ].concat(api.callback || []);
+                    loadedModules[name] = module = [callback].concat(api.callback || []);
 
                     delete api.api;
                     delete api.version;
@@ -72,10 +72,10 @@ Ext.define('Ext.ux.google.Api', {
                         name,
                         version,
                         Ext.applyIf({
-                            callback    : function () {
+                            callback: function () {
                                 loadedModules[name] = true;
 
-                                for (var n = module.length; n-- > 0; ) {
+                                for (var n = module.length; n-- > 0;) {
                                     module[n]();    //iterate callbacks in reverse
                                 }
                             }

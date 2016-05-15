@@ -161,7 +161,7 @@ Ext.define('Ext.chart.series.Line', {
          */
         fill: undefined,
 
-        aggregator: { strategy: 'double' }
+        aggregator: {strategy: 'double'}
     },
 
     /**
@@ -178,7 +178,7 @@ Ext.define('Ext.chart.series.Line', {
      */
     overflowBuffer: 1,
 
-    themeMarkerCount: function() {
+    themeMarkerCount: function () {
         return 1;
     },
 

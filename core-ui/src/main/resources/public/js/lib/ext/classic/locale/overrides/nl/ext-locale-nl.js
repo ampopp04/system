@@ -6,12 +6,12 @@
  * by Ido Sebastiaan Bas van Oostveen (12 Oct 2007)
  * updated to 2.2 by Condor (8 Aug 2008)
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             if (month == 2) {
                 return 'mrt';
             }
@@ -33,7 +33,7 @@ Ext.onReady(function() {
             dec: 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             var sname = name.substring(0, 3).toLowerCase();
             if (sname == 'maa') {
                 return 2;
@@ -43,7 +43,7 @@ Ext.onReady(function() {
 
         Ext.Date.dayNames = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day].substring(0, 3);
         };
 
@@ -147,7 +147,7 @@ Ext.define("Ext.locale.nl.form.field.Date", {
 Ext.define("Ext.locale.nl.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: 'Bezig met laden...'
     });
@@ -164,7 +164,7 @@ Ext.define("Ext.locale.nl.form.field.VTypes", {
 Ext.define("Ext.locale.nl.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Vul hier de URL voor de hyperlink in:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -288,10 +288,10 @@ Ext.define("Ext.locale.nl.window.MessageBox", {
         cancel: 'Annuleren',
         yes: 'Ja',
         no: 'Nee'
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.nl.Component", {	
+Ext.define("Ext.locale.nl.Component", {
     override: "Ext.Component"
 });

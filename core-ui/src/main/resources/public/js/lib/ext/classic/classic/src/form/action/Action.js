@@ -49,7 +49,7 @@ Ext.define('Ext.form.action.Action', {
      * @cfg {Object} headers
      * Extra headers to be sent in the AJAX request for submit and load actions.
      * See {@link Ext.data.proxy.Ajax#headers}.
-     * 
+     *
      * **Note:** Headers are not sent during file upload.
      */
 
@@ -66,19 +66,19 @@ Ext.define('Ext.form.action.Action', {
      * @cfg {Ext.form.Basic} success.form The form that requested the action
      * @cfg {Ext.form.action.Action} success.action The Action class. The {@link #result} property of this object may
      * be examined to perform custom post-processing.
-     * 
+     *
      * @declarativeHandler
      */
 
     /**
      * @cfg {Function/String} failure
-     * The function to call when a failure packet was received, or when an error 
+     * The function to call when a failure packet was received, or when an error
      * occurred in the Ajax communication.
      * @cfg {Ext.form.Basic} failure.form The form that requested the action
-     * @cfg {Ext.form.action.Action} failure.action The Action class. If an Ajax error 
-     * occurred, the failure type will be in {@link #failureType}. The {@link #result} 
+     * @cfg {Ext.form.action.Action} failure.action The Action class. If an Ajax error
+     * occurred, the failure type will be in {@link #failureType}. The {@link #result}
      * property of this object may be examined to perform custom post-processing.
-     * 
+     *
      * @declarativeHandler
      */
 
@@ -104,7 +104,7 @@ Ext.define('Ext.form.action.Action', {
      * @cfg {Boolean} submitEmptyText
      * If set to true, the emptyText value will be sent with the form when it is submitted.
      */
-    submitEmptyText : true,
+    submitEmptyText: true,
 
     /**
      * @property {String} type
@@ -168,7 +168,7 @@ Ext.define('Ext.form.action.Action', {
      * Creates new Action.
      * @param {Object} [config] Config object.
      */
-    constructor: function(config) {
+    constructor: function (config) {
         if (config) {
             Ext.apply(this, config);
         }
@@ -205,13 +205,13 @@ Ext.define('Ext.form.action.Action', {
      * Handles a failure response.
      * @param {Object} response
      */
-    onFailure : function(response){
+    onFailure: function (response) {
         var form = this.form,
             formActive = form && !form.destroying && !form.destroyed;
-        
+
         this.response = response;
         this.failureType = Ext.form.action.Action.CONNECT_FAILURE;
-        
+
         if (formActive) {
             form.afterAction(this, false);
         }
@@ -225,7 +225,7 @@ Ext.define('Ext.form.action.Action', {
      * @return {Object/Boolean} The result object as built by handleResponse, or `true` if
      * the response had empty responseText and responseXML.
      */
-    processResponse : function(response){
+    processResponse: function (response) {
         this.response = response;
         if (!response.responseText && !response.responseXML) {
             return true;
@@ -238,7 +238,7 @@ Ext.define('Ext.form.action.Action', {
      * Build the URL for the AJAX request. Used by the standard AJAX submit and load actions.
      * @return {String} The URL.
      */
-    getUrl: function() {
+    getUrl: function () {
         return this.url || this.form.url;
     },
 
@@ -247,7 +247,7 @@ Ext.define('Ext.form.action.Action', {
      * Determine the HTTP method to be used for the request.
      * @return {String} The HTTP method
      */
-    getMethod: function() {
+    getMethod: function () {
         return (this.method || this.form.method || 'POST').toUpperCase();
     },
 
@@ -257,7 +257,7 @@ Ext.define('Ext.form.action.Action', {
      * Items in params override items of the same name in baseParams.
      * @return {Object} the full set of parameters
      */
-    getParams: function() {
+    getParams: function () {
         return Ext.apply({}, this.params, this.form.baseParams);
     },
 
@@ -265,7 +265,7 @@ Ext.define('Ext.form.action.Action', {
      * @private
      * Creates a callback object.
      */
-    createCallback: function() {
+    createCallback: function () {
         var me = this;
 
         return {

@@ -86,19 +86,19 @@ Ext.define('Ext.ProgressBar', {
 
     renderTpl: [
         '<tpl if="internalText">',
-            '<div class="{baseCls}-text {baseCls}-text-back">{text}</div>',
+        '<div class="{baseCls}-text {baseCls}-text-back">{text}</div>',
         '</tpl>',
         '<div id="{id}-bar" data-ref="bar" class="{baseCls}-bar {baseCls}-bar-{ui}" role="presentation" style="width:{percentage}%">',
-            '<tpl if="internalText">',
-                '<div class="{baseCls}-text">',
-                    '<div>{text}</div>',
-                '</div>',
-            '</tpl>',
+        '<tpl if="internalText">',
+        '<div class="{baseCls}-text">',
+        '<div>{text}</div>',
+        '</div>',
+        '</tpl>',
         '</div>'
     ],
 
     componentLayout: 'progressbar',
-    
+
     ariaRole: 'progressbar',
 
     /**
@@ -109,18 +109,18 @@ Ext.define('Ext.ProgressBar', {
      * @param {String} text The current progress text
      */
 
-    initRenderData: function() {
+    initRenderData: function () {
         var me = this,
             value = me.value || 0;
 
         return Ext.apply(me.callParent(), {
-            internalText : !me.hasOwnProperty('textEl'),
-            text         : me.text || '&#160;',
-            percentage   : value * 100
+            internalText: !me.hasOwnProperty('textEl'),
+            text: me.text || '&#160;',
+            percentage: value * 100
         });
     },
 
-    onRender : function() {
+    onRender: function () {
         var me = this;
 
         me.callParent(arguments);
@@ -138,13 +138,13 @@ Ext.define('Ext.ProgressBar', {
         }
     },
 
-    updateValue: function(value) {
+    updateValue: function (value) {
         this.updateProgress(value, Math.round(value * 100) + '%');
     },
 
     /**
      * Updates the progress bar value, and optionally its text.
-     * 
+     *
      * If the text argument is not specified, then the {@link #textTpl} will be used to generate the text.
      * If there is no `textTpl`, any existing text value will be unchanged. To blank out existing text, pass `""`.
      *
@@ -157,7 +157,7 @@ Ext.define('Ext.ProgressBar', {
      * specified, the default for the class is used
      * @return {Ext.ProgressBar} this
      */
-    updateProgress: function(value, text, animate) {
+    updateProgress: function (value, text, animate) {
         value = value || 0;
 
         var me = this,
@@ -203,9 +203,9 @@ Ext.define('Ext.ProgressBar', {
      * @param {String} [text=''] The string to display in the progress text element
      * @return {Ext.ProgressBar} this
      */
-    updateText: function(text) {
+    updateText: function (text) {
         var me = this;
-        
+
         me.text = text;
         if (me.rendered) {
             me.textEl.setHtml(me.text);
@@ -213,12 +213,12 @@ Ext.define('Ext.ProgressBar', {
         return me;
     },
 
-    applyText : function(text) {
+    applyText: function (text) {
         this.updateText(text);
     },
-    
-    getText: function(){
-        return this.text;    
+
+    getText: function () {
+        return this.text;
     },
 
     /**
@@ -278,22 +278,22 @@ Ext.define('Ext.ProgressBar', {
      * duration and fn are both passed).
      * @return {Ext.ProgressBar} this
      */
-    wait: function(o) {
+    wait: function (o) {
         var me = this, scope;
-            
+
         if (!me.waitTimer) {
             scope = me;
             o = o || {};
             me.updateText(o.text);
             me.waitTimer = Ext.TaskManager.start({
-                run: function(i){
+                run: function (i) {
                     var inc = o.increment || 10;
                     i -= 1;
-                    me.updateProgress(((((i+inc)%inc)+1)*(100/inc))*0.01, null, o.animate);
+                    me.updateProgress(((((i + inc) % inc) + 1) * (100 / inc)) * 0.01, null, o.animate);
                 },
                 interval: o.interval || 1000,
                 duration: o.duration,
-                onStop: function(){
+                onStop: function () {
                     if (o.fn) {
                         o.fn.apply(o.scope || me);
                     }
@@ -309,7 +309,7 @@ Ext.define('Ext.ProgressBar', {
      * Returns true if the progress bar is currently in a {@link #wait} operation
      * @return {Boolean} True if waiting, else false
      */
-    isWaiting: function(){
+    isWaiting: function () {
         return this.waitTimer !== null;
     },
 
@@ -319,9 +319,9 @@ Ext.define('Ext.ProgressBar', {
      * @param {Boolean} [hide=false] True to hide the progress bar.
      * @return {Ext.ProgressBar} this
      */
-    reset: function(hide){
+    reset: function (hide) {
         var me = this;
-        
+
         me.updateProgress(0);
         me.clearTimer();
         if (hide === true) {
@@ -333,9 +333,9 @@ Ext.define('Ext.ProgressBar', {
     /**
      * @private
      */
-    clearTimer: function(){
+    clearTimer: function () {
         var me = this;
-        
+
         if (me.waitTimer) {
             me.waitTimer.onStop = null; //prevent recursion
             Ext.TaskManager.stop(me.waitTimer);
@@ -343,10 +343,10 @@ Ext.define('Ext.ProgressBar', {
         }
     },
 
-    onDestroy: function(){
+    onDestroy: function () {
         var me = this,
             bar = me.bar;
-        
+
         me.clearTimer();
         if (me.rendered) {
             if (me.textEl.isComposite) {

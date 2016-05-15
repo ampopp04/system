@@ -6,7 +6,7 @@
  * Adapted to European Portuguese by Helder Batista (hbatista)
  * 31 January 2008
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Janeiro", "Fevereiro", "Mar&ccedil;o", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
@@ -114,7 +114,7 @@ Ext.define("Ext.locale.pt.form.field.Date", {
 Ext.define("Ext.locale.pt.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Carregando..."
     });
@@ -131,7 +131,7 @@ Ext.define("Ext.locale.pt.form.field.VTypes", {
 Ext.define("Ext.locale.pt.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Por favor, entre com o URL do link:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -231,10 +231,10 @@ Ext.define("Ext.locale.pt.window.MessageBox", {
         cancel: "Cancelar",
         yes: "Sim",
         no: "N&atilde;o"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.pt.Component", {	
+Ext.define("Ext.locale.pt.Component", {
     override: "Ext.Component"
 });

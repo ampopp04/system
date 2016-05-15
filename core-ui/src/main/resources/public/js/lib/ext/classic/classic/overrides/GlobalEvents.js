@@ -9,13 +9,13 @@ Ext.define('Ext.overrides.GlobalEvents', {
     /**
      * @event resumelayouts
      * Fires after global layout processing has been resumed in {@link
-     * Ext.Component#resumeLayouts}.
+        * Ext.Component#resumeLayouts}.
      */
 
     deprecated: {
         5: {
             methods: {
-                addListener: function(ename, fn, scope, options, order, caller, eventOptions) {
+                addListener: function (ename, fn, scope, options, order, caller, eventOptions) {
                     var name,
                         readyFn;
 

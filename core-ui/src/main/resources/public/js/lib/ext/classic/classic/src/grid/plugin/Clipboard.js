@@ -47,7 +47,7 @@ Ext.define('Ext.grid.plugin.Clipboard', {
 
         selModel.getSelected().eachCell(function (cellContext) {
             column = cellContext.column,
-            view = cellContext.column.getView();
+                view = cellContext.column.getView();
             record = cellContext.record;
 
             // Do not copy the check column or row numberer column
@@ -59,7 +59,7 @@ Ext.define('Ext.grid.plugin.Clipboard', {
                 lastRecord = record;
                 ret.push(row = []);
             }
-            
+
             dataIndex = column.dataIndex;
 
             if (isRaw) {
@@ -139,7 +139,7 @@ Ext.define('Ext.grid.plugin.Clipboard', {
 
         // If the view is not focused, use the first cell of the selection as the destination.
         if (!destination) {
-            view.getSelectionModel().getSelected().eachCell(function(c){
+            view.getSelectionModel().getSelected().eachCell(function (c) {
                 destination = c;
                 return false;
             });
@@ -202,7 +202,7 @@ Ext.define('Ext.grid.plugin.Clipboard', {
         this.putCellData(data, format);
     },
 
-    getTarget: function(comp) {
+    getTarget: function (comp) {
         return comp.body;
     }
 });

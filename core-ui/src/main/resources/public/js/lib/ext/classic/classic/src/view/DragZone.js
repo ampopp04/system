@@ -5,7 +5,7 @@ Ext.define('Ext.view.DragZone', {
     extend: 'Ext.dd.DragZone',
     containerScroll: false,
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this,
             view,
             ownerCt,
@@ -44,7 +44,7 @@ Ext.define('Ext.view.DragZone', {
         me.ddel.className = Ext.baseCSSPrefix + 'grid-dd-wrap';
     },
 
-    init: function(id, sGroup, config) {
+    init: function (id, sGroup, config) {
         var me = this,
             eventSpec = {
                 itemmousedown: me.onItemMouseDown,
@@ -60,13 +60,13 @@ Ext.define('Ext.view.DragZone', {
         me.view.mon(me.view, eventSpec);
     },
 
-    onValidDrop: function(target, e, id) {
+    onValidDrop: function (target, e, id) {
         this.callParent([target, e, id]);
         // focus the view that the node was dropped onto so that keynav will be enabled.
         target.el.focus();
     },
 
-    onItemMouseDown: function(view, record, item, index, e) {
+    onItemMouseDown: function (view, record, item, index, e) {
         var navModel;
 
         // Only respond to longpress for touch dragging.
@@ -105,11 +105,11 @@ Ext.define('Ext.view.DragZone', {
      * @param {HTMLElement} item The grid row mousedowned upon.
      * @param {Number} index The row number mousedowned upon.
      */
-    isPreventDrag: function(e, record, item, index) {
+    isPreventDrag: function (e, record, item, index) {
         return false;
     },
 
-    getDragData: function(e) {
+    getDragData: function (e) {
         var view = this.view,
             item = e.getTarget(view.getItemSelector());
 
@@ -126,7 +126,7 @@ Ext.define('Ext.view.DragZone', {
         }
     },
 
-    onInitDrag: function(x, y) {
+    onInitDrag: function (x, y) {
         var me = this,
             data = me.dragData,
             view = data.view,
@@ -146,12 +146,12 @@ Ext.define('Ext.view.DragZone', {
         return true;
     },
 
-    getDragText: function() {
+    getDragText: function () {
         var count = this.dragData.records.length;
         return Ext.String.format(this.dragText, count, count === 1 ? '' : 's');
     },
 
-    getRepairXY : function(e, data){
+    getRepairXY: function (e, data) {
         return data ? data.fromPosition : false;
     }
 });

@@ -9,7 +9,7 @@
 // TODO: mini
 // TODO: placeholder vs header collapse
 
-describe('Ext.layout.container.Border', function() {
+describe('Ext.layout.container.Border', function () {
     // Assertions based on placeholders are tricky as the default placeholder size could change without that
     // necessarily counting as a failure. To handle this we capture that size in these 'constants'.
     var HORIZONTAL_PLACEHOLDER_HEIGHT = 28;
@@ -30,7 +30,7 @@ describe('Ext.layout.container.Border', function() {
         return ct;
     }
 
-    afterEach(function() {
+    afterEach(function () {
         Ext.destroy(ct);
         ct = null;
     });
@@ -60,9 +60,9 @@ describe('Ext.layout.container.Border', function() {
     }
 
     var todoIt = Ext.isIE9 ? xit : it;
-    
-    describe("removing items", function(){
-        var normalize = function(style) {
+
+    describe("removing items", function () {
+        var normalize = function (style) {
             if (style === 'auto') {
                 return '';
             } else if (style == '0px') {
@@ -70,8 +70,8 @@ describe('Ext.layout.container.Border', function() {
             }
             return style;
         }, other;
-        
-        beforeEach(function(){
+
+        beforeEach(function () {
             other = new Ext.container.Container({
                 renderTo: Ext.getBody(),
                 layout: 'fit',
@@ -79,14 +79,14 @@ describe('Ext.layout.container.Border', function() {
                 height: 100
             });
         });
-        
-        afterEach(function(){
+
+        afterEach(function () {
             Ext.destroy(other);
         });
-        
-        it("should clear the top/left on the north region when removing", function(){
+
+        it("should clear the top/left on the north region when removing", function () {
             var c;
-            
+
             ct = new Ext.container.Container({
                 renderTo: Ext.getBody(),
                 layout: 'vbox',
@@ -106,18 +106,18 @@ describe('Ext.layout.container.Border', function() {
                     region: 'east',
                     width: 50
                 }]
-            });    
-            
+            });
+
             ct.remove(c, false);
             other.add(c);
-            
+
             expect(normalize(c.getEl().getStyle('top'))).toBe('');
             expect(normalize(c.getEl().getStyle('left'))).toBe('');
         });
-        
-        it("should clear the top/left on the west region when removing", function(){
+
+        it("should clear the top/left on the west region when removing", function () {
             var c;
-            
+
             ct = new Ext.container.Container({
                 renderTo: Ext.getBody(),
                 layout: 'vbox',
@@ -137,18 +137,18 @@ describe('Ext.layout.container.Border', function() {
                     region: 'east',
                     width: 50
                 }]
-            });    
-            
+            });
+
             ct.remove(c, false);
             other.add(c);
-            
+
             expect(normalize(c.getEl().getStyle('top'))).toBe('');
             expect(normalize(c.getEl().getStyle('left'))).toBe('');
         });
-        
-        it("should clear the top/left on the south region when removing", function(){
+
+        it("should clear the top/left on the south region when removing", function () {
             var c;
-            
+
             ct = new Ext.container.Container({
                 renderTo: Ext.getBody(),
                 layout: 'vbox',
@@ -168,18 +168,18 @@ describe('Ext.layout.container.Border', function() {
                     region: 'east',
                     width: 50
                 }]
-            });    
-            
+            });
+
             ct.remove(c, false);
             other.add(c);
-            
+
             expect(normalize(c.getEl().getStyle('top'))).toBe('');
             expect(normalize(c.getEl().getStyle('left'))).toBe('');
         });
-        
-        it("should clear the top/left on the east region when removing", function(){
+
+        it("should clear the top/left on the east region when removing", function () {
             var c;
-            
+
             ct = new Ext.container.Container({
                 renderTo: Ext.getBody(),
                 layout: 'vbox',
@@ -199,16 +199,16 @@ describe('Ext.layout.container.Border', function() {
                     region: 'east',
                     width: 50
                 })]
-            });    
-            
+            });
+
             ct.remove(c, false);
             other.add(c);
-            
+
             expect(normalize(c.getEl().getStyle('top'))).toBe('');
             expect(normalize(c.getEl().getStyle('left'))).toBe('');
         });
-        
-        it("should remove an item when the item is not rendered and the item is not destroying", function() {
+
+        it("should remove an item when the item is not rendered and the item is not destroying", function () {
             ct = new Ext.container.Container({
                 renderTo: Ext.getBody(),
                 collapsed: true,
@@ -219,28 +219,28 @@ describe('Ext.layout.container.Border', function() {
                     region: 'center'
                 }
             });
-            
+
             // When adding the item to the collapsed panel, it won't render
             var c = ct.add({});
-            expect(function() {
+            expect(function () {
                 ct.remove(c, false);
                 c.destroy();
             }).not.toThrow();
         });
     });
-    
-    describe("splitters", function(){
-        
-        var createWithCenter = function(items, cfg) {
+
+    describe("splitters", function () {
+
+        var createWithCenter = function (items, cfg) {
             items = items.concat({
                 xtype: 'component',
                 region: 'center'
             });
             createBorderLayout(items, cfg);
         };
-        
-        describe("creation", function(){
-            it("should create a splitter with split: true", function(){
+
+        describe("creation", function () {
+            it("should create a splitter with split: true", function () {
                 var north = new Ext.Component({
                     region: 'north',
                     height: 50,
@@ -248,9 +248,9 @@ describe('Ext.layout.container.Border', function() {
                 });
                 createWithCenter([north]);
                 expect(north.nextSibling().isXType('splitter')).toBe(true);
-            });  
-            
-            it("should create a splitter with collapsible: true & collapseMode: 'mini'", function(){
+            });
+
+            it("should create a splitter with collapsible: true & collapseMode: 'mini'", function () {
                 var west = new Ext.panel.Panel({
                     region: 'west',
                     height: 50,
@@ -259,12 +259,12 @@ describe('Ext.layout.container.Border', function() {
                 });
                 createWithCenter([west]);
                 expect(west.nextSibling().isXType('splitter')).toBe(true);
-            });  
-            
-            describe("splitter configuration", function() {
+            });
+
+            describe("splitter configuration", function () {
                 var east, splitter;
-                
-                beforeEach(function() {
+
+                beforeEach(function () {
                     east = new Ext.Component({
                         region: 'east',
                         width: 50,
@@ -273,32 +273,32 @@ describe('Ext.layout.container.Border', function() {
                             id: 'foosplitter'
                         }
                     });
-                    
+
                     createWithCenter([east]);
-                    
+
                     splitter = east.previousSibling();
                 });
-                
-                it("should create a splitter", function() {
+
+                it("should create a splitter", function () {
                     expect(splitter.isXType('splitter')).toBe(true);
                 });
-                
-                it("should set custom properties passed in config", function() {
+
+                it("should set custom properties passed in config", function () {
                     expect(splitter.collapseOnDblClick).toBe(false);
                 });
-                
-                it("should pass on default options unless overridden", function() {
+
+                it("should pass on default options unless overridden", function () {
                     expect(splitter.collapseTarget).toEqual(east);
                 });
-                
-                it("should allow to override default options", function() {
+
+                it("should allow to override default options", function () {
                     expect(splitter.id).toBe('foosplitter');
                 });
             });
         });
-        
-        describe("destruction", function(){
-            it("should destroy the splitter when removing it's owner", function(){
+
+        describe("destruction", function () {
+            it("should destroy the splitter when removing it's owner", function () {
                 var north = new Ext.Component({
                     region: 'north',
                     height: 50,
@@ -309,10 +309,10 @@ describe('Ext.layout.container.Border', function() {
                 expect(ct.items.getCount()).toBe(1);
             });
         });
-        
-        describe("visibility", function(){
-            describe("initial", function(){
-                it("should show the splitter if the component is visible", function(){
+
+        describe("visibility", function () {
+            describe("initial", function () {
+                it("should show the splitter if the component is visible", function () {
                     var north = new Ext.Component({
                         region: 'north',
                         height: 50,
@@ -321,8 +321,8 @@ describe('Ext.layout.container.Border', function() {
                     createWithCenter([north]);
                     expect(north.nextSibling().isVisible()).toBe(true);
                 });
-                
-                it("should hide the splitter if the component is hidden", function(){
+
+                it("should hide the splitter if the component is hidden", function () {
                     var north = new Ext.Component({
                         region: 'north',
                         hidden: true,
@@ -332,8 +332,8 @@ describe('Ext.layout.container.Border', function() {
                     createWithCenter([north]);
                     expect(north.nextSibling().isVisible()).toBe(false);
                 });
-                
-                it("should show the splitter if the component is collapsed", function(){
+
+                it("should show the splitter if the component is collapsed", function () {
                     var north = new Ext.Component({
                         region: 'north',
                         height: 50,
@@ -343,10 +343,10 @@ describe('Ext.layout.container.Border', function() {
                     createWithCenter([north]);
                     expect(north.nextSibling().isVisible()).toBe(true);
                 });
-            });  
-            
-            describe("dynamic", function(){
-                it("should hide the splitter when hiding the component", function(){
+            });
+
+            describe("dynamic", function () {
+                it("should hide the splitter when hiding the component", function () {
                     var north = new Ext.Component({
                         region: 'north',
                         height: 50,
@@ -355,9 +355,9 @@ describe('Ext.layout.container.Border', function() {
                     createWithCenter([north]);
                     north.hide();
                     expect(north.nextSibling().isVisible()).toBe(false);
-                });  
-                
-                it("should show the splitter when showing the component", function(){
+                });
+
+                it("should show the splitter when showing the component", function () {
                     var north = new Ext.Component({
                         region: 'north',
                         height: 50,
@@ -367,10 +367,10 @@ describe('Ext.layout.container.Border', function() {
                     createWithCenter([north]);
                     north.show();
                     expect(north.nextSibling().isVisible()).toBe(true);
-                }); 
+                });
             });
-            
-            it("should not affect other splitters", function(){
+
+            it("should not affect other splitters", function () {
                 var north = new Ext.Component({
                     region: 'north',
                     height: 50,
@@ -387,7 +387,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(south.previousSibling().isVisible()).toBe(true);
             });
         });
-        
+
     });
 
     // All of these tests perform simple sizing and positioning of components within a border layout. This includes:
@@ -399,14 +399,14 @@ describe('Ext.layout.container.Border', function() {
     // * Margins
     //
     // Complex aspects of border layout like splitters, collapsing and placeholders are described in other tests.
-    describe('Simple sizing and positioning', function() {
-        it('should support no child regions', function() {
+    describe('Simple sizing and positioning', function () {
+        it('should support no child regions', function () {
             // extreme edge case - we don't make any assertions but we're implicitly checking it doesn't throw an error
             createBorderLayout([]);
         });
 
-        describe('Fixed sizes', function() {
-            it('should support a fixed-width west region', function() {
+        describe('Fixed sizes', function () {
+            it('should support a fixed-width west region', function () {
                 //
                 //      +--------+--------+
                 //      |        |        |
@@ -439,7 +439,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a fixed-width east region', function() {
+            it('should support a fixed-width east region', function () {
                 //
                 //      +--------+--------+
                 //      |        |        |
@@ -472,7 +472,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a fixed-height north region', function() {
+            it('should support a fixed-height north region', function () {
                 //
                 //      +-----------------+
                 //      |      north      |
@@ -506,7 +506,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(30);
             });
 
-            it('should support a fixed-height south region', function() {
+            it('should support a fixed-height south region', function () {
                 //
                 //      +-----------------+
                 //      |      center     |
@@ -540,7 +540,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support 4 fixed-size regions', function() {
+            it('should support 4 fixed-size regions', function () {
                 //
                 //      +-------------------+
                 //      |      w: 200       |
@@ -602,7 +602,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(50);
             });
 
-            it('should support 4 fixed-size regions with weights', function() {
+            it('should support 4 fixed-size regions with weights', function () {
                 // Same as the previous test case but with weights to change the priorities
                 //
                 //      +------+------+------+
@@ -669,7 +669,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(50);
             });
 
-            it('should support margin on a fixed-width west region', function() {
+            it('should support margin on a fixed-width west region', function () {
                 //
                 //      +------------+--------+
                 //      |     10     |        |
@@ -704,7 +704,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a fixed-width west region with no center region', function() {
+            it('should support a fixed-width west region with no center region', function () {
                 //
                 //      +--------+--------+
                 //      |        |        |
@@ -730,8 +730,8 @@ describe('Ext.layout.container.Border', function() {
             });
         });
 
-        describe('Percentage sizes', function() {
-            it('should support a percentage-width west region', function() {
+        describe('Percentage sizes', function () {
+            it('should support a percentage-width west region', function () {
                 //
                 //      +--------+--------+
                 //      |        |        |
@@ -764,7 +764,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a percentage-width east region', function() {
+            it('should support a percentage-width east region', function () {
                 //
                 //      +--------+--------+
                 //      |        |        |
@@ -797,7 +797,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a percentage-height north region', function() {
+            it('should support a percentage-height north region', function () {
                 //
                 //      +-----------------+
                 //      |    north - 10%  |
@@ -831,7 +831,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(20);
             });
 
-            it('should support a percentage-height south region', function() {
+            it('should support a percentage-height south region', function () {
                 //
                 //      +-----------------+
                 //      |   center - 15%  |
@@ -865,7 +865,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support 4 percentage-size regions', function() {
+            it('should support 4 percentage-size regions', function () {
                 //
                 //      +------------------+
                 //      |      w: 200      |
@@ -927,7 +927,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(24);
             });
 
-            it('should support 4 percentage-size regions with weights', function() {
+            it('should support 4 percentage-size regions with weights', function () {
                 // Similar to the previous case but with priorities shifted and 2 south regions
                 //
                 //      +------+------+------+
@@ -996,8 +996,8 @@ describe('Ext.layout.container.Border', function() {
             });
         });
 
-        describe('Flex sizes', function() {
-            it('should support a flex-width west region', function() {
+        describe('Flex sizes', function () {
+            it('should support a flex-width west region', function () {
                 //
                 //      +--------+--------+
                 //      |        |        |
@@ -1031,7 +1031,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a flex-width east region', function() {
+            it('should support a flex-width east region', function () {
                 //
                 //      +--------+--------+
                 //      |        |        |
@@ -1064,7 +1064,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a flex-height north region', function() {
+            it('should support a flex-height north region', function () {
                 //
                 //      +-----------------+
                 //      |    north - 9f   |
@@ -1098,7 +1098,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(180);
             });
 
-            it('should support a flex-height south region', function() {
+            it('should support a flex-height south region', function () {
                 //
                 //      +-----------------+
                 //      |   center - 1f   |
@@ -1132,7 +1132,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support 4 flex-size regions', function() {
+            it('should support 4 flex-size regions', function () {
                 //
                 //      +------------------+
                 //      |      w: 200      |
@@ -1194,7 +1194,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(50);
             });
 
-            it('should support center flexing', function() {
+            it('should support center flexing', function () {
                 // Explicit flex on the center, plus weights to shift priorities
                 //
                 //      +------+------+
@@ -1240,7 +1240,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(50);
             });
 
-            it('should support margin on a center region with flexed south region', function() {
+            it('should support margin on a center region with flexed south region', function () {
                 // This should be the consistent with how vbox handles flex and margin
                 //
                 //      +------------+
@@ -1282,7 +1282,7 @@ describe('Ext.layout.container.Border', function() {
             });
 
             // TODO
-            it('should support margin on a center and flex-width east region', function() {
+            it('should support margin on a center and flex-width east region', function () {
                 // This should be the consistent with how hbox handles flex and margin
                 //
                 //      +------------+------------+
@@ -1319,7 +1319,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(10);
             });
 
-            it('should support margin on multiple flex-size regions', function() {
+            it('should support margin on multiple flex-size regions', function () {
                 //      +-------------------------+
                 //      |            20           |
                 //      |  +-------------------+  |
@@ -1372,7 +1372,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(146);
             });
 
-            it('should support a flex-width west region with min-width', function() {
+            it('should support a flex-width west region with min-width', function () {
                 //
                 //      +--------+--------+
                 //      |  west  | center |
@@ -1405,7 +1405,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a flex-width west region with min-width and margin', function() {
+            it('should support a flex-width west region with min-width and margin', function () {
                 // The key thing here is to check that minWidth doesn't include the margin in the width
                 //
                 //      +------------+--------+
@@ -1443,8 +1443,8 @@ describe('Ext.layout.container.Border', function() {
             });
         });
 
-        describe('Shrink-wrapping', function() {
-            it('should support a shrink-wrapped west region', function() {
+        describe('Shrink-wrapping', function () {
+            it('should support a shrink-wrapped west region', function () {
                 //
                 //      +-------------+--------+
                 //      | west w:  50 |        |
@@ -1494,7 +1494,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a shrink-wrapped east region', function() {
+            it('should support a shrink-wrapped east region', function () {
                 //
                 //      +--------+-------------+
                 //      |        | east w: 180 |
@@ -1544,7 +1544,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a shrink-wrapped north region', function() {
+            it('should support a shrink-wrapped north region', function () {
                 //
                 //      +----------------------+
                 //      |      10              |
@@ -1596,7 +1596,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(70);
             });
 
-            it('should support a shrink-wrapped south region', function() {
+            it('should support a shrink-wrapped south region', function () {
                 //
                 //      +----------------------+
                 //      |      center          |
@@ -1648,7 +1648,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a shrink-wrapped west region with align stretch', function() {
+            it('should support a shrink-wrapped west region with align stretch', function () {
                 // Whether this is really testing border layout or vbox is unclear but it's a tricky case. See also the
                 // stretchmax version that comes next.
                 //
@@ -1733,7 +1733,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support a shrink-wrapped west region with align stretchmax', function() {
+            it('should support a shrink-wrapped west region with align stretchmax', function () {
                 // Whether this is really testing border layout or vbox is unclear but it's a tricky case. See also the
                 // stretch version that came before.
                 //
@@ -1787,26 +1787,26 @@ describe('Ext.layout.container.Border', function() {
                 ]);
 
                 expect(ct).toHaveLayout({
-                    el: { w: 200, h: 200 },
+                    el: {w: 200, h: 200},
                     items: {
                         '[region=west]': {
-                            el: { xywh: '0 0 90 200' },
+                            el: {xywh: '0 0 90 200'},
                             items: {
-                                cmp1: { el: { xywh: '15 15 60 60' } },
-                                cmp2: { el: { xywh: '20 110 50 30' } },
-                                cmp3: { el: { xywh: '5 165 80 30' } }
+                                cmp1: {el: {xywh: '15 15 60 60'}},
+                                cmp2: {el: {xywh: '20 110 50 30'}},
+                                cmp3: {el: {xywh: '5 165 80 30'}}
                             }
                         },
                         '[region=center]': {
-                            el: { xywh: '90 0 110 200' }
+                            el: {xywh: '90 0 110 200'}
                         }
                     }
                 });
             });
         });
 
-        describe('Mixing sizing paradigms', function() {
-            it('should support mixing fixed-width and flex', function() {
+        describe('Mixing sizing paradigms', function () {
+            it('should support mixing fixed-width and flex', function () {
                 //
                 //      +--------+--------+--------+
                 //      |        |        |        |
@@ -1848,7 +1848,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support mixing fixed-width and percentage-width', function() {
+            it('should support mixing fixed-width and percentage-width', function () {
                 // Exactly the same as the previous test case but using percentages instead of flex
                 //
                 //      +--------+--------+--------+
@@ -1891,7 +1891,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support mixing flex-width and percentage', function() {
+            it('should support mixing flex-width and percentage', function () {
                 // Just like the previous 2 test cases but using flex and percentage
                 //
                 //      +--------+--------+--------+
@@ -1934,7 +1934,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support mixing flex-width and percentage with a max-width capping the percentage', function() {
+            it('should support mixing flex-width and percentage with a max-width capping the percentage', function () {
                 // Just like the previous 2 test cases but using flex and percentage
                 //
                 //      +--------+--------+--------+
@@ -1978,7 +1978,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should prioritize percentages over flex and flex over fixed size', function() {
+            it('should prioritize percentages over flex and flex over fixed size', function () {
                 //
                 //      +--------+--------+--------+
                 //      |        |        |        |
@@ -2025,8 +2025,8 @@ describe('Ext.layout.container.Border', function() {
         });
     });
 
-    describe('Collapsed regions and placeholders', function() {
-        it("should not fire a collapse event when the panel starts collapsed", function() {
+    describe('Collapsed regions and placeholders', function () {
+        it("should not fire a collapse event when the panel starts collapsed", function () {
             var fired = false;
             createBorderLayout([{
                 region: 'center'
@@ -2036,7 +2036,7 @@ describe('Ext.layout.container.Border', function() {
                 collapsible: true,
                 collapsed: true,
                 listeners: {
-                    collapse: function(){
+                    collapse: function () {
                         fired = true;
                     }
                 }
@@ -2044,7 +2044,7 @@ describe('Ext.layout.container.Border', function() {
             expect(fired).toBe(false);
         });
 
-        todoIt('should support a collapsed west region', function() {
+        todoIt('should support a collapsed west region', function () {
             //
             //      +------+--------+
             //      |      | center |
@@ -2053,18 +2053,18 @@ describe('Ext.layout.container.Border', function() {
             //      | west |        |
             //      +------+--------+
             var ct = createBorderLayout([
-                {
-                    collapsed: true,
-                    flex: 2, // irrelevant
-                    region: 'west',
-                    xtype: 'panel',
-                    collapsible: true,
-                    floatable: true // We want to test floating
-                }, {
-                    region: 'center'
-                }
-            ]),
-            floated = false;
+                    {
+                        collapsed: true,
+                        flex: 2, // irrelevant
+                        region: 'west',
+                        xtype: 'panel',
+                        collapsible: true,
+                        floatable: true // We want to test floating
+                    }, {
+                        region: 'center'
+                    }
+                ]),
+                floated = false;
 
             var west = ct.down('[region=west]:not([placeholderFor])');
             var westPh = ct.down('[region=west][placeholderFor]');
@@ -2080,10 +2080,10 @@ describe('Ext.layout.container.Border', function() {
             expect(getLeft(ct, center)).toBe(VERTICAL_PLACEHOLDER_WIDTH);
             expect(getTop(ct, center)).toBe(0);
 
-            west.on('float', function() {
+            west.on('float', function () {
                 floated = true;
             });
-            west.on('unfloat', function() {
+            west.on('unfloat', function () {
                 floated = false;
             });
 
@@ -2092,10 +2092,10 @@ describe('Ext.layout.container.Border', function() {
             jasmine.fireMouseEvent(westPh.el, 'click');
 
             // Wait for 1 second animation to float out the region
-            waitsFor(function() {
+            waitsFor(function () {
                 return floated;
             });
-            runs(function() {
+            runs(function () {
                 expect(floated).toBe(true);
 
                 // Mouseout of the placeholder region so that it disappears
@@ -2103,13 +2103,13 @@ describe('Ext.layout.container.Border', function() {
             });
 
             // Wait for region to be unfloated
-            waits(function() {
+            waits(function () {
                 return floated === false;
             });
             runs(Ext.emptyFn);
         });
 
-        todoIt('should support a collapsed east region', function() {
+        todoIt('should support a collapsed east region', function () {
             //
             //      +--------+------+
             //      | center |      |
@@ -2142,7 +2142,7 @@ describe('Ext.layout.container.Border', function() {
             expect(getTop(ct, center)).toBe(0);
         });
 
-        it('should support a collapsed north region', function() {
+        it('should support a collapsed north region', function () {
             //
             //      +--------+
             //      | north  |
@@ -2178,7 +2178,7 @@ describe('Ext.layout.container.Border', function() {
             expect(getTop(ct, center)).toBe(HORIZONTAL_PLACEHOLDER_HEIGHT);
         });
 
-        it('should support a collapsed south region', function() {
+        it('should support a collapsed south region', function () {
             //
             //      +--------+
             //      | center |
@@ -2214,7 +2214,7 @@ describe('Ext.layout.container.Border', function() {
             expect(getTop(ct, center)).toBe(0);
         });
 
-        todoIt('should support collapsed north and west regions', function() {
+        todoIt('should support collapsed north and west regions', function () {
             //
             //      +---------------+
             //      | h: 28  north  |
@@ -2260,7 +2260,7 @@ describe('Ext.layout.container.Border', function() {
             expect(getTop(ct, center)).toBe(HORIZONTAL_PLACEHOLDER_HEIGHT);
         });
 
-        todoIt('should support collapsed north and west regions with weights', function() {
+        todoIt('should support collapsed north and west regions with weights', function () {
             // Same as the previous example but with weights shifting the region priority. The key thing to check is
             // that region weights carry across to their placeholders
             //
@@ -2310,7 +2310,7 @@ describe('Ext.layout.container.Border', function() {
             expect(getTop(ct, center)).toBe(HORIZONTAL_PLACEHOLDER_HEIGHT);
         });
 
-        todoIt('should support 4 collapsed regions', function() {
+        todoIt('should support 4 collapsed regions', function () {
             //
             //      +--------------------+
             //      |       w: 200       |
@@ -2380,7 +2380,7 @@ describe('Ext.layout.container.Border', function() {
             expect(getTop(ct, center)).toBe(HORIZONTAL_PLACEHOLDER_HEIGHT);
         });
 
-        it('should support a fixed-size custom placeholder', function() {
+        it('should support a fixed-size custom placeholder', function () {
             //
             //      +--------+--------+
             //      | center |  east  |
@@ -2418,7 +2418,7 @@ describe('Ext.layout.container.Border', function() {
             expect(getTop(ct, center)).toBe(0);
         });
 
-        it('should support a flex-size custom placeholder', function() {
+        it('should support a flex-size custom placeholder', function () {
             //
             //      +--------+--------+
             //      |  west  | center |
@@ -2456,7 +2456,7 @@ describe('Ext.layout.container.Border', function() {
             expect(getTop(ct, center)).toBe(0);
         });
 
-        it('should support a percentage-size custom placeholder', function() {
+        it('should support a percentage-size custom placeholder', function () {
             //
             //      +--------+
             //      | center |
@@ -2499,7 +2499,7 @@ describe('Ext.layout.container.Border', function() {
             expect(getTop(ct, center)).toBe(0);
         });
 
-        it('should support an hbox custom placeholder', function() {
+        it('should support an hbox custom placeholder', function () {
             //
             //      +-------+--------+
             //      | w: 90 | w: 110 |
@@ -2566,7 +2566,7 @@ describe('Ext.layout.container.Border', function() {
             expect(getTop(ct, center)).toBe(85);
         });
 
-        it('should update a rendered placeholder when setTitle is called', function() {
+        it('should update a rendered placeholder when setTitle is called', function () {
             var ct = createBorderLayout([
                 {
                     collapsed: true,
@@ -2593,7 +2593,7 @@ describe('Ext.layout.container.Border', function() {
             expect(placeholder.getTitle().getText()).toBe('New Title');
         });
 
-        it('should update an unrendered placeholder when setTitle is called', function() {
+        it('should update an unrendered placeholder when setTitle is called', function () {
             var ct = createBorderLayout([
                 {
                     animCollapse: false,
@@ -2624,7 +2624,7 @@ describe('Ext.layout.container.Border', function() {
             expect(placeholder.getTitle().getText()).toBe('New Title');
         });
 
-        it('should support setTitle with a custom placeholder', function() {
+        it('should support setTitle with a custom placeholder', function () {
             var ct = createBorderLayout([
                 {
                     collapsed: true,
@@ -2654,7 +2654,7 @@ describe('Ext.layout.container.Border', function() {
             expect(east.title).toBe('New Title');
         });
 
-        it('should update a rendered placeholder when setIconCls is called', function() {
+        it('should update a rendered placeholder when setIconCls is called', function () {
             var ct = createBorderLayout([
                 {
                     collapsed: true,
@@ -2682,7 +2682,7 @@ describe('Ext.layout.container.Border', function() {
             expect(placeholder.iconCls).toBe('secondCls');
         });
 
-        it('should update an unrendered placeholder when setIconCls is called', function() {
+        it('should update an unrendered placeholder when setIconCls is called', function () {
             var ct = createBorderLayout([
                 {
                     animCollapse: false,
@@ -2714,7 +2714,7 @@ describe('Ext.layout.container.Border', function() {
             expect(placeholder.iconCls).toBe('secondCls');
         });
 
-        it('should support setIconCls with a custom placeholder', function() {
+        it('should support setIconCls with a custom placeholder', function () {
             var ct = createBorderLayout([
                 {
                     collapsed: true,
@@ -2744,7 +2744,7 @@ describe('Ext.layout.container.Border', function() {
             expect(east.iconCls).toBe('secondCls');
         });
 
-        it('should update a rendered placeholder when setIcon is called', function() {
+        it('should update a rendered placeholder when setIcon is called', function () {
             var ct = createBorderLayout([
                 {
                     collapsed: true,
@@ -2767,7 +2767,7 @@ describe('Ext.layout.container.Border', function() {
             expect(placeholder.icon).toBe(Ext.BLANK_IMAGE_URL);
         });
 
-        it('should update an unrendered placeholder when setIcon is called', function() {
+        it('should update an unrendered placeholder when setIcon is called', function () {
             var ct = createBorderLayout([
                 {
                     animCollapse: false,
@@ -2795,7 +2795,7 @@ describe('Ext.layout.container.Border', function() {
             expect(placeholder.icon).toBe(Ext.BLANK_IMAGE_URL);
         });
 
-        it('should support setIcon with a custom placeholder', function() {
+        it('should support setIcon with a custom placeholder', function () {
             var ct = createBorderLayout([
                 {
                     collapsed: true,
@@ -2823,9 +2823,9 @@ describe('Ext.layout.container.Border', function() {
         });
     });
 
-    describe('Changing regions', function() {
-        describe('Adding regions', function() {
-            it('should support adding a west region', function() {
+    describe('Changing regions', function () {
+        describe('Adding regions', function () {
+            it('should support adding a west region', function () {
                 var ct = createBorderLayout([]);
 
                 ct.add({
@@ -2841,7 +2841,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, west)).toBe(0);
             });
 
-            it('should support adding a center region', function() {
+            it('should support adding a center region', function () {
                 var ct = createBorderLayout([]);
 
                 ct.add({
@@ -2857,7 +2857,7 @@ describe('Ext.layout.container.Border', function() {
                 expect(getTop(ct, center)).toBe(0);
             });
 
-            it('should support adding multiple regions simultaneously', function() {
+            it('should support adding multiple regions simultaneously', function () {
                 //
                 //      +-------------+
                 //      |   w: 200    |
@@ -2901,22 +2901,22 @@ describe('Ext.layout.container.Border', function() {
                 expect(getLeft(ct, center)).toBe(0);
                 expect(getTop(ct, center)).toBe(70);
             });
-            
-            it("should set isViewportBorderChild flag", function() {
-                var ct = createBorderLayout([], { isViewport: true });
-                
+
+            it("should set isViewportBorderChild flag", function () {
+                var ct = createBorderLayout([], {isViewport: true});
+
                 ct.add({
                     flex: 1.5,
                     region: 'west'
                 });
-                
+
                 var west = ct.down('[region=west]');
-                
+
                 expect(west.isViewportBorderChild).toBe(true);
             });
-            
+
             // TODO
-            xit('should support adding a collapsed region', function() {
+            xit('should support adding a collapsed region', function () {
                 //
                 //      +------+------+
                 //      | west |center|
@@ -2961,8 +2961,8 @@ describe('Ext.layout.container.Border', function() {
         });
     });
 
-    describe('Splitters', function() {
-        it('should adjust for splitters in percentage size calculations', function() {
+    describe('Splitters', function () {
+        it('should adjust for splitters in percentage size calculations', function () {
             // Splitters are 5 pixels wide, so...
             //
             //      +-------+--------+-------+
@@ -3006,8 +3006,8 @@ describe('Ext.layout.container.Border', function() {
         });
     });
 
-    describe('Interaction with other layouts', function() {
-        it('should be possible to use border layout within a docked item', function() {
+    describe('Interaction with other layouts', function () {
+        it('should be possible to use border layout within a docked item', function () {
             // Docking uses absolute positioning, border layout uses relative... absolute should win
             //
             //      +--------+
@@ -3059,7 +3059,7 @@ describe('Ext.layout.container.Border', function() {
             expect(getTop(ct, inner)).toBe(120);
         });
 
-        it('should be possible to use border layout within an absolute layout', function() {
+        it('should be possible to use border layout within an absolute layout', function () {
             // Absolute layout uses absolute positioning, border layout uses relative... absolute should win
             //
             //      +------------+
@@ -3121,7 +3121,7 @@ describe('Ext.layout.container.Border', function() {
     // Most of the specs in this suite are temporarily disabled because they are
     // too expensive due to all the animations.  TODO: revisit this once we have
     // the ability to run specs on a nightly basis only. See EXTJSIV-6971
-    describe("collapsing/expanding/floating", function() {
+    describe("collapsing/expanding/floating", function () {
         // The purpose of this suite is to provide coverage for the different
         // possible combinations of collapsing, expanding, and floating of 
         // panels within a border layout to ensure that the timing of their
@@ -3141,9 +3141,9 @@ describe('Ext.layout.container.Border', function() {
             northCollapsedPositions = Ext.clone(positions),
             panel, regions;
 
-            northCollapsedPositions.east.y = northCollapsedPositions.west.y = 28;
+        northCollapsedPositions.east.y = northCollapsedPositions.west.y = 28;
 
-        beforeEach(function() {
+        beforeEach(function () {
             panel = Ext.widget({
                 renderTo: Ext.getBody(),
                 xtype: 'panel',
@@ -3192,11 +3192,11 @@ describe('Ext.layout.container.Border', function() {
             };
         });
 
-        afterEach(function() {
+        afterEach(function () {
             panel.destroy();
         });
 
-        describe("collapse collapse", function() {
+        describe("collapse collapse", function () {
             function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
@@ -3204,77 +3204,77 @@ describe('Ext.layout.container.Border', function() {
                     anim = 0;
 
                 panel1.collapse();
-                panel1.on('collapse', function() {
+                panel1.on('collapse', function () {
                     anim++;
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.collapse();
-                    panel2.on('collapse', function() {
+                    panel2.on('collapse', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(false);
                     expect(panel2.el.isVisible()).toBe(false);
                     expect(center.getWidth()).toBeApprox(centerWidth);
                     expect(center.getHeight()).toBeApprox(centerHeight);
                 });
             }
-            
-            todoIt("should handle north east", function() {
+
+            todoIt("should handle north east", function () {
                 doTest('north', 'east', 172, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 248);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 248, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 248);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 248, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 172);
             });
         });
 
-        describe("collapse expand", function() {
+        describe("collapse expand", function () {
             function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
@@ -3285,20 +3285,20 @@ describe('Ext.layout.container.Border', function() {
 
                 panel2.collapse(null, false);
                 panel1.collapse();
-                panel1.on('collapse', function() {
+                panel1.on('collapse', function () {
                     anim++;
                 });
                 waitsForAnimation();
-                runs(function() {
+                runs(function () {
                     panel2.expand();
-                    panel2.on('expand', function() {
+                    panel2.on('expand', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(false);
                     expect(panel2.el.isVisible()).toBe(true);
                     pos2 = panel2.getPosition(true);
@@ -3309,57 +3309,57 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 100, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 172);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 100, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 100);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 100);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 172, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 172);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 100, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 100, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 100);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 172, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 100);
             });
         });
 
-        describe("collapse float", function() {
-           function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("collapse float", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
@@ -3369,20 +3369,20 @@ describe('Ext.layout.container.Border', function() {
 
                 panel2.collapse(null, false);
                 panel1.collapse();
-                panel1.on('collapse', function() {
+                panel1.on('collapse', function () {
                     anim++;
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.floatCollapsedPanel();
-                    panel2.on('float', function() {
+                    panel2.on('float', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(false);
                     expect(panel2.el.isVisible()).toBe(true);
                     pos2 = panel2.getPosition(true);
@@ -3393,57 +3393,57 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 172, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 248);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 248, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 248);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 248, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 172);
             });
         });
 
-        describe("collapse slideout", function() {
-           function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("collapse slideout", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
@@ -3452,29 +3452,29 @@ describe('Ext.layout.container.Border', function() {
 
                 panel2.collapse(null, false);
                 panel2.floatCollapsedPanel();
-                panel2.on('float', function() {
+                panel2.on('float', function () {
                     floated = true;
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return floated;
                 });
-                runs(function() {
+                runs(function () {
                     panel1.collapse();
-                    panel1.on('collapse', function() {
+                    panel1.on('collapse', function () {
                         anim++;
                     });
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.slideOutFloatedPanel();
-                    panel2.on('unfloat', function() {
+                    panel2.on('unfloat', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(false);
                     expect(panel2.el.isVisible()).toBe(false);
                     expect(center.getWidth()).toBeApprox(centerWidth);
@@ -3482,56 +3482,56 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 172, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 248);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 248, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 248);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 248, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 172);
             });
         });
 
-        describe("expand collapse", function() {
+        describe("expand collapse", function () {
             function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
@@ -3542,20 +3542,20 @@ describe('Ext.layout.container.Border', function() {
 
                 panel1.collapse(null, false);
                 panel1.expand();
-                panel1.on('expand', function() {
+                panel1.on('expand', function () {
                     anim++;
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.collapse();
-                    panel2.on('collapse', function() {
+                    panel2.on('collapse', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(true);
                     expect(panel2.el.isVisible()).toBe(false);
                     pos1 = panel1.getPosition(true);
@@ -3566,56 +3566,56 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 172, 100);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 172);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 100);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 100, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 100, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 172, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 172);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 100);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 100);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 100, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 172, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 100, 172);
             });
         });
 
-        describe("expand expand", function() {
+        describe("expand expand", function () {
             function doTest(region1, region2) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
@@ -3626,20 +3626,20 @@ describe('Ext.layout.container.Border', function() {
                 panel1.collapse(null, false);
                 panel2.collapse(null, false);
                 panel1.expand();
-                panel1.on('expand', function() {
+                panel1.on('expand', function () {
                     anim++;
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.expand();
-                    panel2.on('expand', function() {
+                    panel2.on('expand', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(true);
                     expect(panel2.el.isVisible()).toBe(true);
                     pos1 = panel1.getPosition(true);
@@ -3652,57 +3652,58 @@ describe('Ext.layout.container.Border', function() {
                     expect(center.getHeight()).toBeApprox(100);
                 });
             }
-            it("should handle north east", function() {
+
+            it("should handle north east", function () {
                 doTest('north', 'east');
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south');
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west');
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north');
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south');
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west');
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north');
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east');
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west');
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north');
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east');
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south');
             });
         });
 
-        describe("expand float", function() {
-           function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("expand float", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
@@ -3713,20 +3714,20 @@ describe('Ext.layout.container.Border', function() {
                 panel1.collapse(null, false);
                 panel2.collapse(null, false);
                 panel1.expand();
-                panel1.on('expand', function() {
+                panel1.on('expand', function () {
                     anim++;
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.floatCollapsedPanel();
-                    panel2.on('float', function() {
+                    panel2.on('float', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(true);
                     expect(panel2.el.isVisible()).toBe(true);
                     pos1 = panel1.getPosition(true);
@@ -3740,57 +3741,57 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 172, 100);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 172);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 100);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 100, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 100, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 172, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 172);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 100);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 100);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 100, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 172, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 100, 172);
             });
         });
 
-        describe("expand slideout", function() {
-           function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("expand slideout", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
@@ -3802,29 +3803,29 @@ describe('Ext.layout.container.Border', function() {
                 panel1.collapse(null, false);
                 panel2.collapse(null, false);
                 panel2.floatCollapsedPanel();
-                panel2.on('float', function() {
+                panel2.on('float', function () {
                     floated = true;
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return floated;
                 });
-                runs(function() {
+                runs(function () {
                     panel1.expand();
-                    panel1.on('expand', function() {
+                    panel1.on('expand', function () {
                         anim++;
                     });
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.slideOutFloatedPanel();
-                    panel2.on('unfloat', function() {
+                    panel2.on('unfloat', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(true);
                     expect(panel2.el.isVisible()).toBe(false);
                     pos1 = panel1.getPosition(true);
@@ -3835,57 +3836,57 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 172, 100);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 172);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 100);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 100, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 100, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 172, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 172);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 100);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 100);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 100, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 172, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 100, 172);
             });
         });
 
-        describe("float collapse", function() {
-           function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("float collapse", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
@@ -3894,20 +3895,20 @@ describe('Ext.layout.container.Border', function() {
 
                 panel1.collapse(null, false);
                 panel1.floatCollapsedPanel();
-                panel1.on('float', function() {
+                panel1.on('float', function () {
                     anim++;
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.collapse();
-                    panel2.on('collapse', function() {
+                    panel2.on('collapse', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(true);
                     expect(panel2.el.isVisible()).toBe(false);
                     pos1 = panel1.getPosition(true);
@@ -3918,57 +3919,57 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            todoIt("should handle north east", function() {
+            todoIt("should handle north east", function () {
                 doTest('north', 'east', 172, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 248);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 248, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 248);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 248, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 172);
             });
         });
 
-        describe("float expand", function() {
-           function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("float expand", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
@@ -3979,20 +3980,20 @@ describe('Ext.layout.container.Border', function() {
                 panel1.collapse(null, false);
                 panel2.collapse(null, false);
                 panel1.floatCollapsedPanel();
-                panel1.on('float', function() {
+                panel1.on('float', function () {
                     anim++;
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.expand();
-                    panel2.on('expand', function() {
+                    panel2.on('expand', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(true);
                     expect(panel2.el.isVisible()).toBe(true);
                     pos1 = panel1.getPosition(true);
@@ -4003,57 +4004,57 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 100, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 172);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 100, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 100);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 100);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 172, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 172);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 100, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 100, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 100);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 172, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 100);
             });
         });
 
-        describe("float float", function() {
-           function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("float float", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
@@ -4064,20 +4065,20 @@ describe('Ext.layout.container.Border', function() {
                 panel1.collapse(null, false);
                 panel2.collapse(null, false);
                 panel1.floatCollapsedPanel();
-                panel1.on('float', function() {
+                panel1.on('float', function () {
                     anim++;
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.floatCollapsedPanel();
-                    panel2.on('float', function() {
+                    panel2.on('float', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(true);
                     expect(panel2.el.isVisible()).toBe(true);
                     pos1 = panel1.getPosition(true);
@@ -4091,57 +4092,57 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 172, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 248);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 248, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 248);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 248, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 172);
             });
         });
 
-        describe("float slideout", function() {
-          function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("float slideout", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
@@ -4153,29 +4154,29 @@ describe('Ext.layout.container.Border', function() {
                 panel1.collapse(null, false);
                 panel2.collapse(null, false);
                 panel2.floatCollapsedPanel();
-                panel2.on('float', function() {
+                panel2.on('float', function () {
                     floated = true;
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return floated;
                 });
-                runs(function() {
+                runs(function () {
                     panel1.floatCollapsedPanel();
-                    panel1.on('float', function() {
+                    panel1.on('float', function () {
                         anim++;
                     });
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.slideOutFloatedPanel();
-                    panel2.on('unfloat', function() {
+                    panel2.on('unfloat', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(true);
                     expect(panel2.el.isVisible()).toBe(false);
                     pos1 = panel1.getPosition(true);
@@ -4186,57 +4187,57 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 172, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 248);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 248, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 248);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 248, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 172);
             });
         });
 
-        describe("slideout collapse", function() {
-          function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("slideout collapse", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
@@ -4245,29 +4246,29 @@ describe('Ext.layout.container.Border', function() {
 
                 panel1.collapse(null, false);
                 panel1.floatCollapsedPanel();
-                panel1.on('float', function() {
+                panel1.on('float', function () {
                     floated = true;
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return floated;
                 });
-                runs(function() {
+                runs(function () {
                     panel1.slideOutFloatedPanel();
-                    panel1.on('unfloat', function() {
+                    panel1.on('unfloat', function () {
                         anim++;
                     });
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.collapse();
-                    panel2.on('collapse', function() {
+                    panel2.on('collapse', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(false);
                     expect(panel2.el.isVisible()).toBe(false);
                     expect(center.getWidth()).toBeApprox(centerWidth);
@@ -4275,57 +4276,57 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            todoIt("should handle north east", function() {
+            todoIt("should handle north east", function () {
                 doTest('north', 'east', 172, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 248);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 248, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 248);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 248, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 172);
             });
         });
 
-        describe("slideout expand", function() {
-          function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("slideout expand", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
@@ -4337,29 +4338,29 @@ describe('Ext.layout.container.Border', function() {
                 panel1.collapse(null, false);
                 panel2.collapse(null, false);
                 panel1.floatCollapsedPanel();
-                panel1.on('float', function() {
+                panel1.on('float', function () {
                     floated = true;
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return floated;
                 });
-                runs(function() {
+                runs(function () {
                     panel1.slideOutFloatedPanel();
-                    panel1.on('unfloat', function() {
+                    panel1.on('unfloat', function () {
                         anim++;
                     });
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.expand();
-                    panel2.on('expand', function() {
+                    panel2.on('expand', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(false);
                     expect(panel2.el.isVisible()).toBe(true);
                     pos2 = panel2.getPosition(true);
@@ -4370,57 +4371,57 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 100, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 172);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 100, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 100);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 100);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 172, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 172);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 100, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 100, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 100);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 172, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 100);
             });
         });
 
-        describe("slideout float", function() {
-          function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("slideout float", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
@@ -4432,29 +4433,29 @@ describe('Ext.layout.container.Border', function() {
                 panel1.collapse(null, false);
                 panel2.collapse(null, false);
                 panel1.floatCollapsedPanel();
-                panel1.on('float', function() {
+                panel1.on('float', function () {
                     floated = true;
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return floated;
                 });
-                runs(function() {
+                runs(function () {
                     panel1.slideOutFloatedPanel();
-                    panel1.on('unfloat', function() {
+                    panel1.on('unfloat', function () {
                         anim++;
                     });
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.floatCollapsedPanel();
-                    panel2.on('float', function() {
+                    panel2.on('float', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(false);
                     expect(panel2.el.isVisible()).toBe(true);
                     pos2 = panel2.getPosition(true);
@@ -4465,93 +4466,93 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 172, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 248);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 248, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 248);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 248, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 172);
             });
         });
 
-        describe("slideout slideout", function() {
-          function doTest(region1, region2, centerWidth, centerHeight) {
+        describe("slideout slideout", function () {
+            function doTest(region1, region2, centerWidth, centerHeight) {
                 var panel1 = regions[region1],
                     panel2 = regions[region2],
                     center = regions.center,
                     anim = 0,
                     floated = 0;
-                    
+
                 panel1.collapse(null, false);
                 panel2.collapse(null, false);
                 panel1.floatCollapsedPanel();
                 panel2.floatCollapsedPanel();
-                panel1.on('float', function() {
+                panel1.on('float', function () {
                     floated++;
                 });
-                panel2.on('float', function() {
+                panel2.on('float', function () {
                     floated++;
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return floated === 2;
                 });
-                runs(function() {
+                runs(function () {
                     panel1.slideOutFloatedPanel();
-                    panel1.on('unfloat', function() {
+                    panel1.on('unfloat', function () {
                         anim++;
                     });
                 });
                 waits(15);
-                runs(function() {
+                runs(function () {
                     panel2.slideOutFloatedPanel();
-                    panel2.on('unfloat', function() {
+                    panel2.on('unfloat', function () {
                         anim++;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return anim === 2;
                 }, "animation never completed", 500);
-                runs(function() {
+                runs(function () {
                     expect(panel1.el.isVisible()).toBe(false);
                     expect(panel2.el.isVisible()).toBe(false);
                     expect(center.getWidth()).toBeApprox(centerWidth);
@@ -4559,57 +4560,57 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north east", function() {
+            it("should handle north east", function () {
                 doTest('north', 'east', 172, 172);
             });
 
-            xit("should handle north south", function() {
+            xit("should handle north south", function () {
                 doTest('north', 'south', 100, 248);
             });
 
-            xit("should handle north west", function() {
+            xit("should handle north west", function () {
                 doTest('north', 'west', 172, 172);
             });
 
-            xit("should handle east north", function() {
+            xit("should handle east north", function () {
                 doTest('east', 'north', 172, 172);
             });
 
-            xit("should handle east south", function() {
+            xit("should handle east south", function () {
                 doTest('east', 'south', 172, 172);
             });
 
-            xit("should handle east west", function() {
+            xit("should handle east west", function () {
                 doTest('east', 'west', 248, 100);
             });
 
-            xit("should handle south north", function() {
+            xit("should handle south north", function () {
                 doTest('south', 'north', 100, 248);
             });
 
-            xit("should handle south east", function() {
+            xit("should handle south east", function () {
                 doTest('south', 'east', 172, 172);
             });
 
-            xit("should handle south west", function() {
+            xit("should handle south west", function () {
                 doTest('south', 'west', 172, 172);
             });
 
-            xit("should handle west north", function() {
+            xit("should handle west north", function () {
                 doTest('west', 'north', 172, 172);
             });
 
-            xit("should handle west east", function() {
+            xit("should handle west east", function () {
                 doTest('west', 'east', 248, 100);
             });
 
-            xit("should handle west south", function() {
+            xit("should handle west south", function () {
                 doTest('west', 'south', 172, 172);
             });
         });
 
-        describe("expanding a floated panel", function() {
-          function doTest(region) {
+        describe("expanding a floated panel", function () {
+            function doTest(region) {
                 var panel = regions[region],
                     center = regions.center,
                     animDone = false,
@@ -4617,22 +4618,22 @@ describe('Ext.layout.container.Border', function() {
 
                 panel.collapse(null, false);
                 panel.floatCollapsedPanel();
-                panel.on('float', function() {
+                panel.on('float', function () {
                     floated = true;
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return floated;
                 });
-                runs(function() {
+                runs(function () {
                     panel.expand();
-                    panel.on('expand', function() {
+                    panel.on('expand', function () {
                         animDone = true;
                     });
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return animDone;
                 });
-                runs(function() {
+                runs(function () {
                     expect(panel.el.isVisible()).toBe(true);
                     // we have to round the values because moveTo can produce
                     // fractional pixel values.  This shouldn't be needed once
@@ -4644,58 +4645,58 @@ describe('Ext.layout.container.Border', function() {
                 });
             }
 
-            it("should handle north", function() {
+            it("should handle north", function () {
                 doTest('north');
             });
 
-            xit("should handle east", function() {
+            xit("should handle east", function () {
                 doTest('east');
             });
 
-            xit("should handle south", function() {
+            xit("should handle south", function () {
                 doTest('south');
             });
 
-            xit("should handle west", function() {
+            xit("should handle west", function () {
                 doTest('west');
             });
         });
 
     });
 
-    describe("floating", function() {
+    describe("floating", function () {
         var ctSize = 400,
             region, comp, floatSpy, unfloatSpy;
 
-        beforeEach(function() {
+        beforeEach(function () {
             floatSpy = jasmine.createSpy();
             unfloatSpy = jasmine.createSpy();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             comp = region = floatSpy = unfloatSpy = null;
         });
 
         function waitForFloat(p) {
-            runs(function() {
+            runs(function () {
                 floatSpy.reset();
                 p.un('float', floatSpy);
                 p.on('float', floatSpy);
                 p.floatCollapsedPanel();
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return floatSpy.callCount > 0;
             }, "Never floated");
         }
 
         function waitForUnfloat(p) {
-            runs(function() {
+            runs(function () {
                 unfloatSpy.reset();
                 p.un('unfloat', unfloatSpy);
                 p.on('unfloat', unfloatSpy);
                 p.slideOutFloatedPanel();
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return unfloatSpy.callCount > 0;
             }, "Never unfloated");
         }
@@ -4728,21 +4729,21 @@ describe('Ext.layout.container.Border', function() {
             comp = ct.down('#comp');
         }
 
-        describe("positioning", function() {
-            describe("north", function() {
+        describe("positioning", function () {
+            describe("north", function () {
                 var regionHeight = 150;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     makeWithRegion('north', {
                         height: regionHeight
                     });
                 });
 
-                it("should position the floater below the placeholder", function() {
+                it("should position the floater below the placeholder", function () {
                     region.collapse(null, false);
                     var placeHeight = region.placeholder.getHeight();
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         var box = region.getBox();
                         expect(box.left).toBe(0);
                         expect(box.right).toBe(ctSize);
@@ -4751,11 +4752,11 @@ describe('Ext.layout.container.Border', function() {
                     });
                 });
 
-                it("should reset the position if the container resizes", function() {
+                it("should reset the position if the container resizes", function () {
                     region.collapse(null, false);
                     var placeHeight = region.placeholder.getHeight();
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setSize(ctSize - 100, ctSize - 100);
 
                         var box = region.getBox();
@@ -4767,20 +4768,20 @@ describe('Ext.layout.container.Border', function() {
                 });
             });
 
-            describe("south", function() {
+            describe("south", function () {
                 var regionHeight = 150;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     makeWithRegion('south', {
                         height: regionHeight
                     });
                 });
 
-                it("should position the floater above the placeholder", function() {
+                it("should position the floater above the placeholder", function () {
                     region.collapse(null, false);
                     var placeHeight = region.placeholder.getHeight();
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         var box = region.getBox();
                         expect(box.left).toBe(0);
                         expect(box.right).toBe(ctSize);
@@ -4789,11 +4790,11 @@ describe('Ext.layout.container.Border', function() {
                     });
                 });
 
-                it("should reset the position if the container resizes", function() {
+                it("should reset the position if the container resizes", function () {
                     region.collapse(null, false);
                     var placeHeight = region.placeholder.getHeight();
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setSize(ctSize - 100, ctSize - 100);
 
                         var box = region.getBox();
@@ -4805,20 +4806,20 @@ describe('Ext.layout.container.Border', function() {
                 });
             });
 
-            describe("west", function() {
+            describe("west", function () {
                 var regionWidth = 150;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     makeWithRegion('west', {
                         width: regionWidth
                     });
                 });
 
-                it("should position the floater to the right of the placeholder", function() {
+                it("should position the floater to the right of the placeholder", function () {
                     region.collapse(null, false);
                     var placeWidth = region.placeholder.getWidth();
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         var box = region.getBox();
                         expect(box.left).toBe(placeWidth);
                         expect(box.right).toBe(placeWidth + regionWidth);
@@ -4827,11 +4828,11 @@ describe('Ext.layout.container.Border', function() {
                     });
                 });
 
-                it("should reset the position if the container resizes", function() {
+                it("should reset the position if the container resizes", function () {
                     region.collapse(null, false);
                     var placeWidth = region.placeholder.getWidth();
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setSize(ctSize - 100, ctSize - 100);
 
                         var box = region.getBox();
@@ -4843,20 +4844,20 @@ describe('Ext.layout.container.Border', function() {
                 });
             });
 
-            describe("east", function() {
+            describe("east", function () {
                 var regionWidth = 150;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     makeWithRegion('east', {
                         width: regionWidth
                     });
                 });
 
-                it("should position the floater to the left of the placeholder", function() {
+                it("should position the floater to the left of the placeholder", function () {
                     region.collapse(null, false);
                     var placeWidth = region.placeholder.getWidth();
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         var box = region.getBox();
                         expect(box.left).toBe(ctSize - placeWidth - regionWidth);
                         expect(box.right).toBe(ctSize - placeWidth);
@@ -4865,11 +4866,11 @@ describe('Ext.layout.container.Border', function() {
                     });
                 });
 
-                it("should reset the position if the container resizes", function() {
+                it("should reset the position if the container resizes", function () {
                     region.collapse(null, false);
                     var placeWidth = region.placeholder.getWidth();
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setSize(ctSize - 100, ctSize - 100);
 
                         var box = region.getBox();
@@ -4882,193 +4883,193 @@ describe('Ext.layout.container.Border', function() {
             });
         });
 
-        describe("sizing", function() {
-            describe("north", function() {
-                beforeEach(function() {
+        describe("sizing", function () {
+            describe("north", function () {
+                beforeEach(function () {
                     makeWithRegion('north', {
                         height: 100
                     });
                 });
 
-                it("should layout the size correctly when layout updates while floating", function() {
+                it("should layout the size correctly when layout updates while floating", function () {
                     var width = region.getWidth();
 
                     region.collapse(null, false);
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         comp.setHtml('Foo');
                         expect(comp.getWidth()).toBe(width);
                     });
 
                 });
 
-                it("should update the size of the floater if floated if the ct size changes", function() {
+                it("should update the size of the floater if floated if the ct size changes", function () {
                     var width = region.getWidth() - 100;
 
                     region.collapse(null, false);
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setWidth(width);
                         // Subtract 100 because we started at 400
                         expect(comp.getWidth()).toBe(width);
                     });
                 });
 
-                it("should update the size of the floater if not floated if the ct size changes", function() {
+                it("should update the size of the floater if not floated if the ct size changes", function () {
                     var width = region.getWidth() - 100;
 
                     region.collapse(null, false);
                     waitForFloat(region);
                     waitForUnfloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setWidth(width);
                     });
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         // Subtract 100 because we started at 400
                         expect(comp.getWidth()).toBe(width);
                     });
                 });
             });
 
-            describe("south", function() {
-                beforeEach(function() {
+            describe("south", function () {
+                beforeEach(function () {
                     makeWithRegion('south', {
                         height: 100
                     });
                 });
-                
-                it("should layout the size correctly when layout updates while floating", function() {
+
+                it("should layout the size correctly when layout updates while floating", function () {
                     var width = region.getWidth();
 
                     region.collapse(null, false);
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         comp.setHtml('Foo');
                         expect(comp.getWidth()).toBe(width);
                     });
 
                 });
 
-                it("should update the size of the floater if floated if the ct size changes", function() {
+                it("should update the size of the floater if floated if the ct size changes", function () {
                     var width = region.getWidth() - 100;
 
                     region.collapse(null, false);
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setWidth(width);
                         // Subtract 100 because we started at 400
                         expect(comp.getWidth()).toBe(width);
                     });
                 });
 
-                it("should update the size of the floater if not floated if the ct size changes", function() {
+                it("should update the size of the floater if not floated if the ct size changes", function () {
                     var width = region.getWidth() - 100;
 
                     region.collapse(null, false);
                     waitForFloat(region);
                     waitForUnfloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setWidth(width);
                     });
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         // Subtract 100 because we started at 400
                         expect(comp.getWidth()).toBe(width);
                     });
                 });
             });
 
-            describe("west", function() {
-                beforeEach(function() {
+            describe("west", function () {
+                beforeEach(function () {
                     makeWithRegion('west', {
                         width: 100
                     });
                 });
 
-                it("should layout the size correctly when layout updates while floating", function() {
+                it("should layout the size correctly when layout updates while floating", function () {
                     var height = region.getHeight();
 
                     region.collapse(null, false);
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         comp.setHtml('Foo');
                         expect(comp.getHeight()).toBe(height - region.header.getHeight());
                     });
 
                 });
 
-                it("should update the size of the floater if floated if the ct size changes", function() {
+                it("should update the size of the floater if floated if the ct size changes", function () {
                     var height = region.getHeight() - 100;
 
                     region.collapse(null, false);
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setHeight(height);
                         // Subtract 100 because we started at 400
                         expect(comp.getHeight()).toBe(height - region.header.getHeight());
                     });
                 });
 
-                it("should update the size of the floater if not floated if the ct size changes", function() {
+                it("should update the size of the floater if not floated if the ct size changes", function () {
                     var height = region.getHeight() - 100;
 
                     region.collapse(null, false);
                     waitForFloat(region);
                     waitForUnfloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setHeight(height);
                     });
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         // Subtract 100 because we started at 400
                         expect(comp.getHeight()).toBe(height - region.header.getHeight());
                     });
                 });
             });
 
-            describe("east", function() {
-                beforeEach(function() {
+            describe("east", function () {
+                beforeEach(function () {
                     makeWithRegion('east', {
                         width: 100
                     });
                 });
 
-                it("should layout the size correctly when layout updates while floating", function() {
+                it("should layout the size correctly when layout updates while floating", function () {
                     var height = region.getHeight();
 
                     region.collapse(null, false);
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         comp.setHtml('Foo');
                         expect(comp.getHeight()).toBe(height - region.header.getHeight());
                     });
 
                 });
 
-                it("should update the size of the floater if floated if the ct size changes", function() {
+                it("should update the size of the floater if floated if the ct size changes", function () {
                     var height = region.getHeight() - 100;
 
                     region.collapse(null, false);
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setHeight(height);
                         // Subtract 100 because we started at 400
                         expect(comp.getHeight()).toBe(height - region.header.getHeight());
                     });
                 });
 
-                it("should update the size of the floater if not floated if the ct size changes", function() {
+                it("should update the size of the floater if not floated if the ct size changes", function () {
                     var height = region.getHeight() - 100;
 
                     region.collapse(null, false);
                     waitForFloat(region);
                     waitForUnfloat(region);
-                    runs(function() {
+                    runs(function () {
                         ct.setHeight(height);
                     });
                     waitForFloat(region);
-                    runs(function() {
+                    runs(function () {
                         // Subtract 100 because we started at 400
                         expect(comp.getHeight()).toBe(height - region.header.getHeight());
                     });
@@ -5076,16 +5077,16 @@ describe('Ext.layout.container.Border', function() {
             });
         });
     });
-    
-    describe("adding items dynamically", function(){
-        it("should be able to add a collapsed region", function(){
+
+    describe("adding items dynamically", function () {
+        it("should be able to add a collapsed region", function () {
             createBorderLayout([{
                 region: 'north',
                 title: 'North'
             }, {
                 region: 'center'
             }]);
-                
+
             var added = ct.add({
                 xtype: 'panel',
                 title: 'South',
@@ -5097,25 +5098,25 @@ describe('Ext.layout.container.Border', function() {
             });
             added.expand();
             expect(added.getHeight()).toBe(100);
-        });  
+        });
     });
-    
-    describe("focus management", function() {
+
+    describe("focus management", function () {
         var asyncPressKey = jasmine.asyncPressKey,
             focusAndWait = jasmine.focusAndWait,
             expectFocused = jasmine.expectFocused,
             regions = ['north', 'east', 'south', 'west'],
             i, len, region;
-        
+
         function makeRegionSuite(region, animate) {
-            describe(region + " animCollapse: " + !!animate, function() {
+            describe(region + " animCollapse: " + !!animate, function () {
                 var panel, ph, collapseTool, expandTool, btn,
                     collapseSpy, expandSpy;
-                
-                beforeEach(function() {
+
+                beforeEach(function () {
                     collapseSpy = jasmine.createSpy('collapse');
-                    expandSpy   = jasmine.createSpy('expand');
-                    
+                    expandSpy = jasmine.createSpy('expand');
+
                     createBorderLayout([{
                         xtype: 'panel',
                         title: 'foo',
@@ -5135,144 +5136,144 @@ describe('Ext.layout.container.Border', function() {
                             text: 'bar'
                         }]
                     }]);
-                    
+
                     panel = ct.down('panel[testRegion]');
-                    btn   = ct.down('button');
-                    
+                    btn = ct.down('button');
+
                     collapseTool = panel.collapseTool;
                 });
-                
-                afterEach(function() {
+
+                afterEach(function () {
                     panel = ph = collapseTool = expandTool = btn = null;
                     collapseSpy = expandSpy = null;
                 });
-                
-                describe("tools when expanded", function() {
-                    it("should have a collapse tool", function() {
+
+                describe("tools when expanded", function () {
+                    it("should have a collapse tool", function () {
                         expect(collapseTool.type).toMatch(/^collapse-/);
                     });
-                    
+
                     // Panel header is a FocusableContainer, and tools are managed by it
-                    it("tool should be focusable", function() {
+                    it("tool should be focusable", function () {
                         expect(collapseTool.el.isFocusable()).toBe(true);
                     });
                 });
-                
-                describe("tools when collapsed", function() {
-                    beforeEach(function() {
-                        runs(function() {
+
+                describe("tools when collapsed", function () {
+                    beforeEach(function () {
+                        runs(function () {
                             panel.collapse();
                         });
-                        
+
                         waitForSpy(collapseSpy, 'collapse', 1000);
-                        
-                        runs(function() {
+
+                        runs(function () {
                             ph = ct.down('[placeholderFor]');
                             expandTool = ph.expandTool;
                         });
                     });
-                    
-                    it("should have an expand tool", function() {
+
+                    it("should have an expand tool", function () {
                         expect(expandTool.type).toMatch(/^expand-/);
                     });
-                    
-                    it("should be tabbable", function() {
+
+                    it("should be tabbable", function () {
                         expect(expandTool.el.isFocusable()).toBe(true);
                     });
                 });
-                
-                describe("pointer interaction", function() {
-                    describe("collapsing", function() {
-                        beforeEach(function() {
+
+                describe("pointer interaction", function () {
+                    describe("collapsing", function () {
+                        beforeEach(function () {
                             focusAndWait(btn);
-                            
+
                             jasmine.fireMouseEvent(collapseTool.el, 'click');
-                            
+
                             waitForSpy(collapseSpy, 'collapse', 1000);
-                            
-                            runs(function() {
+
+                            runs(function () {
                                 ph = ct.down('[placeholderFor]');
                                 expandTool = ph.expandTool;
                             });
                         });
-                        
-                        it("should collapse", function() {
+
+                        it("should collapse", function () {
                             expect(!!panel.collapsed).toBe(true);
                         });
-                        
-                        it("should not steal focus from button", function() {
+
+                        it("should not steal focus from button", function () {
                             expectFocused(btn);
                         });
-                        
-                        describe("expanding", function() {
-                            it("should expand", function() {
+
+                        describe("expanding", function () {
+                            it("should expand", function () {
                                 jasmine.fireMouseEvent(expandTool.el, 'click');
-                                
+
                                 waitForSpy(expandSpy, 'expand', 1000);
-                                
-                                runs(function() {
+
+                                runs(function () {
                                     expect(!!panel.collapsed).toBe(false);
                                 });
                             });
-                            
-                            it("should not steal focus from button", function() {
+
+                            it("should not steal focus from button", function () {
                                 expectFocused(btn);
                             });
                         });
                     });
                 });
-                
-                describe("keyboard interaction", function() {
+
+                describe("keyboard interaction", function () {
                     function makeKeySuite(key) {
-                        describe("by " + key + " key", function() {
-                            describe("collapsing", function() {
-                                beforeEach(function() {
+                        describe("by " + key + " key", function () {
+                            describe("collapsing", function () {
+                                beforeEach(function () {
                                     asyncPressKey(collapseTool, key);
-                                    
+
                                     waitForSpy(collapseSpy, 'collapse', 1000);
-                                    
-                                    runs(function() {
+
+                                    runs(function () {
                                         ph = ct.down('[placeholderFor]');
                                         expandTool = ph.expandTool;
                                     });
                                 });
-                                
-                                it("should collapse", function() {
+
+                                it("should collapse", function () {
                                     expect(!!panel.collapsed).toBe(true);
                                 });
-                                
-                                it("should place focus on expand tool", function() {
+
+                                it("should place focus on expand tool", function () {
                                     expectFocused(expandTool);
                                 });
-                                
-                                describe("expanding", function() {
-                                    beforeEach(function() {
+
+                                describe("expanding", function () {
+                                    beforeEach(function () {
                                         asyncPressKey(expandTool, key);
-                                        
+
                                         waitForSpy(expandSpy, 'expand', 1000);
                                     });
-                                    
-                                    it("should expand", function() {
+
+                                    it("should expand", function () {
                                         expect(!!panel.collapsed).toBe(false);
                                     });
-                                    
-                                    it("should place focus on collapse tool", function() {
+
+                                    it("should place focus on collapse tool", function () {
                                         expectFocused(collapseTool);
                                     });
                                 });
                             });
                         });
                     }
-                    
+
                     makeKeySuite('space');
                     makeKeySuite('enter');
                 });
             });
         }
-        
+
         for (i = 0, len = regions.length; i < len; i++) {
             region = regions[i];
-            
+
             makeRegionSuite(region, 100);
             makeRegionSuite(region, false);
         }

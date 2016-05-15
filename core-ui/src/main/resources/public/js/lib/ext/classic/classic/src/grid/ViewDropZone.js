@@ -7,7 +7,7 @@ Ext.define('Ext.grid.ViewDropZone', {
     indicatorHtml: '<div class="' + Ext.baseCSSPrefix + 'grid-drop-indicator-left" role="presentation"></div><div class="' + Ext.baseCSSPrefix + 'grid-drop-indicator-right" role="presentation"></div>',
     indicatorCls: Ext.baseCSSPrefix + 'grid-drop-indicator',
 
-    handleNodeDrop : function(data, record, position) {
+    handleNodeDrop: function (data, record, position) {
         var view = this.view,
             store = view.getStore(),
             index, records, i, len;

@@ -21,7 +21,7 @@ Ext.define('Ext.layout.component.Body', {
         ownerContext.bodyContext = ownerContext.getEl('body');
     },
 
-    beginLayoutCycle: function(ownerContext, firstCycle){
+    beginLayoutCycle: function (ownerContext, firstCycle) {
         var me = this,
             lastWidthModel = me.lastWidthModel,
             lastHeightModel = me.lastHeightModel,

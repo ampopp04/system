@@ -23,7 +23,7 @@ Ext.define('Ext.dom.Fly', {
      */
     isFly: true,
 
-    constructor: function(dom) {
+    constructor: function (dom) {
         this.dom = dom;
 
         // set an "el" property that references "this".  This allows
@@ -49,32 +49,30 @@ Ext.define('Ext.dom.Fly', {
         return me;
     },
 
-    detach: function() {
+    detach: function () {
         this.dom = null;
     },
 
-    addListener:
-        //<debug>
-        function() {
-            Ext.raise(
-                "Cannot use addListener() on Ext.dom.Fly instances. " +
-                "Please use Ext.get() to retrieve an Ext.dom.Element instance instead."
-            );
-        } ||
-        //</debug>
-        null,
+    addListener: //<debug>
+    function () {
+        Ext.raise(
+            "Cannot use addListener() on Ext.dom.Fly instances. " +
+            "Please use Ext.get() to retrieve an Ext.dom.Element instance instead."
+        );
+    } ||
+    //</debug>
+    null,
 
-    removeListener: 
-        //<debug>
-        function() {
-            Ext.raise(
-                "Cannot use removeListener() on Ext.dom.Fly instances. " +
-                "Please use Ext.get() to retrieve an Ext.dom.Element instance instead."
-            );
-        } ||
-        //</debug>
-        null
-}, function(Fly) {
+    removeListener: //<debug>
+    function () {
+        Ext.raise(
+            "Cannot use removeListener() on Ext.dom.Fly instances. " +
+            "Please use Ext.get() to retrieve an Ext.dom.Element instance instead."
+        );
+    } ||
+    //</debug>
+    null
+}, function (Fly) {
     var flyweights = {};
 
     /**
@@ -99,18 +97,18 @@ Ext.define('Ext.dom.Fly', {
      * element which will be processed regularly, then {@link Ext#get Ext.get} will be
      * more appropriate to take advantage of the caching provided by the
      * {@link Ext.dom.Element} class.
-     * 
+     *
      * If this method is called with and id or element that has already been cached by
      * a previous call to Ext.get() it will return the cached Element instead of the
      * flyweight instance.
      *
      * @param {String/HTMLElement} dom The DOM node or `id`.
-     * @param {String} [named] Allows for creation of named reusable flyweights to prevent 
+     * @param {String} [named] Allows for creation of named reusable flyweights to prevent
      * conflicts (e.g. internally Ext uses "_global").
      * @return {Ext.dom.Element} The shared Element object (or `null` if no matching
      * element was found).
      */
-    Ext.fly = function(dom, named) {
+    Ext.fly = function (dom, named) {
         var fly = null,
             fn = Ext.fly,
             nodeType, data;

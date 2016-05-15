@@ -1,7 +1,7 @@
 /**
  * Instances of this class encapsulate a position in a grid's row/column coordinate system.
  *
- * Cells are addressed using the owning {@link #record} and {@link #column} for robustness. 
+ * Cells are addressed using the owning {@link #record} and {@link #column} for robustness.
  * the column may be moved, the store may be sorted, and the CellContext will still reference
  * the same *logical* cell. Be aware that due to buffered rendering the *physical* cell may not exist.
  *
@@ -28,7 +28,7 @@ Ext.define('Ext.grid.CellContext', {
      * @property {Ext.grid.column.Column} column
      * The grid column which owns the referenced cell.
      */
-    
+
     /**
      * @readonly
      * @property {Ext.data.Model} record
@@ -51,16 +51,16 @@ Ext.define('Ext.grid.CellContext', {
      * *Be aware that after the initial call to {@link #setPosition}, this value may become stale due to subsequent column mutation.*
      */
 
-     /**
-      * Creates a new CellContext which references a {@link Ext.view.Table GridView}
-      * @param {Ext.view.Table} view The {@link Ext.view.Table GridView} for which the cell context is needed.
-      *
-      * To complete creation of a valid context, use the {@link #setPosition} method.
-      */
-    constructor: function(view) {
+    /**
+     * Creates a new CellContext which references a {@link Ext.view.Table GridView}
+     * @param {Ext.view.Table} view The {@link Ext.view.Table GridView} for which the cell context is needed.
+     *
+     * To complete creation of a valid context, use the {@link #setPosition} method.
+     */
+    constructor: function (view) {
         this.view = view;
     },
-    
+
     /**
      * Binds this cell context to a logical cell defined by the {@link #record} and {@link #column}.
      *
@@ -75,7 +75,7 @@ Ext.define('Ext.grid.CellContext', {
      *
      * @return {Ext.grid.CellContext} this CellContext object.
      */
-    setPosition: function(row, col) {
+    setPosition: function (row, col) {
         var me = this;
 
         // We were passed {row: 1, column: 2, view: myView} or [2, 1]
@@ -103,7 +103,7 @@ Ext.define('Ext.grid.CellContext', {
         return me;
     },
 
-    setAll: function(view, recordIndex, columnIndex, record, columnHeader) {
+    setAll: function (view, recordIndex, columnIndex, record, columnHeader) {
         var me = this;
 
         me.view = view;
@@ -114,10 +114,10 @@ Ext.define('Ext.grid.CellContext', {
         return me;
     },
 
-    setRow: function(row) {
+    setRow: function (row) {
         var me = this,
             dataSource = me.view.dataSource;
-        
+
         if (row !== undefined) {
             // Row index passed
             if (typeof row === 'number') {
@@ -137,10 +137,10 @@ Ext.define('Ext.grid.CellContext', {
         }
         return me;
     },
-    
-    setColumn: function(col) {
+
+    setColumn: function (col) {
         var me = this,
-                colMgr = me.view.getVisibleColumnManager();
+            colMgr = me.view.getVisibleColumnManager();
 
         // Maintainer:
         // We MUST NOT update the context view with the column's view because this context
@@ -161,24 +161,24 @@ Ext.define('Ext.grid.CellContext', {
     },
 
     /**
-     * Returns the cell object referenced *at the time of calling*. Note that grid DOM is transient, and 
+     * Returns the cell object referenced *at the time of calling*. Note that grid DOM is transient, and
      * the cell referenced may be removed from the DOM due to paging or buffered rendering or column or record removal.
      *
      * @param {Boolean} returnDom Pass `true` to return a DOM object instead of an {@link Ext.dom.Element Element).
      * @return {HTMLElement/Ext.dom.Element} The cell referenced by this context.
      */
-    getCell: function(returnDom) {
+    getCell: function (returnDom) {
         return this.view.getCellByPosition(this, returnDom);
     },
 
     /**
-     * Returns the row object referenced *at the time of calling*. Note that grid DOM is transient, and 
+     * Returns the row object referenced *at the time of calling*. Note that grid DOM is transient, and
      * the row referenced may be removed from the DOM due to paging or buffered rendering or column or record removal.
      *
      * @param {Boolean} returnDom Pass `true` to return a DOM object instead of an {@link Ext.dom.Element Element).
      * @return {HTMLElement/Ext.dom.Element} The grid row referenced by this context.
      */
-    getRow: function(returnDom) {
+    getRow: function (returnDom) {
         var result = this.view.getRow(this.record);
         return returnDom ? result : Ext.get(result);
     },
@@ -191,7 +191,7 @@ Ext.define('Ext.grid.CellContext', {
      * @param {Boolean} returnDom Pass `true` to return a DOM object instead of an {@link Ext.dom.Element Element).
      * @return {HTMLElement/Ext.dom.Element} The grid item referenced by this context.
      */
-    getNode: function(returnDom) {
+    getNode: function (returnDom) {
         var result = this.view.getNode(this.record);
         return returnDom ? result : Ext.get(result);
     },
@@ -201,7 +201,7 @@ Ext.define('Ext.grid.CellContext', {
      * @param {Ext.grid.CellContext} other The CellContext to compare.
      * @return {Boolean} `true` if the other cell context references the same cell as this.
      */
-    isEqual: function(other) {
+    isEqual: function (other) {
         return (other && other.isCellContext && other.record === this.record && other.column === this.column);
     },
 
@@ -211,7 +211,7 @@ Ext.define('Ext.grid.CellContext', {
      * The clone may be retargeted without affecting the reference of this context.
      * @return {Ext.grid.CellContext} A copy of this context, referencing the same cell.
      */
-    clone: function() {
+    clone: function () {
         var me = this,
             result = new me.self(me.view);
 
@@ -223,7 +223,7 @@ Ext.define('Ext.grid.CellContext', {
     },
 
     privates: {
-        isFirstColumn: function() {
+        isFirstColumn: function () {
             var cell = this.getCell(true);
 
             if (cell) {
@@ -231,7 +231,7 @@ Ext.define('Ext.grid.CellContext', {
             }
         },
 
-        isLastColumn: function() {
+        isLastColumn: function () {
             var cell = this.getCell(true);
 
             if (cell) {
@@ -239,7 +239,7 @@ Ext.define('Ext.grid.CellContext', {
             }
         },
 
-        getLastColumnIndex: function() {
+        getLastColumnIndex: function () {
             var row = this.getRow(true);
 
             if (row) {
@@ -253,7 +253,7 @@ Ext.define('Ext.grid.CellContext', {
          * Navigates left or right within the current row.
          * @param {Number} direction `-1` to go towards the row start or `1` to go towards row end
          */
-        navigate: function(direction) {
+        navigate: function (direction) {
             var me = this,
                 columns = me.view.getVisibleColumnManager().getColumns();
 
@@ -285,7 +285,7 @@ Ext.define('Ext.grid.CellContext', {
     },
 
     statics: {
-        compare: function(c1, c2) {
+        compare: function (c1, c2) {
             return c1.rowIdx - c2.rowIdx || c1.colIdx - c2.colIdx;
         }
     }

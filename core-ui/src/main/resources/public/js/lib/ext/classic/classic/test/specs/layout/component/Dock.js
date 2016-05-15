@@ -1,7 +1,7 @@
-describe('Ext.layout.component.Dock', function(){
+describe('Ext.layout.component.Dock', function () {
     var ct;
 
-    afterEach(function(){
+    afterEach(function () {
         Ext.destroy(ct);
         ct = null;
     });
@@ -10,31 +10,31 @@ describe('Ext.layout.component.Dock', function(){
         var failedLayouts = Ext.failedLayouts;
 
         ct = Ext.widget(Ext.apply({
-                xtype: 'panel',
-                renderTo: Ext.getBody()
-            }, options));
+            xtype: 'panel',
+            renderTo: Ext.getBody()
+        }, options));
 
         if (failedLayouts != Ext.failedLayouts) {
             expect('failedLayout=true').toBe('false');
         }
     }
-    
-    describe("shrink wrapping around docked items", function(){
-        
+
+    describe("shrink wrapping around docked items", function () {
+
         var top = 'top',
             left = 'left',
             u; // u to be used as undefined
-            
-        var makeDocked = function(dock, w, h, html) {
+
+        var makeDocked = function (dock, w, h, html) {
             var style = {};
             if (w) {
                 style.width = w + 'px';
             }
-            
+
             if (h) {
                 style.height = h + 'px';
             }
-            
+
             return new Ext.Component({
                 dock: dock,
                 shrinkWrap: true,
@@ -42,29 +42,29 @@ describe('Ext.layout.component.Dock', function(){
                 html: html
             });
         };
-    
-        describe("width", function(){
-            var makeDocker = function(options){
+
+        describe("width", function () {
+            var makeDocker = function (options) {
                 return makeCt(Ext.apply({
                     shrinkWrap: true,
                     border: false,
                     bodyBorder: false,
                     shrinkWrapDock: 2
-                }, options));    
+                }, options));
             };
-            
-            it("should stretch the body width if the docked item is larger", function(){
+
+            it("should stretch the body width if the docked item is larger", function () {
                 makeDocker({
                     dockedItems: [
-                         makeDocked(top, 100, u)
+                        makeDocked(top, 100, u)
                     ],
                     html: 'a'
                 });
                 expect(ct.getWidth()).toBe(100);
                 expect(ct.body.getWidth()).toBe(100);
             });
-            
-            it("should stretch the docked width if the body is larger", function(){
+
+            it("should stretch the docked width if the body is larger", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(top, u, u, 'a')
@@ -74,8 +74,8 @@ describe('Ext.layout.component.Dock', function(){
                 expect(ct.getWidth()).toBe(100);
                 expect(ct.getDockedItems()[0].getWidth()).toBe(100);
             });
-            
-            it("should stretch other docked items to the size of the largest docked item if it is bigger than the body", function(){
+
+            it("should stretch other docked items to the size of the largest docked item if it is bigger than the body", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(top, 100, u),
@@ -85,8 +85,8 @@ describe('Ext.layout.component.Dock', function(){
                 });
                 expect(ct.getDockedItems()[1].getWidth()).toBe(100);
             });
-            
-            it("should stretch all docked items to the size of the body if the body is largest", function(){
+
+            it("should stretch all docked items to the size of the body if the body is largest", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(top, u, u, 'a'),
@@ -97,31 +97,31 @@ describe('Ext.layout.component.Dock', function(){
                 expect(ct.getDockedItems()[0].getWidth()).toBe(100);
                 expect(ct.getDockedItems()[1].getWidth()).toBe(100);
             });
-            
-            it("should stretch all items if the body and a single docked item are the largest & same size", function(){
+
+            it("should stretch all items if the body and a single docked item are the largest & same size", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(top, 50, u, u),
                         makeDocked(top, 100, u, u)
                     ],
                     html: '<div style="width: 100px;"></div>'
-                }); 
+                });
                 expect(ct.getDockedItems()[0].getWidth()).toBe(100);
-                expect(ct.getDockedItems()[1].getWidth()).toBe(100);   
+                expect(ct.getDockedItems()[1].getWidth()).toBe(100);
             });
         });
-        
-        describe("height", function(){
-            var makeDocker = function(options){
+
+        describe("height", function () {
+            var makeDocker = function (options) {
                 return makeCt(Ext.apply({
                     shrinkWrap: true,
                     border: false,
                     bodyBorder: false,
                     shrinkWrapDock: 1
-                }, options));    
+                }, options));
             };
-            
-            it("should stretch the body height if the docked item is larger", function(){
+
+            it("should stretch the body height if the docked item is larger", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(left, u, 100)
@@ -131,8 +131,8 @@ describe('Ext.layout.component.Dock', function(){
                 expect(ct.getHeight()).toBe(100);
                 expect(ct.body.getHeight()).toBe(100);
             });
-            
-            it("should stretch the docked height if the body is larger", function(){
+
+            it("should stretch the docked height if the body is larger", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(left, u, u, 'a')
@@ -142,8 +142,8 @@ describe('Ext.layout.component.Dock', function(){
                 expect(ct.getHeight()).toBe(100);
                 expect(ct.getDockedItems()[0].getHeight()).toBe(100);
             });
-            
-            it("should stretch other docked items to the size of the largest docked item if it is bigger than the body", function(){
+
+            it("should stretch other docked items to the size of the largest docked item if it is bigger than the body", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(left, u, 100),
@@ -153,8 +153,8 @@ describe('Ext.layout.component.Dock', function(){
                 });
                 expect(ct.getDockedItems()[1].getHeight()).toBe(100);
             });
-            
-            it("should stretch all docked items to the size of the body if the body is largest", function(){
+
+            it("should stretch all docked items to the size of the body if the body is largest", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(left, u, u, 'a'),
@@ -165,31 +165,31 @@ describe('Ext.layout.component.Dock', function(){
                 expect(ct.getDockedItems()[0].getHeight()).toBe(100);
                 expect(ct.getDockedItems()[1].getHeight()).toBe(100);
             });
-            
-            it("should stretch all items if the body and a single docked item are the largest & same size", function(){
+
+            it("should stretch all items if the body and a single docked item are the largest & same size", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(left, u, 50, u),
                         makeDocked(left, u, 100, u)
                     ],
                     html: '<div style="height: 100px;"></div>'
-                }); 
+                });
                 expect(ct.getDockedItems()[0].getHeight()).toBe(100);
-                expect(ct.getDockedItems()[1].getHeight()).toBe(100);   
+                expect(ct.getDockedItems()[1].getHeight()).toBe(100);
             });
         });
-        
-        describe("combination", function(){
-            var makeDocker = function(options){
+
+        describe("combination", function () {
+            var makeDocker = function (options) {
                 return makeCt(Ext.apply({
                     shrinkWrap: true,
                     border: false,
                     bodyBorder: false,
                     shrinkWrapDock: true
-                }, options));    
+                }, options));
             };
-            
-            it("should stretch the body in both dimensions if the docked items are larger", function(){
+
+            it("should stretch the body in both dimensions if the docked items are larger", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(top, 100, u),
@@ -202,8 +202,8 @@ describe('Ext.layout.component.Dock', function(){
                 expect(ct.getHeight()).toBe(75);
                 expect(ct.body.getHeight()).toBe(75);
             });
-            
-            it("should only stretch the width the dimension where the body is smaller", function(){
+
+            it("should only stretch the width the dimension where the body is smaller", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(top, 100, u),
@@ -217,8 +217,8 @@ describe('Ext.layout.component.Dock', function(){
                 expect(ct.body.getHeight()).toBe(100);
                 expect(ct.getDockedItems()[1].getHeight()).toBe(100);
             });
-            
-            it("should only stretch the height the dimension where the body is smaller", function(){
+
+            it("should only stretch the height the dimension where the body is smaller", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(top, 100, u),
@@ -232,8 +232,8 @@ describe('Ext.layout.component.Dock', function(){
                 expect(ct.body.getWidth()).toBe(200);
                 expect(ct.getDockedItems()[0].getWidth()).toBe(200);
             });
-            
-            it("should not stretch the body if neither docked item is bigger", function(){
+
+            it("should not stretch the body if neither docked item is bigger", function () {
                 makeDocker({
                     dockedItems: [
                         makeDocked(top, 100, u),
@@ -249,85 +249,85 @@ describe('Ext.layout.component.Dock', function(){
                 expect(ct.getDockedItems()[1].getHeight()).toBe(100);
             });
         });
-        
-        describe("min/max constraints", function(){
-            describe("width", function(){
-                var makeDocker = function(options){
+
+        describe("min/max constraints", function () {
+            describe("width", function () {
+                var makeDocker = function (options) {
                     return makeCt(Ext.apply({
                         shrinkWrap: true,
                         border: false,
                         bodyBorder: false,
                         shrinkWrapDock: 2
-                    }, options));    
+                    }, options));
                 };
-                
-                it("should constrain to a minWidth", function(){
+
+                it("should constrain to a minWidth", function () {
                     makeDocker({
                         minWidth: 200,
                         dockedItems: [
                             makeDocked(top, 100, u)
                         ]
-                    });    
+                    });
                     expect(ct.getWidth()).toBe(200);
                     expect(ct.getDockedItems()[0].getWidth()).toBe(200);
                 });
-                
-                it("should constrain to a maxWidth", function(){
+
+                it("should constrain to a maxWidth", function () {
                     makeDocker({
                         maxWidth: 100,
                         dockedItems: [
                             makeDocked(top, 200, u)
                         ]
-                    });    
+                    });
                     expect(ct.getWidth()).toBe(100);
                     expect(ct.getDockedItems()[0].getWidth()).toBe(100);
                 });
             });
-            
-            describe("height", function(){
-                var makeDocker = function(options){
+
+            describe("height", function () {
+                var makeDocker = function (options) {
                     return makeCt(Ext.apply({
                         shrinkWrap: true,
                         border: false,
                         bodyBorder: false,
                         shrinkWrapDock: 1
-                    }, options));    
+                    }, options));
                 };
-                
-                it("should constrain to a minHeight", function(){
+
+                it("should constrain to a minHeight", function () {
                     makeDocker({
                         minHeight: 200,
                         dockedItems: [
                             makeDocked(left, u, 100)
                         ]
-                    });    
+                    });
                     expect(ct.getHeight()).toBe(200);
                     expect(ct.getDockedItems()[0].getHeight()).toBe(200);
                 });
-                
-                it("should constrain to a maxWidth", function(){
+
+                it("should constrain to a maxWidth", function () {
                     makeDocker({
                         maxHeight: 100,
                         dockedItems: [
                             makeDocked(left, u, 200)
                         ]
-                    });    
+                    });
                     expect(ct.getHeight()).toBe(100);
                     expect(ct.getDockedItems()[0].getHeight()).toBe(100);
                 });
             });
-            
-            describe("combination", function(){
-                var makeDocker = function(options){
+
+            describe("combination", function () {
+                var makeDocker = function (options) {
                     return makeCt(Ext.apply({
                         shrinkWrap: true,
                         border: false,
                         bodyBorder: false,
                         shrinkWrapDock: true
-                    }, options));    
+                    }, options));
                 };
-                
-                it("should constrain a minHeight & maxWidth", function(){
+
+                it("should constrain a minHeight & maxWidth", function () {
                     makeDocker({
                         minHeight: 100,
                         maxWidth: 100,
@@ -335,14 +335,14 @@ describe('Ext.layout.component.Dock', function(){
                             makeDocked(top, 200, u),
                             makeDocked(left, u, 50)
                         ]
-                    });  
-                    expect(ct.getWidth()).toBe(100);  
+                    });
+                    expect(ct.getWidth()).toBe(100);
                     expect(ct.getHeight()).toBe(100);
                     expect(ct.getDockedItems()[0].getWidth()).toBe(100);
                     expect(ct.getDockedItems()[1].getHeight()).toBe(100);
                 });
-                
-                it("should constrain a maxHeight & minWidth", function(){
+
+                it("should constrain a maxHeight & minWidth", function () {
                     makeDocker({
                         maxHeight: 100,
                         minWidth: 100,
@@ -350,14 +350,14 @@ describe('Ext.layout.component.Dock', function(){
                             makeDocked(top, 50, u),
                             makeDocked(left, u, 200)
                         ]
-                    });  
-                    expect(ct.getWidth()).toBe(100);  
+                    });
+                    expect(ct.getWidth()).toBe(100);
                     expect(ct.getHeight()).toBe(100);
                     expect(ct.getDockedItems()[0].getWidth()).toBe(100);
                     expect(ct.getDockedItems()[1].getHeight()).toBe(100);
                 });
-                
-                it("should constrain a minHeight and minWidth", function() {
+
+                it("should constrain a minHeight and minWidth", function () {
                     makeDocker({
                         minHeight: 100,
                         minWidth: 100,
@@ -365,14 +365,14 @@ describe('Ext.layout.component.Dock', function(){
                             makeDocked(top, 50, u),
                             makeDocked(left, u, 50)
                         ]
-                    });  
-                    expect(ct.getWidth()).toBe(100);  
+                    });
+                    expect(ct.getWidth()).toBe(100);
                     expect(ct.getHeight()).toBe(100);
                     expect(ct.getDockedItems()[0].getWidth()).toBe(100);
                     expect(ct.getDockedItems()[1].getHeight()).toBe(100);
                 });
-                
-                it("should constrain a maxHeight and maxWidth", function() {
+
+                it("should constrain a maxHeight and maxWidth", function () {
                     makeDocker({
                         maxHeight: 100,
                         maxWidth: 100,
@@ -380,122 +380,122 @@ describe('Ext.layout.component.Dock', function(){
                             makeDocked(top, 200, u),
                             makeDocked(left, u, 200)
                         ]
-                    });  
-                    expect(ct.getWidth()).toBe(100);  
+                    });
+                    expect(ct.getWidth()).toBe(100);
                     expect(ct.getHeight()).toBe(100);
                     expect(ct.getDockedItems()[0].getWidth()).toBe(100);
                     expect(ct.getDockedItems()[1].getHeight()).toBe(100);
                 });
             });
         });
-        
+
     });
 
-    describe('interaction within box layout', function(){
-        it('should handle stretchmax and minHeight together', function(){
+    describe('interaction within box layout', function () {
+        it('should handle stretchmax and minHeight together', function () {
             makeCt({
-                    width: 100,
+                width: 100,
+                border: false,
+                layout: {
+                    type: 'hbox',
+                    align: 'stretchmax'
+                },
+                items: [{
+                    xtype: 'panel',
                     border: false,
-                    layout: {
-                        type: 'hbox',
-                        align: 'stretchmax'
-                    },
-                    items: [{
-                        xtype: 'panel',
-                        border: false,
-                        items: {
-                            xtype: 'component',
-                            width: 20,
-                            height: 20,
-                            style: 'background-color: red'
-                        },
-                        dockedItems: [{
-                            xtype: 'component',
-                            height: 20,
-                            dock: 'bottom',
-                            style: 'background-color: blue'
-                        }],
-                        minHeight: 100
-                    }, {
+                    items: {
                         xtype: 'component',
-                        style: 'background-color: yellow',
-                        height: 200,
-                        width: 20
-                    }]
-                });
+                        width: 20,
+                        height: 20,
+                        style: 'background-color: red'
+                    },
+                    dockedItems: [{
+                        xtype: 'component',
+                        height: 20,
+                        dock: 'bottom',
+                        style: 'background-color: blue'
+                    }],
+                    minHeight: 100
+                }, {
+                    xtype: 'component',
+                    style: 'background-color: yellow',
+                    height: 200,
+                    width: 20
+                }]
+            });
 
             expect(ct).toHaveLayout({
-                el: { w: 100, h: 200 },
+                el: {w: 100, h: 200},
                 items: {
                     0: {
-                        el: { xywh: '0 0 20 200' },
+                        el: {xywh: '0 0 20 200'},
                         items: {
-                            0: { el: { xywh: '0 0 20 20' } }
+                            0: {el: {xywh: '0 0 20 20'}}
                         },
                         dockedItems: {
-                            0: { el: { xywh: '0 180 20 20' } }
+                            0: {el: {xywh: '0 180 20 20'}}
                         }
                     },
-                    1: { el: { xywh: '20 0 20 200' } }
+                    1: {el: {xywh: '20 0 20 200'}}
                 }
             });
         });
     });
-    
-    describe("DOM element order", function() {
-        describe("framed", function() {
+
+    describe("DOM element order", function () {
+        describe("framed", function () {
             var oldCSS3Support, tabbables;
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 oldCSS3Support = Ext.supports.CSS3BorderRadius;
                 Ext.supports.CSS3BorderRadius = false;
-                
+
                 makeCt({
                     frame: true,
                     title: 'foo',
-                    
+
                     closable: true,
-                    
+
                     items: [{
                         xtype: 'textfield'
                     }],
-                    
+
                     buttons: [{
                         text: 'OK'
                     }]
                 });
-                
+
                 // We're using findTabbableElements here because
                 // it's easier than analyzing individual elements
                 tabbables = ct.el.findTabbableElements();
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 tabbables = null;
                 Ext.supports.CSS3BorderRadius = oldCSS3Support;
             });
-            
-            it("should place header above body", function() {
+
+            it("should place header above body", function () {
                 expect(tabbables[0]).toBe(ct.header.el.dom);
             });
-            
-            it("should place the body in the middle", function() {
+
+            it("should place the body in the middle", function () {
                 var input = ct.down('textfield');
-                
+
                 expect(tabbables[1]).toBe(input.inputEl.dom);
             });
-            
-            it("should place toolbar below the body", function() {
+
+            it("should place toolbar below the body", function () {
                 var buttons = ct.down('toolbar');
-                
+
                 expect(tabbables[2]).toBe(buttons.el.dom);
             });
         });
-        
-        describe('not framed', function() {
+
+        describe('not framed', function () {
             var panel;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 panel = new Ext.panel.Panel({
                     title: 'Test',
                     tbar: {
@@ -515,13 +515,13 @@ describe('Ext.layout.component.Dock', function(){
                     renderTo: document.body
                 });
             });
-            afterEach(function() {
+            afterEach(function () {
                 panel.destroy();
             });
-            
-            it('should not find that isValidParent returns false during a layout when docked items use itemId', function() {
+
+            it('should not find that isValidParent returns false during a layout when docked items use itemId', function () {
                 spyOn(panel.componentLayout, 'isValidParent').andCallThrough();
-                
+
                 panel.updateLayout();
                 var calls = panel.componentLayout.isValidParent.calls,
                     len = calls.length,

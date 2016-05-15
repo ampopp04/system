@@ -27,7 +27,7 @@ Ext.define('Ext.ElementLoader', {
 
     statics: {
         Renderer: {
-            Html: function(loader, response, active){
+            Html: function (loader, response, active) {
                 loader.getTarget().setHtml(response.responseText, active.scripts === true, active.rendererScope);
                 return true;
             }
@@ -94,7 +94,7 @@ Ext.define('Ext.ElementLoader', {
      * - this - The ElementLoader instance.
      * - response - The response object.
      * - options - Ajax options.
-     * 
+     *
      * @declarativeHandler
      */
 
@@ -105,7 +105,7 @@ Ext.define('Ext.ElementLoader', {
      * - this - The ElementLoader instance.
      * - response - The response object.
      * - options - Ajax options.
-     * 
+     *
      * @declarativeHandler
      */
 
@@ -117,7 +117,7 @@ Ext.define('Ext.ElementLoader', {
      * - success - True if successful request.
      * - response - The response object.
      * - options - Ajax options.
-     * 
+     *
      * @declarativeHandler
      */
 
@@ -135,7 +135,7 @@ Ext.define('Ext.ElementLoader', {
      * - The response
      * - The active request
      */
-    
+
     /**
      * @cfg {Object} rendererScope
      * The scope to execute the {@link #renderer} function in.
@@ -172,7 +172,7 @@ Ext.define('Ext.ElementLoader', {
      * @param {Object} options The options passed to the request
      */
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this,
             autoLoad;
 
@@ -211,14 +211,14 @@ Ext.define('Ext.ElementLoader', {
      * Returns the target of this loader.
      * @return {Ext.Component} The target or null if none exists.
      */
-    getTarget: function(){
+    getTarget: function () {
         return this.target || null;
     },
 
     /**
      * Aborts the active load request
      */
-    abort: function(){
+    abort: function () {
         var active = this.active;
         if (active !== undefined) {
             Ext.Ajax.abort(active.request);
@@ -233,7 +233,7 @@ Ext.define('Ext.ElementLoader', {
      * Removes the mask on the target
      * @private
      */
-    removeMask: function(){
+    removeMask: function () {
         this.target.unmask();
     },
 
@@ -242,7 +242,7 @@ Ext.define('Ext.ElementLoader', {
      * @private
      * @param {Boolean/Object} mask The mask configuration
      */
-    addMask: function(mask){
+    addMask: function (mask) {
         this.target.mask(mask === true ? null : mask);
     },
 
@@ -252,7 +252,7 @@ Ext.define('Ext.ElementLoader', {
      * the class, with the exception of the target option. Note that any options passed to the method will override any
      * class defaults.
      */
-    load: function(options) {
+    load: function (options) {
         //<debug>
         if (!this.target) {
             Ext.raise('A valid target is required when loading content');
@@ -319,7 +319,7 @@ Ext.define('Ext.ElementLoader', {
      * @param {Object} active The active request
      * @param {Object} options The initial options
      */
-    setOptions: function(active, options) {
+    setOptions: function (active, options) {
         active.rendererScope = options.rendererScope || this.rendererScope || this;
     },
 
@@ -330,7 +330,7 @@ Ext.define('Ext.ElementLoader', {
      * @param {Boolean} success Success status of the request
      * @param {Object} response The response object
      */
-    onComplete: function(options, success, response) {
+    onComplete: function (options, success, response) {
         var me = this,
             active = me.active,
             rendererScope,
@@ -365,7 +365,7 @@ Ext.define('Ext.ElementLoader', {
      * @param {String/Function} renderer The renderer to use
      * @return {Function} A rendering function to use.
      */
-    getRenderer: function(renderer){
+    getRenderer: function (renderer) {
         if (Ext.isFunction(renderer)) {
             return renderer;
         }
@@ -377,10 +377,10 @@ Ext.define('Ext.ElementLoader', {
      * @param {Number} interval The interval to refresh in ms.
      * @param {Object} options (optional) The options to pass to the load method. See {@link #method-load}
      */
-    startAutoRefresh: function(interval, options){
+    startAutoRefresh: function (interval, options) {
         var me = this;
         me.stopAutoRefresh();
-        me.autoRefresh = Ext.interval(function(){
+        me.autoRefresh = Ext.interval(function () {
             me.load(options);
         }, interval);
     },
@@ -388,7 +388,7 @@ Ext.define('Ext.ElementLoader', {
     /**
      * Clears any auto refresh. See {@link #startAutoRefresh}.
      */
-    stopAutoRefresh: function(){
+    stopAutoRefresh: function () {
         clearInterval(this.autoRefresh);
         delete this.autoRefresh;
     },
@@ -397,14 +397,14 @@ Ext.define('Ext.ElementLoader', {
      * Checks whether the loader is automatically refreshing. See {@link #startAutoRefresh}.
      * @return {Boolean} True if the loader is automatically refreshing
      */
-    isAutoRefreshing: function(){
+    isAutoRefreshing: function () {
         return Ext.isDefined(this.autoRefresh);
     },
 
     /**
      * Destroys the loader. Any active requests will be aborted.
      */
-    destroy: function(){
+    destroy: function () {
         var me = this;
         me.stopAutoRefresh();
         delete me.target;

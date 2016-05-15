@@ -8,10 +8,10 @@ describe('Ext.grid.column.RowNumberer', function () {
         store = new Ext.data.Store(Ext.apply({
             fields: ['name', 'email', 'phone'],
             data: [
-                { 'name': 'Lisa',  'email':'lisa@simpsons.com',  'phone':'555-111-1224'  },
-                { 'name': 'Bart',  'email':'bart@simpsons.com',  'phone':'555-222-1234'  },
-                { 'name': 'Homer', 'email':'homer@simpsons.com', 'phone':'555-222-1244'  },
-                { 'name': 'Marge', 'email':'marge@simpsons.com', 'phone':'555-222-1254'  }
+                {'name': 'Lisa', 'email': 'lisa@simpsons.com', 'phone': '555-111-1224'},
+                {'name': 'Bart', 'email': 'bart@simpsons.com', 'phone': '555-222-1234'},
+                {'name': 'Homer', 'email': 'homer@simpsons.com', 'phone': '555-222-1244'},
+                {'name': 'Marge', 'email': 'marge@simpsons.com', 'phone': '555-222-1254'}
             ],
             autoDestroy: true
         }, storeCfg));
@@ -19,10 +19,10 @@ describe('Ext.grid.column.RowNumberer', function () {
         panel = new Ext.grid.Panel(Ext.apply({
             store: store,
             columns: [
-                { xtype: 'rownumberer'},
-                { header: 'Name',  dataIndex: 'name', width: 100 },
-                { header: 'Email', dataIndex: 'email', width: 100 },
-                { header: 'Phone', dataIndex: 'phone', width: 100 }
+                {xtype: 'rownumberer'},
+                {header: 'Name', dataIndex: 'name', width: 100},
+                {header: 'Email', dataIndex: 'email', width: 100},
+                {header: 'Phone', dataIndex: 'phone', width: 100}
             ],
             height: 200,
             width: 400
@@ -69,9 +69,9 @@ describe('Ext.grid.column.RowNumberer', function () {
         }, treeCfg));
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -79,8 +79,8 @@ describe('Ext.grid.column.RowNumberer', function () {
             return this;
         };
     });
-    
-    afterEach(function() {
+
+    afterEach(function () {
         // Undo the overrides.
         Ext.data.ProxyStore.prototype.load = proxyStoreLoad;
 
@@ -114,11 +114,11 @@ describe('Ext.grid.column.RowNumberer', function () {
             });
         });
 
-        it("should be able to survive a full row update", function() {
+        it("should be able to survive a full row update", function () {
             createGrid();
             var rec = store.first();
             rec.set('name', 'Foo');
-            expect(function() {
+            expect(function () {
                 rec.commit();
             }).not.toThrow();
         });

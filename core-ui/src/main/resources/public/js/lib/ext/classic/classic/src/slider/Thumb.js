@@ -6,7 +6,7 @@
  */
 Ext.define('Ext.slider.Thumb', {
     requires: ['Ext.dd.DragTracker', 'Ext.util.Format'],
-    
+
     overCls: Ext.baseCSSPrefix + 'slider-thumb-over',
 
     /**
@@ -18,7 +18,7 @@ Ext.define('Ext.slider.Thumb', {
      * Creates new slider thumb.
      * @param {Object} [config] Config object.
      */
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this;
 
         /**
@@ -39,20 +39,20 @@ Ext.define('Ext.slider.Thumb', {
     /**
      * Renders the thumb into a slider
      */
-    render: function() {
+    render: function () {
         var me = this;
         me.el = me.slider.innerEl.insertFirst(me.getElConfig());
         me.onRender();
     },
 
-    onRender: function() {
+    onRender: function () {
         if (this.disabled) {
             this.disable();
         }
         this.initEvents();
     },
 
-    getElConfig: function() {
+    getElConfig: function () {
         var me = this,
             slider = me.slider,
             style = {};
@@ -60,8 +60,8 @@ Ext.define('Ext.slider.Thumb', {
         style[slider.vertical ? 'bottom' : slider.horizontalProp] = slider.calculateThumbPosition(slider.normalizeValue(me.value)) + '%';
         return {
             style: style,
-            id  : this.id,
-            cls : this.cls,
+            id: this.id,
+            cls: this.cls,
             role: 'presentation'
         };
     },
@@ -70,7 +70,7 @@ Ext.define('Ext.slider.Thumb', {
      * @private
      * move the thumb
      */
-    move: function(v, animate) {
+    move: function (v, animate) {
         var me = this,
             el = me.el,
             slider = me.slider,
@@ -109,14 +109,14 @@ Ext.define('Ext.slider.Thumb', {
         }
     },
 
-    onAnimComplete: function() {
+    onAnimComplete: function () {
         this.anim = null;
     },
 
     /**
      * Enables the thumb if it is currently disabled
      */
-    enable: function() {
+    enable: function () {
         var el = this.el;
 
         this.disabled = false;
@@ -128,7 +128,7 @@ Ext.define('Ext.slider.Thumb', {
     /**
      * Disables the thumb if it is currently enabled
      */
-    disable: function() {
+    disable: function () {
         var el = this.el;
 
         this.disabled = true;
@@ -140,40 +140,40 @@ Ext.define('Ext.slider.Thumb', {
     /**
      * Sets up an Ext.dd.DragTracker for this thumb
      */
-    initEvents: function() {
+    initEvents: function () {
         var me = this;
 
         me.tracker = new Ext.dd.DragTracker({
-            el           : me.el,
+            el: me.el,
             onBeforeStart: me.onBeforeDragStart.bind(me),
-            onStart      : me.onDragStart.bind(me),
-            onDrag       : me.onDrag.bind(me),
-            onEnd        : me.onDragEnd.bind(me),
-            tolerance    : 3,
-            autoStart    : 300
+            onStart: me.onDragStart.bind(me),
+            onDrag: me.onDrag.bind(me),
+            onEnd: me.onDragEnd.bind(me),
+            tolerance: 3,
+            autoStart: 300
         });
-        
+
         me.el.hover(me.addOverCls, me.removeOverCls, me);
     },
 
-    addOverCls: function() {
+    addOverCls: function () {
         var me = this;
         if (!me.disabled) {
             me.el.addCls(me.overCls);
         }
     },
-    
-    removeOverCls: function() {
+
+    removeOverCls: function () {
         this.el.removeCls(this.overCls);
     },
-    
+
     /**
      * @private
      * This is tied into the internal Ext.dd.DragTracker. If the slider is currently disabled,
      * this returns false to disable the DragTracker too.
      * @return {Boolean} False if the slider is currently disabled
      */
-    onBeforeDragStart : function(e) {
+    onBeforeDragStart: function (e) {
         var me = this,
             el = me.el,
             trackerXY = me.tracker.getXY(),
@@ -197,7 +197,7 @@ Ext.define('Ext.slider.Thumb', {
      * This is tied into the internal Ext.dd.DragTracker's onStart template method. Adds the drag CSS class
      * to the thumb and fires the 'dragstart' event
      */
-    onDragStart: function(e){
+    onDragStart: function (e) {
         var me = this,
             slider = me.slider;
 
@@ -214,10 +214,10 @@ Ext.define('Ext.slider.Thumb', {
      * This is tied into the internal Ext.dd.DragTracker's onDrag template method. This is called every time
      * the DragTracker detects a drag movement. It updates the Slider's value using the position of the drag
      */
-    onDrag: function(e) {
-        var me       = this,
-            slider   = me.slider,
-            index    = me.index,
+    onDrag: function (e) {
+        var me = this,
+            slider = me.slider,
+            index = me.index,
             newValue = me.getValueFromTracker(),
             above,
             below;
@@ -241,7 +241,7 @@ Ext.define('Ext.slider.Thumb', {
         }
     },
 
-    getValueFromTracker: function() {
+    getValueFromTracker: function () {
         var slider = this.slider,
             trackerXY = this.tracker.getXY(),
             trackPoint;
@@ -261,10 +261,10 @@ Ext.define('Ext.slider.Thumb', {
      * This is tied to the internal Ext.dd.DragTracker's onEnd template method. Removes the drag CSS class and
      * fires the 'changecomplete' event with the new value
      */
-    onDragEnd: function(e) {
-        var me     = this,
+    onDragEnd: function (e) {
+        var me = this,
             slider = me.slider,
-            value  = me.value;
+            value = me.value;
 
         slider.onDragEnd(me, e);
         me.el.removeCls(Ext.baseCSSPrefix + 'slider-thumb-drag');
@@ -277,7 +277,7 @@ Ext.define('Ext.slider.Thumb', {
         }
     },
 
-    destroy: function() {
+    destroy: function () {
         var me = this,
             anim = this.anim;
 

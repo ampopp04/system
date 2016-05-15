@@ -42,17 +42,21 @@
 var Ext = Ext || {}; // jshint ignore:line
 // @define Ext
 
-(function() {
+(function () {
     var global = this,
         objectPrototype = Object.prototype,
         toString = objectPrototype.toString,
         enumerables = [//'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable',
-                       'valueOf', 'toLocaleString', 'toString', 'constructor'],
-        emptyFn = function () {},
-        privateFn = function () {},
-        identityFn = function(o) { return o; },
-        // This is the "$previous" method of a hook function on an instance. When called, it
-        // calls through the class prototype by the name of the called method.
+            'valueOf', 'toLocaleString', 'toString', 'constructor'],
+        emptyFn = function () {
+        },
+        privateFn = function () {
+        },
+        identityFn = function (o) {
+            return o;
+        },
+    // This is the "$previous" method of a hook function on an instance. When called, it
+    // calls through the class prototype by the name of the called method.
         callOverrideParent = function () {
             var method = callOverrideParent.caller.caller; // skip callParent (our caller)
             return method.$owner.prototype[method.$name].apply(this, arguments);
@@ -70,9 +74,9 @@ var Ext = Ext || {}; // jshint ignore:line
      * @method now
      * @member Ext
      */
-    Ext.now = Date.now || (Date.now = function() {
-        return +new Date();
-    });
+    Ext.now = Date.now || (Date.now = function () {
+            return +new Date();
+        });
 
     /**
      * Returns the current high-resolution timestamp.
@@ -81,7 +85,7 @@ var Ext = Ext || {}; // jshint ignore:line
      * @member Ext
      * @since 6.0.1
      */
-    Ext.ticks = (global.performance && global.performance.now) ? function() {
+    Ext.ticks = (global.performance && global.performance.now) ? function () {
         return performance.now(); // jshint ignore:line
     } : Ext.now;
 
@@ -96,7 +100,7 @@ var Ext = Ext || {}; // jshint ignore:line
     // so Cmd does not detect them):
     Ext['suspendLayouts'] = Ext['resumeLayouts'] = emptyFn; // jshint ignore:line
 
-    for (i in { toString: 1 }) {
+    for (i in {toString: 1}) {
         enumerables = null;
     }
 
@@ -109,22 +113,22 @@ var Ext = Ext || {}; // jshint ignore:line
     /**
      * Copies all the properties of `config` to the specified `object`. There are two levels
      * of defaulting supported:
-     * 
+     *
      *      Ext.apply(obj, { a: 1 }, { a: 2 });
      *      //obj.a === 1
-     * 
+     *
      *      Ext.apply(obj, {  }, { a: 2 });
      *      //obj.a === 2
-     * 
+     *
      * Note that if recursive merging and cloning without referencing the original objects
      * or arrays is needed, use {@link Ext.Object#merge} instead.
-     * 
+     *
      * @param {Object} object The receiver of the properties.
      * @param {Object} config The primary source of the properties.
      * @param {Object} [defaults] An object that will also be applied for default values.
      * @return {Object} returns `object`.
      */
-    Ext.apply = function(object, config, defaults) {
+    Ext.apply = function (object, config, defaults) {
         if (defaults) {
             Ext.apply(object, defaults);
         }
@@ -337,7 +341,7 @@ var Ext = Ext || {}; // jshint ignore:line
             }
         },
         //</debug>
-        
+
         /**
          * @property {Boolean} [enableAria=true] This property is provided for backward
          * compatibility with previous versions of Ext JS. Accessibility is always enabled
@@ -345,23 +349,23 @@ var Ext = Ext || {}; // jshint ignore:line
          * @since 6.0.0
          */
         enableAria: true,
-        
+
         /**
          * @property {Boolean} [enableAriaButtons=true] Set to `false` to disable WAI-ARIA
          * compatibility checks for buttons.
          * @since 6.0.0
          */
         enableAriaButtons: true,
-        
+
         /**
          * @property {Boolean} [enableAriaPanels=true] Set to `false` to disable WAI-ARIA
          * compatibility checks for panels.
          * @since 6.0.0
          */
         enableAriaPanels: true,
-        
+
         startsWithHashRe: /^#/,
-        
+
         /**
          * @property {RegExp}
          * @private
@@ -385,7 +389,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {String} id
          * @return {String}
          */
-        makeIdSelector: function(id) {
+        makeIdSelector: function (id) {
             //<debug>
             if (!Ext.validIdRe.test(id)) {
                 Ext.raise('Invalid id selector: "' + id + '"');
@@ -395,18 +399,18 @@ var Ext = Ext || {}; // jshint ignore:line
         },
 
         /**
-        * Generates unique ids. If the object/element is passes and it already has an `id`, it is unchanged.
-        * @param {Object} [o] The object to generate an id for.
-        * @param {String} [prefix=ext-gen] (optional) The `id` prefix.
-        * @return {String} The generated `id`.
-        */
-        id: function(o, prefix) {
+         * Generates unique ids. If the object/element is passes and it already has an `id`, it is unchanged.
+         * @param {Object} [o] The object to generate an id for.
+         * @param {String} [prefix=ext-gen] (optional) The `id` prefix.
+         * @return {String} The generated `id`.
+         */
+        id: function (o, prefix) {
             if (o && o.id) {
                 return o.id;
             }
 
             var id = (prefix || Ext.idPrefix) + (++Ext.idSeed);
-            
+
             if (o) {
                 o.id = id;
             }
@@ -418,14 +422,14 @@ var Ext = Ext || {}; // jshint ignore:line
          * A reusable function which returns the value of `getId()` called upon a single passed parameter.
          * Useful when creating a {@link Ext.util.MixedCollection} of objects keyed by an identifier returned from a `getId` method.
          */
-        returnId: function(o) {
+        returnId: function (o) {
             return o.getId();
         },
 
         /**
          * A reusable function which returns `true`.
          */
-        returnTrue: function() {
+        returnTrue: function () {
             return true;
         },
 
@@ -470,9 +474,9 @@ var Ext = Ext || {}; // jshint ignore:line
          * @private
          * @inline
          */
-        canonicalEventName: function(name) {
+        canonicalEventName: function (name) {
             return Ext.$eventNameMap[name] || (Ext.$eventNameMap[name] =
-                (Ext.$vendorEventRe.test(name) ? name : name.toLowerCase()));
+                    (Ext.$vendorEventRe.test(name) ? name : name.toLowerCase()));
         },
 
         /**
@@ -481,7 +485,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Object} config The source of the properties
          * @return {Object} returns obj
          */
-        applyIf: function(object, config) {
+        applyIf: function (object, config) {
             var property;
 
             if (object) {
@@ -506,9 +510,9 @@ var Ext = Ext || {}; // jshint ignore:line
          *
          * @param {Mixed...} args Any number of objects or arrays.
          */
-        destroy: function() {
+        destroy: function () {
             var ln = arguments.length,
-            i, arg;
+                i, arg;
 
             for (i = 0; i < ln; i++) {
                 arg = arguments[i];
@@ -609,7 +613,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Boolean} [allowBlank=false] `true` to allow zero length strings to qualify as non-empty.
          * @return {Object} value, if non-empty, else defaultValue.
          */
-        valueFrom: function(value, defaultValue, allowBlank){
+        valueFrom: function (value, defaultValue, allowBlank) {
             return Ext.isEmpty(value, allowBlank) ? defaultValue : value;
         },
 
@@ -625,7 +629,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Boolean} [allowEmptyString=false] `true` to allow empty strings.
          * @return {Boolean}
          */
-        isEmpty: function(value, allowEmptyString) {
+        isEmpty: function (value, allowEmptyString) {
             return (value == null) || (!allowEmptyString ? value === '' : false) || (Ext.isArray(value) && value.length === 0);
         },
 
@@ -636,7 +640,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @return {Boolean}
          * @method
          */
-        isArray: ('isArray' in Array) ? Array.isArray : function(value) {
+        isArray: ('isArray' in Array) ? Array.isArray : function (value) {
             return toString.call(value) === '[object Array]';
         },
 
@@ -645,7 +649,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Object} object The object to test.
          * @return {Boolean}
          */
-        isDate: function(value) {
+        isDate: function (value) {
             return toString.call(value) === '[object Date]';
         },
 
@@ -655,7 +659,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {String} value The string to test.
          * @return {Boolean}
          */
-        isMSDate: function(value) {
+        isMSDate: function (value) {
             if (!Ext.isString(value)) {
                 return false;
             }
@@ -669,18 +673,18 @@ var Ext = Ext || {}; // jshint ignore:line
          * @method
          */
         isObject: (toString.call(null) === '[object Object]') ?
-        function(value) {
-            // check ownerDocument here as well to exclude DOM nodes
-            return value !== null && value !== undefined && toString.call(value) === '[object Object]' && value.ownerDocument === undefined;
-        } :
-        function(value) {
-            return toString.call(value) === '[object Object]';
-        },
+            function (value) {
+                // check ownerDocument here as well to exclude DOM nodes
+                return value !== null && value !== undefined && toString.call(value) === '[object Object]' && value.ownerDocument === undefined;
+            } :
+            function (value) {
+                return toString.call(value) === '[object Object]';
+            },
 
         /**
          * @private
          */
-        isSimpleObject: function(value) {
+        isSimpleObject: function (value) {
             return value instanceof Object && value.constructor === Object;
         },
 
@@ -690,7 +694,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Object} value The value to test.
          * @return {Boolean}
          */
-        isPrimitive: function(value) {
+        isPrimitive: function (value) {
             var type = typeof value;
 
             return type === 'string' || type === 'number' || type === 'boolean';
@@ -702,21 +706,20 @@ var Ext = Ext || {}; // jshint ignore:line
          * @return {Boolean}
          * @method
          */
-        isFunction:
-        // Safari 3.x and 4.x returns 'function' for typeof <NodeList>, hence we need to fall back to using
+        isFunction: // Safari 3.x and 4.x returns 'function' for typeof <NodeList>, hence we need to fall back to using
         // Object.prototype.toString (slower)
-        (typeof document !== 'undefined' && typeof document.getElementsByTagName('body') === 'function') ? function(value) {
-            return !!value && toString.call(value) === '[object Function]';
-        } : function(value) {
-            return !!value && typeof value === 'function';
-        },
+            (typeof document !== 'undefined' && typeof document.getElementsByTagName('body') === 'function') ? function (value) {
+                return !!value && toString.call(value) === '[object Function]';
+            } : function (value) {
+                return !!value && typeof value === 'function';
+            },
 
         /**
          * Returns `true` if the passed value is a number. Returns `false` for non-finite numbers.
          * @param {Object} value The value to test.
          * @return {Boolean}
          */
-        isNumber: function(value) {
+        isNumber: function (value) {
             return typeof value === 'number' && isFinite(value);
         },
 
@@ -725,7 +728,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Object} value Examples: 1, '1', '2.34'
          * @return {Boolean} True if numeric, false otherwise
          */
-        isNumeric: function(value) {
+        isNumeric: function (value) {
             return !isNaN(parseFloat(value)) && isFinite(value);
         },
 
@@ -734,7 +737,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Object} value The value to test.
          * @return {Boolean}
          */
-        isString: function(value) {
+        isString: function (value) {
             return typeof value === 'string';
         },
 
@@ -744,7 +747,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Object} value The value to test.
          * @return {Boolean}
          */
-        isBoolean: function(value) {
+        isBoolean: function (value) {
             return typeof value === 'boolean';
         },
 
@@ -753,7 +756,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Object} value The value to test.
          * @return {Boolean}
          */
-        isElement: function(value) {
+        isElement: function (value) {
             return value ? value.nodeType === 1 : false;
         },
 
@@ -762,7 +765,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Object} value The value to test.
          * @return {Boolean}
          */
-        isTextNode: function(value) {
+        isTextNode: function (value) {
             return value ? value.nodeName === "#text" : false;
         },
 
@@ -771,7 +774,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Object} value The value to test.
          * @return {Boolean}
          */
-        isDefined: function(value) {
+        isDefined: function (value) {
             return typeof value !== 'undefined';
         },
 
@@ -785,7 +788,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Object} value The value to test
          * @return {Boolean}
          */
-        isIterable: function(value) {
+        isIterable: function (value) {
             // To be iterable, the object must have a numeric length property and must not be a string or function.
             if (!value || typeof value.length !== 'number' || typeof value === 'string' || Ext.isFunction(value)) {
                 return false;
@@ -815,43 +818,42 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {String} className The name of the class.
          * @return {Boolean} `true` if debug is enabled for the specified class.
          */
-        isDebugEnabled:
-            //<debug>
-            function (className, defaultEnabled) {
-                var debugConfig = Ext.debugConfig.hooks;
+        isDebugEnabled: //<debug>
+        function (className, defaultEnabled) {
+            var debugConfig = Ext.debugConfig.hooks;
 
-                if (debugConfig.hasOwnProperty(className)) {
-                    return debugConfig[className];
-                }
+            if (debugConfig.hasOwnProperty(className)) {
+                return debugConfig[className];
+            }
 
-                var enabled = debugConfig['*'],
-                    prefixLength = 0;
+            var enabled = debugConfig['*'],
+                prefixLength = 0;
 
-                if (defaultEnabled !== undefined) {
-                    enabled = defaultEnabled;
-                }
-                if (!className) {
-                    return enabled;
-                }
+            if (defaultEnabled !== undefined) {
+                enabled = defaultEnabled;
+            }
+            if (!className) {
+                return enabled;
+            }
 
-                for (var prefix in debugConfig) {
-                    var value = debugConfig[prefix];
+            for (var prefix in debugConfig) {
+                var value = debugConfig[prefix];
 
-                    // if prefix=='Ext' match 'Ext.foo.Bar' but not 'Ext4.foo.Bar'
-                    if (className.charAt(prefix.length) === '.') {
-                        if (className.substring(0, prefix.length) === prefix) {
-                            if (prefixLength < prefix.length) {
-                                prefixLength = prefix.length;
-                                enabled = value;
-                            }
+                // if prefix=='Ext' match 'Ext.foo.Bar' but not 'Ext4.foo.Bar'
+                if (className.charAt(prefix.length) === '.') {
+                    if (className.substring(0, prefix.length) === prefix) {
+                        if (prefixLength < prefix.length) {
+                            prefixLength = prefix.length;
+                            enabled = value;
                         }
                     }
                 }
+            }
 
-                return enabled;
-            } ||
-            //</debug>
-            emptyFn,
+            return enabled;
+        } ||
+        //</debug>
+        emptyFn,
 
         /**
          * Clone simple variables including array, {}-like objects, DOM nodes and Date without keeping the old reference.
@@ -861,7 +863,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @param {Object} item The variable to clone
          * @return {Object} clone
          */
-        clone: function(item) {
+        clone: function (item) {
             if (item === null || item === undefined) {
                 return item;
             }
@@ -916,7 +918,7 @@ var Ext = Ext || {}; // jshint ignore:line
          * @private
          * Generate a unique reference of Ext in the global scope, useful for sandboxing
          */
-        getUniqueGlobalNamespace: function() {
+        getUniqueGlobalNamespace: function () {
             var uniqueGlobalNamespace = this.uniqueGlobalNamespace,
                 i;
 
@@ -939,13 +941,13 @@ var Ext = Ext || {}; // jshint ignore:line
          */
         functionFactoryCache: {},
 
-        cacheableFunctionFactory: function() {
+        cacheableFunctionFactory: function () {
             var me = this,
                 args = Array.prototype.slice.call(arguments),
                 cache = me.functionFactoryCache,
                 idx, fn, ln;
 
-             if (Ext.isSandboxed) {
+            if (Ext.isSandboxed) {
                 ln = args.length;
                 if (ln > 0) {
                     ln--;
@@ -962,7 +964,7 @@ var Ext = Ext || {}; // jshint ignore:line
             return fn;
         },
 
-        functionFactory: function() {
+        functionFactory: function () {
             var args = Array.prototype.slice.call(arguments),
                 ln;
 
@@ -981,8 +983,8 @@ var Ext = Ext || {}; // jshint ignore:line
          * @private
          */
         Logger: {
-        //<feature logger>
-            log: function(message, priority) {
+            //<feature logger>
+            log: function (message, priority) {
                 if (message && global.console) {
                     if (!priority || !(priority in global.console)) {
                         priority = 'log';
@@ -991,28 +993,28 @@ var Ext = Ext || {}; // jshint ignore:line
                     global.console[priority](message);
                 }
             },
-            verbose: function(message) {
+            verbose: function (message) {
                 this.log(message, 'verbose');
             },
-            info: function(message) {
+            info: function (message) {
                 this.log(message, 'info');
             },
-            warn: function(message) {
+            warn: function (message) {
                 this.log(message, 'warn');
             },
-            error: function(message) {
+            error: function (message) {
                 throw new Error(message);
             },
-            deprecate: function(message) {
+            deprecate: function (message) {
                 this.log(message, 'warn');
             }
         } || {
-        //</feature>
+            //</feature>
             verbose: emptyFn,
             log: emptyFn,
             info: emptyFn,
             warn: emptyFn,
-            error: function(message) {
+            error: function (message) {
                 throw new Error(message);
             },
             deprecate: emptyFn
@@ -1021,7 +1023,7 @@ var Ext = Ext || {}; // jshint ignore:line
         /**
          * @private
          */
-        getElementById: function(id) {
+        getElementById: function (id) {
             return document.getElementById(id);
         },
 
@@ -1029,36 +1031,36 @@ var Ext = Ext || {}; // jshint ignore:line
          * @member Ext
          * @private
          */
-        splitAndUnescape: (function() {
+        splitAndUnescape: (function () {
             var cache = {};
-    
-            return function(origin, delimiter) {
+
+            return function (origin, delimiter) {
                 if (!origin) {
                     return [];
                 }
                 else if (!delimiter) {
                     return [origin];
                 }
-    
+
                 var replaceRe = cache[delimiter] || (cache[delimiter] = new RegExp('\\\\' + delimiter, 'g')),
                     result = [],
                     parts, part;
-    
+
                 parts = origin.split(delimiter);
-    
+
                 while ((part = parts.shift()) !== undefined) {
                     // If any of the parts ends with the delimiter that means
                     // the delimiter was escaped and the split was invalid. Roll back.
                     while (part.charAt(part.length - 1) === '\\' && parts.length > 0) {
                         part = part + delimiter + parts.shift();
                     }
-    
+
                     // Now that we have split the parts, unescape the delimiter char
                     part = part.replace(replaceRe, delimiter);
-    
+
                     result.push(part);
                 }
-    
+
                 return result;
             };
         })()

@@ -74,39 +74,39 @@ Ext.define("Ext.form.Labelable", {
     labelableRenderTpl: [
         '{beforeLabelTpl}',
         '<label id="{id}-labelEl" data-ref="labelEl" class="{labelCls} {labelCls}-{ui} {labelClsExtra} ',
-                '{childElCls} {unselectableCls}" style="{labelStyle}"<tpl if="inputId">',
-                ' for="{inputId}"</tpl> {labelAttrTpl}>',
-            '<span class="{labelInnerCls} {labelInnerCls}-{ui}" style="{labelInnerStyle}">',
-            '{beforeLabelTextTpl}',
-            '<tpl if="fieldLabel">{fieldLabel}',
-                '<tpl if="labelSeparator">{labelSeparator}</tpl>',
-            '</tpl>',
-            '{afterLabelTextTpl}',
-            '</span>',
+        '{childElCls} {unselectableCls}" style="{labelStyle}"<tpl if="inputId">',
+        ' for="{inputId}"</tpl> {labelAttrTpl}>',
+        '<span class="{labelInnerCls} {labelInnerCls}-{ui}" style="{labelInnerStyle}">',
+        '{beforeLabelTextTpl}',
+        '<tpl if="fieldLabel">{fieldLabel}',
+        '<tpl if="labelSeparator">{labelSeparator}</tpl>',
+        '</tpl>',
+        '{afterLabelTextTpl}',
+        '</span>',
         '</label>',
         '{afterLabelTpl}',
         '<div id="{id}-bodyEl" data-ref="bodyEl" role="presentation"',
-            ' class="{baseBodyCls} {baseBodyCls}-{ui}<tpl if="fieldBodyCls">',
-            ' {fieldBodyCls} {fieldBodyCls}-{ui}</tpl> {growCls} {extraFieldBodyCls}"',
-            '<tpl if="bodyStyle"> style="{bodyStyle}"</tpl>>',
-            '{beforeBodyEl}',
-            '{beforeSubTpl}',
-            '{[values.$comp.getSubTplMarkup(values)]}',
-            '{afterSubTpl}',
-            '{afterBodyEl}',
-            // Unlike errorEl below ariaErrorEl is always rendered but is clipped out of existence
-            '<div id="{id}-ariaErrorEl" data-ref="ariaErrorEl" role="alert" aria-live="polite"',
-                ' class="' + Ext.baseCSSPrefix + 'hidden-clip">',
-            '</div>',
+        ' class="{baseBodyCls} {baseBodyCls}-{ui}<tpl if="fieldBodyCls">',
+        ' {fieldBodyCls} {fieldBodyCls}-{ui}</tpl> {growCls} {extraFieldBodyCls}"',
+        '<tpl if="bodyStyle"> style="{bodyStyle}"</tpl>>',
+        '{beforeBodyEl}',
+        '{beforeSubTpl}',
+        '{[values.$comp.getSubTplMarkup(values)]}',
+        '{afterSubTpl}',
+        '{afterBodyEl}',
+        // Unlike errorEl below ariaErrorEl is always rendered but is clipped out of existence
+        '<div id="{id}-ariaErrorEl" data-ref="ariaErrorEl" role="alert" aria-live="polite"',
+        ' class="' + Ext.baseCSSPrefix + 'hidden-clip">',
+        '</div>',
         '</div>',
         '<tpl if="renderError">',
-            '<div id="{id}-errorWrapEl" data-ref="errorWrapEl" class="{errorWrapCls} {errorWrapCls}-{ui}',
-                ' {errorWrapExtraCls}" style="{errorWrapStyle}">',
-                '<div role="presentation" id="{id}-errorEl" data-ref="errorEl" ',
-                    'class="{errorMsgCls} {invalidMsgCls} {invalidMsgCls}-{ui}" ',
-                    'data-anchorTarget="{tipAnchorTarget}">',
-                '</div>',
-            '</div>',
+        '<div id="{id}-errorWrapEl" data-ref="errorWrapEl" class="{errorWrapCls} {errorWrapCls}-{ui}',
+        ' {errorWrapExtraCls}" style="{errorWrapStyle}">',
+        '<div role="presentation" id="{id}-errorEl" data-ref="errorEl" ',
+        'class="{errorMsgCls} {invalidMsgCls} {invalidMsgCls}-{ui}" ',
+        'data-anchorTarget="{tipAnchorTarget}">',
+        '</div>',
+        '</div>',
         '</tpl>',
         {
             disableFormats: true
@@ -123,15 +123,15 @@ Ext.define("Ext.form.Labelable", {
 
     htmlActiveErrorsTpl: [
         '<tpl if="errors && errors.length">',
-            '<ul class="{listCls}">',
-                '<tpl for="errors"><li>{.}</li></tpl>',
-            '</ul>',
+        '<ul class="{listCls}">',
+        '<tpl for="errors"><li>{.}</li></tpl>',
+        '</ul>',
         '</tpl>'
     ],
 
     plaintextActiveErrorsTpl: [
         '<tpl if="errors && errors.length">',
-            '<tpl for="errors"><tpl if="xindex &gt; 1">\n</tpl>{.}</tpl>',
+        '<tpl for="errors"><tpl if="xindex &gt; 1">\n</tpl>{.}</tpl>',
         '</tpl>'
     ],
 
@@ -201,7 +201,7 @@ Ext.define("Ext.form.Labelable", {
      * @cfg {String} invalidCls
      * The CSS class to use when marking the component invalid.
      */
-    invalidCls : Ext.baseCSSPrefix + 'form-invalid',
+    invalidCls: Ext.baseCSSPrefix + 'form-invalid',
 
     /**
      * @cfg {String} fieldLabel
@@ -220,7 +220,7 @@ Ext.define("Ext.form.Labelable", {
      *   - "right" - The label is positioned to the left of the field, with its text aligned to the right.
      *     Its width is determined by the {@link #labelWidth} config.
      */
-    labelAlign : 'left',
+    labelAlign: 'left',
 
     /**
      * @cfg {Number} labelWidth
@@ -248,14 +248,14 @@ Ext.define("Ext.form.Labelable", {
      *
      * Set to empty string to hide the separator completely.
      */
-    labelSeparator : ':',
+    labelSeparator: ':',
     //</locale>
 
     /**
      * @cfg {String} labelStyle
      * A CSS style specification string to apply directly to this field's label.
      */
-    
+
     /**
      * @cfg {Boolean} hideLabel
      * Set to true to completely hide the label element ({@link #fieldLabel} and {@link #labelSeparator}). Also see
@@ -412,7 +412,7 @@ Ext.define("Ext.form.Labelable", {
          * @static
          * @private
          */
-        initTip: function() {
+        initTip: function () {
             var tip = this.tip,
                 cfg, copy;
 
@@ -435,7 +435,7 @@ Ext.define("Ext.form.Labelable", {
                 cfg.anchor = 'top';
                 cfg.showDelay = 0;
                 cfg.listeners = {
-                    beforeshow: function() {
+                    beforeshow: function () {
                         this.minWidth = Ext.fly(this.anchorTarget).getWidth();
                     }
                 };
@@ -450,7 +450,7 @@ Ext.define("Ext.form.Labelable", {
          * Destroy the error tip instance.
          * @static
          */
-        destroyTip: function() {
+        destroyTip: function () {
             this.tip = Ext.destroy(this.tip);
         }
     },
@@ -466,7 +466,7 @@ Ext.define("Ext.form.Labelable", {
      * Performs initialization of this mixin. Component classes using this mixin should call this method during their
      * own initialization.
      */
-    initLabelable: function() {
+    initLabelable: function () {
         var me = this,
             padding = me.padding;
 
@@ -506,7 +506,7 @@ Ext.define("Ext.form.Labelable", {
      * Returns the trimmed label by slicing off the label separator character. Can be overridden.
      * @return {String} The trimmed field label, or empty string if not defined
      */
-    trimLabelSeparator: function() {
+    trimLabelSeparator: function () {
         var me = this,
             separator = me.labelSeparator,
             label = me.fieldLabel || '',
@@ -522,7 +522,7 @@ Ext.define("Ext.form.Labelable", {
      * @template
      * @return {String} The configured field label, or empty string if not defined
      */
-    getFieldLabel: function() {
+    getFieldLabel: function () {
         return this.trimLabelSeparator();
     },
 
@@ -531,7 +531,7 @@ Ext.define("Ext.form.Labelable", {
      * @param {String} label The new label. The {@link #labelSeparator} will be automatically appended to the label
      * string.
      */
-    setFieldLabel: function(label){
+    setFieldLabel: function (label) {
         label = label || '';
 
         var me = this,
@@ -563,7 +563,7 @@ Ext.define("Ext.form.Labelable", {
         }
     },
 
-    setHideLabel: function(hideLabel) {
+    setHideLabel: function (hideLabel) {
         var me = this;
 
         if (hideLabel !== me.hideLabel) {
@@ -575,7 +575,7 @@ Ext.define("Ext.form.Labelable", {
         }
     },
 
-    setHideEmptyLabel: function(hideEmptyLabel) {
+    setHideEmptyLabel: function (hideEmptyLabel) {
         var me = this,
             hide;
 
@@ -620,7 +620,7 @@ Ext.define("Ext.form.Labelable", {
      * @return {Object} The template arguments
      * @protected
      */
-    getLabelableRenderData: function() {
+    getLabelableRenderData: function () {
         var me = this,
             labelAlign = me.labelAlign,
             topLabel = (labelAlign === 'top'),
@@ -694,7 +694,7 @@ Ext.define("Ext.form.Labelable", {
             growCls: me.grow ? me.growCls : '',
             tipAnchorTarget: me.id + '-inputEl',
             errorWrapStyle: (sideError && !autoFitErrors) ?
-                    'visibility:hidden' : 'display:none',
+                'visibility:hidden' : 'display:none',
             fieldLabel: me.getFieldLabel(),
             labelSeparator: me.labelSeparator
         };
@@ -705,11 +705,11 @@ Ext.define("Ext.form.Labelable", {
     },
 
     // hook for rtl
-    getHorizontalPaddingStyle: function() {
+    getHorizontalPaddingStyle: function () {
         return 'padding-right:';
     },
 
-    beforeLabelRender: function() {
+    beforeLabelRender: function () {
         var me = this;
         me.setFieldDefaults(me.getInherited().fieldDefaults);
         if (me.ownerLayout) {
@@ -720,7 +720,7 @@ Ext.define("Ext.form.Labelable", {
         }
     },
 
-    onLabelRender: function() {
+    onLabelRender: function () {
         var me = this,
             style = {},
             ExtElement = Ext.Element,
@@ -747,7 +747,7 @@ Ext.define("Ext.form.Labelable", {
      * Checks if the field has a visible label
      * @return {Boolean} True if the field has a visible label
      */
-    hasVisibleLabel: function(){
+    hasVisibleLabel: function () {
         if (this.hideLabel) {
             return false;
         }
@@ -760,7 +760,7 @@ Ext.define("Ext.form.Labelable", {
      * @return {String} The markup to be inserted
      * @protected
      */
-    getSubTplMarkup: function() {
+    getSubTplMarkup: function () {
         return '';
     },
 
@@ -769,7 +769,7 @@ Ext.define("Ext.form.Labelable", {
      * Implementing subclasses may also use this as e.g. the id for their own input element.
      * @return {String} The input id
      */
-    getInputId: function() {
+    getInputId: function () {
         return '';
     },
 
@@ -778,7 +778,7 @@ Ext.define("Ext.form.Labelable", {
      * returns any message that the component may already hold.
      * @return {String} The active error message on the component; if there is no error, an empty string is returned.
      */
-    getActiveError : function() {
+    getActiveError: function () {
         return this.activeError || '';
     },
 
@@ -787,7 +787,7 @@ Ext.define("Ext.form.Labelable", {
      * merely looks for any message that the component may already hold.
      * @return {Boolean}
      */
-    hasActiveError: function() {
+    hasActiveError: function () {
         return !!this.getActiveError();
     },
 
@@ -796,10 +796,10 @@ Ext.define("Ext.form.Labelable", {
      * string. Also see {@link #setActiveErrors} which accepts an Array of messages and formats them according to the
      * {@link #activeErrorsTpl}. Note that this only updates the error message element's text and attributes, you'll
      * have to call doComponentLayout to actually update the field's layout to match. If the field extends {@link
-     * Ext.form.field.Base} you should call {@link Ext.form.field.Base#markInvalid markInvalid} instead.
+        * Ext.form.field.Base} you should call {@link Ext.form.field.Base#markInvalid markInvalid} instead.
      * @param {String} msg The error message
      */
-    setActiveError: function(msg) {
+    setActiveError: function (msg) {
         this.setActiveErrors(msg);
     },
 
@@ -809,7 +809,7 @@ Ext.define("Ext.form.Labelable", {
      * @return {String[]} The active error messages on the component; if there are no errors, an empty Array is
      * returned.
      */
-    getActiveErrors: function() {
+    getActiveErrors: function () {
         return this.activeErrors || [];
     },
 
@@ -821,7 +821,7 @@ Ext.define("Ext.form.Labelable", {
      * {@link Ext.form.field.Base} you should call {@link Ext.form.field.Base#markInvalid markInvalid} instead.
      * @param {String[]} errors The error messages
      */
-    setActiveErrors: function(errors) {
+    setActiveErrors: function (errors) {
         var me = this,
             errorWrapEl = me.errorWrapEl,
             msgTarget = me.msgTarget,
@@ -843,7 +843,7 @@ Ext.define("Ext.form.Labelable", {
 
         if (me.rendered) {
             actionEl = me.getActionEl();
-            
+
             if (isSide) {
                 me.errorEl.dom.setAttribute('data-errorqtip', activeError);
             }
@@ -859,7 +859,7 @@ Ext.define("Ext.form.Labelable", {
                 me.ariaErrorEl.dom.innerHTML = errors.join('. ');
                 actionEl.dom.setAttribute('aria-describedby', me.ariaErrorEl.id);
             }
-            
+
             if (isSide || isQtip) {
                 Ext.form.Labelable.initTip();
             }
@@ -885,9 +885,9 @@ Ext.define("Ext.form.Labelable", {
     /**
      * Clears the active error message(s). Note that this only clears the error message element's text and attributes,
      * you'll have to call doComponentLayout to actually update the field's layout to match. If the field extends {@link
-     * Ext.form.field.Base} you should call {@link Ext.form.field.Base#clearInvalid clearInvalid} instead.
+        * Ext.form.field.Base} you should call {@link Ext.form.field.Base#clearInvalid clearInvalid} instead.
      */
-    unsetActiveError: function() {
+    unsetActiveError: function () {
         var me = this,
             errorWrapEl = me.errorWrapEl,
             msgTarget = me.msgTarget,
@@ -901,14 +901,14 @@ Ext.define("Ext.form.Labelable", {
 
             if (me.rendered) {
                 actionEl = me.getActionEl();
-                
+
                 if (msgTarget === 'qtip') {
                     actionEl.dom.removeAttribute('data-errorqtip');
                 }
                 else if (msgTarget === 'title') {
                     actionEl.dom.removeAttribute('title');
                 }
-                
+
                 if (msgTarget !== 'title') {
                     me.ariaErrorEl.dom.innerHTML = '';
                     actionEl.dom.removeAttribute('aria-describedby');
@@ -941,7 +941,7 @@ Ext.define("Ext.form.Labelable", {
         }
     },
 
-    doRestoreDisplay: function() {
+    doRestoreDisplay: function () {
         // IE8 hack for https://sencha.jira.com/browse/EXTJS-17536.
         // Need to force a relayout of the display:table form item.
         // TODO: Remove this method when IE8 retires.
@@ -956,7 +956,7 @@ Ext.define("Ext.form.Labelable", {
      * Updates the rendered DOM to match the current activeError. This only updates the content and
      * attributes, you'll have to call doComponentLayout to actually update the display.
      */
-    renderActiveError: function() {
+    renderActiveError: function () {
         var me = this,
             activeError = me.getActiveError(),
             hasError = !!activeError;
@@ -980,7 +980,7 @@ Ext.define("Ext.form.Labelable", {
      * Add/remove invalid class(es)
      * @param {Boolean} hasError
      */
-    toggleInvalidCls: function(hasError) {
+    toggleInvalidCls: function (hasError) {
         this.el[hasError ? 'addCls' : 'removeCls'](this.invalidCls);
     },
 
@@ -990,7 +990,7 @@ Ext.define("Ext.form.Labelable", {
      * prototype and we should apply the default value.
      * @param {Object} defaults The defaults to apply to the object.
      */
-    setFieldDefaults: function(defaults) {
+    setFieldDefaults: function (defaults) {
         var key;
 
         for (key in defaults) {
@@ -999,7 +999,7 @@ Ext.define("Ext.form.Labelable", {
             }
         }
     }
-}, function() {
+}, function () {
     if (Ext.supports.Touch) {
         this.prototype.msgTarget = 'side';
     }

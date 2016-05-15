@@ -1,13 +1,13 @@
-describe('Ext.chart.series.Series', function() {
+describe('Ext.chart.series.Series', function () {
 
     var proto = Ext.chart.series.Series.prototype,
         synchronousLoad = true,
         proxyStoreLoad = Ext.data.ProxyStore.prototype.load,
         loadStore;
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -16,7 +16,7 @@ describe('Ext.chart.series.Series', function() {
         };
     });
 
-    afterEach(function() {
+    afterEach(function () {
         // Undo the overrides.
         Ext.data.ProxyStore.prototype.load = proxyStoreLoad;
     });

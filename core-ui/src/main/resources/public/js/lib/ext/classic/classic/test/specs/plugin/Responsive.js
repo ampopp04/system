@@ -61,7 +61,7 @@ describe('Ext.plugin.Responsive', function () {
             panel = Ext.destroy(panel);
         });
 
-        function createPanel (plugin) {
+        function createPanel(plugin) {
             panel = Ext.create({
                 xtype: 'panel',
                 layout: 'border',
@@ -117,7 +117,7 @@ describe('Ext.plugin.Responsive', function () {
             expect(child.title).toBe('Title - Narrow');
         });
 
-        describe('creation', function (){
+        describe('creation', function () {
             it('should be created using config object', function () {
                 createPanel({
                     ptype: 'responsive'

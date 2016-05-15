@@ -16,21 +16,21 @@
  * @param {Object/String} config Application config object or name of a class derived
  * from Ext.app.Application.
  */
-Ext.application = function(config) {
+Ext.application = function (config) {
     var createApp = function (App) {
-            // This won't be called until App class has been created.
-            Ext.onReady(function() {
-                var Viewport = Ext.viewport;
-                Viewport = Viewport && Viewport['Viewport'];
-                if (Viewport && Viewport.setup) {
-                    Viewport.setup(App.prototype.config.viewport);
-                }
-                Ext.app.Application.instance = new App();
-            });
-        };
+        // This won't be called until App class has been created.
+        Ext.onReady(function () {
+            var Viewport = Ext.viewport;
+            Viewport = Viewport && Viewport['Viewport'];
+            if (Viewport && Viewport.setup) {
+                Viewport.setup(App.prototype.config.viewport);
+            }
+            Ext.app.Application.instance = new App();
+        });
+    };
 
     if (typeof config === "string") {
-        Ext.require(config, function() {
+        Ext.require(config, function () {
             createApp(Ext.ClassManager.get(config));
         });
     }

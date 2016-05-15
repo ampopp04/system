@@ -1,19 +1,19 @@
-describe('Ext.util.CSS', function() {
+describe('Ext.util.CSS', function () {
     var div;
 
-    beforeEach(function() {
+    beforeEach(function () {
         div = Ext.getBody().createChild({
             tag: 'div',
             style: 'height:100px;width:100px'
         });
         div.dom.className = 'ext-css-test';
     });
-    afterEach(function() {
+    afterEach(function () {
         div.destroy();
     });
 
-    it('should create a stylesheet, and apply and update rules', function() {
-        
+    it('should create a stylesheet, and apply and update rules', function () {
+
         // Create a stylesheet with a single rule in it
         var stylesheet = Ext.util.CSS.createStyleSheet('.ext-css-test { background-color:red}', 'unit-test-stylesheet');
         expect(div.getStyle('background-color') === "rgb(255, 0, 0)" || div.getStyle('background-color') === "red").toBe(true);

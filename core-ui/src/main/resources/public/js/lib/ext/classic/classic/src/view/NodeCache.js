@@ -1,7 +1,7 @@
 /**
  * @private
  * A cache of View elements keyed using the index of the associated record in the store.
- * 
+ *
  * This implements the methods of {Ext.dom.CompositeElement} which are used by {@link Ext.view.AbstractView}
  * to provide a map of record nodes and methods to manipulate the nodes.
  * @class Ext.view.NodeCache
@@ -14,29 +14,29 @@ Ext.define('Ext.view.NodeCache', {
         range: document.createRange && document.createRange()
     },
 
-    constructor: function(view) {
+    constructor: function (view) {
         this.view = view;
         this.clear();
         this.el = new Ext.dom.Fly();
     },
-    
-    destroy: function() {
+
+    destroy: function () {
         var me = this;
-        
+
         if (!me.destroyed) {
             me.el.destroy();
             me.el = me.view = null;
             me.destroyed = true;
         }
-        
+
         me.callParent();
     },
 
     /**
-    * Removes all elements from this NodeCache.
-    * @param {Boolean} [removeDom] True to also remove the elements from the document.
-    */
-    clear: function(removeDom) {
+     * Removes all elements from this NodeCache.
+     * @param {Boolean} [removeDom] True to also remove the elements from the document.
+     */
+    clear: function (removeDom) {
         var me = this,
             elements = me.elements,
             range = me.statics().range,
@@ -47,7 +47,7 @@ Ext.define('Ext.view.NodeCache', {
                 range.setStartBefore(elements[me.startIndex]);
                 range.setEndAfter(elements[me.endIndex]);
                 range.deleteContents();
-             } else {
+            } else {
                 for (key in elements) {
                     Ext.removeNode(elements[key]);
                 }
@@ -59,11 +59,11 @@ Ext.define('Ext.view.NodeCache', {
     },
 
     /**
-    * Clears this NodeCache and adds the elements passed.
-    * @param {HTMLElement[]} els An array of DOM elements from which to fill this NodeCache.
-    * @return {Ext.view.NodeCache} this
-    */
-    fill: function(newElements, startIndex, fixedNodes) {
+     * Clears this NodeCache and adds the elements passed.
+     * @param {HTMLElement[]} els An array of DOM elements from which to fill this NodeCache.
+     * @return {Ext.view.NodeCache} this
+     */
+    fill: function (newElements, startIndex, fixedNodes) {
         fixedNodes = fixedNodes || 0;
         var me = this,
             elements = me.elements = {},
@@ -82,7 +82,7 @@ Ext.define('Ext.view.NodeCache', {
         return this;
     },
 
-    insert: function(insertPoint, nodes) {
+    insert: function (insertPoint, nodes) {
         var me = this,
             elements = me.elements,
             i,
@@ -119,7 +119,7 @@ Ext.define('Ext.view.NodeCache', {
         me.count += nodeCount;
     },
 
-    invoke: function(fn, args) {
+    invoke: function (fn, args) {
         var me = this,
             element,
             i;
@@ -134,7 +134,7 @@ Ext.define('Ext.view.NodeCache', {
         return me;
     },
 
-    item: function(index, asDom) {
+    item: function (index, asDom) {
         var el = this.elements[index],
             result = null;
 
@@ -144,11 +144,11 @@ Ext.define('Ext.view.NodeCache', {
         return result;
     },
 
-    first: function(asDom) {
+    first: function (asDom) {
         return this.item(this.startIndex, asDom);
     },
 
-    last: function(asDom) {
+    last: function (asDom) {
         return this.item(this.endIndex, asDom);
     },
 
@@ -159,7 +159,7 @@ Ext.define('Ext.view.NodeCache', {
      * and the data-recordIndex connector attribute must be updated.
      *
      */
-    moveBlock: function(increment) {
+    moveBlock: function (increment) {
         var me = this,
             elements = me.elements,
             node,
@@ -197,11 +197,11 @@ Ext.define('Ext.view.NodeCache', {
         delete elements[i];
     },
 
-    getCount : function() {
+    getCount: function () {
         return this.count;
     },
 
-    slice: function(start, end) {
+    slice: function (start, end) {
         var elements = this.elements,
             result = [],
             i;
@@ -211,20 +211,20 @@ Ext.define('Ext.view.NodeCache', {
         } else {
             end = Math.min(this.endIndex, end - 1);
         }
-        for (i = start||this.startIndex; i <= end; i++) {
+        for (i = start || this.startIndex; i <= end; i++) {
             result.push(elements[i]);
         }
         return result;
     },
 
     /**
-    * Replaces the specified element with the passed element.
-    * @param {String/HTMLElement/Ext.dom.Element/Number} el The id of an element, the Element itself, the index of the
-    * element in this composite to replace.
-    * @param {String/Ext.dom.Element} replacement The id of an element or the Element itself.
-    * @param {Boolean} [domReplace] True to remove and replace the element in the document too.
-    */
-    replaceElement: function(el, replacement, domReplace) {
+     * Replaces the specified element with the passed element.
+     * @param {String/HTMLElement/Ext.dom.Element/Number} el The id of an element, the Element itself, the index of the
+     * element in this composite to replace.
+     * @param {String/Ext.dom.Element} replacement The id of an element or the Element itself.
+     * @param {Boolean} [domReplace] True to remove and replace the element in the document too.
+     */
+    replaceElement: function (el, replacement, domReplace) {
         var elements = this.elements,
             index = (typeof el === 'number') ? el : this.indexOf(el);
 
@@ -242,12 +242,12 @@ Ext.define('Ext.view.NodeCache', {
     },
 
     /**
-    * Find the index of the passed element within the composite collection.
-    * @param {String/HTMLElement/Ext.dom.Element/Number} el The id of an element, or an Ext.dom.Element, or an HTMLElement
-    * to find within the composite collection.
-    * @return {Number} The index of the passed Ext.dom.Element in the composite collection, or -1 if not found.
-    */
-    indexOf: function(el) {
+     * Find the index of the passed element within the composite collection.
+     * @param {String/HTMLElement/Ext.dom.Element/Number} el The id of an element, or an Ext.dom.Element, or an HTMLElement
+     * to find within the composite collection.
+     * @return {Number} The index of the passed Ext.dom.Element in the composite collection, or -1 if not found.
+     */
+    indexOf: function (el) {
         var elements = this.elements,
             index;
 
@@ -260,7 +260,7 @@ Ext.define('Ext.view.NodeCache', {
         return -1;
     },
 
-    removeRange: function(start, end, removeDom) {
+    removeRange: function (start, end, removeDom) {
         var me = this,
             elements = me.elements,
             removed = [],
@@ -301,12 +301,12 @@ Ext.define('Ext.view.NodeCache', {
     },
 
     /**
-    * Removes the specified element(s).
-    * @param {String/HTMLElement/Ext.dom.Element/Number} el The id of an element, the Element itself, the index of the
-    * element in this composite or an array of any of those.
-    * @param {Boolean} [removeDom] True to also remove the element from the document
-    */
-    removeElement: function(keys, removeDom) {
+     * Removes the specified element(s).
+     * @param {String/HTMLElement/Ext.dom.Element/Number} el The id of an element, the Element itself, the index of the
+     * element in this composite or an array of any of those.
+     * @param {Boolean} [removeDom] True to also remove the element from the document
+     */
+    removeElement: function (keys, removeDom) {
         var me = this,
             inKeys,
             key,
@@ -379,7 +379,7 @@ Ext.define('Ext.view.NodeCache', {
      * down, rows are removed from the top and the new rows are added at the bottom.
      * @return {HTMLElement[]} The view item nodes added either at the top or the bottom of the view.
      */
-    scroll: function(newRecords, direction, removeCount) {
+    scroll: function (newRecords, direction, removeCount) {
         var me = this,
             view = me.view,
             store = view.store,
@@ -501,11 +501,11 @@ Ext.define('Ext.view.NodeCache', {
         }
         // Keep count consistent.
         me.count = me.endIndex - me.startIndex + 1;
-        
+
         return children;
     },
 
-    sumHeights: function() {
+    sumHeights: function () {
         var result = 0,
             elements = this.elements,
             i;
@@ -515,6 +515,6 @@ Ext.define('Ext.view.NodeCache', {
         }
         return result;
     }
-}, function() {
+}, function () {
     Ext.dom.CompositeElementLite.importElementMethods.call(this);
 });

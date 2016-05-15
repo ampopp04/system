@@ -13,7 +13,7 @@ Ext.define('Ext.event.gesture.MultiTouch', {
 
     isStarted: false,
 
-    onTouchStart: function(e) {
+    onTouchStart: function (e) {
         var requiredTouchesCount = this.requiredTouchesCount,
             touches = e.touches,
             touchesCount = touches.length;
@@ -26,23 +26,23 @@ Ext.define('Ext.event.gesture.MultiTouch', {
         }
     },
 
-    onTouchEnd: function(e) {
+    onTouchEnd: function (e) {
         this.end(e);
     },
 
-    onTouchCancel: function(e) {
+    onTouchCancel: function (e) {
         this.end(e, true);
         return false;
     },
 
-    start: function() {
+    start: function () {
         if (!this.isTracking) {
             this.isTracking = true;
             this.isStarted = false;
         }
     },
 
-    end: function(e, isCancel) {
+    end: function (e, isCancel) {
         if (this.isTracking) {
             this.isTracking = false;
 
@@ -54,7 +54,7 @@ Ext.define('Ext.event.gesture.MultiTouch', {
         }
     },
 
-    reset: function() {
+    reset: function () {
         this.isTracking = this.isStarted = false;
     }
 });

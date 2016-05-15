@@ -1,17 +1,17 @@
-describe("Ext.Element.style", function() {
+describe("Ext.Element.style", function () {
     var testEl;
-    
-    beforeEach(function() {
+
+    beforeEach(function () {
         testEl = Ext.getBody().createChild({
-            id      : 'ExtElementHelper',
-            style   : 'position:absolute;'
+            id: 'ExtElementHelper',
+            style: 'position:absolute;'
         });
     });
-    
-    afterEach(function() {
+
+    afterEach(function () {
         testEl.destroy();
     });
-    
+
     describe('addCls', function () {
         xit('should add one class', function () {
             testEl.addCls('foo');
@@ -88,59 +88,59 @@ describe("Ext.Element.style", function() {
         });
     });
 
-    describe('getStyle', function(){
+    describe('getStyle', function () {
         var el, dom;
-        beforeEach(function(){
+        beforeEach(function () {
             dom = document.createElement('div');
             testEl.appendChild(dom);
             el = Ext.get(dom);
         });
-        afterEach(function(){
+        afterEach(function () {
             el.destroy();
         });
 
-        describe('border-*-width', function(){
-            Ext.Array.forEach('top right bottom left'.split(' '), function(side){
-                it('must report the correct border-'+ side +'-width when the border-'+ side +'-style is "solid"', function(){
+        describe('border-*-width', function () {
+            Ext.Array.forEach('top right bottom left'.split(' '), function (side) {
+                it('must report the correct border-' + side + '-width when the border-' + side + '-style is "solid"', function () {
                     dom.style.cssText = 'border:5px solid';
-                    expect(el.getStyle('border-'+ side +'-width')).toBe('5px');
+                    expect(el.getStyle('border-' + side + '-width')).toBe('5px');
                 });
-                it('must report 0px for border-'+ side +'-width when the border-'+ side +'-style is "none"', function(){
+                it('must report 0px for border-' + side + '-width when the border-' + side + '-style is "none"', function () {
                     dom.style.cssText = 'border:5px solid; border-' + side + '-style:none';
-                    expect(el.getStyle('border-'+ side +'-width')).toBe('0px');
+                    expect(el.getStyle('border-' + side + '-width')).toBe('0px');
                 });
             });
         });
 
     });
-    
-    describe('setStyle', function() {
+
+    describe('setStyle', function () {
         var el, dom;
-        beforeEach(function(){
+        beforeEach(function () {
             dom = document.createElement('div');
             testEl.appendChild(dom);
             el = Ext.get(dom);
         });
-        afterEach(function(){
+        afterEach(function () {
             el.destroy();
         });
 
-        describe('font-size', function() {
-            it('should set the font size', function() {
+        describe('font-size', function () {
+            it('should set the font size', function () {
                 el.setStyle('font-size', '50px');
                 expect(el.getStyle('font-size')).toEqual('50px');
             });
         });
 
-        describe('font-sstyle', function() {
-            it('should set the font style', function() {
+        describe('font-sstyle', function () {
+            it('should set the font style', function () {
                 el.setStyle('font-style', 'italic');
                 expect(el.getStyle('font-style')).toEqual('italic');
             });
         });
 
-        describe('font-family', function() {
-            it('should set the font family', function() {
+        describe('font-family', function () {
+            it('should set the font family', function () {
                 el.setStyle('font-family', 'Courier');
                 expect(el.getStyle('font-family').toLowerCase().indexOf('courier')).toBeGreaterThan(-1);
             });

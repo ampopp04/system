@@ -66,16 +66,15 @@ Ext.define('Ext.data.amf.RemotingMessage', {
      * Creates new message.
      * @param {Object} config Configuration options
      */
-    constructor: function(config) {
+    constructor: function (config) {
         this.initConfig(config);
     },
-
 
 
     /**
      * Returns an AMFX encoded version of the message.
      */
-    encodeMessage: function() {
+    encodeMessage: function () {
         var encoder = Ext.create('Ext.data.amf.XmlEncoder'),
             cleanObj;
         cleanObj = Ext.copyTo({}, this, "$flexType,body,clientId,destination,headers,messageId,operation,source,timestamp,timeToLive", true);

@@ -5,7 +5,7 @@
 Ext.define('Ext.rtl.layout.ContextItem', {
     override: 'Ext.layout.ContextItem',
 
-    addPositionStyles: function(styles, props) {
+    addPositionStyles: function (styles, props) {
         var x = props.x,
             y = props.y,
             count = 0;

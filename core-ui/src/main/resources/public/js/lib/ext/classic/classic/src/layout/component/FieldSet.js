@@ -7,7 +7,7 @@ Ext.define('Ext.layout.component.FieldSet', {
     alias: ['layout.fieldset'],
 
     type: 'fieldset',
-    
+
     defaultCollapsedWidth: 100,
 
     beforeLayoutCycle: function (ownerContext) {
@@ -16,7 +16,7 @@ Ext.define('Ext.layout.component.FieldSet', {
         }
     },
 
-    beginLayout: function(ownerContext) {
+    beginLayout: function (ownerContext) {
         var legend = this.owner.legend;
         this.callParent([ownerContext]);
         if (legend) {
@@ -49,18 +49,18 @@ Ext.define('Ext.layout.component.FieldSet', {
             }
         }
     },
-    
-    finishedLayout: function(ownerContext) {
+
+    finishedLayout: function (ownerContext) {
         var owner = this.owner,
             restore = ownerContext.restoreMinHeight;
-             
+
         this.callParent(arguments);
         if (restore) {
             owner.minHeight = restore;
         }
     },
 
-    calculateOwnerWidthFromContentWidth: function(ownerContext, contentWidth) {
+    calculateOwnerWidthFromContentWidth: function (ownerContext, contentWidth) {
         var legendContext = ownerContext.legendContext;
         if (legendContext) {
             contentWidth = Math.max(contentWidth, legendContext.getProp('width'));
@@ -71,16 +71,16 @@ Ext.define('Ext.layout.component.FieldSet', {
     calculateOwnerHeightFromContentHeight: function (ownerContext, contentHeight) {
         var border = ownerContext.getBorderInfo(),
             legendContext = ownerContext.legendContext;
-            
+
         // Height of fieldset is content height plus top border width (which is either the
         // legend height or top border width) plus bottom border width
         return ownerContext.getProp('contentHeight') +
-               ownerContext.getPaddingInfo().height +
-               // In IE8m the top padding is on the body el
-               (Ext.isIE8 ?
-                   ownerContext.bodyContext.getPaddingInfo().top : 0) +
-               (legendContext ? legendContext.getProp('height') : border.top) +
-               border.bottom;
+            ownerContext.getPaddingInfo().height +
+            // In IE8m the top padding is on the body el
+            (Ext.isIE8 ?
+                ownerContext.bodyContext.getPaddingInfo().top : 0) +
+            (legendContext ? legendContext.getProp('height') : border.top) +
+            border.bottom;
     },
 
     publishInnerHeight: function (ownerContext, height) {
@@ -100,7 +100,7 @@ Ext.define('Ext.layout.component.FieldSet', {
         }
     },
 
-    getLayoutItems : function() {
+    getLayoutItems: function () {
         var legend = this.owner.legend;
         return legend ? [legend] : [];
     }

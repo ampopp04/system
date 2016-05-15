@@ -1,13 +1,13 @@
 Ext.define(null, {
-    override: 'Ext.scroll.DomScroller', 
-    
+    override: 'Ext.scroll.DomScroller',
+
     compatibility: Ext.isIE8,
-    
+
     privates: {
         // Important note: this code had to be copied as a whole
         // because the scrollLeft assignment trickery only works
         // reliably when it is done within the same function context.
-        doScrollTo: function(x, y, animate) {
+        doScrollTo: function (x, y, animate) {
             var me = this,
                 element = me.getElement(),
                 maxPosition, dom, to, xInf, yInf;
@@ -61,18 +61,18 @@ Ext.define(null, {
                     if (x != null && y != null) {
                         me.deferDomScroll = true;
                     }
-                    
+
                     if (y != null) {
                         dom.scrollTop = y;
                     }
-                    
+
                     if (x != null) {
                         dom.scrollLeft = x;
                     }
-                    
+
                     if (me.deferDomScroll) {
                         me.deferDomScroll = false;
-                        
+
                         // Reading the DOM makes sure the second assignment
                         // will fire the event.
                         +dom.scrollLeft;
@@ -84,14 +84,14 @@ Ext.define(null, {
                 me.positionDirty = true;
             }
         },
-        
-        onDomScroll: function() {
+
+        onDomScroll: function () {
             var me = this;
-            
+
             if (me.deferDomScroll) {
                 return;
             }
-            
+
             me.callParent();
         }
     }

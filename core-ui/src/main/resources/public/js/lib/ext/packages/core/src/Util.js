@@ -10,26 +10,26 @@ Ext.apply(Ext, {
 
     // shortcut for the special named scopes for listener scope resolution
     _namedScopes: {
-        'this': { isThis: 1 },
-        controller: { isController: 1 },
+        'this': {isThis: 1},
+        controller: {isController: 1},
         // these two are private, used to indicate that listeners were declared on the
         // class body with either an unspecified scope, or scope:'controller'
-        self: { isSelf: 1 },
-        'self.controller': { isSelf: 1, isController: 1 }
+        self: {isSelf: 1},
+        'self.controller': {isSelf: 1, isController: 1}
     },
 
-    escapeId: (function(){
+    escapeId: (function () {
         var validIdRe = /^[a-zA-Z_][a-zA-Z0-9_\-]*$/i,
             escapeRx = /([\W]{1})/g,
             leadingNumRx = /^(\d)/g,
-            escapeFn = function(match, capture){
+            escapeFn = function (match, capture) {
                 return "\\" + capture;
             },
-            numEscapeFn = function(match, capture){
+            numEscapeFn = function (match, capture) {
                 return '\\00' + capture.charCodeAt(0).toString(16) + ' ';
             };
 
-        return function(id) {
+        return function (id) {
             return validIdRe.test(id) ? id :
                 // replace the number portion last to keep the trailing ' '
                 // from being escaped
@@ -74,7 +74,7 @@ Ext.apply(Ext, {
         }
 
         var namedScope = (scope in Ext._namedScopes);
-        
+
         if (callback.charAt) { // if (isString(fn))
             if ((!scope || namedScope) && caller) {
                 scope = caller.resolveListenerScope(namedScope ? scope : defaultScope);
@@ -85,7 +85,7 @@ Ext.apply(Ext, {
             }
             if (!Ext.isFunction(scope[callback])) {
                 Ext.raise('No method named "' + callback + '" on ' +
-                                (scope.$className || 'scope object'));
+                    (scope.$className || 'scope object'));
             }
             //</debug>
 
@@ -95,7 +95,7 @@ Ext.apply(Ext, {
         } else if (!scope) {
             scope = caller;
         }
-        
+
         var ret;
 
         if (callback && Ext.isFunction(callback)) {
@@ -124,18 +124,18 @@ Ext.apply(Ext, {
      * Numbers and numeric strings are coerced to Dates using the value as the millisecond era value.
      *
      * Strings are coerced to Dates by parsing using the {@link Ext.Date#defaultFormat defaultFormat}.
-     * 
+     *
      * For example
      *
      *     Ext.coerce('false', true);
-     *     
+     *
      * returns the boolean value `false` because the second parameter is of type `Boolean`.
-     * 
+     *
      * @param {Mixed} from The value to coerce
      * @param {Mixed} to The value it must be compared against
      * @return The coerced value.
      */
-    coerce: function(from, to) {
+    coerce: function (from, to) {
         var fromType = Ext.typeOf(from),
             toType = Ext.typeOf(to),
             isString = typeof from === 'string';
@@ -325,24 +325,24 @@ Ext.apply(Ext, {
      * @return {Function} The subclass constructor from the <tt>overrides</tt> parameter, or a generated one if not provided.
      * @deprecated 4.0.0 Use {@link Ext#define Ext.define} instead
      */
-    extend: (function() {
+    extend: (function () {
         // inline overrides
         var objectConstructor = Object.prototype.constructor,
-            inlineOverrides = function(o) {
-            for (var m in o) {
-                if (!o.hasOwnProperty(m)) {
-                    continue;
+            inlineOverrides = function (o) {
+                for (var m in o) {
+                    if (!o.hasOwnProperty(m)) {
+                        continue;
+                    }
+                    this[m] = o[m];
                 }
-                this[m] = o[m];
-            }
-        };
+            };
 
-        return function(subclass, superclass, overrides) {
+        return function (subclass, superclass, overrides) {
             // First we check if the user passed in just the superClass with overrides
             if (Ext.isObject(superclass)) {
                 overrides = superclass;
                 superclass = subclass;
-                subclass = overrides.constructor !== objectConstructor ? overrides.constructor : function() {
+                subclass = overrides.constructor !== objectConstructor ? overrides.constructor : function () {
                     superclass.apply(this, arguments);
                 };
             }
@@ -358,7 +358,8 @@ Ext.apply(Ext, {
             //</debug>
 
             // We create a new temporary class
-            var F = function() {},
+            var F = function () {
+                },
                 subclassProto, superclassProto = superclass.prototype;
 
             F.prototype = superclassProto;
@@ -370,7 +371,7 @@ Ext.apply(Ext, {
                 superclassProto.constructor = superclass;
             }
 
-            subclass.override = function(overrides) {
+            subclass.override = function (overrides) {
                 Ext.override(subclass, overrides);
             };
 
@@ -378,7 +379,7 @@ Ext.apply(Ext, {
             subclassProto.proto = subclassProto;
 
             subclass.override(overrides);
-            subclass.extend = function(o) {
+            subclass.extend = function (o) {
                 return Ext.extend(subclass, o);
             };
 
@@ -399,7 +400,7 @@ Ext.apply(Ext, {
      * @param {Object} [scope] The scope (`this` reference) in which the specified function is executed.
      * Defaults to the object being iterated itself.
      */
-    iterate: function(object, fn, scope) {
+    iterate: function (object, fn, scope) {
         if (Ext.isEmpty(object)) {
             return;
         }
@@ -489,7 +490,7 @@ Ext.apply(Ext, {
      * @inheritdoc Ext.Object#fromQueryString
      * @deprecated 4.0.0 Use {@link Ext.Object#fromQueryString} instead
      */
-    urlDecode: function() {
+    urlDecode: function () {
         return Ext.Object.fromQueryString.apply(Ext.Object, arguments);
     },
 
@@ -566,14 +567,14 @@ Ext.apply(Ext, {
                 'undefined': 1
             },
             toStringTypes = {
-                '[object Array]'  : 'array',
-                '[object Date]'   : 'date',
+                '[object Array]': 'array',
+                '[object Date]': 'date',
                 '[object Boolean]': 'boolean',
-                '[object Number]' : 'number',
-                '[object RegExp]' : 'regexp'
+                '[object Number]': 'number',
+                '[object RegExp]': 'regexp'
             };
 
-        return function(value) {
+        return function (value) {
             if (value === null) {
                 return 'null';
             }
@@ -639,7 +640,7 @@ Ext.apply(Ext, {
      * @param [aliasNamespace]
      * @member Ext
      */
-    factory: function(config, classReference, instance, aliasNamespace) {
+    factory: function (config, classReference, instance, aliasNamespace) {
         var manager = Ext.ClassManager,
             newInstance;
 
@@ -654,7 +655,7 @@ Ext.apply(Ext, {
         }
 
         if (aliasNamespace) {
-             // If config is a string value, treat it as an alias
+            // If config is a string value, treat it as an alias
             if (typeof config === 'string') {
                 return manager.instantiateByAlias(aliasNamespace + '.' + config);
             }
@@ -736,209 +737,210 @@ Ext.apply(Ext, {
      * @param {String...} [message] The message to log (required unless specified in
      * options object).
      */
-    log:
-    //<debug>
-        (function () {
-            /*
-             * Iterate through an object to dump its content into a string.
-             * For example:
-             *     {
-             *         style: {
-             *             lineWidth: 1
-             *         },
-             *         label: {},
-             *         marker: {
-             *             strokeStyle: "#555",
-             *             radius: 3,
-             *             size: 3
-             *         },
-             *         subStyle: {
-             *             fillStyle: [
-             *                 0: "#133987",
-             *                 1: "#1c55ca",
-             *                 2: "#4d7fe6"
-             *             ]
-             *         },
-             *         markerSubStyle: {}
-             *     } 
-             *
-             * @param {Object} object The object to iterate
-             * @param {Number} [level] Current level of identation (and recursion). Default is 0.
-             * @param {Number} [maxLevel] Maximum level of recursion. Default is 3.
-             * @param {Boolean} [withFunctions] Include functions in the output.
-             * @return {String} The string with the contents of the object
-             */
-            var primitiveRe = /string|number|boolean/;
-            function dumpObject (object, level, maxLevel, withFunctions) {
-                var member, type, value, name, prefix, suffix,
-                    members = [];
+    log: //<debug>
+    (function () {
+        /*
+         * Iterate through an object to dump its content into a string.
+         * For example:
+         *     {
+         *         style: {
+         *             lineWidth: 1
+         *         },
+         *         label: {},
+         *         marker: {
+         *             strokeStyle: "#555",
+         *             radius: 3,
+         *             size: 3
+         *         },
+         *         subStyle: {
+         *             fillStyle: [
+         *                 0: "#133987",
+         *                 1: "#1c55ca",
+         *                 2: "#4d7fe6"
+         *             ]
+         *         },
+         *         markerSubStyle: {}
+         *     } 
+         *
+         * @param {Object} object The object to iterate
+         * @param {Number} [level] Current level of identation (and recursion). Default is 0.
+         * @param {Number} [maxLevel] Maximum level of recursion. Default is 3.
+         * @param {Boolean} [withFunctions] Include functions in the output.
+         * @return {String} The string with the contents of the object
+         */
+        var primitiveRe = /string|number|boolean/;
 
-                if (Ext.isArray(object)) {
-                    prefix = '[';
-                    suffix = ']';
-                } else if (Ext.isObject(object)) {
-                    prefix = '{';
-                    suffix = '}';
-                }
-                if (!maxLevel) {
-                    maxLevel = 3;
-                }
-                if (level > maxLevel) {
-                    return prefix+'...'+suffix;
-                }
+        function dumpObject(object, level, maxLevel, withFunctions) {
+            var member, type, value, name, prefix, suffix,
+                members = [];
 
-                level = level || 1;
-                var spacer = (new Array(level)).join('    ');
-
-                // Cannot use Ext.encode since it can recurse endlessly
-                for (name in object) {
-                    if (object.hasOwnProperty(name)) {
-                        value = object[name];
-
-                        type = typeof value;
-                        if (type === 'function') {
-                            if (!withFunctions) {
-                                continue;
-                            }
-                            member = type;
-                        } else if (type === 'undefined') {
-                            member = type;
-                        } else if (value === null || primitiveRe.test(type) || Ext.isDate(value)) {
-                            member = Ext.encode(value);
-                        } else if (Ext.isArray(value)) {
-                            member = dumpObject(value, level+1, maxLevel, withFunctions);
-                        } else if (Ext.isObject(value)) {
-                            member = dumpObject(value, level+1, maxLevel, withFunctions);
-                        } else {
-                            member = type;
-                        }
-                        members.push(spacer + name + ': ' + member);    // or Ext.encode(name)
-                    }
-                }
-                if (members.length) {
-                    return prefix + '\n    '+ members.join(',\n    ') + '\n'+spacer+suffix;
-                }
-                return prefix+suffix;
+            if (Ext.isArray(object)) {
+                prefix = '[';
+                suffix = ']';
+            } else if (Ext.isObject(object)) {
+                prefix = '{';
+                suffix = '}';
+            }
+            if (!maxLevel) {
+                maxLevel = 3;
+            }
+            if (level > maxLevel) {
+                return prefix + '...' + suffix;
             }
 
-            function log (message) {
-                var options, dump,
-                    con = Ext.global.console,
-                    level = 'log',
-                    indent = log.indent || 0,
-                    prefix, stack, fn, out, max;
+            level = level || 1;
+            var spacer = (new Array(level)).join('    ');
 
-                log.indent = indent;
+            // Cannot use Ext.encode since it can recurse endlessly
+            for (name in object) {
+                if (object.hasOwnProperty(name)) {
+                    value = object[name];
 
-                if (typeof message !== 'string') {
-                    options = message;
-                    message = options.msg || '';
-                    level = options.level || level;
-                    dump = options.dump;
-                    stack = options.stack;
-                    prefix = options.prefix;
-                    fn = options.fn;
-
-                    if (options.indent) {
-                        ++log.indent;
-                    } else if (options.outdent) {
-                        log.indent = indent = Math.max(indent - 1, 0);
-                    }
-
-                    if (dump && !(con && con.dir)) {
-                        message += dumpObject(dump);
-                        dump = null;
-                    }
-                }
-
-                if (arguments.length > 1) {
-                    message += Array.prototype.slice.call(arguments, 1).join('');
-                }
-
-                if (prefix) {
-                    message = prefix + ' - ' + message;
-                }
-
-                message = indent ? Ext.String.repeat(' ', log.indentSize * indent) + message : message;
-                // w/o console, all messages are equal, so munge the level into the message:
-                if (level !== 'log') {
-                    message = '[' + level.charAt(0).toUpperCase() + '] ' + message;
-                }
-
-                if (fn) {
-                    message += '\nCaller: ' + fn.toString();
-                }
-
-                // Not obvious, but 'console' comes and goes when Firebug is turned on/off, so
-                // an early test may fail either direction if Firebug is toggled.
-                //
-                if (con) { // if (Firebug-like console)
-                    if (con[level]) {
-                        con[level](message);
+                    type = typeof value;
+                    if (type === 'function') {
+                        if (!withFunctions) {
+                            continue;
+                        }
+                        member = type;
+                    } else if (type === 'undefined') {
+                        member = type;
+                    } else if (value === null || primitiveRe.test(type) || Ext.isDate(value)) {
+                        member = Ext.encode(value);
+                    } else if (Ext.isArray(value)) {
+                        member = dumpObject(value, level + 1, maxLevel, withFunctions);
+                    } else if (Ext.isObject(value)) {
+                        member = dumpObject(value, level + 1, maxLevel, withFunctions);
                     } else {
-                        con.log(message);
+                        member = type;
                     }
+                    members.push(spacer + name + ': ' + member);    // or Ext.encode(name)
+                }
+            }
+            if (members.length) {
+                return prefix + '\n    ' + members.join(',\n    ') + '\n' + spacer + suffix;
+            }
+            return prefix + suffix;
+        }
 
-                    if (dump) {
-                        con.dir(dump);
-                    }
+        function log(message) {
+            var options, dump,
+                con = Ext.global.console,
+                level = 'log',
+                indent = log.indent || 0,
+                prefix, stack, fn, out, max;
 
-                    if (stack && con.trace) {
-                        // Firebug's console.error() includes a trace already...
-                        if (!con.firebug || level !== 'error') {
-                            con.trace();
-                        }
-                    }
-                } else if (Ext.isOpera) {
-                    opera.postError(message); // jshint ignore:line
+            log.indent = indent;
+
+            if (typeof message !== 'string') {
+                options = message;
+                message = options.msg || '';
+                level = options.level || level;
+                dump = options.dump;
+                stack = options.stack;
+                prefix = options.prefix;
+                fn = options.fn;
+
+                if (options.indent) {
+                    ++log.indent;
+                } else if (options.outdent) {
+                    log.indent = indent = Math.max(indent - 1, 0);
+                }
+
+                if (dump && !(con && con.dir)) {
+                    message += dumpObject(dump);
+                    dump = null;
+                }
+            }
+
+            if (arguments.length > 1) {
+                message += Array.prototype.slice.call(arguments, 1).join('');
+            }
+
+            if (prefix) {
+                message = prefix + ' - ' + message;
+            }
+
+            message = indent ? Ext.String.repeat(' ', log.indentSize * indent) + message : message;
+            // w/o console, all messages are equal, so munge the level into the message:
+            if (level !== 'log') {
+                message = '[' + level.charAt(0).toUpperCase() + '] ' + message;
+            }
+
+            if (fn) {
+                message += '\nCaller: ' + fn.toString();
+            }
+
+            // Not obvious, but 'console' comes and goes when Firebug is turned on/off, so
+            // an early test may fail either direction if Firebug is toggled.
+            //
+            if (con) { // if (Firebug-like console)
+                if (con[level]) {
+                    con[level](message);
                 } else {
-                    out = log.out;
-                    max = log.max;
+                    con.log(message);
+                }
 
-                    if (out.length >= max) {
-                        // this formula allows out.max to change (via debugger), where the
-                        // more obvious "max/4" would not quite be the same
-                        Ext.Array.erase(out, 0, out.length - 3 * Math.floor(max / 4)); // keep newest 75%
+                if (dump) {
+                    con.dir(dump);
+                }
+
+                if (stack && con.trace) {
+                    // Firebug's console.error() includes a trace already...
+                    if (!con.firebug || level !== 'error') {
+                        con.trace();
                     }
+                }
+            } else if (Ext.isOpera) {
+                opera.postError(message); // jshint ignore:line
+            } else {
+                out = log.out;
+                max = log.max;
 
-                    out.push(message);
+                if (out.length >= max) {
+                    // this formula allows out.max to change (via debugger), where the
+                    // more obvious "max/4" would not quite be the same
+                    Ext.Array.erase(out, 0, out.length - 3 * Math.floor(max / 4)); // keep newest 75%
                 }
 
-                // Mostly informational, but the Ext.Error notifier uses them:
-                ++log.count;
-                ++log.counters[level];
+                out.push(message);
             }
 
-            function logx (level, args) {
-                if (typeof args[0] === 'string') {
-                    args.unshift({});
-                }
-                args[0].level = level;
-                log.apply(this, args);
+            // Mostly informational, but the Ext.Error notifier uses them:
+            ++log.count;
+            ++log.counters[level];
+        }
+
+        function logx(level, args) {
+            if (typeof args[0] === 'string') {
+                args.unshift({});
             }
+            args[0].level = level;
+            log.apply(this, args);
+        }
 
-            log.error = function () {
-                logx('error', Array.prototype.slice.call(arguments));
-            };
-            log.info = function () {
-                logx('info', Array.prototype.slice.call(arguments));
-            };
-            log.warn = function () {
-                logx('warn', Array.prototype.slice.call(arguments));
-            };
+        log.error = function () {
+            logx('error', Array.prototype.slice.call(arguments));
+        };
+        log.info = function () {
+            logx('info', Array.prototype.slice.call(arguments));
+        };
+        log.warn = function () {
+            logx('warn', Array.prototype.slice.call(arguments));
+        };
 
-            log.count = 0;
-            log.counters = { error: 0, warn: 0, info: 0, log: 0 };
-            log.indentSize = 2;
-            log.out = [];
-            log.max = 750;
+        log.count = 0;
+        log.counters = {error: 0, warn: 0, info: 0, log: 0};
+        log.indentSize = 2;
+        log.out = [];
+        log.max = 750;
 
-            return log;
-        }()) ||
+        return log;
+    }()) ||
     //</debug>
-        (function () {
-            var nullLog = function () {};
-            nullLog.info = nullLog.warn = nullLog.error = Ext.emptyFn;
-            return nullLog;
-        }())
+    (function () {
+        var nullLog = function () {
+        };
+        nullLog.info = nullLog.warn = nullLog.error = Ext.emptyFn;
+        return nullLog;
+    }())
 });

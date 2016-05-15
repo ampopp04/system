@@ -1,21 +1,20 @@
 /**
- * @private 
+ * @private
  * @class Ext.app.Util
  */
-Ext.define('Ext.app.Util', {
-}, function() {
+Ext.define('Ext.app.Util', {}, function () {
     Ext.apply(Ext.app, {
         namespaces: {
             Ext: {}
         },
 
-       /**
-        * Adds namespace(s) to known list.
-        * @private
-        *
-        * @param {String/String[]} namespace
-        */
-        addNamespaces: function(namespace) {
+        /**
+         * Adds namespace(s) to known list.
+         * @private
+         *
+         * @param {String/String[]} namespace
+         */
+        addNamespaces: function (namespace) {
             var namespaces = Ext.app.namespaces,
                 i, l;
 
@@ -28,28 +27,28 @@ Ext.define('Ext.app.Util', {
             }
         },
 
-       /**
-        * Clear all namespaces from known list.
-        * @private
-        */
-        clearNamespaces: function() {
+        /**
+         * Clear all namespaces from known list.
+         * @private
+         */
+        clearNamespaces: function () {
             Ext.app.namespaces = {};
         },
 
-       /**
-        * Get namespace prefix for a class name.
-        * @private
-        * @param {String} className
-        *
-        * @return {String} Namespace prefix if it's known, otherwise undefined
-        */
-        getNamespace: function(className) {
-            var namespaces    = Ext.apply({}, Ext.ClassManager.paths, Ext.app.namespaces),
+        /**
+         * Get namespace prefix for a class name.
+         * @private
+         * @param {String} className
+         *
+         * @return {String} Namespace prefix if it's known, otherwise undefined
+         */
+        getNamespace: function (className) {
+            var namespaces = Ext.apply({}, Ext.ClassManager.paths, Ext.app.namespaces),
                 deepestPrefix = '',
                 prefix;
 
             for (prefix in namespaces) {
-                if (namespaces.hasOwnProperty(prefix)    &&
+                if (namespaces.hasOwnProperty(prefix) &&
                     prefix.length > deepestPrefix.length &&
                     (prefix + '.' === className.substring(0, prefix.length + 1))) {
                     deepestPrefix = prefix;

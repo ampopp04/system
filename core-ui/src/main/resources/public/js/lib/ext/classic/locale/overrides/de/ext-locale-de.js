@@ -5,14 +5,14 @@
  * 2009-Jul-10 update by Patrick Matsumura and Rupert Quaderer
  * 2010-Mar-10 update by Volker Grabsch
  */
-Ext.onReady(function() {
-    
+Ext.onReady(function () {
+
     if (Ext.Date) {
         Ext.Date.monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-        
+
         Ext.Date.defaultFormat = 'd.m.Y';
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return Ext.Date.monthNames[month].substring(0, 3);
         };
 
@@ -31,20 +31,20 @@ Ext.onReady(function() {
             Dez: 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1, 3).toLowerCase()];
         };
 
         Ext.Date.dayNames = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day].substring(0, 3);
         };
     }
 
     if (Ext.util && Ext.util.Format) {
         Ext.util.Format.__number = Ext.util.Format.number;
-        Ext.util.Format.number = function(v, format) {
+        Ext.util.Format.number = function (v, format) {
             return Ext.util.Format.__number(v, format || "0.000,00/i");
         };
 
@@ -164,7 +164,7 @@ Ext.define("Ext.locale.de.form.field.Date", {
 Ext.define("Ext.locale.de.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Lade Daten ..."
     });
@@ -181,7 +181,7 @@ Ext.define("Ext.locale.de.form.field.VTypes", {
 Ext.define("Ext.locale.de.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Bitte geben Sie die URL für den Link ein:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -322,10 +322,10 @@ Ext.define("Ext.locale.de.window.MessageBox", {
         cancel: "Abbrechen",
         yes: "Ja",
         no: "Nein"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.de.Component", {	
+Ext.define("Ext.locale.de.Component", {
     override: "Ext.Component"
 });

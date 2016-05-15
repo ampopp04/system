@@ -23,7 +23,7 @@
  * This class also publishes a **`beforeshowtip`** event through its host Component. The *host Component* fires the
  * **`beforeshowtip`** event.
  */
-Ext.define('Ext.ux.DataTip', function(DataTip) {
+Ext.define('Ext.ux.DataTip', function (DataTip) {
 
 //  Target the body (if the host is a Panel), or, if there is no body, the main Element.
     function onHostRender() {
@@ -81,13 +81,13 @@ Ext.define('Ext.ux.DataTip', function(DataTip) {
 
         lockableScope: 'both',
 
-        constructor: function(config) {
+        constructor: function (config) {
             var me = this;
             me.callParent([config]);
             me.mixins.plugin.constructor.call(me, config);
         },
 
-        init: function(host) {
+        init: function (host) {
             var me = this;
 
             me.mixins.plugin.init.call(me, host);

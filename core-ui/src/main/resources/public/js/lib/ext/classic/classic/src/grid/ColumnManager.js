@@ -8,7 +8,7 @@ Ext.define('Ext.grid.ColumnManager', {
 
     columns: null,
 
-    constructor: function(visibleOnly, headerCt, secondHeaderCt) {
+    constructor: function (visibleOnly, headerCt, secondHeaderCt) {
         //<debug>
         if (!headerCt.isRootHeader && !headerCt.isGroupHeader) {
             Ext.raise('ColumnManager must be passed an instantiated HeaderContainer or group header');
@@ -28,14 +28,14 @@ Ext.define('Ext.grid.ColumnManager', {
         this.visibleOnly = !!visibleOnly;
     },
 
-    getColumns: function() {
+    getColumns: function () {
         if (!this.columns) {
             this.cacheColumns();
         }
         return this.columns;
     },
 
-    hasVariableRowHeight: function() {
+    hasVariableRowHeight: function () {
         var me = this,
             columns = me.getColumns(),
             len = columns.length,
@@ -81,53 +81,53 @@ Ext.define('Ext.grid.ColumnManager', {
      * @param {Number} index The column index for which to retrieve the column.
      * @return {Ext.grid.column.Column} The header. `null` if it doesn't exist.
      */
-    getHeaderAtIndex: function(index) {
+    getHeaderAtIndex: function (index) {
         var columns = this.getColumns(),
             col = columns[index];
-            
+
         return col || null;
     },
-    
-    getPreviousSibling: function(header){
+
+    getPreviousSibling: function (header) {
         var index = this.getHeaderIndex(header),
             col = null;
-            
+
         if (index > 0) {
             col = this.getColumns()[index - 1];
         }
         return col;
     },
-    
-    getNextSibling: function(header) {
+
+    getNextSibling: function (header) {
         var index = this.getHeaderIndex(header),
             col;
-            
+
         if (index !== -1) {
             col = this.getColumns()[index + 1];
         }
         return col || null;
     },
-    
+
     /**
      * Get the first column.
      * @return {Ext.grid.column.Column} The header. `null` if it doesn't exist
      */
-    getFirst: function() {
+    getFirst: function () {
         var columns = this.getColumns();
         return columns.length > 0 ? columns[0] : null;
     },
-    
+
     /**
      * Get the last column.
      * @return {Ext.grid.column.Column} The header. `null` if it doesn't exist
      */
-    getLast: function(){
+    getLast: function () {
         var columns = this.getColumns(),
             len = columns.length;
-            
+
         return len > 0 ? columns[len - 1] : null;
     },
-    
+
     /**
      * Get a leaf level header by data index regardless of what the nesting
      * structure is.
@@ -138,7 +138,7 @@ Ext.define('Ext.grid.ColumnManager', {
         var columns = this.getColumns(),
             len = columns.length,
             i, header;
-            
+
         for (i = 0; i < len; ++i) {
             header = columns[i];
             if (header.dataIndex === dataIndex) {
@@ -154,11 +154,11 @@ Ext.define('Ext.grid.ColumnManager', {
      * @param {String} id The id
      * @return {Ext.grid.column.Column} The header. `null` if it doesn't exist.
      */
-    getHeaderById: function(id) {
+    getHeaderById: function (id) {
         var columns = this.getColumns(),
             len = columns.length,
             i, header;
-            
+
         for (i = 0; i < len; ++i) {
             header = columns[i];
             if (header.getItemId() === id) {
@@ -177,7 +177,7 @@ Ext.define('Ext.grid.ColumnManager', {
      *
      * @param {Number} index Position at which to find the closest visible column.
      */
-    getVisibleHeaderClosestToIndex: function(index) {
+    getVisibleHeaderClosestToIndex: function (index) {
         var result = this.getHeaderAtIndex(index);
         if (result && result.hidden) {
             result = result.next(':not([hidden])') || result.prev(':not([hidden])');
@@ -185,22 +185,22 @@ Ext.define('Ext.grid.ColumnManager', {
         return result;
     },
 
-    cacheColumns: function() {
+    cacheColumns: function () {
         var columns = this.getHeaderColumns(this.headerCt),
             second = this.secondHeaderCt;
-            
+
         if (second) {
             columns = columns.concat(this.getHeaderColumns(second));
         }
         this.columns = columns;
     },
-    
-    getHeaderColumns: function(header) {
+
+    getHeaderColumns: function (header) {
         var result = this.visibleOnly ? header.getVisibleGridColumns() : header.getGridColumns();
         return Ext.Array.clone(result);
     },
 
-    invalidate: function() {
+    invalidate: function () {
         var root = this.rootColumns;
         this.columns = this.variableRowHeight = null;
 
@@ -209,11 +209,11 @@ Ext.define('Ext.grid.ColumnManager', {
             root.invalidate();
         }
     },
-    
-    destroy: function(){
+
+    destroy: function () {
         this.columns = this.rootColumns = null;
         this.callParent();
     }
-}, function() {
+}, function () {
     this.createAlias('indexOf', 'getHeaderIndex');
 });

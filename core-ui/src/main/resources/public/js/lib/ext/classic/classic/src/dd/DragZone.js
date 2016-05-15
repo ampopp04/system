@@ -13,7 +13,7 @@
  * simpler way to allow a DragZone to manage any number of draggable elements is to configure the DragZone with an
  * implementation of the {@link #getDragData} method which interrogates the passed mouse event to see if it has taken
  * place within an element, or class of elements. This is easily done by using the event's {@link
- * Ext.event.Event#getTarget getTarget} method to identify a node based on a CSS selector. For example,
+    * Ext.event.Event#getTarget getTarget} method to identify a node based on a CSS selector. For example,
  * to make the nodes of a DataView draggable, use the following technique. Knowledge of the use of the DataView is
  * required:
  *
@@ -64,10 +64,10 @@ Ext.define('Ext.dd.DragZone', {
      * @param {String/HTMLElement/Ext.dom.Element} el The container element or ID of it.
      * @param {Object} config
      */
-    constructor : function(el, config){
+    constructor: function (el, config) {
         var me = this,
             scroll = me.containerScroll;
-        
+
         me.callParent([el, config]);
         if (scroll) {
             el = me.scrollEl || el;
@@ -84,7 +84,7 @@ Ext.define('Ext.dd.DragZone', {
      * True to register this container with the Scrollmanager for auto scrolling during drag operations.
      * A {@link Ext.dd.ScrollManager} configuration may also be passed.
      */
-    
+
     /**
      * @cfg {String/HTMLElement/Ext.dom.Element} scrollEl
      * An element to register with the ScrollManager if {@link #containerScroll}
@@ -98,7 +98,7 @@ Ext.define('Ext.dd.DragZone', {
      * @param {Event} e The mouse down event
      * @return {Object} The dragData
      */
-    getDragData : function(e){
+    getDragData: function (e) {
         return Ext.dd.Registry.getHandleFromEvent(e);
     },
 
@@ -110,7 +110,7 @@ Ext.define('Ext.dd.DragZone', {
      * @return {Boolean} true to continue the drag, false to cancel
      * @template
      */
-    onInitDrag : function(x, y){
+    onInitDrag: function (x, y) {
         this.proxy.update(this.dragData.ddel.cloneNode(true));
         this.onStartDrag(x, y);
         return true;
@@ -123,11 +123,11 @@ Ext.define('Ext.dd.DragZone', {
      * @return {Number[]} The xy location (e.g. `[100, 200]`)
      * @template
      */
-    getRepairXY : function(e){
+    getRepairXY: function (e) {
         return Ext.fly(this.dragData.ddel).getXY();
     },
 
-    destroy : function(){
+    destroy: function () {
         this.callParent();
         if (this.containerScroll) {
             Ext.dd.ScrollManager.unregister(this.scrollEl || this.el);

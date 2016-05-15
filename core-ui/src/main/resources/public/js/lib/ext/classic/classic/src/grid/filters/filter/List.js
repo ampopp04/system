@@ -1,12 +1,12 @@
 /**
  * The list grid filter allows you to create a filter selection that limits results
- * to values matching an element in a list.  The filter can be set programmatically or via 
- * user input with a configurable {@link Ext.form.field.Checkbox check box field} in the filter section 
+ * to values matching an element in a list.  The filter can be set programmatically or via
+ * user input with a configurable {@link Ext.form.field.Checkbox check box field} in the filter section
  * of the column header.
- * 
+ *
  * List filters are able to be preloaded/backed by an Ext.data.Store to load
- * their options the first time they are shown.  They are also able to create their own 
- * list of values from  all unique values of the specified {@link #dataIndex} field in 
+ * their options the first time they are shown.  They are also able to create their own
+ * list of values from  all unique values of the specified {@link #dataIndex} field in
  * the store at first time of filter invocation.
  *
  * Example List Filter Usage:
@@ -23,7 +23,7 @@
  *             {id: 5, show: 'Star Wars: Christmas Special', rating: 5}
  *         ]
  *     });
- *   
+ *
  *     Ext.create('Ext.grid.Panel', {
  *         renderTo: Ext.getBody(),
  *         title: 'Sci-Fi Television',
@@ -51,9 +51,9 @@
  *     });
  *
  * ## Options
- * 
+ *
  * There are three means to determine the list of options to present to the user:
- * 
+ *
  *   * The `{@link #cfg-options options}` config.
  *   * The `{@link #cfg-store store}` config. In this mode, the `{@link #cfg-idField}`
  *     and `{@link #cfg-labelField}` configs are used to extract the presentation and
@@ -64,11 +64,11 @@
  *     the `{@link #cfg-labelIndex}` is used to populate the menu items. These fields
  *     are extracted from the records in the associated grid's store. Both of these
  *     configs default to the column's `dataIndex` property.
- * 
+ *
  * In all of these modes, a store is created that is synchronized with the menu items.
  * The records in this store have `{@link #cfg-idField}` and `{@link #cfg-labelField}`
  * fields that get populated from which ever source was provided.
- * 
+ *
  *     var filters = Ext.create('Ext.grid.Panel', {
  *         ...
  *         columns: [{
@@ -96,7 +96,7 @@ Ext.define('Ext.grid.filters.filter.List', {
      * @cfg {Object} [itemDefaults]
      * See the {@link Ext.grid.filters.filter.Base#cfg-itemDefaults documentation} for
      * the base class for details.
-     * 
+     *
      * In the case of this class, however, note that the `checked` config should **not** be
      * specified.
      */
@@ -162,7 +162,7 @@ Ext.define('Ext.grid.filters.filter.List', {
      * The field in the records of the grid's store from which the menu item text should be retrieved.
      * This field is only used when no `{@link #cfg-options}` and no `{@link #cfg-store}` is provided
      * and the distinct value of the grid's store need to be generated dynamically.
-     * 
+     *
      * If not provided, this field defaults to the column's `dataIndex` property.
      * @since 5.1.0
      */
@@ -381,7 +381,7 @@ Ext.define('Ext.grid.filters.filter.List', {
      * @param {Object} config Filter configuration
      * @return {Ext.menu.Menu}
      */
-    createMenu: function(config) {
+    createMenu: function (config) {
         var me = this,
             gridStore = me.getGridStore(),
             store = me.store,

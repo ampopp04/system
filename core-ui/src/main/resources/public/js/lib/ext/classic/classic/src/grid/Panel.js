@@ -119,7 +119,7 @@
  *
  * Specifying the `cellmodel` changes a couple of things. Firstly, clicking on a cell now
  * selects just that cell (using a {@link Ext.selection.RowModel rowmodel} will select the
- * entire row), and secondly the keyboard navigation will walk from cell to cell instead 
+ * entire row), and secondly the keyboard navigation will walk from cell to cell instead
  * of row to row. Cell-based selection models are usually used in conjunction with
  * editing.
  *
@@ -176,14 +176,14 @@
  * encapsulated within the default Panel state of changed width and height and
  * collapsed/expanded state.
  *
- * On a `stateful` grid, not only should the Grid have a {@link #stateId}, each 
+ * On a `stateful` grid, not only should the Grid have a {@link #stateId}, each
  * {@link #columns column} of the grid should also be configured with a
  * {@link Ext.grid.column.Column#stateId stateId} which identifies that column locally
  * within the grid.
- * 
- * Omitting the `stateId` config from the columns results in columns with generated 
- * internal ID's.  The generated ID's are subject to change on each page load 
- * making it impossible for the state manager to restore the previous state of the 
+ *
+ * Omitting the `stateId` config from the columns results in columns with generated
+ * internal ID's.  The generated ID's are subject to change on each page load
+ * making it impossible for the state manager to restore the previous state of the
  * columns.
  *
  * ## Plugins and Features

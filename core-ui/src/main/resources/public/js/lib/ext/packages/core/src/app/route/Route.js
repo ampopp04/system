@@ -33,7 +33,7 @@ Ext.define('Ext.app.route.Route', {
      * called if this route is matched.
      */
     controller: null,
-    
+
     /**
      * @cfg {Boolean} allowInactive `true` to allow this route to be triggered on
      * a controller that is not active.
@@ -85,19 +85,19 @@ Ext.define('Ext.app.route.Route', {
      */
     paramsInMatchString: null,
 
-    constructor : function(config) {
+    constructor: function (config) {
         var me = this,
             url;
 
         Ext.apply(me, config, {
-            conditions : {}
+            conditions: {}
         });
 
         url = me.url;
 
-        me.paramMatchingRegex  = new RegExp(/:([0-9A-Za-z\_]*)/g);
+        me.paramMatchingRegex = new RegExp(/:([0-9A-Za-z\_]*)/g);
         me.paramsInMatchString = url.match(me.paramMatchingRegex) || [];
-        me.matcherRegex        = me.createMatcherRegex(url);
+        me.matcherRegex = me.createMatcherRegex(url);
     },
 
     /**
@@ -106,7 +106,7 @@ Ext.define('Ext.app.route.Route', {
      * @param {String} url The url to recognize.
      * @return {Object/Boolean} The matched data, or `false` if no match.
      */
-    recognize : function(url) {
+    recognize: function (url) {
         var me = this,
             controller = me.controller,
             matches, args;
@@ -115,16 +115,16 @@ Ext.define('Ext.app.route.Route', {
             //find parameter matches
             matches = me.matchesFor(url);
             //find the arguments for the parameters
-            args    = url.match(me.matcherRegex);
+            args = url.match(me.matcherRegex);
 
             //first one is the entire match, remove
             args.shift();
 
             return Ext.applyIf(matches, {
-                controller : controller,
-                action     : me.action,
-                historyUrl : url,
-                args       : args
+                controller: controller,
+                action: me.action,
+                historyUrl: url,
+                args: args
             });
         }
 
@@ -138,7 +138,7 @@ Ext.define('Ext.app.route.Route', {
      * @param {String} url The url to test.
      * @return {Boolean} `true` if this {@link Ext.app.route.Route} recognizes the url.
      */
-    recognizes : function (url) {
+    recognizes: function (url) {
         return this.matcherRegex.test(url);
     },
 
@@ -155,10 +155,10 @@ Ext.define('Ext.app.route.Route', {
      * @param {Object} scope The scope to execute the callback with, defaults to this
      * {@link Ext.app.route.Route}.
      */
-    execute : function(token, argConfig, callback, scope) {
-        var args           = argConfig.args || [],
-            before         = this.before,
-            controller     = this.controller,
+    execute: function (token, argConfig, callback, scope) {
+        var args = argConfig.args || [],
+            before = this.before,
+            controller = this.controller,
             beforeCallback = this.createCallback(argConfig, callback, scope);
 
         if (before) {
@@ -191,12 +191,12 @@ Ext.define('Ext.app.route.Route', {
      * @param {String} url The url to extract matches for
      * @return {Object} matching url segments
      */
-    matchesFor : function (url) {
+    matchesFor: function (url) {
         var params = {},
-            keys   = this.paramsInMatchString,
+            keys = this.paramsInMatchString,
             values = url.match(this.matcherRegex),
-            i      = 0,
-            len    = keys.length;
+            i = 0,
+            len = keys.length;
 
         //first value is the entire match so reject
         values.shift();
@@ -216,21 +216,21 @@ Ext.define('Ext.app.route.Route', {
      * @param {String} url The url string.
      * @return {RegExp} The matcher regex.
      */
-    createMatcherRegex : function (url) {
+    createMatcherRegex: function (url) {
         // Converts a route string into an array of symbols starting with a colon. e.g.
         // ":controller/:action/:id" => [':controller', ':action', ':id']
         //
         var paramsInMatchString = this.paramsInMatchString,
-            conditions          = this.conditions,
-            i                   = 0,
-            len                 = paramsInMatchString.length,
-            format              = Ext.util.Format.format,
-            modifiers           = this.caseInsensitive ? 'i' : '',
+            conditions = this.conditions,
+            i = 0,
+            len = paramsInMatchString.length,
+            format = Ext.util.Format.format,
+            modifiers = this.caseInsensitive ? 'i' : '',
             params, cond, matcher;
 
         for (; i < len; i++) {
-            params  = paramsInMatchString[i];
-            cond    = conditions[params];
+            params = paramsInMatchString[i];
+            cond = conditions[params];
             matcher = format('{0}', cond || '([%a-zA-Z0-9\\-\\_\\s,]+)');
 
             url = url.replace(new RegExp(params), matcher);
@@ -253,13 +253,13 @@ Ext.define('Ext.app.route.Route', {
      * @return {Object} An object with the `resume` and `stop` methods on it to control to continue
      * with the action or not.
      */
-    createCallback : function (args, callback, scope) {
+    createCallback: function (args, callback, scope) {
         var me = this;
 
         scope = scope || me;
 
         return {
-            resume : function() {
+            resume: function () {
                 var controller = me.controller,
                     action = me.action,
                     resume;
@@ -297,7 +297,7 @@ Ext.define('Ext.app.route.Route', {
                 }
             },
 
-            stop : function(all) {
+            stop: function (all) {
                 if (callback) {
                     callback.call(scope, all);
                 }

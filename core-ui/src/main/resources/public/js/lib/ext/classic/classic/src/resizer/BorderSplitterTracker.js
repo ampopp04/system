@@ -10,7 +10,7 @@ Ext.define('Ext.resizer.BorderSplitterTracker', {
     getNextCmp: null,
 
     // calculate the constrain Region in which the splitter el may be moved.
-    calculateConstrainRegion: function() {
+    calculateConstrainRegion: function () {
         var me = this,
             splitter = me.splitter,
             collapseTarget = splitter.collapseTarget,
@@ -27,11 +27,11 @@ Ext.define('Ext.resizer.BorderSplitterTracker', {
             right = box.right,
             bottom = box.bottom,
             size = splitter.vertical ? (right - left) : (bottom - top),
-            //neighborSizes = [],
+        //neighborSizes = [],
             i, neighbor, neighborMaxSize, minRange, maxRange, maxGrowth, maxShrink, targetSize;
 
         // if size=100 and minSize=80, we can reduce by 20 so minRange = minSize-size = -20
-        minRange = (collapseTarget[minSizeProp] || Math.min(size,defaultSplitMin)) - size;
+        minRange = (collapseTarget[minSizeProp] || Math.min(size, defaultSplitMin)) - size;
 
         // if maxSize=150, maxRange = maxSize - size = 50
         maxRange = collapseTarget[maxSizeProp];
@@ -55,7 +55,7 @@ Ext.define('Ext.resizer.BorderSplitterTracker', {
             }
 
             maxGrowth = size - neighborMaxSize; // NaN if no maxSize or negative
-            maxShrink = size - (neighbor[minSizeProp] || Math.min(size,defaultSplitMin));
+            maxShrink = size - (neighbor[minSizeProp] || Math.min(size, defaultSplitMin));
 
             if (!isNaN(maxGrowth)) {
                 // if neighbor can only grow by 10 (maxGrowth = -10), minRange cannot be
@@ -116,7 +116,7 @@ Ext.define('Ext.resizer.BorderSplitterTracker', {
         }
     },
 
-    onBeforeStart: function(e) {
+    onBeforeStart: function (e) {
         var me = this,
             splitter = me.splitter,
             collapseTarget = splitter.collapseTarget,
@@ -144,20 +144,20 @@ Ext.define('Ext.resizer.BorderSplitterTracker', {
         return true;
     },
 
-    performResize: function(e, offset) {
+    performResize: function (e, offset) {
         var me = this,
             splitter = me.splitter,
             collapseDirection = splitter.getCollapseDirection(),
             collapseTarget = splitter.collapseTarget,
-            // a vertical splitter adjusts horizontal dimensions
+        // a vertical splitter adjusts horizontal dimensions
             adjusters = me.splitAdjusters[splitter.vertical ? 'horz' : 'vert'],
             delta = offset[adjusters.index],
             dragInfo = me.dragInfo,
-            //neighbors = splitter.neighbors,
-            //length = neighbors.length,
-            //neighborSizes = dragInfo.neighborSizes,
-            //isVert = collapseTarget.isVert,
-            //i, neighbor,
+        //neighbors = splitter.neighbors,
+        //length = neighbors.length,
+        //neighborSizes = dragInfo.neighborSizes,
+        //isVert = collapseTarget.isVert,
+        //i, neighbor,
             owner;
 
         if (collapseDirection === 'right' || collapseDirection === 'bottom') {
@@ -208,7 +208,7 @@ Ext.define('Ext.resizer.BorderSplitterTracker', {
         }
     },
 
-    getCollapseDirection: function() {
+    getCollapseDirection: function () {
         return this.splitter.getCollapseDirection();
     }
 });

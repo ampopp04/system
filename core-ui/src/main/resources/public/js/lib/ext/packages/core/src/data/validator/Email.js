@@ -4,16 +4,16 @@
 Ext.define('Ext.data.validator.Email', {
     extend: 'Ext.data.validator.Format',
     alias: 'data.validator.email',
-    
+
     type: 'email',
-    
+
     config: {
         /**
          * @cfg {String} message
          * The error message to return when the value is not a valid email
          */
         message: 'Is not a valid email address',
-    
+
         // http://en.wikipedia.org/wiki/Email_address#Local_part
         // http://stackoverflow.com/a/2049510
         // http://isemail.info/

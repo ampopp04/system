@@ -33,7 +33,7 @@ Ext.define('Ext.chart.series.sprite.Bar3D', {
             },
 
             defaults: {
-                depthWidthRatio: 1/3,
+                depthWidthRatio: 1 / 3,
                 saturationFactor: 1,
                 brightnessFactor: 1,
                 colorSpread: 1,

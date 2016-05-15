@@ -54,7 +54,7 @@ Ext.define('Ext.app.bind.BaseBinding', {
         me.scope = me.callback = me.owner = null;
     },
 
-    isReadOnly: function() {
+    isReadOnly: function () {
         return true;
     },
 

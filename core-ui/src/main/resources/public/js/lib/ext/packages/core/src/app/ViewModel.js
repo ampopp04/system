@@ -2,9 +2,9 @@
  * This class manages arbitrary data and its relationship to data models. Instances of
  * `ViewModel` are associated with some `Component` and then used by their child items
  * for the purposes of Data Binding.
- * 
+ *
  * # Binding
- * 
+ *
  * The most commonly used aspect of a `ViewModel` is the `bind` method. This method takes
  * a "bind descriptor" (see below) and a callback to call when the data indicated by the
  * bind descriptor either becomes available or changes.
@@ -25,19 +25,19 @@
  *   * `{@link Ext.app.bind.TemplateBinding}`
  *
  * ## Bind Descriptors
- * 
+ *
  * A "bind descriptor" is a value (a String, an Object or an array of these) that describe
  * the desired data. Any piece of data in the `ViewModel` can be described by a bind
  * descriptor.
- * 
+ *
  * ### Textual Bind Descriptors
- * 
+ *
  * The simplest and most common form of bind descriptors are strings that look like an
  * `Ext.Template` containing text and tokens surrounded by "{}" with dot notation inside
  * to traverse objects and their properties.
- * 
+ *
  * For example:
- * 
+ *
  *   * `'Hello {user.name}!'`
  *   * `'You have selected "{selectedItem.text}".'`
  *   * `'{user.groups}'`
@@ -146,7 +146,7 @@
  * the any dependencies for a binding are fired before the binding itself.
  * - To batch binding firings. The scheduler runs on a short timer, so the following code will only trigger
  * a single binding (the last), the changes in between will never be triggered.
- * 
+ *
  *     viewModel.bind('{val}', function(v) {
  *         console.log(v);
  *     });
@@ -157,7 +157,7 @@
  *
  * The `ViewModel` can be forced to process by calling `{@link #notify}`, which will force the
  * scheduler to run immediately in the current state.
- * 
+ *
  *     viewModel.bind('{val}', function(v) {
  *         console.log(v);
  *     });
@@ -169,14 +169,14 @@
  *     viewModel.notify();
  *     viewModel.set('val', 4);
  *     viewModel.notify();
- *  
+ *
  *
  * #### Models, Stores and Associations
  *
  * A {@link Ext.data.Session Session} manages model instances and their associations.
  * The `ViewModel` may be used with or without a `Session`. When a `Session` is attached, the
  * `ViewModel` will always consult the `Session` to ask about records and stores. The `Session`
- * ensures that only a single instance of each model Type/Id combination is created. This is 
+ * ensures that only a single instance of each model Type/Id combination is created. This is
  * important when tracking changes in models so that we always have the same reference.
  *
  * A `ViewModel` provides functionality to easily consume the built in data package types
@@ -193,12 +193,12 @@
  *         extend: 'Ext.data.Model',
  *         fields: ['name']
  *     });
- *     
+ *
  *     var rec = new MyApp.model.User({
  *         id: 12,
  *         name: 'Foo'
  *     });
- *     
+ *
  *     var viewModel = new Ext.app.ViewModel({
  *         links: {
  *             theUser: {
@@ -297,8 +297,8 @@
  * Stores can be created as part of the `ViewModel` definition. The definitions are processed
  * like bindings which allows for very powerful dynamic functionality.
  *
- * It is important to ensure that you name viewModel's data keys uniquely. If data is not named  
- * uniquely, binds and formulas may receive information from an unintended data source.  
+ * It is important to ensure that you name viewModel's data keys uniquely. If data is not named
+ * uniquely, binds and formulas may receive information from an unintended data source.
  * This applies to keys in the viewModel's data block, stores, and links configs.
  *
  *     var viewModel = new Ext.app.ViewModel({
@@ -424,7 +424,7 @@ Ext.define('Ext.app.ViewModel', {
          *             type: 'User',
          *             create: true
          *         }
-         *     } 
+         *     }
          *
          * `create` can also be an object containing initial data for the record.
          *
@@ -436,7 +436,7 @@ Ext.define('Ext.app.ViewModel', {
          *                 lastName: 'Smith'
          *             }
          *         }
-         *     } 
+         *     }
          *
          * While that is the typical use, the value of each property in `links` may also be
          * a bind descriptor (see `{@link #method-bind}` for the various forms of bind
@@ -628,7 +628,7 @@ Ext.define('Ext.app.ViewModel', {
             parent.unregisterChild(me);
         }
 
-        
+
         me.getRoot().destroy();
 
         for (key in bindings) {
@@ -641,7 +641,7 @@ Ext.define('Ext.app.ViewModel', {
         }
 
         me.hadValue = me.children = me.storeInfo = me._session = me._view = me._scheduler =
-                      me.bindings = me._root = me._parent = me.formulaFn = me.$formulaData = null;
+            me.bindings = me._root = me._parent = me.formulaFn = me.$formulaData = null;
 
         me.destroying = false;
         me.callParent();
@@ -655,7 +655,7 @@ Ext.define('Ext.app.ViewModel', {
      * A simple call might look like this:
      *
      *     var binding = vm.bind('{foo}', this.onFoo, this);
-     * 
+     *
      *     binding.destroy();  // when done with the binding
      *
      * Options for the binding can be provided in the last argument:
@@ -663,7 +663,7 @@ Ext.define('Ext.app.ViewModel', {
      *     var binding = vm.bind('{foo}', this.onFoo, this, {
      *         deep: true
      *     });
-     * 
+     *
      * Alternatively, bind options can be combined with the bind descriptor using only
      * the first argument:
      *
@@ -671,7 +671,7 @@ Ext.define('Ext.app.ViewModel', {
      *         bindTo: '{foo}',  // the presence of bindTo identifies this form
      *         deep: true
      *     }, this.onFoo, this);
-     * 
+     *
      * See the class documentation for more details on Bind Descriptors and options.
      *
      * @param {String/Object/Array} descriptor The bind descriptor. See class description
@@ -728,22 +728,22 @@ Ext.define('Ext.app.ViewModel', {
 
         return session || null;
     },
-    
+
     /**
      * Gets a store configured via the {@link #stores} configuration.
      * @param {String} key The name of the store.
      * @return {Ext.data.Store} The store. `null` if no store exists.
      */
-    getStore: function(key) {
+    getStore: function (key) {
         var storeInfo = this.storeInfo,
             store;
-        
+
         if (storeInfo) {
             store = storeInfo[key];
         }
         return store || null;
     },
-    
+
     /**
      * @method getStores
      * @hide
@@ -822,7 +822,7 @@ Ext.define('Ext.app.ViewModel', {
      *
      * @return {Object} The data stored at the passed path.
      */
-    get: function(path) {
+    get: function (path) {
         return this.getStub(path).getValue();
     },
 
@@ -870,15 +870,15 @@ Ext.define('Ext.app.ViewModel', {
 
     //=========================================================================
     privates: {
-        registerChild: function(child) {
+        registerChild: function (child) {
             var children = this.children;
             if (!children) {
                 this.children = children = {};
             }
             children[child.getId()] = child;
         },
-        
-        unregisterChild: function(child) {
+
+        unregisterChild: function (child) {
             var children = this.children;
             // If we're destroying we'll be wiping this collection shortly, so
             // just ignore it here
@@ -895,7 +895,7 @@ Ext.define('Ext.app.ViewModel', {
          * @return {Ext.data.Model} The model instance.
          * @private
          */
-         getRecord: function(type, id) {
+        getRecord: function (type, id) {
             var session = this.getSession(),
                 Model = type,
                 hasId = id !== undefined,
@@ -937,7 +937,7 @@ Ext.define('Ext.app.ViewModel', {
                 stub = this.getStub(path),
                 binding;
 
-            binding =  stub.bind(callback, scope, options);
+            binding = stub.bind(callback, scope, options);
             if (not) {
                 binding.transform = this.notFn;
             }
@@ -986,7 +986,7 @@ Ext.define('Ext.app.ViewModel', {
             return bindDescr ? root.getChild(bindDescr) : root;
         },
 
-        collect: function() {
+        collect: function () {
             var me = this,
                 parent = me.getParent(),
                 task = me.collectTask;
@@ -1008,10 +1008,10 @@ Ext.define('Ext.app.ViewModel', {
             }
         },
 
-        doCollect: function() {
+        doCollect: function () {
             var children = this.children,
                 key;
-            
+
             // We need to loop over the children first, since they may have link stubs
             // that create bindings inside our VM. Attempt to clean them up first.
             if (children) {
@@ -1022,7 +1022,7 @@ Ext.define('Ext.app.ViewModel', {
             this.getRoot().collect();
         },
 
-        onBindDestroy: function(binding, fromChild) {
+        onBindDestroy: function (binding, fromChild) {
             var me = this,
                 parent;
 
@@ -1083,20 +1083,20 @@ Ext.define('Ext.app.ViewModel', {
             }
         },
 
-        applyParent: function(parent) {
+        applyParent: function (parent) {
             if (parent) {
                 parent.registerChild(this);
             }
             return parent;
         },
-        
-        applyStores: function(stores) {
+
+        applyStores: function (stores) {
             var me = this,
                 root = me.getRoot(),
                 key, cfg, storeBind, stub, listeners, isStatic;
-            
+
             me.storeInfo = {};
-            me.listenerScopeFn = function() {
+            me.listenerScopeFn = function () {
                 return me.getView().getInheritedConfig('defaultListenerScope');
             };
             for (key in stores) {
@@ -1129,8 +1129,8 @@ Ext.define('Ext.app.ViewModel', {
                 }
             }
         },
-        
-        onStoreBind: function(cfg, oldValue, binding) {
+
+        onStoreBind: function (cfg, oldValue, binding) {
             var info = this.storeInfo,
                 key = binding.$storeKey,
                 store = info[key],
@@ -1146,7 +1146,7 @@ Ext.define('Ext.app.ViewModel', {
                 delete cfg.fields;
                 delete cfg.proxy;
                 delete cfg.listeners;
-                
+
                 // TODO: possibly optimize this so we can figure out what has changed
                 // instead of smashing the whole lot
                 if (proxy) {
@@ -1158,7 +1158,7 @@ Ext.define('Ext.app.ViewModel', {
             }
         },
 
-        createStore: function(key, cfg, listeners, binding) {
+        createStore: function (key, cfg, listeners, binding) {
             var session = this.getSession(),
                 store;
 
@@ -1176,7 +1176,7 @@ Ext.define('Ext.app.ViewModel', {
             this.setupStore(store, key);
         },
 
-        setupStore: function(store, key) {
+        setupStore: function (store, key) {
             store.resolveListenerScope = this.listenerScopeFn;
             this.storeInfo[key] = store;
             this.set(key, store);
@@ -1195,7 +1195,7 @@ Ext.define('Ext.app.ViewModel', {
                     Ext.raise('Formula names cannot contain dots: ' + name);
                 }
                 //</debug>
-                
+
                 // Force a stub to be created
                 root.createStubChild(name);
 
@@ -1228,12 +1228,12 @@ Ext.define('Ext.app.ViewModel', {
             return root;
         },
 
-        getFormulaFn: function(data) {
+        getFormulaFn: function (data) {
             var me = this,
                 fn = me.formulaFn;
 
             if (!fn) {
-                fn = me.formulaFn = function(name) {
+                fn = me.formulaFn = function (name) {
                     // Note that the `this` pointer here is the view model because
                     // the VM calls it in the VM scope.
                     return me.$formulaData[name];

@@ -24,7 +24,7 @@ Ext.define('Ext.chart.overrides.AbstractChart', {
         }
     },
 
-    performLayout: function() {
+    performLayout: function () {
         if (this.isVisible(true)) {
             return this.callParent();
         }
@@ -32,12 +32,12 @@ Ext.define('Ext.chart.overrides.AbstractChart', {
         return false;
     },
 
-    afterComponentLayout: function(width, height, oldWidth, oldHeight) {
+    afterComponentLayout: function (width, height, oldWidth, oldHeight) {
         this.callParent([width, height, oldWidth, oldHeight]);
         this.scheduleLayout();
     },
 
-    allowSchedule: function() {
+    allowSchedule: function () {
         return this.rendered;
     },
 

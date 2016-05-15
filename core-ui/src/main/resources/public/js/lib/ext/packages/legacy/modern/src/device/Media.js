@@ -9,7 +9,7 @@ Ext.define('Ext.device.Media', {
         'Ext.device.media.Cordova'
     ],
 
-    constructor: function() {
+    constructor: function () {
         var browserEnv = Ext.browser.is;
 
         if (browserEnv.WebView && browserEnv.Cordova) {

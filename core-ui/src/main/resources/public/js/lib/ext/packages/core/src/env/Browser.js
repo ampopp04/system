@@ -18,9 +18,9 @@
         enginePrefixes = me.enginePrefixes,
         engineNames = me.engineNames,
         browserMatch = userAgent.match(new RegExp('((?:' +
-                Ext.Object.getValues(browserPrefixes).join(')|(?:') + '))([\\w\\._]+)')),
+            Ext.Object.getValues(browserPrefixes).join(')|(?:') + '))([\\w\\._]+)')),
         engineMatch = userAgent.match(new RegExp('((?:' +
-                Ext.Object.getValues(enginePrefixes).join(')|(?:') + '))([\\w\\._]+)')),
+            Ext.Object.getValues(enginePrefixes).join(')|(?:') + '))([\\w\\._]+)')),
         browserName = browserNames.other,
         engineName = engineNames.other,
         browserVersion = '',
@@ -65,11 +65,11 @@
             browserVersion = new Ext.Version(version);
         }
     }
-    
+
     if (browserName && browserVersion) {
         Ext.setVersion(browserName, browserVersion);
     }
-    
+
     /**
      * @property chromeVersion
      * The current version of Chrome (0 if the browser is not Chrome).
@@ -344,7 +344,7 @@
 
             maxIEVersion = Math.max(majorVer, Ext.Boot.maxIEVersion);
             for (i = 7; i <= maxIEVersion; ++i) {
-                prefix = 'isIE' + i; 
+                prefix = 'isIE' + i;
                 if (majorVer <= i) {
                     Ext[prefix + 'm'] = true;
                 }
@@ -563,7 +563,7 @@ Ext.env.Browser.prototype = {
      */
     engineVersion: null,
 
-    setFlag: function(name, value, publish) {
+    setFlag: function (name, value, publish) {
         if (value === undefined) {
             value = true;
         }
@@ -577,15 +577,15 @@ Ext.env.Browser.prototype = {
         return this;
     },
 
-    getStyleDashPrefix: function() {
+    getStyleDashPrefix: function () {
         return this.styleDashPrefixes[this.engineName];
     },
 
-    getStylePrefix: function() {
+    getStylePrefix: function () {
         return this.stylePrefixes[this.engineName];
     },
 
-    getVendorProperyName: function(name) {
+    getVendorProperyName: function (name) {
         var prefix = this.propertyPrefixes[this.engineName];
 
         if (prefix.length > 0) {
@@ -595,7 +595,7 @@ Ext.env.Browser.prototype = {
         return name;
     },
 
-    getPreferredTranslationMethod: function(config) {
+    getPreferredTranslationMethod: function (config) {
         if (typeof config === 'object' && 'translationMethod' in config && config.translationMethod !== 'auto') {
             return config.translationMethod;
         } else {

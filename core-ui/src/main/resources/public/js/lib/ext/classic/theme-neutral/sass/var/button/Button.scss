@@ -67,7 +67,7 @@ $button-small-text-padding: dynamic(4px);
  * @var {number}
  * The default font-size for a small {@link #scale} button
  */
-$button-small-font-size: dynamic(ceil($font-size * .9));  //11px
+$button-small-font-size: dynamic(ceil($font-size * .9)); //11px
 
 /**
  * @var {number}
@@ -284,7 +284,7 @@ $button-medium-text-padding: dynamic(4px);
  * @var {number}
  * The default font-size for a medium {@link #scale} button
  */
-$button-medium-font-size: dynamic($font-size);  //11px
+$button-medium-font-size: dynamic($font-size); //11px
 
 /**
  * @var {number}
@@ -502,7 +502,7 @@ $button-large-text-padding: dynamic(4px);
  * @var {number}
  * The default font-size for a large {@link #scale} button
  */
-$button-large-font-size: dynamic($font-size);  //11px
+$button-large-font-size: dynamic($font-size); //11px
 
 /**
  * @var {number}
@@ -1541,7 +1541,7 @@ $button-grid-cell-text-padding: dynamic($button-small-text-padding);
  * @var {number}
  * The default font-size for a grid cell button
  */
-$button-grid-cell-font-size: dynamic($button-small-font-size);  //11px
+$button-grid-cell-font-size: dynamic($button-small-font-size); //11px
 
 /**
  * @var {number}

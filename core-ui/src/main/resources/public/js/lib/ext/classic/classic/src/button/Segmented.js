@@ -1,11 +1,11 @@
 /**
- * SegmentedButton is a container for a group of {@link Ext.button.Button Button}s.  You 
- * may populate the segmented button's children by adding buttons to the items config.  The segmented 
- * button's children enjoy the same customizations as regular buttons, such as 
+ * SegmentedButton is a container for a group of {@link Ext.button.Button Button}s.  You
+ * may populate the segmented button's children by adding buttons to the items config.  The segmented
+ * button's children enjoy the same customizations as regular buttons, such as
  * menu, tooltip, etc.  You can see usages of the various configuration
  * possibilities in the example below.
  *
- *     @example @preview 
+ *     @example @preview
  *     Ext.create('Ext.button.Segmented', {            
  *          renderTo: Ext.getBody(),
  *          allowMultiple: true,
@@ -26,12 +26,12 @@
  *               }
  *          }
  *     });
- * 
+ *
  */
 Ext.define('Ext.button.Segmented', {
     extend: 'Ext.container.Container',
     xtype: 'segmentedbutton',
-    requires: [ 
+    requires: [
         'Ext.button.Button',
         'Ext.layout.container.SegmentedButton'
     ],
@@ -188,14 +188,14 @@ Ext.define('Ext.button.Segmented', {
      * @param {Array} oldValue The old value.
      */
 
-    applyValue: function(value, oldValue) {
+    applyValue: function (value, oldValue) {
         var me = this,
             allowMultiple = me.getAllowMultiple(),
             buttonValue, button, values, oldValues, items, i, ln, hasPressed;
 
         values = (value instanceof Array) ? value : (value == null) ? [] : [value];
         oldValues = (oldValue instanceof Array) ? oldValue :
-                (oldValue == null) ? [] : [oldValue];
+            (oldValue == null) ? [] : [oldValue];
 
         // Set a flag to tell our toggle listener not to respond to the buttons' toggle
         // events while we are applying the value.
@@ -279,7 +279,7 @@ Ext.define('Ext.button.Segmented', {
         return value;
     },
 
-    beforeRender: function() {
+    beforeRender: function () {
         var me = this;
 
         me.addCls(me.baseCls + me._getClsSuffix());
@@ -287,7 +287,7 @@ Ext.define('Ext.button.Segmented', {
         me.callParent();
     },
 
-    onAdd: function(item) {
+    onAdd: function (item) {
         var me = this,
             syncItemClasses = '_syncItemClasses';
 
@@ -304,7 +304,7 @@ Ext.define('Ext.button.Segmented', {
             }
         }
 
-        for(; i < ln; i++) {
+        for (; i < ln; i++) {
             if (items[i] !== item) {
                 value = items[i].value;
                 if (value != null && value === item.value) {
@@ -337,7 +337,7 @@ Ext.define('Ext.button.Segmented', {
         me.callParent([item]);
     },
 
-    onRemove: function(item) {
+    onRemove: function (item) {
         var me = this;
 
         item.removeCls(me.itemCls + me._getClsSuffix());
@@ -345,7 +345,7 @@ Ext.define('Ext.button.Segmented', {
         me.callParent([item]);
     },
 
-    beforeLayout: function() {
+    beforeLayout: function () {
         if (Ext.isChrome) {
             // workaround for a chrome bug with table-layout:fixed elements where the element
             // is layed out with 0 width, for example, in the following test case, without
@@ -368,7 +368,7 @@ Ext.define('Ext.button.Segmented', {
         this.callParent();
     },
 
-    updateDefaultUI: function(defaultUI) {
+    updateDefaultUI: function (defaultUI) {
         var items = this.items,
             item, i, ln;
 
@@ -380,7 +380,7 @@ Ext.define('Ext.button.Segmented', {
             }
             for (i = 0, ln = items.length; i < ln; i++) {
                 item = items[i];
-                if (item.ui === 'default' && defaultUI !== 'default' && !item.hasOwnProperty('ui') ) {
+                if (item.ui === 'default' && defaultUI !== 'default' && !item.hasOwnProperty('ui')) {
                     items[i].ui = defaultUI;
                 }
             }
@@ -388,25 +388,25 @@ Ext.define('Ext.button.Segmented', {
     },
 
     //<debug>
-    updateAllowDepress: function(newAllowDepress, oldAllowDepress) {
+    updateAllowDepress: function (newAllowDepress, oldAllowDepress) {
         if (this.rendered && (newAllowDepress !== oldAllowDepress)) {
             Ext.raise("Changing the allowDepress config of a segmented button after render is not supported.");
         }
     },
 
-    updateAllowMultiple: function(newAllowMultiple, oldAllowMultiple) {
+    updateAllowMultiple: function (newAllowMultiple, oldAllowMultiple) {
         if (this.rendered && (newAllowMultiple !== oldAllowMultiple)) {
             Ext.raise("Changing the allowMultiple config of a segmented button after render is not supported.");
         }
     },
 
-    updateAllowToggle: function(newAllowToggle, oldAllowToggle) {
+    updateAllowToggle: function (newAllowToggle, oldAllowToggle) {
         if (this.rendered && (newAllowToggle !== oldAllowToggle)) {
             Ext.raise("Changing the allowToggle config of a segmented button after render is not supported.");
         }
     },
 
-    updateVertical: function(newVertical, oldVertical) {
+    updateVertical: function (newVertical, oldVertical) {
         if (this.rendered && (newVertical !== oldVertical)) {
             Ext.raise("Changing the orientation of a segmented button after render is not supported.");
         }
@@ -414,17 +414,17 @@ Ext.define('Ext.button.Segmented', {
     //</debug>
 
     privates: {
-        _getClsSuffix: function() {
+        _getClsSuffix: function () {
             return this.getVertical() ? '-vertical' : '-horizontal';
         },
 
         // rtl hook
-        _getFirstCls: function() {
+        _getFirstCls: function () {
             return this._firstCls;
         },
 
         // rtl hook
-        _getLastCls: function() {
+        _getLastCls: function () {
             return this._lastCls;
         },
 
@@ -434,7 +434,7 @@ Ext.define('Ext.button.Segmented', {
          * @param {String/Number} value The button's value or index
          * @return {Ext.button.Button}
          */
-        _lookupButtonByValue: function(value) {
+        _lookupButtonByValue: function (value) {
             var items = this.items.items,
                 ln = items.length,
                 i = 0,
@@ -457,8 +457,8 @@ Ext.define('Ext.button.Segmented', {
 
             return button;
         },
-        
-        _onBeforeItemToggle: function(button, pressed) {
+
+        _onBeforeItemToggle: function (button, pressed) {
             // If we allow multiple selections, and we are forcing a selection, and we are unpressing
             // and we only have one value, then veto this. we are not allowing the selection length
             // to fall to zero.
@@ -473,7 +473,7 @@ Ext.define('Ext.button.Segmented', {
          * @param {Ext.button.Button} button
          * @param {Boolean} pressed
          */
-        _onItemToggle: function(button, pressed) {
+        _onItemToggle: function (button, pressed) {
             if (this._isApplyingValue) {
                 return;
             }
@@ -521,7 +521,7 @@ Ext.define('Ext.button.Segmented', {
          * @private
          * @param {Boolean} force force sync even if not rendered.
          */
-        _syncItemClasses: function(force) {
+        _syncItemClasses: function (force) {
             var me = this,
                 firstCls, middleCls, lastCls, items, ln, visibleItems, item, i;
 
@@ -547,7 +547,7 @@ Ext.define('Ext.button.Segmented', {
 
             //remove all existing classes from visible items
             for (i = 0; i < ln; i++) {
-                visibleItems[i].removeCls([ firstCls, middleCls, lastCls ]);
+                visibleItems[i].removeCls([firstCls, middleCls, lastCls]);
             }
 
             // do not add any classes if there is only one item (no border removal needed)

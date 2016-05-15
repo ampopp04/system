@@ -1,6 +1,6 @@
-describe("grid-rowedit", function() {
+describe("grid-rowedit", function () {
     function createSuite(buffered) {
-        describe(buffered ? "with buffered rendering" : "without buffered rendering", function() {
+        describe(buffered ? "with buffered rendering" : "without buffered rendering", function () {
             var ENTER = 13,
                 ESC = 27;
 
@@ -19,43 +19,43 @@ describe("grid-rowedit", function() {
                     'field10'
                 ]
             });
-                
+
             function triggerCellMouseEvent(type, rowIdx, cellIdx, button, x, y) {
                 var target = findCell(rowIdx, cellIdx);
 
                 jasmine.fireMouseEvent(target, type, x, y, button);
             }
-            
+
             function triggerCellKeyEvent(type, rowIdx, cellIdx, key) {
                 var target = findCell(rowIdx, cellIdx);
                 jasmine.fireKeyEvent(target, type, key);
             }
-            
+
             function triggerEditorKey(key) {
                 var target = plugin.getEditor().items.first().inputEl.dom;
                 jasmine.fireKeyEvent(target, 'keydown', key);
                 jasmine.fireKeyEvent(target, 'keyup', key);
                 jasmine.fireKeyEvent(target, 'keypress', key);
             }
-            
+
             function getRec(index) {
                 return store.getAt(index);
             }
-            
+
             function findCell(rowIdx, cellIdx) {
                 return grid.getView().getCellInclusive({
                     row: rowIdx,
                     column: cellIdx
                 }, true);
             }
-            
+
             function startEdit(rec) {
                 if (!rec || !rec.isModel) {
                     rec = store.getAt(rec || 0);
                 }
                 plugin.startEdit(rec);
             }
-            
+
             // Prevent validity from running on a delay
             function clearFormDelay() {
                 plugin.getEditor().getForm().taskDelay = 0;
@@ -68,10 +68,10 @@ describe("grid-rowedit", function() {
                     hasCols,
                     i,
                     colConfig;
-                
+
                 if (!columns) {
                     hasCols = true;
-                    colRef = [];    
+                    colRef = [];
                     for (i = 1; i <= 5; ++i) {
                         colConfig = {
                             text: 'F' + i,
@@ -91,7 +91,7 @@ describe("grid-rowedit", function() {
                         colRef[i - 1] = defaultCols[i - 1];
                     }
                 }
-                    
+
                 for (i = 1; i <= 10; ++i) {
                     data.push({
                         field1: i + '.' + 1,
@@ -106,12 +106,12 @@ describe("grid-rowedit", function() {
                         field10: i + '.' + 10
                     });
                 }
-                
+
                 store = new Ext.data.Store({
                     model: GridEventModel,
                     data: data
                 });
-                
+
                 plugin = new Ext.grid.plugin.RowEditing(pluginCfg);
 
                 grid = new Ext.grid.Panel(Ext.apply({
@@ -133,17 +133,18 @@ describe("grid-rowedit", function() {
                 }
                 view = grid.getView();
             }
-            
-            afterEach(function(){
+
+            afterEach(function () {
                 Ext.destroy(grid, store);
                 plugin = grid = store = view = null;
                 Ext.data.Model.schema.clear();
             });
 
-            describe("resolveListenerScope", function() {
-                it("should resolve the scope to the grid", function() {
+            describe("resolveListenerScope", function () {
+                it("should resolve the scope to the grid", function () {
                     var fooScope = {
-                        someFn: function() {}
+                        someFn: function () {
+                        }
                     };
 
                     spyOn(fooScope, 'someFn');
@@ -153,7 +154,7 @@ describe("grid-rowedit", function() {
                             'beforeedit': 'someFn'
                         }
                     });
-                    grid.resolveSatelliteListenerScope = function() {
+                    grid.resolveSatelliteListenerScope = function () {
                         return fooScope;
                     };
                     triggerCellMouseEvent('dblclick', 0, 0);
@@ -161,12 +162,12 @@ describe("grid-rowedit", function() {
                 });
             });
 
-            describe("Editing in a locked grid", function() {
-                beforeEach(function() {
+            describe("Editing in a locked grid", function () {
+                beforeEach(function () {
                     makeGrid(null, null, true);
                 });
 
-                it('should move an editor from one side to another when a column is locked during editing', function() {
+                it('should move an editor from one side to another when a column is locked during editing', function () {
                     var ed;
 
                     triggerCellMouseEvent('dblclick', 0, 2);
@@ -175,7 +176,7 @@ describe("grid-rowedit", function() {
 
                     // The editor of the 3rd column (first normal column) should be active
                     expect(Ext.Element.getActiveElement() === ed.inputEl.dom).toBe(true);
-                    
+
                     // The editor should be in the right container
                     expect(ed.up('container') === plugin.editor.items.items[1]).toBe(true);
 
@@ -188,9 +189,9 @@ describe("grid-rowedit", function() {
                 });
             });
 
-            describe("basic editing", function() {
+            describe("basic editing", function () {
                 // https://sencha.jira.com/browse/EXTJS-18773
-                it('should scroll a record that is outside the rendered block into view and edit it', function() {
+                it('should scroll a record that is outside the rendered block into view and edit it', function () {
                     makeGrid();
                     var data = [],
                         i;
@@ -215,14 +216,14 @@ describe("grid-rowedit", function() {
                     expect(plugin.getEditor().isVisible()).toBe(true);
                 });
 
-                it("should trigger the edit on cell interaction", function(){
+                it("should trigger the edit on cell interaction", function () {
                     makeGrid();
                     triggerCellMouseEvent('dblclick', 0, 0);
                     expect(plugin.editing).toBe(true);
                     expect(plugin.getEditor().isVisible()).toBe(true);
                 });
 
-                it("should focus the field for the clicked cell", function() {
+                it("should focus the field for the clicked cell", function () {
                     makeGrid();
                     triggerCellMouseEvent('dblclick', 0, 3);
                     expect(plugin.editing).toBe(true);
@@ -232,7 +233,7 @@ describe("grid-rowedit", function() {
                     jasmine.expectFocused(toFocus);
                 });
 
-                it("should be able to be trigger by record", function(){
+                it("should be able to be trigger by record", function () {
                     makeGrid();
                     var rec = store.first();
                     startEdit(rec);
@@ -240,7 +241,7 @@ describe("grid-rowedit", function() {
                     expect(plugin.getEditor().getRecord() === rec).toBe(true);
                 });
 
-                it("should trigger the first time when clicking a cell without a defined editor", function() {
+                it("should trigger the first time when clicking a cell without a defined editor", function () {
                     Ext.destroy(grid, store);
                     Ext.data.Model.schema.clear();
                     makeGrid([{
@@ -254,7 +255,7 @@ describe("grid-rowedit", function() {
                     expect(plugin.getEditor().isVisible()).toBe(true);
                 });
 
-                it("should focus the first visible column if not passed", function(){
+                it("should focus the first visible column if not passed", function () {
                     makeGrid();
                     var rec = store.first();
                     startEdit(rec);
@@ -264,7 +265,7 @@ describe("grid-rowedit", function() {
                     jasmine.expectFocused(toFocus);
                 });
 
-                it("should focus the first column that isn't a displayfield", function() {
+                it("should focus the first column that isn't a displayfield", function () {
                     makeGrid([{
                         dataIndex: 'field1',
                         field: 'displayfield'
@@ -296,52 +297,52 @@ describe("grid-rowedit", function() {
                     jasmine.expectFocused(toFocus);
                 });
 
-                it("should scroll horizontally to display the field being edited", function() {
-                    makeGrid(null,null,null,{
+                it("should scroll horizontally to display the field being edited", function () {
+                    makeGrid(null, null, null, {
                         width: 300
                     });
                     var rec = store.first(),
-                        x, offset=0;
+                        x, offset = 0;
 
                     // IE 8 has a 2px offset when the editor is visible
-                    if(Ext.isIE8) {
+                    if (Ext.isIE8) {
                         offset = 2;
                     }
 
                     // this will scroll the grid all the way to the right
-                    view.scrollBy(300,0);
-                    waitsFor(function() {
+                    view.scrollBy(300, 0);
+                    waitsFor(function () {
                         return view.getScrollX() >= 200;
                     });
 
-                    runs(function(){
+                    runs(function () {
                         x = view.getScrollX();
-                        plugin.startEdit(rec,colRef[4]);
+                        plugin.startEdit(rec, colRef[4]);
 
                         // expects the grid not to scroll when editing the last field
-                        expect(view.getScrollX()).toBe(x-offset);
+                        expect(view.getScrollX()).toBe(x - offset);
                         plugin.cancelEdit();
                         // expects the grid not to scroll when cancelling the edit
                         expect(view.getScrollX()).toBe(x);
-                        plugin.startEdit(rec,colRef[0]);
+                        plugin.startEdit(rec, colRef[0]);
                         // expects the grid to scroll left when editing the first field
                         expect(view.getScrollX()).toBe(offset);
                     });
                 });
 
-                it("should not be dirty when the field has values", function() {
+                it("should not be dirty when the field has values", function () {
                     makeGrid();
                     startEdit(store.first());
                     expect(plugin.getEditor().isDirty()).toBe(false);
                 });
             });
 
-            describe("scrolling while editing", function() {
-                beforeEach(function() {
+            describe("scrolling while editing", function () {
+                beforeEach(function () {
                     var data = [],
                         bufferPlugin;
 
-                   makeGrid([{
+                    makeGrid([{
                         dataIndex: 'field1',
                         field: 'displayfield'
                     }, {
@@ -353,70 +354,70 @@ describe("grid-rowedit", function() {
                     }, {
                         dataIndex: 'field4',
                         field: 'textfield'
-                    }],{
+                    }], {
                         clicksToMoveEditor: 1,
-                        autoCancel: false 
-                    },null,{
+                        autoCancel: false
+                    }, null, {
                         trailingBufferZone: 10,
                         leadingBufferZone: 10
                     });
 
 
-                for (var i = 11; i <= 100; ++i) {
-                    data.push({
-                        field1: i + '.' + 1,
-                        field2: i + '.' + 2,
-                        field3: i + '.' + 3,
-                        field4: i + '.' + 4,
-                        field5: i + '.' + 5,
-                        field6: i + '.' + 6,
-                        field7: i + '.' + 7,
-                        field8: i + '.' + 8,
-                        field9: i + '.' + 9,
-                        field10: i + '.' + 10
-                    });
-                }
+                    for (var i = 11; i <= 100; ++i) {
+                        data.push({
+                            field1: i + '.' + 1,
+                            field2: i + '.' + 2,
+                            field3: i + '.' + 3,
+                            field4: i + '.' + 4,
+                            field5: i + '.' + 5,
+                            field6: i + '.' + 6,
+                            field7: i + '.' + 7,
+                            field8: i + '.' + 8,
+                            field9: i + '.' + 9,
+                            field10: i + '.' + 10
+                        });
+                    }
 
-                store.insert(10,data);
+                    store.insert(10, data);
 
                 });
 
-                it('it should keep the editor active if scrolling out of view', function() {
+                it('it should keep the editor active if scrolling out of view', function () {
                     startEdit();
-                    
-                    runs(function(){
-                        setTimeout(function(){
+
+                    runs(function () {
+                        setTimeout(function () {
                             // this will scroll the grid view down
                             // to a point where rows get de-rendered
                             // if the grid has a bufferedRenderer plugin
-                            view.scrollBy(0,700);
-                        },50);
-                        
+                            view.scrollBy(0, 700);
+                        }, 50);
+
                     })
 
                     waitsFor(function () {
                         // Wait until a record begin edit is cached
                         // or verified if it is not a grid with bufferedRenderer
-                         return plugin.editor._cachedNode || !grid.bufferedRenderer;
+                        return plugin.editor._cachedNode || !grid.bufferedRenderer;
                     }, 'scroll to the bottom', 10000);
 
-                    runs(function(){
+                    runs(function () {
                         // if this is a grid with bufferedRenderer
                         // the record editor should be hidden at Y = -400;
                         if (grid.bufferedRenderer) {
                             expect(plugin.editor.getLocalY()).not.toBe(0);
                         }
-                        setTimeout(function(){
+                        setTimeout(function () {
                             // scrolls the grid back to the top
-                            view.scrollBy(0,-700);
-                        },1000);
+                            view.scrollBy(0, -700);
+                        }, 1000);
                     });
 
-                    waitsFor(function(){
+                    waitsFor(function () {
                         return view.getScrollY() === 0;
-                    },10000);
+                    }, 10000);
 
-                    runs(function(){
+                    runs(function () {
                         // the cached record should have been erased
                         // or it should never existed if this is not a grid with bufferedRenderer
                         // the editor also should not be hidden anymore
@@ -430,15 +431,15 @@ describe("grid-rowedit", function() {
             });
 
             // https://sencha.jira.com/browse/EXTJSIV-11364
-            describe("destroying a grid before editing starts", function() {
-                beforeEach(function(){
+            describe("destroying a grid before editing starts", function () {
+                beforeEach(function () {
                     makeGrid([{
                         name: 'F0',
                         dataIndex: 'field0',
                         field: {
                             xtype: 'combobox',
                             id: 'field0',
-                            initComponent: function() {
+                            initComponent: function () {
                                 // The column will be removed at this point, and column.up will return undefined.
                                 this.store = this.column.up('tablepanel').store.collect(this.column.dataIndex, false, true);
                                 Ext.form.field.ComboBox.prototype.initComponent.apply(this, arguments);
@@ -447,27 +448,27 @@ describe("grid-rowedit", function() {
                     }]);
                 });
 
-                it("should not throw an error", function() {
-                    expect(function() {
+                it("should not throw an error", function () {
+                    expect(function () {
                         grid.destroy();
                     }).not.toThrow();
                 });
             });
 
-            describe("setting widths", function() {
+            describe("setting widths", function () {
                 function expectWidth(field, width) {
                     width -= field._marginWidth;
-                    expect(field.getWidth()).toBe(width);    
+                    expect(field.getWidth()).toBe(width);
                 }
-                
+
                 function expectWidths() {
                     var items = plugin.getEditor().items;
-                    items.each(function(item, index) {
+                    items.each(function (item, index) {
                         expectWidth(item, colRef[index].getWidth());
                     });
                 }
-                
-                it("should set fixed column widths", function() {
+
+                it("should set fixed column widths", function () {
                     makeGrid([{
                         dataIndex: 'field1',
                         width: 100,
@@ -476,12 +477,12 @@ describe("grid-rowedit", function() {
                         dataIndex: 'field2',
                         width: 200,
                         field: 'textfield'
-                    }]);    
+                    }]);
                     startEdit();
                     expectWidths();
                 });
-                
-                it("should set flex widths", function() {
+
+                it("should set flex widths", function () {
                     makeGrid([{
                         dataIndex: 'field1',
                         flex: 1,
@@ -490,12 +491,12 @@ describe("grid-rowedit", function() {
                         dataIndex: 'field2',
                         flex: 1,
                         field: 'textfield'
-                    }]);    
+                    }]);
                     startEdit();
                     expectWidths();
                 });
-                
-                it("should set width with a mix of flex/configured", function() {
+
+                it("should set width with a mix of flex/configured", function () {
                     makeGrid([{
                         dataIndex: 'field1',
                         flex: 1,
@@ -508,13 +509,13 @@ describe("grid-rowedit", function() {
                         dataIndex: 'field3',
                         width: 400,
                         field: 'textfield'
-                    }]);    
+                    }]);
                     startEdit();
                     expectWidths();
                 });
-                
-                describe("reconfigure", function() {
-                    it("should set the widths if the editor has not been shown", function() {
+
+                describe("reconfigure", function () {
+                    it("should set the widths if the editor has not been shown", function () {
                         makeGrid();
                         grid.reconfigure(null, [{
                             dataIndex: 'field1',
@@ -529,8 +530,8 @@ describe("grid-rowedit", function() {
                         startEdit();
                         expectWidths();
                     });
-                    
-                    it("should set the widths after the editor has already been shown", function() {
+
+                    it("should set the widths after the editor has already been shown", function () {
                         makeGrid();
                         plugin.startEdit(store.first());
                         plugin.cancelEdit();
@@ -550,23 +551,23 @@ describe("grid-rowedit", function() {
                 });
             });
 
-            describe("events", function() {
-                beforeEach(function() {
+            describe("events", function () {
+                beforeEach(function () {
                     makeGrid();
                 });
-                describe("beforeedit", function(){
-                    it("should fire the event", function() {
+                describe("beforeedit", function () {
+                    it("should fire the event", function () {
                         var called = false;
-                        plugin.on('beforeedit', function(){
+                        plugin.on('beforeedit', function () {
                             called = true;
                         });
                         triggerCellMouseEvent('dblclick', 0, 0);
                         expect(called).toBe(true);
                     });
-                    
-                    it("should fire the event with the plugin & an event context", function() {
+
+                    it("should fire the event with the plugin & an event context", function () {
                         var p, context;
-                        plugin.on('beforeedit', function(a1, a2){
+                        plugin.on('beforeedit', function (a1, a2) {
                             p = a1;
                             context = a2;
                         });
@@ -580,28 +581,28 @@ describe("grid-rowedit", function() {
                         expect(context.rowIdx).toBe(0);
                         expect(context.store === store).toBe(true);
                     });
-                    
-                    it("should prevent editing if false is returned", function(){
-                        plugin.on('beforeedit', function(a1, a2){
+
+                    it("should prevent editing if false is returned", function () {
+                        plugin.on('beforeedit', function (a1, a2) {
                             return false;
                         });
                         triggerCellMouseEvent('dblclick', 0, 0);
                         expect(plugin.editing).toBeFalsy();
                     });
-                    
-                    it("should prevent editing if context.cancel is set", function(){
-                        plugin.on('beforeedit', function(p, context){
+
+                    it("should prevent editing if context.cancel is set", function () {
+                        plugin.on('beforeedit', function (p, context) {
                             context.cancel = true;
                         });
                         triggerCellMouseEvent('dblclick', 0, 0);
                         expect(plugin.editing).toBeFalsy();
                     });
-                });  
-                
-                describe("canceledit", function(){
-                    it("should fire the event when editing is cancelled", function(){
+                });
+
+                describe("canceledit", function () {
+                    it("should fire the event when editing is cancelled", function () {
                         var called = false;
-                        plugin.on('canceledit', function(p, context){
+                        plugin.on('canceledit', function (p, context) {
                             called = true;
                         });
                         triggerCellMouseEvent('dblclick', 0, 0);
@@ -609,10 +610,10 @@ describe("grid-rowedit", function() {
                         expect(called).toBe(true);
                         expect(plugin.editing).toBe(false);
                     });
-                    
-                    it("should pass the plugin and the context", function(){
+
+                    it("should pass the plugin and the context", function () {
                         var p, context;
-                        plugin.on('canceledit', function(a1, a2){
+                        plugin.on('canceledit', function (a1, a2) {
                             p = a1;
                             context = a2;
                         });
@@ -628,27 +629,27 @@ describe("grid-rowedit", function() {
                         expect(context.store === store).toBe(true);
                     });
                 });
-                
-                describe("validateedit", function(){
-                    it("should fire the validateedit event before edit", function(){
+
+                describe("validateedit", function () {
+                    it("should fire the validateedit event before edit", function () {
                         var calledFirst = false,
                             called = false;
 
-                        plugin.on('validateedit', function(){
+                        plugin.on('validateedit', function () {
                             calledFirst = !called;
                         });
-                        plugin.on('edit', function(p, context){
+                        plugin.on('edit', function (p, context) {
                             calledFirst = !called;
                         });
                         triggerCellMouseEvent('dblclick', 0, 0);
                         plugin.completeEdit();
                         expect(calledFirst).toBe(true);
-                    });  
-                    
-                    it("should pass the plugin and the context", function(){
+                    });
+
+                    it("should pass the plugin and the context", function () {
                         var p, context;
 
-                        plugin.on('validateedit', function(a1, a2){
+                        plugin.on('validateedit', function (a1, a2) {
                             p = a1;
                             context = a2;
                         });
@@ -662,15 +663,15 @@ describe("grid-rowedit", function() {
                         expect(context.row === view.getRow(view.all.first())).toBe(true);
                         expect(context.rowIdx).toBe(0);
                         expect(context.store === store).toBe(true);
-                    }); 
-                    
-                    it("should veto the completeEdit if we return false", function(){
+                    });
+
+                    it("should veto the completeEdit if we return false", function () {
                         var called = false;
 
-                        plugin.on('validateedit', function(){
+                        plugin.on('validateedit', function () {
                             return false;
                         });
-                        plugin.on('edit', function(p, context){
+                        plugin.on('edit', function (p, context) {
                             called = true;
                         });
                         triggerCellMouseEvent('dblclick', 0, 0);
@@ -678,14 +679,14 @@ describe("grid-rowedit", function() {
                         expect(plugin.editing).toBe(true);
                         expect(called).toBe(false);
                     });
-                    
-                    it("should veto the completeEdit if we set context.cancel", function(){
+
+                    it("should veto the completeEdit if we set context.cancel", function () {
                         var called = false;
 
-                        plugin.on('validateedit', function(p, context){
+                        plugin.on('validateedit', function (p, context) {
                             context.cancel = true;
                         });
-                        plugin.on('edit', function(p, context){
+                        plugin.on('edit', function (p, context) {
                             called = true;
                         });
                         triggerCellMouseEvent('dblclick', 0, 0);
@@ -694,24 +695,24 @@ describe("grid-rowedit", function() {
                         expect(called).toBe(false);
                     });
                 });
-                
-                describe("edit", function(){
-                    it("should fire the edit event", function(){
+
+                describe("edit", function () {
+                    it("should fire the edit event", function () {
                         var called = false;
 
-                        plugin.on('edit', function(p, context){
+                        plugin.on('edit', function (p, context) {
                             called = true;
                         });
                         triggerCellMouseEvent('dblclick', 0, 0);
                         plugin.completeEdit();
                         expect(plugin.editing).toBe(false);
                         expect(called).toBe(true);
-                    });  
-                    
-                    it("should pass the plugin and the context", function(){
+                    });
+
+                    it("should pass the plugin and the context", function () {
                         var p, context;
 
-                        plugin.on('edit', function(a1, a2){
+                        plugin.on('edit', function (a1, a2) {
                             p = a1;
                             context = a2;
                         });
@@ -726,8 +727,8 @@ describe("grid-rowedit", function() {
                         expect(context.rowIdx).toBe(0);
                         expect(context.store === store).toBe(true);
                     });
-                    
-                    it("should update the value in the model", function(){
+
+                    it("should update the value in the model", function () {
 
                         triggerCellMouseEvent('dblclick', 0, 0);
                         plugin.getEditor().items.first().setValue('foo');
@@ -736,32 +737,32 @@ describe("grid-rowedit", function() {
                     });
                 });
             });
-            
-            describe("dynamic editors", function() {
-                beforeEach(function() {
+
+            describe("dynamic editors", function () {
+                beforeEach(function () {
                     // Suppress console warning about Trigger field being deprecated
                     spyOn(Ext.log, 'warn');
                 });
-                
-                it("should allow the editor to change dynamically", function(){
+
+                it("should allow the editor to change dynamically", function () {
                     var field = new Ext.form.field.Trigger();
                     makeGrid();
                     colRef[0].setEditor(field);
                     triggerCellMouseEvent('dblclick', 0, 0);
                     expect(plugin.getEditor().items.first() === field).toBe(true);
                 });
-                
-                it("should allow the editor to change in the beforeedit event", function() {
+
+                it("should allow the editor to change in the beforeedit event", function () {
                     var field = new Ext.form.field.Trigger();
                     makeGrid();
-                    plugin.on('beforeedit', function(){
+                    plugin.on('beforeedit', function () {
                         colRef[0].setEditor(field);
-                    });  
+                    });
                     triggerCellMouseEvent('dblclick', 0, 0);
                     expect(plugin.getEditor().items.first() === field).toBe(true);
                 });
 
-                it("should correct the width when setting the editor during beforeedit after rendering", function() {
+                it("should correct the width when setting the editor during beforeedit after rendering", function () {
                     var field = new Ext.form.field.Trigger();
                     makeGrid([{
                         width: 500,
@@ -769,49 +770,49 @@ describe("grid-rowedit", function() {
                     }]);
                     triggerCellMouseEvent('dblclick', 0, 0);
                     plugin.cancelEdit();
-                    plugin.on('beforeedit', function() {
+                    plugin.on('beforeedit', function () {
                         colRef[0].setEditor(field);
-                    });  
+                    });
                     triggerCellMouseEvent('dblclick', 0, 0);
                     expect(plugin.getEditor().items.first().getWidth()).toBe(500);
                 });
-                
-                it("should allow us to set an editor if one wasn't there before", function() {
+
+                it("should allow us to set an editor if one wasn't there before", function () {
                     var field = new Ext.form.field.Text();
                     makeGrid([{
                         dataIndex: 'field1'
                     }, {
                         dataIndex: 'field2',
                         field: 'textfield'
-                    }]);    
+                    }]);
                     colRef = grid.getColumnManager().getColumns();
                     colRef[0].setEditor(field);
                     triggerCellMouseEvent('dblclick', 0, 0);
                     expect(plugin.getEditor().items.first() === field).toBe(true);
                 });
-                
-                it("should allow us to clear out an editor", function() {
+
+                it("should allow us to clear out an editor", function () {
                     makeGrid();
                     colRef[0].setEditor(null);
                     triggerCellMouseEvent('dblclick', 0, 0);
                     expect(plugin.getEditor().items.first().getXType()).toBe('displayfield');
                 });
-                
-                it("should destroy the old field", function() {
+
+                it("should destroy the old field", function () {
                     var field = new Ext.form.field.Text();
-                    
+
                     makeGrid([{
                         dataIndex: 'field1',
                         field: field
-                    }]);    
+                    }]);
                     colRef = grid.getColumnManager().getColumns();
                     colRef[0].setEditor(new Ext.form.field.Text());
                     expect(field.destroyed).toBe(true);
                 });
             });
-            
-            describe("hidden columns", function() {
-                beforeEach(function(){
+
+            describe("hidden columns", function () {
+                beforeEach(function () {
                     makeGrid([{
                         dataIndex: 'field1',
                         hidden: true,
@@ -838,41 +839,41 @@ describe("grid-rowedit", function() {
                     }]);
                     colRef = grid.getColumnManager().getColumns();
                 });
-                
-                it("should not show editors for hidden columns", function() {
+
+                it("should not show editors for hidden columns", function () {
                     triggerCellMouseEvent('dblclick', 0, 1);
                     expect(plugin.getEditor().items.getAt(0).isVisible()).toBe(false);
                     expect(plugin.getEditor().items.getAt(3).isVisible()).toBe(false);
                 });
-                
-                it("should focus the first visible field", function() {
+
+                it("should focus the first visible field", function () {
                     startEdit();
                     var toFocus = plugin.getEditor().items.getAt(1);
                     jasmine.waitForFocus(toFocus);
                     jasmine.expectFocused(toFocus);
                 });
 
-                it("should show the editor when the column is shown", function() {
+                it("should show the editor when the column is shown", function () {
                     startEdit();
                     colRef[0].show();
                     expect(plugin.getEditor().items.getAt(0).isVisible()).toBe(true);
                 });
-                
-                it("should hide the editor when the column is hidden", function() {
+
+                it("should hide the editor when the column is hidden", function () {
                     startEdit();
                     colRef[6].show();
                     expect(plugin.getEditor().items.getAt(6).isVisible()).toBe(true);
                 });
             });
-            
-            describe("reconfigure", function() {
+
+            describe("reconfigure", function () {
                 var old;
-                describe("original editor not rendered", function() {
-                    beforeEach(function() {
+                describe("original editor not rendered", function () {
+                    beforeEach(function () {
                         makeGrid();
                         old = [];
-                        Ext.Array.forEach(grid.getColumnManager().getColumns(), function(col) {
-                            old.push(col.getEditor());    
+                        Ext.Array.forEach(grid.getColumnManager().getColumns(), function (col) {
+                            old.push(col.getEditor());
                         });
                         grid.reconfigure(null, [{
                             dataIndex: 'field1',
@@ -884,26 +885,26 @@ describe("grid-rowedit", function() {
                         }]);
                         colRef = grid.getColumnManager().getColumns();
                     });
-                
-                    it("should destroy old editors", function() {
-                        Ext.Array.forEach(old, function(item){
-                            expect(item.destroyed).toBe(true);    
+
+                    it("should destroy old editors", function () {
+                        Ext.Array.forEach(old, function (item) {
+                            expect(item.destroyed).toBe(true);
                         });
                     });
-                
-                    it("should update columns with no editors", function() {
+
+                    it("should update columns with no editors", function () {
                         triggerCellMouseEvent('dblclick', 0, 1);
                         expect(plugin.getEditor().items.getAt(1).getXType()).toBe('displayfield');
-                    });  
-                
-                    it("should use new editors", function() {
+                    });
+
+                    it("should use new editors", function () {
                         triggerCellMouseEvent('dblclick', 0, 0);
                         expect(plugin.getEditor().items.first().getItemId()).toBe('newEd');
                     });
                 });
-                
-                describe("original rendered", function() {
-                    it("should cancel editing on reconfigure if visible", function() {
+
+                describe("original rendered", function () {
+                    it("should cancel editing on reconfigure if visible", function () {
                         makeGrid();
                         triggerCellMouseEvent('dblclick', 0, 0);
                         grid.reconfigure(null, [{
@@ -914,34 +915,34 @@ describe("grid-rowedit", function() {
                     });
                 });
             });
-            
-            describe("values/validity", function() {
-                it("should set the values on each field", function() {
+
+            describe("values/validity", function () {
+                it("should set the values on each field", function () {
                     makeGrid();
                     triggerCellMouseEvent('dblclick', 0, 0);
                     var items = plugin.getEditor().items;
-                    
+
                     expect(items.getAt(0).getValue()).toBe('1.1');
                     expect(items.getAt(1).getValue()).toBe('1.2');
                     expect(items.getAt(2).getValue()).toBe('1.3');
                     expect(items.getAt(3).getValue()).toBe('1.4');
                     expect(items.getAt(4).getValue()).toBe('1.5');
                 });
-                
-                it("should set the correct value if the field name config is specified", function() {
+
+                it("should set the correct value if the field name config is specified", function () {
                     makeGrid([{
                         dataIndex: 'field1',
                         field: {
                             xtype: 'textfield',
                             name: 'field2'
                         }
-                    }]); 
-                    
+                    }]);
+
                     triggerCellMouseEvent('dblclick', 0, 0);
                     expect(plugin.getEditor().items.first().getValue()).toBe('1.2');
                 });
 
-                it("should not retain the value from previous edits if the model value is not defined", function() {
+                it("should not retain the value from previous edits if the model value is not defined", function () {
                     makeGrid();
                     startEdit(0);
                     var field = plugin.getEditor().items.getAt(0);
@@ -951,34 +952,34 @@ describe("grid-rowedit", function() {
                     startEdit(0);
                     expect(field.getValue()).toBe('');
                 });
-                
-                describe("buttons", function() {
-                    beforeEach(function() {
+
+                describe("buttons", function () {
+                    beforeEach(function () {
                         makeGrid();
                     });
-                    
-                    it("should disable the buttons when starting editing in an invalid state", function() {
+
+                    it("should disable the buttons when starting editing in an invalid state", function () {
                         store.first().set('field1', '');
                         triggerCellMouseEvent('dblclick', 0, 0);
                         expect(plugin.getEditor().down('#update').disabled).toBe(true);
                     });
-                
-                    it("should disable the buttons when a value changes the form to a invalid state", function() {
+
+                    it("should disable the buttons when a value changes the form to a invalid state", function () {
                         triggerCellMouseEvent('dblclick', 0, 0);
                         clearFormDelay();
                         plugin.getEditor().items.first().setValue('');
                         expect(plugin.getEditor().down('#update').disabled).toBe(true);
                     });
-                
-                    it("should enable the buttons when a value changes the form to a valid state", function() {
+
+                    it("should enable the buttons when a value changes the form to a valid state", function () {
                         store.first().set('field1', '');
                         triggerCellMouseEvent('dblclick', 0, 0);
                         clearFormDelay();
                         plugin.getEditor().items.first().setValue('Foo');
                         expect(plugin.getEditor().down('#update').disabled).toBe(false);
                     });
-                    
-                    it("should update the state correctly after loading multiple records", function() {
+
+                    it("should update the state correctly after loading multiple records", function () {
                         store.removeAll();
                         store.insert(0, {});
                         startEdit(0);
@@ -990,28 +991,28 @@ describe("grid-rowedit", function() {
                         plugin.getEditor().items.first().setValue('Foo');
                         expect(plugin.getEditor().down('#update').disabled).toBe(false);
                     });
-               });
-               
-               describe("tooltip", function() {
-                   beforeEach(function() {
+                });
+
+                describe("tooltip", function () {
+                    beforeEach(function () {
                         makeGrid();
                     });
-                    
-                    it("should show the tip when starting editing in an invalid state", function() {
+
+                    it("should show the tip when starting editing in an invalid state", function () {
                         store.first().set('field1', '');
                         triggerCellMouseEvent('dblclick', 0, 0);
                         expect(plugin.getEditor().tooltip.isVisible()).toBe(true);
                     });
-                
-                    it("should show the tip when a value changes the form to a invalid state", function() {
+
+                    it("should show the tip when a value changes the form to a invalid state", function () {
                         triggerCellMouseEvent('dblclick', 0, 0);
                         clearFormDelay();
                         var editor = plugin.getEditor();
                         editor.items.first().setValue('');
                         expect(editor.tooltip.isVisible()).toBe(true);
                     });
-                
-                    it("should hide the tip when a value changes the form to a valid state", function() {
+
+                    it("should hide the tip when a value changes the form to a valid state", function () {
                         store.first().set('field1', '');
                         triggerCellMouseEvent('dblclick', 0, 0);
                         clearFormDelay();
@@ -1020,7 +1021,7 @@ describe("grid-rowedit", function() {
                         expect(editor.tooltip.isVisible()).toBe(false);
                     });
 
-                    describe("tip content", function() {
+                    describe("tip content", function () {
                         function expectErrors(errors) {
                             // Parse out the markup here
                             var editor = plugin.getEditor(),
@@ -1037,7 +1038,7 @@ describe("grid-rowedit", function() {
                             }
                         }
 
-                        it("should update the tip content with errors for each field", function() {
+                        it("should update the tip content with errors for each field", function () {
                             store.first().set('field2', '');
                             var editor = plugin.getEditor(),
                                 f1 = editor.items.getAt(0),
@@ -1057,7 +1058,7 @@ describe("grid-rowedit", function() {
                             ]);
                         });
 
-                        it("should add a new field if it becomes invalid", function() {
+                        it("should add a new field if it becomes invalid", function () {
                             var editor = plugin.getEditor(),
                                 f1 = editor.items.getAt(0),
                                 f2 = editor.items.getAt(1),
@@ -1081,7 +1082,7 @@ describe("grid-rowedit", function() {
                             ]);
                         });
 
-                        it("should remove a existing field if it becomes valid", function() {
+                        it("should remove a existing field if it becomes valid", function () {
                             store.first().set('field2', '');
                             var editor = plugin.getEditor(),
                                 f1 = editor.items.getAt(0),
@@ -1106,11 +1107,11 @@ describe("grid-rowedit", function() {
                             ]);
                         });
 
-                        it("should only render the first error from the field", function() {
+                        it("should only render the first error from the field", function () {
                             var editor = plugin.getEditor(),
                                 f1 = editor.items.getAt(0);
 
-                            f1.getErrors = function() {
+                            f1.getErrors = function () {
                                 return ['Foo', 'Bar'];
                             };
 
@@ -1119,15 +1120,15 @@ describe("grid-rowedit", function() {
                             expectErrors(['F1: Foo']);
                         });
 
-                        it("should not prefix the error with the column name if the text is empty", function() {
+                        it("should not prefix the error with the column name if the text is empty", function () {
                             var editor = plugin.getEditor(),
                                 f1 = editor.items.getAt(0),
                                 f2 = editor.items.getAt(1);
 
-                            f1.getErrors = function() {
+                            f1.getErrors = function () {
                                 return ['Foo'];
                             };
-                            f2.getErrors = function() {
+                            f2.getErrors = function () {
                                 return ['Bar'];
                             };
                             colRef[0].text = '';
@@ -1136,11 +1137,11 @@ describe("grid-rowedit", function() {
                             expectErrors(['Foo', 'F2: Bar']);
                         });
                     });
-               });
+                });
             });
-            
-            describe("field types", function() {
-                it("should set values with a fieldcontainer", function() {
+
+            describe("field types", function () {
+                it("should set values with a fieldcontainer", function () {
                     makeGrid([{
                         dataIndex: 'field1',
                         field: {
@@ -1153,18 +1154,18 @@ describe("grid-rowedit", function() {
                     }]);
                     triggerCellMouseEvent('dblclick', 0, 0);
                     expect(plugin.getEditor().items.first().items.first().getValue()).toBe('1.1');
-                });  
+                });
             });
-            
-            describe("key events", function() {
-                it("should cancel editing on ESC", function() {
+
+            describe("key events", function () {
+                it("should cancel editing on ESC", function () {
                     makeGrid();
                     triggerCellMouseEvent('dblclick', 0, 0);
                     triggerEditorKey(ESC);
                     expect(plugin.editing).toBe(false);
-                });   
-                
-                it("should complete on edit if the form is valid", function() {
+                });
+
+                it("should complete on edit if the form is valid", function () {
                     makeGrid();
                     triggerCellMouseEvent('dblclick', 0, 0);
                     plugin.getEditor().items.first().setValue('Foo');
@@ -1172,8 +1173,8 @@ describe("grid-rowedit", function() {
                     expect(plugin.editing).toBe(false);
                     expect(store.first().get('field1')).toBe('Foo');
                 });
-                
-                it("should not finish editing if enter is pressed and the form is invalid", function() {
+
+                it("should not finish editing if enter is pressed and the form is invalid", function () {
                     makeGrid();
                     triggerCellMouseEvent('dblclick', 0, 0);
                     // First doesn't allow blank
@@ -1181,8 +1182,8 @@ describe("grid-rowedit", function() {
                     triggerEditorKey(ENTER);
                     expect(plugin.editing).toBe(true);
                 });
-                
-                it("should be able to cancel after pressing enter and the form is invalid", function() {
+
+                it("should be able to cancel after pressing enter and the form is invalid", function () {
                     makeGrid();
                     triggerCellMouseEvent('dblclick', 0, 0);
                     // First doesn't allow blank
@@ -1193,15 +1194,15 @@ describe("grid-rowedit", function() {
                     expect(store.first().get('field1')).toBe('1.1');
                 });
             });
-            
-            describe("adding/removing/moving columns", function() {
+
+            describe("adding/removing/moving columns", function () {
                 function dragColumn(from, to, onRight) {
                     var fromBox = from.el.getBox(),
-                        fromMx = fromBox.x + fromBox.width/2,
-                        fromMy = fromBox.y + fromBox.height/2,
+                        fromMx = fromBox.x + fromBox.width / 2,
+                        fromMy = fromBox.y + fromBox.height / 2,
                         toBox = to.el.getBox(),
                         toMx = toBox.x,
-                        toMy = toBox.y + toBox.height/2,
+                        toMy = toBox.y + toBox.height / 2,
                         offset = onRight ? toBox.width - 6 : 5,
                         moveOffset = toMx + offset,
                         dragThresh = onRight ? Ext.dd.DragDropManager.clickPixelThresh + 1 : -Ext.dd.DragDropManager.clickPixelThresh - 1;
@@ -1220,8 +1221,8 @@ describe("grid-rowedit", function() {
                     jasmine.fireMouseEvent(to.el.dom, 'mouseup', moveOffset, toMy);
                 }
 
-                describe("modification while visible with the grid pending layouts", function() {
-                    it("should update the layout appropriately", function() {
+                describe("modification while visible with the grid pending layouts", function () {
+                    it("should update the layout appropriately", function () {
                         makeGrid();
                         startEdit();
 
@@ -1234,13 +1235,13 @@ describe("grid-rowedit", function() {
                 });
 
                 function createLockingSuite(beforeFirstShow) {
-                    describe(beforeFirstShow ? "before first show" : "after first show", function() {
-                        describe("basic operations", function() {
-                            beforeEach(function() {
+                    describe(beforeFirstShow ? "before first show" : "after first show", function () {
+                        describe("basic operations", function () {
+                            beforeEach(function () {
                                 makeGrid();
                             });
 
-                            it("should add a new field", function() {
+                            it("should add a new field", function () {
                                 if (!beforeFirstShow) {
                                     startEdit();
                                 }
@@ -1250,14 +1251,14 @@ describe("grid-rowedit", function() {
                                         xtype: 'textfield',
                                         id: 'field6'
                                     }
-                                });  
+                                });
                                 if (beforeFirstShow) {
                                     startEdit();
                                 }
                                 expect(plugin.getEditor().getComponent('field6').getValue()).toBe('1.6');
-                            });  
-                        
-                            it("should remove an existing field & destroy it", function() {
+                            });
+
+                            it("should remove an existing field & destroy it", function () {
                                 if (!beforeFirstShow) {
                                     startEdit();
                                 }
@@ -1266,10 +1267,10 @@ describe("grid-rowedit", function() {
                                     startEdit();
                                 }
                                 expect(plugin.getEditor().getComponent('field2')).toBeFalsy();
-                                expect(Ext.getCmp('field2')).toBeFalsy();    
+                                expect(Ext.getCmp('field2')).toBeFalsy();
                             });
-                        
-                            it("should move the field in the editor", function() {
+
+                            it("should move the field in the editor", function () {
                                 if (!beforeFirstShow) {
                                     startEdit();
                                 }
@@ -1277,10 +1278,10 @@ describe("grid-rowedit", function() {
                                 if (beforeFirstShow) {
                                     startEdit();
                                 }
-                                expect(plugin.getEditor().items.last().getItemId()).toBe('field1');    
+                                expect(plugin.getEditor().items.last().getItemId()).toBe('field1');
                             });
-                        
-                            it("should remove all fields", function() {
+
+                            it("should remove all fields", function () {
                                 if (!beforeFirstShow) {
                                     startEdit();
                                 }
@@ -1292,7 +1293,7 @@ describe("grid-rowedit", function() {
                             });
                         });
 
-                        describe("moving with hidden columns", function() {
+                        describe("moving with hidden columns", function () {
                             // The purpose here is to simulate user drag drops
                             function makeColumns(columns) {
                                 var len = columns.length,
@@ -1313,49 +1314,49 @@ describe("grid-rowedit", function() {
                                 return out;
                             }
 
-                            it("should insert after the first hidden column", function() {
+                            it("should insert after the first hidden column", function () {
                                 makeGrid(makeColumns([true, false, false, false, false]));
                                 if (!beforeFirstShow) {
-                                   startEdit();
+                                    startEdit();
                                 }
                                 // insert before the first visible column
                                 grid.headerCt.move(4, 1);
                                 if (beforeFirstShow) {
-                                   startEdit();
+                                    startEdit();
                                 }
-                                expect(plugin.getEditor().items.getAt(1).getItemId()).toBe('field5');  
+                                expect(plugin.getEditor().items.getAt(1).getItemId()).toBe('field5');
                             });
 
-                            it("should insert before the last hidden column", function() {
+                            it("should insert before the last hidden column", function () {
                                 makeGrid(makeColumns([false, false, false, false, true]));
                                 if (!beforeFirstShow) {
-                                   startEdit();
+                                    startEdit();
                                 }
                                 // insert after the last visible column
                                 grid.headerCt.move(0, 3);
                                 if (beforeFirstShow) {
-                                   startEdit();
+                                    startEdit();
                                 }
-                                expect(plugin.getEditor().items.getAt(3).getItemId()).toBe('field1');  
+                                expect(plugin.getEditor().items.getAt(3).getItemId()).toBe('field1');
                             });
 
-                            it("should position properly with hidden columns in the middle", function() {
+                            it("should position properly with hidden columns in the middle", function () {
                                 makeGrid(makeColumns([false, false, true, false, true, true, false]));
                                 if (!beforeFirstShow) {
-                                   startEdit();
+                                    startEdit();
                                 }
                                 grid.headerCt.move(0, 3);
                                 grid.headerCt.insert(1, colRef[6]);
                                 if (beforeFirstShow) {
-                                   startEdit();
+                                    startEdit();
                                 }
-                                expect(plugin.getEditor().items.getAt(1).getItemId()).toBe('field7'); 
-                                expect(plugin.getEditor().items.getAt(4).getItemId()).toBe('field1'); 
+                                expect(plugin.getEditor().items.getAt(1).getItemId()).toBe('field7');
+                                expect(plugin.getEditor().items.getAt(4).getItemId()).toBe('field1');
                             });
                         });
 
-                        describe("moving grouped columns", function() {
-                            beforeEach(function() {
+                        describe("moving grouped columns", function () {
+                            beforeEach(function () {
                                 makeGrid([{
                                     text: 'Locked',
                                     dataIndex: 'field10',
@@ -1407,35 +1408,37 @@ describe("grid-rowedit", function() {
                                 }
                             }
 
-                            it("should move all leaf columns to the left", function() {
+                            it("should move all leaf columns to the left", function () {
                                 if (!beforeFirstShow) {
-                                   startEdit();
+                                    startEdit();
                                 }
                                 grid.normalGrid.headerCt.move(1, 0);
                                 if (beforeFirstShow) {
-                                   startEdit();
+                                    startEdit();
                                 }
                                 expectOrder(['field4', 'field5', 'field6', 'field1', 'field2', 'field3', 'field7', 'field8', 'field9']);
                             });
 
-                            it("should move all leaf columns to the right", function() {
+                            it("should move all leaf columns to the right", function () {
                                 if (!beforeFirstShow) {
-                                   startEdit();
+                                    startEdit();
                                 }
                                 grid.normalGrid.headerCt.move(1, 2);
                                 if (beforeFirstShow) {
-                                   startEdit();
+                                    startEdit();
                                 }
                                 expectOrder(['field1', 'field2', 'field3', 'field7', 'field8', 'field9', 'field4', 'field5', 'field6']);
                             });
                         });
                     });
                 }
+
                 createLockingSuite(true);
                 createLockingSuite(false);
             });
         });
     }
+
     createSuite(false);
     createSuite(true);
 });

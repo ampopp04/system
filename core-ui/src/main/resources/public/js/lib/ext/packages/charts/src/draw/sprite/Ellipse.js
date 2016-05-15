@@ -1,7 +1,7 @@
 /**
  * @class Ext.draw.sprite.Ellipse
  * @extends Ext.draw.sprite.Path
- * 
+ *
  * A sprite that represents an ellipse.
  *
  *     @example
@@ -31,12 +31,12 @@ Ext.define("Ext.draw.sprite.Ellipse", {
                  * @cfg {Number} [cx=0] The center coordinate of the sprite on the x-axis.
                  */
                 cx: "number",
-                
+
                 /**
                  * @cfg {Number} [cy=0] The center coordinate of the sprite on the y-axis.
                  */
                 cy: "number",
-                
+
                 /**
                  * @cfg {Number} [rx=1] The radius of the sprite on the x-axis.
                  */

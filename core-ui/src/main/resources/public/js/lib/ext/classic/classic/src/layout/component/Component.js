@@ -78,10 +78,10 @@ Ext.define('Ext.layout.component.Component', {
 
             if (!body) {
                 dirty = me.setWidthInDom ||
-                        (firstCycle ? width !== lastSize.width : widthModel.constrained);
+                    (firstCycle ? width !== lastSize.width : widthModel.constrained);
             }
 
-            
+
             ownerContext.setWidth(width, dirty);
         } else if (isTopLevel) {
             if (widthModel.calculated) {
@@ -101,7 +101,7 @@ Ext.define('Ext.layout.component.Component', {
 
             if (!body) {
                 dirty = firstCycle ? height !== lastSize.height
-                                   : heightModel.constrained;
+                    : heightModel.constrained;
             }
 
             ownerContext.setHeight(height, dirty);
@@ -116,7 +116,7 @@ Ext.define('Ext.layout.component.Component', {
         }
     },
 
-    finishedLayout: function(ownerContext) {
+    finishedLayout: function (ownerContext) {
         var me = this,
             elementChildren = ownerContext.children,
             owner = me.owner,
@@ -139,7 +139,7 @@ Ext.define('Ext.layout.component.Component', {
 
         // Cache the currently layed out size
         me.lastComponentSize = owner.el.lastBox = props = ownerContext.props;
-        
+
         // lastBox is a copy of the defined props to allow save/restore of these (panel
         // collapse needs this)
         lastBox = owner.lastBox || (owner.lastBox = {});
@@ -148,16 +148,16 @@ Ext.define('Ext.layout.component.Component', {
         lastBox.width = props.width;
         lastBox.height = props.height;
         lastBox.invalid = false;
-        
+
         me.callParent([ownerContext]);
     },
-    
-    notifyOwner: function(ownerContext) {
+
+    notifyOwner: function (ownerContext) {
         var me = this,
             currentSize = me.lastComponentSize,
             prevSize = ownerContext.previousSize;
 
-        me.owner.afterComponentLayout(currentSize.width, currentSize.height, 
+        me.owner.afterComponentLayout(currentSize.width, currentSize.height,
             prevSize ? prevSize.width : undefined, prevSize ? prevSize.height : undefined);
     },
 
@@ -165,7 +165,7 @@ Ext.define('Ext.layout.component.Component', {
      * Returns the owner component's resize element.
      * @return {Ext.dom.Element}
      */
-    getTarget : function() {
+    getTarget: function () {
         return this.owner.el;
     },
 
@@ -175,11 +175,11 @@ Ext.define('Ext.layout.component.Component', {
      * May be overridden in Component layout managers which implement an inner element.
      * @return {Ext.dom.Element}
      */
-    getRenderTarget : function() {
+    getRenderTarget: function () {
         return this.owner.el;
     },
 
-    cacheTargetInfo: function(ownerContext) {
+    cacheTargetInfo: function (ownerContext) {
         var me = this,
             targetInfo = me.targetInfo,
             target;
@@ -379,7 +379,7 @@ Ext.define('Ext.layout.component.Component', {
                             // may have a better idea of how to do it even with no items:
                             temp = containerLayout.measureContentHeight(ownerContext);
                         } else {
-                           if (target.cacheHeight) {
+                            if (target.cacheHeight) {
                                 // if all instances of a given xtype/UI are the same size, only read the DOM once
                                 // to measure the first instance.  Thereafter, retrieve the height from the cache.
                                 key = target.xtype + '-' + target.ui;

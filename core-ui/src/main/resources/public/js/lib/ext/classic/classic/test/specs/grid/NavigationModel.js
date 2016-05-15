@@ -1,5 +1,5 @@
-describe('Ext.grid.NavigationModel', function() {
-    
+describe('Ext.grid.NavigationModel', function () {
+
     // Expect that a row and column are focused.
     // Column index is overall across a locked pair.
     function expectPosition(rowIdx, colIdx) {
@@ -128,25 +128,25 @@ describe('Ext.grid.NavigationModel', function() {
     var proto = Ext.view.Table.prototype,
         grid, colRef, store, view, selModel, navModel;
 
-    afterEach(function(){
+    afterEach(function () {
         Ext.destroy(grid);
         grid = null;
         view = null;
         selModel = null;
     });
 
-    describe('Re-entering grid after sorting', function() {
-        it('should scroll last focused row into view on sort', function() {
+    describe('Re-entering grid after sorting', function () {
+        it('should scroll last focused row into view on sort', function () {
             makeGrid(null, 500);
             var startPos = new Ext.grid.CellContext(view).setPosition(9, 4);
 
             navModel.setPosition(9, 4);
 
-            waitsFor(function() {
-                return navModel.lastFocused  && navModel.lastFocused.isEqual(startPos);
+            waitsFor(function () {
+                return navModel.lastFocused && navModel.lastFocused.isEqual(startPos);
             });
 
-            runs(function() {
+            runs(function () {
                 colRef[4].el.dom.focus();
 
                 // Sort ascending
@@ -164,8 +164,8 @@ describe('Ext.grid.NavigationModel', function() {
         });
     });
 
-    describe('reacting to programmatic focus', function() {
-        it('should set the position correctly', function() {
+    describe('reacting to programmatic focus', function () {
+        it('should set the position correctly', function () {
             makeGrid(null, 500);
             var focusContext = new Ext.grid.CellContext(view).setPosition(0, 0),
                 newCell;
@@ -174,12 +174,12 @@ describe('Ext.grid.NavigationModel', function() {
             view.focus();
 
             // Wait until the NavigationModel has processed the onFocusEnter, and synched its position
-            waitsFor(function() {
+            waitsFor(function () {
                 return view.getNavigationModel().getPosition().isEqual(focusContext) && Ext.Element.getActiveElement() === focusContext.getCell(true);
             }, 'for position(0,0) to be focuised');
 
 
-            runs(function() {
+            runs(function () {
                 focusContext = new Ext.grid.CellContext(view).setPosition(2, 2);
                 newCell = focusContext.getCell(true);
 
@@ -188,165 +188,165 @@ describe('Ext.grid.NavigationModel', function() {
             });
 
             // Wait until the NavigationModel is synched up.
-            waitsFor(function() {
+            waitsFor(function () {
                 return view.getNavigationModel().getPosition().isEqual(focusContext) && Ext.Element.getActiveElement() === newCell;
             }, 'for cell (2,2) to be focused');
         });
     });
-    
-    describe('navigation in a locking grid', function() {
-        it('should wrap and navigate from side to side seamlessly', function() {
+
+    describe('navigation in a locking grid', function () {
+        it('should wrap and navigate from side to side seamlessly', function () {
             makeGrid(4, 100, null, null, true);
 
             navModel.setPosition(new Ext.grid.CellContext(grid.lockedGrid.view).setPosition(0, 0));
             expectPosition(0, 0);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(0, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(0, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(0, 3);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(1, 0);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(1, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(1, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(1, 3);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(2, 0);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(2, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(2, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(2, 3);
 
             // Now do left arrow until we get back to 0, 0
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(2, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(2, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(2, 0);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(1, 3);
 
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(1, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(1, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(1, 0);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(0, 3);
 
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(0, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(0, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(0, 0);
         });
     });
-    
-    describe('navigation in a non-locking grid', function() {
-        it('should wrap and navigate correctly', function() {
+
+    describe('navigation in a non-locking grid', function () {
+        it('should wrap and navigate correctly', function () {
             makeGrid(4, 100);
 
             navModel.setPosition(new Ext.grid.CellContext(grid.view).setPosition(0, 0));
             expectPosition(0, 0);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(0, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(0, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(0, 3);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(1, 0);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(1, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(1, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(1, 3);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(2, 0);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(2, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(2, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.RIGHT);
             expectPosition(2, 3);
 
             // Now do left arrow until we get back to 0, 0
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(2, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(2, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(2, 0);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(1, 3);
 
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(1, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(1, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(1, 0);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(0, 3);
 
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(0, 2);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(0, 1);
-            
+
             jasmine.fireKeyEvent(navModel.cell, 'keydown', Ext.event.Event.LEFT);
             expectPosition(0, 0);
         });
     });
 
-    describe('With widget column', function() {
+    describe('With widget column', function () {
         var People = Ext.define(null, {
                 extend: 'Ext.data.Model',
                 idProperty: 'peopleId',
@@ -386,7 +386,7 @@ describe('Ext.grid.NavigationModel', function() {
                     flex: 1,
                     dataIndex: 'name'
                 }, {
-                    id : 'locId',
+                    id: 'locId',
                     text: 'Location',
                     width: 160,
                     dataIndex: 'location',
@@ -396,19 +396,19 @@ describe('Ext.grid.NavigationModel', function() {
                         xtype: 'button',
                         itemId: 'projButton',
                         listeners: {
-                            click: function(button) {
+                            click: function (button) {
                                 pos = grid.getSelectionModel().getPosition();
                             }
                         }
                     }
                 }, {
-                    xtype : 'widgetcolumn',
+                    xtype: 'widgetcolumn',
                     header: 'Age',
-                    width : 80,
+                    width: 80,
                     dataIndex: 'age',
-                    stopSelection : true,
-                    widget : {
-                            xtype : 'numberfield'
+                    stopSelection: true,
+                    widget: {
+                        xtype: 'numberfield'
                     }
                 }]
             }, gridCfg));
@@ -416,19 +416,19 @@ describe('Ext.grid.NavigationModel', function() {
             widgetColumn = grid.down('widgetcolumn');
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             createGrid();
         });
-        afterEach(function() {
+        afterEach(function () {
             grid.destroy();
         });
-        it('should select when clicking a widget is stopSelection is false', function() {
+        it('should select when clicking a widget is stopSelection is false', function () {
             var row0Button = widgetColumn.getWidget(store.getAt(0));
-            
+
             jasmine.fireMouseEvent(row0Button.el, 'click');
 
             // The selection must get set
-            waitsFor(function() {
+            waitsFor(function () {
                 return !!pos;
             });
         });

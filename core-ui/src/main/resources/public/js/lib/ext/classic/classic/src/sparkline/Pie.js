@@ -16,27 +16,27 @@ Ext.define('Ext.sparkline.Pie', {
          * @cfg {Number} [offset] Angle in degrees to offset the first slice.
          */
         offset: 0,
-        
+
         /**
          * @cfg {String[]} [sliceColors] An array of CSS colro values to apply to the chart slices.
          */
         sliceColors: ['#3366cc', '#dc3912', '#ff9900', '#109618', '#66aa00', '#dd4477', '#0099c6', '#990099'],
-        
+
         /**
          * @cfg {Number} [borderWidth=0] Border width in pixels of line round slices.
          */
         borderWidth: 0,
-        
+
         /**
          * @cfg {String} [borderColor=#000] Border color of line round slices.
          */
         borderColor: '#000',
-        
+
         tipTpl: new Ext.XTemplate('&#9679; {value} ({percent:number("0.0")}%)')
     },
 
     // Ensure values is an array of numbers
-    applyValues: function(newValues) {
+    applyValues: function (newValues) {
         newValues = Ext.Array.map(Ext.Array.from(newValues), Number);
         this.disabled = !(newValues && newValues.length);
         return newValues;
@@ -61,13 +61,13 @@ Ext.define('Ext.sparkline.Pie', {
         me.radius = Math.floor(Math.min(me.getWidth(), me.getHeight()) / 2);
     },
 
-    getRegion: function(x, y) {
+    getRegion: function (x, y) {
         var ratio = window.devicePixelRatio || 1,
             shapeid = this.canvas.getShapeAt(x * ratio, y * ratio);
         return (shapeid != null && this.shapes[shapeid] != null) ? this.shapes[shapeid] : null;
     },
 
-    getRegionFields: function(region) {
+    getRegionFields: function (region) {
         var sliceColors = this.getSliceColors();
 
         return {
@@ -79,11 +79,11 @@ Ext.define('Ext.sparkline.Pie', {
         };
     },
 
-    renderHighlight: function(region) {
+    renderHighlight: function (region) {
         this.renderSlice(region, true).append();
     },
 
-    renderSlice: function(valuenum, highlight) {
+    renderSlice: function (valuenum, highlight) {
         var me = this,
             canvas = me.canvas,
             radius = me.radius,
@@ -92,7 +92,7 @@ Ext.define('Ext.sparkline.Pie', {
             circle = 2 * Math.PI,
             values = me.values,
             total = me.total,
-            next = offset ? (2*Math.PI)*(offset/360) : 0,
+            next = offset ? (2 * Math.PI) * (offset / 360) : 0,
             start, end, i, vlen, color,
             sliceColors = this.getSliceColors();
 

@@ -3,9 +3,9 @@
  * @private
  */
 Ext.define('Ext.ux.colorpick.SliderAlpha', {
-    extend : 'Ext.ux.colorpick.Slider',
-    alias  : 'widget.colorpickerslideralpha',
-    cls    : Ext.baseCSSPrefix + 'colorpicker-alpha',
+    extend: 'Ext.ux.colorpick.Slider',
+    alias: 'widget.colorpickerslideralpha',
+    cls: Ext.baseCSSPrefix + 'colorpicker-alpha',
 
     requires: [
         'Ext.XTemplate'
@@ -13,20 +13,20 @@ Ext.define('Ext.ux.colorpick.SliderAlpha', {
 
     gradientStyleTpl: Ext.create('Ext.XTemplate',
         Ext.isIE && Ext.ieVersion < 10
-        ? 'filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=\'#FF{hex}\', endColorstr=\'#00{hex}\');' /* IE6-9 */
-        : 'background: -mox-linear-gradient(top, rgba({r}, {g}, {b}, 1) 0%, rgba({r}, {g}, {b}, 0) 100%);' +   /* FF3.6+ */
-          'background: -webkit-linear-gradient(top,rgba({r}, {g}, {b}, 1) 0%, rgba({r}, {g}, {b}, 0) 100%);' + /* Chrome10+,Safari5.1+ */
-          'background: -o-linear-gradient(top, rgba({r}, {g}, {b}, 1) 0%, rgba({r}, {g}, {b}, 0) 100%);' +      /* Opera 11.10+ */
-          'background: -ms-linear-gradient(top, rgba({r}, {g}, {b}, 1) 0%, rgba({r}, {g}, {b}, 0) 100%);' +     /* IE10+ */
-          'background: linear-gradient(to bottom, rgba({r}, {g}, {b}, 1) 0%, rgba({r}, {g}, {b}, 0) 100%);'     /* W3C */
+            ? 'filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=\'#FF{hex}\', endColorstr=\'#00{hex}\');' /* IE6-9 */
+            : 'background: -mox-linear-gradient(top, rgba({r}, {g}, {b}, 1) 0%, rgba({r}, {g}, {b}, 0) 100%);' + /* FF3.6+ */
+        'background: -webkit-linear-gradient(top,rgba({r}, {g}, {b}, 1) 0%, rgba({r}, {g}, {b}, 0) 100%);' + /* Chrome10+,Safari5.1+ */
+        'background: -o-linear-gradient(top, rgba({r}, {g}, {b}, 1) 0%, rgba({r}, {g}, {b}, 0) 100%);' + /* Opera 11.10+ */
+        'background: -ms-linear-gradient(top, rgba({r}, {g}, {b}, 1) 0%, rgba({r}, {g}, {b}, 0) 100%);' + /* IE10+ */
+        'background: linear-gradient(to bottom, rgba({r}, {g}, {b}, 1) 0%, rgba({r}, {g}, {b}, 0) 100%);'     /* W3C */
     ),
 
     // Called via data binding whenever selectedColor.a changes; param is 0-100
     setAlpha: function (value) {
-        var me              = this,
-            container       = me.getDragContainer(),
-            dragHandle      = me.getDragHandle(),
-            containerEl     = container.getEl(),
+        var me = this,
+            container = me.getDragContainer(),
+            dragHandle = me.getDragHandle(),
+            containerEl = container.getEl(),
             containerHeight = containerEl.getHeight(),
             el, top;
 
@@ -51,7 +51,7 @@ Ext.define('Ext.ux.colorpick.SliderAlpha', {
     },
 
     // Called via data binding whenever selectedColor.h changes; hue param is 0-1
-    setColor: function(color) {
+    setColor: function (color) {
         var me = this,
             container = me.getDragContainer(),
             hex, el;

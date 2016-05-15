@@ -10,9 +10,9 @@ Ext.define('Ext.layout.container.ColumnSplitter', {
 
     isSplitter: true,
 
-    synthetic  : true,
+    synthetic: true,
 
-    cls : Ext.baseCSSPrefix + 'splitter-vertical',
+    cls: Ext.baseCSSPrefix + 'splitter-vertical',
 
     orientation: 'vertical',
 

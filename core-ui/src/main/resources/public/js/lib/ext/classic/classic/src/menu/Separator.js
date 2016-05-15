@@ -23,7 +23,7 @@
 Ext.define('Ext.menu.Separator', {
     extend: 'Ext.menu.Item',
     alias: 'widget.menuseparator',
-    
+
     focusable: false,
 
     /**
@@ -115,10 +115,10 @@ Ext.define('Ext.menu.Separator', {
      * @private
      */
     text: '&#160;',
-    
+
     ariaRole: 'separator',
 
-    beforeRender: function() {
+    beforeRender: function () {
         this.addCls(this.separatorCls);
         this.callParent();
     }

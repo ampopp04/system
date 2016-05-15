@@ -1,24 +1,24 @@
-describe("Ext.form.field.Text", function() {
+describe("Ext.form.field.Text", function () {
     var component;
-    
+
     function makeComponent(config) {
         config = config || {};
-        
+
         if (!config.name) {
             config.name = 'test';
         }
-        
+
         return component = new Ext.form.field.Text(config);
     }
 
-    function render (parent) {
+    function render(parent) {
         component.render(parent || Ext.getBody());
     }
-    
+
     function expectAria(attr, value) {
         jasmine.expectAriaAttr(component, attr, value);
     }
-    
+
     function createField(config) {
         config = Ext.apply({
             name: 'fieldName',
@@ -27,122 +27,122 @@ describe("Ext.form.field.Text", function() {
             size: 12,
             renderTo: Ext.getBody()
         }, config);
-        
+
         // Suppress console warning about 'size' config being deprecated
         spyOn(Ext.log, 'warn');
-                
+
         return makeComponent(config);
     }
 
-    afterEach(function() {
+    afterEach(function () {
         if (component) {
             component.destroy();
             component = null;
         }
     });
 
-    it("should be registered as 'textfield' xtype", function() {
+    it("should be registered as 'textfield' xtype", function () {
         component = Ext.create("Ext.form.field.Text", {name: 'test'});
         expect(component instanceof Ext.form.field.Text).toBe(true);
         expect(Ext.getClass(component).xtype).toBe("textfield");
     });
 
-    describe("defaults", function() {
-        beforeEach(function() {
+    describe("defaults", function () {
+        beforeEach(function () {
             makeComponent();
         });
 
-        it("should have inputType = 'text'", function() {
+        it("should have inputType = 'text'", function () {
             expect(component.inputType).toBe('text');
         });
-        it("should have vtypeText = undefined", function() {
+        it("should have vtypeText = undefined", function () {
             expect(component.vtypeText).not.toBeDefined();
         });
-        it("should have stripCharsRe = undefined", function() {
+        it("should have stripCharsRe = undefined", function () {
             expect(component.stripCharsRe).not.toBeDefined();
         });
-        it("should have grow = falsy", function() {
+        it("should have grow = falsy", function () {
             expect(component.grow).toBeFalsy();
         });
-        it("should have growMin = 30", function() {
+        it("should have growMin = 30", function () {
             expect(component.growMin).toBe(30);
         });
-        it("should have growMax = 800", function() {
+        it("should have growMax = 800", function () {
             expect(component.growMax).toBe(800);
         });
-        it("should have vtype = undefined", function() {
+        it("should have vtype = undefined", function () {
             expect(component.vtype).not.toBeDefined();
         });
-        it("should have maskRe = undefined", function() {
+        it("should have maskRe = undefined", function () {
             expect(component.maskRe).not.toBeDefined();
         });
-        it("should have disableKeyFilter = falsy", function() {
+        it("should have disableKeyFilter = falsy", function () {
             expect(component.disableKeyFilter).toBeFalsy();
         });
-        it("should have allowBlank = true", function() {
+        it("should have allowBlank = true", function () {
             expect(component.allowBlank).toBe(true);
         });
-        it("should have minLength = 0", function() {
+        it("should have minLength = 0", function () {
             expect(component.minLength).toBe(0);
         });
-        it("should have maxLength = MAX_VALUE", function() {
+        it("should have maxLength = MAX_VALUE", function () {
             expect(component.maxLength).toBe(Number.MAX_VALUE);
         });
-        it("should have enforceMaxLength = falsy", function() {
+        it("should have enforceMaxLength = falsy", function () {
             expect(component.enforceMaxLength).toBeFalsy();
         });
-        it("should have minLengthText = 'The minimum length for this field is {0}'", function() {
+        it("should have minLengthText = 'The minimum length for this field is {0}'", function () {
             expect(component.minLengthText).toBe('The minimum length for this field is {0}');
         });
-        it("should have maxLengthText = 'The maximum length for this field is {0}'", function() {
+        it("should have maxLengthText = 'The maximum length for this field is {0}'", function () {
             expect(component.maxLengthText).toBe('The maximum length for this field is {0}');
         });
-        it("should have selectOnFocus = falsy", function() {
+        it("should have selectOnFocus = falsy", function () {
             expect(component.selectOnFocus).toBeFalsy();
         });
-        it("should have blankText = 'This field is required'", function() {
+        it("should have blankText = 'This field is required'", function () {
             expect(component.blankText).toBe('This field is required');
         });
-        it("should have validator = undefined", function() {
+        it("should have validator = undefined", function () {
             expect(component.vtypeText).not.toBeDefined();
         });
-        it("should have regex = undefined", function() {
+        it("should have regex = undefined", function () {
             expect(component.regex).not.toBeDefined();
         });
-        it("should have regexText = ''", function() {
+        it("should have regexText = ''", function () {
             expect(component.regexText).toBe('');
         });
-        it("should have emptyText = ''", function() {
+        it("should have emptyText = ''", function () {
             expect(component.emptyText).toBe('');
         });
-        it("should have emptyCls = 'x-form-empty-field'", function() {
+        it("should have emptyCls = 'x-form-empty-field'", function () {
             expect(component.emptyCls).toBe('x-form-empty-field');
         });
-        it("should have enableKeyEvents = falsy", function() {
+        it("should have enableKeyEvents = falsy", function () {
             expect(component.enableKeyEvents).toBeFalsy();
         });
     });
 
-    it("should encode the input value in the template", function(){
+    it("should encode the input value in the template", function () {
         makeComponent({
             renderTo: Ext.getBody(),
             value: 'test "  <br/> test'
         });
         expect(component.inputEl.dom.value).toBe('test "  <br/> test');
     });
-    
-    it("should be able to set a numeric value", function(){
+
+    it("should be able to set a numeric value", function () {
         makeComponent({
             renderTo: Ext.getBody()
-        });    
+        });
         component.setValue(100);
         expect(component.getValue()).toBe('100');
     });
 
-    describe("rendering", function() {
+    describe("rendering", function () {
         // NOTE this doesn't yet test the main label, error icon, etc. just the parts specific to Text.
         describe('should work', function () {
-            beforeEach(function() {
+            beforeEach(function () {
                 createField({
                     afterSubTpl: ['<h1 id="{id}-afterSubEl" data-ref="afterSubEl">afterSubTpl</h1>'],
                     childEls: ['afterSubEl']
@@ -158,74 +158,74 @@ describe("Ext.form.field.Text", function() {
                 });
             });
 
-            describe("bodyEl", function() {
-                it("should have the class 'x-form-item-body'", function() {
+            describe("bodyEl", function () {
+                it("should have the class 'x-form-item-body'", function () {
                     expect(component.bodyEl.hasCls('x-form-item-body')).toBe(true);
                 });
 
-                it("should have the id '[id]-bodyEl'", function() {
+                it("should have the id '[id]-bodyEl'", function () {
                     expect(component.bodyEl.dom.id).toEqual(component.id + '-bodyEl');
                 });
             });
 
-            describe("inputEl", function() {
-                it("should be an input element", function() {
+            describe("inputEl", function () {
+                it("should be an input element", function () {
                     expect(component.inputEl.dom.tagName.toLowerCase()).toEqual('input');
                 });
 
-                it("should have type = the inputType config of the element", function() {
+                it("should have type = the inputType config of the element", function () {
                     expect(component.inputEl.dom.type).toEqual(component.inputType);
                 });
 
-                it("should have the component's inputId as its id", function() {
+                it("should have the component's inputId as its id", function () {
                     expect(component.inputEl.dom.id).toEqual(component.inputId);
                 });
 
-                it("should be cached by its dom id", function() {
+                it("should be cached by its dom id", function () {
                     expect(Ext.cache[component.inputEl.dom.id]).not.toBe(undefined);
                 });
 
-                it("should be cached by its component inputId", function() {
+                it("should be cached by its component inputId", function () {
                     expect(Ext.cache[component.inputId]).not.toBe(undefined);
                 });
 
-                it("should have the 'fieldCls' config as a class", function() {
+                it("should have the 'fieldCls' config as a class", function () {
                     expect(component.inputEl.hasCls(component.fieldCls)).toBe(true);
                 });
 
-                it("should have a class of 'x-form-[inputType]'", function() {
+                it("should have a class of 'x-form-[inputType]'", function () {
                     expect(component.inputEl.hasCls('x-form-' + component.inputType)).toBe(true);
                 });
 
-                it("should have its name set to the 'name' config", function() {
+                it("should have its name set to the 'name' config", function () {
                     expect(component.inputEl.dom.name).toEqual('fieldName');
                 });
 
-                it("should have its value set to the 'value' config", function() {
+                it("should have its value set to the 'value' config", function () {
                     expect(component.inputEl.dom.value).toEqual('fieldValue');
                 });
 
-                it("should have autocomplete = 'off'", function() {
+                it("should have autocomplete = 'off'", function () {
                     expect(component.inputEl.dom.getAttribute('autocomplete')).toEqual('off');
                 });
 
-                it("should have tabindex set to the tabIndex config", function() {
+                it("should have tabindex set to the tabIndex config", function () {
                     expect('' + component.inputEl.dom.getAttribute("tabIndex")).toEqual('5');
                 });
 
-                it("should set the size attribute", function() {
+                it("should set the size attribute", function () {
                     expect(+component.inputEl.dom.getAttribute("size")).toEqual(1);
                 });
             });
-            
-            describe("ariaEl", function() {
-                it("should be inputEl", function() {
+
+            describe("ariaEl", function () {
+                it("should be inputEl", function () {
                     expect(component.ariaEl).toBe(component.inputEl);
                 });
             });
 
-            xdescribe("sizing", function(){
-                it("should have the size property affect size when shrink wrapping", function(){
+            xdescribe("sizing", function () {
+                it("should have the size property affect size when shrink wrapping", function () {
                     var width = component.getWidth();
                     component.destroy();
                     makeComponent({
@@ -241,7 +241,7 @@ describe("Ext.form.field.Text", function() {
                     expect(component.getWidth()).toBeLessThan(width);
                 });
 
-                it("should give preference to a calculated/configured width", function(){
+                it("should give preference to a calculated/configured width", function () {
                     component.destroy();
                     makeComponent({
                         size: 12,
@@ -252,107 +252,107 @@ describe("Ext.form.field.Text", function() {
                 });
             });
         });
-        
+
         // Text fields are extremely important so we're duplicating
         // the Base tests here
-        describe("ARIA attributes", function() {
-            describe("in general", function() {
-                it("should not render when !ariaRole", function() {
-                    createField({ ariaRole: undefined });
-                    
+        describe("ARIA attributes", function () {
+            describe("in general", function () {
+                it("should not render when !ariaRole", function () {
+                    createField({ariaRole: undefined});
+
                     expect(component.ariaEl.dom.hasAttribute('role')).toBe(false);
                 });
-                
-                it("should render when ariaRole is defined", function() {
+
+                it("should render when ariaRole is defined", function () {
                     createField();
-                    
+
                     expectAria('role', 'textbox');
                 });
             });
-            
-            describe("aria-hidden", function() {
-                it("should be false when visible", function() {
+
+            describe("aria-hidden", function () {
+                it("should be false when visible", function () {
                     createField();
-                    
+
                     expectAria('aria-hidden', 'false');
                 });
-                
-                it("should be true when hidden", function() {
-                    createField({ hidden: true });
-                    
+
+                it("should be true when hidden", function () {
+                    createField({hidden: true});
+
                     expectAria('aria-hidden', 'true');
                 });
             });
-            
-            describe("aria-disabled", function() {
-                it("should be false when enabled", function() {
+
+            describe("aria-disabled", function () {
+                it("should be false when enabled", function () {
                     createField();
-                    
+
                     expectAria('aria-disabled', 'false');
                 });
-                
-                it("should be true when disabled", function() {
-                    createField({ disabled: true });
-                    
+
+                it("should be true when disabled", function () {
+                    createField({disabled: true});
+
                     expectAria('aria-disabled', 'true');
                 });
             });
-            
-            describe("aria-readonly", function() {
-                it("should be false by default", function() {
+
+            describe("aria-readonly", function () {
+                it("should be false by default", function () {
                     createField();
-                    
+
                     expectAria('aria-readonly', 'false');
                 });
-                
-                it("should be true when readOnly", function() {
-                    createField({ readOnly: true });
-                    
+
+                it("should be true when readOnly", function () {
+                    createField({readOnly: true});
+
                     expectAria('aria-readonly', 'true');
                 });
             });
-            
-            describe("aria-invalid", function() {
-                it("should be false by default", function() {
+
+            describe("aria-invalid", function () {
+                it("should be false by default", function () {
                     createField();
-                    
+
                     expectAria('aria-invalid', 'false');
                 });
             });
-            
-            describe("aria-label", function() {
-                it("should not exist by default", function() {
+
+            describe("aria-label", function () {
+                it("should not exist by default", function () {
                     createField();
-                    
+
                     expectAria('aria-label', null);
                 });
-                
-                it("should be rendered when set", function() {
-                    createField({ ariaLabel: 'foo' });
-                    
+
+                it("should be rendered when set", function () {
+                    createField({ariaLabel: 'foo'});
+
                     expectAria('aria-label', 'foo');
                 });
             });
-            
-            describe("title", function() {
-                it("should be set to formatText", function() {
+
+            describe("title", function () {
+                it("should be set to formatText", function () {
                     createField({
                         format: 'foo',
                         formatText: '{0} bar'
                     });
-                    
+
                     expectAria('title', 'foo bar');
                 });
             });
-            
-            describe("via config", function() {
-                it("should set aria-foo", function() {
+
+            describe("via config", function () {
+                it("should set aria-foo", function () {
                     createField({
                         ariaAttributes: {
                             'aria-foo': 'bar'
                         }
                     });
-                    
+
                     expectAria('aria-foo', 'bar');
                 });
             });
@@ -412,10 +412,10 @@ describe("Ext.form.field.Text", function() {
         });
     });
 
-    describe("readOnly", function() {
-        describe("readOnly config", function() {
-            describe("readOnly: true", function() {
-                it("should set the readOnly on the inputEl", function() {
+    describe("readOnly", function () {
+        describe("readOnly config", function () {
+            describe("readOnly: true", function () {
+                it("should set the readOnly on the inputEl", function () {
                     makeComponent({
                         readOnly: true,
                         renderTo: Ext.getBody()
@@ -423,7 +423,7 @@ describe("Ext.form.field.Text", function() {
                     expect(component.inputEl.dom.readOnly).toBe(true);
                 });
 
-                it("should have triggers hidden", function() {
+                it("should have triggers hidden", function () {
                     makeComponent({
                         readOnly: true,
                         triggers: {
@@ -436,7 +436,7 @@ describe("Ext.form.field.Text", function() {
                     expect(component.getTrigger('bar').hidden).toBe(true);
                 });
 
-                it("should not fire the writeablechange event", function() {
+                it("should not fire the writeablechange event", function () {
                     var spy = jasmine.createSpy();
                     makeComponent({
                         readOnly: true,
@@ -447,16 +447,16 @@ describe("Ext.form.field.Text", function() {
                     });
                     expect(spy).not.toHaveBeenCalled();
                 });
-                
-                it("should set aria-readonly to true", function() {
-                    createField({ readOnly: true });
-                    
+
+                it("should set aria-readonly to true", function () {
+                    createField({readOnly: true});
+
                     expectAria('aria-readonly', 'true');
                 });
             });
 
-            describe("readOnly: false", function() {
-                it("should not set the readOnly on the inputEl", function() {
+            describe("readOnly: false", function () {
+                it("should not set the readOnly on the inputEl", function () {
                     makeComponent({
                         readOnly: false,
                         renderTo: Ext.getBody()
@@ -464,7 +464,7 @@ describe("Ext.form.field.Text", function() {
                     expect(component.inputEl.dom.readOnly).toBe(false);
                 });
 
-                it("should have triggers visible", function() {
+                it("should have triggers visible", function () {
                     makeComponent({
                         readOnly: false,
                         triggers: {
@@ -477,7 +477,7 @@ describe("Ext.form.field.Text", function() {
                     expect(component.getTrigger('bar').hidden).toBe(false);
                 });
 
-                it("should not fire the writeablechange event", function() {
+                it("should not fire the writeablechange event", function () {
                     var spy = jasmine.createSpy();
                     makeComponent({
                         readOnly: false,
@@ -488,26 +488,26 @@ describe("Ext.form.field.Text", function() {
                     });
                     expect(spy).not.toHaveBeenCalled();
                 });
-                
-                it("should set aria-readonly to false", function() {
-                    createField({ readOnly: false });
-                    
+
+                it("should set aria-readonly to false", function () {
+                    createField({readOnly: false});
+
                     expectAria('aria-readonly', 'false');
                 });
             });
         });
 
-        describe("setReadOnly method", function() {
-            describe("before render", function() {
-                describe("readOnly: true", function() {
-                    it("should set readOnly on the inputEl when rendered", function() {
+        describe("setReadOnly method", function () {
+            describe("before render", function () {
+                describe("readOnly: true", function () {
+                    it("should set readOnly on the inputEl when rendered", function () {
                         makeComponent();
                         component.setReadOnly(true);
                         component.render(Ext.getBody());
                         expect(component.inputEl.dom.readOnly).toBe(true);
                     });
 
-                    it("should hide triggers when rendered", function() {
+                    it("should hide triggers when rendered", function () {
                         makeComponent({
                             triggers: {
                                 foo: {},
@@ -520,7 +520,7 @@ describe("Ext.form.field.Text", function() {
                         expect(component.getTrigger('bar').hidden).toBe(true);
                     });
 
-                    it("should fire the writeablechange event", function() {
+                    it("should fire the writeablechange event", function () {
                         var spy = jasmine.createSpy();
                         makeComponent();
                         component.on('writeablechange', spy);
@@ -529,18 +529,18 @@ describe("Ext.form.field.Text", function() {
                         expect(spy.mostRecentCall.args[0]).toBe(component);
                         expect(spy.mostRecentCall.args[1]).toBe(true);
                     });
-                    
-                    it("should set aria-readonly to true", function() {
+
+                    it("should set aria-readonly to true", function () {
                         makeComponent();
                         component.setReadOnly(true);
                         component.render(Ext.getBody());
-                        
+
                         expectAria('aria-readonly', 'true');
                     });
                 });
 
-                describe("readOnly: false", function() {
-                    it("should not set readOnly on the inputEl when rendered", function() {
+                describe("readOnly: false", function () {
+                    it("should not set readOnly on the inputEl when rendered", function () {
                         makeComponent({
                             readOnly: true
                         });
@@ -549,7 +549,7 @@ describe("Ext.form.field.Text", function() {
                         expect(component.inputEl.dom.readOnly).toBe(false);
                     });
 
-                    it("should not hide triggers when rendered", function() {
+                    it("should not hide triggers when rendered", function () {
                         makeComponent({
                             readOnly: true,
                             triggers: {
@@ -563,7 +563,7 @@ describe("Ext.form.field.Text", function() {
                         expect(component.getTrigger('bar').hidden).toBe(false);
                     });
 
-                    it("should fire the writeablechange event", function() {
+                    it("should fire the writeablechange event", function () {
                         var spy = jasmine.createSpy();
                         makeComponent({
                             readOnly: true
@@ -574,20 +574,20 @@ describe("Ext.form.field.Text", function() {
                         expect(spy.mostRecentCall.args[0]).toBe(component);
                         expect(spy.mostRecentCall.args[1]).toBe(false);
                     });
-                    
-                    it("should set aria-readonly to false", function() {
-                        makeComponent({ readOnly: true });
+
+                    it("should set aria-readonly to false", function () {
+                        makeComponent({readOnly: true});
                         component.setReadOnly(false);
                         component.render(Ext.getBody());
-                        
+
                         expectAria('aria-readonly', 'false');
                     });
                 });
             });
 
-            describe("after render", function() {
-                describe("readOnly: true", function() {
-                    it("should set readOnly on the inputEl", function() {
+            describe("after render", function () {
+                describe("readOnly: true", function () {
+                    it("should set readOnly on the inputEl", function () {
                         makeComponent({
                             renderTo: Ext.getBody()
                         });
@@ -595,7 +595,7 @@ describe("Ext.form.field.Text", function() {
                         expect(component.inputEl.dom.readOnly).toBe(true);
                     });
 
-                    it("should hide triggers when rendered", function() {
+                    it("should hide triggers when rendered", function () {
                         makeComponent({
                             renderTo: Ext.getBody(),
                             triggers: {
@@ -608,7 +608,7 @@ describe("Ext.form.field.Text", function() {
                         expect(component.getTrigger('bar').hidden).toBe(true);
                     });
 
-                    it("should fire the writeablechange event", function() {
+                    it("should fire the writeablechange event", function () {
                         var spy = jasmine.createSpy();
                         makeComponent({
                             renderTo: Ext.getBody()
@@ -619,17 +619,17 @@ describe("Ext.form.field.Text", function() {
                         expect(spy.mostRecentCall.args[0]).toBe(component);
                         expect(spy.mostRecentCall.args[1]).toBe(true);
                     });
-                    
-                    it("should set aria-readonly to true", function() {
+
+                    it("should set aria-readonly to true", function () {
                         createField();
                         component.setReadOnly(true);
-                        
+
                         expectAria('aria-readonly', 'true');
                     });
                 });
 
-                describe("readOnly: false", function() {
-                    it("should not set readOnly on the inputEl when rendered", function() {
+                describe("readOnly: false", function () {
+                    it("should not set readOnly on the inputEl when rendered", function () {
                         makeComponent({
                             renderTo: Ext.getBody(),
                             readOnly: true
@@ -638,7 +638,7 @@ describe("Ext.form.field.Text", function() {
                         expect(component.inputEl.dom.readOnly).toBe(false);
                     });
 
-                    it("should not hide triggers when rendered", function() {
+                    it("should not hide triggers when rendered", function () {
                         makeComponent({
                             renderTo: Ext.getBody(),
                             readOnly: true,
@@ -652,7 +652,7 @@ describe("Ext.form.field.Text", function() {
                         expect(component.getTrigger('bar').hidden).toBe(false);
                     });
 
-                    it("should fire the writeablechange event", function() {
+                    it("should fire the writeablechange event", function () {
                         var spy = jasmine.createSpy();
                         makeComponent({
                             renderTo: Ext.getBody(),
@@ -664,11 +664,11 @@ describe("Ext.form.field.Text", function() {
                         expect(spy.mostRecentCall.args[0]).toBe(component);
                         expect(spy.mostRecentCall.args[1]).toBe(false);
                     });
-                    
-                    it("should set aria-readonly to false", function() {
-                        createField({ readOnly: true });
+
+                    it("should set aria-readonly to false", function () {
+                        createField({readOnly: true});
                         component.setReadOnly(false);
-                        
+
                         expectAria('aria-readonly', 'false');
                     });
                 });
@@ -697,12 +697,12 @@ describe("Ext.form.field.Text", function() {
         });
     });
 
-    describe("emptyText", function() {
+    describe("emptyText", function () {
         // NOTE emptyText is handled via the HTML5 'placeholder' attribute for those browsers which
         // support it, and the old modified-value method for other browsers, so the tests differ.
 
         if ('placeholder' in document.createElement('input')) { //ala Ext.supports.Placeholder
-            it("should set the input's placeholder attribute", function() {
+            it("should set the input's placeholder attribute", function () {
                 makeComponent({
                     emptyText: 'empty',
                     renderTo: Ext.getBody()
@@ -710,7 +710,7 @@ describe("Ext.form.field.Text", function() {
                 expect(component.inputEl.dom.placeholder).toEqual('empty');
             });
 
-            it("should be able to be added with setEmptyText", function() {
+            it("should be able to be added with setEmptyText", function () {
                 makeComponent({
                     renderTo: Ext.getBody()
                 });
@@ -719,9 +719,9 @@ describe("Ext.form.field.Text", function() {
                 expect(component.inputEl.dom.placeholder).toEqual('Foo');
             });
 
-            it("should be able to be removed with setEmptyText", function() {
+            it("should be able to be removed with setEmptyText", function () {
                 makeComponent({
-                    emptyText : 'Bar',
+                    emptyText: 'Bar',
                     renderTo: Ext.getBody()
                 });
                 component.setEmptyText('');
@@ -730,30 +730,30 @@ describe("Ext.form.field.Text", function() {
             });
         }
         else {
-            describe("when the value is empty", function() {
-                beforeEach(function() {
+            describe("when the value is empty", function () {
+                beforeEach(function () {
                     makeComponent({
                         emptyText: 'empty',
                         renderTo: Ext.getBody()
                     });
                 });
 
-                it("should set the input field's value to the emptyText", function() {
+                it("should set the input field's value to the emptyText", function () {
                     expect(component.inputEl.dom.value).toEqual('empty');
                 });
 
-                it("should add the emptyCls to the input element", function() {
+                it("should add the emptyCls to the input element", function () {
                     expect(component.inputEl.hasCls(component.emptyCls)).toBe(true);
                 });
 
-                it("should return empty string from the value getters", function() {
+                it("should return empty string from the value getters", function () {
                     expect(component.getValue()).toEqual('');
                     expect(component.getRawValue()).toEqual('');
                 });
             });
 
-            describe("when the value is not empty", function() {
-                beforeEach(function() {
+            describe("when the value is not empty", function () {
+                beforeEach(function () {
                     makeComponent({
                         emptyText: 'empty',
                         value: 'value',
@@ -761,22 +761,22 @@ describe("Ext.form.field.Text", function() {
                     });
                 });
 
-                it("should set the input field's value to the specified value", function() {
+                it("should set the input field's value to the specified value", function () {
                     expect(component.inputEl.dom.value).toEqual('value');
                 });
 
-                it("should remove the emptyCls from the input element", function() {
+                it("should remove the emptyCls from the input element", function () {
                     expect(component.inputEl.hasCls(component.emptyCls)).toBe(false);
                 });
 
-                it("should return the value from the value getters", function() {
+                it("should return the value from the value getters", function () {
                     expect(component.getValue()).toEqual('value');
                     expect(component.getRawValue()).toEqual('value');
                 });
             });
 
-            describe("when the value is equal to the placeholder/emptyText", function() {
-                beforeEach(function() {
+            describe("when the value is equal to the placeholder/emptyText", function () {
+                beforeEach(function () {
                     makeComponent({
                         emptyText: 'value',
                         value: 'value',
@@ -784,24 +784,24 @@ describe("Ext.form.field.Text", function() {
                     });
                 });
 
-                it("should set the input field's value to the specified value", function() {
+                it("should set the input field's value to the specified value", function () {
                     expect(component.inputEl.dom.value).toEqual('value');
                 });
 
-                it("should remove the emptyCls from the input element", function() {
+                it("should remove the emptyCls from the input element", function () {
                     expect(component.inputEl.hasCls(component.emptyCls)).toBe(false);
                 });
 
-                it("should return the value from the value getters", function() {
+                it("should return the value from the value getters", function () {
                     expect(component.getValue()).toEqual('value');
                     expect(component.getRawValue()).toEqual('value');
                 });
             });
 
-            describe("using setEmptyText", function() {
-                describe("when value is empty", function() {
+            describe("using setEmptyText", function () {
+                describe("when value is empty", function () {
 
-                    it("should be able to add empty text", function() {
+                    it("should be able to add empty text", function () {
                         makeComponent({
                             renderTo: Ext.getBody()
                         });
@@ -811,9 +811,9 @@ describe("Ext.form.field.Text", function() {
                         expect(component.inputEl).toHaveCls(component.emptyCls);
                     })
 
-                    it("should be able to remove empty text", function() {
-                         makeComponent({
-                            emptyText : 'Bar',
+                    it("should be able to remove empty text", function () {
+                        makeComponent({
+                            emptyText: 'Bar',
                             renderTo: Ext.getBody()
                         });
                         component.setEmptyText('');
@@ -824,11 +824,11 @@ describe("Ext.form.field.Text", function() {
 
                 });
 
-                describe("when value is not empty", function() {
+                describe("when value is not empty", function () {
 
-                    it("should be able to add empty text", function() {
+                    it("should be able to add empty text", function () {
                         makeComponent({
-                            value : 'value',
+                            value: 'value',
                             renderTo: Ext.getBody()
                         });
                         component.setEmptyText('Foo');
@@ -840,10 +840,10 @@ describe("Ext.form.field.Text", function() {
                         expect(component.inputEl.hasCls(component.emptyCls)).toBe(true);
                     })
 
-                    it("should be able to remove empty text", function() {
-                         makeComponent({
-                            emptyText : 'Bar',
-                            value : 'value',
+                    it("should be able to remove empty text", function () {
+                        makeComponent({
+                            emptyText: 'Bar',
+                            value: 'value',
                             renderTo: Ext.getBody()
                         });
                         component.setEmptyText();
@@ -863,192 +863,192 @@ describe("Ext.form.field.Text", function() {
         }
     });
 
-    
-    describe("validation", function(){
-        describe("minLength", function(){
-            it("should ignore minLength when allowBlank is set", function(){
+
+    describe("validation", function () {
+        describe("minLength", function () {
+            it("should ignore minLength when allowBlank is set", function () {
                 makeComponent({
                     minLength: 5,
                     allowBlank: true
                 });
                 expect(component.getErrors()).toEqual([]);
             });
-        
-            it("should have an error if the value is less than the minLength", function(){
+
+            it("should have an error if the value is less than the minLength", function () {
                 makeComponent({
                     minLength: 5,
                     allowBlank: false,
                     value: 'four'
-                });    
+                });
                 expect(component.getErrors()).toContain("The minimum length for this field is 5");
             });
-        
-            it("should not have an error if the value length exceeds minLength", function(){
+
+            it("should not have an error if the value length exceeds minLength", function () {
                 makeComponent({
                     minLength: 5,
                     allowBlank: false,
                     value: "more than 5"
-                });    
+                });
                 expect(component.getErrors()).toEqual([]);
-            });    
+            });
         });
-        
-        describe("maxLength", function(){
-            it("should have an error if the value is more than the maxLength", function(){
+
+        describe("maxLength", function () {
+            it("should have an error if the value is more than the maxLength", function () {
                 makeComponent({
                     maxLength: 5,
                     value: "more than 5"
-                });    
+                });
                 expect(component.getErrors()).toContain("The maximum length for this field is 5");
             });
-        
-            it("should not have an error if the value length is less than the maxLength", function(){
+
+            it("should not have an error if the value length is less than the maxLength", function () {
                 makeComponent({
                     maxLength: 5,
                     value: "foo"
-                });    
+                });
                 expect(component.getErrors()).toEqual([]);
             });
-            
-            it("should set the maxlength attribute when enforceMaxLength is used", function(){
+
+            it("should set the maxlength attribute when enforceMaxLength is used", function () {
                 makeComponent({
                     maxLength: 5,
                     enforceMaxLength: true,
                     renderTo: Ext.getBody()
-                });   
+                });
                 expect(component.inputEl.dom.maxLength).toEqual(5);
             });
-            
-            it("should ignore enforceMaxLength if the max is the default", function(){
+
+            it("should ignore enforceMaxLength if the max is the default", function () {
                 makeComponent({
                     enforceMaxLength: true,
                     renderTo: Ext.getBody()
                 });
-                
+
                 var dom = document.createElement('input'),
                     len;
-                    
+
                 dom.type = 'text';
                 len = dom.maxLength;
                 dom = null;
-                
+
                 // In some browsers, even if the maxLength is not set
                 // it still returns a numeric value
                 expect(component.inputEl.dom.maxLength).toEqual(len);
             })
         });
-        
-        describe("allowBlank", function(){
-            it("should have no errors if allowBlank is true and the field is empty", function(){
+
+        describe("allowBlank", function () {
+            it("should have no errors if allowBlank is true and the field is empty", function () {
                 makeComponent();
-                expect(component.getErrors()).toEqual([]);    
+                expect(component.getErrors()).toEqual([]);
             });
-            
-            it("should have no errors if allowBlank is false and the field is not empty", function(){
+
+            it("should have no errors if allowBlank is false and the field is not empty", function () {
                 makeComponent({
                     allowBlank: false,
                     value: "not empty"
                 });
-                expect(component.getErrors()).toEqual([]);    
+                expect(component.getErrors()).toEqual([]);
             });
-            
-            it("should have an error if allowBlank is false and the field is empty", function(){
+
+            it("should have an error if allowBlank is false and the field is empty", function () {
                 makeComponent({
                     allowBlank: false
-                });   
-                expect(component.getErrors()).toContain("This field is required");   
+                });
+                expect(component.getErrors()).toContain("This field is required");
             });
-            
-            it("should set allowBlank to false when using allowOnlyWhitespace: false", function(){
+
+            it("should set allowBlank to false when using allowOnlyWhitespace: false", function () {
                 makeComponent({
                     allowOnlyWhitespace: false
-                }); 
+                });
                 expect(component.allowBlank).toBe(false);
             });
-            
-            it("should not allow only whitespace when allowOnlyWhitespace: false", function(){
+
+            it("should not allow only whitespace when allowOnlyWhitespace: false", function () {
                 makeComponent({
                     allowOnlyWhitespace: false,
                     value: '     '
-                }); 
-                expect(component.getErrors()).toContain('This field is required');     
+                });
+                expect(component.getErrors()).toContain('This field is required');
             });
         });
-        
-        describe("regex", function(){
-            it("should have an error if the value doesn't match the regex", function(){
+
+        describe("regex", function () {
+            it("should have an error if the value doesn't match the regex", function () {
                 makeComponent({
                     value: "bar",
                     regex: /foo/,
                     regexText: "regex error"
                 });
                 expect(component.getErrors()).toContain("regex error");
-            }); 
-            
-            it("should not have an error if the value matches the regex", function(){
+            });
+
+            it("should not have an error if the value matches the regex", function () {
                 makeComponent({
                     regex: /foo/,
                     regexText: "foo"
                 });
                 expect(component.getErrors()).toEqual([]);
-            }); 
+            });
         });
-        
-        describe("validator", function(){
-            it("should have an error if the value doesn't match the validator", function(){
+
+        describe("validator", function () {
+            it("should have an error if the value doesn't match the validator", function () {
                 makeComponent({
                     allowBlank: false,
-                    validator: function(value){
+                    validator: function (value) {
                         return value == "foo" ? true : "error message";
                     },
-                    value: "bar"    
-                });  
+                    value: "bar"
+                });
                 expect(component.getErrors()).toContain("error message");
-            });  
-            
-            it("should not have an error if the value matches the validator", function(){
+            });
+
+            it("should not have an error if the value matches the validator", function () {
                 makeComponent({
                     allowBlank: false,
-                    validator: function(value){
+                    validator: function (value) {
                         return value == "foo" ? true : "error message";
                     },
-                    value: "foo"    
-                });  
+                    value: "foo"
+                });
                 expect(component.getErrors()).toEqual([]);
             });
         });
-        
-        describe("aria-invalid", function() {
-            beforeEach(function() {
+
+        describe("aria-invalid", function () {
+            beforeEach(function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     allowBlank: false,
                     value: "foo"
                 });
             });
-            
-            it("should be false when valid", function() {
+
+            it("should be false when valid", function () {
                 expectAria('aria-invalid', 'false');
             });
-            
-            it("should be true when invalid", function() {
+
+            it("should be true when invalid", function () {
                 component.setValue('');
-                
+
                 expectAria('aria-invalid', 'true');
             });
-            
-            it("should be false when invalid mark is cleared", function() {
+
+            it("should be false when invalid mark is cleared", function () {
                 component.setValue('');
                 component.setValue('bar');
-                
+
                 expectAria('aria-invalid', 'false');
             });
         });
     });
 
 
-    describe("isDirty", function() {
-        it("should return true when the value is different than the original value", function() {
+    describe("isDirty", function () {
+        it("should return true when the value is different than the original value", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 value: 'foo'
@@ -1057,7 +1057,7 @@ describe("Ext.form.field.Text", function() {
             expect(component.isDirty()).toBe(true);
         });
 
-        it("should return false when the value is equal to the original value", function() {
+        it("should return false when the value is equal to the original value", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 value: 'foo'
@@ -1067,7 +1067,7 @@ describe("Ext.form.field.Text", function() {
             expect(component.isDirty()).toBe(false);
         });
 
-        it("should fire the dirtychange event", function() {
+        it("should fire the dirtychange event", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 value: 'foo'
@@ -1084,7 +1084,7 @@ describe("Ext.form.field.Text", function() {
             expect(spy.mostRecentCall.args).toEqual([component, false]);
         });
 
-        it("should add the dirtyCls to the main element", function() {
+        it("should add the dirtyCls to the main element", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 value: 'foo',
@@ -1097,53 +1097,53 @@ describe("Ext.form.field.Text", function() {
     });
 
 
-    describe("enableKeyEvents", function() {
-        describe("enableKeyEvents=false", function() {
-            beforeEach(function() {
+    describe("enableKeyEvents", function () {
+        describe("enableKeyEvents=false", function () {
+            beforeEach(function () {
                 makeComponent({
                     enableKeyEvents: false,
                     renderTo: Ext.getBody()
                 });
             });
-            it("should not fire the keydown event", function() {
+            it("should not fire the keydown event", function () {
                 var spy = jasmine.createSpy();
                 component.on('keydown', spy);
                 jasmine.fireKeyEvent(component.inputEl.dom, 'keydown');
                 expect(spy).not.toHaveBeenCalled();
             });
-            it("should not fire the keypress event", function() {
+            it("should not fire the keypress event", function () {
                 var spy = jasmine.createSpy();
                 component.on('keypress', spy);
                 jasmine.fireKeyEvent(component.inputEl.dom, 'keypress');
                 expect(spy).not.toHaveBeenCalled();
             });
-            it("should not fire the keyup event", function() {
+            it("should not fire the keyup event", function () {
                 var spy = jasmine.createSpy();
                 component.on('keyup', spy);
                 jasmine.fireKeyEvent(component.inputEl.dom, 'keyup');
                 expect(spy).not.toHaveBeenCalled();
             });
         });
-        describe("enableKeyEvents=true", function() {
-            beforeEach(function() {
+        describe("enableKeyEvents=true", function () {
+            beforeEach(function () {
                 makeComponent({
                     enableKeyEvents: true,
                     renderTo: Ext.getBody()
                 });
             });
-            it("should not fire the keydown event", function() {
+            it("should not fire the keydown event", function () {
                 var spy = jasmine.createSpy();
                 component.on('keydown', spy);
                 jasmine.fireKeyEvent(component.inputEl.dom, 'keydown');
                 expect(spy).toHaveBeenCalled();
             });
-            it("should not fire the keypress event", function() {
+            it("should not fire the keypress event", function () {
                 var spy = jasmine.createSpy();
                 component.on('keypress', spy);
                 jasmine.fireKeyEvent(component.inputEl.dom, 'keypress');
                 expect(spy).toHaveBeenCalled();
             });
-            it("should not fire the keyup event", function() {
+            it("should not fire the keyup event", function () {
                 var spy = jasmine.createSpy();
                 component.on('keyup', spy);
                 jasmine.fireKeyEvent(component.inputEl.dom, 'keyup');
@@ -1153,55 +1153,55 @@ describe("Ext.form.field.Text", function() {
     });
 
 
-    describe("disable/enable", function() {
-        describe("disabled config", function() {
-            beforeEach(function() {
+    describe("disable/enable", function () {
+        describe("disabled config", function () {
+            beforeEach(function () {
                 makeComponent({
                     disabled: true,
                     renderTo: Ext.getBody()
                 });
             });
 
-            it("should set the input element's disabled property to true", function() {
+            it("should set the input element's disabled property to true", function () {
                 expect(component.inputEl.dom.disabled).toBe(true);
             });
-            
-            it("should set aria-disabled to true", function() {
+
+            it("should set aria-disabled to true", function () {
                 expectAria('aria-disabled', 'true');
             });
-            
+
             if (Ext.isIE) {
-                it("should set the input element's unselectable property to 'on'", function() {
+                it("should set the input element's unselectable property to 'on'", function () {
                     expect(component.inputEl.dom.unselectable).toEqual('on');
                 });
             }
         });
-        
-        describe("disable method", function() {
-            beforeEach(function() {
+
+        describe("disable method", function () {
+            beforeEach(function () {
                 makeComponent({
                     renderTo: Ext.getBody()
                 });
                 component.disable();
             });
 
-            it("should set the input element's disabled property to true", function() {
+            it("should set the input element's disabled property to true", function () {
                 expect(component.inputEl.dom.disabled).toBe(true);
             });
-            
-            it("should set aria-disabled to true", function() {
+
+            it("should set aria-disabled to true", function () {
                 expectAria('aria-disabled', 'true');
             });
-            
+
             if (Ext.isIE) {
-                it("should set the input element's unselectable property to 'on'", function() {
+                it("should set the input element's unselectable property to 'on'", function () {
                     expect(component.inputEl.dom.unselectable).toEqual('on');
                 });
             }
         });
-        
-        describe("enable method", function() {
-            beforeEach(function() {
+
+        describe("enable method", function () {
+            beforeEach(function () {
                 makeComponent({
                     disabled: true,
                     renderTo: Ext.getBody()
@@ -1209,16 +1209,16 @@ describe("Ext.form.field.Text", function() {
                 component.enable();
             });
 
-            it("should set the input element's disabled property to false", function() {
+            it("should set the input element's disabled property to false", function () {
                 expect(component.inputEl.dom.disabled).toBe(false);
             });
-            
-            it("should set aria-disabled to false", function() {
+
+            it("should set aria-disabled to false", function () {
                 expectAria('aria-disabled', 'false');
             });
-            
+
             if (Ext.isIE) {
-                it("should set the input element's unselectable property to ''", function() {
+                it("should set the input element's unselectable property to ''", function () {
                     expect(component.inputEl.dom.unselectable).toEqual('');
                 });
             }
@@ -1226,14 +1226,13 @@ describe("Ext.form.field.Text", function() {
     });
 
 
-
-    describe("maskRe", function() {
+    describe("maskRe", function () {
         //TODO need a good way to test the cancellation of keypress events for masked chars
     });
 
 
-    describe("stripCharsRe", function() {
-        beforeEach(function() {
+    describe("stripCharsRe", function () {
+        beforeEach(function () {
             makeComponent({
                 stripCharsRe: /[B9]/gi,
                 renderTo: Ext.getBody()
@@ -1241,11 +1240,11 @@ describe("Ext.form.field.Text", function() {
             component.setRawValue('ab9 cB9d');
         });
 
-        it("should remove characters matching the RE from the value that is returned", function() {
+        it("should remove characters matching the RE from the value that is returned", function () {
             expect(component.getValue()).toEqual('a cd');
         });
 
-        it("should remove all occurences that match RE from the value that is returned without specifying the global flag", function() {
+        it("should remove all occurences that match RE from the value that is returned without specifying the global flag", function () {
             component.destroy();
             makeComponent({
                 stripCharsRe: /[B9]/i,
@@ -1255,7 +1254,7 @@ describe("Ext.form.field.Text", function() {
             expect(component.getValue()).toBe('This is testing the mask without the g flag');
         });
 
-        it("should update the raw field value with the stripped value", function() {
+        it("should update the raw field value with the stripped value", function () {
             expect(component.inputEl.dom.value).toEqual('ab9 cB9d');
             component.getValue();
             expect(component.inputEl.dom.value).toEqual('a cd');
@@ -1263,30 +1262,30 @@ describe("Ext.form.field.Text", function() {
     });
 
 
-    describe("selectText method", function() {
+    describe("selectText method", function () {
         // utility to get the begin and end of the selection range across browsers
         function getSelectedText() {
             var el = component.inputEl.dom;
             return el.setSelectionRange ?
-                   el.value.substring(el.selectionStart, el.selectionEnd) : //Standard
-                   document.selection.createRange().text; //IE<9
+                el.value.substring(el.selectionStart, el.selectionEnd) : //Standard
+                document.selection.createRange().text; //IE<9
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             makeComponent({renderTo: Ext.getBody()});
         });
 
-        it("should select the entire value by default", function() {
+        it("should select the entire value by default", function () {
             component.setValue('field value');
             component.selectText();
             expect(getSelectedText()).toEqual('field value');
         });
-        it("should select from the 'start' argument", function() {
+        it("should select from the 'start' argument", function () {
             component.setValue('field value');
             component.selectText(3);
             expect(getSelectedText()).toEqual('ld value');
         });
-        it("should select to the 'end' argument", function() {
+        it("should select to the 'end' argument", function () {
             component.setValue('field value');
             component.selectText(3, 8);
             expect(getSelectedText()).toEqual('ld va');
@@ -1294,9 +1293,9 @@ describe("Ext.form.field.Text", function() {
     });
 
 
-    describe("autoSize method and = configs", function() {
-        describe("with an auto width", function() {
-            beforeEach(function() {
+    describe("autoSize method and = configs", function () {
+        describe("with an auto width", function () {
+            beforeEach(function () {
                 makeComponent({
                     grow: true,
                     growMin: 30,
@@ -1305,7 +1304,7 @@ describe("Ext.form.field.Text", function() {
                 });
             });
 
-            it("should auto height with an initial value", function() {
+            it("should auto height with an initial value", function () {
                 component.destroy();
                 makeComponent({
                     grow: true,
@@ -1317,12 +1316,12 @@ describe("Ext.form.field.Text", function() {
                 expect(component.getWidth()).toBeLessThan(300);
                 expect(component.getWidth()).toBeGreaterThan(10);
             });
-            
-            it("should set the initial width to growMin", function() {
+
+            it("should set the initial width to growMin", function () {
                 expect(component.getWidth()).toBe(30);
             });
 
-            it("should increase the width of the input as the value becomes longer", function() {
+            it("should increase the width of the input as the value becomes longer", function () {
                 component.setValue('value A');
                 var width1 = component.getWidth();
                 component.setValue('value AB');
@@ -1330,34 +1329,34 @@ describe("Ext.form.field.Text", function() {
                 expect(width2).toBeGreaterThan(width1);
             });
 
-            it("should decrease the width of the input as the value becomes shorter", function() {
+            it("should decrease the width of the input as the value becomes shorter", function () {
                 component.setValue('value AB');
                 var width1 = component.getWidth();
                 component.setValue('value A');
                 var width2 = component.getWidth();
                 expect(width2).toBeLessThan(width1);
             });
-            
-            it("should not increase the width above the growMax config", function() {
+
+            it("should not increase the width above the growMax config", function () {
                 component.setValue('a really long value that would go above the growMax config');
                 var width = component.getWidth();
                 expect(width).toBe(100);
             });
 
-            it("should not decrease the width below the growMin config", function() {
+            it("should not decrease the width below the growMin config", function () {
                 component.setValue('.');
                 var width = component.getWidth();
                 expect(width).toBe(30);
             });
-            
-            it("should work with markup", function(){
+
+            it("should work with markup", function () {
                 component.setValue('<fake tag appears here');
                 expect(component.getWidth()).toBeGreaterThan(30);
             });
         });
 
-        describe("with a fixed width", function() {
-            it("should have no affect on a configured wdith", function() {
+        describe("with a fixed width", function () {
+            it("should have no affect on a configured wdith", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     grow: true,
@@ -1369,7 +1368,7 @@ describe("Ext.form.field.Text", function() {
                 expect(component.getWidth()).toBe(150);
             });
 
-            it("should have no affect on a calculated height", function() {
+            it("should have no affect on a calculated height", function () {
                 makeComponent({
                     grow: true,
                     growMin: 100,
@@ -1391,14 +1390,14 @@ describe("Ext.form.field.Text", function() {
         });
     });
 
-    describe('fieldStyle', function() {
-        function isRed (color) {
+    describe('fieldStyle', function () {
+        function isRed(color) {
             if (color != 'red red red red' && color != '#ff0000' && color !== 'rgb(255, 0, 0)') {
                 expect(color).toBe('red');
             }
         }
 
-        it("should set the style of the inputEl when rendered", function() {
+        it("should set the style of the inputEl when rendered", function () {
             makeComponent({
                 fieldStyle: 'border-left-color:red;',
                 renderTo: Ext.getBody()
@@ -1406,8 +1405,8 @@ describe("Ext.form.field.Text", function() {
             var borderColor = component.inputEl.getStyle('border-left-color');
             isRed(borderColor);
         });
-        describe('setFieldStyle method', function() {
-            it("should apply the argument as the style of the rendered inputEl", function() {
+        describe('setFieldStyle method', function () {
+            it("should apply the argument as the style of the rendered inputEl", function () {
                 makeComponent({
                     renderTo: Ext.getBody()
                 });
@@ -1415,8 +1414,8 @@ describe("Ext.form.field.Text", function() {
                 var borderColor = component.inputEl.getStyle('border-left-color');
                 isRed(borderColor);
             });
-            
-            it("should store the argument as the fieldStyle and apply it when rendered", function() {
+
+            it("should store the argument as the fieldStyle and apply it when rendered", function () {
                 makeComponent({});
                 component.setFieldStyle('border-left-color:red;');
                 component.render(Ext.getBody());
@@ -1426,9 +1425,9 @@ describe("Ext.form.field.Text", function() {
         });
     });
 
-    describe('label hiding', function() {
-        describe('hideEmptyLabel', function() {
-            it("should render a label when fieldLabel is empty", function() {
+    describe('label hiding', function () {
+        describe('hideEmptyLabel', function () {
+            it("should render a label when fieldLabel is empty", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     hideEmptyLabel: true
@@ -1436,7 +1435,7 @@ describe("Ext.form.field.Text", function() {
                 expect(component.labelEl).not.toBeNull();
             });
 
-            it("should render an empty label when set to false", function() {
+            it("should render an empty label when set to false", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     hideEmptyLabel: false
@@ -1445,8 +1444,8 @@ describe("Ext.form.field.Text", function() {
             });
         });
 
-        describe('hideLabel', function() {
-            it("should render a label when true", function() {
+        describe('hideLabel', function () {
+            it("should render a label when true", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     hideLabel: true,
@@ -1455,7 +1454,7 @@ describe("Ext.form.field.Text", function() {
                 expect(component.labelEl).not.toBeNull();
             });
 
-            it("should render a label when false", function() {
+            it("should render a label when false", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     hideLabel: false,
@@ -1465,43 +1464,43 @@ describe("Ext.form.field.Text", function() {
             });
         });
     });
-    
-    describe("setRawValue", function() {
-        it("should not fire the change event when called", function() {
+
+    describe("setRawValue", function () {
+        it("should not fire the change event when called", function () {
             var called = false;
-            runs(function() {
+            runs(function () {
                 makeComponent();
                 render();
                 component.checkChangeBuffer = 0;
-                component.on('change', function() {
+                component.on('change', function () {
                     called = true;
                 });
                 component.setRawValue('foo');
             });
             waits(50);
-            runs(function() {
+            runs(function () {
                 expect(called).toBe(false);
             });
-        })    
+        })
     });
 
-    describe('getSubmitData', function() {
-        it("should return the field's value", function() {
+    describe('getSubmitData', function () {
+        it("should return the field's value", function () {
             makeComponent({name: 'myname', value: 'myvalue'});
             expect(component.getSubmitData()).toEqual({myname: 'myvalue'});
         });
-        it("should return empty string for an empty value", function() {
+        it("should return empty string for an empty value", function () {
             makeComponent({name: 'myname', value: ''});
             expect(component.getSubmitData()).toEqual({myname: ''});
         });
     });
 
-    describe('getModelData', function() {
-        it("should return the field's value", function() {
+    describe('getModelData', function () {
+        it("should return the field's value", function () {
             makeComponent({name: 'myname', value: 'myvalue'});
             expect(component.getModelData()).toEqual({myname: 'myvalue'});
         });
-        it("should return empty string for an empty value", function() {
+        it("should return empty string for an empty value", function () {
             makeComponent({name: 'myname', value: ''});
             expect(component.getModelData()).toEqual({myname: ''});
         });
@@ -1525,7 +1524,7 @@ describe("Ext.form.field.Text", function() {
                 });
             }
 
-            beforeEach(function() {
+            beforeEach(function () {
                 MockAjaxManager.addMethods();
 
                 session = new Ext.data.Session({
@@ -1542,25 +1541,25 @@ describe("Ext.form.field.Text", function() {
                     // W/o convert:null here the defaultValue kicks in and we get empty
                     // strings. For this test we don't want that.
                     fields: [
-                        { name: 'first',       type: 'string', convert: null },
-                        { name: 'last',        type: 'string', convert: null },
-                        { name: 'email',       type: 'string', convert: null },
-                        { name: 'formatField', type: 'string', convert: null },
-                        { name: 'phone',       type: 'string', convert: null },
-                        { name: 'color',       type: 'string', convert: null },
-                        { name: 'description', type: 'string', convert: null },
-                        { name: 'initial',     type: 'string', convert: null }
+                        {name: 'first', type: 'string', convert: null},
+                        {name: 'last', type: 'string', convert: null},
+                        {name: 'email', type: 'string', convert: null},
+                        {name: 'formatField', type: 'string', convert: null},
+                        {name: 'phone', type: 'string', convert: null},
+                        {name: 'color', type: 'string', convert: null},
+                        {name: 'description', type: 'string', convert: null},
+                        {name: 'initial', type: 'string', convert: null}
                     ],
 
                     validators: {
-                        last:        { type: 'length', min: 1 },
-                        description: { type: 'length', min: 10, max: 200 },
-                        color:       { type: 'inclusion', list: [ 'red', 'white', 'blue' ] },
-                        first:       { type: 'exclusion', list: [ 'Ed' ] },
-                        formatField: { type: 'format', matcher: /123/ },
-                        email:       'email',
-                        phone:       { type: 'presence', message: 'Phone number required' },
-                        initial:     { type: 'length', min: 1 }
+                        last: {type: 'length', min: 1},
+                        description: {type: 'length', min: 10, max: 200},
+                        color: {type: 'inclusion', list: ['red', 'white', 'blue']},
+                        first: {type: 'exclusion', list: ['Ed']},
+                        formatField: {type: 'format', matcher: /123/},
+                        email: 'email',
+                        phone: {type: 'presence', message: 'Phone number required'},
+                        initial: {type: 'length', min: 1}
                     },
 
                     doValidate: function () {
@@ -1582,28 +1581,28 @@ describe("Ext.form.field.Text", function() {
                     items: [{
                         itemId: 'description',
                         bind: '{theUser.description}'
-                    },{
+                    }, {
                         itemId: 'last',
                         bind: '{theUser.last}'
-                    },{
+                    }, {
                         itemId: 'formatField',
                         bind: '{theUser.formatField}'
-                    },{
+                    }, {
                         itemId: 'color',
                         bind: '{theUser.color}'
-                    },{
+                    }, {
                         itemId: 'first',
                         bind: '{theUser.first}'
-                    },{
+                    }, {
                         itemId: 'email',
                         bind: '{theUser.email}'
-                    },{
+                    }, {
                         itemId: 'phone',
                         bind: '{theUser.phone}'
-                    },{
+                    }, {
                         itemId: 'initial',
                         bind: '{theUser.initial}'
-                    },{
+                    }, {
                         itemId: 'extraStuff',
                         bind: '{theUser.extraStuff}'
                     }]
@@ -1629,8 +1628,8 @@ describe("Ext.form.field.Text", function() {
                 Ext.data.Model.schema.clear(true);
             });
 
-            describe("delivering validation messages", function() {
-                beforeEach(function() {
+            describe("delivering validation messages", function () {
+                beforeEach(function () {
                     completeRequest({
                         id: 42,
                         description: 'too short',
@@ -1643,7 +1642,7 @@ describe("Ext.form.field.Text", function() {
                     });
                 });
 
-                describe("for invalid fields", function() {
+                describe("for invalid fields", function () {
                     var Val = Ext.data.validator.Validator.all;
 
                     it('should report description too short', function () {
@@ -1692,7 +1691,7 @@ describe("Ext.form.field.Text", function() {
                         expect(errors.length).toBe(0);
                     });
 
-                    it("should have the correct bad format message", function() {
+                    it("should have the correct bad format message", function () {
                         var item = panel.child('#formatField');
 
                         scheduler.notify();
@@ -1715,7 +1714,7 @@ describe("Ext.form.field.Text", function() {
                         expect(errors.length).toBe(0);
                     });
 
-                    it("should have the correct non-inclusion message", function() {
+                    it("should have the correct non-inclusion message", function () {
                         var item = panel.child('#color');
 
                         scheduler.notify();
@@ -1738,7 +1737,7 @@ describe("Ext.form.field.Text", function() {
                         expect(errors.length).toBe(0);
                     });
 
-                    it("should have the correct non-exclusion message", function() {
+                    it("should have the correct non-exclusion message", function () {
                         var item = panel.child('#first');
 
                         scheduler.notify();
@@ -1761,7 +1760,7 @@ describe("Ext.form.field.Text", function() {
                         expect(errors.length).toBe(0);
                     });
 
-                    it("should have the correct bad email format message", function() {
+                    it("should have the correct bad email format message", function () {
                         var item = panel.child('#email');
 
                         scheduler.notify();
@@ -1784,7 +1783,7 @@ describe("Ext.form.field.Text", function() {
                         expect(errors.length).toBe(0);
                     });
 
-                    it("should allow user-defined error messages", function() {
+                    it("should allow user-defined error messages", function () {
                         var item = panel.child('#phone');
 
                         scheduler.notify();
@@ -1901,7 +1900,7 @@ describe("Ext.form.field.Text", function() {
                     items: [{
                         xtype: 'checkbox',
                         reference: 'chk'
-                    },{
+                    }, {
                         xtype: 'textfield',
                         reference: 'textfld',
                         bind: {
@@ -1940,8 +1939,8 @@ describe("Ext.form.field.Text", function() {
                         enableToggle: true,
                         // this is here to ensure that instance config does not break
                         // the class publishes
-                        publishes: [ 'disabled' ]
-                    },{
+                        publishes: ['disabled']
+                    }, {
                         xtype: 'textfield',
                         reference: 'textfld',
                         bind: {
@@ -1977,8 +1976,8 @@ describe("Ext.form.field.Text", function() {
                     items: [{
                         xtype: 'textfield',
                         reference: 'textfld',
-                        publishes: [ 'value' ]
-                    },{
+                        publishes: ['value']
+                    }, {
                         xtype: 'displayfield',
                         reference: 'display',
                         bind: 'Hello {textfld.value}!'
@@ -2013,8 +2012,8 @@ describe("Ext.form.field.Text", function() {
                     items: [{
                         xtype: 'textfield',
                         reference: 'txt',
-                        publishes: [ 'value', 'rawValue', 'dirty' ]
-                    },{
+                        publishes: ['value', 'rawValue', 'dirty']
+                    }, {
                         xtype: 'displayfield',
                         reference: 'display',
                         bind: 'R: {txt.rawValue} / V: {txt.value} / D: {!txt.dirty}'
@@ -2041,7 +2040,7 @@ describe("Ext.form.field.Text", function() {
         }); // use cases
     }); // binding
 
-    describe('triggers', function() {
+    describe('triggers', function () {
         var fooHandler = jasmine.createSpy(),
             barHandler = jasmine.createSpy(),
             fakeScope = {},
@@ -2070,19 +2069,19 @@ describe("Ext.form.field.Text", function() {
             barEl = barTrigger.getEl();
         }
 
-        it("should create Trigger instances", function() {
+        it("should create Trigger instances", function () {
             create();
             expect(fooTrigger instanceof Ext.form.trigger.Trigger).toBe(true);
             expect(barTrigger instanceof Ext.form.trigger.Trigger).toBe(true);
         });
 
-        it("should render triggers", function() {
+        it("should render triggers", function () {
             create();
             expect(component.triggerWrap.selectNode('.foo-trigger', false)).toBe(fooEl);
             expect(component.triggerWrap.selectNode('.bar-trigger', false)).toBe(barEl);
         });
 
-        it("should call trigger handlers", function() {
+        it("should call trigger handlers", function () {
             var args;
 
             create();
@@ -2103,19 +2102,19 @@ describe("Ext.form.field.Text", function() {
 //            expect(barHandler.mostRecentCall.object).toBe(fakeScope);
         });
 
-        it("should create a triggerEl composite element for 4.x compat", function() {
+        it("should create a triggerEl composite element for 4.x compat", function () {
             create();
             expect(component.triggerEl instanceof Ext.CompositeElement).toBe(true);
             expect(component.triggerEl.elements[0]).toBe(fooEl);
             expect(component.triggerEl.elements[1]).toBe(barEl);
         });
 
-        it("should create a triggerCell composite element for 4.x compat", function() {
+        it("should create a triggerCell composite element for 4.x compat", function () {
             create();
             expect(component.triggerCell).toBe(component.triggerEl);
         });
 
-        it("should order the triggers by weight", function() {
+        it("should order the triggers by weight", function () {
             create({
                 triggers: {
                     foo: {
@@ -2127,7 +2126,7 @@ describe("Ext.form.field.Text", function() {
             expect(barEl.next()).toBe(fooEl);
         });
 
-        it("should hide triggers on render if hideTrigger is true", function() {
+        it("should hide triggers on render if hideTrigger is true", function () {
             create({
                 hideTrigger: true
             });
@@ -2138,7 +2137,7 @@ describe("Ext.form.field.Text", function() {
             expect(barEl.isStyle('display', 'none')).toBe(true);
         });
 
-        it("should hide/show all triggers after render using setHideTrigger", function() {
+        it("should hide/show all triggers after render using setHideTrigger", function () {
             create();
 
             component.setHideTrigger(true);
@@ -2157,8 +2156,8 @@ describe("Ext.form.field.Text", function() {
         });
     });
 
-    describe("grow", function() {
-        beforeEach(function() {
+    describe("grow", function () {
+        beforeEach(function () {
             Ext.util.CSS.createStyleSheet(
                 // make the input el have a 9px character width
                 '.x-form-text { font:15px monospace;letter-spacing:0px; }',
@@ -2166,7 +2165,7 @@ describe("Ext.form.field.Text", function() {
             );
         });
 
-        afterEach(function() {
+        afterEach(function () {
             Ext.util.CSS.removeStyleSheet('growStyleSheet');
         });
 
@@ -2176,14 +2175,14 @@ describe("Ext.form.field.Text", function() {
                 borders = component.inputWrap.getBorderWidth('lr') + component.triggerWrap.getBorderWidth('lr'),
                 triggerWidth = 0;
 
-            Ext.Object.each(component.getTriggers(), function(key, trigger) {
+            Ext.Object.each(component.getTriggers(), function (key, trigger) {
                 triggerWidth += trigger.el.getWidth();
             });
 
             return textMeasure + borders + triggerWidth;
         }
 
-        it("should start out at growMin", function() {
+        it("should start out at growMin", function () {
             makeComponent({
                 renderTo: document.body,
                 grow: true,
@@ -2193,7 +2192,7 @@ describe("Ext.form.field.Text", function() {
             expect(component.getWidth()).toBe(50);
         });
 
-        it("should initially render at the width of the text", function() {
+        it("should initially render at the width of the text", function () {
             makeComponent({
                 renderTo: document.body,
                 value: 'mmmmmmmmmm',
@@ -2203,7 +2202,7 @@ describe("Ext.form.field.Text", function() {
             expect(component.getWidth()).toBe(getExpectedWidth());
         });
 
-        it("should initially render with a width of growMax if initial text width exceeds growMax", function() {
+        it("should initially render with a width of growMax if initial text width exceeds growMax", function () {
             makeComponent({
                 renderTo: document.body,
                 value: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
@@ -2214,7 +2213,7 @@ describe("Ext.form.field.Text", function() {
             expect(component.getWidth()).toBe(200);
         });
 
-        it("should grow and shrink", function() {
+        it("should grow and shrink", function () {
             makeComponent({
                 renderTo: document.body,
                 grow: true,
@@ -2245,7 +2244,7 @@ describe("Ext.form.field.Text", function() {
         });
     });
 
-    describe('layout', function() {
+    describe('layout', function () {
         var dimensions = {
             1: 'width',
             2: 'height',
@@ -2254,7 +2253,7 @@ describe("Ext.form.field.Text", function() {
 
         function makeLayoutSuite(shrinkWrap, autoFitErrors) {
             describe((shrinkWrap ? ("shrink wrap " + dimensions[shrinkWrap]) : "fixed width and height") +
-                " autoFitErrors: " + autoFitErrors, function() {
+                " autoFitErrors: " + autoFitErrors, function () {
                 var shrinkWidth = (shrinkWrap & 1),
                     shrinkHeight = (shrinkWrap & 2),
                     errorWidth = 18, // the width of the error when side aligned
@@ -2269,7 +2268,7 @@ describe("Ext.form.field.Text", function() {
                     bodyWidth = 150, // the width of the bodyEl
                     bodyHeight = shrinkHeight ? 22 : 100, // the height of the bodyEl
                     labelHeight = 23, // the height of the label when top aligned
-                    hideLabel, topLabel,  width, height;
+                    hideLabel, topLabel, width, height;
 
                 function create(cfg) {
                     cfg = cfg || {};
@@ -2303,7 +2302,7 @@ describe("Ext.form.field.Text", function() {
                         // use a fixed size element vs. text for the field label for
                         // consistency of measurement cross-browser
                         fieldLabel: '<span style="display:inline-block;width:' + labelInnerWidth +
-                            'px;background-color:red;box-sizing:border-box;">&nbsp;</span>',
+                        'px;background-color:red;box-sizing:border-box;">&nbsp;</span>',
                         labelSeparator: ''
                     }, cfg));
                 }
@@ -2317,11 +2316,11 @@ describe("Ext.form.field.Text", function() {
                 // and right alignment, with the exception of the text align of the
                 // label's inner element.
                 function makeSideLabelSuite(labelAlign) {
-                    describe(labelAlign + " label", function() {
+                    describe(labelAlign + " label", function () {
                         var leftLabel = (labelAlign === 'left');
 
                         // https://sencha.jira.com/browse/EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout", function() {
+                        (Ext.isIE8 ? xit : it)("should layout", function () {
                             create({
                                 labelAlign: labelAlign
                             });
@@ -2359,7 +2358,7 @@ describe("Ext.form.field.Text", function() {
                         });
 
                         // https://sencha.jira.com/browse/EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout with side error", function() {
+                        (Ext.isIE8 ? xit : it)("should layout with side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 msgTarget: 'side'
@@ -2411,7 +2410,7 @@ describe("Ext.form.field.Text", function() {
                         });
 
                         // https://sencha.jira.com/browse/EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout with hidden side error", function() {
+                        (Ext.isIE8 ? xit : it)("should layout with hidden side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 msgTarget: 'side'
@@ -2463,7 +2462,7 @@ describe("Ext.form.field.Text", function() {
                         });
 
                         // TODO: EXTJS-12634
-                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with under error", function() {
+                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with under error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 msgTarget: 'under'
@@ -2515,7 +2514,7 @@ describe("Ext.form.field.Text", function() {
                         });
 
                         // https://sencha.jira.com/browse/EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout with hidden label", function() {
+                        (Ext.isIE8 ? xit : it)("should layout with hidden label", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true
@@ -2540,7 +2539,7 @@ describe("Ext.form.field.Text", function() {
                         });
 
                         // https://sencha.jira.com/browse/EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout with hidden label and side error", function() {
+                        (Ext.isIE8 ? xit : it)("should layout with hidden label and side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true,
@@ -2585,7 +2584,7 @@ describe("Ext.form.field.Text", function() {
                         });
 
                         // https://sencha.jira.com/browse/EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout with hidden label and hidden side error", function() {
+                        (Ext.isIE8 ? xit : it)("should layout with hidden label and hidden side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true,
@@ -2630,7 +2629,7 @@ describe("Ext.form.field.Text", function() {
                         });
 
                         // TODO: EXTJS-12634
-                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with hidden label and under error", function() {
+                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with hidden label and under error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true,
@@ -2680,8 +2679,8 @@ describe("Ext.form.field.Text", function() {
                 makeSideLabelSuite('right'); // labelAlign: 'right'
 
                 // TODO: EXTJS-12634
-                (Ext.isIE10m && !shrinkHeight ? xdescribe : describe)("top label", function() {
-                    it("should layout", function() {
+                (Ext.isIE10m && !shrinkHeight ? xdescribe : describe)("top label", function () {
+                    it("should layout", function () {
                         create({
                             labelAlign: 'top'
                         });
@@ -2719,7 +2718,7 @@ describe("Ext.form.field.Text", function() {
                         expect(component.errorWrapEl).toBeNull();
                     });
 
-                    it("should layout with side error", function() {
+                    it("should layout with side error", function () {
                         create({
                             labelAlign: 'top',
                             msgTarget: 'side'
@@ -2771,7 +2770,7 @@ describe("Ext.form.field.Text", function() {
                         });
                     });
 
-                    it("should layout with hidden side error", function() {
+                    it("should layout with hidden side error", function () {
                         create({
                             labelAlign: 'top',
                             msgTarget: 'side'
@@ -2824,7 +2823,7 @@ describe("Ext.form.field.Text", function() {
                         });
                     });
 
-                    it("should layout with under error", function() {
+                    it("should layout with under error", function () {
                         create({
                             labelAlign: 'top',
                             msgTarget: 'under'
@@ -2876,7 +2875,7 @@ describe("Ext.form.field.Text", function() {
                         });
                     });
 
-                    it("should layout with hidden label", function() {
+                    it("should layout with hidden label", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true
@@ -2906,7 +2905,7 @@ describe("Ext.form.field.Text", function() {
                         expect(component.errorWrapEl).toBeNull();
                     });
 
-                    it("should layout with hidden label and side error", function() {
+                    it("should layout with hidden label and side error", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true,
@@ -2950,7 +2949,7 @@ describe("Ext.form.field.Text", function() {
                         });
                     });
 
-                    it("should layout with hidden label and hidden side error", function() {
+                    it("should layout with hidden label and hidden side error", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true,
@@ -2994,7 +2993,7 @@ describe("Ext.form.field.Text", function() {
                         });
                     });
 
-                    it("should layout with hidden label and under error", function() {
+                    it("should layout with hidden label and under error", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true,
@@ -3048,7 +3047,7 @@ describe("Ext.form.field.Text", function() {
         makeLayoutSuite(3, false); // shrinkWrap both
         makeLayoutSuite(3, true); // shrinkWrap both, autoFitErrors
 
-        it("should work around the webkit min-width table-cell bug", function() {
+        it("should work around the webkit min-width table-cell bug", function () {
             // See EXTJS-12665 and https://bugs.webkit.org/show_bug.cgi?id=130239
             var field = Ext.widget({
                 xtype: 'textfield',
@@ -3070,7 +3069,7 @@ describe("Ext.form.field.Text", function() {
             field.destroy();
         });
 
-        it("should not stretch the triggerWrap height if the field height expands due to wrapping text in the label", function() {
+        it("should not stretch the triggerWrap height if the field height expands due to wrapping text in the label", function () {
             var field = Ext.widget({
                 xtype: 'textfield',
                 renderTo: Ext.getBody(),

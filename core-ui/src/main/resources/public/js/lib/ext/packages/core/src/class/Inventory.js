@@ -1,4 +1,4 @@
-    // @tag class
+// @tag class
 /**
  * @class Ext.Inventory
  * @private
@@ -95,7 +95,7 @@ Ext.Inventory.prototype = {
      * @param {String} alias
      * @return {String} className
      */
-    getNameByAlias: function(alias) {
+    getNameByAlias: function (alias) {
         return this.aliasToName[alias] || '';
     },
 
@@ -225,7 +225,7 @@ Ext.Inventory.prototype = {
         while (i-- > 0) {
             length = (prefix = prefixes[i]).length;
             if (length < className.length && className.charAt(length) === '.'
-                                          && prefix === className.substring(0, length)) {
+                && prefix === className.substring(0, length)) {
                 return prefix;
             }
         }
@@ -270,7 +270,7 @@ Ext.Inventory.prototype = {
         }
 
         if (alternates) {
-            for (i = alternates.length; i--; ) {
+            for (i = alternates.length; i--;) {
                 // Like aliases, alternate class names can also be remapped.
                 if (name === (a = alternates[i])) {
                     delete alternateToName[a];
@@ -300,25 +300,25 @@ Ext.Inventory.prototype = {
     /**
      * This method returns a selector object that produces a selection of classes and
      * delivers them to the desired `receiver`.
-     * 
+     *
      * The returned selector object has the same methods as the given `receiver` object
      * but these methods on the selector accept a first argument that expects a pattern
      * or array of patterns. The actual method on the `receiver` will be called with an
      * array of classes that match these patterns but with any patterns passed to an
      * `exclude` call removed.
-     * 
+     *
      * For example:
-     * 
+     *
      *      var sel = inventory.select({
      *              require: function (classes) {
      *                  console.log('Classes: ' + classes.join(','));
      *              }
      *          });
-     * 
+     *
      *      sel.exclude('Ext.chart.*').exclude('Ext.draw.*').require('*');
-     *      
+     *
      *      // Logs all classes except those in the Ext.chart and Ext.draw namespaces.
-     * 
+     *
      * @param {Object} receiver
      * @param {Object} [scope] Optional scope to use when calling `receiver` methods.
      * @return {Object} An object with the same methods as `receiver` plus `exclude`.
@@ -348,7 +348,7 @@ Ext.Inventory.prototype = {
 
         return function (include) {
             var args = Ext.Array.slice(arguments, 1);
-            
+
             args.unshift(me.getNamesByExpression(include, excludes));
 
             return fn.apply(scope, args);

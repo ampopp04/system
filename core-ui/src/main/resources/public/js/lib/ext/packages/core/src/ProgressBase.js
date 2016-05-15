@@ -21,14 +21,14 @@ Ext.define('Ext.ProgressBase', {
         textTpl: null
     },
 
-    applyTextTpl: function(textTpl) {
+    applyTextTpl: function (textTpl) {
         if (!textTpl.isTemplate) {
             textTpl = new Ext.XTemplate(textTpl);
         }
         return textTpl;
     },
 
-    applyValue: function(value) {
+    applyValue: function (value) {
         return value || 0;
     }
 });

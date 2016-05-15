@@ -16,39 +16,39 @@ Ext.define('Ext.sparkline.Discrete', {
          * @cfg {Number} lineHeight Height of each line in pixels - Defaults to 30% of the graph height.
          */
         lineHeight: 'auto',
-        
+
         /**
          * @cfg {String} thresholdColor Colour to use in combination with {@link #thresholdValue}
          */
         thresholdColor: null,
-        
+
         /**
          * @cfg {Number} thresholdValue Values less than this value will be drawn using {@link #thresholdColor} instead of lineColor
          */
         thresholdValue: 0,
-        
+
         /**
          * @cfg {Number} [chartRangeMax] The maximum value to use for the range of Y values of the chart - Defaults to the maximum value supplied.
          */
         chartRangeMax: null,
-        
+
         /**
          * @cfg {Number} [chartRangeMin] The minimum value to use for the range of Y values of the chart - Defaults to the minimum value supplied.
          */
         chartRangeMin: null,
-        
+
         /**
          * @cfg {Boolean} chartRangeClip If true then the y values supplied to plot will be clipped to fall
          * between {@link #chartRangeMin} and {@link #chartRangeMax} - By default chartRangeMin/Max just ensure that the chart
          * spans at least that range of values, but does not constrain it.
          */
         chartRangeClip: false,
-        
+
         tipTpl: new Ext.XTemplate('{prefix}{value}{suffix}')
     },
 
     // Ensure values is an array of numbers
-    applyValues: function(newValues) {
+    applyValues: function (newValues) {
         newValues = Ext.Array.map(Ext.Array.from(newValues), Number);
         this.disabled = !(newValues && newValues.length);
         return newValues;

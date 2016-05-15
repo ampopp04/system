@@ -10,17 +10,17 @@ Ext.define('Ext.util.LruCache', {
     extend: 'Ext.util.HashMap',
 
     config: {
-        /** 
-        * @cfg {Number} maxSize The maximum size the cache is allowed to grow to before further additions cause
-        * removal of the least recently used entry.
-        */
-       maxSize: null
-   },
+        /**
+         * @cfg {Number} maxSize The maximum size the cache is allowed to grow to before further additions cause
+         * removal of the least recently used entry.
+         */
+        maxSize: null
+    },
 
     /**
      * @inheritdoc
      */
-    add: function(key, newValue) {
+    add: function (key, newValue) {
         var me = this,
             entry, last;
 
@@ -33,7 +33,7 @@ Ext.define('Ext.util.LruCache', {
             value: newValue
         };
 
-        
+
         if (last) {
             // If the list is not empty, update the last entry
             last.next = entry;
@@ -50,7 +50,7 @@ Ext.define('Ext.util.LruCache', {
     /**
      * @private
      */
-    insertBefore: function(key, newValue, sibling) {
+    insertBefore: function (key, newValue, sibling) {
         var me = this,
             existingKey,
             entry;
@@ -93,7 +93,7 @@ Ext.define('Ext.util.LruCache', {
     /**
      * @inheritdoc
      */
-    get: function(key) {
+    get: function (key) {
         var entry = this.map[key];
         if (entry) {
 
@@ -108,7 +108,7 @@ Ext.define('Ext.util.LruCache', {
     /**
      * @private
      */
-    removeAtKey: function(key) {
+    removeAtKey: function (key) {
         this.unlinkEntry(this.map[key]);
         return this.callParent(arguments);
     },
@@ -116,7 +116,7 @@ Ext.define('Ext.util.LruCache', {
     /**
      * @inheritdoc
      */
-    clear: function(/* private */ initial) {
+    clear: function (/* private */ initial) {
         this.first = this.last = null;
         return this.callParent([initial]);
     },
@@ -124,7 +124,7 @@ Ext.define('Ext.util.LruCache', {
     /**
      * @private
      */
-    unlinkEntry: function(entry) {
+    unlinkEntry: function (entry) {
         // Stitch the list back up.
         if (entry) {
             if (entry.next) {
@@ -144,7 +144,7 @@ Ext.define('Ext.util.LruCache', {
     /**
      * @private
      */
-    moveToEnd: function(entry) {
+    moveToEnd: function (entry) {
         this.unlinkEntry(entry);
 
         // NOT an assignment.
@@ -162,12 +162,12 @@ Ext.define('Ext.util.LruCache', {
     /**
      * @private
      */
-    getArray: function(isKey) {
+    getArray: function (isKey) {
         var arr = [],
             entry = this.first;
 
         while (entry) {
-            arr.push(isKey ? entry.key: entry.value);
+            arr.push(isKey ? entry.key : entry.value);
             entry = entry.next;
         }
         return arr;
@@ -190,7 +190,7 @@ Ext.define('Ext.util.LruCache', {
      * @param {Boolean} [reverse=false] Pass <code>true</code> to iterate the list in reverse (most recent first) order.
      * @return {Ext.util.LruCache} this
      */
-    each: function(fn, scope, reverse) {
+    each: function (fn, scope, reverse) {
         var me = this,
             entry = reverse ? me.last : me.first,
             length = me.length;
@@ -208,7 +208,7 @@ Ext.define('Ext.util.LruCache', {
     /**
      * @private
      */
-    findKey: function(value) {
+    findKey: function (value) {
         var key,
             map = this.map;
 
@@ -226,7 +226,7 @@ Ext.define('Ext.util.LruCache', {
      * Performs a shallow copy on this haLruCachesh.
      * @return {Ext.util.HashMap} The new hash object.
      */
-    clone: function() {
+    clone: function () {
         var newCache = new this.self(this.initialConfig),
             map = this.map,
             key;
@@ -244,7 +244,7 @@ Ext.define('Ext.util.LruCache', {
     /**
      * Purge the least recently used entries if the maxSize has been exceeded.
      */
-    prune: function() {
+    prune: function () {
         var me = this,
             max = me.getMaxSize(),
             purgeCount = max ? (me.length - max) : 0;
@@ -256,25 +256,25 @@ Ext.define('Ext.util.LruCache', {
         }
     },
 
-    destroy: function() {
+    destroy: function () {
         this.first = this.last = null;
-        this.callParent();     
+        this.callParent();
     }
 
-  /**
-   * @method containsKey
-   * @private
-   */
-  /**
-   * @method contains
-   * @private
-   */
-  /**
-   * @method getKeys
-   * @private
-   */
-  /**
-   * @method getValues
-   * @private
-   */
+    /**
+     * @method containsKey
+     * @private
+     */
+    /**
+     * @method contains
+     * @private
+     */
+    /**
+     * @method getKeys
+     * @private
+     */
+    /**
+     * @method getValues
+     * @private
+     */
 });

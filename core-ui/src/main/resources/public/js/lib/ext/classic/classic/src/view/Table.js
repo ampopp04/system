@@ -13,7 +13,7 @@
  */
 Ext.define('Ext.view.Table', {
     extend: 'Ext.view.View',
-    xtype: [ 'tableview', 'gridview' ],
+    xtype: ['tableview', 'gridview'],
     alternateClassName: 'Ext.grid.View',
     requires: [
         'Ext.grid.CellContext',
@@ -182,14 +182,14 @@ Ext.define('Ext.view.Table', {
     selectedCellCls: Ext.baseCSSPrefix + 'grid-cell-selected',
     focusedItemCls: Ext.baseCSSPrefix + 'grid-item-focused',
     overItemCls: Ext.baseCSSPrefix + 'grid-item-over',
-    altRowCls:   Ext.baseCSSPrefix + 'grid-item-alt',
+    altRowCls: Ext.baseCSSPrefix + 'grid-item-alt',
     dirtyCls: Ext.baseCSSPrefix + 'grid-dirty-cell',
     rowClsRe: new RegExp('(?:^|\\s*)' + Ext.baseCSSPrefix + 'grid-item-alt(?:\\s+|$)', 'g'),
     cellRe: new RegExp(Ext.baseCSSPrefix + 'grid-cell-([^\\s]+)(?:\\s|$)', ''),
     positionBody: true,
     positionCells: false,
     stripeOnUpdate: null,
-    
+
     /**
      * @property {Boolean} actionableMode
      * This value is `true` when the grid has been set to actionable mode by the user.
@@ -239,7 +239,7 @@ Ext.define('Ext.view.Table', {
      * @cfg {Boolean} markDirty
      * True to show the dirty cell indicator when a cell has been modified.
      */
-    markDirty : true,
+    markDirty: true,
 
     /**
      * @cfg {Boolean} enableTextSelection
@@ -281,33 +281,33 @@ Ext.define('Ext.view.Table', {
      */
     tpl: [
         '{%',
-            'view = values.view;',
-            'if (!(columns = values.columns)) {',
-                'columns = values.columns = view.ownerCt.getVisibleColumnManager().getColumns();',
-            '}',
-            'values.fullWidth = 0;',
-            // Stamp cellWidth into the columns
-            'for (i = 0, len = columns.length; i < len; i++) {',
-                'column = columns[i];',
-                'values.fullWidth += (column.cellWidth = column.lastBox ? column.lastBox.width : column.width || column.minWidth);',
-            '}',
+        'view = values.view;',
+        'if (!(columns = values.columns)) {',
+        'columns = values.columns = view.ownerCt.getVisibleColumnManager().getColumns();',
+        '}',
+        'values.fullWidth = 0;',
+        // Stamp cellWidth into the columns
+        'for (i = 0, len = columns.length; i < len; i++) {',
+        'column = columns[i];',
+        'values.fullWidth += (column.cellWidth = column.lastBox ? column.lastBox.width : column.width || column.minWidth);',
+        '}',
 
-            // Add the row/column line classes to the container element.
-            'tableCls=values.tableCls=[];',
+        // Add the row/column line classes to the container element.
+        'tableCls=values.tableCls=[];',
         '%}',
         '<div class="' + Ext.baseCSSPrefix + 'grid-item-container" role="presentation" style="width:{fullWidth}px">',
-            '{[view.renderTHead(values, out, parent)]}',
-            '{%',
-                'view.renderRows(values.rows, values.columns, values.viewStartIndex, out);',
-            '%}',
-            '{[view.renderTFoot(values, out, parent)]}',
+        '{[view.renderTHead(values, out, parent)]}',
+        '{%',
+        'view.renderRows(values.rows, values.columns, values.viewStartIndex, out);',
+        '%}',
+        '{[view.renderTFoot(values, out, parent)]}',
         '</div>',
-        
+
         // This template is shared on the Ext.view.Table prototype, so we have to
         // clean up the closed over variables. Otherwise we'll retain the last values
         // of the template execution!
         '{% ',
-            'view = columns = column = null;',
+        'view = columns = column = null;',
         '%}',
         {
             definitions: 'var view, tableCls, columns, i, len, column;',
@@ -317,16 +317,16 @@ Ext.define('Ext.view.Table', {
 
     outerRowTpl: [
         '<table id="{rowId}" role="presentation" ',
-            'data-boundView="{view.id}" ',
-            'data-recordId="{record.internalId}" ',
-            'data-recordIndex="{recordIndex}" ',
-            'class="{[values.itemClasses.join(" ")]}" cellpadding="0" cellspacing="0" style="{itemStyle};width:0">',
+        'data-boundView="{view.id}" ',
+        'data-recordId="{record.internalId}" ',
+        'data-recordIndex="{recordIndex}" ',
+        'class="{[values.itemClasses.join(" ")]}" cellpadding="0" cellspacing="0" style="{itemStyle};width:0">',
 
-                // Do NOT emit a <TBODY> tag in case the nextTpl has to emit a <COLGROUP> column sizer element.
-                // Browser will create a tbody tag when it encounters the first <TR>
-                '{%',
-                    'this.nextTpl.applyOut(values, out, parent)',
-                '%}',
+        // Do NOT emit a <TBODY> tag in case the nextTpl has to emit a <COLGROUP> column sizer element.
+        // Browser will create a tbody tag when it encounters the first <TR>
+        '{%',
+        'this.nextTpl.applyOut(values, out, parent)',
+        '%}',
         '</table>',
         {
             priority: 9999
@@ -335,15 +335,15 @@ Ext.define('Ext.view.Table', {
 
     rowTpl: [
         '{%',
-            'var dataRowCls = values.recordIndex === -1 ? "" : " ' + Ext.baseCSSPrefix + 'grid-row";',
+        'var dataRowCls = values.recordIndex === -1 ? "" : " ' + Ext.baseCSSPrefix + 'grid-row";',
         '%}',
         '<tr class="{[values.rowClasses.join(" ")]} {[dataRowCls]}"',
-                ' role="{rowRole}" {rowAttr:attributes}>',
-            '<tpl for="columns">' +
-                '{%',
-                    'parent.view.renderCell(values, parent.record, parent.recordIndex, parent.rowIndex, xindex - 1, out, parent)',
-                 '%}',
-            '</tpl>',
+        ' role="{rowRole}" {rowAttr:attributes}>',
+        '<tpl for="columns">' +
+        '{%',
+        'parent.view.renderCell(values, parent.record, parent.recordIndex, parent.rowIndex, xindex - 1, out, parent)',
+        '%}',
+        '</tpl>',
         '</tr>',
         {
             priority: 0
@@ -352,11 +352,11 @@ Ext.define('Ext.view.Table', {
 
     cellTpl: [
         '<td class="{tdCls}" role="{cellRole}" {tdAttr} {cellAttr:attributes}',
-                ' style="width:{column.cellWidth}px;<tpl if="tdStyle">{tdStyle}</tpl>"',
-                ' tabindex="-1" data-columnid="{[values.column.getItemId()]}">',
-            '<div {unselectableAttr} class="' + Ext.baseCSSPrefix + 'grid-cell-inner {innerCls}" ',
-                'style="text-align:{align};<tpl if="style">{style}</tpl>" ',
-                '{cellInnerAttr:attributes}>{value}</div>',
+        ' style="width:{column.cellWidth}px;<tpl if="tdStyle">{tdStyle}</tpl>"',
+        ' tabindex="-1" data-columnid="{[values.column.getItemId()]}">',
+        '<div {unselectableAttr} class="' + Ext.baseCSSPrefix + 'grid-cell-inner {innerCls}" ',
+        'style="text-align:{align};<tpl if="style">{style}</tpl>" ',
+        '{cellInnerAttr:attributes}>{value}</div>',
         '</td>',
         {
             priority: 0
@@ -383,229 +383,229 @@ Ext.define('Ext.view.Table', {
         ]
     },
 
-     /**
-      * @event beforecellclick
-      * Fired before the cell click is processed. Return false to cancel the default action.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event beforecellclick
+     * Fired before the cell click is processed. Return false to cancel the default action.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event cellclick
-      * Fired when table cell is clicked.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event cellclick
+     * Fired when table cell is clicked.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event beforecelldblclick
-      * Fired before the cell double click is processed. Return false to cancel the default action.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event beforecelldblclick
+     * Fired before the cell double click is processed. Return false to cancel the default action.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event celldblclick
-      * Fired when table cell is double clicked.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event celldblclick
+     * Fired when table cell is double clicked.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event beforecellcontextmenu
-      * Fired before the cell right click is processed. Return false to cancel the default action.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event beforecellcontextmenu
+     * Fired before the cell right click is processed. Return false to cancel the default action.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event cellcontextmenu
-      * Fired when table cell is right clicked.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event cellcontextmenu
+     * Fired when table cell is right clicked.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event beforecellmousedown
-      * Fired before the cell mouse down is processed. Return false to cancel the default action.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event beforecellmousedown
+     * Fired before the cell mouse down is processed. Return false to cancel the default action.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event cellmousedown
-      * Fired when the mousedown event is captured on the cell.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event cellmousedown
+     * Fired when the mousedown event is captured on the cell.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event beforecellmouseup
-      * Fired before the cell mouse up is processed. Return false to cancel the default action.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event beforecellmouseup
+     * Fired before the cell mouse up is processed. Return false to cancel the default action.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event cellmouseup
-      * Fired when the mouseup event is captured on the cell.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event cellmouseup
+     * Fired when the mouseup event is captured on the cell.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event beforecellkeydown
-      * Fired before the cell key down is processed. Return false to cancel the default action.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event beforecellkeydown
+     * Fired before the cell key down is processed. Return false to cancel the default action.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event cellkeydown
-      * Fired when the keydown event is captured on the cell.
-      * @param {Ext.view.Table} this
-      * @param {HTMLElement} td The TD element for the cell.
-      * @param {Number} cellIndex
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event cellkeydown
+     * Fired when the keydown event is captured on the cell.
+     * @param {Ext.view.Table} this
+     * @param {HTMLElement} td The TD element for the cell.
+     * @param {Number} cellIndex
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event rowclick
-      * Fired when table cell is clicked.
-      * @param {Ext.view.Table} this
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event rowclick
+     * Fired when table cell is clicked.
+     * @param {Ext.view.Table} this
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event rowdblclick
-      * Fired when table cell is double clicked.
-      * @param {Ext.view.Table} this
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event rowdblclick
+     * Fired when table cell is double clicked.
+     * @param {Ext.view.Table} this
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event rowcontextmenu
-      * Fired when table cell is right clicked.
-      * @param {Ext.view.Table} this
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event rowcontextmenu
+     * Fired when table cell is right clicked.
+     * @param {Ext.view.Table} this
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event rowmousedown
-      * Fired when the mousedown event is captured on the cell.
-      * @param {Ext.view.Table} this
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event rowmousedown
+     * Fired when the mousedown event is captured on the cell.
+     * @param {Ext.view.Table} this
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event rowmouseup
-      * Fired when the mouseup event is captured on the cell.
-      * @param {Ext.view.Table} this
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event rowmouseup
+     * Fired when the mouseup event is captured on the cell.
+     * @param {Ext.view.Table} this
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-     /**
-      * @event rowkeydown
-      * Fired when the keydown event is captured on the cell.
-      * @param {Ext.view.Table} this
-      * @param {Ext.data.Model} record
-      * @param {HTMLElement} tr The TR element for the cell.
-      * @param {Number} rowIndex
-      * @param {Ext.event.Event} e
-      * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
-      */
+    /**
+     * @event rowkeydown
+     * Fired when the keydown event is captured on the cell.
+     * @param {Ext.view.Table} this
+     * @param {Ext.data.Model} record
+     * @param {HTMLElement} tr The TR element for the cell.
+     * @param {Number} rowIndex
+     * @param {Ext.event.Event} e
+     * @param {Ext.grid.CellContext} e.position A CellContext object which defines the target cell.
+     */
 
-    constructor: function(config) {
+    constructor: function (config) {
         // Adjust our base class if we are inside a TreePanel
         if (config.grid.isTree) {
             config.baseCls = Ext.baseCSSPrefix + 'tree-view';
@@ -619,7 +619,7 @@ Ext.define('Ext.view.Table', {
      * which might insert arbitrary markup into a grid item. Or if at least one visible column has been configured
      * with variableRowHeight. Or if the store is grouped.
      */
-    hasVariableRowHeight: function(fromLockingPartner) {
+    hasVariableRowHeight: function (fromLockingPartner) {
         var me = this;
         return me.variableRowHeight || me.store.isGrouped() || me.getVisibleColumnManager().hasVariableRowHeight() ||
             // If not already called from a locking partner, and there is a locking partner,
@@ -627,7 +627,7 @@ Ext.define('Ext.view.Table', {
             (!fromLockingPartner && me.lockingPartner && me.lockingPartner.hasVariableRowHeight(true));
     },
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
 
         if (me.columnLines) {
@@ -669,7 +669,7 @@ Ext.define('Ext.view.Table', {
      * @private
      * Create a config object for this view's selection model based upon the passed grid's configurations.
      */
-    applySelectionModel: function(selModel, oldSelModel) {
+    applySelectionModel: function (selModel, oldSelModel) {
         var me = this,
             grid = me.ownerGrid,
             defaultType = selModel.type,
@@ -715,7 +715,7 @@ Ext.define('Ext.view.Table', {
         return selModel;
     },
 
-    updateSelectionModel: function(selModel, oldSelModel) {
+    updateSelectionModel: function (selModel, oldSelModel) {
         var me = this;
 
         if (oldSelModel) {
@@ -737,15 +737,15 @@ Ext.define('Ext.view.Table', {
         me.selModel = selModel;
     },
 
-    getVisibleColumnManager: function() {
+    getVisibleColumnManager: function () {
         return this.ownerCt.getVisibleColumnManager();
     },
 
-    getColumnManager: function() {
+    getColumnManager: function () {
         return this.ownerCt.getColumnManager();
     },
 
-    getTopLevelVisibleColumnManager: function() {
+    getTopLevelVisibleColumnManager: function () {
         // ownerGrid refers to the topmost responsible Ext.panel.Grid.
         // This could be this view's ownerCt, or if part of a locking arrangement, the locking grid
         return this.ownerGrid.getVisibleColumnManager();
@@ -758,7 +758,7 @@ Ext.define('Ext.view.Table', {
      * @param {Number} toIdx The index at which to insert columns.
      * @param {Number} [colsToMove=1] The number of columns to move beginning at the `fromIdx`
      */
-    moveColumn: function(fromIdx, toIdx, colsToMove) {
+    moveColumn: function (fromIdx, toIdx, colsToMove) {
         var me = this,
             multiMove = colsToMove > 1,
             range = multiMove && document.createRange ? document.createRange() : null,
@@ -860,7 +860,7 @@ Ext.define('Ext.view.Table', {
      * Add a listener to the main view element. It will be destroyed with the view.
      * @private
      */
-    addElListener: function(eventName, fn, scope){
+    addElListener: function (eventName, fn, scope) {
         this.mon(this, eventName, fn, scope, {
             element: 'el'
         });
@@ -870,7 +870,7 @@ Ext.define('Ext.view.Table', {
      * Get the leaf columns used for rendering the grid rows.
      * @private
      */
-    getGridColumns: function() {
+    getGridColumns: function () {
         return this.ownerCt.getVisibleColumnManager().getColumns();
     },
 
@@ -880,7 +880,7 @@ Ext.define('Ext.view.Table', {
      * @private
      * @param {Number} index The index
      */
-    getHeaderAtIndex: function(index) {
+    getHeaderAtIndex: function (index) {
         return this.ownerCt.getVisibleColumnManager().getHeaderAtIndex(index);
     },
 
@@ -890,7 +890,7 @@ Ext.define('Ext.view.Table', {
      * @param {Ext.grid.column.Column/Number} column
      * @private
      */
-    getCell: function(record, column) {
+    getCell: function (record, column) {
         var row = this.getRow(record);
         if (typeof column === 'number') {
             column = this.getHeaderAtIndex(column);
@@ -903,7 +903,7 @@ Ext.define('Ext.view.Table', {
      * @param {String} id The id of the feature
      * @return {Ext.grid.feature.Feature} The feature. Undefined if not found
      */
-    getFeature: function(id) {
+    getFeature: function (id) {
         var features = this.featuresMC;
         if (features) {
             return features.get(id);
@@ -914,9 +914,9 @@ Ext.define('Ext.view.Table', {
      * @private
      * Finds a features by ftype in the features array
      */
-    findFeature: function(ftype) {
+    findFeature: function (ftype) {
         if (this.features) {
-            return Ext.Array.findBy(this.features, function(feature) {
+            return Ext.Array.findBy(this.features, function (feature) {
                 if (feature.ftype === ftype) {
                     return true;
                 }
@@ -928,7 +928,7 @@ Ext.define('Ext.view.Table', {
      * Initializes each feature and bind it to this view.
      * @private
      */
-    initFeatures: function(grid) {
+    initFeatures: function (grid) {
         var me = this,
             i,
             features,
@@ -936,14 +936,14 @@ Ext.define('Ext.view.Table', {
             len;
 
         // Row container element emitted by tpl
-        me.tpl             = Ext.XTemplate.getTpl(this, 'tpl');
+        me.tpl = Ext.XTemplate.getTpl(this, 'tpl');
 
         // The rowTpl emits a <div>
-        me.rowTpl          = Ext.XTemplate.getTpl(this, 'rowTpl');
+        me.rowTpl = Ext.XTemplate.getTpl(this, 'rowTpl');
         me.addRowTpl(Ext.XTemplate.getTpl(this, 'outerRowTpl'));
 
         // Each cell is emitted by the cellTpl
-        me.cellTpl        = Ext.XTemplate.getTpl(this, 'cellTpl');
+        me.cellTpl = Ext.XTemplate.getTpl(this, 'cellTpl');
 
         me.featuresMC = new Ext.util.MixedCollection();
         features = me.features = me.constructFeatures();
@@ -959,7 +959,7 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    renderTHead: function(values, out, parent) {
+    renderTHead: function (values, out, parent) {
         var headers = values.view.headerFns,
             len, i;
 
@@ -974,7 +974,7 @@ Ext.define('Ext.view.Table', {
     // they will be pushed on at construction time. If the need does arise,
     // we can add this functionality in the future, but for now it's not
     // really necessary since currently only the summary feature uses this.
-    addHeaderFn: function(fn) {
+    addHeaderFn: function (fn) {
         var headers = this.headerFns;
         if (!headers) {
             headers = this.headerFns = [];
@@ -982,7 +982,7 @@ Ext.define('Ext.view.Table', {
         headers.push(fn);
     },
 
-    renderTFoot: function(values, out, parent){
+    renderTFoot: function (values, out, parent) {
         var footers = values.view.footerFns,
             len, i;
 
@@ -993,7 +993,7 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    addFooterFn: function(fn) {
+    addFooterFn: function (fn) {
         var footers = this.footerFns;
         if (!footers) {
             footers = this.footerFns = [];
@@ -1001,19 +1001,19 @@ Ext.define('Ext.view.Table', {
         footers.push(fn);
     },
 
-    addTpl: function(newTpl) {
+    addTpl: function (newTpl) {
         return this.insertTpl('tpl', newTpl);
     },
 
-    addRowTpl: function(newTpl) {
+    addRowTpl: function (newTpl) {
         return this.insertTpl('rowTpl', newTpl);
     },
 
-    addCellTpl: function(newTpl) {
+    addCellTpl: function (newTpl) {
         return this.insertTpl('cellTpl', newTpl);
     },
 
-    insertTpl: function(which, newTpl) {
+    insertTpl: function (which, newTpl) {
         var me = this,
             tpl,
             prevTpl;
@@ -1049,7 +1049,7 @@ Ext.define('Ext.view.Table', {
         return newTpl;
     },
 
-    tplApplyOut: function(values, out, parent) {
+    tplApplyOut: function (values, out, parent) {
         if (this.before) {
             if (this.before(values, out, parent) === false) {
                 return;
@@ -1069,7 +1069,7 @@ Ext.define('Ext.view.Table', {
      *
      * MUST NOT update the this.features property, and MUST NOT update the instantiated Features.
      */
-    constructFeatures: function() {
+    constructFeatures: function () {
         var me = this,
             features = me.features,
             feature,
@@ -1090,26 +1090,26 @@ Ext.define('Ext.view.Table', {
         return result;
     },
 
-    beforeRender: function() {
+    beforeRender: function () {
         this.callParent();
 
         if (!this.enableTextSelection) {
             this.protoEl.unselectable();
         }
     },
-    
-    getElConfig: function() {
+
+    getElConfig: function () {
         var config = this.callParent();
-        
+
         // Table views are special in this regard; they should not have
         // aria-hidden and aria-disabled attributes.
         delete config['aria-hidden'];
         delete config['aria-disabled'];
-        
+
         return config;
     },
-    
-    onBindStore: function(store) {
+
+    onBindStore: function (store) {
         var me = this,
             bufferedRenderer = me.bufferedRenderer;
 
@@ -1127,7 +1127,7 @@ Ext.define('Ext.view.Table', {
         me.callParent(arguments);
     },
 
-    getStoreListeners: function() {
+    getStoreListeners: function () {
         var result = this.callParent();
 
         // The BufferedRenderer handles clearing down the view on its onStoreClear method
@@ -1138,7 +1138,7 @@ Ext.define('Ext.view.Table', {
         return result;
     },
 
-    beforePageRemove: function(pageMap, pageNumber) {
+    beforePageRemove: function (pageMap, pageNumber) {
         var rows = this.all,
             pageSize = pageMap.getPageSize();
 
@@ -1153,46 +1153,46 @@ Ext.define('Ext.view.Table', {
      * @private
      * Template method implemented starting at the AbstractView class.
      */
-    onViewScroll: function(scroller, x, y) {
+    onViewScroll: function (scroller, x, y) {
         // We ignore scrolling caused by focusing
         if (!this.ignoreScroll) {
             this.callParent([scroller, x, y]);
         }
     },
 
-    /** 
+    /**
      * @private
      * Create the DOM element which enapsulates the passed record.
      * Used when updating existing rows, so drills down into resulting structure.
      */
-    createRowElement: function(record, index, updateColumns) {
+    createRowElement: function (record, index, updateColumns) {
         var me = this,
             div = me.renderBuffer,
             tplData = me.collectData([record], index);
 
         tplData.columns = updateColumns;
         me.tpl.overwrite(div, tplData);
-        
+
         // We don't want references to be retained on the prototype
         me.cleanupData();
-        
+
         // Return first element within node containing element
         return Ext.fly(div).down(me.getNodeContainerSelector(), true).firstChild;
     },
 
-    /** 
+    /**
      * @private
      * Override so that we can use a quicker way to access the row nodes.
      * They are simply all child nodes of the nodeContainer element.
      */
-    bufferRender: function(records, index) {
+    bufferRender: function (records, index) {
         var me = this,
             div = me.renderBuffer,
             result,
             range = document.createRange ? document.createRange() : null;
 
         me.tpl.overwrite(div, me.collectData(records, index));
-        
+
         // We don't want references to be retained on the prototype
         me.cleanupData();
 
@@ -1212,14 +1212,14 @@ Ext.define('Ext.view.Table', {
                 result.appendChild(div.firstChild);
             }
         }
-        
+
         return {
             fragment: result,
             children: Ext.Array.toArray(result.childNodes)
         };
     },
 
-    collectData: function(records, startIndex) {
+    collectData: function (records, startIndex) {
         var me = this;
 
         me.rowValues.view = me;
@@ -1230,18 +1230,18 @@ Ext.define('Ext.view.Table', {
         me.tableValues.viewStartIndex = startIndex;
         me.tableValues.touchScroll = me.touchScroll;
         me.tableValues.tableStyle = 'width:' + me.headerCt.getTableWidth() + 'px';
-        
+
         return me.tableValues;
     },
-    
-    cleanupData: function() {
+
+    cleanupData: function () {
         var tableValues = this.tableValues;
 
         // Clean up references on the prototype
         tableValues.view = tableValues.columns = tableValues.rows = this.rowValues.view = null;
     },
 
-    /** 
+    /**
      * @private. Called when the table changes height.
      * For example, see examples/grid/group-summary-grid.html
      * If we have flexed column headers, we need to update the header layout
@@ -1249,7 +1249,7 @@ Ext.define('Ext.view.Table', {
      * Only do this on platforms which have a space-consuming scrollbar.
      * Only do it when vertical scrolling is enabled.
      */
-    refreshSize: function(forceLayout) {
+    refreshSize: function (forceLayout) {
         var me = this,
             bodySelector = me.getBodySelector();
 
@@ -1279,14 +1279,14 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    clearViewEl: function(leaveNodeContainer) {
+    clearViewEl: function (leaveNodeContainer) {
         var me = this,
             all = me.all,
             store = me.getStore(),
             i, nodeContainer, targetEl,
             removedItems = all.slice(),
             removedRecs = [];
-        
+
         // The purpose of this is to allow boilerplate HTML nodes to remain in place inside a View
         // while the transient, templated data can be discarded and recreated.
         // 
@@ -1297,7 +1297,7 @@ Ext.define('Ext.view.Table', {
         // view. This is so that widgets rendered into a view by a WidgetColumn can be recycled.
         if (me.hasListeners.itemremove) {
             for (i = all.startIndex; i <= all.endIndex; i++) {
-                removedRecs.push(store.getByInternalId(all.item(i, true).getAttribute('data-recordId')));  
+                removedRecs.push(store.getByInternalId(all.item(i, true).getAttribute('data-recordId')));
             }
         }
         me.fireEvent('itemremove', removedRecs, all.startIndex, removedItems, me);
@@ -1315,19 +1315,19 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    getMaskTarget: function() {
+    getMaskTarget: function () {
         // Masking a TableView masks its IMMEDIATE parent GridPanel's body.
         // Disabling/enabling a locking view relays the call to both child views.
         return this.ownerCt.body;
     },
 
     statics: {
-        getBoundView: function(node) {
+        getBoundView: function (node) {
             return Ext.getCmp(node.getAttribute('data-boundView'));
         }
     },
 
-    getRecord: function(node) {
+    getRecord: function (node) {
         // If store.destroy has been called before some delayed event fires on a node, we must ignore the event.
         if (this.store.destroyed) {
             return;
@@ -1345,7 +1345,7 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    indexOf: function(node) {
+    indexOf: function (node) {
         node = this.getNode(node);
         if (!node && node !== 0) {
             return -1;
@@ -1353,13 +1353,13 @@ Ext.define('Ext.view.Table', {
         return this.all.indexOf(node);
     },
 
-    indexInStore: function(node) {
+    indexInStore: function (node) {
         // We cannot use the stamped in data-recordindex because that is the index in the original configured store
         // NOT the index in the dataSource that is being used - that may be a GroupStore.
         return node ? this.dataSource.indexOf(this.getRecord(node)) : -1;
     },
 
-    indexOfRow: function(record) {
+    indexOfRow: function (record) {
         var dataSource = this.dataSource,
             idx;
 
@@ -1371,7 +1371,7 @@ Ext.define('Ext.view.Table', {
         return idx;
     },
 
-    renderRows: function(rows, columns, viewStartIndex, out) {
+    renderRows: function (rows, columns, viewStartIndex, out) {
         var me = this,
             rowValues = me.rowValues,
             rowCount = rows.length,
@@ -1379,7 +1379,7 @@ Ext.define('Ext.view.Table', {
 
         rowValues.view = me;
         rowValues.columns = columns;
-        
+
         // The roles are the same for all data rows and cells
         rowValues.rowRole = me.rowAriaRole;
         me.cellValues.cellRole = me.cellAriaRole;
@@ -1394,22 +1394,22 @@ Ext.define('Ext.view.Table', {
     },
 
     /* Alternative column sizer element renderer.
-    renderTHeadColumnSizer: function(values, out) {
-        var columns = this.getGridColumns(),
-            len = columns.length, i,
-            column, width;
+     renderTHeadColumnSizer: function(values, out) {
+     var columns = this.getGridColumns(),
+     len = columns.length, i,
+     column, width;
 
-        out.push('<thead><tr class="' + Ext.baseCSSPrefix + 'grid-header-row">');
-        for (i = 0; i < len; i++) {
-            column = columns[i];
-            width = column.lastBox ? column.lastBox.width : Ext.grid.header.Container.prototype.defaultWidth;
-            out.push('<th class="', Ext.baseCSSPrefix, 'grid-cell-', columns[i].getItemId(), '" style="width:' + width + 'px"></th>');
-        }
-        out.push('</tr></thead>');
-    },
-    */
+     out.push('<thead><tr class="' + Ext.baseCSSPrefix + 'grid-header-row">');
+     for (i = 0; i < len; i++) {
+     column = columns[i];
+     width = column.lastBox ? column.lastBox.width : Ext.grid.header.Container.prototype.defaultWidth;
+     out.push('<th class="', Ext.baseCSSPrefix, 'grid-cell-', columns[i].getItemId(), '" style="width:' + width + 'px"></th>');
+     }
+     out.push('</tr></thead>');
+     },
+     */
 
-    renderColumnSizer: function(values, out) {
+    renderColumnSizer: function (values, out) {
         var columns = values.columns || this.getGridColumns(),
             len = columns.length, i,
             column, width;
@@ -1433,7 +1433,7 @@ Ext.define('Ext.view.Table', {
      * the resulting HTML string is returned.
      * @return {String} **only when the out parameter is omitted** The resulting HTML string.
      */
-    renderRow: function(record, rowIdx, out) {
+    renderRow: function (record, rowIdx, out) {
         var me = this,
             isMetadataRecord = rowIdx === -1,
             selModel = me.selectionModel,
@@ -1602,7 +1602,7 @@ Ext.define('Ext.view.Table', {
      * to return the top level row.
      * @return {HTMLElement} The node or null if it wasn't found
      */
-    getRow: function(nodeInfo) {
+    getRow: function (nodeInfo) {
         var fly;
 
         if ((!nodeInfo && nodeInfo !== 0) || !this.rendered) {
@@ -1615,7 +1615,7 @@ Ext.define('Ext.view.Table', {
         }
         // An id
         if (Ext.isString(nodeInfo)) {
-            return Ext.fly(nodeInfo).down(this.rowSelector,true);
+            return Ext.fly(nodeInfo).down(this.rowSelector, true);
         }
         // Row index
         if (Ext.isNumber(nodeInfo)) {
@@ -1627,7 +1627,7 @@ Ext.define('Ext.view.Table', {
             return this.getRowByRecord(nodeInfo);
         }
         fly = Ext.fly(nodeInfo);
-        
+
         // Passed an item, go down and get the row
         if (fly.is(this.itemSelector)) {
             return this.getRowFromItem(fly);
@@ -1637,33 +1637,33 @@ Ext.define('Ext.view.Table', {
         return fly.findParent(this.rowSelector, this.getTargetEl()); // already an HTMLElement
     },
 
-    getRowId: function(record){
+    getRowId: function (record) {
         return this.id + '-record-' + record.internalId;
     },
 
-    constructRowId: function(internalId){
+    constructRowId: function (internalId) {
         return this.id + '-record-' + internalId;
     },
 
-    getNodeById: function(id){
+    getNodeById: function (id) {
         id = this.constructRowId(id);
         return this.retrieveNode(id, false);
     },
 
-    getRowById: function(id){
+    getRowById: function (id) {
         id = this.constructRowId(id);
         return this.retrieveNode(id, true);
     },
 
-    getNodeByRecord: function(record) {
+    getNodeByRecord: function (record) {
         return this.retrieveNode(this.getRowId(record), false);
     },
 
-    getRowByRecord: function(record) {
+    getRowByRecord: function (record) {
         return this.retrieveNode(this.getRowId(record), true);
     },
 
-    getRowFromItem: function(item) {
+    getRowFromItem: function (item) {
         var rows = Ext.getDom(item).tBodies[0].childNodes,
             len = rows.length,
             i;
@@ -1675,7 +1675,7 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    retrieveNode: function(id, dataRow){
+    retrieveNode: function (id, dataRow) {
         var result = this.el.getById(id, true);
 
         if (dataRow && result) {
@@ -1712,7 +1712,7 @@ Ext.define('Ext.view.Table', {
     /**
      * Returns a CSS selector which selects the outermost element(s) in this view.
      */
-    getBodySelector: function() {
+    getBodySelector: function () {
         return this.bodySelector;
     },
 
@@ -1722,7 +1722,7 @@ Ext.define('Ext.view.Table', {
      * This is used by the {@link Ext.view.TableLayout} when resizing columns.
      *
      */
-    getColumnSizerSelector: function(header) {
+    getColumnSizerSelector: function (header) {
         var selector = this.sizerSelector + '-' + header.getItemId();
 
         return 'td' + selector + ',col' + selector;
@@ -1731,7 +1731,7 @@ Ext.define('Ext.view.Table', {
     /**
      * Returns a CSS selector which selects items of the view rendered by the outerRowTpl
      */
-    getItemSelector: function() {
+    getItemSelector: function () {
         return this.itemSelector;
     },
 
@@ -1743,14 +1743,14 @@ Ext.define('Ext.view.Table', {
      * omitted, the general cell selector which matches **ant cell** will be returned.
      *
      */
-    getCellSelector: function(header) {
+    getCellSelector: function (header) {
         return header ? header.getCellSelector() : this.cellSelector;
     },
 
     /*
      * Returns a CSS selector which selects the content carrying element within cells.
      */
-    getCellInnerSelector: function(header) {
+    getCellInnerSelector: function (header) {
         return this.getCellSelector(header) + ' ' + this.innerSelector;
     },
 
@@ -1760,7 +1760,7 @@ Ext.define('Ext.view.Table', {
      * representing this row
      * @param {String} cls
      */
-    addRowCls: function(rowInfo, cls) {
+    addRowCls: function (rowInfo, cls) {
         var row = this.getRow(rowInfo);
         if (row) {
             Ext.fly(row).addCls(cls);
@@ -1773,7 +1773,7 @@ Ext.define('Ext.view.Table', {
      * representing this row
      * @param {String} cls
      */
-    removeRowCls: function(rowInfo, cls) {
+    removeRowCls: function (rowInfo, cls) {
         var row = this.getRow(rowInfo);
         if (row) {
             Ext.fly(row).removeCls(cls);
@@ -1781,14 +1781,14 @@ Ext.define('Ext.view.Table', {
     },
 
     // GridSelectionModel invokes onRowSelect as selection changes
-    onRowSelect: function(rowIdx) {
+    onRowSelect: function (rowIdx) {
         var me = this,
             rowNode;
 
         me.addItemCls(rowIdx, me.selectedItemCls);
-        
+
         rowNode = me.getRow(rowIdx);
-        
+
         if (rowNode) {
             rowNode.setAttribute('aria-selected', true);
         }
@@ -1801,14 +1801,14 @@ Ext.define('Ext.view.Table', {
     },
 
     // GridSelectionModel invokes onRowDeselect as selection changes
-    onRowDeselect: function(rowIdx) {
+    onRowDeselect: function (rowIdx) {
         var me = this,
             rowNode;
 
         me.removeItemCls(rowIdx, me.selectedItemCls);
-        
+
         rowNode = me.getRow(rowIdx);
-        
+
         if (rowNode) {
             rowNode.removeAttribute('aria-selected');
         }
@@ -1820,18 +1820,18 @@ Ext.define('Ext.view.Table', {
         //</feature>
     },
 
-    onCellSelect: function(position) {
+    onCellSelect: function (position) {
         var cell = this.getCellByPosition(position);
-        
+
         if (cell) {
             cell.addCls(this.selectedCellCls);
             cell.dom.setAttribute('aria-selected', true);
         }
     },
 
-    onCellDeselect: function(position) {
+    onCellDeselect: function (position) {
         var cell = this.getCellByPosition(position, true);
-        
+
         if (cell) {
             Ext.fly(cell).removeCls(this.selectedCellCls);
             cell.removeAttribute('aria-selected');
@@ -1840,9 +1840,9 @@ Ext.define('Ext.view.Table', {
 
     // Old API. Used by tests now to test coercion of navigation from hidden column to closest visible.
     // Position.column includes all columns including hidden ones.
-    getCellInclusive: function(position, returnDom) {
+    getCellInclusive: function (position, returnDom) {
         if (position) {
-            var row   = this.getRow(position.row),
+            var row = this.getRow(position.row),
                 header = this.ownerCt.getColumnManager().getHeaderAtIndex(position.column);
 
             if (header && row) {
@@ -1852,10 +1852,10 @@ Ext.define('Ext.view.Table', {
         return false;
     },
 
-    getCellByPosition: function(position, returnDom) {
+    getCellByPosition: function (position, returnDom) {
         if (position) {
             var view = position.view || this,
-                row   = view.getRow(position.record || position.row),
+                row = view.getRow(position.record || position.row),
                 header = position.column.isColumn ? position.column : view.getVisibleColumnManager().getHeaderAtIndex(position.column);
 
             if (header && row) {
@@ -1865,7 +1865,7 @@ Ext.define('Ext.view.Table', {
         return false;
     },
 
-    onFocusEnter: function(e) {
+    onFocusEnter: function (e) {
         var me = this,
             fromComponent = e.fromComponent,
             navigationModel = me.getNavigationModel(),
@@ -1952,7 +1952,7 @@ Ext.define('Ext.view.Table', {
                 if (!focusPosition) {
                     e.stopEvent();
                     me.el.focus();
-                    
+
                     return;
                 }
             }
@@ -1977,10 +1977,10 @@ Ext.define('Ext.view.Table', {
         Ext.Component.prototype.onFocusEnter.call(me, e);
     },
 
-    onFocusLeave: function(e) {
+    onFocusLeave: function (e) {
         var me = this,
-            // See if focus is really leaving the grid.
-            // If we have a locking partner, and focus is going to that, we're NOT leaving the grid.
+        // See if focus is really leaving the grid.
+        // If we have a locking partner, and focus is going to that, we're NOT leaving the grid.
             isLeavingGrid = !me.lockingPartner || !e.toComponent || (e.toComponent !== me.lockingPartner && !me.lockingPartner.isAncestor(e.toComponent));
 
         // If the blur was caused by a refresh, we expect things to be refocused.
@@ -2018,7 +2018,7 @@ Ext.define('Ext.view.Table', {
 
     // GridSelectionModel invokes onRowFocus to 'highlight'
     // the last row focused
-    onRowFocus: function(rowIdx, highlight, supressFocus) {
+    onRowFocus: function (rowIdx, highlight, supressFocus) {
         var me = this;
 
         if (highlight) {
@@ -2044,7 +2044,7 @@ Ext.define('Ext.view.Table', {
      * @param {Boolean/Number} [delay] Delay the focus this number of milliseconds (true for 10 milliseconds).
      * record associated with the node.
      */
-    focusRow: function(row, delay) {
+    focusRow: function (row, delay) {
         var me = this,
             focusTask = me.getFocusTask();
 
@@ -2070,11 +2070,11 @@ Ext.define('Ext.view.Table', {
      * @param {Boolean/Number} [delay] Delay the focus this number of milliseconds (true for 10 milliseconds).
      * record associated with the node.
      */
-    focusNode: function(row, delay) {
+    focusNode: function (row, delay) {
         this.focusRow(row, delay);
     },
 
-    scrollRowIntoView: function(row, animate) {
+    scrollRowIntoView: function (row, animate) {
         row = this.getRow(row);
         if (row) {
             this.scrollElIntoView(row, false, animate);
@@ -2086,7 +2086,7 @@ Ext.define('Ext.view.Table', {
      * @param {Ext.grid.CellContext} pos The cell to select
      * @param {Boolean/Number} [delay] Delay the focus this number of milliseconds (true for 10 milliseconds).
      */
-    focusCell: function(position, delay) {
+    focusCell: function (position, delay) {
         var me = this,
             cell,
             focusTask = me.getFocusTask();
@@ -2106,8 +2106,8 @@ Ext.define('Ext.view.Table', {
             me.getNavigationModel().setPosition(position);
         }
     },
-    
-    getLastFocused: function() {
+
+    getLastFocused: function () {
         var me = this,
             lastFocused = me.lastFocused;
 
@@ -2120,7 +2120,7 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    scrollCellIntoView: function(cell, animate) {
+    scrollCellIntoView: function (cell, animate) {
         if (cell.isCellContext) {
             cell = this.getCellByPosition(cell);
         }
@@ -2129,7 +2129,7 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    scrollElIntoView: function(el, hscroll, animate) {
+    scrollElIntoView: function (el, hscroll, animate) {
         var scroller = this.getScrollable();
 
         if (scroller) {
@@ -2188,7 +2188,7 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    handleUpdate: function(store, record, operation, changedFieldNames) {
+    handleUpdate: function (store, record, operation, changedFieldNames) {
         operation = operation || Ext.data.Model.EDIT;
         var me = this,
             recordIndex = me.store.indexOf(record),
@@ -2280,8 +2280,8 @@ Ext.define('Ext.view.Table', {
                 // or one or more columns has a custom renderer
                 // or there's more than one <TR>, we must use the full render pathway to create a whole new TableView item
                 if (me.getRowClass || !me.getRowFromItem(oldItemDom) ||
-                        (updateTypeFlags & 1) || // jshint ignore:line
-                        (oldItemDom.tBodies[0].childNodes.length > 1)) {
+                    (updateTypeFlags & 1) || // jshint ignore:line
+                    (oldItemDom.tBodies[0].childNodes.length > 1)) {
                     elData = oldItemDom._extData;
                     newItemDom = me.createRowElement(record, me.indexOfRow(record), columnsToUpdate);
                     if (Ext.fly(oldItemDom, '_internal').hasCls(overItemCls)) {
@@ -2361,7 +2361,7 @@ Ext.define('Ext.view.Table', {
                         else {
                             if (column.renderer) {
                                 value = Ext.callback(column.renderer, scope,
-                                        [value, null, record, 0, 0, me.dataSource, me], 0, column, ownerCt);
+                                    [value, null, record, 0, 0, me.dataSource, me], 0, column, ownerCt);
                             }
 
                             emptyValue = value == null || value === '';
@@ -2428,11 +2428,11 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    afterComponentLayout: function() {
+    afterComponentLayout: function () {
         var scroller;
-        
+
         this.callParent(arguments);
-        
+
         // BufferedRenderer gets a pair of calls bracketting a component layout
         // which enables it to calsulate its scroll range and update the scroller.
         // If no BufferedRenderer, we do it here.
@@ -2441,12 +2441,12 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    clearChangedCells: function() {
+    clearChangedCells: function () {
         var me = this,
             now = Ext.Date.now(),
             changedCell;
 
-        for (var i = 0, len = me.changedCells.length; i < len; ) {
+        for (var i = 0, len = me.changedCells.length; i < len;) {
             changedCell = me.changedCells[i];
             if (changedCell.expires <= now) {
                 Ext.fly(changedCell.cell).removeCls(changedCell.highlightClass);
@@ -2463,7 +2463,7 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    updateColumns: function(oldRowDom, newRowDom, columnsToUpdate) {
+    updateColumns: function (oldRowDom, newRowDom, columnsToUpdate) {
         var me = this,
             newAttrs, attLen, attName, attrIndex,
             colCount = columnsToUpdate.length,
@@ -2472,20 +2472,20 @@ Ext.define('Ext.view.Table', {
             oldCell, newCell,
             cellSelector = me.getCellSelector();
 
-            // Copy new row attributes across. Use IE-specific method if possible.
-            // Must do again at this level because the row DOM passed here may be the nested row in a row wrap.
-            if (oldRowDom.mergeAttributes) {
-                oldRowDom.mergeAttributes(newRowDom, true);
-            } else {
-                newAttrs = newRowDom.attributes;
-                attLen = newAttrs.length;
-                for (attrIndex = 0; attrIndex < attLen; attrIndex++) {
-                    attName = newAttrs[attrIndex].name;
-                    if (attName !== 'id') {
-                        oldRowDom.setAttribute(attName, newAttrs[attrIndex].value);
-                    }
+        // Copy new row attributes across. Use IE-specific method if possible.
+        // Must do again at this level because the row DOM passed here may be the nested row in a row wrap.
+        if (oldRowDom.mergeAttributes) {
+            oldRowDom.mergeAttributes(newRowDom, true);
+        } else {
+            newAttrs = newRowDom.attributes;
+            attLen = newAttrs.length;
+            for (attrIndex = 0; attrIndex < attLen; attrIndex++) {
+                attName = newAttrs[attrIndex].name;
+                if (attName !== 'id') {
+                    oldRowDom.setAttribute(attName, newAttrs[attrIndex].value);
                 }
             }
+        }
 
         // Replace changed cells in the existing row structure with the new version from the rendered row.
         for (colIndex = 0; colIndex < colCount; colIndex++) {
@@ -2509,14 +2509,14 @@ Ext.define('Ext.view.Table', {
      * 1 = Column needs update, and renderer has > 1 argument; We need to render a whole new HTML item.
      * 2 = Column needs update, but renderer has 1 argument or column uses an updater.
      */
-    shouldUpdateCell: function(record, column, changedFieldNames) {
+    shouldUpdateCell: function (record, column, changedFieldNames) {
         return column.shouldUpdateCell(record, changedFieldNames);
     },
 
     /**
      * Refreshes the grid view. Sets the sort state and focuses the previously focused row.
      */
-    refresh: function() {
+    refresh: function () {
         var me = this,
             scroller,
             restoreFocus = me.saveFocusState();
@@ -2545,16 +2545,16 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    processContainerEvent: function(e) {
+    processContainerEvent: function (e) {
         // If we find a component & it belongs to our grid, don't fire the event.
         // For example, grid editors resolve to the parent grid
         var cmp = Ext.Component.fromElement(e.target.parentNode);
         if (cmp && cmp.up(this.ownerCt)) {
             return false;
-        } 
+        }
     },
 
-    processItemEvent: function(record, item, rowIndex, e) {
+    processItemEvent: function (record, item, rowIndex, e) {
         var me = this,
             self = me.self,
             map = self.EventMap,
@@ -2655,7 +2655,7 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    processSpecialEvent: function(e) {
+    processSpecialEvent: function (e) {
         var me = this,
             features = me.features,
             ln = features.length,
@@ -2684,13 +2684,13 @@ Ext.define('Ext.view.Table', {
 
                     if (
                         // before view event
-                        (me.fireEvent.apply(me, beforeArgs) === false) ||
-                        // panel grid event
-                        (panel.fireEvent.apply(panel, beforeArgs) === false) ||
-                        // view event
-                        (me.fireEvent.apply(me, args) === false) ||
-                        // panel event
-                        (panel.fireEvent.apply(panel, args) === false)
+                    (me.fireEvent.apply(me, beforeArgs) === false) ||
+                    // panel grid event
+                    (panel.fireEvent.apply(panel, beforeArgs) === false) ||
+                    // view event
+                    (me.fireEvent.apply(me, args) === false) ||
+                    // panel event
+                    (panel.fireEvent.apply(panel, args) === false)
                     ) {
                         return false;
                     }
@@ -2723,7 +2723,7 @@ Ext.define('Ext.view.Table', {
      * Expands a particular header to fit the max content width.
      * @deprecated Use {@link #autoSizeColumn} instead.
      */
-    expandToFit: function(header) {
+    expandToFit: function (header) {
         this.autoSizeColumn(header);
     },
 
@@ -2733,7 +2733,7 @@ Ext.define('Ext.view.Table', {
      * autosizes descendant leaf columns.*
      * @param {Ext.grid.column.Column/Number} header The header (or index of header) to auto size.
      */
-    autoSizeColumn: function(header) {
+    autoSizeColumn: function (header) {
         if (Ext.isNumber(header)) {
             header = this.getGridColumns()[header];
         }
@@ -2752,7 +2752,7 @@ Ext.define('Ext.view.Table', {
      * in the grid under this header.
      * @private
      */
-    getMaxContentWidth: function(header) {
+    getMaxContentWidth: function (header) {
         var me = this,
             cells = me.el.query(header.getCellInnerSelector()),
             originalWidth = header.getWidth(),
@@ -2810,17 +2810,17 @@ Ext.define('Ext.view.Table', {
         return maxWidth;
     },
 
-    getPositionByEvent: function(e) {
-        var me       = this,
+    getPositionByEvent: function (e) {
+        var me = this,
             cellNode = e.getTarget(me.cellSelector),
-            rowNode  = e.getTarget(me.itemSelector),
-            record   = me.getRecord(rowNode),
-            header   = me.getHeaderByCell(cellNode);
+            rowNode = e.getTarget(me.itemSelector),
+            record = me.getRecord(rowNode),
+            header = me.getHeaderByCell(cellNode);
 
         return me.getPosition(record, header);
     },
 
-    getHeaderByCell: function(cell) {
+    getHeaderByCell: function (cell) {
         if (cell) {
             return this.ownerCt.getVisibleColumnManager().getHeaderById(Ext.getDom(cell).getAttribute('data-columnId'));
         }
@@ -2838,13 +2838,13 @@ Ext.define('Ext.view.Table', {
      *
      * @private
      */
-    walkCells: function(pos, direction, verifierFn, scope) {
-        var me              = this,
-            result          = pos.clone(),
-            lockingPartner  = me.lockingPartner && me.lockingPartner.grid.isVisible() ? me.lockingPartner : null,
-            rowIdx          = pos.rowIdx,
-            maxRowIdx       = me.dataSource.getCount() - 1,
-            columns         = me.ownerCt.getVisibleColumnManager().getColumns();
+    walkCells: function (pos, direction, verifierFn, scope) {
+        var me = this,
+            result = pos.clone(),
+            lockingPartner = me.lockingPartner && me.lockingPartner.grid.isVisible() ? me.lockingPartner : null,
+            rowIdx = pos.rowIdx,
+            maxRowIdx = me.dataSource.getCount() - 1,
+            columns = me.ownerCt.getVisibleColumnManager().getColumns();
 
         switch (direction.toLowerCase()) {
             case 'right':
@@ -2900,7 +2900,7 @@ Ext.define('Ext.view.Table', {
                 // if top row, deny up
                 if (rowIdx === 0) {
                     return false;
-                // go up
+                    // go up
                 } else {
                     result.setRow(rowIdx - 1);
                 }
@@ -2910,7 +2910,7 @@ Ext.define('Ext.view.Table', {
                 // if bottom row, deny down
                 if (rowIdx === maxRowIdx) {
                     return false;
-                // go down
+                    // go down
                 } else {
                     result.setRow(rowIdx + 1);
                 }
@@ -2935,7 +2935,7 @@ Ext.define('Ext.view.Table', {
      * @deprecated 5.5.0
      * @private
      */
-    walkRows: function(startRow, distance) {
+    walkRows: function (startRow, distance) {
         // Note that we use the **dataSource** here because row indices mean view row indices
         // so records in collapsed groups must be omitted.
         var me = this,
@@ -2975,7 +2975,7 @@ Ext.define('Ext.view.Table', {
      * @param {Ext.data.Model} startRec The Record to start from.
      * @param {Number} distance The distance to move from the record. May be +ve or -ve.
      */
-    walkRecs: function(startRec, distance) {
+    walkRecs: function (startRec, distance) {
         // Note that we use the **store** to access the records by index because the dataSource omits records in collapsed groups.
         // This is used by selection models which use the **store**
         var me = this,
@@ -3007,13 +3007,13 @@ Ext.define('Ext.view.Table', {
         } while (moved !== distance);
         return lastValid;
     },
-    
+
     /**
      * Returns the index of the first row in your table view deemed to be visible.
      * @return {Number}
      * @private
      */
-    getFirstVisibleRowIndex: function() {
+    getFirstVisibleRowIndex: function () {
         var me = this,
             count = (me.dataSource.isBufferedStore ? me.dataSource.getTotalCount() : me.dataSource.getCount()),
             result = me.indexOf(me.all.first()) - 1;
@@ -3032,7 +3032,7 @@ Ext.define('Ext.view.Table', {
      * @return {Number}
      * @private
      */
-    getLastVisibleRowIndex: function() {
+    getLastVisibleRowIndex: function () {
         var me = this,
             result = me.indexOf(me.all.last());
 
@@ -3045,15 +3045,15 @@ Ext.define('Ext.view.Table', {
         return result;
     },
 
-    getHeaderCt: function() {
+    getHeaderCt: function () {
         return this.headerCt;
     },
 
-    getPosition: function(record, header) {
+    getPosition: function (record, header) {
         return new Ext.grid.CellContext(this).setPosition(record, header);
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         var me = this,
             features = me.featuresMC,
             len,
@@ -3064,26 +3064,26 @@ Ext.define('Ext.view.Table', {
                 features.getAt(i).destroy();
             }
         }
-        
+
         me.cellFly = me.featuresMC = null;
-        
+
         me.callParent(arguments);
-        
+
         me.all.destroy();
         me.body.destroy();
         me.all = me.body = me.body.el = null;
-        
+
         me.grid = me.ownerGrid = me.headerCt = me.panel = null;
         me.selection = me.actionPosition = me.eventPosition = me.lastFocused = null;
         me.actionRow = me.cellTpl = me.rowTpl = me.bufferedRenderer = null;
     },
 
-    /** 
+    /**
      * @private.
      * Respond to store replace event which is fired by GroupStore group expand/collapse operations.
      * This saves a layout because a remove and add operation are coalesced in this operation.
      */
-    onReplace: function(store, startIndex, oldRecords, newRecords) {
+    onReplace: function (store, startIndex, oldRecords, newRecords) {
         var me = this,
             bufferedRenderer = me.bufferedRenderer,
             restoreFocus;
@@ -3103,7 +3103,7 @@ Ext.define('Ext.view.Table', {
         me.setPendingStripe(startIndex);
     },
 
-    onResize: function(width, height, oldWidth, oldHeight) {
+    onResize: function (width, height, oldWidth, oldHeight) {
         var me = this,
             bufferedRenderer = me.bufferedRenderer;
 
@@ -3116,7 +3116,7 @@ Ext.define('Ext.view.Table', {
     },
 
     // after adding a row stripe rows from then on
-    onAdd: function(store, records, index) {
+    onAdd: function (store, records, index) {
         var me = this,
             bufferedRenderer = me.bufferedRenderer;
 
@@ -3124,7 +3124,7 @@ Ext.define('Ext.view.Table', {
         // That is if the rendered block has been moved down the dataset, or
         // the addition will tip the rendered block size over the buffered renderer's calculated viewSize.
         if (me.rendered && bufferedRenderer && (bufferedRenderer.bodyTop || me.dataSource.getCount() + records.length >= bufferedRenderer.viewSize)) {
-             bufferedRenderer.onReplace(store, index, [], records);
+            bufferedRenderer.onReplace(store, index, [], records);
         } else {
             me.callParent(arguments);
         }
@@ -3132,7 +3132,7 @@ Ext.define('Ext.view.Table', {
     },
 
     // after removing a row stripe rows from then on
-    onRemove: function(store, records, index) {
+    onRemove: function (store, records, index) {
         var me = this,
             bufferedRenderer = me.bufferedRenderer,
             restoreFocus;
@@ -3164,7 +3164,7 @@ Ext.define('Ext.view.Table', {
      * @returns {Function} A function that will restore focus if focus was within this view,
      * or a function which does nothing is focus is not in this view.
      */
-    saveFocusState: function() {
+    saveFocusState: function () {
         var me = this,
             store = me.dataSource,
             actionableMode = me.actionableMode,
@@ -3192,7 +3192,7 @@ Ext.define('Ext.view.Table', {
 
             // The following function will attempt to refocus back in the same mode to the same cell
             // as it was at before based upon the previous record (if it's still inthe store), or the row index.
-            return function() {
+            return function () {
                 // If we still have data, attempt to refocus in the same mode.
                 if (store.getCount()) {
 
@@ -3201,7 +3201,7 @@ Ext.define('Ext.view.Table', {
                     refocusRow = Math.min(focusPosition.rowIdx, me.all.getCount() - 1);
                     refocusCol = Math.min(focusPosition.colIdx, me.getVisibleColumnManager().getColumns().length - 1);
                     focusPosition = new Ext.grid.CellContext(me).setPosition(
-                            store.contains(focusPosition.record) ? focusPosition.record : refocusRow, refocusCol);
+                        store.contains(focusPosition.record) ? focusPosition.record : refocusRow, refocusCol);
 
                     if (actionableMode) {
                         me.ownerGrid.setActionableMode(true, focusPosition);
@@ -3219,8 +3219,8 @@ Ext.define('Ext.view.Table', {
         }
         return Ext.emptyFn;
     },
-    
-    onDataRefresh: function(store) {
+
+    onDataRefresh: function (store) {
         // When there's a buffered renderer present, store refresh events cause TableViews to
         // go to scrollTop:0
         var me = this,
@@ -3235,7 +3235,7 @@ Ext.define('Ext.view.Table', {
         me.callParent([store]);
     },
 
-    getViewRange: function() {
+    getViewRange: function () {
         var me = this;
 
         if (me.bufferedRenderer) {
@@ -3244,24 +3244,24 @@ Ext.define('Ext.view.Table', {
         return me.callParent();
     },
 
-    setPendingStripe: function(index) {
+    setPendingStripe: function (index) {
         var current = this.stripeOnUpdate;
         if (current === null) {
-            current = index; 
+            current = index;
         } else {
             current = Math.min(current, index);
         }
         this.stripeOnUpdate = current;
     },
-    
-    onEndUpdate: function() {
+
+    onEndUpdate: function () {
         var me = this,
             stripeOnUpdate = me.stripeOnUpdate,
             startIndex = me.all.startIndex;
-        
+
         if (me.rendered && (stripeOnUpdate || stripeOnUpdate === 0)) {
             if (stripeOnUpdate < startIndex) {
-              stripeOnUpdate = startIndex;
+                stripeOnUpdate = startIndex;
             }
             me.doStripeRows(stripeOnUpdate);
             me.stripeOnUpdate = null;
@@ -3276,7 +3276,7 @@ Ext.define('Ext.view.Table', {
      * By default process up to the last row.
      * @private
      */
-    doStripeRows: function(startRow, endRow) {
+    doStripeRows: function (startRow, endRow) {
         var me = this,
             rows,
             rowsLn,
@@ -3300,11 +3300,11 @@ Ext.define('Ext.view.Table', {
         }
     },
 
-    hasActiveFeature: function(){
+    hasActiveFeature: function () {
         return (this.isGrouping && this.store.isGrouped()) || this.isRowWrapped;
     },
 
-    getCellPaddingAfter: function(cell) {
+    getCellPaddingAfter: function (cell) {
         return Ext.fly(cell).getPadding('r');
     },
 
@@ -3329,18 +3329,18 @@ Ext.define('Ext.view.Table', {
          * Note that these may be wrapping rows which *contain* rows which map to records
          * @private
          */
-        collectNodes: function(targetEl) {
+        collectNodes: function (targetEl) {
             this.all.fill(this.getNodeContainer().childNodes, this.all.startIndex);
         },
 
         /**
-         * 
+         *
          * @param {Boolean} enabled
          * @param {Ext.grid.CellContext} position
          * @return {Boolean} Returns `false` if the mode did not change.
          * @private
          */
-        setActionableMode: function(enabled, position) {
+        setActionableMode: function (enabled, position) {
             var me = this,
                 navModel = me.getNavigationModel(),
                 focusRow,
@@ -3375,9 +3375,9 @@ Ext.define('Ext.view.Table', {
                 if (position && (position.view === me || (position.view === (lockingPartner = me.lockingPartner) && lockingPartner.actionableMode))) {
                     position = position.clone();
                     record = position.record;
-                    
-                    me.grid.ensureVisible(record,{
-                        column : position.column
+
+                    me.grid.ensureVisible(record, {
+                        column: position.column
                     });
 
                     focusRow = me.all.item(position.rowIdx);
@@ -3410,7 +3410,7 @@ Ext.define('Ext.view.Table', {
                         // Only enter actionable mode if there is an already actionable locking partner,
                         // or there are tabbable children in current cell.
                         if (lockingPartner || (tabbableChildren = focusCell.findTabbableElements()).length) {
-                            
+
                             // Restore tabbabilty to all elements in this row
                             focusRow.restoreTabbableState(/* skipSelf */ true);
 
@@ -3437,7 +3437,7 @@ Ext.define('Ext.view.Table', {
                                 navModel.setPosition();
 
                                 navModel.actionPosition = me.actionPosition = position;
-                                
+
                                 Ext.fly(tabbableChildren[0]).focus();
 
                                 // Avoid falling through to returning false
@@ -3493,7 +3493,7 @@ Ext.define('Ext.view.Table', {
             }
         },
 
-        onRowExit: function(prevRow, newRow, forward) {
+        onRowExit: function (prevRow, newRow, forward) {
             var me = this,
                 direction = forward ? 'nextSibling' : 'previousSibling',
                 lockingPartner = me.lockingPartner,
@@ -3562,7 +3562,7 @@ Ext.define('Ext.view.Table', {
          * Finds the first actionable element in the passed direction starting by looking in the passed row.
          * @private
          */
-        findFirstActionableElement: function(focusRow, direction, forward) {
+        findFirstActionableElement: function (focusRow, direction, forward) {
             var me = this,
                 columns = me.getVisibleColumnManager().getColumns(),
                 columnCount = columns.length,
@@ -3617,7 +3617,7 @@ Ext.define('Ext.view.Table', {
 
                     // Keep actionPosition synched
                     me.actionPosition = me.getNavigationModel().actionPosition = position;
-                    
+
                     Ext.fly(focusTarget).focus();
                 }
                 else {
@@ -3629,7 +3629,7 @@ Ext.define('Ext.view.Table', {
             // No focusRow, loop round in the correct direction.
             else {
                 me.grid.ensureVisible(forward ? 0 : me.dataSource.getCount() - 1, {
-                    callback: function(success, record, row) {
+                    callback: function (success, record, row) {
                         if (success) {
                             me.findFirstActionableElement(row, direction, forward);
                         } else {

@@ -8,7 +8,7 @@ Ext.define('Ext.util.translatable.ScrollParent', {
 
     isScrollParent: true,
 
-    applyElement: function(element) {
+    applyElement: function (element) {
         var el = Ext.get(element);
 
         if (el) {
@@ -18,14 +18,14 @@ Ext.define('Ext.util.translatable.ScrollParent', {
         return el;
     },
 
-    doTranslate: function(x, y) {
+    doTranslate: function (x, y) {
         var parent = this.parent;
 
         parent.setScrollLeft(Math.round(-x));
         parent.setScrollTop(Math.round(-y));
     },
 
-    getPosition: function() {
+    getPosition: function () {
         var me = this,
             position = me.position,
             parent = me.parent;

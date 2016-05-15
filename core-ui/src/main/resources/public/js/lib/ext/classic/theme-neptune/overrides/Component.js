@@ -1,7 +1,7 @@
 Ext.define('Ext.theme.neptune.Component', {
     override: 'Ext.Component',
 
-    initComponent: function() {
+    initComponent: function () {
         this.callParent();
 
         if (this.dock && this.border === undefined) {
@@ -29,7 +29,7 @@ Ext.define('Ext.theme.neptune.Component', {
             }
         }
     }
-}, function() {
+}, function () {
     Ext.namespace('Ext.theme.is').Neptune = true;
     Ext.theme.name = 'Neptune';
 });

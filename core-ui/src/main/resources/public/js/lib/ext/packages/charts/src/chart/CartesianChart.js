@@ -23,7 +23,7 @@ Ext.define('Ext.chart.CartesianChart', {
         'Ext.chart.grid.HorizontalGrid',
         'Ext.chart.grid.VerticalGrid'
     ],
-    xtype: [ 'cartesian', 'chart' ],
+    xtype: ['cartesian', 'chart'],
     isCartesian: true,
 
     config: {
@@ -225,8 +225,8 @@ Ext.define('Ext.chart.CartesianChart', {
             if (flipXY) {
                 if (isRtl) {
                     surface.matrix.set(0, -1, -1, 0,
-                            innerPadding.left + innerWidth,
-                            innerPadding.top + innerHeight);
+                        innerPadding.left + innerWidth,
+                        innerPadding.top + innerHeight);
                 } else {
                     surface.matrix.set(0, -1, 1, 0,
                         innerPadding.left,

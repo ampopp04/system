@@ -1,11 +1,11 @@
-describe("Ext.tab.Panel", function() {
+describe("Ext.tab.Panel", function () {
     var tabPanel, fakeTabBar;
 
     function createTabPanel(config) {
         tabPanel = Ext.create(Ext.apply({
-                xtype: 'tabpanel',
-                renderTo: Ext.getBody()
-            }, config));
+            xtype: 'tabpanel',
+            renderTo: Ext.getBody()
+        }, config));
 
         return tabPanel;
     }
@@ -17,7 +17,7 @@ describe("Ext.tab.Panel", function() {
         for (i = 0; i < count; i++) {
             items[i] = {
                 xtype: 'panel',
-                html : 'test ' + (i + 1),
+                html: 'test ' + (i + 1),
                 title: 'test ' + (i + 1),
                 itemId: 'item' + (i + 1)
             };
@@ -28,26 +28,26 @@ describe("Ext.tab.Panel", function() {
         }));
     }
 
-    afterEach(function() {
+    afterEach(function () {
         if (tabPanel) {
             tabPanel = Ext.destroy(tabPanel);
         }
     });
 
-    describe("active tab config on init", function() {
-        it("should ignore the activeTab as a string ID if it doesn't exist", function() {
+    describe("active tab config on init", function () {
+        it("should ignore the activeTab as a string ID if it doesn't exist", function () {
             createTabPanelWithTabs(3, {
                 activeTab: 'foo'
             });
             expect(tabPanel.getActiveTab()).toBeUndefined();
         });
-        it("should ignore the activeTab as a numeric index if it doesn't exist", function() {
+        it("should ignore the activeTab as a numeric index if it doesn't exist", function () {
             createTabPanelWithTabs(3, {
                 activeTab: 4
             });
             expect(tabPanel.getActiveTab()).toBeUndefined();
         });
-        it("should activate the activeTab by string ID if it does exist", function() {
+        it("should activate the activeTab by string ID if it does exist", function () {
             var foo = Ext.id(null, 'foo-'),
                 bar = Ext.id(null, 'bar-');
 
@@ -61,7 +61,7 @@ describe("Ext.tab.Panel", function() {
             });
             expect(tabPanel.getActiveTab().id).toEqual(foo);
         });
-        it("should activate the activeTab by index if it does exist", function(){
+        it("should activate the activeTab by index if it does exist", function () {
             var foo = Ext.id(null, 'foo-'),
                 bar = Ext.id(null, 'bar-');
 
@@ -75,22 +75,21 @@ describe("Ext.tab.Panel", function() {
             });
             expect(tabPanel.getActiveTab().id).toEqual(foo);
         });
-        it("should not set an active tab if null", function() {
+        it("should not set an active tab if null", function () {
             createTabPanelWithTabs(3, {
                 activeTab: null
             });
             expect(tabPanel.getActiveTab()).toBeUndefined();
         });
-        it("should set the first child tab as the active tab if none is configured", function() {
-            createTabPanelWithTabs(3, {
-            });
+        it("should set the first child tab as the active tab if none is configured", function () {
+            createTabPanelWithTabs(3, {});
             expect(tabPanel.getActiveTab()).toBe(tabPanel.items.getAt(0));
         });
     });
 
-    describe("activating other tabs on tab close", function() {
+    describe("activating other tabs on tab close", function () {
         var tb;
-        it("should activate the next tab", function() {
+        it("should activate the next tab", function () {
             createTabPanelWithTabs(6, {
                 renderTo: document.body,
                 activeTab: 4
@@ -99,7 +98,7 @@ describe("Ext.tab.Panel", function() {
             tb.closeTab(tb.items.items[4]);
             expect(tabPanel.items.indexOf(tabPanel.getActiveTab())).toEqual(4);
         });
-        it("should activate the previously active tab", function() {
+        it("should activate the previously active tab", function () {
             createTabPanelWithTabs(6, {
                 renderTo: document.body,
                 activeTab: 5
@@ -110,7 +109,7 @@ describe("Ext.tab.Panel", function() {
             tabPanel.tabBar.closeTab(tb.items.items[4]);
             expect(tabPanel.items.indexOf(tabPanel.getActiveTab())).toEqual(0);
         });
-        it("should activate the new first tab when closing the first", function() {
+        it("should activate the new first tab when closing the first", function () {
             createTabPanelWithTabs(6, {
                 renderTo: document.body,
                 activeTab: 0
@@ -120,102 +119,102 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.items.indexOf(tabPanel.getActiveTab())).toEqual(0);
         });
     });
-    
-    describe("the tabBar", function() {
-        beforeEach(function() {
+
+    describe("the tabBar", function () {
+        beforeEach(function () {
             fakeTabBar = {
                 something: 'yea'
             };
         });
-        
-        it("should be referenced as .tabBar", function() {
+
+        it("should be referenced as .tabBar", function () {
             createTabPanel();
             expect(tabPanel.tabBar).toBeDefined();
         });
-        
-        it("should be docked to the top", function() {
+
+        it("should be docked to the top", function () {
             createTabPanel();
             expect(tabPanel.tabBar.dock).toEqual('top');
         });
-        
-        it("should be accessible through getTabBar()", function() {
+
+        it("should be accessible through getTabBar()", function () {
             createTabPanel();
             expect(tabPanel.getTabBar()).toBeDefined();
         });
-        
-        it("should accept additional config", function() {
+
+        it("should accept additional config", function () {
             createTabPanel({
                 tabBar: {
                     someConfig: 'something'
                 }
             });
-            
+
             expect(tabPanel.tabBar.someConfig).toEqual('something');
         });
-        
-        xdescribe("if there were no other dockedItems", function() {
-            beforeEach(function() {
+
+        xdescribe("if there were no other dockedItems", function () {
+            beforeEach(function () {
                 createTabPanel();
             });
 
-            it("should create the dockedItems MixedCollection", function() {
+            it("should create the dockedItems MixedCollection", function () {
                 expect(tabPanel.dockedItems instanceof Ext.util.MixedCollection).toBe(true);
             });
-            
-            it("should place the tabBar in the array", function() {
+
+            it("should place the tabBar in the array", function () {
                 expect(tabPanel.dockedItems.items[0]).toEqual(tabPanel.tabBar);
             });
         });
-        
-        describe("if there was an array of dockedItems", function() {
-            beforeEach(function() {
+
+        describe("if there was an array of dockedItems", function () {
+            beforeEach(function () {
                 createTabPanel({
                     dockedItems: [
                         {
                             xtype: 'panel',
-                            html : 'test',
-                            dock : 'top'
+                            html: 'test',
+                            dock: 'top'
                         }
                     ]
                 });
             });
-            
-            it("should add the tabBar to the dockedItems", function() {
+
+            it("should add the tabBar to the dockedItems", function () {
                 expect(tabPanel.dockedItems.length).toEqual(2);
             });
-            
-            it("should place the tabBar as the last item in the array", function() {
-                expect(tabPanel.dockedItems.items[1]).toEqual(tabPanel.tabBar);
-            });
-        });
-        
-        describe("if there was a single dockedItem, not in an array", function() {
-            beforeEach(function() {
-                createTabPanel({
-                    dockedItems: {
-                        xtype: 'panel',
-                        html : 'test',
-                        dock : 'top'
-                    }
-                });
-            });
-            
-            xit("should turn the dockedItems into an array", function() {
-                expect(tabPanel.dockedItems instanceof Ext.util.MixedCollection).toBe(true);
-            });
-            
-            it("should add the tabBar to the dockedItems", function() {
-                expect(tabPanel.dockedItems.length).toEqual(2);
-            });
-            
-            it("should place the tabBar as the last item in the array", function() {
+
+            it("should place the tabBar as the last item in the array", function () {
                 expect(tabPanel.dockedItems.items[1]).toEqual(tabPanel.tabBar);
             });
         });
 
-        describe("non tab items", function() {
-            it("should not cause an error", function() {
-                expect(function() {
+        describe("if there was a single dockedItem, not in an array", function () {
+            beforeEach(function () {
+                createTabPanel({
+                    dockedItems: {
+                        xtype: 'panel',
+                        html: 'test',
+                        dock: 'top'
+                    }
+                });
+            });
+
+            xit("should turn the dockedItems into an array", function () {
+                expect(tabPanel.dockedItems instanceof Ext.util.MixedCollection).toBe(true);
+            });
+
+            it("should add the tabBar to the dockedItems", function () {
+                expect(tabPanel.dockedItems.length).toEqual(2);
+            });
+
+            it("should place the tabBar as the last item in the array", function () {
+                expect(tabPanel.dockedItems.items[1]).toEqual(tabPanel.tabBar);
+            });
+        });
+
+        describe("non tab items", function () {
+            it("should not cause an error", function () {
+                expect(function () {
                     createTabPanel({
                         tabBar: {
                             items: [{
@@ -235,8 +234,8 @@ describe("Ext.tab.Panel", function() {
                 expect(items.last().getText()).toBe('Foo');
             });
 
-            it("should not cause an error when using tabPosition", function() {
-                expect(function() {
+            it("should not cause an error when using tabPosition", function () {
+                expect(function () {
                     createTabPanel({
                         tabPosition: 'bottom',
                         tabBar: {
@@ -257,11 +256,11 @@ describe("Ext.tab.Panel", function() {
                 expect(items.last().getText()).toBe('Foo');
             });
 
-            it("should allow a click on a button", function() {
+            it("should allow a click on a button", function () {
                 var spy = jasmine.createSpy('click'),
                     btn;
-                
-                runs(function() {
+
+                runs(function () {
                     createTabPanel({
                         tabBar: {
                             items: [{
@@ -280,45 +279,47 @@ describe("Ext.tab.Panel", function() {
 
                     btn.on('click', spy);
                 });
-                
-                runs(function() {
-                    expect(function() {
+
+                runs(function () {
+                    expect(function () {
                         jasmine.fireMouseEvent(btn.getEl(), 'click');
                     }).not.toThrow();
                 });
-                
-                waitsFor(function() { return !!spy.callCount }, 'spy to be called', 100);
-                
-                runs(function() {
+
+                waitsFor(function () {
+                    return !!spy.callCount
+                }, 'spy to be called', 100);
+
+                runs(function () {
                     expect(spy).toHaveBeenCalled();
                 });
             });
         });
     });
-    
-    describe("the layout", function() {
-        beforeEach(function() {
+
+    describe("the layout", function () {
+        beforeEach(function () {
             createTabPanel({
                 layout: {
                     someConfig: 'something'
                 }
             });
         });
-        
-        it("should be a card layout", function() {
+
+        it("should be a card layout", function () {
             expect(tabPanel.layout instanceof Ext.layout.CardLayout).toBe(true);
         });
-        
-        it("should accept additional config", function() {
+
+        it("should accept additional config", function () {
             expect(tabPanel.layout.someConfig).toEqual('something');
         });
     });
 
-    describe("after initialization", function() {
-        it("should have created a tab for each child component", function() {
+    describe("after initialization", function () {
+        it("should have created a tab for each child component", function () {
             var count = 0;
             createTabPanelWithTabs(2);
-            tabPanel.getTabBar().items.each(function(item) {
+            tabPanel.getTabBar().items.each(function (item) {
                 if (item.is('tab')) {
                     count = count + 1;
                 }
@@ -327,13 +328,13 @@ describe("Ext.tab.Panel", function() {
         });
 
         describe('activeTab config', function () {
-            it('if none, should set the first tab as active by default', function() {
+            it('if none, should set the first tab as active by default', function () {
                 createTabPanelWithTabs(2);
 
                 expect(tabPanel.getActiveTab()).toEqual(tabPanel.items.items[0]);
             });
 
-            it('if undefined, should call setActiveTab with the correct item', function() {
+            it('if undefined, should call setActiveTab with the correct item', function () {
                 createTabPanelWithTabs(2, {
                     activeTab: undefined
                 });
@@ -341,7 +342,7 @@ describe("Ext.tab.Panel", function() {
                 expect(tabPanel.getActiveTab()).toEqual(tabPanel.items.items[0]);
             });
 
-            it('if set, should call setActiveTab with the correct item', function() {
+            it('if set, should call setActiveTab with the correct item', function () {
                 createTabPanelWithTabs(2, {
                     activeTab: 1
                 });
@@ -349,7 +350,7 @@ describe("Ext.tab.Panel", function() {
                 expect(tabPanel.getActiveTab()).toEqual(tabPanel.items.items[1]);
             });
 
-            it('if null, should not call setActiveTab', function() {
+            it('if null, should not call setActiveTab', function () {
                 createTabPanelWithTabs(2, {
                     activeTab: null
                 });
@@ -357,7 +358,7 @@ describe("Ext.tab.Panel", function() {
                 expect(tabPanel.getActiveTab()).toEqual(null);
             });
 
-            it('if called when there are no tabs it should set activeTab as undefined', function() {
+            it('if called when there are no tabs it should set activeTab as undefined', function () {
                 createTabPanelWithTabs(0);
                 tabPanel.setActiveTab(5);
 
@@ -367,53 +368,53 @@ describe("Ext.tab.Panel", function() {
         });
     });
 
-    describe("modifying items", function() {
-        describe("tab configuration", function() {
+    describe("modifying items", function () {
+        describe("tab configuration", function () {
             var tabBar;
-            
+
             function addChild(config) {
                 return tabPanel.add(Ext.apply({
                     xtype: 'panel',
                     title: 'new',
-                    html : 'New Panel',
+                    html: 'New Panel',
                     itemId: 'newItem'
                 }, config));
             }
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 createTabPanel();
-                
+
                 tabBar = tabPanel.getTabBar();
             });
-            
-            it("should give the tab a reference to the card", function() {
-                var newChild = addChild(),            
-                    newTab   = tabBar.items.first();
-                
+
+            it("should give the tab a reference to the card", function () {
+                var newChild = addChild(),
+                    newTab = tabBar.items.first();
+
                 expect(newTab.card).toEqual(newChild);
             });
-            
-            it("should give the tab a reference to the tabBar", function() {
-                var newChild = addChild(),            
-                    newTab   = tabBar.items.first();
-                
+
+            it("should give the tab a reference to the tabBar", function () {
+                var newChild = addChild(),
+                    newTab = tabBar.items.first();
+
                 expect(newTab.tabBar).toEqual(tabBar);
             });
-            
-            it("should not overwrite closeText with undefined", function() {
+
+            it("should not overwrite closeText with undefined", function () {
                 var tab = addChild().tab;
-                
+
                 expect(tab.closeText).toBe('Close Tab');
             });
-            
-            it("should overwrite closeText when specified in tab config", function() {
-                var tab = addChild({ closeText: 'foo bar' }).tab;
-                
+
+            it("should overwrite closeText when specified in tab config", function () {
+                var tab = addChild({closeText: 'foo bar'}).tab;
+
                 expect(tab.closeText).toBe('foo bar');
             });
         });
 
-        it("should append a tab to the end", function() {
+        it("should append a tab to the end", function () {
             createTabPanelWithTabs(3);
             var item = tabPanel.add({
                 title: 'foo'
@@ -426,7 +427,7 @@ describe("Ext.tab.Panel", function() {
             expect(item.tab).toBe(tab);
         });
 
-        it("should insert a tab at the specified index", function() {
+        it("should insert a tab at the specified index", function () {
             createTabPanelWithTabs(3);
             var item = tabPanel.insert(1, {
                 title: 'foo'
@@ -439,7 +440,7 @@ describe("Ext.tab.Panel", function() {
             expect(item.tab).toBe(tab);
         });
 
-        it("should move the tab when using moveBefore", function() {
+        it("should move the tab when using moveBefore", function () {
             createTabPanelWithTabs(5);
 
             var item = tabPanel.down('#item1'),
@@ -454,7 +455,7 @@ describe("Ext.tab.Panel", function() {
             expect(item.tab).toBe(tab);
         });
 
-        it("should move the tab when using moveAfter", function() {
+        it("should move the tab when using moveAfter", function () {
             createTabPanelWithTabs(5);
 
             var item = tabPanel.down('#item1'),
@@ -469,7 +470,7 @@ describe("Ext.tab.Panel", function() {
             expect(item.tab).toBe(tab);
         });
 
-        it("should remove the tab when removing", function() {
+        it("should remove the tab when removing", function () {
             createTabPanelWithTabs(3);
 
             tabPanel.remove(1);
@@ -479,8 +480,8 @@ describe("Ext.tab.Panel", function() {
             expect(items.getAt(1).text).toBe('test 3');
         });
     });
-    
-    describe("setting the active tab", function() {
+
+    describe("setting the active tab", function () {
         var waitForFocus = jasmine.waitForFocus,
             pressArrow = jasmine.pressArrowKey,
             expectFocused = jasmine.expectFocused,
@@ -488,75 +489,75 @@ describe("Ext.tab.Panel", function() {
             item1, item2, item3, item4,
             tab1, tab2, tab3, tab4;
 
-        beforeEach(function() {
+        beforeEach(function () {
             createTabPanelWithTabs(4);
             item1 = tabPanel.items.getAt(0);
             item2 = tabPanel.items.getAt(1);
             item3 = tabPanel.items.getAt(2);
             item4 = tabPanel.items.getAt(3);
-            
+
             tab1 = item1.tab;
             tab2 = item2.tab;
             tab3 = item3.tab;
             tab4 = item4.tab;
         });
 
-        afterEach(function() {
+        afterEach(function () {
             tab1 = tab2 = tab3 = tab4 = null;
             item1 = item2 = item3 = item4 = null;
         });
-        
-        describe("programmatically", function() {
-            describe("parameter types", function() {
-                it("should accept a component index", function() {
+
+        describe("programmatically", function () {
+            describe("parameter types", function () {
+                it("should accept a component index", function () {
                     tabPanel.setActiveTab(2);
                     expect(tabPanel.getActiveTab()).toBe(item3);
                 });
 
-                it("should accept an itemId", function() {
+                it("should accept an itemId", function () {
                     tabPanel.setActiveTab('item2');
                     expect(tabPanel.getActiveTab()).toBe(item2);
                 });
 
-                it("should accept an instance", function() {
+                it("should accept an instance", function () {
                     tabPanel.setActiveTab('item2');
                     expect(tabPanel.getActiveTab()).toBe(tabPanel.down('#item2'));
                 });
 
-                it("should accept an object config and add it", function() {
+                it("should accept an object config and add it", function () {
                     tabPanel.setActiveTab({
                         itemId: 'item5'
                     });
                     expect(tabPanel.getActiveTab()).toBe(tabPanel.down('#item5'));
                 });
 
-                it("should leave the current active tab if the component is not found", function() {
+                it("should leave the current active tab if the component is not found", function () {
                     tabPanel.setActiveTab(9);
                     expect(tabPanel.getActiveTab()).toBe(item1);
                 });
             });
 
-            describe("return value", function() {
-                it("should return the current tab if the component could not be found", function() {
+            describe("return value", function () {
+                it("should return the current tab if the component could not be found", function () {
                     expect(tabPanel.setActiveTab(9)).toBe(item1);
                 });
 
-                it("should return the same tab if setting the current tab active", function() {
+                it("should return the same tab if setting the current tab active", function () {
                     expect(tabPanel.setActiveTab(item1)).toBe(item1);
                 });
 
-                it("should return the current tab if the tab change is vetoed", function() {
-                    tabPanel.on('beforetabchange', function() {
+                it("should return the current tab if the tab change is vetoed", function () {
+                    tabPanel.on('beforetabchange', function () {
                         return false;
                     });
                     expect(tabPanel.setActiveTab(item3)).toBe(item1);
                 });
 
-                it("should return the new active item", function() {
+                it("should return the new active item", function () {
                     expect(tabPanel.setActiveTab(item4)).toBe(item4);
                 });
 
-                it("should return a newly added item", function() {
+                it("should return a newly added item", function () {
                     var item = tabPanel.setActiveTab({
                         itemId: 'item5'
                     });
@@ -564,38 +565,38 @@ describe("Ext.tab.Panel", function() {
                 });
             });
 
-            describe("events", function() {
+            describe("events", function () {
                 var beforeSpy, spy;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     beforeSpy = jasmine.createSpy();
                     spy = jasmine.createSpy();
                     tabPanel.on('beforetabchange', beforeSpy);
                     tabPanel.on('tabchange', spy);
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     beforeSpy = spy = null;
                 });
 
-                describe("when the tab cannot be found", function() {
-                    it("should not fire beforetabchange or tabchange", function() {
+                describe("when the tab cannot be found", function () {
+                    it("should not fire beforetabchange or tabchange", function () {
                         tabPanel.setActiveTab(9);
                         expect(beforeSpy).not.toHaveBeenCalled();
                         expect(spy).not.toHaveBeenCalled();
                     });
                 });
 
-                describe("when setting the same tab", function() {
-                    it("should not fire beforetabchange or tabchange", function() {
+                describe("when setting the same tab", function () {
+                    it("should not fire beforetabchange or tabchange", function () {
                         tabPanel.setActiveTab(item1);
                         expect(beforeSpy).not.toHaveBeenCalled();
                         expect(spy).not.toHaveBeenCalled();
                     });
                 });
 
-                describe("when setting a new (existing) tab", function() {
-                    it("should fire beforetabchange and pass the tabpanel, new tab & old tab", function() {
+                describe("when setting a new (existing) tab", function () {
+                    it("should fire beforetabchange and pass the tabpanel, new tab & old tab", function () {
                         tabPanel.setActiveTab(item2);
                         expect(beforeSpy.callCount).toBe(1);
                         var args = beforeSpy.mostRecentCall.args;
@@ -604,14 +605,14 @@ describe("Ext.tab.Panel", function() {
                         expect(args[2]).toBe(item1);
                     });
 
-                    it("should not modify the activeTab if beforetabchange returns false", function() {
+                    it("should not modify the activeTab if beforetabchange returns false", function () {
                         beforeSpy.andReturn(false);
                         tabPanel.setActiveTab(item2);
                         expect(spy).not.toHaveBeenCalled();
                         expect(tabPanel.getActiveTab()).toBe(item1);
                     });
 
-                    it("should fire the tabchange event and pass the tabpanel, new tab & old tab", function() {
+                    it("should fire the tabchange event and pass the tabpanel, new tab & old tab", function () {
                         tabPanel.setActiveTab(item3);
                         expect(spy.callCount).toBe(1);
                         var args = spy.mostRecentCall.args;
@@ -621,8 +622,8 @@ describe("Ext.tab.Panel", function() {
                     });
                 });
 
-                describe("when setting a new (config) tab", function() {
-                    it("should pass the new item instance", function() {
+                describe("when setting a new (config) tab", function () {
+                    it("should pass the new item instance", function () {
                         tabPanel.setActiveTab({
                             itemId: 'item5'
                         });
@@ -632,10 +633,10 @@ describe("Ext.tab.Panel", function() {
                     });
                 });
 
-                describe("tab visibility", function() {
-                    it("should not have the new tab visible when beforetabchange fires", function() {
+                describe("tab visibility", function () {
+                    it("should not have the new tab visible when beforetabchange fires", function () {
                         var cardVisible, active;
-                        beforeSpy.andCallFake(function() {
+                        beforeSpy.andCallFake(function () {
                             cardVisible = item2.isVisible();
                             active = tabPanel.getTabBar().activeTab;
                         });
@@ -644,9 +645,9 @@ describe("Ext.tab.Panel", function() {
                         expect(active).toBe(item1.tab);
                     });
 
-                    it("should have the new tab visible when tabchange fires", function() {
+                    it("should have the new tab visible when tabchange fires", function () {
                         var cardVisible, active;
-                        spy.andCallFake(function() {
+                        spy.andCallFake(function () {
                             cardVisible = item2.isVisible();
                             active = tabPanel.getTabBar().activeTab;
                         });
@@ -656,14 +657,14 @@ describe("Ext.tab.Panel", function() {
                     });
                 });
 
-                it("should not affect layouts if beforetabchange is vetoed", function() {
+                it("should not affect layouts if beforetabchange is vetoed", function () {
                     var other = new Ext.Component({
                         renderTo: Ext.getBody(),
                         width: 50,
                         height: 50
                     });
 
-                    tabPanel.on('beforetabchange', function() {
+                    tabPanel.on('beforetabchange', function () {
                         other.setSize(100, 100);
                         return false;
                     });
@@ -677,36 +678,36 @@ describe("Ext.tab.Panel", function() {
                 });
             });
 
-            describe("tab bar", function() {
+            describe("tab bar", function () {
                 var bar;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     bar = tabPanel.getTabBar();
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     bar = null;
                 });
 
-                it("should set the active item on the tab bar", function() {
+                it("should set the active item on the tab bar", function () {
                     tabPanel.setActiveTab(item2);
                     expect(bar.activeTab).toBe(item2.tab);
                 });
 
-                it("should not modify the tab bar item if the item cannot be found", function() {
+                it("should not modify the tab bar item if the item cannot be found", function () {
                     tabPanel.setActiveTab(9);
                     expect(bar.activeTab).toBe(item1.tab);
                 });
 
-                it("should set the active item when adding a new item", function() {
+                it("should set the active item when adding a new item", function () {
                     tabPanel.setActiveTab({
                         itemId: 'item5'
                     });
                     expect(bar.activeTab).toBe(tabPanel.down('#item5').tab);
                 });
 
-                it("should not modify the tab bar item when beforetabchange returns false", function() {
-                    tabPanel.on('beforetabchange', function() {
+                it("should not modify the tab bar item when beforetabchange returns false", function () {
+                    tabPanel.on('beforetabchange', function () {
                         return false;
                     });
                     tabPanel.setActiveTab(item3);
@@ -715,128 +716,128 @@ describe("Ext.tab.Panel", function() {
             });
         });
 
-        describe("via the ui", function() {
+        describe("via the ui", function () {
             function clickTab(item) {
-                runs(function() {
+                runs(function () {
                     var target = item.tab.getEl().dom;
                     jasmine.fireMouseEvent(target, 'click');
                 });
-                
+
                 // Need to yield enough cycles to unwind event handlers
                 jasmine.waitAWhile();
             }
-            
+
             function expectActiveItem(want) {
-                runs(function() {
+                runs(function () {
                     var have = tabPanel.getActiveTab();
-                    
+
                     expect(have).toBe(want);
                 });
             }
-            
+
             var beforeSpy, spy;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 beforeSpy = jasmine.createSpy().andReturn(true);
                 spy = jasmine.createSpy();
                 tabPanel.on('beforetabchange', beforeSpy);
                 tabPanel.on('tabchange', spy);
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 beforeSpy = spy = null;
             });
 
-            describe("mouse", function() {
-                describe("interaction", function() {
-                    it("should set the active tab", function() {
+            describe("mouse", function () {
+                describe("interaction", function () {
+                    it("should set the active tab", function () {
                         clickTab(item2);
-                        
+
                         waitForFocus(tab2);
-                        
+
                         expectActiveItem(item2);
                     });
-                    
-                    it("should not set the active tab if the beforetabchange event returns false", function() {
-                        runs(function() {
+
+                    it("should not set the active tab if the beforetabchange event returns false", function () {
+                        runs(function () {
                             beforeSpy.andReturn(false);
                         });
-                        
+
                         clickTab(item3);
-                        
+
                         expectActiveItem(item1);
                     });
 
-                    it("should not set the active tab if the tab is disabled", function() {
+                    it("should not set the active tab if the tab is disabled", function () {
                         item2.setDisabled(true);
                         clickTab(item2);
                         expectActiveItem(item1);
                     });
                 });
-                
-                describe("focus handling", function() {
-                    describe("during tab activate event", function() {
+
+                describe("focus handling", function () {
+                    describe("during tab activate event", function () {
                         var textfield, tabFocusSpy, fieldFocusSpy;
-                        
-                        beforeEach(function() {
-                            tabFocusSpy   = jasmine.createSpy('tab focus');
+
+                        beforeEach(function () {
+                            tabFocusSpy = jasmine.createSpy('tab focus');
                             fieldFocusSpy = jasmine.createSpy('textfield focus');
-                            
+
                             textfield = item3.add({
                                 xtype: 'textfield',
                                 listeners: {
                                     focus: fieldFocusSpy
                                 }
                             });
-                            
-                            item3.on('activate', function() {
+
+                            item3.on('activate', function () {
                                 // Give IE enough time to repaint the textfield,
                                 // otherwise it won't properly focus but *will*
                                 // fire the focus event, which results in repeatable
                                 // but very confusing failures.
                                 // ***PURE UNDILUTED HATRED***
                                 jasmine.waitAWhile();
-                                
-                                runs(function() {
+
+                                runs(function () {
                                     tab3.getFocusEl().on('focus', tabFocusSpy);
                                     textfield.focus();
                                 });
                             });
                         });
-                        
-                        it("should not force focus back to the tab", function() {
+
+                        it("should not force focus back to the tab", function () {
                             clickTab(item3);
-                                    
+
                             waitForSpy(fieldFocusSpy);
-                            
+
                             // Unwind the handlers that could potentially refocus
                             jasmine.waitAWhile();
-                            
-                            runs(function() {
+
+                            runs(function () {
                                 expect(tabFocusSpy).not.toHaveBeenCalled();
                             });
                         });
                     });
                 });
 
-                describe("events", function() {
-                    it("should fire no events if clicking on the active tab", function() {
+                describe("events", function () {
+                    it("should fire no events if clicking on the active tab", function () {
                         clickTab(item1);
-                        
+
                         waitForFocus(tab1);
-                        
-                        runs(function() {
+
+                        runs(function () {
                             expect(beforeSpy).not.toHaveBeenCalled();
                             expect(spy).not.toHaveBeenCalled();
                         });
                     });
 
-                    it("should fire the beforetabchange event, passing the tab panel, new tab & old tab", function() {
+                    it("should fire the beforetabchange event, passing the tab panel, new tab & old tab", function () {
                         clickTab(item2);
-                        
+
                         waitForFocus(tab2);
-                        
-                        runs(function() {
+
+                        runs(function () {
                             expect(beforeSpy.callCount).toBe(1);
                             var args = beforeSpy.mostRecentCall.args;
                             expect(args[0]).toBe(tabPanel);
@@ -845,12 +846,12 @@ describe("Ext.tab.Panel", function() {
                         });
                     });
 
-                    it("should fire the tabchange event, passing the tab panel, new tab & old tab", function() {
+                    it("should fire the tabchange event, passing the tab panel, new tab & old tab", function () {
                         clickTab(item2);
-                        
+
                         waitForFocus(tab2);
-                        
-                        runs(function() {
+
+                        runs(function () {
                             expect(spy.callCount).toBe(1);
                             var args = spy.mostRecentCall.args;
                             expect(args[0]).toBe(tabPanel);
@@ -859,258 +860,258 @@ describe("Ext.tab.Panel", function() {
                         });
                     });
 
-                    it("should not fire the tabchange event if beforetabchange returns false", function() {
+                    it("should not fire the tabchange event if beforetabchange returns false", function () {
                         clickTab(item2);
-                        
+
                         waitForFocus(tab2);
-                        
-                        runs(function() {
+
+                        runs(function () {
                             beforeSpy.andReturn(false);
                             spy = jasmine.createSpy();
                         });
-                        
+
                         clickTab(item3);
-                        
+
                         // Focus does change, but active tab does not
                         waitForFocus(tab3);
-                        
-                        runs(function() {
+
+                        runs(function () {
                             expect(spy).not.toHaveBeenCalled();
                         });
                     });
-                }); 
+                });
             });
-            
+
             // Firefox and Safari on Mac will not focus <anchor> tags by default,
             // and that will make some or all tests below to fail. Fix TBD.
             var todoDescribe = (Ext.isMac && (Ext.isGecko || Ext.isSafari) ? xdescribe : describe);
-            
-            todoDescribe("keys", function() {
-                describe("arrows", function() {
-                    it("should go right from 1 to 2", function() {
+
+            todoDescribe("keys", function () {
+                describe("arrows", function () {
+                    it("should go right from 1 to 2", function () {
                         pressArrow(tab1, 'right');
-                        
+
                         expectActiveItem(item2);
                     });
-                    
-                    it("should loop over right from 4 to 1", function() {
+
+                    it("should loop over right from 4 to 1", function () {
                         pressArrow(tab4, 'right');
-                        
+
                         expectActiveItem(item1);
                     });
-                    
-                    it("should go left from 2 to 1", function() {
+
+                    it("should go left from 2 to 1", function () {
                         pressArrow(tab2, 'left');
-                        
+
                         expectActiveItem(item1);
                     });
-                    
-                    it("should loop over left to 4 from 1", function() {
+
+                    it("should loop over left to 4 from 1", function () {
                         pressArrow(tab1, 'left');
-                        
+
                         expectActiveItem(item4);
                     });
                 });
-                
-                describe("Space/Enter", function() {
-                    it("should activate card on Space key", function() {
+
+                describe("Space/Enter", function () {
+                    it("should activate card on Space key", function () {
                         pressKey(tab2, 'space');
-                        
+
                         expectActiveItem(item2);
                     });
-                    
-                    it("should activate card on Enter key", function() {
+
+                    it("should activate card on Enter key", function () {
                         pressKey(tab3, 'enter');
-                        
+
                         expectActiveItem(item3);
                     });
                 });
-                
-                describe("activation", function() {
-                    describe("activateOnFocus == true (default)", function() {
-                        beforeEach(function() {
+
+                describe("activation", function () {
+                    describe("activateOnFocus == true (default)", function () {
+                        beforeEach(function () {
                             pressArrow(tab1, 'right');
                         });
-                        
-                        it("should focus navigated-to tab", function() {
+
+                        it("should focus navigated-to tab", function () {
                             expectFocused(tab2);
                         });
-                        
-                        it("should activate navigated-to item", function() {
+
+                        it("should activate navigated-to item", function () {
                             expectActiveItem(item2);
                         });
-                        
-                        it("should set active flag on navigated-to tab", function() {
-                            runs(function() {
+
+                        it("should set active flag on navigated-to tab", function () {
+                            runs(function () {
                                 expect(tab1.active).toBeFalsy();
                                 expect(tab2.active).toBe(true);
                             });
                         });
-                        
-                        it("should not attempt to activate a child that is not a Tab", function() {
+
+                        it("should not attempt to activate a child that is not a Tab", function () {
                             var button;
-                            
-                            runs(function() {
+
+                            runs(function () {
                                 button = new Ext.button.Button({
                                     text: 'foo',
                                     activate: jasmine.createSpy('activate')
                                 });
-                            
+
                                 tabPanel.getTabBar().insert(2, button);
                             });
-                            
+
                             pressArrow(tab2, 'right');
-                            
+
                             // Need to defer waitForFocus until the button is rendered
                             // so there is some DOM to wait for :)
-                            runs(function() {
+                            runs(function () {
                                 waitForFocus(button);
                             });
-                            
-                            runs(function() {
+
+                            runs(function () {
                                 expect(button.activate).not.toHaveBeenCalled();
                             });
                         });
                     });
-                    
-                    describe("activateOnFocus == false", function() {
-                        beforeEach(function() {
-                            runs(function() {
+
+                    describe("activateOnFocus == false", function () {
+                        beforeEach(function () {
+                            runs(function () {
                                 tabPanel.getTabBar().setActivateOnFocus(false);
                             });
-                            
+
                             pressArrow(tab1, 'right');
                         });
-                        
-                        it("should focus navigated-to tab", function() {
+
+                        it("should focus navigated-to tab", function () {
                             expectFocused(tab2);
                         });
-                        
-                        it("should not activate navigated-to item", function() {
+
+                        it("should not activate navigated-to item", function () {
                             expectActiveItem(item1);
                         });
-                        
-                        it("should not set active flag on navigated-to tab", function() {
-                            runs(function() {
+
+                        it("should not set active flag on navigated-to tab", function () {
+                            runs(function () {
                                 expect(tab1.active).toBe(true);
                                 expect(tab2.active).toBeFalsy();
                             });
                         });
                     });
                 });
-                
-                describe("events", function() {
+
+                describe("events", function () {
                     // Focus by clicking before sending arrow key, so that
                     // events fire on the actual change. We have to click instead of
                     // just focusing because certain browsers (Firefox, I'm pointing at you!)
                     // do not fire focusing events correctly, we have to emulate these
                     // and things get messy real quick.
-                    beforeEach(function() {
+                    beforeEach(function () {
                         clickTab(item2);
-                        
+
                         waitForFocus(tab2);
                     });
-                    
-                    describe("beforetabchange", function() {
-                        beforeEach(function() {
+
+                    describe("beforetabchange", function () {
+                        beforeEach(function () {
                             pressArrow(tab2, 'right');
-                            
+
                             waitForFocus(tab3);
                         });
-                        
-                        it("should fire the event", function() {
-                            runs(function() {
+
+                        it("should fire the event", function () {
+                            runs(function () {
                                 // Extra call is when we're focusing the tab in beforeEach
                                 expect(beforeSpy.callCount).toBe(2);
                             });
                         });
-                        
-                        it("should pass the tab panel, new and old tab", function() {
-                            runs(function() {
+
+                        it("should pass the tab panel, new and old tab", function () {
+                            runs(function () {
                                 var args = beforeSpy.mostRecentCall.args;
-                                
+
                                 expect(args[0]).toBe(tabPanel);
                                 expect(args[1]).toBe(item3);
                                 expect(args[2]).toBe(item2);
                             });
                         });
                     });
-                    
-                    describe("tabchange", function() {
-                        beforeEach(function() {
+
+                    describe("tabchange", function () {
+                        beforeEach(function () {
                             pressArrow(tab2, 'left');
-                            
+
                             waitForFocus(tab1);
                         });
-                        
-                        it("should fire the event", function() {
-                            runs(function() {
+
+                        it("should fire the event", function () {
+                            runs(function () {
                                 // Extra call is when we're focusing the tab in beforeEach
                                 expect(spy.callCount).toBe(2);
                             });
                         });
-                        
-                        it("should pass the tab panel, new and old tab", function() {
-                            runs(function() {
+
+                        it("should pass the tab panel, new and old tab", function () {
+                            runs(function () {
                                 var args = spy.mostRecentCall.args;
-                                
+
                                 expect(args[0]).toBe(tabPanel);
                                 expect(args[1]).toBe(item1);
                                 expect(args[2]).toBe(item2);
                             });
                         });
                     });
-                    
-                    describe("canceling beforetabchange", function() {
-                        beforeEach(function() {
+
+                    describe("canceling beforetabchange", function () {
+                        beforeEach(function () {
                             beforeSpy.andReturn(false);
-                            
+
                             // It was called when we focused tab2
                             spy = jasmine.createSpy();
-                            
+
                             pressArrow(tab2, 'right');
-                            
+
                             // Focus should change
                             waitForFocus(tab3);
                         });
-                        
-                        it("should move focus to tab3", function() {
+
+                        it("should move focus to tab3", function () {
                             expectFocused(tab3);
                         });
-                        
-                        it("should not fire tabchange event", function() {
+
+                        it("should not fire tabchange event", function () {
                             expect(spy).not.toHaveBeenCalled();
                         });
                     });
-                    
-                    describe("focusing non-Tab children", function() {
+
+                    describe("focusing non-Tab children", function () {
                         var button, beforeCount, changeCount;
-                        
-                        beforeEach(function() {
-                            runs(function() {
+
+                        beforeEach(function () {
+                            runs(function () {
                                 button = new Ext.button.Button({
                                     text: 'foo'
                                 });
-                            
+
                                 tabPanel.getTabBar().insert(2, button);
-                                
+
                                 // Both spies are called when we change tabs above
                                 beforeCount = beforeSpy.callCount;
                                 changeCount = spy.callCount;
                             });
 
                             pressArrow(tab2, 'right');
-                            
-                            runs(function() {
+
+                            runs(function () {
                                 waitForFocus(button);
                             });
                         });
-                        
-                        it("should not fire beforetabchange event", function() {
+
+                        it("should not fire beforetabchange event", function () {
                             expect(beforeSpy.callCount).toBe(beforeCount);
                         });
-                        
-                        it("should not fire tabchange event", function() {
+
+                        it("should not fire tabchange event", function () {
                             expect(spy.callCount).toBe(changeCount);
                         });
                     });
@@ -1118,68 +1119,68 @@ describe("Ext.tab.Panel", function() {
             });
         });
     });
-    
-    describe("removing child components", function() {
-        it("should remove the corresponding tab from the tabBar", function() {
+
+    describe("removing child components", function () {
+        it("should remove the corresponding tab from the tabBar", function () {
             createTabPanelWithTabs(2);
-            
+
             var secondPanel = tabPanel.items.last(),
-                tabBar      = tabPanel.getTabBar(),
-                oldCount    = tabBar.items.length;
-            
+                tabBar = tabPanel.getTabBar(),
+                oldCount = tabBar.items.length;
+
             tabPanel.remove(secondPanel);
-            
+
             expect(tabBar.items.length).toEqual(oldCount - 1);
         });
-        
-        describe("if the removed child is the currently active tab", function() {
+
+        describe("if the removed child is the currently active tab", function () {
             var firstItem, secondItem, thirdItem;
 
-            describe("and there is at least one tab after it", function() {
-                beforeEach(function() {
+            describe("and there is at least one tab after it", function () {
+                beforeEach(function () {
                     createTabPanelWithTabs(3, {renderTo: document.body, activeTab: 1});
-                    firstItem  = tabPanel.items.first();
+                    firstItem = tabPanel.items.first();
                     secondItem = tabPanel.items.getAt(1);
                     thirdItem = tabPanel.items.last();
                 });
-                
-                it("should activate the next tab", function() {
+
+                it("should activate the next tab", function () {
                     // second is currently active
                     tabPanel.remove(secondItem);
                     expect(tabPanel.getActiveTab().title).toEqual(thirdItem.title);
                 });
             });
-            
-            describe("and there is no tab before it but at least one after it", function() {
-                beforeEach(function() {
+
+            describe("and there is no tab before it but at least one after it", function () {
+                beforeEach(function () {
                     createTabPanelWithTabs(2, {renderTo: document.body, activeTab: 0});
-                    firstItem  = tabPanel.items.items[0];
+                    firstItem = tabPanel.items.items[0];
                     secondItem = tabPanel.items.items[1];
                 });
-                
-                it("should activate the next tab", function() {
+
+                it("should activate the next tab", function () {
                     // first is currently active
                     tabPanel.remove(firstItem);
                     expect(tabPanel.getActiveTab().title).toEqual(secondItem.title);
                 });
             });
-            
-            describe("and there are no other tabs", function() {
-                beforeEach(function() {
+
+            describe("and there are no other tabs", function () {
+                beforeEach(function () {
                     createTabPanelWithTabs(1);
                     firstItem = tabPanel.items.first();
                 });
-                
-                it("should not activate any other tabs", function() {
+
+                it("should not activate any other tabs", function () {
                     tabPanel.remove(firstItem);
                     expect(tabPanel.getActiveTab()).toBeUndefined();
                 });
             });
         });
     });
-    
-    describe("AutoSizing", function() {
-        beforeEach(function() {
+
+    describe("AutoSizing", function () {
+        beforeEach(function () {
             createTabPanel({
                 width: 600,
                 items: [{
@@ -1193,17 +1194,17 @@ describe("Ext.tab.Panel", function() {
             });
         });
 
-        it("should activate the first tab, and size to accommodate it", function() {
+        it("should activate the first tab, and size to accommodate it", function () {
             expect(tabPanel.body.getViewSize().height).toBe(200);
         });
-        it("should activate the second tab, and size to accommodate it", function() {
+        it("should activate the second tab, and size to accommodate it", function () {
             tabPanel.setActiveTab(1);
             expect(tabPanel.body.getViewSize().height).toBe(400);
         });
     });
 
-    xdescribe("TabPanel's minTabWidth/maxTabWidth", function() {
-        it('Should create a single tab with width of 200', function() {
+    xdescribe("TabPanel's minTabWidth/maxTabWidth", function () {
+        it('Should create a single tab with width of 200', function () {
             createTabPanel({
                 renderTo: document.body,
                 minTabWidth: 200,
@@ -1213,7 +1214,7 @@ describe("Ext.tab.Panel", function() {
             });
             expect(tabPanel.down('tab').getWidth()).toBe(200);
         });
-        it('Should create a single tab with width of 20', function() {
+        it('Should create a single tab with width of 20', function () {
             createTabPanel({
                 renderTo: document.body,
                 maxTabWidth: 20,
@@ -1227,33 +1228,33 @@ describe("Ext.tab.Panel", function() {
 
     // Tests in this suite are about non-visual things, and rendering is disabled
     // to avoid odd layout failures in IE9m
-    describe("ui", function() {
-        it("should use the TabPanel's ui as the default UI for the Tab Bar and Tab", function() {
+    describe("ui", function () {
+        it("should use the TabPanel's ui as the default UI for the Tab Bar and Tab", function () {
             createTabPanel({
                 renderTo: undefined,
                 ui: 'foo',
-                items: [{ title: 'A' }]
+                items: [{title: 'A'}]
             });
 
             expect(tabPanel.tabBar.ui).toBe('foo');
             expect(tabPanel.items.getAt(0).tab.ui).toBe('foo');
         });
 
-        it("should use the Tab Bar's ui as the default UI for Tabs", function() {
+        it("should use the Tab Bar's ui as the default UI for Tabs", function () {
             createTabPanel({
                 renderTo: undefined,
                 ui: 'foo',
                 tabBar: {
                     ui: 'bar'
                 },
-                items: [{ title: 'A' }]
+                items: [{title: 'A'}]
             });
 
             expect(tabPanel.tabBar.ui).toBe('bar');
             expect(tabPanel.items.getAt(0).tab.ui).toBe('bar');
         });
 
-        it("should allow the tab to override the default UI", function() {
+        it("should allow the tab to override the default UI", function () {
             createTabPanel({
                 renderTo: undefined,
                 ui: 'foo',
@@ -1273,8 +1274,8 @@ describe("Ext.tab.Panel", function() {
         });
     });
 
-    describe("bind", function() {
-        it("should be able to bind the tab title when the view model is on the tab panel", function() {
+    describe("bind", function () {
+        it("should be able to bind the tab title when the view model is on the tab panel", function () {
             createTabPanel({
                 renderTo: Ext.getBody(),
                 viewModel: {
@@ -1295,7 +1296,7 @@ describe("Ext.tab.Panel", function() {
             expect(bar.items.last().getText()).toBe('Bar');
         });
 
-        it("should be able to bind the tab title when the view model is on the tab item", function() {
+        it("should be able to bind the tab title when the view model is on the tab item", function () {
             createTabPanel({
                 renderTo: Ext.getBody(),
                 items: [{
@@ -1317,7 +1318,7 @@ describe("Ext.tab.Panel", function() {
             expect(bar.items.last().getText()).toBe('Bar');
         });
 
-        it("should not instance a view model inside an inactive tab when binding the title to a view model on the tab", function() {
+        it("should not instance a view model inside an inactive tab when binding the title to a view model on the tab", function () {
             createTabPanel({
                 renderTo: Ext.getBody(),
                 items: [{
@@ -1341,8 +1342,8 @@ describe("Ext.tab.Panel", function() {
         });
     });
 
-    describe("removeAll", function() {
-        it("should not activate any items", function() {
+    describe("removeAll", function () {
+        it("should not activate any items", function () {
             var spy = jasmine.createSpy();
             tabPanel = new Ext.tab.Panel({
                 renderTo: Ext.getBody(),
@@ -1364,7 +1365,7 @@ describe("Ext.tab.Panel", function() {
             expect(spy).not.toHaveBeenCalled();
         });
 
-        it("should not render any items during destroy", function() {
+        it("should not render any items during destroy", function () {
             var spy = jasmine.createSpy();
             tabPanel = new Ext.tab.Panel({
                 renderTo: Ext.getBody(),
@@ -1386,9 +1387,9 @@ describe("Ext.tab.Panel", function() {
             expect(spy).not.toHaveBeenCalled();
         });
     });
-    
-    describe("cleanup", function() {
-        it("should leave no orphans", function() {
+
+    describe("cleanup", function () {
+        it("should leave no orphans", function () {
             var count = Ext.ComponentManager.getCount();
             tabPanel = new Ext.tab.Panel({
                 renderTo: Ext.getBody(),
@@ -1405,9 +1406,9 @@ describe("Ext.tab.Panel", function() {
             });
             tabPanel.destroy();
             expect(Ext.ComponentManager.getCount()).toBe(count);
-        }); 
+        });
 
-        it("should not activate any items during destroy", function() {
+        it("should not activate any items during destroy", function () {
             var spy = jasmine.createSpy();
             tabPanel = new Ext.tab.Panel({
                 renderTo: Ext.getBody(),
@@ -1429,7 +1430,7 @@ describe("Ext.tab.Panel", function() {
             expect(spy).not.toHaveBeenCalled();
         });
 
-        it("should not render any items during destroy", function() {
+        it("should not render any items during destroy", function () {
             var spy = jasmine.createSpy();
             tabPanel = new Ext.tab.Panel({
                 renderTo: Ext.getBody(),
@@ -1681,8 +1682,8 @@ describe("Ext.tab.Panel", function() {
         });
     });
 
-    describe("tabRotation", function() {
-        it("should not override the rotation config of indiviual tabs", function() {
+    describe("tabRotation", function () {
+        it("should not override the rotation config of indiviual tabs", function () {
             createTabPanel({
                 tabRotation: 2,
                 items: [{
@@ -1695,7 +1696,7 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.tabBar.items.getAt(0).rotation).toBe(0);
         });
 
-        it("should not override the rotation config of indiviual tabs, when tabPosition is configured", function() {
+        it("should not override the rotation config of indiviual tabs, when tabPosition is configured", function () {
             createTabPanel({
                 tabPosition: 'right',
                 items: [{
@@ -1708,7 +1709,7 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.tabBar.items.getAt(0).rotation).toBe(0);
         });
 
-        it("should allow rotation to be configured on the tabBar", function() {
+        it("should allow rotation to be configured on the tabBar", function () {
             createTabPanelWithTabs(1, {
                 tabBar: {
                     tabRotation: 2
@@ -1717,21 +1718,21 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.tabBar.items.getAt(0).rotation).toBe(2);
         });
 
-        it("should pass configured tabRotation on to the tabs", function() {
+        it("should pass configured tabRotation on to the tabs", function () {
             createTabPanelWithTabs(1, {
                 tabRotation: 2
             });
             expect(tabPanel.tabBar.items.getAt(0).rotation).toBe(2);
         });
 
-        describe("default behavior", function() {
-            it("should not have rotation classes for tabPosition:top", function() {
+        describe("default behavior", function () {
+            it("should not have rotation classes for tabPosition:top", function () {
                 createTabPanelWithTabs(1);
                 expect(tabPanel.tabBar.items.getAt(0).el).not.toHaveCls('x-tab-rotate-left');
                 expect(tabPanel.tabBar.items.getAt(0).el).not.toHaveCls('x-tab-rotate-right');
             });
 
-            it("should default to 0 for tabPosition:bottom", function() {
+            it("should default to 0 for tabPosition:bottom", function () {
                 createTabPanelWithTabs(1, {
                     tabPosition: 'bottom'
                 });
@@ -1740,7 +1741,7 @@ describe("Ext.tab.Panel", function() {
                 expect(tabPanel.tabBar.items.getAt(0).el).not.toHaveCls('x-tab-rotate-right');
             });
 
-            it("should have right rotation cls for tabPosition:right", function() {
+            it("should have right rotation cls for tabPosition:right", function () {
                 createTabPanelWithTabs(1, {
                     tabPosition: 'right'
                 });
@@ -1749,7 +1750,7 @@ describe("Ext.tab.Panel", function() {
                 expect(tabPanel.tabBar.items.getAt(0).el).toHaveCls('x-tab-rotate-right');
             });
 
-            it("should have left rotation cls for tabPosition:left", function() {
+            it("should have left rotation cls for tabPosition:left", function () {
                 createTabPanelWithTabs(1, {
                     tabPosition: 'left'
                 });
@@ -1760,13 +1761,13 @@ describe("Ext.tab.Panel", function() {
         });
     });
 
-    describe("tabBarHeaderPosition", function() {
-        it("should render the tabBar as a docked item if tabBarHeaderPosition is unspecified", function() {
+    describe("tabBarHeaderPosition", function () {
+        it("should render the tabBar as a docked item if tabBarHeaderPosition is unspecified", function () {
             createTabPanelWithTabs(1);
             expect(tabPanel.getDockedItems()[0]).toBe(tabPanel.tabBar);
         });
 
-        it("should render the tabBar as a header item if tabBarHeaderPosition is specified", function() {
+        it("should render the tabBar as a header item if tabBarHeaderPosition is specified", function () {
             createTabPanelWithTabs(1, {
                 tabBarHeaderPosition: 0
             });
@@ -1775,7 +1776,7 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.tabBar.ownerCt).toBe(tabPanel.header);
         });
 
-        it("should render the tabBar before the title", function() {
+        it("should render the tabBar before the title", function () {
             createTabPanelWithTabs(1, {
                 ariaRole: 'tabpanel',
                 title: 'Foo',
@@ -1788,7 +1789,7 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.header.items.getAt(1)).toBe(tabPanel.header.getTitle());
         });
 
-        it("should render the tabBar after the title", function() {
+        it("should render the tabBar after the title", function () {
             createTabPanelWithTabs(1, {
                 ariaRole: 'tabpanel',
                 title: 'Foo',
@@ -1801,14 +1802,14 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.header.items.getAt(1)).toBe(tabPanel.tabBar);
         });
 
-        it("should default the tabBar's 'dock' config to 'top' when inside a top header", function() {
+        it("should default the tabBar's 'dock' config to 'top' when inside a top header", function () {
             createTabPanelWithTabs(1, {
                 tabBarHeaderPosition: 0
             });
             expect(tabPanel.tabBar.dock).toBe('top');
         });
 
-        it("should default the tabBar's 'dock' config to 'right' when inside a right header", function() {
+        it("should default the tabBar's 'dock' config to 'right' when inside a right header", function () {
             createTabPanelWithTabs(1, {
                 headerPosition: 'right',
                 tabBarHeaderPosition: 0
@@ -1816,7 +1817,7 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.tabBar.dock).toBe('right');
         });
 
-        it("should default the tabBar's 'dock' config to 'bottom' when inside a bottom header", function() {
+        it("should default the tabBar's 'dock' config to 'bottom' when inside a bottom header", function () {
             createTabPanelWithTabs(1, {
                 headerPosition: 'bottom',
                 tabBarHeaderPosition: 0
@@ -1824,7 +1825,7 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.tabBar.dock).toBe('bottom');
         });
 
-        it("should default the tabBar's 'dock' config to 'left' when inside a left header", function() {
+        it("should default the tabBar's 'dock' config to 'left' when inside a left header", function () {
             createTabPanelWithTabs(1, {
                 headerPosition: 'left',
                 tabBarHeaderPosition: 0
@@ -1832,7 +1833,7 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.tabBar.dock).toBe('left');
         });
 
-        it("should render the tabBar after any existing header items", function() {
+        it("should render the tabBar after any existing header items", function () {
             createTabPanelWithTabs(1, {
                 header: {
                     items: [{
@@ -1847,7 +1848,7 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.header.items.getAt(1)).toBe(tabPanel.tabBar);
         });
 
-        it("should not mutate the header config", function() {
+        it("should not mutate the header config", function () {
             var headerCfg = {
                 title: 'Foo',
                 items: [{
@@ -1864,34 +1865,34 @@ describe("Ext.tab.Panel", function() {
         });
     });
 
-    describe("tabPosition", function() {
-        it("should dock the tabBar to the top when tabPosition is 'top'", function() {
+    describe("tabPosition", function () {
+        it("should dock the tabBar to the top when tabPosition is 'top'", function () {
             createTabPanelWithTabs(1);
             expect(tabPanel.tabBar.dock).toBe('top');
         });
 
-        it("should dock the tabBar to the right when tabPosition is 'right'", function() {
+        it("should dock the tabBar to the right when tabPosition is 'right'", function () {
             createTabPanelWithTabs(1, {
                 tabPosition: 'right'
             });
             expect(tabPanel.tabBar.dock).toBe('right');
         });
 
-        it("should dock the tabBar to the bottom when tabPosition is 'bottom'", function() {
+        it("should dock the tabBar to the bottom when tabPosition is 'bottom'", function () {
             createTabPanelWithTabs(1, {
                 tabPosition: 'bottom'
             });
             expect(tabPanel.tabBar.dock).toBe('bottom');
         });
 
-        it("should dock the tabBar to the left when tabPosition is 'left'", function() {
+        it("should dock the tabBar to the left when tabPosition is 'left'", function () {
             createTabPanelWithTabs(1, {
                 tabPosition: 'left'
             });
             expect(tabPanel.tabBar.dock).toBe('left');
         });
 
-        it("should ignore tabPosition when tabBarHeaderPosition is specified", function() {
+        it("should ignore tabPosition when tabBarHeaderPosition is specified", function () {
             createTabPanelWithTabs(1, {
                 tabPosition: 'left',
                 headerPosition: 'bottom',
@@ -1901,14 +1902,14 @@ describe("Ext.tab.Panel", function() {
             expect(tabPanel.tabBar.dock).toBe('bottom');
         });
 
-        it("should set tabPosition after rendering", function() {
+        it("should set tabPosition after rendering", function () {
             createTabPanelWithTabs(1);
 
             tabPanel.setTabPosition('left');
             expect(tabPanel.tabBar.dock).toBe('left');
         });
 
-        it("should not allow setting of tabPosition after rendering if tabBarHeaderPosition was specified", function() {
+        it("should not allow setting of tabPosition after rendering if tabBarHeaderPosition was specified", function () {
             createTabPanelWithTabs(1, {
                 headerPosition: 'bottom',
                 tabBarHeaderPosition: 0
@@ -1920,153 +1921,153 @@ describe("Ext.tab.Panel", function() {
 
 
     });
-    
-    describe("ARIA", function() {
+
+    describe("ARIA", function () {
         var expectAria = jasmine.expectAriaAttr,
             expectNoAria = jasmine.expectNoAriaAttr,
             tab1, tab2, card1, card2;
-        
-        beforeEach(function() {
+
+        beforeEach(function () {
             createTabPanelWithTabs(2);
-            
+
             card1 = tabPanel.items.getAt(0);
             card2 = tabPanel.items.getAt(1);
-            
+
             tab1 = card1.tab;
             tab2 = card2.tab;
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             tab1 = tab2 = card1 = card2 = null;
         });
-        
-        describe("attributes", function() {
-            it("should have tab role on the tab", function() {
+
+        describe("attributes", function () {
+            it("should have tab role on the tab", function () {
                 expectAria(tab1, 'role', 'tab');
             });
-            
-            it("should have tabpanel role on the card", function() {
+
+            it("should have tabpanel role on the card", function () {
                 expectAria(card1, 'role', 'tabpanel');
             });
-            
-            it("should have aria-selected='true' on tab1", function() {
+
+            it("should have aria-selected='true' on tab1", function () {
                 expectAria(tab1, 'aria-selected', 'true');
             });
-            
-            it("should have aria-selected='false' on tab2", function() {
+
+            it("should have aria-selected='false' on tab2", function () {
                 expectAria(tab2, 'aria-selected', 'false');
             });
-            
-            it("should have aria-labelledby on card1", function() {
+
+            it("should have aria-labelledby on card1", function () {
                 expectAria(card1, 'aria-labelledby', tab1.id);
             });
-            
-            it("should not have aria-label on card1", function() {
+
+            it("should not have aria-label on card1", function () {
                 expectNoAria(card1, 'aria-label');
             });
-            
-            it("should have aria-expanded='true' on card1", function() {
+
+            it("should have aria-expanded='true' on card1", function () {
                 expectAria(card1, 'aria-expanded', 'true');
             });
-            
-            it("should have aria-hidden='false' on card1", function() {
+
+            it("should have aria-hidden='false' on card1", function () {
                 expectAria(card1, 'aria-hidden', 'false');
             });
-            
-            describe("dynamically added panel", function() {
+
+            describe("dynamically added panel", function () {
                 var tab3, card3;
-                
-                beforeEach(function() {
+
+                beforeEach(function () {
                     card3 = tabPanel.add(new Ext.panel.Panel({
                         title: '<span style="background-color: red">foo</span>',
                         html: 'blerg'
                     }));
-                    
+
                     tab3 = card3.tab;
-                    
+
                     // This is to render the tab child
                     tabPanel.setActiveTab(2);
                 });
-                
-                afterEach(function() {
+
+                afterEach(function () {
                     tab3 = card3 = null;
                 });
-                
-                it("should have correct aria-labelledby on card1", function() {
+
+                it("should have correct aria-labelledby on card1", function () {
                     expectAria(card3, 'aria-labelledby', tab3.id);
                 });
-                
-                it("should not have aria-label on card1", function() {
+
+                it("should not have aria-label on card1", function () {
                     expectNoAria(card3, 'aria-label');
                 });
             });
-            
-            describe("dynamically moved panel", function() {
+
+            describe("dynamically moved panel", function () {
                 var tabPanel2, oldTab1Id;
-                
-                beforeEach(function() {
+
+                beforeEach(function () {
                     tabPanel2 = new Ext.tab.Panel({
                         renderTo: Ext.getBody()
                     });
-                    
+
                     oldTab1Id = tab1.id;
-                    
+
                     tabPanel.remove(card1, false);
                     tabPanel2.add(card1);
-                    
+
                     tab1 = card1.tab;
                 });
-                
-                afterEach(function() {
+
+                afterEach(function () {
                     tabPanel2.destroy();
                     tabPanel2 = oldTab1Id = null;
                 });
-                
-                it("should have new tab id on card1", function() {
+
+                it("should have new tab id on card1", function () {
                     expect(tab1.id).not.toBe(oldTab1Id);
                 });
-                
-                it("should have correct aria-labelledby on card1", function() {
+
+                it("should have correct aria-labelledby on card1", function () {
                     expectAria(card1, 'aria-labelledby', tab1.id);
                 });
-                
-                it("should not have aria-label on card1", function() {
+
+                it("should not have aria-label on card1", function () {
                     expectNoAria(card1, 'aria-label');
                 });
             });
         });
-        
-        describe("tab switching", function() {
-            beforeEach(function() {
+
+        describe("tab switching", function () {
+            beforeEach(function () {
                 tabPanel.setActiveTab(1);
             });
-            
-            describe("aria-selected", function() {
-                it("should be true on tab2", function() {
+
+            describe("aria-selected", function () {
+                it("should be true on tab2", function () {
                     expectAria(tab2, 'aria-selected', 'true');
                 });
-                
-                it("should be false on tab1", function() {
+
+                it("should be false on tab1", function () {
                     expectAria(tab1, 'aria-selected', 'false');
                 });
             });
-            
-            describe("aria-expanded", function() {
-                it("should be true on card2", function() {
+
+            describe("aria-expanded", function () {
+                it("should be true on card2", function () {
                     expectAria(card2, 'aria-expanded', 'true');
                 });
-                
-                it("should be false on card1", function() {
+
+                it("should be false on card1", function () {
                     expectAria(card1, 'aria-expanded', 'false');
                 });
             });
-            
-            describe("aria-hidden", function() {
-                it("should be true on card1", function() {
+
+            describe("aria-hidden", function () {
+                it("should be true on card1", function () {
                     expectAria(card1, 'aria-hidden', 'true');
                 });
-                
-                it("should be false on card2", function() {
+
+                it("should be false on card2", function () {
                     expectAria(card2, 'aria-hidden', 'false');
                 });
             });

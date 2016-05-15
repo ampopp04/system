@@ -28,39 +28,39 @@
  * @private
  */
 @mixin css-outline(
-    $width: 1px,
-    $style: solid,
-    $color: #000,
-    $offset: 0,
-    $border-width: 0,
-    $pseudo: false
+  $width: 1px,
+  $style: solid,
+  $color: #000,
+  $offset: 0,
+  $border-width: 0,
+  $pseudo: false
 ) {
-    @mixin css-outline-pseudo() {
-        &:after {
-            position: absolute;
-            content: ' ';
-            top: -$offset - $width - top($border-width) ;
-            right: -$offset - $width - right($border-width);
-            bottom: -$offset - $width - bottom($border-width);
-            left: -$offset - $width - left($border-width);
+  @mixin css-outline-pseudo() {
+    &:after {
+      position: absolute;
+      content: ' ';
+      top: -$offset - $width - top($border-width);
+      right: -$offset - $width - right($border-width);
+      bottom: -$offset - $width - bottom($border-width);
+      left: -$offset - $width - left($border-width);
 
-            border: $width $style $color;
-            pointer-events: none;
-        }
+      border: $width $style $color;
+      pointer-events: none;
     }
+  }
 
-    @if $pseudo {
+  @if $pseudo {
+    @include css-outline-pseudo;
+  } @else {
+    outline: $width $style $color;
+    outline-offset: $offset;
+
+    @if $include-ie {
+      .#{$prefix}ie8 & {
+        outline: none;
         @include css-outline-pseudo;
-    } @else {
-        outline: $width $style $color;
-        outline-offset: $offset;
 
-        @if $include-ie {
-            .#{$prefix}ie8 & {
-                outline: none;
-                @include css-outline-pseudo;
-
-            }
-        }
+      }
     }
+  }
 }

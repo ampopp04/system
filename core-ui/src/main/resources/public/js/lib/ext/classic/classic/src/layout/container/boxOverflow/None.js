@@ -23,8 +23,8 @@ Ext.define('Ext.layout.container.boxOverflow.None', {
 
     $configPrefixed: false,
     $configStrict: false,
-    
-    constructor: function(config) {
+
+    constructor: function (config) {
         this.initConfig(config);
     },
 
@@ -35,7 +35,7 @@ Ext.define('Ext.layout.container.boxOverflow.None', {
     beginLayout: Ext.emptyFn,
     beginLayoutCycle: Ext.emptyFn,
 
-    calculate: function(ownerContext) {
+    calculate: function (ownerContext) {
         var me = this,
             plan = ownerContext.state.boxPlan,
             overflow;
@@ -91,11 +91,11 @@ Ext.define('Ext.layout.container.boxOverflow.None', {
      * @param {Ext.Component/String/Number} item The item reference, id or index
      * @return {Ext.Component} The item
      */
-    getItem: function(item) {
+    getItem: function (item) {
         return this.layout.owner.getComponent(item);
     },
 
-    getOwnerType: function(owner){
+    getOwnerType: function (owner) {
         var type;
         if (owner.isToolbar) {
             type = 'toolbar';
@@ -108,17 +108,17 @@ Ext.define('Ext.layout.container.boxOverflow.None', {
         } else {
             type = owner.getXType();
         }
-        
+
         return type;
     },
 
     getPrefixConfig: Ext.emptyFn,
     getSuffixConfig: Ext.emptyFn,
-    getOverflowCls: function() {
+    getOverflowCls: function () {
         return '';
     },
 
-    setVertical: function() {
+    setVertical: function () {
         var me = this,
             layout = me.layout,
             innerCt = layout.innerCt;

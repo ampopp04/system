@@ -3,7 +3,7 @@
  * By PetarD petar.dimitrijevic@vorteksed.com.mk (utf8 encoding)
  * 23 April 2007
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Јануари", "Февруари", "Март", "Април", "Мај", "Јуни", "Јули", "Август", "Септември", "Октомври", "Ноември", "Декември"];
@@ -104,7 +104,7 @@ Ext.define("Ext.locale.mk.form.field.Date", {
 Ext.define("Ext.locale.mk.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Вчитувам..."
     });
@@ -141,10 +141,10 @@ Ext.define("Ext.locale.mk.window.MessageBox", {
         cancel: "Поништи",
         yes: "Да",
         no: "Не"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.mk.Component", {	
+Ext.define("Ext.locale.mk.Component", {
     override: "Ext.Component"
 });

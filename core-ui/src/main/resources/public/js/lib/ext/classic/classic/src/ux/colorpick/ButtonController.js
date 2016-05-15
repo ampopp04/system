@@ -56,7 +56,7 @@ Ext.define('Ext.ux.colorpick.ButtonController', {
     },
 
     // When button is clicked show the color picker window
-    onClick: function() {
+    onClick: function () {
         var me = this,
             view = me.getView(),
             color = view.getColor(),
@@ -70,7 +70,7 @@ Ext.define('Ext.ux.colorpick.ButtonController', {
     },
 
     onColorPickerOK: function (picker) {
-        var view  = this.getView(),
+        var view = this.getView(),
             color = picker.getColor(),
             cpWin = view.colorPickerWindow;
 
@@ -80,7 +80,7 @@ Ext.define('Ext.ux.colorpick.ButtonController', {
     },
 
     onColorPickerCancel: function () {
-        var view  = this.getView(),
+        var view = this.getView(),
             cpWin = view.colorPickerWindow;
 
         cpWin.hide();

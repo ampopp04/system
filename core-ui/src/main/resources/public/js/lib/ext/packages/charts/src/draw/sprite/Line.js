@@ -68,10 +68,10 @@ Ext.define('Ext.draw.sprite.Line', {
         }
 
         fromX = Math.min(x1, x2);
-        toX   = Math.max(x1, x2);
+        toX = Math.max(x1, x2);
 
         fromY = Math.min(y1, y2);
-        toY   = Math.max(y1, y2);
+        toY = Math.max(y1, y2);
 
         var angle = Math.atan2(toX - fromX, toY - fromY),
             sin = Math.sin(angle),

@@ -8,7 +8,7 @@ Ext.define('Ext.rtl.panel.Panel', {
         left: 'right'
     },
 
-    convertCollapseDir: function(collapseDir) {
+    convertCollapseDir: function (collapseDir) {
         if (!!Ext.rootInheritedState.rtl !== this.isLocalRtl()) { // jshint ignore:line
             collapseDir = this.rtlCollapseDirs[collapseDir];
         }

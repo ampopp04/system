@@ -159,8 +159,8 @@ Ext.Factory.prototype = {
     fixNameFn: function (match) {
         return match.substring(1).toUpperCase();
     },
-    
-    clearCache: function() {
+
+    clearCache: function () {
         this.cache = {};
     }
 };
@@ -275,7 +275,7 @@ Ext.define('Ext.mixin.Factoryable', {
         alias = alias && alias.length && alias[0];
         if (alias && (dot = alias.lastIndexOf('.')) > 0) {
             config.type = alias.substring(0, dot);
-            config.defaultType = alias.substring(dot+1);
+            config.defaultType = alias.substring(dot + 1);
         }
 
         if (factoryConfig) {

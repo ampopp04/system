@@ -476,8 +476,8 @@ Ext.define('Ext.chart.series.Series', {
 
         /**
          * @cfg {Object} tooltip
-         * Add tooltips to the visualization's markers. The config options for the 
-         * tooltip are the same configuration used with {@link Ext.tip.ToolTip} plus a 
+         * Add tooltips to the visualization's markers. The config options for the
+         * tooltip are the same configuration used with {@link Ext.tip.ToolTip} plus a
          * `renderer` config option and a `scope` for the renderer. For example:
          *
          *     tooltip: {
@@ -491,27 +491,27 @@ Ext.define('Ext.chart.series.Series', {
          *
          * Note that tooltips are shown for series markers and won't work
          * if the {@link #marker} is not configured.
-         * @cfg {Object} tooltip.scope The scope to use when the renderer function is 
+         * @cfg {Object} tooltip.scope The scope to use when the renderer function is
          * called.  Defaults to the Series instance.
-         * @cfg {Function} tooltip.renderer An 'interceptor' method which can be used to 
-         * modify the tooltip attributes before it is shown.  The renderer function is 
+         * @cfg {Function} tooltip.renderer An 'interceptor' method which can be used to
+         * modify the tooltip attributes before it is shown.  The renderer function is
          * passed the following params:
          * @cfg {Ext.tip.ToolTip} tooltip.renderer.toolTip The tooltip instance
-         * @cfg {Ext.data.Model} tooltip.renderer.record The record instance for the 
+         * @cfg {Ext.data.Model} tooltip.renderer.record The record instance for the
          * chart item (sprite) currently targeted by the tooltip.
-         * @cfg {Object} tooltip.renderer.ctx A data object with values relating to the 
+         * @cfg {Object} tooltip.renderer.ctx A data object with values relating to the
          * currently targeted chart sprite
-         * @cfg {String} tooltip.renderer.ctx.category The type of sprite passed to the 
-         * renderer function (will be "items", "markers", or "labels" depending on the 
+         * @cfg {String} tooltip.renderer.ctx.category The type of sprite passed to the
+         * renderer function (will be "items", "markers", or "labels" depending on the
          * target sprite of the tooltip)
          * @cfg {String} tooltip.renderer.ctx.field The {@link #yField} for the series
-         * @cfg {Number} tooltip.renderer.ctx.index The target sprite's index within the 
+         * @cfg {Number} tooltip.renderer.ctx.index The target sprite's index within the
          * series' items
-         * @cfg {Ext.data.Model} tooltip.renderer.ctx.record The record instance for the 
+         * @cfg {Ext.data.Model} tooltip.renderer.ctx.record The record instance for the
          * chart item (sprite) currently targeted by the tooltip.
-         * @cfg {Ext.chart.series.Series} tooltip.renderer.ctx.series The series instance 
+         * @cfg {Ext.chart.series.Series} tooltip.renderer.ctx.series The series instance
          * containing the tooltip's target sprite
-         * @cfg {Ext.draw.sprite.Sprite} tooltip.renderer.ctx.sprite The sprite (item) 
+         * @cfg {Ext.draw.sprite.Sprite} tooltip.renderer.ctx.sprite The sprite (item)
          * target of the tooltip
          */
         tooltip: null
@@ -527,7 +527,7 @@ Ext.define('Ext.chart.series.Series', {
      * A Pie chart needs one color per slice while a Stacked Bar chart needs one per segment.
      * An OHLC chart needs 2 colors (one for drops, one for rises), and most other charts need just 1 color.
      */
-    themeColorCount: function() {
+    themeColorCount: function () {
         return 1;
     },
 
@@ -544,7 +544,7 @@ Ext.define('Ext.chart.series.Series', {
      * Returns the number of markers this series needs.
      * Currently, only the Line, Scatter and Radar series use markers - and they need just one each.
      */
-    themeMarkerCount: function() {
+    themeMarkerCount: function () {
         return 0;
     },
 
@@ -1126,7 +1126,7 @@ Ext.define('Ext.chart.series.Series', {
             } else {
                 if (directionFields) {
                     for (j = 0; j < directionFields.length; j++) {
-                        if ( Ext.Array.indexOf(axisFields, directionFields[j]) >= 0 ) {
+                        if (Ext.Array.indexOf(axisFields, directionFields[j]) >= 0) {
                             return axis;
                         }
                     }
@@ -1387,7 +1387,7 @@ Ext.define('Ext.chart.series.Series', {
             if (arguments.length > 1) {
                 record = legendStore.findBy(function (rec) {
                     return rec.get('series') === id &&
-                           rec.get('index')  === index;
+                        rec.get('index') === index;
                 });
                 if (record !== -1) {
                     record = legendStore.getAt(record);
@@ -1442,7 +1442,7 @@ Ext.define('Ext.chart.series.Series', {
             theme = me.getThemeStyle(),
             fillColors = Ext.Array.clone(colors),
             strokeColors = me.getStrokeColorsFromFillColors(colors),
-            newSubStyle = { fillStyle: fillColors, strokeStyle: strokeColors };
+            newSubStyle = {fillStyle: fillColors, strokeStyle: strokeColors};
 
         theme.subStyle = Ext.apply(theme.subStyle || {}, newSubStyle);
         theme.markerSubStyle = Ext.apply(theme.markerSubStyle || {}, newSubStyle);
@@ -1450,8 +1450,7 @@ Ext.define('Ext.chart.series.Series', {
         me.doUpdateStyles();
     },
 
-    themeOnlyIfConfigured: {
-    },
+    themeOnlyIfConfigured: {},
 
     updateTheme: function (theme) {
         var me = this,
@@ -1521,8 +1520,8 @@ Ext.define('Ext.chart.series.Series', {
             sprites = me.sprites,
             itemInstancing = me.getItemInstancing(),
             i = 0, ln = sprites && sprites.length,
-            // 'showMarkers' updater calls 'series.getSprites()',
-            // which we don't want to call here.
+        // 'showMarkers' updater calls 'series.getSprites()',
+        // which we don't want to call here.
             showMarkers = me.getConfig('showMarkers', true),
             markerCfg = me.getMarker(),
             style;
@@ -1541,7 +1540,7 @@ Ext.define('Ext.chart.series.Series', {
         }
     },
 
-    getStyleWithTheme: function() {
+    getStyleWithTheme: function () {
         var me = this,
             theme = me.getThemeStyle(),
             seriesThemeStyle = (theme && theme.style) || {},
@@ -1549,7 +1548,7 @@ Ext.define('Ext.chart.series.Series', {
         return style;
     },
 
-    getSubStyleWithTheme: function() {
+    getSubStyleWithTheme: function () {
         var me = this,
             theme = me.getThemeStyle(),
             seriesThemeSubStyle = (theme && theme.subStyle) || {},
@@ -1774,7 +1773,7 @@ Ext.define('Ext.chart.series.Series', {
     destroy: function () {
         var me = this,
             store = me._store,
-            // Peek at the config so we don't create one just to destroy it
+        // Peek at the config so we don't create one just to destroy it
             tooltip = me.getConfig('tooltip', true);
 
         if (store && store.getAutoDestroy()) {

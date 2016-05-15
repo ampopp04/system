@@ -1,7 +1,7 @@
 Ext.define('Ext.rtl.event.Event', {
     override: 'Ext.event.Event',
-    
-    getXY: function() {
+
+    getXY: function () {
         var me = this,
             xy = me.xy;
 

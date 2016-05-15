@@ -11,13 +11,13 @@ Ext.define('Ext.grid.property.HeaderContainer', {
     nameWidth: 115,
 
     //<locale>
-    nameText : 'Name',
+    nameText: 'Name',
     //</locale>
     //<locale>
-    valueText : 'Value',
+    valueText: 'Value',
     //</locale>
     //<locale>
-    dateFormat : 'm/j/Y',
+    dateFormat: 'm/j/Y',
     //</locale>
     //<locale>
     trueText: 'true',
@@ -37,7 +37,7 @@ Ext.define('Ext.grid.property.HeaderContainer', {
      * @param {Ext.grid.property.Grid} grid The grid this store will be bound to
      * @param {Object} source The source data config object
      */
-    constructor : function(grid, store) {
+    constructor: function (grid, store) {
         var me = this;
 
         me.grid = grid;
@@ -75,7 +75,7 @@ Ext.define('Ext.grid.property.HeaderContainer', {
         me.grid.valueColumn = me.items.getAt(1);
     },
 
-    getCellEditor: function(record){
+    getCellEditor: function (record) {
         return this.grid.getCellEditor(record, this);
     },
 
@@ -83,7 +83,7 @@ Ext.define('Ext.grid.property.HeaderContainer', {
      * @private
      * Render a property name cell
      */
-    renderProp : function(v) {
+    renderProp: function (v) {
         return this.getPropertyName(v);
     },
 
@@ -91,7 +91,7 @@ Ext.define('Ext.grid.property.HeaderContainer', {
      * @private
      * Render a property value cell
      */
-    renderCell : function(val, meta, rec) {
+    renderCell: function (val, meta, rec) {
         var me = this,
             grid = me.grid,
             renderer = grid.getConfigProp(rec.get(grid.nameField), 'renderer'),
@@ -111,11 +111,11 @@ Ext.define('Ext.grid.property.HeaderContainer', {
     /**
      * @private
      */
-    renderDate : Ext.util.Format.date,
+    renderDate: Ext.util.Format.date,
 
     /**
      * @private
-     */    renderBool : function(bVal) {
+     */    renderBool: function (bVal) {
         return this[bVal ? 'trueText' : 'falseText'];
     },
 
@@ -123,7 +123,7 @@ Ext.define('Ext.grid.property.HeaderContainer', {
      * @private
      * Renders custom property names instead of raw names if defined in the Grid
      */
-    getPropertyName : function(name) {
+    getPropertyName: function (name) {
         return this.grid.getConfigProp(name, 'displayName', name);
     }
 });

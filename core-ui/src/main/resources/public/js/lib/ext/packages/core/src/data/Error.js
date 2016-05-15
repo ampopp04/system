@@ -26,7 +26,7 @@ Ext.define('Ext.data.Error', {
         message: ''
     },
 
-    constructor: function(config) {
+    constructor: function (config) {
         this.initConfig(config);
         this.msg = this.message; // compat
     }

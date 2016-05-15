@@ -61,12 +61,12 @@ Ext.define('Ext.ux.desktop.Desktop', {
      */
     shortcutTpl: [
         '<tpl for=".">',
-            '<div class="ux-desktop-shortcut" id="{name}-shortcut">',
-                '<div class="ux-desktop-shortcut-icon {iconCls}">',
-                    '<img src="',Ext.BLANK_IMAGE_URL,'" title="{name}">',
-                '</div>',
-                '<span class="ux-desktop-shortcut-text">{name}</span>',
-            '</div>',
+        '<div class="ux-desktop-shortcut" id="{name}-shortcut">',
+        '<div class="ux-desktop-shortcut-icon {iconCls}">',
+        '<img src="', Ext.BLANK_IMAGE_URL, '" title="{name}">',
+        '</div>',
+        '<span class="ux-desktop-shortcut-text">{name}</span>',
+        '</div>',
         '</tpl>',
         '<div class="x-clear"></div>'
     ],
@@ -92,7 +92,7 @@ Ext.define('Ext.ux.desktop.Desktop', {
         me.contextMenu = new Ext.menu.Menu(me.createDesktopMenu());
 
         me.items = [
-            { xtype: 'wallpaper', id: me.id+'_wallpaper' },
+            {xtype: 'wallpaper', id: me.id + '_wallpaper'},
             me.createDataView()
         ];
 
@@ -143,8 +143,8 @@ Ext.define('Ext.ux.desktop.Desktop', {
         }
 
         ret.items.push(
-                { text: 'Tile', handler: me.tileWindows, scope: me, minWindows: 1 },
-                { text: 'Cascade', handler: me.cascadeWindows, scope: me, minWindows: 1 }
+            {text: 'Tile', handler: me.tileWindows, scope: me, minWindows: 1},
+            {text: 'Cascade', handler: me.cascadeWindows, scope: me, minWindows: 1}
         );
 
         return ret;
@@ -155,11 +155,11 @@ Ext.define('Ext.ux.desktop.Desktop', {
         return {
             defaultAlign: 'br-tr',
             items: [
-                { text: 'Restore', handler: me.onWindowMenuRestore, scope: me },
-                { text: 'Minimize', handler: me.onWindowMenuMinimize, scope: me },
-                { text: 'Maximize', handler: me.onWindowMenuMaximize, scope: me },
+                {text: 'Restore', handler: me.onWindowMenuRestore, scope: me},
+                {text: 'Minimize', handler: me.onWindowMenuMinimize, scope: me},
+                {text: 'Maximize', handler: me.onWindowMenuMaximize, scope: me},
                 '-',
-                { text: 'Close', handler: me.onWindowMenuClose, scope: me }
+                {text: 'Close', handler: me.onWindowMenuClose, scope: me}
             ],
             listeners: {
                 beforeshow: me.onWindowMenuBeforeShow,
@@ -200,7 +200,7 @@ Ext.define('Ext.ux.desktop.Desktop', {
         }
     },
 
-    onWindowClose: function(win) {
+    onWindowClose: function (win) {
         var me = this;
         me.windows.remove(win);
         me.taskbar.removeTaskButton(win.taskButton);
@@ -224,7 +224,7 @@ Ext.define('Ext.ux.desktop.Desktop', {
     },
 
     onWindowMenuHide: function (menu) {
-        Ext.defer(function() {
+        Ext.defer(function () {
             menu.theWin = null;
         }, 1);
     },
@@ -255,12 +255,12 @@ Ext.define('Ext.ux.desktop.Desktop', {
         return this.wallpaper.wallpaper;
     },
 
-    setTickSize: function(xTickSize, yTickSize) {
+    setTickSize: function (xTickSize, yTickSize) {
         var me = this,
             xt = me.xTickSize = xTickSize,
             yt = me.yTickSize = (arguments.length > 1) ? yTickSize : xt;
 
-        me.windows.each(function(win) {
+        me.windows.each(function (win) {
             var dd = win.dd, resizer = win.resizer;
             dd.xTickSize = xt;
             dd.yTickSize = yt;
@@ -277,11 +277,11 @@ Ext.define('Ext.ux.desktop.Desktop', {
     //------------------------------------------------------
     // Window management methods
 
-    cascadeWindows: function() {
+    cascadeWindows: function () {
         var x = 0, y = 0,
             zmgr = this.getDesktopZIndexManager();
 
-        zmgr.eachBottomUp(function(win) {
+        zmgr.eachBottomUp(function (win) {
             if (win.isWindow && win.isVisible() && !win.maximized) {
                 win.setPosition(x, y);
                 x += 20;
@@ -290,14 +290,14 @@ Ext.define('Ext.ux.desktop.Desktop', {
         });
     },
 
-    createWindow: function(config, cls) {
+    createWindow: function (config, cls) {
         var me = this, win, cfg = Ext.applyIf(config || {}, {
-                stateful: false,
-                isWindow: true,
-                constrainHeader: true,
-                minimizable: true,
-                maximizable: true
-            });
+            stateful: false,
+            isWindow: true,
+            constrainHeader: true,
+            minimizable: true,
+            maximizable: true
+        });
 
         cls = cls || Ext.window.Window;
         win = me.add(new cls(cfg));
@@ -330,7 +330,7 @@ Ext.define('Ext.ux.desktop.Desktop', {
         });
 
         // replace normal window close w/fadeOut animation:
-        win.doClose = function ()  {
+        win.doClose = function () {
             win.doClose = Ext.emptyFn; // dblclick can call again...
             win.el.disableShadow();
             win.el.fadeOut({
@@ -371,11 +371,11 @@ Ext.define('Ext.ux.desktop.Desktop', {
         return (windows.getCount() && windows.getAt(0).zIndexManager) || null;
     },
 
-    getWindow: function(id) {
+    getWindow: function (id) {
         return this.windows.get(id);
     },
 
-    minimizeWindow: function(win) {
+    minimizeWindow: function (win) {
         win.minimized = true;
         win.hide();
     },
@@ -390,11 +390,11 @@ Ext.define('Ext.ux.desktop.Desktop', {
         return win;
     },
 
-    tileWindows: function() {
+    tileWindows: function () {
         var me = this, availWidth = me.body.getWidth(true);
         var x = me.xTickSize, y = me.yTickSize, nextY = y;
 
-        me.windows.each(function(win) {
+        me.windows.each(function (win) {
             if (win.isVisible() && !win.maximized) {
                 var w = win.el.getWidth();
 

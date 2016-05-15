@@ -17,11 +17,11 @@ Ext.define('Ext.data.field.Date', {
      *
      * Serves as a default for the {@link #dateReadFormat} and {@link #dateWriteFormat} config options. This
      * will be used in place of those other configurations if not specified.
-     * 
+     *
      * A format string for the {@link Ext.Date#parse Ext.Date.parse} function, or "timestamp" if the value provided by
      * the Reader is a UNIX timestamp, or "time" if the value provided by the Reader is a javascript millisecond
      * timestamp. See {@link Ext.Date}.
-     * 
+     *
      * It is quite important to note that while this config is optional, it will default to using the base
      * JavaScript Date object's `parse` function if not specified, rather than {@link Ext.Date#parse Ext.Date.parse}.
      * This can cause unexpected issues, especially when converting between timezones, or when converting dates that
@@ -39,7 +39,7 @@ Ext.define('Ext.data.field.Date', {
      */
     dateReadFormat: null,
 
-    /** 
+    /**
      * @cfg {String} dateWriteFormat
      * Provides a custom format when serializing dates with a {@link Ext.data.writer.Writer}.
      * If this is not specified, the {@link #dateFormat} will be used. If no `dateFormat`
@@ -72,7 +72,7 @@ Ext.define('Ext.data.field.Date', {
         var lhsIsDate = lhs instanceof Date,
             rhsIsDate = rhs instanceof Date,
             result;
-            
+
         if (rhsIsDate && lhsIsDate) {
             result = lhs.getTime() - rhs.getTime();
             if (result === 0) {
@@ -88,7 +88,7 @@ Ext.define('Ext.data.field.Date', {
         return result;
     },
 
-    convert: function(v) {
+    convert: function (v) {
         if (!v) {
             return null;
         }
@@ -121,28 +121,28 @@ Ext.define('Ext.data.field.Date', {
 
         return result;
     },
-    
+
     /**
      * Gets the dateFormat for this field. See {@link #dateFormat}.
      * @return {String} dateFormat
      */
-    getDateFormat: function() {
+    getDateFormat: function () {
         return this.dateFormat;
     },
-    
+
     /**
      * Gets the dateReadFormat for this field. See {@link #dateReadFormat}.
      * @return {String} dateReadFormat
      */
-    getDateReadFormat: function() {
+    getDateReadFormat: function () {
         return this.dateReadFormat;
     },
-    
+
     /**
      * Gets the dateWriteFormat for this field. See {@link #dateWriteFormat}.
      * @return {String} dateWriteFormat
      */
-    getDateWriteFormat: function() {
+    getDateWriteFormat: function () {
         var me = this;
 
         if (me.hasOwnProperty('dateWriteFormat')) {
@@ -155,8 +155,8 @@ Ext.define('Ext.data.field.Date', {
 
         return me.dateWriteFormat || me.dateFormat || 'timestamp';
     },
-    
-    getType: function() {
+
+    getType: function () {
         return 'date';
     }
 });

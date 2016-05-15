@@ -89,7 +89,7 @@ describe('Ext.grid.filters.filter.List', function () {
 
     function setup() {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.Store.prototype.load = function() {
+        loadStore = Ext.data.Store.prototype.load = function () {
             storeLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -131,7 +131,7 @@ describe('Ext.grid.filters.filter.List', function () {
     });
 
     describe('binding the grid store listeners', function () {
-        Ext.grid.filters.filter.List.prototype.getGridStoreListeners =  function () {
+        Ext.grid.filters.filter.List.prototype.getGridStoreListeners = function () {
             var me = this;
 
             return me.gridStoreListeners = {
@@ -369,10 +369,10 @@ describe('Ext.grid.filters.filter.List', function () {
                         dataIndex: 'type'
                     }, {
                         data: [
-                            { id: 101, type: 't101' },
-                            { id: 102, type: 't102' },
-                            { id: 103, type: 't103' },
-                            { id: 104, type: 't104' }
+                            {id: 101, type: 't101'},
+                            {id: 102, type: 't102'},
+                            {id: 103, type: 't103'},
+                            {id: 104, type: 't104'}
                         ]
                     });
 
@@ -419,10 +419,10 @@ describe('Ext.grid.filters.filter.List', function () {
                         labelIndex: 'name'
                     }, {
                         data: [
-                            { foo: 101, name: 'Item 101' },
-                            { foo: 102, name: 'Item 102' },
-                            { foo: 103, name: 'Item 103' },
-                            { foo: 104, name: 'Item 104' }
+                            {foo: 101, name: 'Item 101'},
+                            {foo: 102, name: 'Item 102'},
+                            {foo: 103, name: 'Item 103'},
+                            {foo: 104, name: 'Item 104'}
                         ]
                     });
 
@@ -445,7 +445,7 @@ describe('Ext.grid.filters.filter.List', function () {
         });
     });
 
-    describe("list items", function() {
+    describe("list items", function () {
         var options;
 
         describe('passing config.value', function () {
@@ -551,11 +551,11 @@ describe('Ext.grid.filters.filter.List', function () {
             });
         });
 
-        describe("passing options", function() {
-            describe("flat array", function() {
+        describe("passing options", function () {
+            describe("flat array", function () {
                 var opt = ['foo', 'bar', 'baz'];
 
-                it("should use the array element as the menu text", function() {
+                it("should use the array element as the menu text", function () {
                     createGrid({
                         options: opt
                     });
@@ -567,7 +567,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(menu.items.getAt(2).text).toBe('baz');
                 });
 
-                it("should use the array element as the filter value", function() {
+                it("should use the array element as the filter value", function () {
                     createGrid({
                         options: opt
                     });
@@ -579,9 +579,9 @@ describe('Ext.grid.filters.filter.List', function () {
                 });
             });
 
-            describe("nested array", function() {
+            describe("nested array", function () {
                 var opt = [['foo', 'Foo'], ['bar', 'Bar'], ['baz', 'Baz']];
-                it("should use the element at index 1 as the menu text", function() {
+                it("should use the element at index 1 as the menu text", function () {
                     createGrid({
                         options: opt
                     });
@@ -593,7 +593,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(menu.items.getAt(2).text).toBe('Baz');
                 });
 
-                it("should use the element at index 0 as the filter value", function() {
+                it("should use the element at index 0 as the filter value", function () {
                     createGrid({
                         options: opt
                     });
@@ -605,9 +605,9 @@ describe('Ext.grid.filters.filter.List', function () {
                 });
             });
 
-            describe("array of objects", function() {
+            describe("array of objects", function () {
                 var opt = [{id: 'foo', text: 'Foo'}, {id: 'bar', text: 'Bar'}, {id: 'baz', text: 'Baz'}];
-                it("should use the item with the labelField as the menu text", function() {
+                it("should use the item with the labelField as the menu text", function () {
                     createGrid({
                         options: opt,
                         idField: 'id',
@@ -621,7 +621,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(menu.items.getAt(2).text).toBe('Baz');
                 });
 
-                it("should use the item with the idField as the filter value", function() {
+                it("should use the item with the idField as the filter value", function () {
                     createGrid({
                         options: opt,
                         idField: 'id',
@@ -636,12 +636,12 @@ describe('Ext.grid.filters.filter.List', function () {
             });
         });
 
-        describe("passing a store", function() {
-            afterEach(function() {
+        describe("passing a store", function () {
+            afterEach(function () {
                 options = Ext.destroy(options);
             });
 
-            describe("with data", function() {
+            describe("with data", function () {
                 function makeStore() {
                     return new Ext.data.Store({
                         model: Model,
@@ -655,7 +655,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     });
                 }
 
-                it("should not load the store", function() {
+                it("should not load the store", function () {
                     options = makeStore();
 
                     spyOn(options, 'load');
@@ -667,7 +667,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(options.load).not.toHaveBeenCalled();
                 });
 
-                it("should use the field with the labelField as the menu text", function() {
+                it("should use the field with the labelField as the menu text", function () {
                     options = makeStore();
                     createGrid({
                         store: options
@@ -679,7 +679,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(menu.items.getAt(1).text).toBe('Type 2');
                 });
 
-                it("should use the field with the idField as the filter value", function() {
+                it("should use the field with the idField as the filter value", function () {
                     options = makeStore();
                     createGrid({
                         store: options
@@ -692,7 +692,7 @@ describe('Ext.grid.filters.filter.List', function () {
                 });
             });
 
-            describe("with no data", function() {
+            describe("with no data", function () {
                 function makeStore(cfg) {
                     return new Ext.data.Store(Ext.apply({
                         model: Model,
@@ -703,7 +703,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     }, cfg));
                 }
 
-                it("should not load on creation", function() {
+                it("should not load on creation", function () {
                     options = makeStore();
 
                     spyOn(options, 'load');
@@ -714,8 +714,8 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(options.load).not.toHaveBeenCalled();
                 });
 
-                describe("placeholder", function() {
-                    it("should show a loading placeholder on show", function() {
+                describe("placeholder", function () {
+                    it("should show a loading placeholder on show", function () {
                         options = makeStore();
                         createGrid({
                             store: options
@@ -726,7 +726,7 @@ describe('Ext.grid.filters.filter.List', function () {
                         expect(menu.items.getAt(0).text).toBe(listFilter.loadingText);
                     });
 
-                    it("should remove the placeholder when the store loads", function() {
+                    it("should remove the placeholder when the store loads", function () {
                         options = makeStore();
                         createGrid({
                             store: options
@@ -746,9 +746,9 @@ describe('Ext.grid.filters.filter.List', function () {
                     });
                 });
 
-                describe("loadOnShow", function() {
-                    describe("with loadOnShow: true", function() {
-                        it("should load the store on show", function() {
+                describe("loadOnShow", function () {
+                    describe("with loadOnShow: true", function () {
+                        it("should load the store on show", function () {
                             options = makeStore();
 
                             spyOn(options, 'load');
@@ -761,7 +761,7 @@ describe('Ext.grid.filters.filter.List', function () {
                             expect(options.load).toHaveBeenCalled();
                         });
 
-                        it("should not load if the store has a pending autoLoad", function() {
+                        it("should not load if the store has a pending autoLoad", function () {
                             options = makeStore({
                                 autoLoad: true
                             });
@@ -774,7 +774,7 @@ describe('Ext.grid.filters.filter.List', function () {
                             expect(options.load).not.toHaveBeenCalled();
                         });
 
-                        it("should not load if the store is loading", function() {
+                        it("should not load if the store is loading", function () {
                             options = makeStore();
 
                             options.load();
@@ -788,7 +788,7 @@ describe('Ext.grid.filters.filter.List', function () {
                             expect(options.load).not.toHaveBeenCalled();
                         });
 
-                        it("should not load if the store has already loaded", function() {
+                        it("should not load if the store has already loaded", function () {
                             options = makeStore();
 
                             createGrid({
@@ -807,8 +807,8 @@ describe('Ext.grid.filters.filter.List', function () {
                         });
                     });
 
-                    describe("with loadOnShow: false", function() {
-                        it("should not load the store on show", function() {
+                    describe("with loadOnShow: false", function () {
+                        it("should not load the store on show", function () {
                             options = makeStore();
                             spyOn(options, 'load');
 
@@ -822,8 +822,8 @@ describe('Ext.grid.filters.filter.List', function () {
                     });
                 });
 
-                describe("after load", function() {
-                    it("should use the field with the labelField as the menu text", function() {
+                describe("after load", function () {
+                    it("should use the field with the labelField as the menu text", function () {
                         options = makeStore();
                         createGrid({
                             store: options,
@@ -848,7 +848,7 @@ describe('Ext.grid.filters.filter.List', function () {
                         expect(menu.items.getAt(2).text).toBe('Type 3');
                     });
 
-                    it("should use the field with the idField as the filter value", function() {
+                    it("should use the field with the idField as the filter value", function () {
                         options = makeStore();
                         createGrid({
                             store: options,
@@ -874,8 +874,8 @@ describe('Ext.grid.filters.filter.List', function () {
                     });
                 });
 
-                describe("cleanup", function() {
-                    it("should not have any listeners on the store if the store has not loaded", function() {
+                describe("cleanup", function () {
+                    it("should not have any listeners on the store if the store has not loaded", function () {
                         options = makeStore();
                         var load = options.hasListeners.load || 0;
 
@@ -886,7 +886,7 @@ describe('Ext.grid.filters.filter.List', function () {
                         expect(options.hasListeners.load || 0).toBe(load);
                     });
 
-                    it("should not have any listeners on the store if the store is loading if the load returns after destroy", function() {
+                    it("should not have any listeners on the store if the store is loading if the load returns after destroy", function () {
                         options = makeStore();
                         var load = options.hasListeners.load || 0;
 
@@ -899,7 +899,7 @@ describe('Ext.grid.filters.filter.List', function () {
                         completeRequest([]);
                     });
 
-                    it("should not have any listeners on the store if the store has loaded", function() {
+                    it("should not have any listeners on the store if the store has loaded", function () {
                         options = makeStore();
                         var load = options.hasListeners.load || 0;
 
@@ -915,8 +915,8 @@ describe('Ext.grid.filters.filter.List', function () {
             });
         });
 
-        describe("store types", function() {
-            it("should accept a store id", function() {
+        describe("store types", function () {
+            it("should accept a store id", function () {
                 options = new Ext.data.Store({
                     model: Model,
                     id: 'Foo',
@@ -938,7 +938,7 @@ describe('Ext.grid.filters.filter.List', function () {
                 options.destroy();
             });
 
-            it("should accept a store config", function() {
+            it("should accept a store config", function () {
                 createGrid({
                     store: {
                         model: Model,
@@ -958,9 +958,9 @@ describe('Ext.grid.filters.filter.List', function () {
             });
         });
 
-        describe("cleanup", function() {
-            describe("with autoDestroy: true", function() {
-                it("should destroy a store specified by id", function() {
+        describe("cleanup", function () {
+            describe("with autoDestroy: true", function () {
+                it("should destroy a store specified by id", function () {
                     options = new Ext.data.Store({
                         model: Model,
                         autoDestroy: true,
@@ -981,7 +981,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(options.destroyed).toBe(true);
                 });
 
-                it("should destroy a store instance", function() {
+                it("should destroy a store instance", function () {
                     options = new Ext.data.Store({
                         model: Model,
                         autoDestroy: true,
@@ -1000,7 +1000,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(options.destroyed).toBe(true);
                 });
 
-                it("should destroy a store passed as a config", function() {
+                it("should destroy a store passed as a config", function () {
                     createGrid({
                         store: {
                             model: Model,
@@ -1020,8 +1020,8 @@ describe('Ext.grid.filters.filter.List', function () {
                 });
             });
 
-            describe("with autoDestroy: false", function() {
-                it("should not destroy a store specified by id", function() {
+            describe("with autoDestroy: false", function () {
+                it("should not destroy a store specified by id", function () {
                     options = new Ext.data.Store({
                         model: Model,
                         autoDestroy: false,
@@ -1043,7 +1043,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     options.destroy();
                 });
 
-                it("should not destroy a store instance", function() {
+                it("should not destroy a store instance", function () {
                     options = new Ext.data.Store({
                         model: Model,
                         autoDestroy: false,
@@ -1064,7 +1064,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     options.destroy();
                 });
 
-                it("should not destroy a store passed as a config", function() {
+                it("should not destroy a store passed as a config", function () {
                     createGrid({
                         store: {
                             model: Model,
@@ -1087,9 +1087,9 @@ describe('Ext.grid.filters.filter.List', function () {
             });
         });
 
-        describe("inferring from grid store", function() {
-            describe("with data", function() {
-                beforeEach(function() {
+        describe("inferring from grid store", function () {
+            describe("with data", function () {
+                beforeEach(function () {
                     createGrid({}, {
                         data: [{
                             text: 't1'
@@ -1111,13 +1111,13 @@ describe('Ext.grid.filters.filter.List', function () {
                     });
                 });
 
-                it("should not load the store", function() {
+                it("should not load the store", function () {
                     spyOn(store, 'load');
                     showMenu();
                     expect(store.load).not.toHaveBeenCalled();
                 });
 
-                it("should use the unique dataIndex values as the menu text and exclude nulls", function() {
+                it("should use the unique dataIndex values as the menu text and exclude nulls", function () {
                     showMenu();
                     var menu = getMenu();
                     expect(menu.items.getCount()).toBe(4);
@@ -1127,7 +1127,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(menu.items.getAt(3).text).toBe('t4');
                 });
 
-                it("should use the dataIndex as the filter value", function() {
+                it("should use the dataIndex as the filter value", function () {
                     showMenu();
                     clickItem(1);
                     var filter = store.getFilters().first();
@@ -1136,8 +1136,8 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(filter.getValue()).toEqual(['t2']);
                 });
 
-                describe("cleanup", function() {
-                    it("should not destroy the store when destroying the grid", function() {
+                describe("cleanup", function () {
+                    it("should not destroy the store when destroying the grid", function () {
                         spyOn(store, 'destroy').andCallThrough();
                         grid.destroy();
                         expect(store.destroy).not.toHaveBeenCalled();
@@ -1145,10 +1145,10 @@ describe('Ext.grid.filters.filter.List', function () {
                 });
             });
 
-            describe("with no data", function() {
+            describe("with no data", function () {
                 var loadData;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     loadData = [{
                         text: 't1'
                     }, {
@@ -1176,13 +1176,13 @@ describe('Ext.grid.filters.filter.List', function () {
                     });
                 });
 
-                it("should not load the store", function() {
+                it("should not load the store", function () {
                     spyOn(store, 'load');
                     showMenu();
                     expect(store.load).not.toHaveBeenCalled();
                 });
 
-                it("should use the unique dataIndex values as the menu text and exclude nulls when the store loads", function() {
+                it("should use the unique dataIndex values as the menu text and exclude nulls when the store loads", function () {
                     store.load();
                     showMenu();
                     var menu = getMenu();
@@ -1194,7 +1194,7 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(menu.items.getAt(3).text).toBe('t4');
                 });
 
-                it("should use the dataIndex as the filter value when the store loads", function() {
+                it("should use the dataIndex as the filter value when the store loads", function () {
                     store.load();
                     showMenu();
                     completeRequest(loadData);
@@ -1205,8 +1205,8 @@ describe('Ext.grid.filters.filter.List', function () {
                     expect(filter.getValue()).toEqual(['t2']);
                 });
 
-                describe("cleanup", function() {
-                    it("should not destroy the store when destroying the grid", function() {
+                describe("cleanup", function () {
+                    it("should not destroy the store when destroying the grid", function () {
                         store.load();
                         showMenu();
                         completeRequest(loadData);
@@ -1279,10 +1279,10 @@ describe('Ext.grid.filters.filter.List', function () {
                         });
 
                         /*
-                        it('should not create a list store before list is initially shown', function () {
-                            expect(listFilter.store).toBe(undefined);
-                        });
-                        */
+                         it('should not create a list store before list is initially shown', function () {
+                         expect(listFilter.store).toBe(undefined);
+                         });
+                         */
                     });
 
                     describe('with an empty value', function () {
@@ -1330,10 +1330,10 @@ describe('Ext.grid.filters.filter.List', function () {
                         });
 
                         /*
-                        it('should not create a list store', function () {
-                            expect(listFilter.store).toBe(undefined);
-                        });
-                        */
+                         it('should not create a list store', function () {
+                         expect(listFilter.store).toBe(undefined);
+                         });
+                         */
                     });
 
                     describe('without a value', function () {
@@ -1452,10 +1452,10 @@ describe('Ext.grid.filters.filter.List', function () {
                         labelIndex: 'name'
                     }, {
                         data: [
-                            { id: 101, name: 'Item 101', type: 't101' },
-                            { id: 102, name: 'Item 102', type: 't102' },
-                            { id: 103, name: 'Item 103', type: 't103' },
-                            { id: 104, name: 'Item 104', type: 't104' }
+                            {id: 101, name: 'Item 101', type: 't101'},
+                            {id: 102, name: 'Item 102', type: 't102'},
+                            {id: 103, name: 'Item 103', type: 't103'},
+                            {id: 104, name: 'Item 104', type: 't104'}
                         ]
                     });
 
@@ -1476,12 +1476,12 @@ describe('Ext.grid.filters.filter.List', function () {
 
                 it('should update when reloaded', function () {
                     store.loadData([
-                        { id: 101, name: 'Item 101', type: 't101' },
-                        { id: 102, name: 'Item 102', type: 't102' },
-                        { id: 103, name: 'Item 103', type: 't103' },
-                        { id: 104, name: 'Item 104', type: 't104' },
-                        { id: 105, name: 'Item 105', type: 't105' },
-                        { id: 106, name: 'Item 106', type: 't106' }
+                        {id: 101, name: 'Item 101', type: 't101'},
+                        {id: 102, name: 'Item 102', type: 't102'},
+                        {id: 103, name: 'Item 103', type: 't103'},
+                        {id: 104, name: 'Item 104', type: 't104'},
+                        {id: 105, name: 'Item 105', type: 't105'},
+                        {id: 106, name: 'Item 106', type: 't106'}
                     ]);
 
                     expect(items.length).toBe(6);
@@ -1587,7 +1587,7 @@ describe('Ext.grid.filters.filter.List', function () {
     });
 
     describe('initializing the UI', function () {
-        var responseData =  [{
+        var responseData = [{
                 id: 't1',
                 text: 'Item 1'
             }, {
@@ -1775,7 +1775,7 @@ describe('Ext.grid.filters.filter.List', function () {
                 }, cfg));
             }
 
-            afterEach(function() {
+            afterEach(function () {
                 options = Ext.destroy(options);
             });
 

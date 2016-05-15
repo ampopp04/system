@@ -1,7 +1,7 @@
 Ext.testHelper = {
     defaultTarget: document.createElement('div'),
 
-    createTouchList: function(touches) {
+    createTouchList: function (touches) {
         var touchList = [],
             i, ln, touch;
 
@@ -14,7 +14,7 @@ Ext.testHelper = {
         return touchList;
     },
 
-    createTouch: function(touch) {
+    createTouch: function (touch) {
         return Ext.merge({
             target: this.defaultTarget,
             timeStamp: Ext.Date.now(),
@@ -26,7 +26,7 @@ Ext.testHelper = {
         }, touch || {});
     },
 
-    createTouchEvent: function(event) {
+    createTouchEvent: function (event) {
         var touchEvent = Ext.merge({
             type: 'touchstart',
             target: this.defaultTarget,
@@ -46,7 +46,7 @@ Ext.testHelper = {
         return touchEvent;
     },
 
-    createTouchEvents: function(events) {
+    createTouchEvents: function (events) {
         var ret = [],
             i, ln, event;
 
@@ -59,7 +59,7 @@ Ext.testHelper = {
         return ret;
     },
 
-    recognize: function(recognizer, events) {
+    recognize: function (recognizer, events) {
         var currentTouchesCount = 0,
             i, ln, e;
 
@@ -114,35 +114,35 @@ Ext.testHelper = {
         return events;
     },
 
-    events:  (Ext.supports.PointerEvents) ?
-        {
-            start: 'pointerdown',
-            move: 'pointermove',
-            end: 'pointerup',
-            cancel: 'pointercancel'
-        }
+    events: (Ext.supports.PointerEvents) ?
+    {
+        start: 'pointerdown',
+        move: 'pointermove',
+        end: 'pointerup',
+        cancel: 'pointercancel'
+    }
         : (Ext.supports.MSPointerEvents) ?
-        {
-            start: 'MSPointerDown',
-            move: 'MSPointerMove',
-            end: 'MSPointerUp',
-            cancel: 'MSPointerCancel'
-        }
+    {
+        start: 'MSPointerDown',
+        move: 'MSPointerMove',
+        end: 'MSPointerUp',
+        cancel: 'MSPointerCancel'
+    }
         : (Ext.supports.TouchEvents) ?
-        {
-            start: 'touchstart',
-            move: 'touchmove',
-            end: 'touchend',
-            cancel: 'touchcancel'
-        }
+    {
+        start: 'touchstart',
+        move: 'touchmove',
+        end: 'touchend',
+        cancel: 'touchcancel'
+    }
         :
-        {
-            start: 'mousedown',
-            move: 'mousemove',
-            end: 'mouseup'
-        },
+    {
+        start: 'mousedown',
+        move: 'mousemove',
+        end: 'mouseup'
+    },
 
-    fireEvent: function(type, target, cfg) {
+    fireEvent: function (type, target, cfg) {
         var eventType = this.events[type],
             activeTouches = {},
             touch, id, touches;
@@ -190,19 +190,19 @@ Ext.testHelper = {
         }
     },
 
-    touchStart: function(target, cfg) {
+    touchStart: function (target, cfg) {
         this.fireEvent('start', target, cfg);
     },
 
-    touchMove: function(target, cfg) {
+    touchMove: function (target, cfg) {
         this.fireEvent('move', target, cfg);
     },
 
-    touchEnd: function(target, cfg) {
+    touchEnd: function (target, cfg) {
         this.fireEvent('end', target, cfg);
     },
 
-    touchCancel: function(target, cfg) {
+    touchCancel: function (target, cfg) {
         this.fireEvent('cancel', target, cfg);
     }
 };

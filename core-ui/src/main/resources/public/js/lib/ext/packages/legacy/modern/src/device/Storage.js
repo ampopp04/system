@@ -9,7 +9,7 @@ Ext.define('Ext.device.Storage', {
         'Ext.device.storage.Simulator'
     ],
 
-    constructor: function() {
+    constructor: function () {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView) {
             if (browserEnv.Cordova) {

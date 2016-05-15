@@ -1,18 +1,18 @@
-xdescribe('Ext.util.History', function() {
+xdescribe('Ext.util.History', function () {
     var fooLink, barLink, bletchLink;
 
-    beforeEach(function() {
+    beforeEach(function () {
         location.hash = '';
     });
 
-    afterEach(function() {
+    afterEach(function () {
         fooLink.parentNode.removeChild(fooLink);
         barLink.parentNode.removeChild(barLink);
         bletchLink.parentNode.removeChild(bletchLink);
         location.hash = '';
     });
 
-    it('should track history', function() {
+    it('should track history', function () {
         fooLink = document.createElement('a');
         barLink = document.createElement('a');
         bletchLink = document.createElement('a');
@@ -20,14 +20,14 @@ xdescribe('Ext.util.History', function() {
         var hashHistory = [],
             useClickEvent = Ext.isWebKit || Ext.isGecko,
             useClickMethod = fooLink.click,
-            navigate = useClickEvent ? function(link) {
+            navigate = useClickEvent ? function (link) {
                 if (Ext.isGecko) {
                     link.focus();
                 }
                 jasmine.fireMouseEvent(link, 'click');
-            } : useClickMethod ? function(link) {
+            } : useClickMethod ? function (link) {
                 link.click();
-            } : function(link) {
+            } : function (link) {
                 Ext.util.History.setHash(link.hash.substr(1));
             };
 
@@ -40,62 +40,62 @@ xdescribe('Ext.util.History', function() {
 
         Ext.History.init();
 
-        Ext.History.on('change', function(token) {
+        Ext.History.on('change', function (token) {
             hashHistory.push(token);
         });
 
         // Navigate to #foo
         navigate(fooLink);
 
-        waitsFor(function() {
+        waitsFor(function () {
             return hashHistory.length === 1;
         }, 'Hash history change #foo', 200);
 
-        runs(function() {
+        runs(function () {
             expect(location.hash).toBe('#foo');
 
             // Navigate to #bar
             navigate(barLink);
         });
 
-        waitsFor(function() {
+        waitsFor(function () {
             return hashHistory.length === 2;
         }, 'Hash history change #bar', 200);
 
-        runs(function(){
+        runs(function () {
             expect(location.hash).toBe('#bar');
 
             // Navigate to #bletch
             navigate(bletchLink);
         });
 
-        waitsFor(function() {
+        waitsFor(function () {
             return hashHistory.length === 3;
         }, 'Hash history change #bletch', 200);
 
-        runs(function() {
+        runs(function () {
             expect(location.hash).toBe('#bletch');
 
             // Go back to #bar
             Ext.util.History.back();
         });
 
-        waitsFor(function() {
+        waitsFor(function () {
             return hashHistory.length === 4;
         }, 'Hash history change #bar', 200);
 
-        runs(function() {
+        runs(function () {
             expect(location.hash).toBe('#bar');
 
             // Go back to #foo
             Ext.util.History.back();
         });
 
-        waitsFor(function() {
+        waitsFor(function () {
             return hashHistory.length === 5;
         }, 'Hash history change #foo', 200);
 
-        runs(function(){
+        runs(function () {
             expect(location.hash).toBe('#foo');
             expect(hashHistory).toEqual(["foo", "bar", "bletch", "bar", "foo"]);
         });

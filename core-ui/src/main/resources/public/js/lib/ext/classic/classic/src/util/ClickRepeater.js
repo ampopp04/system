@@ -34,7 +34,7 @@ Ext.define('Ext.util.ClickRepeater', {
      * @param {String/HTMLElement/Ext.dom.Element} el The element or its ID to listen on
      * @param {Object} [config] Config object.
      */
-    constructor : function(el, config){
+    constructor: function (el, config) {
         var me = this;
 
         me.el = Ext.get(el);
@@ -44,14 +44,14 @@ Ext.define('Ext.util.ClickRepeater', {
 
         me.callParent();
 
-        if(!me.disabled){
+        if (!me.disabled) {
             me.disabled = true;
             me.enable();
         }
 
         // allow inline handler
-        if(me.handler){
-            me.on("click", me.handler,  me.scope || me);
+        if (me.handler) {
+            me.on("click", me.handler, me.scope || me);
         }
     },
 
@@ -75,7 +75,7 @@ Ext.define('Ext.util.ClickRepeater', {
      * @cfg {Number} interval
      * The interval between firings of the "click" event (in milliseconds).
      */
-    interval : 20,
+    interval: 20,
 
     /**
      * @cfg {Number} delay
@@ -88,28 +88,28 @@ Ext.define('Ext.util.ClickRepeater', {
      * @cfg {Boolean} preventDefault
      * True to prevent the default click event
      */
-    preventDefault : true,
+    preventDefault: true,
 
     /**
      * @cfg {Boolean} stopDefault
      * True to stop the default click event
      */
-    stopDefault : false,
+    stopDefault: false,
 
-    timer : 0,
+    timer: 0,
 
     /**
      * Enables the repeater and allows events to fire.
      */
-    enable: function(){
-        if(this.disabled){
+    enable: function () {
+        if (this.disabled) {
             this.el.on('mousedown', this.handleMouseDown, this);
             // IE versions will detect clicks as in sequence as dblclicks
             // if they happen in quick succession
-            if (Ext.isIE8){
+            if (Ext.isIE8) {
                 this.el.on('dblclick', this.handleDblClick, this);
             }
-            if(this.preventDefault || this.stopDefault){
+            if (this.preventDefault || this.stopDefault) {
                 this.el.on('click', this.eventOptions, this);
             }
         }
@@ -119,10 +119,10 @@ Ext.define('Ext.util.ClickRepeater', {
     /**
      * Disables the repeater and stops events from firing.
      */
-    disable: function(/* private */ force){
-        if(force || !this.disabled){
+    disable: function (/* private */ force) {
+        if (force || !this.disabled) {
             clearTimeout(this.timer);
-            if(this.pressedCls){
+            if (this.pressedCls) {
                 this.el.removeCls(this.pressedCls);
             }
             Ext.getDoc().un('mouseup', this.handleMouseUp, this);
@@ -135,20 +135,20 @@ Ext.define('Ext.util.ClickRepeater', {
      * Convenience function for setting disabled/enabled by boolean.
      * @param {Boolean} disabled
      */
-    setDisabled: function(disabled){
+    setDisabled: function (disabled) {
         this[disabled ? 'disable' : 'enable']();
     },
 
-    eventOptions: function(e){
-        if(this.preventDefault){
+    eventOptions: function (e) {
+        if (this.preventDefault) {
             e.preventDefault();
         }
-        if(this.stopDefault){
+        if (this.stopDefault) {
             e.stopEvent();
         }
     },
 
-    destroy: function() {
+    destroy: function () {
         this.disable(true);
         this.callParent();
     },
@@ -163,9 +163,9 @@ Ext.define('Ext.util.ClickRepeater', {
     /**
      * @private
      */
-    handleMouseDown: function(e) {
+    handleMouseDown: function (e) {
         clearTimeout(this.timer);
-        if(this.pressedCls){
+        if (this.pressedCls) {
             this.el.addCls(this.pressedCls);
         }
         this.mousedownTime = new Date();
@@ -181,12 +181,12 @@ Ext.define('Ext.util.ClickRepeater', {
             this.delay = 400;
         }
 
-        this.timer =  Ext.defer(this.click, this.delay || this.interval, this, [e]);
-        
+        this.timer = Ext.defer(this.click, this.delay || this.interval, this, [e]);
+
         if (this.mousedownPreventDefault) {
             e.preventDefault();
         }
-        
+
         if (this.mousedownStopEvent) {
             e.stopEvent();
         }
@@ -195,9 +195,9 @@ Ext.define('Ext.util.ClickRepeater', {
     /**
      * @private
      */
-    click : function(e){
+    click: function (e) {
         this.fireEvent("click", this, e);
-        this.timer =  Ext.defer(this.click, this.accelerate ?
+        this.timer = Ext.defer(this.click, this.accelerate ?
             this.easeOutExpo(Ext.Date.getElapsed(this.mousedownTime),
                 400,
                 -390,
@@ -205,16 +205,16 @@ Ext.define('Ext.util.ClickRepeater', {
             this.interval, this, [e]);
     },
 
-    easeOutExpo : function (t, b, c, d) {
-        return (t === d) ? b + c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
+    easeOutExpo: function (t, b, c, d) {
+        return (t === d) ? b + c : c * (-Math.pow(2, -10 * t / d) + 1) + b;
     },
 
     /**
      * @private
      */
-    handleMouseOut : function(){
+    handleMouseOut: function () {
         clearTimeout(this.timer);
-        if(this.pressedCls){
+        if (this.pressedCls) {
             this.el.removeCls(this.pressedCls);
         }
         this.el.on("mouseover", this.handleMouseReturn, this);
@@ -223,9 +223,9 @@ Ext.define('Ext.util.ClickRepeater', {
     /**
      * @private
      */
-    handleMouseReturn : function(e){
+    handleMouseReturn: function (e) {
         this.el.un("mouseover", this.handleMouseReturn, this);
-        if(this.pressedCls){
+        if (this.pressedCls) {
             this.el.addCls(this.pressedCls);
         }
         this.click(e);
@@ -234,12 +234,12 @@ Ext.define('Ext.util.ClickRepeater', {
     /**
      * @private
      */
-    handleMouseUp : function(e){
+    handleMouseUp: function (e) {
         clearTimeout(this.timer);
         this.el.un("mouseover", this.handleMouseReturn, this);
         this.el.un("mouseout", this.handleMouseOut, this);
         Ext.getDoc().un("mouseup", this.handleMouseUp, this);
-        if(this.pressedCls){
+        if (this.pressedCls) {
             this.el.removeCls(this.pressedCls);
         }
         this.fireEvent("mouseup", this, e);

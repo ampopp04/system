@@ -21,9 +21,9 @@ Ext.define('Ext.chart.interactions.RotatePie3D', {
             rect = chart.getMainRect();
 
         return direction * Math.atan2(
-            pageXY[1] - xy[1] - rect[3] * 0.5,
-            pageXY[0] - xy[0] - rect[2] * 0.5
-        );
+                pageXY[1] - xy[1] - rect[3] * 0.5,
+                pageXY[0] - xy[0] - rect[2] * 0.5
+            );
     },
 
     getRadius: function (e) {

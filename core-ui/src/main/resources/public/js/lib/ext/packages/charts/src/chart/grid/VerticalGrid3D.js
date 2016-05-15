@@ -1,7 +1,7 @@
 /**
  * @class Ext.chart.grid.VerticalGrid3D
  * @extends Ext.chart.grid.VerticalGrid
- * 
+ *
  * Vertical 3D Grid sprite. Used in 3D Cartesian Charts.
  */
 Ext.define('Ext.chart.grid.VerticalGrid3D', {
@@ -51,7 +51,7 @@ Ext.define('Ext.chart.grid.VerticalGrid3D', {
         // Vertical stripe.
 
         left = x - halfLineWidth + depth;
-        top  = clipRect[1] - depth - dy;
+        top = clipRect[1] - depth - dy;
 
         ctx.beginPath();
         ctx.rect(left, top, width, clipRect[3]);
@@ -67,23 +67,23 @@ Ext.define('Ext.chart.grid.VerticalGrid3D', {
         // Diagonal stripe.
 
         left = x - halfLineWidth;
-        top  = clipRect[3];
+        top = clipRect[3];
 
         ctx.beginPath();
-        ctx.moveTo(left,                 top);
-        ctx.lineTo(left + depth,         top - depth);
+        ctx.moveTo(left, top);
+        ctx.lineTo(left + depth, top - depth);
         ctx.lineTo(left + depth + width, top - depth);
-        ctx.lineTo(left + width,         top);
+        ctx.lineTo(left + width, top);
         ctx.closePath();
         ctx.fill();
 
         // Diagonal line.
 
         left = x - halfLineWidth;
-        top  = clipRect[3];
+        top = clipRect[3];
 
         ctx.beginPath();
-        ctx.moveTo(left,         top);
+        ctx.moveTo(left, top);
         ctx.lineTo(left + depth, top - depth);
         ctx.stroke();
     }

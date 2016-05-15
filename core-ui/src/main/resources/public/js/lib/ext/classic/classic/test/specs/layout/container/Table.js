@@ -1,9 +1,9 @@
-describe("Ext.layout.container.Table", function(){
+describe("Ext.layout.container.Table", function () {
 
-    describe("fixed/auto sizing", function(){
-        
+    describe("fixed/auto sizing", function () {
+
         // See EXTJSIV-7667
-        it("should be able to auto-size tables correctly", function(){
+        it("should be able to auto-size tables correctly", function () {
             var ct = new Ext.container.Container({
                 width: 400,
                 height: 200,
@@ -26,9 +26,9 @@ describe("Ext.layout.container.Table", function(){
             // Tolerate 100-104 range due to browser diffs
             expect(ct.down('#item').getWidth()).toBeGreaterThan(99);
             expect(ct.down('#item').getWidth()).toBeLessThan(105);
-            ct.destroy();    
-       });
-        
+            ct.destroy();
+        });
+
     });
-    
+
 });

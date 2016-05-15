@@ -19,7 +19,7 @@ describe('Ext.resizer.Splitter', function () {
             renderTo: Ext.getBody()
         });
     }
-    
+
     function expectAria(attr, value) {
         jasmine.expectAriaAttr(splitter, attr, value);
     }
@@ -50,21 +50,21 @@ describe('Ext.resizer.Splitter', function () {
             });
         });
     });
-    
-    describe("ARIA", function() {
-        beforeEach(function() {
+
+    describe("ARIA", function () {
+        beforeEach(function () {
             makeContainer();
         });
-        
-        it("should be tabbable", function() {
+
+        it("should be tabbable", function () {
             expect(splitter.el.isTabbable()).toBe(true);
         });
-        
-        it("should have separator role", function() {
+
+        it("should have separator role", function () {
             expectAria('role', 'separator');
         });
-        
-        it("should have aria-orientation", function() {
+
+        it("should have aria-orientation", function () {
             expectAria('aria-orientation', 'vertical');
         });
     });

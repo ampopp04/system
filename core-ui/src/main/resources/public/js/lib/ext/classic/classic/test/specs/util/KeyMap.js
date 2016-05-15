@@ -1,43 +1,43 @@
-describe("Ext.util.KeyMap", function(){
+describe("Ext.util.KeyMap", function () {
     var el, map, createMap, defaultFn, fireKey, origProcessEvent, KEYS = {
         A: 65,
         B: 66,
         C: 67,
         X: 88,
         Y: 89,
-        Z: 90 
+        Z: 90
     };
-    
-    beforeEach(function(){
+
+    beforeEach(function () {
         el = Ext.getBody().createChild({
             id: 'test-keyMap-el'
         });
-        
-        createMap = function(config, eventName){
+
+        createMap = function (config, eventName) {
             map = new Ext.KeyMap(el, config, eventName);
         };
-        
-        fireKey = function(key, eventName, options){
+
+        fireKey = function (key, eventName, options) {
             jasmine.fireKeyEvent(el, eventName || 'keydown', key, options || null);
         };
-        
+
         defaultFn = jasmine.createSpy('defaultKeyNavHandler');
         origProcessEvent = Ext.util.KeyMap.prototype.processEvent;
     });
-    
-    afterEach(function(){
+
+    afterEach(function () {
         if (map) {
             map.disable();
         }
-        
+
         el.destroy();
         Ext.util.KeyMap.prototype.processEvent = origProcessEvent;
         origProcessEvent = fireKey = defaultFn = map = createMap = el = null;
     });
-    
-    describe("constructor", function(){
-        describe("receiving element", function(){
-            it("should take a string id", function(){
+
+    describe("constructor", function () {
+        describe("receiving element", function () {
+            it("should take a string id", function () {
                 map = new Ext.util.KeyMap('test-keyMap-el');
                 map.addBinding({
                     key: KEYS.A,
@@ -46,8 +46,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.A);
                 expect(defaultFn).toHaveBeenCalled();
             });
-            
-            it("should take a dom element", function(){
+
+            it("should take a dom element", function () {
                 map = new Ext.util.KeyMap(el);
                 map.addBinding({
                     key: KEYS.X,
@@ -56,8 +56,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.X);
                 expect(defaultFn).toHaveBeenCalled();
             });
-            
-            it("should take an Ext.Element", function(){
+
+            it("should take an Ext.Element", function () {
                 map = new Ext.util.KeyMap(Ext.get(el));
                 map.addBinding({
                     key: KEYS.Z,
@@ -67,8 +67,8 @@ describe("Ext.util.KeyMap", function(){
                 expect(defaultFn).toHaveBeenCalled();
             });
         });
-        
-        it("should pass the config to addBinding", function(){
+
+        it("should pass the config to addBinding", function () {
             createMap({
                 key: KEYS.Z,
                 handler: defaultFn
@@ -76,8 +76,8 @@ describe("Ext.util.KeyMap", function(){
             fireKey(KEYS.Z);
             expect(defaultFn).toHaveBeenCalled();
         });
-        
-        it("should default the eventName to keydown", function(){
+
+        it("should default the eventName to keydown", function () {
             createMap({
                 key: KEYS.C,
                 handler: defaultFn
@@ -85,8 +85,8 @@ describe("Ext.util.KeyMap", function(){
             fireKey(KEYS.C, 'keydown');
             expect(defaultFn).toHaveBeenCalled();
         });
-        
-        it("should accept an eventName argument", function(){
+
+        it("should accept an eventName argument", function () {
             createMap({
                 key: KEYS.B,
                 handler: defaultFn
@@ -95,11 +95,11 @@ describe("Ext.util.KeyMap", function(){
             expect(defaultFn).toHaveBeenCalled();
         });
     });
-    
-    describe("addBinding", function(){
-        
-        describe("single binding", function(){
-            it("should listen to a single keycode", function(){
+
+    describe("addBinding", function () {
+
+        describe("single binding", function () {
+            it("should listen to a single keycode", function () {
                 createMap();
                 map.addBinding({
                     key: KEYS.A,
@@ -108,8 +108,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.A);
                 expect(defaultFn).toHaveBeenCalled();
             });
-        
-            it("should accept an array of keycodes", function(){
+
+            it("should accept an array of keycodes", function () {
                 createMap();
                 map.addBinding({
                     key: [KEYS.A, KEYS.Z],
@@ -117,11 +117,11 @@ describe("Ext.util.KeyMap", function(){
                 });
                 fireKey(KEYS.A);
                 fireKey(KEYS.Z);
-            
+
                 expect(defaultFn.callCount).toEqual(2);
             });
-        
-            it("should accept a single character as a string", function(){
+
+            it("should accept a single character as a string", function () {
                 createMap();
                 map.addBinding({
                     key: 'b',
@@ -130,8 +130,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.B);
                 expect(defaultFn).toHaveBeenCalled();
             });
-        
-            it("should accept multiple characters as a string", function(){
+
+            it("should accept multiple characters as a string", function () {
                 createMap();
                 map.addBinding({
                     key: 'xyz',
@@ -140,11 +140,11 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.X);
                 fireKey(KEYS.Y);
                 fireKey(KEYS.Z);
-                
+
                 expect(defaultFn.callCount).toEqual(3);
             });
-        
-            it("should accept an array of characters", function(){
+
+            it("should accept an array of characters", function () {
                 createMap();
                 map.addBinding({
                     key: ['c', 'y'],
@@ -152,13 +152,13 @@ describe("Ext.util.KeyMap", function(){
                 });
                 fireKey(KEYS.C);
                 fireKey(KEYS.Y);
-                
+
                 expect(defaultFn.callCount).toEqual(2);
             });
         });
-        
-        describe("array binding", function(){
-            it("should support an array of mixed bindings", function(){
+
+        describe("array binding", function () {
+            it("should support an array of mixed bindings", function () {
                 createMap();
                 map.addBinding([{
                     key: KEYS.A,
@@ -169,11 +169,11 @@ describe("Ext.util.KeyMap", function(){
                 }]);
                 fireKey(KEYS.A);
                 fireKey(KEYS.B);
-                
+
                 expect(defaultFn.callCount).toEqual(2);
             });
-            
-            it("should process all bindings", function(){
+
+            it("should process all bindings", function () {
                 createMap();
                 map.addBinding([{
                     key: KEYS.A,
@@ -186,8 +186,8 @@ describe("Ext.util.KeyMap", function(){
                 expect(defaultFn.callCount).toEqual(2);
             });
         });
-        
-        it("should support multiple addBinding calls", function(){
+
+        it("should support multiple addBinding calls", function () {
             createMap();
             map.addBinding({
                 key: KEYS.A,
@@ -202,20 +202,20 @@ describe("Ext.util.KeyMap", function(){
             expect(defaultFn.callCount).toEqual(2);
         });
     });
-    
-    describe("ctrl/alt/shift", function(){
-        
-        var createOverride = function(altKey, ctrlKey, shiftKey){
-            Ext.util.KeyMap.prototype.processEvent = function(event) {
+
+    describe("ctrl/alt/shift", function () {
+
+        var createOverride = function (altKey, ctrlKey, shiftKey) {
+            Ext.util.KeyMap.prototype.processEvent = function (event) {
                 event.altKey = altKey || false;
                 event.ctrlKey = ctrlKey || false;
                 event.shiftKey = shiftKey || false;
                 return event;
             };
         };
-        
-        describe("alt", function(){
-            it("should fire the event if the alt key is not pressed and the alt option is undefined", function(){
+
+        describe("alt", function () {
+            it("should fire the event if the alt key is not pressed and the alt option is undefined", function () {
                 createOverride();
                 createMap({
                     key: KEYS.A,
@@ -224,8 +224,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.A);
                 expect(defaultFn).toHaveBeenCalled();
             });
-            
-            it("should fire the event if the alt key is pressed and the alt option is undefined", function(){
+
+            it("should fire the event if the alt key is pressed and the alt option is undefined", function () {
                 createOverride(true);
                 createMap({
                     key: KEYS.A,
@@ -234,8 +234,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.A);
                 expect(defaultFn).toHaveBeenCalled();
             });
-            
-            it("should fire the event if the alt key is not pressed and the alt option is false", function(){
+
+            it("should fire the event if the alt key is not pressed and the alt option is false", function () {
                 createOverride();
                 createMap({
                     key: KEYS.B,
@@ -245,8 +245,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.B);
                 expect(defaultFn).toHaveBeenCalled();
             });
-            
-            it("should not fire the event if the alt key is pressed and the alt option is true", function(){
+
+            it("should not fire the event if the alt key is pressed and the alt option is true", function () {
                 createOverride();
                 createMap({
                     key: KEYS.C,
@@ -256,8 +256,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.C);
                 expect(defaultFn).not.toHaveBeenCalled();
             });
-            
-            it("should not fire the event if the alt key is pressed and the alt option is false", function(){
+
+            it("should not fire the event if the alt key is pressed and the alt option is false", function () {
                 createOverride(true);
                 createMap({
                     key: KEYS.X,
@@ -267,8 +267,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.X);
                 expect(defaultFn).not.toHaveBeenCalled();
             });
-            
-            it("should fire the event if the alt key is pressed and the alt option is true", function(){
+
+            it("should fire the event if the alt key is pressed and the alt option is true", function () {
                 createOverride(true);
                 createMap({
                     key: KEYS.X,
@@ -279,9 +279,9 @@ describe("Ext.util.KeyMap", function(){
                 expect(defaultFn).toHaveBeenCalled();
             });
         });
-        
-        describe("ctrl", function(){
-            it("should fire the event if the ctrl key is not pressed and the ctrl option is undefined", function(){
+
+        describe("ctrl", function () {
+            it("should fire the event if the ctrl key is not pressed and the ctrl option is undefined", function () {
                 createOverride();
                 createMap({
                     key: KEYS.A,
@@ -290,8 +290,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.A);
                 expect(defaultFn).toHaveBeenCalled();
             });
-            
-            it("should fire the event if the ctrl key is pressed and the ctrl option is undefined", function(){
+
+            it("should fire the event if the ctrl key is pressed and the ctrl option is undefined", function () {
                 createOverride(false, true);
                 createMap({
                     key: KEYS.A,
@@ -300,8 +300,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.A);
                 expect(defaultFn).toHaveBeenCalled();
             });
-            
-            it("should fire the event if the ctrl key is not pressed and the ctrl option is false", function(){
+
+            it("should fire the event if the ctrl key is not pressed and the ctrl option is false", function () {
                 createOverride();
                 createMap({
                     key: KEYS.A,
@@ -311,8 +311,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.A);
                 expect(defaultFn).toHaveBeenCalled();
             });
-            
-            it("should not fire the event if the ctrl key is pressed and the ctrl option is true", function(){
+
+            it("should not fire the event if the ctrl key is pressed and the ctrl option is true", function () {
                 createOverride();
                 createMap({
                     key: KEYS.C,
@@ -322,8 +322,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.C);
                 expect(defaultFn).not.toHaveBeenCalled();
             });
-            
-            it("should not fire the event if the ctrl key is pressed and the ctrl option is false", function(){
+
+            it("should not fire the event if the ctrl key is pressed and the ctrl option is false", function () {
                 createOverride(false, true);
                 createMap({
                     key: KEYS.X,
@@ -333,8 +333,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.X);
                 expect(defaultFn).not.toHaveBeenCalled();
             });
-            
-            it("should fire the event if the ctrl key is pressed and the ctrl option is true", function(){
+
+            it("should fire the event if the ctrl key is pressed and the ctrl option is true", function () {
                 createOverride(false, true);
                 createMap({
                     key: KEYS.X,
@@ -345,9 +345,9 @@ describe("Ext.util.KeyMap", function(){
                 expect(defaultFn).toHaveBeenCalled();
             });
         });
-        
-        describe("shift", function(){
-            it("should fire the event if the shift key is not pressed and the shift option is undefined", function(){
+
+        describe("shift", function () {
+            it("should fire the event if the shift key is not pressed and the shift option is undefined", function () {
                 createOverride();
                 createMap({
                     key: KEYS.A,
@@ -356,8 +356,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.A);
                 expect(defaultFn).toHaveBeenCalled();
             });
-            
-            it("should fire the event if the shift key is pressed and the shift option is undefined", function(){
+
+            it("should fire the event if the shift key is pressed and the shift option is undefined", function () {
                 createOverride(false, false, true);
                 createMap({
                     key: KEYS.A,
@@ -366,8 +366,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.A);
                 expect(defaultFn).toHaveBeenCalled();
             });
-            
-            it("should fire the event if the shift key is not pressed and the shift option is false", function(){
+
+            it("should fire the event if the shift key is not pressed and the shift option is false", function () {
                 createOverride();
                 createMap({
                     key: KEYS.B,
@@ -377,8 +377,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.B);
                 expect(defaultFn).toHaveBeenCalled();
             });
-            
-            it("should not fire the event if the shift key is pressed and the shift option is true", function(){
+
+            it("should not fire the event if the shift key is pressed and the shift option is true", function () {
                 createOverride();
                 createMap({
                     key: KEYS.C,
@@ -388,8 +388,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.C);
                 expect(defaultFn).not.toHaveBeenCalled();
             });
-            
-            it("should not fire the event if the shift key is pressed and the shift option is false", function(){
+
+            it("should not fire the event if the shift key is pressed and the shift option is false", function () {
                 createOverride(false, false, true);
                 createMap({
                     key: KEYS.X,
@@ -399,8 +399,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.X);
                 expect(defaultFn).not.toHaveBeenCalled();
             });
-            
-            it("should fire the event if the shift key is pressed and the shift option is true", function(){
+
+            it("should fire the event if the shift key is pressed and the shift option is true", function () {
                 createOverride(false, false, true);
                 createMap({
                     key: KEYS.X,
@@ -410,11 +410,11 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.X);
                 expect(defaultFn).toHaveBeenCalled();
             });
-        });    
-        
-        describe("combinations", function(){
+        });
+
+        describe("combinations", function () {
             // these are just some of the combinations, but are sufficient for testing purposes
-            it("should not fire the event if alt & ctrl are set to true but only alt is pressed", function(){
+            it("should not fire the event if alt & ctrl are set to true but only alt is pressed", function () {
                 createOverride(true);
                 createMap({
                     key: KEYS.Y,
@@ -425,8 +425,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.Y);
                 expect(defaultFn).not.toHaveBeenCalled();
             });
-            
-            it("should not fire the event if alt, ctrl & shift are set but only shift and ctrl are pressed", function(){
+
+            it("should not fire the event if alt, ctrl & shift are set but only shift and ctrl are pressed", function () {
                 createOverride(false, true, true);
                 createMap({
                     key: KEYS.Y,
@@ -438,8 +438,8 @@ describe("Ext.util.KeyMap", function(){
                 fireKey(KEYS.Y);
                 expect(defaultFn).not.toHaveBeenCalled();
             });
-            
-            it("should fire the event if alt & shift are set and alt, ctrl & shift are pressed", function(){
+
+            it("should fire the event if alt & shift are set and alt, ctrl & shift are pressed", function () {
                 createOverride(true, true, true);
                 createMap({
                     key: KEYS.Z,
@@ -452,87 +452,87 @@ describe("Ext.util.KeyMap", function(){
             });
         });
     });
-    
-    describe("params/scope", function(){
-        describe("scope", function(){
-            it("should default the scope to the map", function(){
+
+    describe("params/scope", function () {
+        describe("scope", function () {
+            it("should default the scope to the map", function () {
                 var actual;
-                
+
                 createMap({
                     key: KEYS.A,
-                    handler: function(){
+                    handler: function () {
                         actual = this;
                     }
                 });
                 fireKey(KEYS.A);
-                expect(actual).toEqual(map);    
+                expect(actual).toEqual(map);
             });
-            
-            it("should execute the callback in the passed scope", function(){
+
+            it("should execute the callback in the passed scope", function () {
                 var scope = {},
                     actual;
-                
+
                 createMap({
                     key: KEYS.Y,
                     scope: scope,
-                    handler: function(){
+                    handler: function () {
                         actual = this;
                     }
                 });
                 fireKey(KEYS.Y);
                 expect(actual).toBe(scope);
             });
-            
-            it("should execute each matched binding in the specified scope", function(){
+
+            it("should execute each matched binding in the specified scope", function () {
                 var scope1 = {},
                     scope2 = {},
                     actual1,
                     actual2;
-                    
+
                 createMap([{
                     key: KEYS.B,
                     scope: scope1,
-                    handler: function(){
+                    handler: function () {
                         actual1 = this;
                     }
                 }, {
                     key: KEYS.X,
                     scope: scope2,
-                    handler: function(){
+                    handler: function () {
                         actual2 = this;
                     }
                 }]);
-                
+
                 fireKey(KEYS.B);
                 fireKey(KEYS.X);
-                
+
                 expect(actual1).toBe(scope1);
                 expect(actual2).toBe(scope2);
             });
         });
-        
-        it("should execute the handler with the key and an event", function(){
+
+        it("should execute the handler with the key and an event", function () {
             var realKey,
                 realEvent;
-                
+
             createMap({
                 key: KEYS.Z,
-                handler: function(key, event){
+                handler: function (key, event) {
                     realKey = key;
                     realEvent = event;
                 }
             });
             fireKey(KEYS.Z);
-            
+
             expect(realKey).toEqual(KEYS.Z);
             expect(realEvent.getXY()).toBeTruthy();
             expect(realEvent.type).toBeTruthy();
             expect(realEvent.getTarget()).toBeTruthy();
         });
     });
-    
-    describe("disable/enabling", function(){
-        it("should be enabled by default", function(){
+
+    describe("disable/enabling", function () {
+        it("should be enabled by default", function () {
             createMap({
                 key: KEYS.B,
                 fn: defaultFn
@@ -540,8 +540,8 @@ describe("Ext.util.KeyMap", function(){
             fireKey(KEYS.B);
             expect(defaultFn).toHaveBeenCalled();
         });
-        
-        it("should not fire any events when disabled", function(){
+
+        it("should not fire any events when disabled", function () {
             createMap({
                 key: KEYS.C,
                 fn: defaultFn
@@ -550,8 +550,8 @@ describe("Ext.util.KeyMap", function(){
             fireKey(KEYS.C);
             expect(defaultFn).not.toHaveBeenCalled();
         });
-        
-        it("should fire events after being disabled/enabled", function(){
+
+        it("should fire events after being disabled/enabled", function () {
             createMap({
                 key: KEYS.Z,
                 fn: defaultFn
@@ -564,14 +564,14 @@ describe("Ext.util.KeyMap", function(){
             expect(defaultFn).toHaveBeenCalled();
         });
     });
-    
-    describe("event propagation", function() {
+
+    describe("event propagation", function () {
         var spy001, spy002;
-        
-        beforeEach(function() {
+
+        beforeEach(function () {
             spy001 = jasmine.createSpy('Agent 001');
             spy002 = jasmine.createSpy('Agent 002');
-            
+
             createMap([{
                 key: [KEYS.A, KEYS.A],
                 fn: spy001
@@ -580,42 +580,42 @@ describe("Ext.util.KeyMap", function(){
                 fn: spy002
             }]);
         });
-        
-        describe("stopping", function() {
-            beforeEach(function() {
+
+        describe("stopping", function () {
+            beforeEach(function () {
                 spy001.andReturn(false);
                 spyOn(map, 'processBinding').andCallThrough();
-                
+
                 // Re-bind the handler to allow spying on it
                 map.disable();
                 spyOn(map, 'handleTargetEvent').andCallThrough();
                 map.enable();
-                
+
                 fireKey(KEYS.A);
             });
-            
-            it("should not call subsequent handlers in processBinding", function() {
+
+            it("should not call subsequent handlers in processBinding", function () {
                 expect(spy001.callCount).toBe(1);
             });
-            
-            it("should not call processBinding more than once", function() {
+
+            it("should not call processBinding more than once", function () {
                 expect(map.processBinding.callCount).toBe(1);
             });
-            
-            it("should not call subsequent bindings' handlers", function() {
+
+            it("should not call subsequent bindings' handlers", function () {
                 expect(spy002).not.toHaveBeenCalled();
             });
-            
-            it("should return false from the main event handler", function() {
+
+            it("should return false from the main event handler", function () {
                 var result = map.handleTargetEvent.mostRecentCall.result;
-                
+
                 expect(result).toBe(false);
             });
         });
     });
-    
-    describe("destroying", function(){
-        it("should unbind any events on the element", function(){
+
+    describe("destroying", function () {
+        it("should unbind any events on the element", function () {
             createMap({
                 key: KEYS.A
             });
@@ -623,17 +623,17 @@ describe("Ext.util.KeyMap", function(){
             fireKey(KEYS.A);
             expect(defaultFn).not.toHaveBeenCalled();
         });
-        
+
         /**
          * This test has been commented out because I'm unable to get it to check
          * whether the item has been removed from the DOM. Tried:
          * a) expect(el.parentNode).toBeNull();
          * b) expect(el.parentNode).toBeFalsy();
          * c) expect(jasmine.util.argsToArray(Ext.getBody().dom.childNodes)).not.toContain(el)
-         * 
+         *
          * None of which work. Odd.
          */
-        xit("should remove the element if removeEl is specified", function(){
+        xit("should remove the element if removeEl is specified", function () {
             createMap({
                 key: KEYS.A
             });

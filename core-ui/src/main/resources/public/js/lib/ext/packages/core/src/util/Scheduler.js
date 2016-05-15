@@ -73,7 +73,7 @@ Ext.define('Ext.util.Scheduler', {
         if (Ext.util.Scheduler.instances) {
             Ext.util.Scheduler.instances.push(this);
         } else {
-            Ext.util.Scheduler.instances = [ this ];
+            Ext.util.Scheduler.instances = [this];
         }
         this.id = Ext.util.Scheduler.count = (Ext.util.Scheduler.count || 0) + 1;
         //</debug>
@@ -119,7 +119,7 @@ Ext.define('Ext.util.Scheduler', {
 
         item.id = item.id || ++me.nextId;
         item.scheduler = me;
-        
+
         items.add(item);
 
         if (!me.sortMap) {
@@ -561,7 +561,7 @@ Ext.define('Ext.util.Scheduler', {
             if (!item) {
                 Ext.raise('scheduleItem: Invalid argument');
             }
-            Ext.log('Schedule item: ' + item.getFullName() + ' - ' + (this.scheduledCount+1));
+            Ext.log('Schedule item: ' + item.getFullName() + ' - ' + (this.scheduledCount + 1));
             if (item.order <= this.notifyIndex) {
                 Ext.log.warn('Suboptimal order: ' + item.order + ' < ' + this.notifyIndex);
             }

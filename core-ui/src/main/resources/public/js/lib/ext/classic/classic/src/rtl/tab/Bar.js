@@ -3,11 +3,11 @@ Ext.define('Ext.rtl.tab.Bar', {
 
     privates: {
         // rtl hook
-        _getTabAdjustProp: function() {
+        _getTabAdjustProp: function () {
             return this.getInherited().rtl ? 'right' : 'left';
         },
 
-        getCloseXY: function(closeEl, tabX, tabY, tabWidth, tabHeight, closeWidth, closeHeight, direction) {
+        getCloseXY: function (closeEl, tabX, tabY, tabWidth, tabHeight, closeWidth, closeHeight, direction) {
             var closeXY, closeX, closeY, xy;
 
             if (this.isOppositeRootDirection()) {

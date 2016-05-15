@@ -77,7 +77,7 @@ Ext.define('Ext.device.Device', {
         'Ext.device.device.Simulator'
     ],
 
-    constructor: function() {
+    constructor: function () {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView) {
             if (browserEnv.Cordova) {

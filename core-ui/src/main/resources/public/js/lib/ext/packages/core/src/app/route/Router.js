@@ -13,9 +13,9 @@
  * @private
  */
 Ext.define('Ext.app.route.Router', {
-    singleton : true,
+    singleton: true,
 
-    requires : [
+    requires: [
         'Ext.app.route.Queue',
         'Ext.app.route.Route',
         'Ext.util.History'
@@ -37,7 +37,7 @@ Ext.define('Ext.app.route.Router', {
      * instances.
      */
 
-    constructor : function () {
+    constructor: function () {
         var History = Ext.util.History;
 
         if (!History.ready) {
@@ -54,15 +54,15 @@ Ext.define('Ext.app.route.Router', {
      * @private
      * @param {String} token The token to react to.
      */
-    onStateChange : function (token) {
-        var me          = this,
-            app         = me.application,
-            routes      = me.routes,
-            len         = routes.length,
+    onStateChange: function (token) {
+        var me = this,
+            app = me.application,
+            routes = me.routes,
+            len = routes.length,
             queueRoutes = me.queueRoutes,
-            tokens      = token.split(me.multipleToken),
-            t           = 0,
-            length      = tokens.length,
+            tokens = token.split(me.multipleToken),
+            t = 0,
+            length = tokens.length,
             i, queue, route, args, matched;
 
         for (; t < length; t++) {
@@ -72,13 +72,13 @@ Ext.define('Ext.app.route.Router', {
             if (queueRoutes) {
                 //create a queue
                 queue = new Ext.app.route.Queue({
-                    token : token
+                    token: token
                 });
             }
 
             for (i = 0; i < len; i++) {
                 route = routes[i];
-                args  = route.recognize(token);
+                args = route.recognize(token);
 
                 if (args) {
                     matched = true;
@@ -94,7 +94,7 @@ Ext.define('Ext.app.route.Router', {
                 //run the queue
                 queue.runQueue();
             }
-            
+
             if (!matched && app) {
                 app.fireEvent('unmatchedroute', token);
             }
@@ -111,29 +111,29 @@ Ext.define('Ext.app.route.Router', {
      * @param {Ext.app.Controller} controller The controller associated with the
      * {@link Ext.app.route.Route}
      */
-    connect : function (url, action, controller) {
+    connect: function (url, action, controller) {
         var config = {
-                url        : url,
-                action     : action,
-                controller : controller
-            };
+            url: url,
+            action: action,
+            controller: controller
+        };
 
         if (Ext.isObject(action)) {
             Ext.merge(config, action);
         }
         this.routes.push(new Ext.app.route.Route(config));
     },
-    
+
     /**
      * Disconnects all routes for a controller.
      * @param {Ext.app.Controller} controller The controller to disconnect routes from.
      */
-    disconnectAll: function(controller) {
+    disconnectAll: function (controller) {
         var routes = this.routes,
             len = routes.length,
             newRoutes = [],
             i, route;
-    
+
         for (i = 0; i < len; ++i) {
             route = routes[i];
             if (route.controller !== controller) {
@@ -151,21 +151,21 @@ Ext.define('Ext.app.route.Router', {
      * @return {Object/Boolean} If the url was recognized, the controller and action to
      * call, else `false`.
      */
-    recognize : function(url) {
+    recognize: function (url) {
         var routes = this.routes || [],
-            i      = 0,
-            len    = routes.length,
+            i = 0,
+            len = routes.length,
             route, args;
 
         for (; i < len; i++) {
             route = routes[i];
-            args  = route.recognize(url);
+            args = route.recognize(url);
 
             if (args) {
                 //route is recognized, return it and the arguments recognized if any
                 return {
-                    route : route,
-                    args  : args
+                    route: route,
+                    args: args
                 };
             }
         }
@@ -184,14 +184,14 @@ Ext.define('Ext.app.route.Router', {
      *
      * @param {Function} fn The function to call
      */
-    draw : function(fn) {
+    draw: function (fn) {
         fn.call(this, this);
     },
 
     /**
      * Clear all the recognized routes.
      */
-    clear : function() {
+    clear: function () {
         this.routes = [];
     }
 });

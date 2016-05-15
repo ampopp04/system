@@ -4,7 +4,7 @@
  * A collection of useful static methods to deal with numbers
  * @singleton
  */
-Ext.Number = (new function() { // jshint ignore:line
+Ext.Number = (new function () { // jshint ignore:line
 // @define Ext.lang.Number
 // @define Ext.Number
 // @require Ext
@@ -22,16 +22,16 @@ Ext.Number = (new function() { // jshint ignore:line
             DEFAULT: ClipDefault,
 
             COUNT: Ext.applyIf({
-                    count: true
-                }, ClipDefault),
+                count: true
+            }, ClipDefault),
 
             INCLUSIVE: Ext.applyIf({
-                    inclusive: true
-                }, ClipDefault),
+                inclusive: true
+            }, ClipDefault),
 
             NOWRAP: Ext.applyIf({
-                    wrap: false
-                }, ClipDefault)
+                wrap: false
+            }, ClipDefault)
         },
 
         /**
@@ -130,7 +130,7 @@ Ext.Number = (new function() { // jshint ignore:line
          * @param {Number} max The maximum number in the range
          * @return {Number} The constrained value if outside the range, otherwise the current value
          */
-        constrain: function(number, min, max) {
+        constrain: function (number, min, max) {
             var x = parseFloat(number);
 
             // (x < Nan) || (x < undefined) == false
@@ -167,7 +167,7 @@ Ext.Number = (new function() { // jshint ignore:line
          * @param {Number} maxValue The maximum value to which the returned value must be constrained. Overrides the increment.
          * @return {Number} The value of the nearest snap target.
          */
-        snap : function(value, increment, minValue, maxValue) {
+        snap: function (value, increment, minValue, maxValue) {
             var m;
 
             // If no value passed, or minValue was passed and value is less than minValue (anything < undefined is false)
@@ -187,7 +187,7 @@ Ext.Number = (new function() { // jshint ignore:line
                     }
                 }
             }
-            return ExtNumber.constrain(value, minValue,  maxValue);
+            return ExtNumber.constrain(value, minValue, maxValue);
         },
 
         /**
@@ -206,7 +206,7 @@ Ext.Number = (new function() { // jshint ignore:line
          * @param {Number} [maxValue=Infinity] The maximum value to which the returned value must be constrained.
          * @return {Number} The value of the nearest snap target.
          */
-        snapInRange : function(value, increment, minValue, maxValue) {
+        snapInRange: function (value, increment, minValue, maxValue) {
             var tween;
 
             // default minValue to zero
@@ -259,11 +259,11 @@ Ext.Number = (new function() { // jshint ignore:line
          * @param {Number} value The number to format
          * @param {Number} precision The number of digits to show after the decimal point
          */
-        toFixed: isToFixedBroken ? function(value, precision) {
+        toFixed: isToFixedBroken ? function (value, precision) {
             precision = precision || 0;
             var pow = math.pow(10, precision);
             return (math.round(value * pow) / pow).toFixed(precision);
-        } : function(value, precision) {
+        } : function (value, precision) {
             return value.toFixed(precision);
         },
 
@@ -271,14 +271,14 @@ Ext.Number = (new function() { // jshint ignore:line
          * Validate that a value is numeric and convert it to a number if necessary. Returns the specified default value if
          * it is not.
 
-    Ext.Number.from('1.23', 1); // returns 1.23
-    Ext.Number.from('abc', 1); // returns 1
+         Ext.Number.from('1.23', 1); // returns 1.23
+         Ext.Number.from('abc', 1); // returns 1
 
          * @param {Object} value
          * @param {Number} defaultValue The value to return if the original value is non-numeric
          * @return {Number} value, if numeric, defaultValue otherwise
          */
-        from: function(value, defaultValue) {
+        from: function (value, defaultValue) {
             if (isFinite(value)) {
                 value = parseFloat(value);
             }
@@ -293,16 +293,16 @@ Ext.Number = (new function() { // jshint ignore:line
          * @return {Number} A random integer within the specified range.
          */
         randomInt: function (from, to) {
-           return math.floor(math.random() * (to - from + 1) + from);
+            return math.floor(math.random() * (to - from + 1) + from);
         },
-        
+
         /**
          * Corrects floating point numbers that overflow to a non-precise
          * value because of their floating nature, for example `0.1 + 0.2`
          * @param {Number} n The number
          * @return {Number} The correctly rounded number
          */
-        correctFloat: function(n) {
+        correctFloat: function (n) {
             // This is to correct the type of errors where 2 floats end with
             // a long string of decimals, eg 0.1 + 0.2. When they overflow in this
             // manner, they usually go to 15-16 decimals, so we cut it off at 14.
@@ -316,7 +316,7 @@ Ext.Number = (new function() { // jshint ignore:line
      * @method num
      * @inheritdoc Ext.Number#from
      */
-    Ext.num = function() {
+    Ext.num = function () {
         return ExtNumber.from.apply(this, arguments);
     };
 }());

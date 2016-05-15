@@ -63,11 +63,11 @@ Ext.define('Ext.grid.plugin.RowExpander', {
      * The width of the Row Expander column header
      */
     headerWidth: 24,
-    
+
     /**
      * @cfg {Boolean} [bodyBefore=false]
      * Configure as `true` to put the row expander body *before* the data row.
-     * 
+     *
      */
     bodyBefore: false,
 
@@ -76,7 +76,7 @@ Ext.define('Ext.grid.plugin.RowExpander', {
     rowCollapsedCls: Ext.baseCSSPrefix + 'grid-row-collapsed',
 
     addCollapsedCls: {
-        fn: function(out, values, parent) {
+        fn: function (out, values, parent) {
             var me = this.rowExpander;
             if (!me.recordsExpanded[values.record.internalId]) {
                 values.itemClasses.push(me.rowCollapsedCls);
@@ -84,7 +84,7 @@ Ext.define('Ext.grid.plugin.RowExpander', {
             this.nextTpl.applyOut(values, out, parent);
         },
 
-        syncRowHeights: function(lockedItem, normalItem) {
+        syncRowHeights: function (lockedItem, normalItem) {
             this.rowExpander.syncRowHeights(lockedItem, normalItem);
         },
 
@@ -108,7 +108,7 @@ Ext.define('Ext.grid.plugin.RowExpander', {
      * @param {HTMLElement} expandRow The &lt;tr> element containing the expanded data.
      */
 
-    setCmp: function(grid) {
+    setCmp: function (grid) {
         var me = this,
             features;
 
@@ -138,7 +138,7 @@ Ext.define('Ext.grid.plugin.RowExpander', {
      * Returns the array of Feature configurations needed to make the RowExpander work.
      * May be overridden in a subclass to modify the returned array.
      */
-    getFeatureConfig: function(grid) {
+    getFeatureConfig: function (grid) {
         var me = this,
             features = [],
             featuresCfg = {
@@ -163,14 +163,16 @@ Ext.define('Ext.grid.plugin.RowExpander', {
         if (grid.enableLocking) {
             features.push(Ext.apply({
                 lockableScope: 'locked',
-                getRowBodyContents: me.lockedTpl ? me.getRowBodyContentsFn(me.lockedTpl) : function() {return '';}
+                getRowBodyContents: me.lockedTpl ? me.getRowBodyContentsFn(me.lockedTpl) : function () {
+                    return '';
+                }
             }, featuresCfg));
         }
 
         return features;
     },
-    
-    getRowBodyContentsFn: function(rowBodyTpl) {
+
+    getRowBodyContentsFn: function (rowBodyTpl) {
         var me = this;
         return function (rowValues) {
             rowBodyTpl.owner = me;
@@ -178,7 +180,7 @@ Ext.define('Ext.grid.plugin.RowExpander', {
         };
     },
 
-    init: function(grid) {
+    init: function (grid) {
         if (grid.lockable) {
             grid = grid.normalGrid;
         }
@@ -227,7 +229,7 @@ Ext.define('Ext.grid.plugin.RowExpander', {
         }
     },
 
-    onItemAdd: function(newRecords, startIndex, newItems) {
+    onItemAdd: function (newRecords, startIndex, newItems) {
         var me = this,
             ownerLockable = me.grid.ownerLockable,
             lockableSyncRowHeights = me.lockableSyncRowHeights || (me.lockableSyncRowHeights = Ext.Function.createAnimationFrame(ownerLockable.syncRowHeights, ownerLockable)),
@@ -243,21 +245,21 @@ Ext.define('Ext.grid.plugin.RowExpander', {
         }
     },
 
-    beforeReconfigure: function(grid, store, columns, oldStore, oldColumns) {
+    beforeReconfigure: function (grid, store, columns, oldStore, oldColumns) {
         var me = this;
 
         if (me.viewListeners) {
-            me.viewListeners.destroy();    
+            me.viewListeners.destroy();
         }
-        
+
         if (columns) {
-            me.expanderColumn = new Ext.grid.Column(me.getHeaderConfig());    
+            me.expanderColumn = new Ext.grid.Column(me.getHeaderConfig());
             columns.unshift(me.expanderColumn);
         }
-        
+
     },
 
-    onLockableProcessColumns: function(lockable, lockedHeaders, normalHeaders) {
+    onLockableProcessColumns: function (lockable, lockedHeaders, normalHeaders) {
         this.addExpander(lockedHeaders.length ? lockable.lockedGrid : lockable.normalGrid);
     },
 
@@ -267,7 +269,7 @@ Ext.define('Ext.grid.plugin.RowExpander', {
      *
      * If we are expanding the normal side of a lockable grid, poke the column into the locked side if the locked side has columns
      */
-    addExpander: function(expanderGrid) {
+    addExpander: function (expanderGrid) {
         var me = this;
 
         me.grid = expanderGrid;
@@ -278,7 +280,7 @@ Ext.define('Ext.grid.plugin.RowExpander', {
         expanderGrid.getSelectionModel().injectCheckbox = 1;
     },
 
-    getRowBodyFeatureData: function(record, idx, rowValues) {
+    getRowBodyFeatureData: function (record, idx, rowValues) {
         var me = this;
 
         me.self.prototype.setupRowData.apply(me, arguments);
@@ -287,7 +289,7 @@ Ext.define('Ext.grid.plugin.RowExpander', {
         rowValues.rowBodyCls = me.recordsExpanded[record.internalId] ? '' : me.rowBodyHiddenCls;
     },
 
-    setup: function(rows, rowValues){
+    setup: function (rows, rowValues) {
         var me = this,
             lockable = me.grid.ownerLockable;
 
@@ -299,14 +301,14 @@ Ext.define('Ext.grid.plugin.RowExpander', {
         }
     },
 
-    bindView: function(view) {
+    bindView: function (view) {
         view.on('itemkeydown', this.onKeyDown, this);
         if (this.expandOnDblClick) {
             view.on('itemdblclick', this.onDblClick, this);
         }
     },
 
-    onKeyDown: function(view, record, row, rowIdx, e) {
+    onKeyDown: function (view, record, row, rowIdx, e) {
         var me = this,
             key = e.getKey(),
             pos = view.getNavigationModel().getPosition(),
@@ -317,17 +319,17 @@ Ext.define('Ext.grid.plugin.RowExpander', {
             isCollapsed = row.hasCls(me.rowCollapsedCls);
 
             // + key on collapsed or - key on expanded
-            if (((key === 107  || (key === 187 && e.shiftKey)) && isCollapsed) || ((key === 109 || key === 189) && !isCollapsed)) {
+            if (((key === 107 || (key === 187 && e.shiftKey)) && isCollapsed) || ((key === 109 || key === 189) && !isCollapsed)) {
                 me.toggleRow(rowIdx, record);
             }
         }
     },
 
-    onDblClick: function(view, record, row, rowIdx, e) {
+    onDblClick: function (view, record, row, rowIdx, e) {
         this.toggleRow(rowIdx, record);
     },
 
-    toggleRow: function(rowIdx, record) {
+    toggleRow: function (rowIdx, record) {
         var me = this,
             view = me.view,
             bufferedRenderer = view.bufferedRenderer,
@@ -340,7 +342,7 @@ Ext.define('Ext.grid.plugin.RowExpander', {
             wasCollapsed = normalRow.hasCls(me.rowCollapsedCls),
             addOrRemoveCls = wasCollapsed ? 'removeCls' : 'addCls',
 
-            // The expander column should be rowSpan="2" only when the expander is expanded
+        // The expander column should be rowSpan="2" only when the expander is expanded
             rowSpan = wasCollapsed ? 2 : 1,
             ownerLockable = me.grid.ownerLockable,
             expanderCell;
@@ -378,10 +380,10 @@ Ext.define('Ext.grid.plugin.RowExpander', {
         if (me.expanderColumn) {
             expanderCell = Ext.fly(view.getRow(rowIdx)).down(me.expanderColumn.getCellSelector(), true);
             if (expanderCell) {
-                expanderCell.rowSpan = rowSpan;    
+                expanderCell.rowSpan = rowSpan;
             }
         }
-        
+
         fireView.fireEvent(wasCollapsed ? 'expandbody' : 'collapsebody', rowNode, record, nextBd);
 
         // Layout needed of we are shrinkwrapping height, or there are locked/unlocked sides to sync
@@ -397,11 +399,11 @@ Ext.define('Ext.grid.plugin.RowExpander', {
             } else {
                 scroller.refresh(true);
             }
-        }    
+        }
     },
 
     // Called from TableLayout.finishedLayout
-    syncRowHeights: function(lockedItem, normalItem) {
+    syncRowHeights: function (lockedItem, normalItem) {
         var me = this,
             lockedBd = Ext.fly(lockedItem).down(me.rowBodyTrSelector),
             normalBd = Ext.fly(normalItem).down(me.rowBodyTrSelector),
@@ -426,13 +428,13 @@ Ext.define('Ext.grid.plugin.RowExpander', {
         }
     },
 
-    onColumnUnlock: function(lockable, column) {
+    onColumnUnlock: function (lockable, column) {
         var me = this,
             lockedColumns;
-        
+
         lockable = me.grid.ownerLockable;
         lockedColumns = lockable.lockedGrid.visibleColumnManager.getColumns();
-        
+
         // User has unlocked all columns and left only the expander column in the locked side.
         if (lockedColumns.length === 1) {
             if (lockedColumns[0] === me.expanderColumn) {
@@ -444,14 +446,14 @@ Ext.define('Ext.grid.plugin.RowExpander', {
         }
     },
 
-    onColumnLock: function(lockable, column) {
+    onColumnLock: function (lockable, column) {
         var me = this,
             lockedColumns,
             lockedGrid;
-        
+
         lockable = me.grid.ownerLockable;
         lockedColumns = lockable.lockedGrid.visibleColumnManager.getColumns();
-        
+
         // User has unlocked all columns and left only the expander column in the locked side.
         if (lockedColumns.length === 1) {
             me.grid = lockedGrid = lockable.lockedGrid;
@@ -459,7 +461,7 @@ Ext.define('Ext.grid.plugin.RowExpander', {
         }
     },
 
-    getHeaderConfig: function() {
+    getHeaderConfig: function () {
         var me = this,
             lockable = me.grid.ownerLockable;
 
@@ -475,10 +477,10 @@ Ext.define('Ext.grid.plugin.RowExpander', {
             menuDisabled: true,
             tdCls: Ext.baseCSSPrefix + 'grid-cell-special',
             innerCls: Ext.baseCSSPrefix + 'grid-cell-inner-row-expander',
-            renderer: function() {
+            renderer: function () {
                 return '<div class="' + Ext.baseCSSPrefix + 'grid-row-expander" role="presentation" tabIndex="0"></div>';
             },
-            processEvent: function(type, view, cell, rowIndex, cellIndex, e, record) {
+            processEvent: function (type, view, cell, rowIndex, cellIndex, e, record) {
                 if ((type === "click" && e.getTarget('.' + Ext.baseCSSPrefix + 'grid-row-expander')) || (type === 'keydown' && e.getKey() === e.SPACE)) {
                     me.toggleRow(rowIndex, record);
                     return me.selectRowOnExpand;
@@ -487,12 +489,12 @@ Ext.define('Ext.grid.plugin.RowExpander', {
 
             // This column always migrates to the locked side if the locked side is visible.
             // It has to report this correctly so that editors can position things correctly
-            isLocked: function() {
+            isLocked: function () {
                 return lockable && (lockable.lockedGrid.isVisible() || this.locked);
             },
 
             // In an editor, this shows nothing.
-            editRenderer: function() {
+            editRenderer: function () {
                 return '&#160;';
             }
         };

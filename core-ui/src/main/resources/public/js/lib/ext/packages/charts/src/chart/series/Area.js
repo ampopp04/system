@@ -3,7 +3,7 @@
  * @extends Ext.chart.series.StackedCartesian
  *
  * Creates an Area Chart.
- * 
+ *
  *     @example
  *     Ext.create({
  *        xtype: 'cartesian', 

@@ -1,34 +1,34 @@
 // @tag core
 /**
  * @class Ext.util.DelayedTask
- * 
+ *
  * The DelayedTask class provides a convenient way to "buffer" the execution of a method,
  * performing setTimeout where a new timeout cancels the old timeout. When called, the
  * task will wait the specified time period before executing. If durng that time period,
  * the task is called again, the original call will be cancelled. This continues so that
  * the function is only called a single time for each iteration.
- * 
+ *
  * This method is especially useful for things like detecting whether a user has finished
  * typing in a text field. An example would be performing validation on a keypress. You can
  * use this class to buffer the keypress events for a certain number of milliseconds, and
- * perform only if they stop for that amount of time.  
- * 
+ * perform only if they stop for that amount of time.
+ *
  * ## Usage
- * 
+ *
  *     var task = new Ext.util.DelayedTask(function(){
  *         alert(Ext.getDom('myInputField').value.length);
  *     });
- *     
+ *
  *     // Wait 500ms before calling our function. If the user presses another key
  *     // during that 500ms, it will be cancelled and we'll wait another 500ms.
  *     Ext.get('myInputField').on('keypress', function() {
  *         task.{@link #delay}(500);
  *     });
- * 
+ *
  * Note that we are using a DelayedTask here to illustrate a point. The configuration
  * option `buffer` for {@link Ext.util.Observable#addListener addListener/on} will
  * also setup a delayed task for you to buffer events.
- * 
+ *
  * @constructor The parameters to this constructor serve as defaults and are not required.
  * @param {Function} fn (optional) The default function to call. If not specified here, it must be specified during the {@link #delay} call.
  * @param {Object} scope (optional) The default scope (The **`this`** reference) in which the
@@ -39,12 +39,12 @@
  * `newDelay`, `newFn`, `newScope` or `newArgs`, whichever are passed.
  */
 Ext.util = Ext.util || {};
-Ext.util.DelayedTask = function(fn, scope, args, cancelOnDelay, fireIdleEvent) {
+Ext.util.DelayedTask = function (fn, scope, args, cancelOnDelay, fireIdleEvent) {
 // @define Ext.util.DelayedTask
 // @uses Ext.GlobalEvents
     var me = this,
         delay,
-        call = function() {
+        call = function () {
             var globalEvents = Ext.GlobalEvents;
             clearInterval(me.id);
             me.id = null;
@@ -75,16 +75,16 @@ Ext.util.DelayedTask = function(fn, scope, args, cancelOnDelay, fireIdleEvent) {
      * is specified, <code>this</code> will refer to the browser window.
      * @param {Array} newArgs (optional) Overrides args passed to constructor
      */
-    me.delay = function(newDelay, newFn, newScope, newArgs) {
+    me.delay = function (newDelay, newFn, newScope, newArgs) {
         if (cancelOnDelay) {
             me.cancel();
         }
         if (typeof newDelay === 'number') {
             delay = newDelay;
         }
-        fn    = newFn    || fn;
+        fn = newFn || fn;
         scope = newScope || scope;
-        args  = newArgs  || args;
+        args = newArgs || args;
         if (!me.id) {
             me.id = Ext.interval(call, delay);
         }
@@ -93,7 +93,7 @@ Ext.util.DelayedTask = function(fn, scope, args, cancelOnDelay, fireIdleEvent) {
     /**
      * Cancel the last queued timeout
      */
-    me.cancel = function() {
+    me.cancel = function () {
         if (me.id) {
             clearInterval(me.id);
             me.id = null;

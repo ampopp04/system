@@ -1,7 +1,7 @@
 /**
  * @class Ext.chart.series.sprite.Pie3DPart
  * @extends Ext.draw.sprite.Path
- * 
+ *
  * Pie3D series sprite.
  */
 Ext.define('Ext.chart.series.sprite.Pie3DPart', {
@@ -211,7 +211,7 @@ Ext.define('Ext.chart.series.sprite.Pie3DPart', {
                 });
                 break;
             case 'bottom':
-                fillStyle =  new Ext.draw.gradient.Radial({
+                fillStyle = new Ext.draw.gradient.Radial({
                     start: {
                         x: 0,
                         y: 0,
@@ -233,7 +233,7 @@ Ext.define('Ext.chart.series.sprite.Pie3DPart', {
                 break;
             case 'outerFront':
             case 'outerBack':
-                fillStyle =  new Ext.draw.gradient.Linear({
+                fillStyle = new Ext.draw.gradient.Linear({
                     stops: [{
                         offset: 0,
                         color: color.createDarker(0.15 * colorSpread).toString()
@@ -308,7 +308,7 @@ Ext.define('Ext.chart.series.sprite.Pie3DPart', {
                 break;
             case 'outerFront':
                 startAngle = normalize(startAngle + rotation);
-                endAngle   = normalize(endAngle   + rotation);
+                endAngle = normalize(endAngle + rotation);
                 if (startAngle >= 0 && endAngle < 0) {
                     depth = Math.sin(startAngle);
                 } else if (startAngle <= 0 && endAngle > 0) {
@@ -396,7 +396,7 @@ Ext.define('Ext.chart.series.sprite.Pie3DPart', {
         }
         return this.updatePlainBBox(transform);
     },
-    
+
     updatePath: function (path) {
         if (!this.attr.globalAlpha) {
             return;
@@ -557,13 +557,13 @@ Ext.define('Ext.chart.series.sprite.Pie3DPart', {
             startRho = attr.startRho,
             endRho = attr.endRho,
             angle = (position === 'start' && startAngle) ||
-                    (position === 'end' && endAngle),
+                (position === 'end' && endAngle),
             sin = Math.sin(angle),
             cos = Math.cos(angle),
             isTranslucent = attr.globalAlpha < 1,
             isVisible = position === 'start' && cos < 0 ||
-                        position === 'end' && cos > 0 ||
-                        isTranslucent,
+                position === 'end' && cos > 0 ||
+                isTranslucent,
             midAngle;
 
         if (isVisible) {
@@ -609,10 +609,10 @@ Ext.define('Ext.chart.series.sprite.Pie3DPart', {
             normalize = Ext.draw.sprite.AttributeParser.angle,
             startAngle = attr.startAngle + baseRotation,
             endAngle = attr.endAngle + baseRotation,
-            // It's critical to use non-normalized start and end angles
-            // for middle angle calculation. Consider a situation where the
-            // start angle is +170 degrees and the end engle is -170 degrees
-            // after normalization (the middle angle is 0 then, but it should be 180 degrees).
+        // It's critical to use non-normalized start and end angles
+        // for middle angle calculation. Consider a situation where the
+        // start angle is +170 degrees and the end engle is -170 degrees
+        // after normalization (the middle angle is 0 then, but it should be 180 degrees).
             midAngle = normalize((startAngle + endAngle) / 2),
             thickness = attr.thickness,
             isTranslucent = attr.globalAlpha < 1,

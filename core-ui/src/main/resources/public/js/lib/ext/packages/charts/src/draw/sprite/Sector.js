@@ -1,7 +1,7 @@
 /**
  * @class Ext.draw.sprite.Sector
  * @extends Ext.draw.sprite.Path
- * 
+ *
  * A sprite representing a pie slice.
  *
  *     @example

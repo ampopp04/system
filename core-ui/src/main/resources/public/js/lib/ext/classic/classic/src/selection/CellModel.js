@@ -80,7 +80,7 @@ Ext.define('Ext.selection.CellModel', {
      * @param {Number} column The column index selected
      */
 
-    bindComponent: function(view) {
+    bindComponent: function (view) {
         var me = this,
             grid;
 
@@ -107,13 +107,13 @@ Ext.define('Ext.selection.CellModel', {
         }
     },
 
-    getViewListeners: function() {
+    getViewListeners: function () {
         var result = this.callParent();
         result.refresh = this.onViewRefresh;
         return result;
     },
 
-    getHeaderCt: function() {
+    getHeaderCt: function () {
         var selection = this.navigationModel.getPosition(),
             view = selection ? selection.view : this.primaryView;
 
@@ -121,7 +121,7 @@ Ext.define('Ext.selection.CellModel', {
     },
 
     // Selection blindly follows focus. For now.
-    onNavigate: function(e) {
+    onNavigate: function (e) {
         // It was a navigate out event.
         // Or stopSelection was stamped into the event by an upstream handler.
         // This is used by ActionColumn and CheckColumn to implement their stopSelection config
@@ -132,10 +132,10 @@ Ext.define('Ext.selection.CellModel', {
         this.setPosition(e.position);
     },
 
-    selectWithEvent: function(record, e) {
+    selectWithEvent: function (record, e) {
         this.select(record);
     },
-    /** 
+    /**
      * Selects a cell by row / column.
      *
      *     var grid = Ext.create('Ext.grid.Panel', {
@@ -189,7 +189,7 @@ Ext.define('Ext.selection.CellModel', {
      * @param {Ext.grid.column.Column/Number} pos.column
      *   A column or index of the column (starting at 0).  Includes visible columns only.
      */
-    select: function(pos, /* private */ keepExisting, suppressEvent) {
+    select: function (pos, /* private */ keepExisting, suppressEvent) {
         var me = this,
             row,
             oldPos = me.getPosition(),
@@ -205,17 +205,17 @@ Ext.define('Ext.selection.CellModel', {
                     };
                 } else {
                     pos = null;
-                } 
+                }
             } else if (typeof pos === 'number') {
                 pos = {
                     row: pos,
                     column: 0
                 };
             }
-        } 
+        }
 
         if (pos) {
-            me.selectByPosition(pos, suppressEvent);   
+            me.selectByPosition(pos, suppressEvent);
         } else {
             me.deselect();
         }
@@ -225,7 +225,7 @@ Ext.define('Ext.selection.CellModel', {
      * Returns the current position in the format {row: row, column: column}
      * @deprecated 5.0.1 This API uses column indices which include hidden columns in the count. Use {@link #getPosition} instead.
      */
-    getCurrentPosition: function() {
+    getCurrentPosition: function () {
         // If it's during a select, return nextSelection since we buffer
         // the real selection until after the event fires
         var position = this.selecting ? this.nextSelection : this.selection;
@@ -248,7 +248,7 @@ Ext.define('Ext.selection.CellModel', {
      * Returns the current position in the format {row: row, column: column}
      * @return {Ext.grid.CellContext} A CellContext object describing the current cell.
      */
-    getPosition: function() {
+    getPosition: function () {
         return (this.selecting ? this.nextSelection : this.selection) || null;
     },
 
@@ -258,7 +258,7 @@ Ext.define('Ext.selection.CellModel', {
      * @param {Ext.grid.CellContext/Object} position The position to set. May be an object of the form `{row:1, column:2}`
      * @param {Boolean} suppressEvent True to suppress selection events
      */
-    setCurrentPosition: function(pos, suppressEvent, /* private */ preventCheck) {
+    setCurrentPosition: function (pos, suppressEvent, /* private */ preventCheck) {
         if (pos && !pos.isCellContext) {
             pos = new Ext.grid.CellContext(this.view).setPosition({
                 row: pos.row,
@@ -278,7 +278,7 @@ Ext.define('Ext.selection.CellModel', {
      * @param {Ext.grid.CellContext/Object} position The position to set. May be an object of the form `{row:1, column:2}`
      * @param {Boolean} suppressEvent True to suppress selection events
      */
-    setPosition: function(pos, suppressEvent, /* private */ preventCheck) {
+    setPosition: function (pos, suppressEvent, /* private */ preventCheck) {
         var me = this,
             last = me.selection;
 
@@ -311,7 +311,7 @@ Ext.define('Ext.selection.CellModel', {
         // </debug>
     },
 
-    isCellSelected: function(view, row, column) {
+    isCellSelected: function (view, row, column) {
         var me = this,
             testPos,
             pos = me.getPosition();
@@ -328,7 +328,7 @@ Ext.define('Ext.selection.CellModel', {
     },
 
     // Keep selection model in consistent state upon record deletion.
-    onStoreRemove: function(store, records, indices) {
+    onStoreRemove: function (store, records, indices) {
         var me = this,
             pos = me.getPosition();
 
@@ -336,20 +336,20 @@ Ext.define('Ext.selection.CellModel', {
         if (pos && store.isMoving(pos.record)) {
             return;
         }
-        
+
         if (pos && store.getCount() && store.indexOf(pos.record) !== -1) {
             pos.setRow(pos.record);
         } else {
             me.selection = null;
         }
     },
-    
-    onStoreClear: function() {
+
+    onStoreClear: function () {
         this.callParent(arguments);
         this.selection = null;
     },
-    
-    onStoreAdd: function() {
+
+    onStoreAdd: function () {
         var me = this,
             pos = me.getPosition();
 
@@ -366,7 +366,7 @@ Ext.define('Ext.selection.CellModel', {
      * @private
      * IMPORTANT* Due to V4.0.0 history, the cellIndex here is the index within ALL columns, including hidden.
      */
-    onCellClick: function(view, cell, cellIndex, record, row, recordIndex, e) {
+    onCellClick: function (view, cell, cellIndex, record, row, recordIndex, e) {
         // Record index will be -1 if the clicked record is a metadata record and not selectable
         if (recordIndex !== -1) {
             this.setPosition(e.position);
@@ -375,7 +375,7 @@ Ext.define('Ext.selection.CellModel', {
 
     // notify the view that the cell has been selected to update the ui
     // appropriately and bring the cell into focus
-    onCellSelect: function(position, supressEvent) {
+    onCellSelect: function (position, supressEvent) {
         if (position && position.rowIdx !== undefined && position.rowIdx > -1) {
             this.doSelect(position.record, /*keepExisting*/false, supressEvent);
         }
@@ -383,13 +383,13 @@ Ext.define('Ext.selection.CellModel', {
 
     // notify view that the cell has been deselected to update the ui
     // appropriately
-    onCellDeselect: function(position, supressEvent) {
+    onCellDeselect: function (position, supressEvent) {
         if (position && position.rowIdx !== undefined) {
             this.doDeselect(position.record, supressEvent);
         }
     },
 
-    onSelectChange: function(record, isSelected, suppressEvent, commitFn) {
+    onSelectChange: function (record, isSelected, suppressEvent, commitFn) {
         var me = this,
             pos, eventName, view;
 
@@ -407,7 +407,7 @@ Ext.define('Ext.selection.CellModel', {
         view = pos.view || me.primaryView;
 
         if ((suppressEvent || me.fireEvent('before' + eventName, me, record, pos.rowIdx, pos.colIdx)) !== false &&
-                commitFn() !== false) {
+            commitFn() !== false) {
 
             if (isSelected) {
                 view.onCellSelect(pos);
@@ -422,7 +422,7 @@ Ext.define('Ext.selection.CellModel', {
         }
     },
 
-    refresh: function() {
+    refresh: function () {
         var pos = this.getPosition(),
             selRowIdx;
 
@@ -437,28 +437,28 @@ Ext.define('Ext.selection.CellModel', {
      * When grid uses {@link Ext.panel.Table#optimizedColumnMove optimizedColumnMove} (the default), this is added as a
      * {@link Ext.panel.Table#columnmove columnmove} handler to correctly maintain the
      * selected column using the same column header.
-     * 
+     *
      * If optimizedColumnMove === false, (which some grid Features set) then the view is refreshed,
      * so this is not added as a handler because the selected column.
      */
-    onColumnMove: function(headerCt, header, fromIdx, toIdx) {
+    onColumnMove: function (headerCt, header, fromIdx, toIdx) {
         var grid = headerCt.up('tablepanel');
         if (grid) {
             this.onViewRefresh(grid.view);
         }
     },
-    
-    onUpdate: function(record) {
+
+    onUpdate: function (record) {
         var me = this,
             pos;
-            
+
         if (me.isSelected(record)) {
-            pos = me.selecting ? me.nextSelection : me.selection; 
+            pos = me.selecting ? me.nextSelection : me.selection;
             me.view.onCellSelect(pos);
         }
     },
 
-    onViewRefresh: function(view) {
+    onViewRefresh: function (view) {
         var me = this,
             pos = me.getPosition(),
             newPos,
@@ -476,9 +476,9 @@ Ext.define('Ext.selection.CellModel', {
                 // column header is not a child of the header container
                 // this happens when the grid is reconfigured with new columns
                 // make a best effor to select something by matching on id, then text, then dataIndex
-                column = headerCt.queryById(column.id) || 
-                               headerCt.down('[text="' + column.text + '"]') ||
-                               headerCt.down('[dataIndex="' + column.dataIndex + '"]');
+                column = headerCt.queryById(column.id) ||
+                    headerCt.down('[text="' + column.text + '"]') ||
+                    headerCt.down('[dataIndex="' + column.dataIndex + '"]');
             }
 
             // If we have a columnHeader (either the column header that already exists in
@@ -503,7 +503,7 @@ Ext.define('Ext.selection.CellModel', {
      * @private
      * Used internally by CellEditing
      */
-    selectByPosition: function(position, suppressEvent) {
+    selectByPosition: function (position, suppressEvent) {
         this.setPosition(position, suppressEvent);
     }
 });

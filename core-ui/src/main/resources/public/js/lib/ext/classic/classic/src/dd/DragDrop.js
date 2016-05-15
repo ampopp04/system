@@ -60,8 +60,8 @@ Ext.define('Ext.dd.DragDrop', {
      * - maintainOffset
      * - primaryButtonOnly
      */
-    constructor: function(id, sGroup, config) {
-        if(id) {
+    constructor: function (id, sGroup, config) {
+        if (id) {
             this.init(id, sGroup, config);
         }
     },
@@ -175,7 +175,7 @@ Ext.define('Ext.dd.DragDrop', {
     /**
      * Locks this instance
      */
-    lock: function() {
+    lock: function () {
         this.locked = true;
     },
 
@@ -189,7 +189,7 @@ Ext.define('Ext.dd.DragDrop', {
     /**
      * Unlocks this instace
      */
-    unlock: function() {
+    unlock: function () {
         this.locked = false;
     },
 
@@ -319,7 +319,8 @@ Ext.define('Ext.dd.DragDrop', {
      * Code that executes immediately before the startDrag event
      * @private
      */
-    b4StartDrag: function(x, y) { },
+    b4StartDrag: function (x, y) {
+    },
 
     /**
      * Abstract method called after a drag/drop object is clicked
@@ -327,20 +328,23 @@ Ext.define('Ext.dd.DragDrop', {
      * @param {Number} x X click location
      * @param {Number} y Y click location
      */
-    startDrag: function(x, y) { /* override this */ },
+    startDrag: function (x, y) { /* override this */
+    },
 
     /**
      * Code that executes immediately before the onDrag event
      * @private
      */
-    b4Drag: function(e) { },
+    b4Drag: function (e) {
+    },
 
     /**
      * Abstract method called during the onMouseMove event while dragging an
      * object.
      * @param {Event} e the mousemove event
      */
-    onDrag: function(e) { /* override this */ },
+    onDrag: function (e) { /* override this */
+    },
 
     /**
      * Abstract method called when this element fist begins hovering over
@@ -350,13 +354,15 @@ Ext.define('Ext.dd.DragDrop', {
      * id this is hovering over.  In INTERSECT mode, an array of one or more
      * dragdrop items being hovered over.
      */
-    onDragEnter: function(e, id) { /* override this */ },
+    onDragEnter: function (e, id) { /* override this */
+    },
 
     /**
      * Code that executes immediately before the onDragOver event
      * @private
      */
-    b4DragOver: function(e) { },
+    b4DragOver: function (e) {
+    },
 
     /**
      * Abstract method called when this element is hovering over another
@@ -366,13 +372,15 @@ Ext.define('Ext.dd.DragDrop', {
      * id this is hovering over.  In INTERSECT mode, an array of dd items
      * being hovered over.
      */
-    onDragOver: function(e, id) { /* override this */ },
+    onDragOver: function (e, id) { /* override this */
+    },
 
     /**
      * Code that executes immediately before the onDragOut event
      * @private
      */
-    b4DragOut: function(e) { },
+    b4DragOut: function (e) {
+    },
 
     /**
      * Abstract method called when we are no longer hovering over an element
@@ -381,13 +389,15 @@ Ext.define('Ext.dd.DragDrop', {
      * id this was hovering over.  In INTERSECT mode, an array of dd items
      * that the mouse is no longer over.
      */
-    onDragOut: function(e, id) { /* override this */ },
+    onDragOut: function (e, id) { /* override this */
+    },
 
     /**
      * Code that executes immediately before the onDragDrop event
      * @private
      */
-    b4DragDrop: function(e) { },
+    b4DragDrop: function (e) {
+    },
 
     /**
      * Abstract method called when this item is dropped on another DragDrop
@@ -397,45 +407,52 @@ Ext.define('Ext.dd.DragDrop', {
      * id this was dropped on.  In INTERSECT mode, an array of dd items this
      * was dropped on.
      */
-    onDragDrop: function(e, id) { /* override this */ },
+    onDragDrop: function (e, id) { /* override this */
+    },
 
     /**
      * Abstract method called when this item is dropped on an area with no
      * drop target
      * @param {Event} e the mouseup event
      */
-    onInvalidDrop: function(e) { /* override this */ },
+    onInvalidDrop: function (e) { /* override this */
+    },
 
     /**
      * Code that executes immediately before the endDrag event
      * @private
      */
-    b4EndDrag: function(e) { },
+    b4EndDrag: function (e) {
+    },
 
     /**
      * Called when we are done dragging the object
      * @param {Event} e the mouseup event
      */
-    endDrag: function(e) { /* override this */ },
+    endDrag: function (e) { /* override this */
+    },
 
     /**
      * Code executed immediately before the onMouseDown event
      * @param {Event} e the mousedown event
      * @private
      */
-    b4MouseDown: function(e) {  },
+    b4MouseDown: function (e) {
+    },
 
     /**
      * Called when a drag/drop obj gets a mousedown
      * @param {Event} e the mousedown event
      */
-    onMouseDown: function(e) { /* override this */ },
+    onMouseDown: function (e) { /* override this */
+    },
 
     /**
      * Called when a drag/drop obj gets a mouseup
      * @param {Event} e the mouseup event
      */
-    onMouseUp: function(e) { /* override this */ },
+    onMouseUp: function (e) { /* override this */
+    },
 
     /**
      * Override the onAvailable method to do what is needed after the initial
@@ -480,9 +497,9 @@ Ext.define('Ext.dd.DragDrop', {
      * an object containing the sides to pad. For example: `{right:10, bottom:10}`
      * @param {Boolean} inContent (optional) Constrain the draggable in the content box of the element (inside padding and borders)
      */
-    constrainTo : function(constrainTo, pad, inContent){
+    constrainTo: function (constrainTo, pad, inContent) {
         if (Ext.isNumber(pad)) {
-            pad = {left: pad, right:pad, top:pad, bottom:pad};
+            pad = {left: pad, right: pad, top: pad, bottom: pad};
         }
         pad = pad || this.defaultPadding;
         var ddBox = Ext.get(this.getEl()).getBox(),
@@ -504,7 +521,7 @@ Ext.define('Ext.dd.DragDrop', {
         } else {
             xy = constrainEl.getXY();
             c = {
-                x : xy[0],
+                x: xy[0],
                 y: xy[1],
                 width: constrainDom.clientWidth,
                 height: constrainDom.clientHeight
@@ -515,12 +532,12 @@ Ext.define('Ext.dd.DragDrop', {
         leftSpace = ddBox.x - c.x;
 
         this.resetConstraints();
-        this.setXConstraint(leftSpace - (pad.left||0), // left
-            c.width - leftSpace - ddBox.width - (pad.right||0), //right
+        this.setXConstraint(leftSpace - (pad.left || 0), // left
+            c.width - leftSpace - ddBox.width - (pad.right || 0), //right
             this.xTickSize
         );
-        this.setYConstraint(topSpace - (pad.top||0), //top
-            c.height - topSpace - ddBox.height - (pad.bottom||0), //bottom
+        this.setYConstraint(topSpace - (pad.top || 0), //top
+            c.height - topSpace - ddBox.height - (pad.bottom || 0), //bottom
             this.yTickSize
         );
     },
@@ -529,7 +546,7 @@ Ext.define('Ext.dd.DragDrop', {
      * Returns a reference to the linked element
      * @return {HTMLElement} the html element
      */
-    getEl: function() {
+    getEl: function () {
         if (!this._domRef) {
             this._domRef = Ext.getDom(this.id);
         }
@@ -543,7 +560,7 @@ Ext.define('Ext.dd.DragDrop', {
      * element. An example of this can be found in Ext.dd.DDProxy
      * @return {HTMLElement} the html element
      */
-    getDragEl: function() {
+    getDragEl: function () {
         return Ext.getDom(this.dragElId);
     },
 
@@ -554,7 +571,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @param {String} sGroup the group of related items
      * @param {Object} config configuration attributes
      */
-    init: function(id, sGroup, config) {
+    init: function (id, sGroup, config) {
         var me = this;
 
         me.el = me.el || Ext.get(id); // subclass may have already set "el"
@@ -570,7 +587,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @param {String} sGroup the group of related items
      * @param {Object} config configuration attributes
      */
-    initTarget: function(id, sGroup, config) {
+    initTarget: function (id, sGroup, config) {
         // configuration attributes
         this.config = config || {};
 
@@ -599,7 +616,7 @@ Ext.define('Ext.dd.DragDrop', {
         this.setDragElId(id);
 
         // by default, clicked anchors will not start drag operations.
-        this.invalidHandleTypes = { A: "A" };
+        this.invalidHandleTypes = {A: "A"};
         this.invalidHandleIds = {};
         this.invalidHandleClasses = [];
 
@@ -615,26 +632,26 @@ Ext.define('Ext.dd.DragDrop', {
      * DragDrop in order to get all of the parameters that are available in
      * each object.
      */
-    applyConfig: function() {
+    applyConfig: function () {
 
         // configurable properties:
         //    padding, isTarget, maintainOffset, primaryButtonOnly
-        this.padding           = this.config.padding || [0, 0, 0, 0];
-        this.isTarget          = (this.config.isTarget !== false);
-        this.maintainOffset    = (this.config.maintainOffset);
+        this.padding = this.config.padding || [0, 0, 0, 0];
+        this.isTarget = (this.config.isTarget !== false);
+        this.maintainOffset = (this.config.maintainOffset);
         this.primaryButtonOnly = (this.config.primaryButtonOnly !== false);
     },
-    
+
     /**
      * Executed when the linked element is available
      * @private
      */
-    handleOnAvailable: function() {
+    handleOnAvailable: function () {
         this.available = true;
         this.resetConstraints();
         this.onAvailable();
     },
-    
+
     /**
      * Configures the padding for the target zone in px.  Effectively expands
      * (or reduces) the virtual object size for targeting calculations.
@@ -646,7 +663,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @param {Number} iBot    Bot pad
      * @param {Number} iLeft   Left pad
      */
-    setPadding: function(iTop, iRight, iBot, iLeft) {
+    setPadding: function (iTop, iRight, iBot, iLeft) {
         // this.padding = [iLeft, iRight, iTop, iBot];
         if (!iRight && 0 !== iRight) {
             this.padding = [iTop, iTop, iTop, iTop];
@@ -662,7 +679,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @param {Number} diffX   the X offset, default 0
      * @param {Number} diffY   the Y offset, default 0
      */
-    setInitPosition: function(diffX, diffY) {
+    setInitPosition: function (diffX, diffY) {
         var el = this.getEl(),
             dx, dy, p;
 
@@ -690,7 +707,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @param pos current position (from previous lookup)
      * @private
      */
-    setStartPosition: function(pos) {
+    setStartPosition: function (pos) {
         var p = pos || Ext.fly(this.getEl()).getXY();
         this.deltaSetXY = null;
 
@@ -704,7 +721,7 @@ Ext.define('Ext.dd.DragDrop', {
      * groups as needed.
      * @param {String} sGroup the name of the group
      */
-    addToGroup: function(sGroup) {
+    addToGroup: function (sGroup) {
         this.groups[sGroup] = true;
         this.DDMInstance.regDragDrop(this, sGroup);
     },
@@ -713,7 +730,7 @@ Ext.define('Ext.dd.DragDrop', {
      * Removes this instance from the supplied interaction group
      * @param {String} sGroup  The group to drop
      */
-    removeFromGroup: function(sGroup) {
+    removeFromGroup: function (sGroup) {
         if (this.groups[sGroup]) {
             delete this.groups[sGroup];
         }
@@ -726,7 +743,7 @@ Ext.define('Ext.dd.DragDrop', {
      * will be moved with the cursor during a drag
      * @param {String} id the id of the element that will be used to initiate the drag
      */
-    setDragElId: function(id) {
+    setDragElId: function (id) {
         this.dragElId = id;
     },
 
@@ -740,7 +757,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @param {String} id the id of the element that will be used to
      * initiate the drag.
      */
-    setHandleElId: function(id) {
+    setHandleElId: function (id) {
         if (typeof id !== "string") {
             id = Ext.id(id);
         }
@@ -753,7 +770,7 @@ Ext.define('Ext.dd.DragDrop', {
      * handle
      * @param {String} id the id of the element that will be used to initiate the drag
      */
-    setOuterHandleElId: function(id) {
+    setOuterHandleElId: function (id) {
         if (typeof id !== "string") {
             id = Ext.id(id);
         }
@@ -766,10 +783,10 @@ Ext.define('Ext.dd.DragDrop', {
     /**
      * Removes all drag and drop hooks for this element
      */
-    unreg: function() {
+    unreg: function () {
         var me = this,
             el;
-        
+
         if (me._domRef) {
             el = Ext.fly(me.id);
             if (el) {
@@ -780,7 +797,7 @@ Ext.define('Ext.dd.DragDrop', {
         me.DDMInstance._remove(me, me.autoGroup);
     },
 
-    destroy: function() {
+    destroy: function () {
         this.unreg();
         this.callParent();
     },
@@ -791,7 +808,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @return {Boolean} true if this obj or all drag/drop is locked, else
      * false
      */
-    isLocked: function() {
+    isLocked: function () {
         return (this.DDMInstance.isLocked() || this.locked);
     },
 
@@ -801,7 +818,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @param {Ext.dd.DragDrop} oDD the clicked dd object (this dd obj)
      * @private
      */
-    handleMouseDown: function(e, oDD){
+    handleMouseDown: function (e, oDD) {
         var me = this;
 
         if ((me.primaryButtonOnly && e.button) || me.isLocked()) {
@@ -810,7 +827,7 @@ Ext.define('Ext.dd.DragDrop', {
 
         me.DDMInstance.refreshCache(me.groups);
 
-        if (me.hasOuterHandles || me.DDMInstance.isOverTarget(e.getPoint(), me))  {
+        if (me.hasOuterHandles || me.DDMInstance.isOverTarget(e.getPoint(), me)) {
             if (me.clickValidator(e)) {
                 // set the initial element position
                 me.setStartPosition();
@@ -824,11 +841,11 @@ Ext.define('Ext.dd.DragDrop', {
         }
     },
 
-    clickValidator: function(e) {
+    clickValidator: function (e) {
         var target = e.getTarget();
         return ( this.isValidHandleChild(target) &&
-                    (this.id === this.handleElId ||
-                        this.DDMInstance.handleWasClicked(target, this.id)) );
+        (this.id === this.handleElId ||
+        this.DDMInstance.handleWasClicked(target, this.id)) );
     },
 
     /**
@@ -838,7 +855,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @method addInvalidHandleType
      * @param {String} tagName the type of element to exclude
      */
-    addInvalidHandleType: function(tagName) {
+    addInvalidHandleType: function (tagName) {
         var type = tagName.toUpperCase();
         this.invalidHandleTypes[type] = type;
     },
@@ -849,7 +866,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @method addInvalidHandleId
      * @param {String} id the element id of the element you wish to ignore
      */
-    addInvalidHandleId: function(id) {
+    addInvalidHandleId: function (id) {
         if (typeof id !== "string") {
             id = Ext.id(id);
         }
@@ -860,7 +877,7 @@ Ext.define('Ext.dd.DragDrop', {
      * Lets you specify a css class of elements that will not initiate a drag
      * @param {String} cssClass the class of the elements you wish to ignore
      */
-    addInvalidHandleClass: function(cssClass) {
+    addInvalidHandleClass: function (cssClass) {
         this.invalidHandleClasses.push(cssClass);
     },
 
@@ -868,7 +885,7 @@ Ext.define('Ext.dd.DragDrop', {
      * Unsets an excluded tag name set by addInvalidHandleType
      * @param {String} tagName the type of element to unexclude
      */
-    removeInvalidHandleType: function(tagName) {
+    removeInvalidHandleType: function (tagName) {
         var type = tagName.toUpperCase();
         // this.invalidHandleTypes[type] = null;
         delete this.invalidHandleTypes[type];
@@ -878,7 +895,7 @@ Ext.define('Ext.dd.DragDrop', {
      * Unsets an invalid handle id
      * @param {String} id the id of the element to re-enable
      */
-    removeInvalidHandleId: function(id) {
+    removeInvalidHandleId: function (id) {
         if (typeof id !== "string") {
             id = Ext.id(id);
         }
@@ -890,7 +907,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @param {String} cssClass the class of the element(s) you wish to
      * re-enable
      */
-    removeInvalidHandleClass: function(cssClass) {
+    removeInvalidHandleClass: function (cssClass) {
         var invalidHandleClasses = this.invalidHandleClasses,
             len = invalidHandleClasses.length,
             i;
@@ -907,7 +924,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @param {HTMLElement} node the HTMLElement to evaluate
      * @return {Boolean} true if this is a valid tag type, false if not
      */
-    isValidHandleChild: function(node) {
+    isValidHandleChild: function (node) {
 
         var valid = true,
             nodeName,
@@ -915,13 +932,13 @@ Ext.define('Ext.dd.DragDrop', {
         // var n = (node.nodeName == "#text") ? node.parentNode : node;
         try {
             nodeName = node.nodeName.toUpperCase();
-        } catch(e) {
+        } catch (e) {
             nodeName = node.nodeName;
         }
         valid = valid && !this.invalidHandleTypes[nodeName];
         valid = valid && !this.invalidHandleIds[node.id];
 
-        for (i=0, len=this.invalidHandleClasses.length; valid && i<len; ++i) {
+        for (i = 0, len = this.invalidHandleClasses.length; valid && i < len; ++i) {
             valid = !Ext.fly(node).hasCls(this.invalidHandleClasses[i]);
         }
 
@@ -935,7 +952,7 @@ Ext.define('Ext.dd.DragDrop', {
      * in setXConstraint().
      * @private
      */
-    setXTicks: function(iStartX, iTickSize) {
+    setXTicks: function (iStartX, iTickSize) {
         this.xTicks = [];
         this.xTickSize = iTickSize;
 
@@ -964,7 +981,7 @@ Ext.define('Ext.dd.DragDrop', {
      * setYConstraint().
      * @private
      */
-    setYTicks: function(iStartY, iTickSize) {
+    setYTicks: function (iStartY, iTickSize) {
         this.yTicks = [];
         this.yTickSize = iTickSize;
 
@@ -998,13 +1015,15 @@ Ext.define('Ext.dd.DragDrop', {
      * @param {Number} iTickSize (optional) parameter for specifying that the
      * element should move iTickSize pixels at a time.
      */
-    setXConstraint: function(iLeft, iRight, iTickSize) {
+    setXConstraint: function (iLeft, iRight, iTickSize) {
         this.leftConstraint = iLeft;
         this.rightConstraint = iRight;
 
         this.minX = this.initPageX - iLeft;
         this.maxX = this.initPageX + iRight;
-        if (iTickSize) { this.setXTicks(this.initPageX, iTickSize); }
+        if (iTickSize) {
+            this.setXTicks(this.initPageX, iTickSize);
+        }
 
         this.constrainX = true;
     },
@@ -1013,7 +1032,7 @@ Ext.define('Ext.dd.DragDrop', {
      * Clears any constraints applied to this instance.  Also clears ticks
      * since they can't exist independent of a constraint at this time.
      */
-    clearConstraints: function() {
+    clearConstraints: function () {
         this.constrainX = false;
         this.constrainY = false;
         this.clearTicks();
@@ -1022,7 +1041,7 @@ Ext.define('Ext.dd.DragDrop', {
     /**
      * Clears any tick interval defined for this instance
      */
-    clearTicks: function() {
+    clearTicks: function () {
         this.xTicks = null;
         this.yTicks = null;
         this.xTickSize = 0;
@@ -1038,13 +1057,15 @@ Ext.define('Ext.dd.DragDrop', {
      * @param {Number} iTickSize (optional) parameter for specifying that the
      * element should move iTickSize pixels at a time.
      */
-    setYConstraint: function(iUp, iDown, iTickSize) {
+    setYConstraint: function (iUp, iDown, iTickSize) {
         this.topConstraint = iUp;
         this.bottomConstraint = iDown;
 
         this.minY = this.initPageY - iUp;
         this.maxY = this.initPageY + iDown;
-        if (iTickSize) { this.setYTicks(this.initPageY, iTickSize); }
+        if (iTickSize) {
+            this.setYTicks(this.initPageY, iTickSize);
+        }
 
         this.constrainY = true;
 
@@ -1054,7 +1075,7 @@ Ext.define('Ext.dd.DragDrop', {
      * Must be called if you manually reposition a dd element.
      * @param {Boolean} maintainOffset
      */
-    resetConstraints: function() {
+    resetConstraints: function () {
         // Maintain offsets if necessary
         if (this.initPageX || this.initPageX === 0) {
             // figure out how much this thing has moved
@@ -1063,21 +1084,21 @@ Ext.define('Ext.dd.DragDrop', {
 
             this.setInitPosition(dx, dy);
 
-        // This is the first time we have detected the element's position
+            // This is the first time we have detected the element's position
         } else {
             this.setInitPosition();
         }
 
         if (this.constrainX) {
-            this.setXConstraint( this.leftConstraint,
-                                 this.rightConstraint,
-                                 this.xTickSize        );
+            this.setXConstraint(this.leftConstraint,
+                this.rightConstraint,
+                this.xTickSize);
         }
 
         if (this.constrainY) {
-            this.setYConstraint( this.topConstraint,
-                                 this.bottomConstraint,
-                                 this.yTickSize         );
+            this.setYConstraint(this.topConstraint,
+                this.bottomConstraint,
+                this.yTickSize);
         }
     },
 
@@ -1090,7 +1111,7 @@ Ext.define('Ext.dd.DragDrop', {
      * @return {Number} the closest tick
      * @private
      */
-    getTick: function(val, tickArray) {
+    getTick: function (val, tickArray) {
         if (!tickArray) {
             // If tick interval is not defined, it is effectively 1 pixel,
             // so we return the value passed to us.
@@ -1101,7 +1122,7 @@ Ext.define('Ext.dd.DragDrop', {
             return tickArray[0];
         } else {
             var i, len, next, diff1, diff2;
-            for (i=0, len=tickArray.length; i<len; ++i) {
+            for (i = 0, len = tickArray.length; i < len; ++i) {
                 next = i + 1;
                 if (tickArray[next] && tickArray[next] >= val) {
                     diff1 = val - tickArray[i];
@@ -1120,7 +1141,7 @@ Ext.define('Ext.dd.DragDrop', {
      * toString method
      * @return {String} string representation of the dd obj
      */
-    toString: function() {
+    toString: function () {
         return ("DragDrop " + this.id);
     }
 

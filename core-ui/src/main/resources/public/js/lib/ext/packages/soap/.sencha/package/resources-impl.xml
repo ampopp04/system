@@ -20,7 +20,7 @@
             </sequential>
         </for>
     </target>
-    
+
     <target name="-before-copy-resources"/>
     <target name="-after-copy-resources"/>
     <target name="-copy-resources">

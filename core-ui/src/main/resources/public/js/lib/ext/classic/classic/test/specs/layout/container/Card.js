@@ -1,4 +1,4 @@
-describe("Ext.layout.container.Card", function() {
+describe("Ext.layout.container.Card", function () {
     var comp;
 
     function createCardContainer(config) {
@@ -51,12 +51,12 @@ describe("Ext.layout.container.Card", function() {
         return text.join('');
     }
 
-    afterEach(function(){
+    afterEach(function () {
         comp = Ext.destroy(comp);
     });
 
-    describe("visibility", function() {
-        it("should have the active item as visible", function() {
+    describe("visibility", function () {
+        it("should have the active item as visible", function () {
             createCardContainer({
                 defaultType: 'component',
                 items: [{
@@ -68,7 +68,7 @@ describe("Ext.layout.container.Card", function() {
             expect(comp.down('#a').isVisible()).toBe(true);
         });
 
-        it("should have the inactive items as not visible", function() {
+        it("should have the inactive items as not visible", function () {
             createCardContainer({
                 defaultType: 'component',
                 items: [{
@@ -83,7 +83,7 @@ describe("Ext.layout.container.Card", function() {
             expect(comp.down('#c').isVisible()).toBe(false);
         });
 
-        it("should have child items of inactive items as not visible with deep: true", function() {
+        it("should have child items of inactive items as not visible with deep: true", function () {
             createCardContainer({
                 items: [{
                     xtype: 'component',
@@ -107,22 +107,28 @@ describe("Ext.layout.container.Card", function() {
         });
 
         // Tests EXTJS-15545
-        describe("with an added listener", function() {
-            it("should have child items of inactive items as not visible with deep: true", function() {
+        describe("with an added listener", function () {
+            it("should have child items of inactive items as not visible with deep: true", function () {
                 createCardContainer({
                     items: [{
                         xtype: 'component',
                         itemId: 'a'
                     }, {
                         xtype: 'container',
-                        listeners: {added: function(){}},
+                        listeners: {
+                            added: function () {
+                            }
+                        },
                         items: {
                             xtype: 'component',
                             itemId: 'b'
                         }
                     }, {
                         xtype: 'container',
-                        listeners: {added: function() {}},
+                        listeners: {
+                            added: function () {
+                            }
+                        },
                         items: {
                             xtype: 'component',
                             itemId: 'c'
@@ -135,8 +141,8 @@ describe("Ext.layout.container.Card", function() {
         });
     });
 
-    describe("Sizing", function() {
-        it("should size the child using both dimensions", function() {
+    describe("Sizing", function () {
+        it("should size the child using both dimensions", function () {
             createCardContainer({
                 items: {
                     xtype: 'component'
@@ -145,8 +151,8 @@ describe("Ext.layout.container.Card", function() {
             expect(comp.items.items[0].getWidth()).toEqual(100);
             expect(comp.items.items[0].getHeight()).toEqual(100);
         });
-        
-        it("should size the child using height and shrinkWrap width", function() {
+
+        it("should size the child using height and shrinkWrap width", function () {
             createCardContainer({
                 height: 100,
                 width: undefined,
@@ -160,7 +166,7 @@ describe("Ext.layout.container.Card", function() {
             expect(comp.getWidth()).toEqual(200);
         });
 
-        it("should size the child using width and shrinkWrap height", function() {
+        it("should size the child using width and shrinkWrap height", function () {
             createCardContainer({
                 width: 100,
                 height: undefined,
@@ -173,9 +179,9 @@ describe("Ext.layout.container.Card", function() {
             expect(comp.getHeight()).toEqual(200);
         });
     });
-    
-    describe('Deferred render', function() {
-        it("should render all children", function(){
+
+    describe('Deferred render', function () {
+        it("should render all children", function () {
             createCardContainer({
                 items: [{
                     xtype: 'component'
@@ -187,7 +193,7 @@ describe("Ext.layout.container.Card", function() {
             expect(comp.items.items[1].el).toBeDefined();
         });
 
-        it("should only render the active item", function() {
+        it("should only render the active item", function () {
             createCardContainer({
                 activeItem: 1,
                 deferredRender: true,
@@ -201,9 +207,9 @@ describe("Ext.layout.container.Card", function() {
             expect(comp.items.items[1].el).toBeDefined();
         });
     });
-    
-    describe('Events', function() {
-        it("should fire beforeactivate and activate on item 1", function() {
+
+    describe('Events', function () {
+        it("should fire beforeactivate and activate on item 1", function () {
             var comp1BeforeActivated, comp1Activated;
             createCardContainer({
                 activeItem: 1,
@@ -213,10 +219,10 @@ describe("Ext.layout.container.Card", function() {
                 }, {
                     xtype: 'component',
                     listeners: {
-                        beforeactivate: function() {
+                        beforeactivate: function () {
                             comp1BeforeActivated = true;
                         },
-                        activate: function() {
+                        activate: function () {
                             comp1Activated = true;
                         }
                     }
@@ -228,7 +234,7 @@ describe("Ext.layout.container.Card", function() {
             expect(comp.items.items[1].el).toBeDefined();
         });
 
-        it("should veto activation of item 1", function() {
+        it("should veto activation of item 1", function () {
             var comp1BeforeActivated, comp1Activated;
             createCardContainer({
                 activeItem: 1,
@@ -238,11 +244,11 @@ describe("Ext.layout.container.Card", function() {
                 }, {
                     xtype: 'component',
                     listeners: {
-                        beforeactivate: function() {
+                        beforeactivate: function () {
                             comp1BeforeActivated = true;
                             return false;
                         },
-                        activate: function() {
+                        activate: function () {
                             comp1Activated = true;
                         }
                     }
@@ -469,9 +475,9 @@ describe("Ext.layout.container.Card", function() {
                     proxyStoreLoad = Ext.data.ProxyStore.prototype.load,
                     loadStore;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     // Override so that we can control asynchronous loading
-                    loadStore = Ext.data.ProxyStore.prototype.load = function() {
+                    loadStore = Ext.data.ProxyStore.prototype.load = function () {
                         proxyStoreLoad.apply(this, arguments);
                         if (synchronousLoad) {
                             this.flushLoad.apply(this, arguments);
@@ -480,7 +486,7 @@ describe("Ext.layout.container.Card", function() {
                     };
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     // Undo the overrides.
                     Ext.data.ProxyStore.prototype.load = proxyStoreLoad;
                 });

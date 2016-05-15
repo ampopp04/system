@@ -1,9 +1,9 @@
 describe('Ext.app.bind.Template', function () {
     var BindTemplate;
 
-    function getNumFragments (tpl) {
+    function getNumFragments(tpl) {
         var count = 0;
-        for (var i = tpl.buffer.length; i-- > 0; ) {
+        for (var i = tpl.buffer.length; i-- > 0;) {
             if (tpl.buffer[i]) {
                 ++count;
             }
@@ -11,9 +11,9 @@ describe('Ext.app.bind.Template', function () {
         return count;
     }
 
-    function getNumSlots (tpl) {
+    function getNumSlots(tpl) {
         var count = 0;
-        for (var i = tpl.slots.length; i-- > 0; ) {
+        for (var i = tpl.slots.length; i-- > 0;) {
             if (tpl.slots[i]) {
                 ++count;
             }
@@ -178,8 +178,8 @@ describe('Ext.app.bind.Template', function () {
         });
 
         it('should apply simple formatting', function () {
-            var tpl = new BindTemplate('Hello {foo:number} {bar.foo:date("Y-m-d")} '+
-                                       '-- {foo:number("0.00")}');
+            var tpl = new BindTemplate('Hello {foo:number} {bar.foo:date("Y-m-d")} ' +
+                '-- {foo:number("0.00")}');
 
             var s = tpl.apply([123.456, new Date(2013, 2, 2)]);
             expect(s).toBe('Hello 123.456 2013-03-02 -- 123.46');
@@ -189,7 +189,7 @@ describe('Ext.app.bind.Template', function () {
             // The "," inside a string argument makes splitting on commas and producing an
             // args array early impossible (if we are to respect global references in them
             // as well)... but still needs to work.
-            var tpl = new BindTemplate('Hello {foo:number} {bar.foo:date("Y-m-d")} '+
+            var tpl = new BindTemplate('Hello {foo:number} {bar.foo:date("Y-m-d")} ' +
                 '-- {foo:number("0,000.00")}');
 
             var s = tpl.apply([123456.789, new Date(2013, 2, 2)]);
@@ -253,7 +253,7 @@ describe('Ext.app.bind.Template', function () {
         });
 
         it('should apply simple formatting', function () {
-            var tpl = new BindTemplate('Hello {foo:number} {bar.foo:date("Y-m-d")} '+
+            var tpl = new BindTemplate('Hello {foo:number} {bar.foo:date("Y-m-d")} ' +
                 '-- {foo:this.number("0.00")}');
 
             var s = tpl.apply([123.456, new Date(2013, 2, 2)], {
@@ -269,7 +269,7 @@ describe('Ext.app.bind.Template', function () {
         it('should apply complex formatting', function () {
             // This template uses a global reference as an argument. Odd but it works in
             // other templates.
-            var tpl = new BindTemplate('Hello {foo:number} {bar.foo:date("Y-m-d")} '+
+            var tpl = new BindTemplate('Hello {foo:number} {bar.foo:date("Y-m-d")} ' +
                 '-- {foo:this.thing(Ext.versions.core)}');
 
             var s = tpl.apply([123.456, new Date(2013, 2, 2)], {
@@ -280,7 +280,7 @@ describe('Ext.app.bind.Template', function () {
             });
 
             expect(s).toBe('Hello 123.456 2013-03-02 -- ::123.456=' +
-                    Ext.getVersion('core') + '::');
+                Ext.getVersion('core') + '::');
         });
     });
 

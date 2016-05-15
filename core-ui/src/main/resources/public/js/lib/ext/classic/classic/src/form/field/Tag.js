@@ -1,7 +1,7 @@
 /**
- * `tagfield` provides a combobox that removes the hassle of dealing with long and unruly select 
- * options. The selected list is visually maintained in the value display area instead of 
- * within the picker itself. Users may easily add or remove `tags` from the 
+ * `tagfield` provides a combobox that removes the hassle of dealing with long and unruly select
+ * options. The selected list is visually maintained in the value display area instead of
+ * within the picker itself. Users may easily add or remove `tags` from the
  * display value area.
  *
  *       @example
@@ -31,8 +31,8 @@
  *               queryMode: 'local',
  *               filterPickList: true
  *           }]
- *       });  
- *       
+ *       });
+ *
  * ### History
  *
  * Inspired by the [SuperBoxSelect component for ExtJS 3](http://technomedia.co.uk/SuperBoxSelect/examples3.html),
@@ -44,7 +44,7 @@
  * By: kvee_iv http://www.sencha.com/forum/member.php?29437-kveeiv
  */
 Ext.define('Ext.form.field.Tag', {
-    extend:'Ext.form.field.ComboBox',
+    extend: 'Ext.form.field.ComboBox',
     requires: [
         'Ext.selection.Model',
         'Ext.data.Store',
@@ -89,10 +89,10 @@ Ext.define('Ext.form.field.Tag', {
      * The {@link Ext.XTemplate XTemplate} to use for the inner
      * markup of the labeled items. Defaults to the configured {@link #displayField}
      */
-    
+
     /**
      * @cfg {String/Ext.XTemplate} tipTpl
-     * The {@link Ext.XTemplate XTemplate} to use for the tip of the labeled items. 
+     * The {@link Ext.XTemplate XTemplate} to use for the tip of the labeled items.
      *
      * @since  5.1.1
      */
@@ -231,18 +231,18 @@ Ext.define('Ext.form.field.Tag', {
      */
     fieldSubTpl: [
         '<div id="{cmpId}-listWrapper" data-ref="listWrapper" class="' + Ext.baseCSSPrefix + 'tagfield {fieldCls} {typeCls} {typeCls}-{ui}" style="{wrapperStyle}">',
-            '<ul id="{cmpId}-itemList" data-ref="itemList" class="' + Ext.baseCSSPrefix + 'tagfield-list{itemListCls}">',
-                '<li id="{cmpId}-inputElCt" data-ref="inputElCt" class="' + Ext.baseCSSPrefix + 'tagfield-input">',
-                    '<div id="{cmpId}-emptyEl" data-ref="emptyEl" class="{emptyCls}">{emptyText}</div>',
-                    '<input id="{cmpId}-inputEl" data-ref="inputEl" type="{type}" ',
-                    '<tpl if="name">name="{name}" </tpl>',
-                    '<tpl if="value"> value="{[Ext.util.Format.htmlEncode(values.value)]}"</tpl>',
-                    '<tpl if="size">size="{size}" </tpl>',
-                    '<tpl if="tabIdx != null">tabindex="{tabIdx}" </tpl>',
-                    '<tpl if="disabled"> disabled="disabled"</tpl>',
-                    'class="' + Ext.baseCSSPrefix + 'tagfield-input-field {inputElCls}" autocomplete="off">',
-                '</li>',
-            '</ul>',
+        '<ul id="{cmpId}-itemList" data-ref="itemList" class="' + Ext.baseCSSPrefix + 'tagfield-list{itemListCls}">',
+        '<li id="{cmpId}-inputElCt" data-ref="inputElCt" class="' + Ext.baseCSSPrefix + 'tagfield-input">',
+        '<div id="{cmpId}-emptyEl" data-ref="emptyEl" class="{emptyCls}">{emptyText}</div>',
+        '<input id="{cmpId}-inputEl" data-ref="inputEl" type="{type}" ',
+        '<tpl if="name">name="{name}" </tpl>',
+        '<tpl if="value"> value="{[Ext.util.Format.htmlEncode(values.value)]}"</tpl>',
+        '<tpl if="size">size="{size}" </tpl>',
+        '<tpl if="tabIdx != null">tabindex="{tabIdx}" </tpl>',
+        '<tpl if="disabled"> disabled="disabled"</tpl>',
+        'class="' + Ext.baseCSSPrefix + 'tagfield-input-field {inputElCls}" autocomplete="off">',
+        '</li>',
+        '</ul>',
         '</div>',
         {
             disableFormats: true
@@ -254,7 +254,7 @@ Ext.define('Ext.form.field.Tag', {
     /**
      * @private
      */
-    childEls: [ 'listWrapper', 'itemList', 'inputEl', 'inputElCt', 'emptyEl' ],
+    childEls: ['listWrapper', 'itemList', 'inputEl', 'inputElCt', 'emptyEl'],
 
     /**
      * @private
@@ -274,7 +274,7 @@ Ext.define('Ext.form.field.Tag', {
     tagItemCloseSelector: '.' + Ext.baseCSSPrefix + 'tagfield-item-close',
     tagSelectedCls: Ext.baseCSSPrefix + 'tagfield-item-selected',
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this,
             typeAhead = me.typeAhead,
             delimiter = me.delimiter;
@@ -300,7 +300,7 @@ Ext.define('Ext.form.field.Tag', {
         // when we bind the store.
         me.selectionModel = new Ext.selection.Model({
             mode: 'MULTI',
-            onSelectChange: function(record, isSelected, suppressEvent, commitFn) {
+            onSelectChange: function (record, isSelected, suppressEvent, commitFn) {
                 commitFn();
             },
             // Relay these selection events passing the field instead of exposing the underlying selection model
@@ -320,7 +320,7 @@ Ext.define('Ext.form.field.Tag', {
         }
     },
 
-    initEvents: function() {
+    initEvents: function () {
         var me = this,
             inputEl = me.inputEl;
 
@@ -328,7 +328,7 @@ Ext.define('Ext.form.field.Tag', {
 
         if (!me.enableKeyEvents) {
             inputEl.on('keydown', me.onKeyDown, me);
-            inputEl.on('keyup',   me.onKeyUp, me);
+            inputEl.on('keyup', me.onKeyUp, me);
         }
 
         me.listWrapper.on({
@@ -338,7 +338,7 @@ Ext.define('Ext.form.field.Tag', {
         });
     },
 
-    isValid: function() {
+    isValid: function () {
         var me = this,
             disabled = me.disabled,
             validate = me.forceValidation || !disabled;
@@ -346,7 +346,7 @@ Ext.define('Ext.form.field.Tag', {
         return validate ? me.validateValue(me.getValue()) : disabled;
     },
 
-    onBindStore: function(store) {
+    onBindStore: function (store) {
         var me = this;
 
         me.callParent([store]);
@@ -372,11 +372,11 @@ Ext.define('Ext.form.field.Tag', {
         }
     },
 
-    filterPicked: function(rec) {
+    filterPicked: function (rec) {
         return !this.valueCollection.contains(rec);
     },
 
-    onUnbindStore: function(store) {
+    onUnbindStore: function (store) {
         var me = this,
             valueStore = me.valueStore,
             picker = me.picker;
@@ -398,7 +398,7 @@ Ext.define('Ext.form.field.Tag', {
         me.callParent(arguments);
     },
 
-    onValueCollectionEndUpdate: function() {
+    onValueCollectionEndUpdate: function () {
         var me = this,
             pickedRecords = me.valueCollection.items,
             valueStore = me.valueStore;
@@ -427,23 +427,23 @@ Ext.define('Ext.form.field.Tag', {
 
     checkValueOnDataChange: Ext.emptyFn,
 
-    onSelectionChange: function(selModel, selectedRecs) {
+    onSelectionChange: function (selModel, selectedRecs) {
         this.applyMultiselectItemMarkup();
         this.fireEvent('valueselectionchange', this, selectedRecs);
     },
 
-    onFocusChange: function(selectionModel, oldFocused, newFocused) {
+    onFocusChange: function (selectionModel, oldFocused, newFocused) {
         this.fireEvent('valuefocuschange', this, oldFocused, newFocused);
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         this.selectionModel = Ext.destroy(this.selectionModel);
 
         // This will unbind the store, which will destroy the valueStore
         this.callParent(arguments);
     },
 
-    getSubTplData: function(fieldData) {
+    getSubTplData: function (fieldData) {
         var me = this,
             data = me.callParent(arguments),
             emptyText = me.emptyText,
@@ -481,7 +481,7 @@ Ext.define('Ext.form.field.Tag', {
         return data;
     },
 
-    afterRender: function() {
+    afterRender: function () {
         var me = this,
             inputEl = me.inputEl,
             emptyText = me.emptyText;
@@ -500,7 +500,7 @@ Ext.define('Ext.form.field.Tag', {
         me.callParent(arguments);
     },
 
-    findRecord: function(field, value) {
+    findRecord: function (field, value) {
         var matches = this.getStore().queryRecords(field, value);
         return matches.length ? matches[0] : false;
     },
@@ -509,7 +509,7 @@ Ext.define('Ext.form.field.Tag', {
      * Get the current cursor position in the input field, for key-based navigation
      * @private
      */
-    getCursorPosition: function() {
+    getCursorPosition: function () {
         var cursorPos;
 
         if (document.selection) {
@@ -527,7 +527,7 @@ Ext.define('Ext.form.field.Tag', {
      * Check to see if the input field has selected text, for key-based navigation
      * @private
      */
-    hasSelectedText: function() {
+    hasSelectedText: function () {
         var inputEl = this.inputEl.dom,
             sel, range;
 
@@ -557,7 +557,7 @@ Ext.define('Ext.form.field.Tag', {
      *
      * @protected
      */
-    onKeyDown: function(e) {
+    onKeyDown: function (e) {
         var me = this,
             key = e.getKey(),
             inputEl = me.inputEl,
@@ -643,7 +643,7 @@ Ext.define('Ext.form.field.Tag', {
      * delimiter, as well as the keyUp processing of key-based selection of labeled items.
      * @protected
      */
-    onKeyUp: function(e, t) {
+    onKeyUp: function (e, t) {
         var me = this,
             inputEl = me.inputEl,
             rawValue = inputEl.dom.value,
@@ -658,21 +658,21 @@ Ext.define('Ext.form.field.Tag', {
         }
 
         if (me.multiSelect && me.delimiterRegexp && me.delimiterRegexp.test(rawValue) ||
-                (me.createNewOnEnter && e.getKey() === e.ENTER)) {
+            (me.createNewOnEnter && e.getKey() === e.ENTER)) {
             rawValue = Ext.Array.clean(rawValue.split(me.delimiterRegexp));
             inputEl.dom.value = '';
             me.setValue(me.valueStore.getRange().concat(rawValue));
             inputEl.focus();
         }
 
-        me.callParent([e,t]);
+        me.callParent([e, t]);
     },
 
     /**
      * Overridden to get and set the DOM value directly for type-ahead suggestion (bypassing get/setRawValue)
      * @protected
      */
-    onTypeAhead: function() {
+    onTypeAhead: function () {
         var me = this,
             displayField = me.displayField,
             inputElDom = me.inputEl.dom,
@@ -696,7 +696,7 @@ Ext.define('Ext.form.field.Tag', {
      * Delegation control for selecting and removing labeled items or triggering list collapse/expansion
      * @protected
      */
-    onItemListClick: function(e) {
+    onItemListClick: function (e) {
         var me = this,
             selectionModel = me.selectionModel,
             itemEl = e.getTarget(me.tagItemSelector),
@@ -734,7 +734,7 @@ Ext.define('Ext.form.field.Tag', {
 
     // Prevent item from receiving focus.
     // See EXTJS-17686.
-    onItemMouseDown: function(e) {
+    onItemMouseDown: function (e) {
         e.preventDefault();
     },
 
@@ -743,7 +743,7 @@ Ext.define('Ext.form.field.Tag', {
      * life cycle for the creation of on-demand stores (to account for automatic valueField/displayField setting)
      * @private
      */
-    getMultiSelectItemMarkup: function() {
+    getMultiSelectItemMarkup: function () {
         var me = this,
             childElCls = (me._getChildElCls && me._getChildElCls()) || ''; // hook for rtl cls
 
@@ -759,26 +759,26 @@ Ext.define('Ext.form.field.Tag', {
 
             me.multiSelectItemTpl = new Ext.XTemplate([
                 '<tpl for=".">',
-                    '<li data-selectionIndex="{[xindex - 1]}" data-recordId="{internalId}" class="' + me.tagItemCls + childElCls,
-                    '<tpl if="this.isSelected(values)">',
-                    ' ' + me.tagSelectedCls,
-                    '</tpl>',
-                    '{%',
-                        'values = values.data;',
-                    '%}',
-                    me.tipTpl ? '" data-qtip="{[this.getTip(values)]}">' : '">',
-                    '<div class="' + me.tagItemTextCls + '">{[this.getItemLabel(values)]}</div>',
-                    '<div class="' + me.tagItemCloseCls + childElCls + '"></div>' ,
-                    '</li>' ,
+                '<li data-selectionIndex="{[xindex - 1]}" data-recordId="{internalId}" class="' + me.tagItemCls + childElCls,
+                '<tpl if="this.isSelected(values)">',
+                ' ' + me.tagSelectedCls,
+                '</tpl>',
+                '{%',
+                'values = values.data;',
+                '%}',
+                me.tipTpl ? '" data-qtip="{[this.getTip(values)]}">' : '">',
+                '<div class="' + me.tagItemTextCls + '">{[this.getItemLabel(values)]}</div>',
+                '<div class="' + me.tagItemCloseCls + childElCls + '"></div>',
+                '</li>',
                 '</tpl>',
                 {
-                    isSelected: function(rec) {
+                    isSelected: function (rec) {
                         return me.selectionModel.isSelected(rec);
                     },
-                    getItemLabel: function(values) {
+                    getItemLabel: function (values) {
                         return Ext.String.htmlEncode(me.labelTpl.apply(values));
                     },
-                    getTip: function(values) {
+                    getTip: function (values) {
                         return Ext.String.htmlEncode(me.tipTpl.apply(values));
                     },
                     strict: true
@@ -796,7 +796,7 @@ Ext.define('Ext.form.field.Tag', {
      * Update the labeled items rendering
      * @private
      */
-    applyMultiselectItemMarkup: function() {
+    applyMultiselectItemMarkup: function () {
         var me = this,
             itemList = me.itemList;
 
@@ -810,14 +810,14 @@ Ext.define('Ext.form.field.Tag', {
     /**
      * Returns the record from valueStore for the labeled item node
      */
-    getRecordByListItemNode: function(itemEl) {
+    getRecordByListItemNode: function (itemEl) {
         return this.valueCollection.items[Number(itemEl.getAttribute('data-selectionIndex'))];
     },
 
     /**
      * Toggle of labeled item selection by node reference
      */
-    toggleSelectionByListItemNode: function(itemEl, keepExisting) {
+    toggleSelectionByListItemNode: function (itemEl, keepExisting) {
         var me = this,
             rec = me.getRecordByListItemNode(itemEl),
             selModel = me.selectionModel;
@@ -834,7 +834,7 @@ Ext.define('Ext.form.field.Tag', {
     /**
      * Removal of labelled item by node reference
      */
-    removeByListItemNode: function(itemEl) {
+    removeByListItemNode: function (itemEl) {
         var me = this,
             rec = me.getRecordByListItemNode(itemEl);
 
@@ -846,7 +846,7 @@ Ext.define('Ext.form.field.Tag', {
     // Private implementation.
     // The display value is always the raw value.
     // Picked values are displayed by the tag template.
-    getDisplayValue: function() {
+    getDisplayValue: function () {
         return this.getRawValue();
     },
 
@@ -855,7 +855,7 @@ Ext.define('Ext.form.field.Tag', {
      * Intercept calls to getRawValue to pretend there is no inputEl for rawValue handling,
      * so that we can use inputEl for user input of just the current value.
      */
-    getRawValue: function() {
+    getRawValue: function () {
         var me = this,
             records = me.getValueRecords(),
             values = [],
@@ -868,7 +868,7 @@ Ext.define('Ext.form.field.Tag', {
         return values.join(',');
     },
 
-    setRawValue: function(value) {
+    setRawValue: function (value) {
         // setRawValue is not supported for tagfield.
         return;
     },
@@ -877,7 +877,7 @@ Ext.define('Ext.form.field.Tag', {
      * Removes a value or values from the current value of the field
      * @param {Mixed} value The value or values to remove from the current value, see {@link #setValue}
      */
-    removeValue: function(value) {
+    removeValue: function (value) {
         var me = this,
             valueCollection = me.valueCollection,
             len, i, item,
@@ -935,7 +935,7 @@ Ext.define('Ext.form.field.Tag', {
      * @param {Mixed} value The value(s) to be set, see method documentation for details
      * @return {Ext.form.field.Field/Boolean} this, or `false` if asynchronously querying for unknown values
      */
-    setValue: function(value, /* private */ add, skipLoad) {
+    setValue: function (value, /* private */ add, skipLoad) {
         var me = this,
             valueStore = me.valueStore,
             valueField = me.valueField,
@@ -988,7 +988,7 @@ Ext.define('Ext.form.field.Tag', {
                 params[me.valueParam || me.valueField] = unknownValues.join(me.delimiter);
                 store.load({
                     params: params,
-                    callback: function() {
+                    callback: function () {
                         me.setValue(value, add, true);
                         me.autoSize();
                         me.lastQuery = false;
@@ -1016,7 +1016,7 @@ Ext.define('Ext.form.field.Tag', {
 
     // Private internal setting of value when records are added to the valueCollection
     // setValue itself adds to the valueCollection.
-    updateValue: function() {
+    updateValue: function () {
         var me = this,
             valueArray = me.valueCollection.getRange(),
             len = valueArray.length,
@@ -1042,7 +1042,7 @@ Ext.define('Ext.form.field.Tag', {
      * Returns the records for the field's current value
      * @return {Array} The records for the field's current value
      */
-    getValueRecords: function() {
+    getValueRecords: function () {
         return this.valueCollection.getRange();
     },
 
@@ -1050,7 +1050,7 @@ Ext.define('Ext.form.field.Tag', {
      * @inheritdoc
      * Overridden to optionally allow for submitting the field as a json encoded array.
      */
-    getSubmitData: function() {
+    getSubmitData: function () {
         var me = this,
             val = me.callParent(arguments);
 
@@ -1064,7 +1064,7 @@ Ext.define('Ext.form.field.Tag', {
     /**
      * Overridden to handle partial-input selections more directly
      */
-    assertValue: function() {
+    assertValue: function () {
         var me = this,
             rawValue = me.inputEl.dom.value,
             rec = !Ext.isEmpty(rawValue) ? me.findRecordByDisplay(rawValue) : false,
@@ -1088,7 +1088,7 @@ Ext.define('Ext.form.field.Tag', {
     /**
      * Overridden to be more accepting of varied value types
      */
-    isEqual: function(v1, v2) {
+    isEqual: function (v1, v2) {
         var fromArray = Ext.Array.from,
             valueField = this.valueField,
             i, len, t1, t2;
@@ -1101,7 +1101,7 @@ Ext.define('Ext.form.field.Tag', {
             return false;
         }
 
-        for(i = 0; i < len; i++) {
+        for (i = 0; i < len; i++) {
             t1 = v1[i].isModel ? v1[i].get(valueField) : v1[i];
             t2 = v2[i].isModel ? v2[i].get(valueField) : v2[i];
             if (t1 !== t2) {
@@ -1115,7 +1115,7 @@ Ext.define('Ext.form.field.Tag', {
     /**
      * Overridden to use value (selection) instead of raw value and to avoid the use of placeholder
      */
-    applyEmptyText : function() {
+    applyEmptyText: function () {
         var me = this,
             emptyText = me.emptyText,
             emptyEl = me.emptyEl,
@@ -1148,7 +1148,7 @@ Ext.define('Ext.form.field.Tag', {
     /**
      * Overridden to use inputEl instead of raw value and to avoid the use of placeholder
      */
-    preFocus : function(){
+    preFocus: function () {
         var me = this,
             inputEl = me.inputEl,
             isEmpty = inputEl.dom.value === '';
@@ -1167,7 +1167,7 @@ Ext.define('Ext.form.field.Tag', {
      * Intercept calls to onFocus to add focusCls, because the base field
      * classes assume this should be applied to inputEl
      */
-    onFocus: function() {
+    onFocus: function () {
         var me = this,
             focusCls = me.focusCls,
             itemList = me.itemList;
@@ -1183,7 +1183,7 @@ Ext.define('Ext.form.field.Tag', {
      * Intercept calls to onBlur to remove focusCls, because the base field
      * classes assume this should be applied to inputEl
      */
-    onBlur: function() {
+    onBlur: function () {
         var me = this,
             focusCls = me.focusCls,
             itemList = me.itemList;
@@ -1199,7 +1199,7 @@ Ext.define('Ext.form.field.Tag', {
      * Intercept calls to renderActiveError to add invalidCls, because the base
      * field classes assume this should be applied to inputEl
      */
-    renderActiveError: function() {
+    renderActiveError: function () {
         var me = this,
             invalidCls = me.invalidCls,
             itemList = me.itemList,
@@ -1215,7 +1215,7 @@ Ext.define('Ext.form.field.Tag', {
     /**
      * Initiate auto-sizing for height based on {@link #grow}, if applicable.
      */
-    autoSize: function() {
+    autoSize: function () {
         var me = this;
 
         if (me.grow && me.rendered) {
@@ -1229,7 +1229,7 @@ Ext.define('Ext.form.field.Tag', {
     /**
      * Track height change to fire {@link #event-autosize} event, when applicable.
      */
-    afterComponentLayout: function() {
+    afterComponentLayout: function () {
         var me = this,
             height;
 

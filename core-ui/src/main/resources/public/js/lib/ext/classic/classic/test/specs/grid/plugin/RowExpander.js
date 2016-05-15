@@ -1,41 +1,41 @@
 describe('Ext.grid.plugin.RowExpander', function () {
     var dummyData = [
-            ['3m Co',71.72,0.02,0.03,'9/1 12:00am', 'Manufacturing'],
-            ['Alcoa Inc',29.01,0.42,1.47,'9/1 12:00am', 'Manufacturing'],
-            ['Altria Group Inc',83.81,0.28,0.34,'9/1 12:00am', 'Manufacturing'],
-            ['American Express Company',52.55,0.01,0.02,'9/1 12:00am', 'Finance'],
-            ['American International Group, Inc.',64.13,0.31,0.49,'9/1 12:00am', 'Services'],
-            ['AT&T Inc.',31.61,-0.48,-1.54,'9/1 12:00am', 'Services'],
-            ['Boeing Co.',75.43,0.53,0.71,'9/1 12:00am', 'Manufacturing'],
-            ['Caterpillar Inc.',67.27,0.92,1.39,'9/1 12:00am', 'Services'],
-            ['Citigroup, Inc.',49.37,0.02,0.04,'9/1 12:00am', 'Finance'],
-            ['E.I. du Pont de Nemours and Company',40.48,0.51,1.28,'9/1 12:00am', 'Manufacturing'],
-            ['Exxon Mobil Corp',68.1,-0.43,-0.64,'9/1 12:00am', 'Manufacturing'],
-            ['General Electric Company',34.14,-0.08,-0.23,'9/1 12:00am', 'Manufacturing'],
-            ['General Motors Corporation',30.27,1.09,3.74,'9/1 12:00am', 'Automotive'],
-            ['Hewlett-Packard Co.',36.53,-0.03,-0.08,'9/1 12:00am', 'Computer'],
-            ['Honeywell Intl Inc',38.77,0.05,0.13,'9/1 12:00am', 'Manufacturing'],
-            ['Intel Corporation',19.88,0.31,1.58,'9/1 12:00am', 'Computer'],
-            ['International Business Machines',81.41,0.44,0.54,'9/1 12:00am', 'Computer'],
-            ['Johnson & Johnson',64.72,0.06,0.09,'9/1 12:00am', 'Medical'],
-            ['JP Morgan & Chase & Co',45.73,0.07,0.15,'9/1 12:00am', 'Finance'],
-            ['McDonald\'s Corporation',36.76,0.86,2.40,'9/1 12:00am', 'Food'],
-            ['Merck & Co., Inc.',40.96,0.41,1.01,'9/1 12:00am', 'Medical'],
-            ['Microsoft Corporation',25.84,0.14,0.54,'9/1 12:00am', 'Computer'],
-            ['Pfizer Inc',27.96,0.4,1.45,'9/1 12:00am', 'Services', 'Medical'],
-            ['The Coca-Cola Company',45.07,0.26,0.58,'9/1 12:00am', 'Food'],
-            ['The Home Depot, Inc.',34.64,0.35,1.02,'9/1 12:00am', 'Retail'],
-            ['The Procter & Gamble Company',61.91,0.01,0.02,'9/1 12:00am', 'Manufacturing'],
-            ['United Technologies Corporation',63.26,0.55,0.88,'9/1 12:00am', 'Computer'],
-            ['Verizon Communications',35.57,0.39,1.11,'9/1 12:00am', 'Services'],
-            ['Wal-Mart Stores, Inc.',45.45,0.73,1.63,'9/1 12:00am', 'Retail'],
-            ['Walt Disney Company (The) (Holding Company)',29.89,0.24,0.81,'9/1 12:00am', 'Services']
+            ['3m Co', 71.72, 0.02, 0.03, '9/1 12:00am', 'Manufacturing'],
+            ['Alcoa Inc', 29.01, 0.42, 1.47, '9/1 12:00am', 'Manufacturing'],
+            ['Altria Group Inc', 83.81, 0.28, 0.34, '9/1 12:00am', 'Manufacturing'],
+            ['American Express Company', 52.55, 0.01, 0.02, '9/1 12:00am', 'Finance'],
+            ['American International Group, Inc.', 64.13, 0.31, 0.49, '9/1 12:00am', 'Services'],
+            ['AT&T Inc.', 31.61, -0.48, -1.54, '9/1 12:00am', 'Services'],
+            ['Boeing Co.', 75.43, 0.53, 0.71, '9/1 12:00am', 'Manufacturing'],
+            ['Caterpillar Inc.', 67.27, 0.92, 1.39, '9/1 12:00am', 'Services'],
+            ['Citigroup, Inc.', 49.37, 0.02, 0.04, '9/1 12:00am', 'Finance'],
+            ['E.I. du Pont de Nemours and Company', 40.48, 0.51, 1.28, '9/1 12:00am', 'Manufacturing'],
+            ['Exxon Mobil Corp', 68.1, -0.43, -0.64, '9/1 12:00am', 'Manufacturing'],
+            ['General Electric Company', 34.14, -0.08, -0.23, '9/1 12:00am', 'Manufacturing'],
+            ['General Motors Corporation', 30.27, 1.09, 3.74, '9/1 12:00am', 'Automotive'],
+            ['Hewlett-Packard Co.', 36.53, -0.03, -0.08, '9/1 12:00am', 'Computer'],
+            ['Honeywell Intl Inc', 38.77, 0.05, 0.13, '9/1 12:00am', 'Manufacturing'],
+            ['Intel Corporation', 19.88, 0.31, 1.58, '9/1 12:00am', 'Computer'],
+            ['International Business Machines', 81.41, 0.44, 0.54, '9/1 12:00am', 'Computer'],
+            ['Johnson & Johnson', 64.72, 0.06, 0.09, '9/1 12:00am', 'Medical'],
+            ['JP Morgan & Chase & Co', 45.73, 0.07, 0.15, '9/1 12:00am', 'Finance'],
+            ['McDonald\'s Corporation', 36.76, 0.86, 2.40, '9/1 12:00am', 'Food'],
+            ['Merck & Co., Inc.', 40.96, 0.41, 1.01, '9/1 12:00am', 'Medical'],
+            ['Microsoft Corporation', 25.84, 0.14, 0.54, '9/1 12:00am', 'Computer'],
+            ['Pfizer Inc', 27.96, 0.4, 1.45, '9/1 12:00am', 'Services', 'Medical'],
+            ['The Coca-Cola Company', 45.07, 0.26, 0.58, '9/1 12:00am', 'Food'],
+            ['The Home Depot, Inc.', 34.64, 0.35, 1.02, '9/1 12:00am', 'Retail'],
+            ['The Procter & Gamble Company', 61.91, 0.01, 0.02, '9/1 12:00am', 'Manufacturing'],
+            ['United Technologies Corporation', 63.26, 0.55, 0.88, '9/1 12:00am', 'Computer'],
+            ['Verizon Communications', 35.57, 0.39, 1.11, '9/1 12:00am', 'Services'],
+            ['Wal-Mart Stores, Inc.', 45.45, 0.73, 1.63, '9/1 12:00am', 'Retail'],
+            ['Walt Disney Company (The) (Holding Company)', 29.89, 0.24, 0.81, '9/1 12:00am', 'Services']
         ],
         store, expander, grid, view, bufferedRenderer, columns, i;
 
 
     // add in some dummy descriptions
-    for (i = 0; i < dummyData.length; i++){
+    for (i = 0; i < dummyData.length; i++) {
         dummyData[i].push('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed metus nibh, sodales a, porta at, vulputate eget, dui. Pellentesque ut nisl. Maecenas tortor turpis, interdum non, sodales non, iaculis ac, lacus. Vestibulum auctor, tortor quis iaculis malesuada, libero lectus bibendum purus, sit amet tincidunt quam turpis vel lacus. In pellentesque nisl non sem. Suspendisse nunc sem, pretium eget, cursus a, fringilla vel, urna.<br/><br/>Aliquam commodo ullamcorper erat. Nullam vel justo in neque porttitor laoreet. Aenean lacus dui, consequat eu, adipiscing eget, nonummy non, nisi. Morbi nunc est, dignissim non, ornare sed, luctus eu, massa. Vivamus eget quam. Vivamus tincidunt diam nec urna. Curabitur velit.');
     }
 
@@ -45,17 +45,17 @@ describe('Ext.grid.plugin.RowExpander', function () {
         Ext.define('spec.RowExpanderCompany', {
             extend: 'Ext.data.Model',
             fields: [
-            {name: 'company'},
-            {name: 'price', type: 'float'},
-            {name: 'change', type: 'float'},
-            {name: 'pctChange', type: 'float'},
-            {name: 'lastChange', type: 'date',  dateFormat: 'n/j h:ia'},
-            {name: 'industry'},
+                {name: 'company'},
+                {name: 'price', type: 'float'},
+                {name: 'change', type: 'float'},
+                {name: 'pctChange', type: 'float'},
+                {name: 'lastChange', type: 'date', dateFormat: 'n/j h:ia'},
+                {name: 'industry'},
                 // Rating dependent upon performance 0 = best, 2 = worst
                 {
                     name: 'rating',
                     type: 'int',
-                    convert: function(value, record) {
+                    convert: function (value, record) {
                         var pct = record.get('pctChange');
 
                         if (pct < 0) {
@@ -78,25 +78,26 @@ describe('Ext.grid.plugin.RowExpander', function () {
         });
 
         expander = new Ext.grid.plugin.RowExpander(Ext.apply({
-            rowBodyTpl : new Ext.XTemplate(
+            rowBodyTpl: new Ext.XTemplate(
                 '<p><b>Company:</b> {company}</p>',
                 '<p><b>Change:</b> {change:this.formatChange}</p><br>',
                 '<p><b>Summary:</b> {desc}</p>',
                 {
-                    formatChange: function(v){
+                    formatChange: function (v) {
                         var color = v >= 0 ? 'green' : 'red';
                         return '<span style="color: ' + color + ';">' + Ext.util.Format.usMoney(v) + '</span>';
                     }
                 }
-            )}, rowExpanderCfg || {}));
+            )
+        }, rowExpanderCfg || {}));
 
         columns = gridCfg.columns || [
-            {text: "Company", flex: 1, dataIndex: 'company'},
-            {text: "Price", renderer: Ext.util.Format.usMoney, dataIndex: 'price'},
-            {text: "Change", dataIndex: 'change'},
-            {text: "% Change", dataIndex: 'pctChange'},
-            {text: "Last Updated", renderer: Ext.util.Format.dateRenderer('m/d/Y'), dataIndex: 'lastChange'}
-        ];
+                {text: "Company", flex: 1, dataIndex: 'company'},
+                {text: "Price", renderer: Ext.util.Format.usMoney, dataIndex: 'price'},
+                {text: "Change", dataIndex: 'change'},
+                {text: "% Change", dataIndex: 'pctChange'},
+                {text: "Last Updated", renderer: Ext.util.Format.dateRenderer('m/d/Y'), dataIndex: 'lastChange'}
+            ];
 
         grid = new Ext.grid.Panel(Ext.apply({
             store: store,
@@ -122,7 +123,7 @@ describe('Ext.grid.plugin.RowExpander', function () {
     });
 
     describe("RowExpander", function () {
-        it("should not expand in response to mousedown", function() {
+        it("should not expand in response to mousedown", function () {
             makeGrid();
 
             jasmine.fireMouseEvent(grid.view.el.query('.x-grid-row-expander')[0], 'mousedown');
@@ -130,7 +131,7 @@ describe('Ext.grid.plugin.RowExpander', function () {
             expect(grid.view.all.item(0).down('.' + Ext.baseCSSPrefix + 'grid-rowbody-tr').isVisible()).toBe(false);
         });
 
-        it("should expand on click", function() {
+        it("should expand on click", function () {
             makeGrid();
 
             jasmine.fireMouseEvent(grid.view.el.query('.x-grid-row-expander')[0], 'click');
@@ -138,7 +139,7 @@ describe('Ext.grid.plugin.RowExpander', function () {
             expect(grid.view.all.item(0).down('.' + Ext.baseCSSPrefix + 'grid-rowbody-tr').isVisible()).toBe(true);
         });
 
-        it("should collapse on click", function() {
+        it("should collapse on click", function () {
             makeGrid();
 
             // start with row 0 expanded
@@ -149,8 +150,8 @@ describe('Ext.grid.plugin.RowExpander', function () {
             expect(grid.view.all.item(0).down('.' + Ext.baseCSSPrefix + 'grid-rowbody-tr').isVisible()).toBe(false);
         });
 
-        describe("with a lockedTpl", function() {
-            beforeEach(function() {
+        describe("with a lockedTpl", function () {
+            beforeEach(function () {
                 makeGrid({
                     columns: [
                         {text: "Company", width: 200, dataIndex: 'company', locked: true},
@@ -160,12 +161,12 @@ describe('Ext.grid.plugin.RowExpander', function () {
                         {text: "Last Updated", renderer: Ext.util.Format.dateRenderer('m/d/Y'), dataIndex: 'lastChange'}
                     ]
                 }, {
-                    rowBodyTpl : new Ext.XTemplate(
+                    rowBodyTpl: new Ext.XTemplate(
                         '<p><b>Company:</b> {company}</p>',
                         '<p><b>Change:</b> {change:this.formatChange}</p><br>',
                         '<p><b>Summary:</b> {desc}</p>',
                         {
-                            formatChange: function(v){
+                            formatChange: function (v) {
                                 var color = v >= 0 ? 'green' : 'red';
                                 return '<span style="color: ' + color + ';">' + Ext.util.Format.usMoney(v) + '</span>';
                             }
@@ -175,19 +176,19 @@ describe('Ext.grid.plugin.RowExpander', function () {
                 });
             });
 
-            it("should not expand in response to mousedown", function() {
+            it("should not expand in response to mousedown", function () {
                 jasmine.fireMouseEvent(grid.lockedGrid.view.el.query('.x-grid-row-expander')[0], 'mousedown');
 
                 expect(grid.lockedGrid.view.all.item(0).down('.' + Ext.baseCSSPrefix + 'grid-rowbody-tr').isVisible()).toBe(false);
             });
 
-            it("should expand on click", function() {
+            it("should expand on click", function () {
                 jasmine.fireMouseEvent(grid.lockedGrid.view.el.query('.x-grid-row-expander')[0], 'click');
 
                 expect(grid.lockedGrid.view.all.item(0).down('.' + Ext.baseCSSPrefix + 'grid-rowbody-tr').isVisible()).toBe(true);
             });
 
-            it("should collapse on click", function() {
+            it("should collapse on click", function () {
                 // start with row 0 expanded
                 expander.toggleRow(0, store.getAt(0));
 
@@ -276,12 +277,12 @@ describe('Ext.grid.plugin.RowExpander', function () {
                     normalView.setScrollY(1000);
 
                     waits(500);
-                    runs(function() {
+                    runs(function () {
                         normalView.setScrollY(0);
                     });
 
                     waits(500);
-                    runs(function() {
+                    runs(function () {
                         // We scrolled the normal view, and the locked view should have had its newly rendered row 0 height synced
                         expect(lockedView.all.item(0, true).offsetHeight).toBe(item0ExpandedHeight);
                     });
@@ -338,7 +339,7 @@ describe('Ext.grid.plugin.RowExpander', function () {
             expect(parseInt(grid.body.down('.x-grid-cell-rowbody', true).getAttribute('colspan'), 10)).toBe(6);
         });
 
-        it('should expand the buffered rendering scroll range when at the bottom and the row is expanded', function() {
+        it('should expand the buffered rendering scroll range when at the bottom and the row is expanded', function () {
             makeGrid({
                 leadingBufferZone: 2,
                 trailingBufferZone: 2,
@@ -348,12 +349,12 @@ describe('Ext.grid.plugin.RowExpander', function () {
             expect(bufferedRenderer).toBeDefined();
 
             // Scroll until last row visible
-            waitsFor(function() {
+            waitsFor(function () {
                 view.setScrollY(view.getScrollY() + 10);
                 return view.all.endIndex === store.getCount() - 1;
             });
 
-            runs(function() {
+            runs(function () {
                 // Get the expander elements to click on
                 var expanders = view.el.query('.x-grid-row-expander'),
                     scroller = view.getScrollable(),

@@ -17,7 +17,7 @@ Ext.define('Ext.fx.DrawPath', {
     stopsRE: /^(\d+%?)$/,
     radian: Math.PI / 180,
 
-    is: function(o, type) {
+    is: function (o, type) {
         type = String(type).toLowerCase();
         return (type == "object" && o === Object(o)) ||
             (type == "undefined" && typeof o == type) ||
@@ -32,7 +32,7 @@ Ext.define('Ext.fx.DrawPath', {
     },
 
     // Convert the passed arrayPath to a proper SVG path string (d attribute)
-    pathToString: function(arrayPath) {
+    pathToString: function (arrayPath) {
         return arrayPath.join(",").replace(Ext.fx.DrawPath.pathToStringRE, "$1");
     },
 
@@ -72,7 +72,7 @@ Ext.define('Ext.fx.DrawPath', {
         return data;
     },
 
-    pathClone: function(pathArray) {
+    pathClone: function (pathArray) {
         var res = [],
             j, jj, i, ii;
         if (!this.is(pathArray, "array") || !this.is(pathArray && pathArray[0], "array")) { // rough assumption
@@ -134,10 +134,10 @@ Ext.define('Ext.fx.DrawPath', {
                         r[1] = +pathSegment[1] + x;
                         break;
                     case "M":
-                    // MoveTo
+                        // MoveTo
                         mx = +pathSegment[1] + x;
                         my = +pathSegment[2] + y;
-                        // fall;
+                    // fall;
                     default:
                         j = 1;
                         ln2 = pathSegment.length;
@@ -173,7 +173,7 @@ Ext.define('Ext.fx.DrawPath', {
                     ln2 = pathSegment.length;
                     mx = pathSegment[ln2 - 2];
                     my = pathSegment[ln2 - 1];
-                    // fall;
+                // fall;
                 default:
                     pathSegment = res[i];
                     ln2 = pathSegment.length;
@@ -236,7 +236,7 @@ Ext.define('Ext.fx.DrawPath', {
         }
         return [p, p2];
     },
-    
+
     //Returns any path command as a curveto command based on the attrs passed
     command2curve: function (pathCommand, d) {
         var me = this;
@@ -287,15 +287,15 @@ Ext.define('Ext.fx.DrawPath', {
         var _13 = 1 / 3,
             _23 = 2 / 3;
         return [
-                _13 * x1 + _23 * ax,
-                _13 * y1 + _23 * ay,
-                _13 * x2 + _23 * ax,
-                _13 * y2 + _23 * ay,
-                x2,
-                y2
-            ];
+            _13 * x1 + _23 * ax,
+            _13 * y1 + _23 * ay,
+            _13 * x2 + _23 * ax,
+            _13 * y2 + _23 * ay,
+            x2,
+            y2
+        ];
     },
-    
+
     rotate: function (x, y, rad) {
         var cos = Math.cos(rad),
             sin = Math.sin(rad),
@@ -339,7 +339,7 @@ Ext.define('Ext.fx.DrawPath', {
             rx2 = rx * rx;
             ry2 = ry * ry;
             k = (large_arc_flag == sweep_flag ? -1 : 1) *
-                    msqrt(mabs((rx2 * ry2 - rx2 * y * y - ry2 * x * x) / (rx2 * y * y + ry2 * x * x)));
+                msqrt(mabs((rx2 * ry2 - rx2 * y * y - ry2 * x * x) / (rx2 * y * y + ry2 * x * x)));
             cx = k * rx * y / ry + (x1 + x2) / 2;
             cy = k * -ry * x / rx + (y1 + y2) / 2;
             f1 = masin(((y1 - cy) / ry).toFixed(7));
@@ -397,7 +397,7 @@ Ext.define('Ext.fx.DrawPath', {
             res = [m2, m3, m4].concat(res).join().split(",");
             newres = [];
             ln = res.length;
-            for (i = 0;  i < ln; i++) {
+            for (i = 0; i < ln; i++) {
                 newres[i] = i % 2 ? me.rotate(res[i - 1], res[i], rad).y : me.rotate(res[i], res[i + 1], rad).x;
             }
             return newres;

@@ -127,7 +127,7 @@ Ext.define('Ext.chart.series.sprite.Line', {
                 lineConfig.y = y;
                 lineConfig.x0 = x0;
                 lineConfig.y0 = y0;
-                params = [me, lineConfig, me.rendererData, start + i/3];
+                params = [me, lineConfig, me.rendererData, start + i / 3];
                 changes = Ext.callback(renderer, null, params, 0, me.getSeries());
             }
 
@@ -150,22 +150,22 @@ Ext.define('Ext.chart.series.sprite.Line', {
             ctx.lineTo(x, y);
             strip.push(x, y);
 
-            if ( changes || !(Ext.isNumber(x1 + y1)) ) {
+            if (changes || !(Ext.isNumber(x1 + y1))) {
                 ctx.save();
-                    Ext.apply(ctx, changes);
+                Ext.apply(ctx, changes);
 
-                    if (attr.fillArea) {
-                        ctx.lineTo(x, xAxis);
-                        ctx.lineTo(stripStartX, xAxis);
-                        ctx.closePath();
-                        ctx.fill();
-                    }
+                if (attr.fillArea) {
+                    ctx.lineTo(x, xAxis);
+                    ctx.lineTo(stripStartX, xAxis);
+                    ctx.closePath();
+                    ctx.fill();
+                }
 
-                    // Draw the line on top of the filled area.
-                    ctx.beginPath();
-                    me.drawStrip(ctx, strip);
-                    strip = [];
-                    ctx.stroke();
+                // Draw the line on top of the filled area.
+                ctx.beginPath();
+                me.drawStrip(ctx, strip);
+                strip = [];
+                ctx.stroke();
                 ctx.restore();
 
                 ctx.beginPath();
@@ -226,7 +226,7 @@ Ext.define('Ext.chart.series.sprite.Line', {
                 lineConfig.cy2 = cy2;
                 lineConfig.x = x;
                 lineConfig.y = y;
-                params = [me, lineConfig, me.rendererData, start + i/3 + 1];
+                params = [me, lineConfig, me.rendererData, start + i / 3 + 1];
                 changes = Ext.callback(renderer, null, params, 0, me.getSeries());
                 ctx.save();
                 Ext.apply(ctx, changes);

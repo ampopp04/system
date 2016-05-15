@@ -8,10 +8,10 @@ Ext.define('Ext.resizer.Handle', {
     // Ext.resizer.Resizer.prototype.possiblePositions define the regions
     // which will be passed in as a region configuration.
     region: '',
-    
+
     ariaRole: 'presentation',
 
-    beforeRender: function() {
+    beforeRender: function () {
         var me = this;
 
         me.callParent();

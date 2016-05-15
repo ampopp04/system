@@ -1,4 +1,4 @@
-describe("Ext.toolbar.Toolbar", function(){
+describe("Ext.toolbar.Toolbar", function () {
     var expectAria = jasmine.expectAriaAttr,
         expectNoAria = jasmine.expectNoAriaAttr,
         toolbar;
@@ -14,8 +14,8 @@ describe("Ext.toolbar.Toolbar", function(){
         Ext.destroy(toolbar);
         toolbar = null;
     });
-    
-    it("should default to using a hbox layout", function() {
+
+    it("should default to using a hbox layout", function () {
         createToolbar();
         expect(toolbar.getLayout() instanceof Ext.layout.container.HBox);
     });
@@ -48,12 +48,12 @@ describe("Ext.toolbar.Toolbar", function(){
         });
     });
 
-    describe('defaultButtonUI', function() {
-        it("should use the defaultButtonUI for child buttons with no ui configured on the instance", function() {
+    describe('defaultButtonUI', function () {
+        it("should use the defaultButtonUI for child buttons with no ui configured on the instance", function () {
             // This test causes layout failure in IE8, but otherwise tests out fine.
             // Since it's not about layout, silencing the error is OK.
             spyOn(Ext.log, 'error');
-            
+
             createToolbar({
                 height: 30,
                 defaultButtonUI: 'foo',
@@ -65,10 +65,10 @@ describe("Ext.toolbar.Toolbar", function(){
             expect(toolbar.items.getAt(0).ui).toBe('foo-small');
         });
 
-        it("should not use the defaultButtonUI for child buttons with ui configured on the instance", function() {
+        it("should not use the defaultButtonUI for child buttons with ui configured on the instance", function () {
             // See above
             spyOn(Ext.log, 'error');
-            
+
             createToolbar({
                 height: 30,
                 defaultButtonUI: 'foo',
@@ -81,7 +81,7 @@ describe("Ext.toolbar.Toolbar", function(){
             expect(toolbar.items.getAt(0).ui).toBe('bar-small');
         });
 
-        it("should not use the defaultButtonUI for child buttons with ui of 'default' configured on the instance", function() {
+        it("should not use the defaultButtonUI for child buttons with ui of 'default' configured on the instance", function () {
             createToolbar({
                 defaultButtonUI: 'foo',
                 items: [{
@@ -93,7 +93,7 @@ describe("Ext.toolbar.Toolbar", function(){
             expect(toolbar.items.getAt(0).ui).toBe('default-small');
         });
 
-        it("should use the defaultButtonUI for segmented buttons with no defaultUI configured on the instance", function() {
+        it("should use the defaultButtonUI for segmented buttons with no defaultUI configured on the instance", function () {
             createToolbar({
                 defaultButtonUI: 'foo',
                 items: [{
@@ -108,7 +108,7 @@ describe("Ext.toolbar.Toolbar", function(){
             expect(toolbar.items.getAt(0).items.getAt(0).ui).toBe('foo-small');
         });
 
-        it("should not use the defaultButtonUI for segmented buttons with defaultUI configured on the instance", function() {
+        it("should not use the defaultButtonUI for segmented buttons with defaultUI configured on the instance", function () {
             createToolbar({
                 defaultButtonUI: 'foo',
                 items: [{
@@ -124,7 +124,7 @@ describe("Ext.toolbar.Toolbar", function(){
             expect(toolbar.items.getAt(0).items.getAt(0).ui).toBe('bar-small');
         });
 
-        it("should not use the defaultButtonUI for segmented buttons with defaultUI of 'default' configured on the instance", function() {
+        it("should not use the defaultButtonUI for segmented buttons with defaultUI of 'default' configured on the instance", function () {
             createToolbar({
                 defaultButtonUI: 'foo',
                 items: [{
@@ -141,8 +141,8 @@ describe("Ext.toolbar.Toolbar", function(){
         });
     });
 
-    describe('defaultFieldUI', function() {
-        it("should use the defaultFieldUI for child fields with no ui configured on the instance", function() {
+    describe('defaultFieldUI', function () {
+        it("should use the defaultFieldUI for child fields with no ui configured on the instance", function () {
             createToolbar({
                 defaultFieldUI: 'foo',
                 items: [{
@@ -153,7 +153,7 @@ describe("Ext.toolbar.Toolbar", function(){
             expect(toolbar.items.getAt(0).ui).toBe('foo');
         });
 
-        it("should not use the defaultFieldUI for child fields with ui configured on the instance", function() {
+        it("should not use the defaultFieldUI for child fields with ui configured on the instance", function () {
             createToolbar({
                 defaultFieldUI: 'foo',
                 items: [{
@@ -165,7 +165,7 @@ describe("Ext.toolbar.Toolbar", function(){
             expect(toolbar.items.getAt(0).ui).toBe('bar');
         });
 
-        it("should not use the defaultFieldUI for child fields with ui of 'default' configured on the instance", function() {
+        it("should not use the defaultFieldUI for child fields with ui of 'default' configured on the instance", function () {
             createToolbar({
                 defaultFieldUI: 'foo',
                 items: [{
@@ -177,9 +177,9 @@ describe("Ext.toolbar.Toolbar", function(){
             expect(toolbar.items.getAt(0).ui).toBe('default');
         });
     });
-    
-    describe("FocusableContainer", function() {
-        it("should be on with buttons", function() {
+
+    describe("FocusableContainer", function () {
+        it("should be on with buttons", function () {
             createToolbar({
                 items: [{
                     xtype: 'button'
@@ -187,11 +187,11 @@ describe("Ext.toolbar.Toolbar", function(){
                     xtype: 'button'
                 }]
             });
-            
+
             expectAria(toolbar, 'tabIndex', '0');
         });
-        
-        it("should be off with input fields", function() {
+
+        it("should be off with input fields", function () {
             createToolbar({
                 items: [{
                     xtype: 'button'
@@ -199,11 +199,11 @@ describe("Ext.toolbar.Toolbar", function(){
                     xtype: 'textfield'
                 }]
             });
-            
+
             expectNoAria(toolbar, 'tabIndex');
         });
-        
-        it("should be off with sliders", function() {
+
+        it("should be off with sliders", function () {
             createToolbar({
                 items: [{
                     xtype: 'button'
@@ -211,7 +211,7 @@ describe("Ext.toolbar.Toolbar", function(){
                     xtype: 'slider'
                 }]
             });
-            
+
             expectNoAria(toolbar, 'tabIndex');
         });
     });

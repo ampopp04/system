@@ -2,7 +2,7 @@
  * Slovenian translation by Matjaž (UTF-8 encoding)
  * 25 April 2007
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
     if (Ext.Date) {
         Ext.Date.monthNames = ["Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "Avgust", "September", "Oktober", "November", "December"];
 
@@ -103,7 +103,7 @@ Ext.define("Ext.locale.sl.form.field.Date", {
 Ext.define("Ext.locale.sl.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Nalagam..."
     });
@@ -140,10 +140,10 @@ Ext.define("Ext.locale.sl.window.MessageBox", {
         cancel: "Prekliči",
         yes: "Da",
         no: "Ne"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.sl.Component", {	
+Ext.define("Ext.locale.sl.Component", {
     override: "Ext.Component"
 });

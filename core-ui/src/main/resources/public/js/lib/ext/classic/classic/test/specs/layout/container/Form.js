@@ -1,9 +1,9 @@
-describe('Ext.layout.container.Form', function() {
+describe('Ext.layout.container.Form', function () {
 
     // TODO: form layout specs
-    xdescribe('child items manipulation', function() {
+    xdescribe('child items manipulation', function () {
 
-        it('should convert child items tables to tbody nodes', function() {
+        it('should convert child items tables to tbody nodes', function () {
             var panel = Ext.create('Ext.form.Panel', {
                     layout: 'form',
                     renderTo: Ext.getBody(),
@@ -36,7 +36,7 @@ describe('Ext.layout.container.Form', function() {
 
     });
 
-    it("should shrinkwrap auto-width items", function() {
+    it("should shrinkwrap auto-width items", function () {
         var panel = Ext.widget({
             xtype: 'panel',
             renderTo: document.body,

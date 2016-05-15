@@ -5,12 +5,12 @@ Ext.define('Ext.container.DockingContainer', {
 
     /* Begin Definitions */
 
-    requires: ['Ext.util.MixedCollection', 'Ext.Element' ],
+    requires: ['Ext.util.MixedCollection', 'Ext.Element'],
 
     /* End Definitions */
 
     isDockingContainer: true,
-    
+
     /**
      * @event dockedadd
      * Fires when any {@link Ext.Component} is added or inserted as a docked item.
@@ -18,7 +18,7 @@ Ext.define('Ext.container.DockingContainer', {
      * @param {Ext.Component} component The component being added
      * @param {Number} index The index at which the component will be added docked items collection
      */
-    
+
     /**
      * @event dockedremove
      * Fires when any {@link Ext.Component} is removed from the docked items.
@@ -56,10 +56,10 @@ Ext.define('Ext.container.DockingContainer', {
      *      }
      */
     defaultDockWeights: {
-        top:    { render: 1, visual: 1 },
-        left:   { render: 3, visual: 5 },
-        right:  { render: 5, visual: 7 },
-        bottom: { render: 7, visual: 3 }
+        top: {render: 1, visual: 1},
+        left: {render: 3, visual: 5},
+        right: {render: 5, visual: 7},
+        bottom: {render: 7, visual: 3}
     },
 
     /**
@@ -113,11 +113,10 @@ Ext.define('Ext.container.DockingContainer', {
      * @private
      * @since 6.0.0
      */
-    tabGuardTpl:
-        '<div id="{id}-{tabGuardEl}" data-ref="{tabGuardEl}" tabIndex="0" class="' +
-            Ext.baseCSSPrefix + 'tab-guard ' +
-            Ext.baseCSSPrefix + 'tab-guard-{tabGuard}" ' +
-        '></div>',
+    tabGuardTpl: '<div id="{id}-{tabGuardEl}" data-ref="{tabGuardEl}" tabIndex="0" class="' +
+    Ext.baseCSSPrefix + 'tab-guard ' +
+    Ext.baseCSSPrefix + 'tab-guard-{tabGuard}" ' +
+    '></div>',
 
     /**
      * Adds docked item(s) to the container.
@@ -128,7 +127,7 @@ Ext.define('Ext.container.DockingContainer', {
      * @param {Number} [pos] The index at which the Component will be added
      * @return {Ext.Component[]} The added components.
      */
-    addDocked : function(items, pos) {
+    addDocked: function (items, pos) {
         var me = this,
             rendered = me.rendered,
             i = 0,
@@ -159,7 +158,7 @@ Ext.define('Ext.container.DockingContainer', {
 
             index = pos + i;
             dockedItems.insert(index, item);
-            
+
             instanced = !!item.instancedCmp;
             delete item.instancedCmp;
             item.onAdded(me, index, instanced);
@@ -172,7 +171,7 @@ Ext.define('Ext.container.DockingContainer', {
             }
         }
 
-        
+
         if (me.rendered) {
             me.updateLayout();
             Ext.resumeLayouts(true);
@@ -180,7 +179,7 @@ Ext.define('Ext.container.DockingContainer', {
         return items;
     },
 
-    destroyDockedItems: function() {
+    destroyDockedItems: function () {
         var dockedItems = this.dockedItems,
             c;
 
@@ -234,7 +233,7 @@ Ext.define('Ext.container.DockingContainer', {
      * @param {String/Number} comp The id, itemId or position of the docked component (see {@link Ext.container.Container#getComponent getComponent} for details)
      * @return {Ext.Component} The docked component (if found)
      */
-    getDockedComponent: function(comp) {
+    getDockedComponent: function (comp) {
         if (Ext.isObject(comp)) {
             comp = comp.getItemId();
         }
@@ -254,7 +253,7 @@ Ext.define('Ext.container.DockingContainer', {
      *  default.
      * @return {Ext.Component[]} The array of docked components meeting the specified criteria.
      */
-    getDockedItems : function(selector, beforeBody) {
+    getDockedItems: function (selector, beforeBody) {
         var dockedItems = this.getComponentLayout().getDockedItems('render', beforeBody);
 
         if (selector && dockedItems.length) {
@@ -264,10 +263,10 @@ Ext.define('Ext.container.DockingContainer', {
         return dockedItems;
     },
 
-    getDockingRefItems: function(deep, containerItems) {
+    getDockingRefItems: function (deep, containerItems) {
         // deep fetches the docked items and their descendants using '*' and then '* *'
         var selector = deep && '*,* *',
-            // start with only the top/left docked items (and maybe their children)
+        // start with only the top/left docked items (and maybe their children)
             dockedItems = this.getDockedItems(selector, true),
             items;
 
@@ -281,7 +280,7 @@ Ext.define('Ext.container.DockingContainer', {
         return dockedItems;
     },
 
-    initDockingItems: function() {
+    initDockingItems: function () {
         var me = this,
             items = me.dockedItems;
 
@@ -300,7 +299,7 @@ Ext.define('Ext.container.DockingContainer', {
      * must include a 'dock' paramater on each component to indicate where it should be docked ('top', 'right',
      * 'bottom', 'left').
      */
-    insertDocked : function(pos, items) {
+    insertDocked: function (pos, items) {
         this.addDocked(items, pos);
     },
 
@@ -312,7 +311,7 @@ Ext.define('Ext.container.DockingContainer', {
      * @template
      * @protected
      */
-    onDockedAdd : Ext.emptyFn,
+    onDockedAdd: Ext.emptyFn,
     /**
      * @method
      * Invoked after a docked item is removed from the Panel.
@@ -320,14 +319,14 @@ Ext.define('Ext.container.DockingContainer', {
      * @template
      * @protected
      */
-    onDockedRemove : Ext.emptyFn,
+    onDockedRemove: Ext.emptyFn,
 
     /**
      * Removes the docked item from the panel.
      * @param {Ext.Component} item The Component to remove.
      * @param {Boolean} autoDestroy (optional) Destroy the component after removal.
      */
-    removeDocked: function(item, autoDestroy) {
+    removeDocked: function (item, autoDestroy) {
         var me = this,
             layout,
             hasLayout;
@@ -358,7 +357,7 @@ Ext.define('Ext.container.DockingContainer', {
             // not destroying, make any layout related removals
             layout.afterRemove(item);
         }
-        
+
         if (me.hasListeners.dockedremove) {
             me.fireEvent('dockedremove', me, item);
         }
@@ -376,7 +375,7 @@ Ext.define('Ext.container.DockingContainer', {
      * @param {'top'/'right'/'bottom'/'left'} side
      * @private
      */
-    moveDocked: function(item, side) {
+    moveDocked: function (item, side) {
         var me = this;
 
         if (me.rendered) {

@@ -1,4 +1,4 @@
-describe("Ext.plugin.Viewport", function() {
+describe("Ext.plugin.Viewport", function () {
     var c, DomScrollDescribe = Ext.supports.touchScroll ? xdescribe : describe;
 
     function makeComponent(cfg, ComponentClass) {
@@ -8,17 +8,17 @@ describe("Ext.plugin.Viewport", function() {
         }, cfg));
     }
 
-    afterEach(function() {
+    afterEach(function () {
         c = Ext.destroy(c);
     });
 
-    describe("size model", function() {
-        it("should be configured before render", function() {
+    describe("size model", function () {
+        it("should be configured before render", function () {
             var sizeModel;
 
             makeComponent({
                 listeners: {
-                    beforerender: function(c) {
+                    beforerender: function (c) {
                         sizeModel = c.getSizeModel();
                     }
                 }
@@ -27,7 +27,7 @@ describe("Ext.plugin.Viewport", function() {
             expect(sizeModel.height.configured).toBe(true);
         });
 
-        it("should be configured after render", function() {
+        it("should be configured after render", function () {
             makeComponent();
             var sizeModel = c.getSizeModel();
             expect(sizeModel.width.configured).toBe(true);
@@ -35,11 +35,11 @@ describe("Ext.plugin.Viewport", function() {
         });
     });
 
-    describe("inherited state", function() {
-        describe("viewmodel", function() {
+    describe("inherited state", function () {
+        describe("viewmodel", function () {
             var vm;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 vm = new Ext.app.ViewModel({
                     data: {
                         foo: 'bar'
@@ -50,15 +50,15 @@ describe("Ext.plugin.Viewport", function() {
                 });
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 vm = Ext.destroy(vm);
             });
 
-            it("should use the viewmodel on the rootInheritedState", function() {
+            it("should use the viewmodel on the rootInheritedState", function () {
                 expect(Ext.rootInheritedState.viewModel).toBe(vm);
             });
 
-            it("should allow non children of the viewport to inherit the viewmodel", function() {
+            it("should allow non children of the viewport to inherit the viewmodel", function () {
                 var other = new Ext.Component({
                     bind: '{foo}',
                     renderTo: Ext.getBody()
@@ -68,25 +68,25 @@ describe("Ext.plugin.Viewport", function() {
             });
         });
 
-        describe("session", function() {
+        describe("session", function () {
             var session;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 session = new Ext.data.Session();
                 makeComponent({
                     session: session
                 });
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 session = Ext.destroy(session);
             });
 
-            it("should use the session on the rootInheritedState", function() {
+            it("should use the session on the rootInheritedState", function () {
                 expect(Ext.rootInheritedState.session).toBe(session);
             });
 
-            it("should allow non children of the viewport to inherit the session", function() {
+            it("should allow non children of the viewport to inherit the session", function () {
                 var other = new Ext.Component({
                     renderTo: Ext.getBody()
                 });
@@ -95,25 +95,25 @@ describe("Ext.plugin.Viewport", function() {
             });
         });
 
-        describe("controller", function() {
+        describe("controller", function () {
             var controller;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 controller = new Ext.app.ViewController();
                 makeComponent({
                     controller: controller
                 });
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 controller = null;
             });
 
-            it("should use the controller on the rootInheritedState", function() {
+            it("should use the controller on the rootInheritedState", function () {
                 expect(Ext.rootInheritedState.controller).toBe(controller);
             });
 
-            it("should allow non children of the viewport to inherit the controller", function() {
+            it("should allow non children of the viewport to inherit the controller", function () {
                 var other = new Ext.Component({
                     renderTo: Ext.getBody()
                 });
@@ -123,8 +123,8 @@ describe("Ext.plugin.Viewport", function() {
         });
     });
 
-    describe("destruction", function() {
-        it("should not pollute the rootInheritedState with a viewmodel", function() {
+    describe("destruction", function () {
+        it("should not pollute the rootInheritedState with a viewmodel", function () {
             var vm = new Ext.app.ViewModel();
             makeComponent({
                 viewModel: vm
@@ -133,7 +133,7 @@ describe("Ext.plugin.Viewport", function() {
             expect(Ext.rootInheritedState.viewModel).toBeUndefined();
         });
 
-        it("should not pollute the rootInheritedState with a session", function() {
+        it("should not pollute the rootInheritedState with a session", function () {
             var session = new Ext.data.Session();
             makeComponent({
                 session: session
@@ -143,7 +143,7 @@ describe("Ext.plugin.Viewport", function() {
             session.destroy();
         });
 
-        it("should not pollute the rootInheritedState with a controller", function() {
+        it("should not pollute the rootInheritedState with a controller", function () {
             var controller = new Ext.app.ViewController();
             makeComponent({
                 controller: controller
@@ -152,23 +152,23 @@ describe("Ext.plugin.Viewport", function() {
             expect(Ext.rootInheritedState.controller).toBeUndefined();
         });
     });
-    
-    describe("ARIA attributes", function() {
-        beforeEach(function() {
+
+    describe("ARIA attributes", function () {
+        beforeEach(function () {
             makeComponent();
         });
-        
-        it("should assign role=application to the document body", function() {
+
+        it("should assign role=application to the document body", function () {
             expect(Ext.getBody().dom.getAttribute('role')).toBe('application');
         });
     });
 
-    describe('scroll events on auto layout Container viewport', function() {
+    describe('scroll events on auto layout Container viewport', function () {
         var DomScroller = Ext.scroll.DomScroller,
             viewportScrollCount = 0,
             documentScrollCount = 0;
 
-        beforeEach(function() {
+        beforeEach(function () {
             // Gets destroyed by viewports, so restore to initial conditions for tests
             if (!DomScroller.document) {
                 DomScroller.document = new DomScroller({
@@ -176,7 +176,8 @@ describe("Ext.plugin.Viewport", function() {
                     y: true,
                     element: document.body
                 });
-            };
+            }
+            ;
 
             document.documentElement.style.height = '500px';
             document.documentElement.style.overflow = 'auto';
@@ -185,7 +186,7 @@ describe("Ext.plugin.Viewport", function() {
             // event sources are used on different platforms.
             // We are checking that the global instance is destroyed and fires
             // no events.
-            DomScroller.document.on('scroll', function() {
+            DomScroller.document.on('scroll', function () {
                 documentScrollCount++;
             });
             makeComponent({
@@ -199,22 +200,22 @@ describe("Ext.plugin.Viewport", function() {
                 }
             }, Ext.Container);
             c.getScrollable().on({
-                scroll: function() {
+                scroll: function () {
                     viewportScrollCount++;
                 }
             });
         });
-        afterEach(function() {
+        afterEach(function () {
             document.documentElement.style.height = document.documentElement.style.overflow = document.body.style.backgroundColor = '';
         });
-        
-        it('should only fire one global scroll event per scroll', function() {
+
+        it('should only fire one global scroll event per scroll', function () {
             c.scrollTo(null, 500);
 
             // Wait for potentially asynchronous scroll events to fire.
             waits(100);
 
-            runs(function() {
+            runs(function () {
                 // Document scroller must have been destroyed
                 expect(DomScroller.document == null).toBe(true);
 
@@ -226,12 +227,12 @@ describe("Ext.plugin.Viewport", function() {
         });
     });
 
-    describe('scroll events on auto layout Panel Viewport', function() {
+    describe('scroll events on auto layout Panel Viewport', function () {
         var DomScroller = Ext.scroll.DomScroller,
             viewportScrollCount = 0,
             documentScrollCount = 0;
 
-        beforeEach(function() {
+        beforeEach(function () {
             // Gets destroyed by viewports, so restore to initial conditions for tests
             if (!DomScroller.document) {
                 DomScroller.document = new DomScroller({
@@ -239,7 +240,8 @@ describe("Ext.plugin.Viewport", function() {
                     y: true,
                     element: document.body
                 });
-            };
+            }
+            ;
 
             document.documentElement.style.height = '500px';
             document.documentElement.style.overflow = 'auto';
@@ -248,7 +250,7 @@ describe("Ext.plugin.Viewport", function() {
             // event sources are used on different platforms.
             // We are checking that the global instance is destroyed and fires
             // no events.
-            DomScroller.document.on('scroll', function() {
+            DomScroller.document.on('scroll', function () {
                 documentScrollCount++;
             });
             makeComponent({
@@ -260,22 +262,22 @@ describe("Ext.plugin.Viewport", function() {
                 }
             }, Ext.panel.Panel);
             c.getScrollable().on({
-                scroll: function() {
+                scroll: function () {
                     viewportScrollCount++;
                 }
             });
         });
-        afterEach(function() {
+        afterEach(function () {
             document.documentElement.style.height = document.documentElement.style.overflow = document.body.style.backgroundColor = '';
         });
-        
-        it('should only fire one global scroll event per scroll', function() {
+
+        it('should only fire one global scroll event per scroll', function () {
             c.scrollTo(null, 500);
 
             // Wait for potentially asynchronous scroll events to fire.
             waits(100);
 
-            runs(function() {
+            runs(function () {
                 // Document scroller must have been destroyed
                 expect(DomScroller.document == null).toBe(true);
 
@@ -287,12 +289,12 @@ describe("Ext.plugin.Viewport", function() {
         });
     });
 
-    DomScrollDescribe('Global DOM scroll events on auto layout Container viewport', function() {
+    DomScrollDescribe('Global DOM scroll events on auto layout Container viewport', function () {
         var DomScroller = Ext.scroll.DomScroller,
             viewportScrollCount = 0,
             documentScrollCount = 0;
 
-        beforeEach(function() {
+        beforeEach(function () {
             // Gets destroyed by viewports, so restore to initial conditions for tests
             if (!DomScroller.document) {
                 DomScroller.document = new DomScroller({
@@ -300,17 +302,18 @@ describe("Ext.plugin.Viewport", function() {
                     y: true,
                     element: document.body
                 });
-            };
+            }
+            ;
 
             // This must not fire.
             // We can't use a single global listener because different
             // event sources are used on different platforms.
             // We are checking that the global instance is destroyed and fires
             // no events.
-            DomScroller.document.on('scroll', function() {
+            DomScroller.document.on('scroll', function () {
                 documentScrollCount++;
             });
-            Ext.on('scroll', function() {
+            Ext.on('scroll', function () {
                 viewportScrollCount++;
             });
             makeComponent({
@@ -322,14 +325,14 @@ describe("Ext.plugin.Viewport", function() {
                 }
             }, Ext.Container);
         });
-        
-        it('should only fire one global scroll event per scroll', function() {
+
+        it('should only fire one global scroll event per scroll', function () {
             c.scrollTo(null, 500);
 
             // Wait for potentially asynchronous scroll events to fire.
             waits(100);
 
-            runs(function() {
+            runs(function () {
                 // Document scroller must have been destroyed
                 expect(DomScroller.document == null).toBe(true);
 
@@ -341,12 +344,12 @@ describe("Ext.plugin.Viewport", function() {
         });
     });
 
-    DomScrollDescribe('Global DOM scroll events on auto layout Panel Viewport', function() {
+    DomScrollDescribe('Global DOM scroll events on auto layout Panel Viewport', function () {
         var DomScroller = Ext.scroll.DomScroller,
             viewportScrollCount = 0,
             documentScrollCount = 0;
 
-        beforeEach(function() {
+        beforeEach(function () {
             // Gets destroyed by viewports, so restore to initial conditions for tests
             if (!DomScroller.document) {
                 DomScroller.document = new DomScroller({
@@ -354,17 +357,18 @@ describe("Ext.plugin.Viewport", function() {
                     y: true,
                     element: document.body
                 });
-            };
+            }
+            ;
 
             // This must not fire.
             // We can't use a single global listener because different
             // event sources are used on different platforms.
             // We are checking that the global instance is destroyed and fires
             // no events.
-            DomScroller.document.on('scroll', function() {
+            DomScroller.document.on('scroll', function () {
                 documentScrollCount++;
             });
-            Ext.on('scroll', function() {
+            Ext.on('scroll', function () {
                 viewportScrollCount++;
             });
             makeComponent({
@@ -376,14 +380,14 @@ describe("Ext.plugin.Viewport", function() {
                 }
             }, Ext.panel.Panel);
         });
-        
-        it('should only fire one global scroll event per scroll', function() {
+
+        it('should only fire one global scroll event per scroll', function () {
             c.scrollTo(null, 500);
 
             // Wait for potentially asynchronous scroll events to fire.
             waits(100);
 
-            runs(function() {
+            runs(function () {
                 // Document scroller must have been destroyed
                 expect(DomScroller.document == null).toBe(true);
 

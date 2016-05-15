@@ -36,7 +36,7 @@ Ext.define('Ext.plugin.Manager', {
      * contain a `ptype`. (Optional if the config contains a `ptype`).
      * @return {Ext.Component} The newly instantiated Plugin.
      */
-    create : function(config, defaultType, host) {
+    create: function (config, defaultType, host) {
         var result, type;
 
         if (config.init) {

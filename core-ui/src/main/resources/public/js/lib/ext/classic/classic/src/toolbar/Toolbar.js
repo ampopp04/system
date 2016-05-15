@@ -197,7 +197,7 @@ Ext.define('Ext.toolbar.Toolbar', {
     ],
     alias: 'widget.toolbar',
     alternateClassName: 'Ext.Toolbar',
-    
+
     mixins: [
         'Ext.util.FocusableContainer'
     ],
@@ -322,11 +322,11 @@ Ext.define('Ext.toolbar.Toolbar', {
         shortcutsHV: {
             // horizontal
             0: {
-                '->': { xtype: 'tbfill', height: 0 }
+                '->': {xtype: 'tbfill', height: 0}
             },
             // vertical
             1: {
-                '->': { xtype: 'tbfill', width: 0 }
+                '->': {xtype: 'tbfill', width: 0}
             }
         }
     },
@@ -473,14 +473,14 @@ Ext.define('Ext.toolbar.Toolbar', {
         me.callParent(arguments);
     },
 
-    onAdd: function(component) {
+    onAdd: function (component) {
         // If we encounter a child component that needs to handle arrow keys
         // (input fields, sliders) we opt out of FocusableContainer behavior
         // because it becomes highly confusing for the users.
         if (component.needArrowKeys && this.enableFocusableContainer) {
             this.enableFocusableContainer = false;
         }
-        
+
         this.callParent(arguments);
         this.trackMenu(component);
     },
@@ -489,7 +489,7 @@ Ext.define('Ext.toolbar.Toolbar', {
         this.callParent(arguments);
         this.trackMenu(c, true);
     },
-    
+
     privates: {
         /**
          * @private

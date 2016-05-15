@@ -14,7 +14,7 @@ Ext.define('Ext.overrides.event.publisher.Dom', {
 
         // This method gets bound to the element scope in addDirectListener so that
         // the currentTarget can be captured using "this".
-        onDirectEvent = function(e, publisher, capture) {
+        onDirectEvent = function (e, publisher, capture) {
             e.target = e.srcElement || window;
             e.currentTarget = this;
             if (capture) {
@@ -26,30 +26,30 @@ Ext.define('Ext.overrides.event.publisher.Dom', {
             }
         };
 
-        onDirectCaptureEvent = function(e, publisher) {
+        onDirectCaptureEvent = function (e, publisher) {
             e.target = e.srcElement || window;
             e.currentTarget = this; // this, not DomPublisher
             publisher.onDirectCaptureEvent(e);
         };
 
         DomPublisher.override({
-            addDelegatedListener: function(eventName) {
+            addDelegatedListener: function (eventName) {
                 this.delegatedListeners[eventName] = 1;
                 // Use attachEvent for IE9 and below.  Even though IE9 strict supports
                 // addEventListener, it has issues with using synthetic events.
                 this.target.attachEvent('on' + eventName, this.onDelegatedEvent);
             },
 
-            removeDelegatedListener: function(eventName) {
+            removeDelegatedListener: function (eventName) {
                 delete this.delegatedListeners[eventName];
                 this.target.detachEvent('on' + eventName, this.onDelegatedEvent);
             },
 
-            addDirectListener: function(eventName, element, capture) {
+            addDirectListener: function (eventName, element, capture) {
                 var me = this,
                     dom = element.dom,
-                    // binding the listener to the element allows us to capture the
-                    // "currentTarget" (see onDirectEvent)
+                // binding the listener to the element allows us to capture the
+                // "currentTarget" (see onDirectEvent)
                     boundFn = Ext.Function.bind(onDirectEvent, dom, [me, capture], true),
                     directBoundListeners = me.directBoundListeners,
                     handlers = directBoundListeners[eventName] || (directBoundListeners[eventName] = {});
@@ -64,7 +64,7 @@ Ext.define('Ext.overrides.event.publisher.Dom', {
                 }
             },
 
-            removeDirectListener: function(eventName, element) {
+            removeDirectListener: function (eventName, element) {
                 var dom = element.dom;
 
                 if (dom.detachEvent) {
@@ -75,7 +75,7 @@ Ext.define('Ext.overrides.event.publisher.Dom', {
                 }
             },
 
-            doDelegatedEvent: function(e, invokeAfter) {
+            doDelegatedEvent: function (e, invokeAfter) {
                 e.target = e.srcElement || window;
 
                 if (e.type === 'focusin') {
@@ -93,14 +93,14 @@ Ext.define('Ext.overrides.event.publisher.Dom', {
         // can't capture any events without addEventListener.  Have to have direct
         // listeners for every event that does not bubble.
         Ext.apply(prototype.directEvents, prototype.captureEvents);
-        
+
         // These do not bubble in IE9m so have to attach direct listeners as well.
         Ext.apply(prototype.directEvents, {
             change: 1,
             input: 1,
             paste: 1
         });
-        
+
         prototype.captureEvents = {};
     }
 });

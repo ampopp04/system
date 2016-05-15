@@ -1,7 +1,7 @@
 /**
  * A Queue is a queue of {@link Ext.app.route.Route} instances managed by the
  * {@link Ext.app.route.Router} singleton if queueActions is set to `true`.
- * 
+ *
  * A developer shouldn't need to use this class as {@link Ext.app.route.Router} should
  * manage this class. When a {@link Ext.app.route.Route} is executed,it will automatically
  * keep running the queue until the queue is empty.
@@ -21,7 +21,7 @@ Ext.define('Ext.app.route.Queue', {
      */
     token: null,
 
-    constructor : function(config) {
+    constructor: function (config) {
         Ext.apply(this, config);
 
         //Create the queue MixedCollection
@@ -34,25 +34,25 @@ Ext.define('Ext.app.route.Queue', {
      * @param {Ext.app.route.Route} route The route to add to the queue.
      * @param {Object} args The arguments recognized by the {Ext.app.route.Route}.
      */
-    queueAction : function (route, args) {
+    queueAction: function (route, args) {
         this.queue.add({
-            route : route,
-            args  : args
+            route: route,
+            args: args
         });
     },
 
     /**
      * Clear all queued actions.
      */
-    clearQueue : function() {
+    clearQueue: function () {
         this.queue.removeAll();
     },
 
     /**
      * Run the queue one by one.
      */
-    runQueue : function() {
-        var queue  = this.queue,
+    runQueue: function () {
+        var queue = this.queue,
             action = queue.removeAt(0),
             route;
 
@@ -68,7 +68,7 @@ Ext.define('Ext.app.route.Queue', {
      *
      * @param {Boolean} clearQueue If `true` was returned, will clear all queued actions.
      */
-    onActionExecute : function(clearQueue) {
+    onActionExecute: function (clearQueue) {
         if (clearQueue) {
             //clear all queued actions
             this.clearQueue();

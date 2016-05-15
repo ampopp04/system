@@ -1,6 +1,6 @@
 describe('Ext.resizer.Resizer', function () {
     var resizer, target,
-    testIt = Ext.isWebKit ? it : xit;
+        testIt = Ext.isWebKit ? it : xit;
 
     function makeResizer(cfg) {
         target = new Ext.Component(Ext.apply({
@@ -42,46 +42,46 @@ describe('Ext.resizer.Resizer', function () {
             });
         });
     });
-    
-    describe('constraining', function() {
+
+    describe('constraining', function () {
         // Synthetic event resizing only works on good browsers.
         // Code tested is not browser dependent however.
-        testIt('should not constrain if constrain config !== true', function() {
+        testIt('should not constrain if constrain config !== true', function () {
             var window,
                 panel = new Ext.panel.Panel({
-                height: 200,
-                width: 200,
-                renderTo: document.body,
-                items: [window = new Ext.window.Window({
-                    height: 100,
-                    width: 100,
-                    title: 'Child Window'
-                })]
-            });
-            
+                    height: 200,
+                    width: 200,
+                    renderTo: document.body,
+                    items: [window = new Ext.window.Window({
+                        height: 100,
+                        width: 100,
+                        title: 'Child Window'
+                    })]
+                });
+
             window.show();
             jasmine.fireMouseEvent(window.resizer.east, 'mousedown');
             jasmine.fireMouseEvent(document.body, 'mousemove', 200, 150);
             jasmine.fireMouseEvent(document.body, 'mouseup');
-            
+
             // Window must be allowed to resize outside its owning Panel's bounds
             expect(window.getWidth()).toBe(300);
             Ext.destroy(panel, window);
         });
-        testIt("should constrain to floatParent's targetEl if constrain config == true", function() {
+        testIt("should constrain to floatParent's targetEl if constrain config == true", function () {
             var window,
                 panel = new Ext.panel.Panel({
-                height: 200,
-                width: 200,
-                renderTo: document.body,
-                items: [window = new Ext.window.Window({
-                    constrain: true,
-                    height: 100,
-                    width: 100,
-                    title: 'Child Window'
-                })]
-            });
-            
+                    height: 200,
+                    width: 200,
+                    renderTo: document.body,
+                    items: [window = new Ext.window.Window({
+                        constrain: true,
+                        height: 100,
+                        width: 100,
+                        title: 'Child Window'
+                    })]
+                });
+
             window.show();
             jasmine.fireMouseEvent(window.resizer.east, 'mousedown');
             jasmine.fireMouseEvent(document.body, 'mousemove', 200, 150);
@@ -93,8 +93,8 @@ describe('Ext.resizer.Resizer', function () {
         });
     });
 
-    describe('resizing in a layout', function() {
-        testIt('Should allow layout last word on positioning when sizing using top handle', function() {
+    describe('resizing in a layout', function () {
+        testIt('Should allow layout last word on positioning when sizing using top handle', function () {
             var i,
                 panels = [],
                 macBeth = [
@@ -126,13 +126,13 @@ describe('Ext.resizer.Resizer', function () {
                 items: panels,
                 renderTo: document.body
             });
-            
+
             var panel1Top = panels[1].getY();
-            
+
             jasmine.fireMouseEvent(panels[1].resizer.north, 'mousedown');
             jasmine.fireMouseEvent(document.body, 'mousemove', 0, -50);
             jasmine.fireMouseEvent(document.body, 'mouseup');
-            
+
             // Layout should have correctred the top
             expect(panels[1].getY()).toBe(panel1Top);
             outerPanel.destroy();

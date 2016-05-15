@@ -1,25 +1,25 @@
 /**
  * A Schema is a collection of related {@link Ext.data.Model entities} and their respective
  * {@link Ext.data.schema.Association associations}.
- * 
+ *
  * # Schema Instances
- * 
+ *
  * By default a single instance of this class is created which serves as the schema for all
  * entities that do not have an explicit `{@link Ext.data.Model#cfg-schema schema}` config
  * either specified or inherited. This is sufficient in most cases.
- * 
+ *
  * When an entity does specify a `{@link Ext.data.Model#cfg-schema schema}`, however, that
  * looks up (or creates) an instance for that entity class which is then inherited.
- * 
+ *
  * **Important:** All related entities *must* belong to a single schema instance in order
  * to properly link up their associations.
- * 
+ *
  * ## Configuring Schemas
- * 
+ *
  * The best way to control the configuration of your `schema` is to define a base class for
  * all of your entities and use the `{@link Ext.data.Model#cfg-schema schema}` config like
  * this:
- * 
+ *
  *      Ext.define('MyApp.model.Base', {
  *          extend: 'Ext.data.Model',
  *
@@ -28,7 +28,7 @@
  *              // configs go here
  *          }
  *      });
- * 
+ *
  * **Note:** Only one explicit configuration can be applied to the default schema. In most
  * applications this will not be an issue.
  *
@@ -37,17 +37,17 @@
  * you need to set the `namespace` for your schema (see below).
  *
  * ## Relative Naming
- * 
+ *
  * When describing associations between entities, it is desirable to use shorthand names
  * that do not contain the common namespace portion. This is called the `entityName` as
  * opposed to its class name. By default, the `entityName` is the full class name. However,
  * if a namespace is used, the common portion can be discarded and we can derive a shorter name.
  * In the following code, `"MyApp.model.Foo"` has an `entityName` of `"Foo"` and the schema has
  * a `namespace` of "MyApp.model".
- * 
+ *
  * If you use deeper nesting for entities, you may need to set the `namespace` config to
  * account for this. For example:
- * 
+ *
  *      Ext.define('MyApp.model.Base', {
  *          extend: 'Ext.data.Model',
  *
@@ -61,20 +61,20 @@
  * as the `entityName` given the above as a base class.
  *
  * # Association Naming
- * 
+ *
  * There are various terms involved when describing associations. Perhaps the simplest
  * example that will clarify these terms is that of the common many-to-many association
  * of User and Group.
- * 
+ *
  *   * `entityName` - The names "User" and "Group" are the `entityName` values associated
  *   with these two classes. These are derived from their full classnames (perhaps
  *   something like "App.model.User" and "App.model.Group").
- *   
+ *
  *   * `associationName` - When talking about associations, especially the many-to-many
  *   variety, it is important to give them names. Associations are not owned by either of
  *   the entities involved, so this name is similar to an `entityName`. In the case of
  *   "User" and "Group", the default `associationName` would be "GroupUsers".
- *   
+ *
  *   * `left` and `right` - Associations describe a relationship between two entities. To
  *   talk about specific associations we would use the `entityName` of the parties (such
  *   as "User" or "Group"). When discussing associations in the abstract, however, it is
@@ -85,7 +85,7 @@
  *   is the one containing the foreign-key.
  *
  * ## Custom Naming Conventions
- * 
+ *
  * One of the jobs the the `Schema` is to manage name generation (such as `entityName`).
  * This job is delegated to a class called the `namer`. If you need to generate names in
  * other ways, you can provide a custom `namer` for your classes:
@@ -144,14 +144,14 @@ Ext.define('Ext.data.schema.Schema', {
         /**
          * @property {Object} instances
          * A collection of `Schema` instances keyed by its `type`.
-         * 
+         *
          *      var mySchema = Ext.data.schema.Schema.instances.mySchema;
          *
          * If the `Schema` may not have been created yet, use the {@link #get} method to
          * create the instance on first request:
-         * 
+         *
          *      var mySchema = Ext.data.schema.Schema.get('mySchema');
-         * 
+         *
          * @readonly
          * @private
          */
@@ -285,13 +285,13 @@ Ext.define('Ext.data.schema.Schema', {
         defaultIdentifier: null,
 
         /**
-        * @cfg {Number} keyCheckDelay
-        * The time to wait (in ms) before checking for null foreign keys on records that
-        * will cause them to be dropped. This is useful for allowing records to be moved to a different
-        * source.
-        * @private
-        * @since 5.0.1
-        */
+         * @cfg {Number} keyCheckDelay
+         * The time to wait (in ms) before checking for null foreign keys on records that
+         * will cause them to be dropped. This is useful for allowing records to be moved to a different
+         * source.
+         * @private
+         * @since 5.0.1
+         */
         keyCheckDelay: 10,
 
         /**
@@ -428,7 +428,7 @@ Ext.define('Ext.data.schema.Schema', {
         var entry = this.entityClasses[name] || this.entities[name];
         return (entry && entry.cls) || null;
     },
-    
+
     /**
      * Get the entity name taking into account the {@link #namespace}.
      * @param {String/Ext.data.Model} cls The model class or name of the class.
@@ -437,7 +437,7 @@ Ext.define('Ext.data.schema.Schema', {
     getEntityName: function (cls) {
         var ns = this.getNamespace(),
             index, name;
-            
+
         if (typeof cls === 'string') {
             name = cls;
         } else {
@@ -459,19 +459,19 @@ Ext.define('Ext.data.schema.Schema', {
 
         return name;
     },
-    
+
     /**
      * Checks if the passed entity has attached associations that need to be read when
      * using nested loading.
-     * 
+     *
      * @param {String/Ext.Class/Ext.data.Model} name The name, instance, or Model class.
      * @return {Boolean} `true` if there are associations attached to the entity.
      */
-    hasAssociations: function(name) {
+    hasAssociations: function (name) {
         name = name.entityName || name;
-        return !!this.associationEntityMap[name];  
+        return !!this.associationEntityMap[name];
     },
-    
+
     /**
      * Checks if an entity is defined
      * @param {String/Ext.data.Model} entity The name or model
@@ -488,43 +488,43 @@ Ext.define('Ext.data.schema.Schema', {
     /**
      * Adds an entry from a {@link Ext.data.schema.ManyToMany matrix config} declared by an
      * entity.
-     * 
+     *
      * This is the ideal method to override in a derived class if the standard, default
      * naming conventions need to be adjusted. In the override, apply whatever logic is
      * appropriate to determine the missing values and pass along the proper results to
      * this method in the `callParent`.
-     * 
+     *
      * @param {Ext.Class} entityType A class derived from `Ext.data.Model`.
      *
      * @param {String} matrixName The name of the matrix association.
      *
      * @param {String} [relation] A base name for the matrix. For information about the
      * meaning of this see {@link Ext.data.Schema#ManyToMany}.
-     * 
+     *
      * @param {Object} left The descriptor for the "left" of the matrix.
      * @param {String} left.type The type of the entity on the "left" of the matrix.
-     * 
+     *
      * @param {String} [left.field] The name of the field in the matrix table for the "left"
      * side entity. If not provided, this defaults to the `left.type` name
      * {@link Ext.util.Inflector#singularize singularized} and uncapitalized followed by
      * "Id". For example, "userId" for a `left.type` of "Users".
-     * 
+     *
      * @param {String} [left.role] The name of the relationship from the `left.type` to the
      * `right.type`. If not provided, this defaults to the `left.type` name
      * {@link Ext.util.Inflector#pluralize pluralized} and uncapitalized. For example,
      * "users" for a `left.type` of "User".
-     * 
+     *
      * @param {Object} right The descriptor for the "right" of the matrix.
      * @param {String} right.type The type of the entity on the "right" of the matrix.
-     * 
+     *
      * @param {String} [right.field] The name of the field in the matrix table for the
      * "right" side entity. If not provided, this defaults in the same way as `left.field`
      * except this is based on `right.type`.
-     * 
+     *
      * @param {String} [right.role] The name of the relationship from the `right.type` to
      * the `left.type`. If not provided, this defaults in the same way as `left.role`
      * except this is based on `right.type`.
-     * 
+     *
      * @protected
      */
     addMatrix: function (entityType, matrixName, relation, left, right) {
@@ -532,19 +532,19 @@ Ext.define('Ext.data.schema.Schema', {
             namer = me.getNamer(),
             associations = me.associations,
             entities = me.entities,
-            leftType   = left.type,
-            rightType  = right.type,
-            leftField  = left.field  || namer.apply('idField', leftType),
+            leftType = left.type,
+            rightType = right.type,
+            leftField = left.field || namer.apply('idField', leftType),
             rightField = right.field || namer.apply('idField', rightType),
-            leftRole   = left.role   || namer.matrixRole(relation, leftType),
-            rightRole  = right.role  || namer.matrixRole(relation, rightType),
+            leftRole = left.role || namer.matrixRole(relation, leftType),
+            rightRole = right.role || namer.matrixRole(relation, rightType),
             matrix, leftEntry, rightEntry;
 
-        leftEntry = entities[leftType] || 
-                   (entities[leftType] = { cls: null, name: leftType, associations: {} });
+        leftEntry = entities[leftType] ||
+            (entities[leftType] = {cls: null, name: leftType, associations: {}});
 
         rightEntry = entities[rightType] ||
-                    (entities[rightType] = { cls: null, name: rightType, associations: {} });
+            (entities[rightType] = {cls: null, name: rightType, associations: {}});
 
         ++me.assocCount;
         associations[matrixName] = matrix = new Ext.data.schema.ManyToMany({
@@ -584,38 +584,38 @@ Ext.define('Ext.data.schema.Schema', {
     /**
      * Adds a {@link Ext.data.Field#reference reference} field association for an entity
      * to this `schema`.
-     * 
+     *
      * This is the ideal method to override in a derived class if the standard, default
      * naming conventions need to be adjusted. In the override, apply whatever logic is
      * appropriate to determine the missing values and pass along the proper results to
      * this method in the `callParent`.
-     * 
+     *
      * @param {Ext.Class} entityType A class derived from `Ext.data.Model`.
-     * 
+     *
      * @param {Ext.data.field.Field} referenceField The `field` with the `reference` config.
-     * 
+     *
      * @param {String} [association] The name of the association. If empty or null, this
      * will be derived from `entityType`, `role`, `inverse` and
      * `referenceField.unique`.
-     * 
+     *
      * @param {String} [role] The name of the relationship from `entityType` to the target
      * `type`. If not specified, the default is the `referenceField.name` (minus any "Id"
      * suffix if present).
-     * 
+     *
      * @param {String} [inverse] The name of the relationship from the target `type`
      * to the `entityType`. If not specified, this is derived from the
      * {@link Ext.data.Model#entityName entityName} of the `entityType`
      * ({@link Ext.util.Inflector#singularize singularized} or
      * {@link Ext.util.Inflector#pluralize pluralized} based on `referenceField.unique`).
-     * 
+     *
      * @param {String} type The {@link Ext.data.Model#entityName entityName} of the target
      * of the reference.
-     * 
+     *
      * @param {Object} [descr] The `reference` descriptor from the `referenceField` if one
      * was given in the field definition.
      *
      * @param {Boolean} [unique=false] Indicates if the reference is one-to-one.
-     * 
+     *
      * @protected
      */
     addReference: function (entityType, referenceField, descr, unique) {
@@ -623,17 +623,17 @@ Ext.define('Ext.data.schema.Schema', {
             namer = me.getNamer(),
             entities = me.entities,
             associations = me.associations,
-            entityName  = entityType.entityName,
+            entityName = entityType.entityName,
             association = descr.association,
-            legacy      = !!descr.legacy,
-            child       = descr.child,
-            parent      = descr.parent,
-            rightRole   = descr.role,
-            // Allow { child: 'OrderItem' } or the reverse (for one-to-one mostly):
-            rightType   = descr.type || parent || child,
-            leftVal     = descr.inverse,
-            left        = Ext.isString(leftVal) ? { role: leftVal } : leftVal,
-            leftRole    = left && left.role,
+            legacy = !!descr.legacy,
+            child = descr.child,
+            parent = descr.parent,
+            rightRole = descr.role,
+        // Allow { child: 'OrderItem' } or the reverse (for one-to-one mostly):
+            rightType = descr.type || parent || child,
+            leftVal = descr.inverse,
+            left = Ext.isString(leftVal) ? {role: leftVal} : leftVal,
+            leftRole = left && left.role,
             entry, T;
 
         if (!rightRole) {
@@ -662,8 +662,8 @@ Ext.define('Ext.data.schema.Schema', {
         //<debug>
         if (association in associations) {
             Ext.raise('Duplicate association: "' + association + '" declared by ' +
-                    entityName + (referenceField ? ('.' + referenceField.name) : '') + ' (collides with ' +
-                    associations[association].definedBy.entityName + ')');
+                entityName + (referenceField ? ('.' + referenceField.name) : '') + ' (collides with ' +
+                associations[association].definedBy.entityName + ')');
         }
         if (referenceField && referenceField.definedBy === entities[rightType]) {
             Ext.raise('ForeignKey reference should not be owned by the target model');
@@ -673,7 +673,7 @@ Ext.define('Ext.data.schema.Schema', {
         // Lookup the entry for the target of the reference. Since it may not as yet be
         // defined, we may need to create the entry.
         entry = entities[rightType] ||
-               (entities[rightType] = { cls: null, name: rightType, associations: {} });
+            (entities[rightType] = {cls: null, name: rightType, associations: {}});
 
         // as a field w/reference we are always "left":
         T = unique ? Ext.data.schema.OneToOne : Ext.data.schema.ManyToOne;
@@ -718,7 +718,7 @@ Ext.define('Ext.data.schema.Schema', {
             me.associationEntityMap[entry.cls.entityName] = true;
         }
         associations[association.name] = association;
-        
+
         if (association.right.cls) {
             me.decorateModel(association);
         }
@@ -749,7 +749,7 @@ Ext.define('Ext.data.schema.Schema', {
             //<debug>
             else if (entry.cls) {
                 Ext.raise('Duplicate entity name "' + entityName + '": ' +
-                        entry.cls.$className + ' and ' + entityType.$className);
+                    entry.cls.$className + ' and ' + entityType.$className);
             }
             //</debug>
             else {
@@ -831,8 +831,8 @@ Ext.define('Ext.data.schema.Schema', {
                      *      manyToMany: '#Group'
                      *  });
                      */
-                    left  = { type: entityName };  // User
-                    right = { type: matrixDef.substring(1) };  // Group
+                    left = {type: entityName};  // User
+                    right = {type: matrixDef.substring(1)};  // Group
                 }
                 else if (matrixDef.charAt(last = matrixDef.length - 1) === '#') { // "User#"
                     /*
@@ -841,19 +841,19 @@ Ext.define('Ext.data.schema.Schema', {
                      *      manyToMany: 'User#'
                      *  });
                      */
-                    left  = { type: matrixDef.substring(0, last) }; // User
-                    right = { type: entityName };  // Group
+                    left = {type: matrixDef.substring(0, last)}; // User
+                    right = {type: entityName};  // Group
                 }
                 else if (namer.apply('multiRole', entityName) <
-                         namer.apply('multiRole', matrixDef)) {
+                    namer.apply('multiRole', matrixDef)) {
                     /*
                      *  Ext.define('Group', {
                      *      extend: 'Ext.data.Model',
                      *      manyToMany: 'User'
                      *  });
                      */
-                    left  = { type: entityName };  // Group
-                    right = { type: matrixDef };  // User
+                    left = {type: entityName};  // Group
+                    right = {type: matrixDef};  // User
                 }
                 else {
                     /*
@@ -862,8 +862,8 @@ Ext.define('Ext.data.schema.Schema', {
                      *      manyToMany: 'Group'
                      *  });
                      */
-                    left  = { type: matrixDef };  // Group
-                    right = { type: entityName };  // User
+                    left = {type: matrixDef};  // Group
+                    right = {type: entityName};  // User
                 }
             } else {
                 //<debug>
@@ -873,7 +873,7 @@ Ext.define('Ext.data.schema.Schema', {
                 relation = matrixDef.relation;
 
                 if (left || (!right && namer.apply('multiRole', entityName) <
-                                       namer.apply('multiRole', matrixDef.type))) {
+                    namer.apply('multiRole', matrixDef.type))) {
                     if (!left || left === true) {
                         /*
                          *  Ext.define('User', {
@@ -884,7 +884,7 @@ Ext.define('Ext.data.schema.Schema', {
                          *      }
                          *  });
                          */
-                        left = { type: entityName }; // User
+                        left = {type: entityName}; // User
                     } else {
                         /*
                          *  Ext.define('User', {
@@ -897,7 +897,7 @@ Ext.define('Ext.data.schema.Schema', {
                          *      }
                          *  });
                          */
-                        left = Ext.apply({ type: entityName }, left); // User
+                        left = Ext.apply({type: entityName}, left); // User
                     }
                     right = matrixDef;  // Group
                 } else {
@@ -911,7 +911,7 @@ Ext.define('Ext.data.schema.Schema', {
                          *      }
                          *  });
                          */
-                        right = { type: entityName }; // Group
+                        right = {type: entityName}; // Group
                     } else {
                         /*
                          *  Ext.define('Group', {
@@ -924,7 +924,7 @@ Ext.define('Ext.data.schema.Schema', {
                          *      }
                          *  });
                          */
-                        right = Ext.apply({ type: entityName }, right); // Group
+                        right = Ext.apply({type: entityName}, right); // Group
                     }
                     left = matrixDef; // User
                 }
@@ -946,7 +946,7 @@ Ext.define('Ext.data.schema.Schema', {
             else {
                 var entry = associations[matrixName],
                     before = [entry.kind, entry.left.type, entry.left.role, entry.left.field,
-                              entry.right.type, entry.right.role, entry.right.field].join('|');
+                        entry.right.type, entry.right.role, entry.right.field].join('|');
 
                 // Call back in to bypass this check and realize the new association:
                 delete associations[matrixName];
@@ -961,7 +961,7 @@ Ext.define('Ext.data.schema.Schema', {
 
                 // Now we can compare the old and the new to see if they are the same.
                 after = [after.kind, after.left.type, after.left.role, after.left.field,
-                         after.right.type, after.right.role, after.right.field].join('|');
+                    after.right.type, after.right.role, after.right.field].join('|');
 
                 if (before != after) {
                     Ext.log.warn(matrixName + '(' + entry.definedBy.entityName + '): ' + before);
@@ -1007,7 +1007,7 @@ Ext.define('Ext.data.schema.Schema', {
         // Using 0 = belongsTo
         //       1 = hasOne
         //       2 = hasMany
-        addPending: function(name, entityType, assoc, type) {
+        addPending: function (name, entityType, assoc, type) {
             var pending = this.pending;
             if (!pending[name]) {
                 pending[name] = [];
@@ -1015,15 +1015,15 @@ Ext.define('Ext.data.schema.Schema', {
             pending[name].push([entityType, assoc, type]);
         },
 
-        addLegacyBelongsTo: function(entityType, assoc) {
+        addLegacyBelongsTo: function (entityType, assoc) {
             this.addLegacySingle(entityType, assoc);
         },
 
-        addLegacyHasOne: function(entityType, assoc) {
+        addLegacyHasOne: function (entityType, assoc) {
             this.addLegacySingle(entityType, assoc);
         },
 
-        addLegacySingle: function(entityType, assoc) {
+        addLegacySingle: function (entityType, assoc) {
             var foreignKey, name, referenceField;
 
             assoc = this.constructLegacyAssociation(entityType, assoc);
@@ -1082,7 +1082,7 @@ Ext.define('Ext.data.schema.Schema', {
             }
         },
 
-        constructLegacyAssociation: function(entityType, assoc) {
+        constructLegacyAssociation: function (entityType, assoc) {
             if (Ext.isString(assoc)) {
                 assoc = {
                     model: assoc
@@ -1097,7 +1097,7 @@ Ext.define('Ext.data.schema.Schema', {
             return assoc;
         },
 
-        afterLegacyAssociations: function(cls) {
+        afterLegacyAssociations: function (cls) {
             var pending = this.pending,
                 name = cls.entityName,
                 mine = pending[name],
@@ -1111,7 +1111,7 @@ Ext.define('Ext.data.schema.Schema', {
             }
         },
 
-        clear: function(clearNamespace) {
+        clear: function (clearNamespace) {
             // for testing
             var me = this,
                 timer = me.timer;
@@ -1147,10 +1147,10 @@ Ext.define('Ext.data.schema.Schema', {
 
         applyDecoration: function (role) {
             var me = this,
-                // To decorate a role like "users" (of a User / Group matrix) we need to add
-                // getter/setter methods to access the "users" collection ... to Group! All
-                // other data about the "users" role and the User class belong to the given
-                // "role" but the receiver class is the inverse.
+            // To decorate a role like "users" (of a User / Group matrix) we need to add
+            // getter/setter methods to access the "users" collection ... to Group! All
+            // other data about the "users" role and the User class belong to the given
+            // "role" but the receiver class is the inverse.
                 cls = role.inverse.cls,
                 namer = me.getNamer(),
                 getterName, setterName, proto;
@@ -1182,7 +1182,7 @@ Ext.define('Ext.data.schema.Schema', {
             this.applyDecoration(association.right);
         },
 
-        processKeyChecks: function(processAll) {
+        processKeyChecks: function (processAll) {
             var me = this,
                 keyCheckQueue = me.keyCheckQueue,
                 timer = me.timer,
@@ -1212,7 +1212,7 @@ Ext.define('Ext.data.schema.Schema', {
             } while (processAll && me.keyCheckQueue.length);
         },
 
-        queueKeyCheck: function(record, role) {
+        queueKeyCheck: function (record, role) {
             var me = this,
                 keyCheckQueue = me.keyCheckQueue,
                 timer = me.timer;
@@ -1267,7 +1267,7 @@ Ext.define('Ext.data.schema.Schema', {
 
             if (entityType.rank === 0) {
                 Ext.raise(entityName + " has circular foreign-key references: " +
-                                topoStack.join(" --> "));
+                    topoStack.join(" --> "));
             }
 
             entityType.rank = 0; // mark as "adding" so we can detect cycles

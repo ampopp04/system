@@ -512,7 +512,9 @@ describe('Ext.draw.sprite.Sprite', function () {
 
         it("should return null, if the sprite's bounding box is hit, but the sprite is not visible", function () {
             var originalMethod = sprite.isVisible;
-            sprite.isVisible = function () { return false; };
+            sprite.isVisible = function () {
+                return false;
+            };
             var result = Ext.draw.sprite.Sprite.prototype.hitTest.call(sprite, [10, 10]);
             expect(result).toBe(null);
             sprite.isVisible = originalMethod;

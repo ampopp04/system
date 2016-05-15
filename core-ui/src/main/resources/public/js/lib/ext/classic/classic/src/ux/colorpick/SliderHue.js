@@ -3,17 +3,17 @@
  * @private
  */
 Ext.define('Ext.ux.colorpick.SliderHue', {
-    extend : 'Ext.ux.colorpick.Slider',
-    alias  : 'widget.colorpickersliderhue',
-    cls    : Ext.baseCSSPrefix + 'colorpicker-hue',
+    extend: 'Ext.ux.colorpick.Slider',
+    alias: 'widget.colorpickersliderhue',
+    cls: Ext.baseCSSPrefix + 'colorpicker-hue',
 
     afterRender: function () {
-        var me  = this,
+        var me = this,
             src = me.gradientUrl,
-            el  = me.el;
+            el = me.el;
 
         me.callParent();
-        
+
         if (!src) {
             // We do this trick to allow the Sass to calculate resource image path for
             // our package and pick up the proper image URL here.
@@ -22,7 +22,7 @@ Ext.define('Ext.ux.colorpick.SliderHue', {
 
             // In IE8 this path will have quotes around it
             if (src.indexOf('"') === 0) {
-                src = src.substring(1, src.length-1);
+                src = src.substring(1, src.length - 1);
             }
 
             // Then remember it on our prototype for any subsequent instances.
@@ -43,11 +43,11 @@ Ext.define('Ext.ux.colorpick.SliderHue', {
 
 
     // Called via data binding whenever selectedColor.h changes; hue param is 0-1
-    setHue: function(hue) {
-        var me              = this,
-            container       = me.getDragContainer(),
-            dragHandle      = me.getDragHandle(),
-            containerEl     = container.getEl(),
+    setHue: function (hue) {
+        var me = this,
+            container = me.getDragContainer(),
+            dragHandle = me.getDragHandle(),
+            containerEl = container.getEl(),
             containerHeight = containerEl.getHeight(),
             el, top;
 
@@ -67,7 +67,7 @@ Ext.define('Ext.ux.colorpick.SliderHue', {
         // Position dragger
         el = dragHandle.getEl();
         el.setStyle({
-            top  : top + 'px'
+            top: top + 'px'
         });
     }
 });

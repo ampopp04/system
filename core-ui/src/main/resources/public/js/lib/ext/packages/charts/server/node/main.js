@@ -10,7 +10,7 @@ var v2 = require('./converters/v2.js');
 
 var MAX_FILE_SIZE = 5 * 1024 * 1024;
 var TMP_DIR_NAME = process.cwd() + '/' + 'tmp/';
-var SCRIPT = fs.readFileSync('./save_script_tpl.js', { encoding: 'utf8' });
+var SCRIPT = fs.readFileSync('./save_script_tpl.js', {encoding: 'utf8'});
 
 if (!fs.existsSync(TMP_DIR_NAME)) {
     fs.mkdirSync(TMP_DIR_NAME);
@@ -79,7 +79,7 @@ http.createServer(function (request, response) {
                 filename: serverFileName
             }));
 
-            fs.writeFile(scriptFileName, script, { encoding: 'utf8' }, function (err) {
+            fs.writeFile(scriptFileName, script, {encoding: 'utf8'}, function (err) {
                 if (err) throw err;
 
                 var phantom = spawn('phantomjs', [scriptFileName]);

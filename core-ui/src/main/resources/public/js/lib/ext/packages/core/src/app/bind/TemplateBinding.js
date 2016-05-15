@@ -24,7 +24,7 @@ Ext.define('Ext.app.bind.TemplateBinding', {
             tpl = new Ext.app.bind.Template(template),
             tokens = tpl.getTokens();
 
-        me.callParent([ owner, callback, scope, options ]);
+        me.callParent([owner, callback, scope, options]);
 
         me.tpl = tpl;
         me.tokens = tokens;
@@ -38,8 +38,8 @@ Ext.define('Ext.app.bind.TemplateBinding', {
             me.onData(tpl.text);
         }
     },
-    
-    destroy: function() {
+
+    destroy: function () {
         var me = this;
         Ext.destroy(me.multiBinding);
         me.tpl = me.multiBinding = null;
@@ -67,8 +67,8 @@ Ext.define('Ext.app.bind.TemplateBinding', {
         var multi = this.multiBinding;
         return multi ? multi.isLoading() : false;
     },
-    
-    onBindData: function(data) {
+
+    onBindData: function (data) {
         this.onData(this.tpl.apply(data, this.getTemplateScope()));
     },
 

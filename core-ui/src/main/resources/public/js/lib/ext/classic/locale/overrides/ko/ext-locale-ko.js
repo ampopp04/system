@@ -3,7 +3,7 @@
  * 05 September 2007
  * Modify by techbug / 25 February 2008
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
@@ -111,7 +111,7 @@ Ext.define("Ext.locale.ko.form.field.Date", {
 Ext.define("Ext.locale.ko.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "로딩중..."
     });
@@ -128,7 +128,7 @@ Ext.define("Ext.locale.ko.form.field.VTypes", {
 Ext.define("Ext.locale.ko.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'URL을 입력해주세요:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -236,10 +236,10 @@ Ext.define("Ext.locale.ko.window.MessageBox", {
         cancel: "취소",
         yes: "예",
         no: "아니오"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.ko.Component", {	
+Ext.define("Ext.locale.ko.Component", {
     override: "Ext.Component"
 });

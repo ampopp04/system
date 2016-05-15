@@ -14,42 +14,42 @@ Ext.define('Ext.tip.Tip', {
      * @cfg {Boolean} [closable=false]
      * True to render a close tool button into the tooltip header.
      */
-    
+
     /**
      * @cfg {Number} [width='auto']
      * Width in pixels of the tip.  Width will be ignored if it
      * exceeds the bounds of {@link #minWidth} or {@link #maxWidth}.
      */
-    
+
     /**
      * @cfg {Number} minWidth
      * The minimum width of the tip in pixels.
      */
-    minWidth : 40,
+    minWidth: 40,
     /**
      * @cfg {Number} maxWidth
      * The maximum width of the tip in pixels.
      */
-    maxWidth : 500,
+    maxWidth: 500,
     /**
      * @cfg {Boolean/String} shadow
      * `true` or "sides" for the default effect, "frame" for 4-way shadow, and "drop"
      * for bottom-right shadow.
      */
-    shadow : "sides",
+    shadow: "sides",
 
     /**
      * @cfg {String} defaultAlign
      * **Experimental**. The default {@link Ext.util.Positionable#alignTo} anchor position value
      * for this tip relative to its element of origin.
      */
-    defaultAlign : "tl-bl?",
+    defaultAlign: "tl-bl?",
     /**
      * @cfg {Boolean} constrainPosition
      * If `true`, then the tooltip will be automatically constrained to stay within
      * the browser viewport.
      */
-    constrainPosition : true,
+    constrainPosition: true,
 
     autoRender: true,
     hidden: true,
@@ -79,10 +79,10 @@ Ext.define('Ext.tip.Tip', {
 
     frameHeader: false,
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
 
-        me.floating = Ext.apply( {}, {
+        me.floating = Ext.apply({}, {
             shadow: me.shadow,
             constrain: me.constrainPosition
         }, me.self.prototype.floating);
@@ -100,7 +100,7 @@ Ext.define('Ext.tip.Tip', {
      *
      * @param {Number[]} xy An array containing the x and y coordinates
      */
-    showAt : function(xy){
+    showAt: function (xy) {
         var me = this;
         this.callParent(arguments);
         // Show may have been vetoed.

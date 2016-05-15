@@ -1,4 +1,4 @@
-describe("Ext.util.Positionable", function() {
+describe("Ext.util.Positionable", function () {
     var wrap, positionable;
 
     function createElement(cfg) {
@@ -30,7 +30,7 @@ describe("Ext.util.Positionable", function() {
         }, cfg));
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // creates an absolute positioned wrapper element so that specs can
         // append Elements/Components to it to test potioning to page-coordinates
         wrap = Ext.getBody().createChild({
@@ -44,16 +44,16 @@ describe("Ext.util.Positionable", function() {
         });
     });
 
-    afterEach(function() {
+    afterEach(function () {
         wrap.destroy();
         positionable.destroy();
     });
 
     function createSuite(isComponent) {
         var suiteType = isComponent ? "Components" : "Elements";
-        
-        describe("aligning " + suiteType, function() {
-            var positions = [ 'tl', 't', 'tr', 'l', 'c', 'r', 'bl', 'b', 'br' ],
+
+        describe("aligning " + suiteType, function () {
+            var positions = ['tl', 't', 'tr', 'l', 'c', 'r', 'bl', 'b', 'br'],
                 alignToPositions = {
                     tl: [60, 60],
                     t: [90, 60],
@@ -78,7 +78,7 @@ describe("Ext.util.Positionable", function() {
                 },
                 alignToEl;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 isComponent ? createComponent() : createElement();
                 alignToEl = Ext.getBody().createChild({
                     style: {
@@ -91,15 +91,15 @@ describe("Ext.util.Positionable", function() {
                 });
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 alignToEl.destroy();
             });
 
-            Ext.each(positions, function(pos) {
-                Ext.each(positions, function(alignToPos) {
+            Ext.each(positions, function (pos) {
+                Ext.each(positions, function (alignToPos) {
                     var posString = pos + '-' + alignToPos;
 
-                    it("should align " + posString, function() {
+                    it("should align " + posString, function () {
                         var xy;
 
                         positionable.alignTo(alignToEl, posString);
@@ -111,97 +111,97 @@ describe("Ext.util.Positionable", function() {
             });
         });
 
-        describe("aligning " + suiteType + ' with "?" constraining', function() {
+        describe("aligning " + suiteType + ' with "?" constraining', function () {
             // Test tesult with constraining.
             // alignToEl is positioned offset so that the positioned element sometimes swaps sides
             // and sometimes is just constrained.
             var resultPositions = {
-                "tl-tl?": [35, 40],
-                "tl-t?": [65, 40],
-                "tl-tr?": [95, 40],
-                "tl-l?": [35, 70],
-                "tl-c?": [65, 70],
-                "tl-r?": [95, 70],
-                "tl-bl?": [35, 100],
-                "tl-b?": [65, 100],
-                "tl-br?": [95, 100],
-                "t-tl?": [15, 40],
-                "t-t?": [45, 40],
-                "t-tr?": [75, 40],
-                "t-l?": [15, 70],
-                "t-c?": [45, 70],
-                "t-r?": [75, 70],
-                "t-bl?": [15, 100],
-                "t-b?": [45, 100],
-                "t-br?": [75, 100],
-                "tr-tl?": [95, 40],
-                "tr-t?": [25, 40],
-                "tr-tr?": [55, 40],
-                "tr-l?": [95, 70],
-                "tr-c?": [25, 70],
-                "tr-r?": [55, 70],
-                "tr-bl?": [15, 100],
-                "tr-b?": [25, 100],
-                "tr-br?": [55, 100],
-                "l-tl?": [35, 20],
-                "l-t?": [65, 20],
-                "l-tr?": [95, 20],
-                "l-l?": [35, 50],
-                "l-c?": [65, 50],
-                "l-r?": [95, 50],
-                "l-bl?": [35, 80],
-                "l-b?": [65, 80],
-                "l-br?": [95, 80],
-                "c-tl?": [15, 20],
-                "c-t?": [45, 20],
-                "c-tr?": [75, 20],
-                "c-l?": [15, 50],
-                "c-c?": [45, 50],
-                "c-r?": [75, 50],
-                "c-bl?": [15, 80],
-                "c-b?": [45, 80],
-                "c-br?": [75, 80],
-                "r-tl?": [95, 20],
-                "r-t?": [25, 20],
-                "r-tr?": [55, 20],
-                "r-l?": [95, 50],
-                "r-c?": [25, 50],
-                "r-r?": [55, 50],
-                "r-bl?": [95, 80],
-                "r-b?": [25, 80],
-                "r-br?": [55, 80],
-                "bl-tl?": [35, 100],
-                "bl-t?": [65, 100],
-                "bl-tr?": [95, 20],
-                "bl-l?": [35, 30],
-                "bl-c?": [65, 30],
-                "bl-r?": [95, 30],
-                "bl-bl?": [35, 60],
-                "bl-b?": [65, 60],
-                "bl-br?": [95, 60],
-                "b-tl?": [15, 100],
-                "b-t?": [45, 100],
-                "b-tr?": [75, 100],
-                "b-l?": [15, 30],
-                "b-c?": [45, 30],
-                "b-r?": [75, 30],
-                "b-bl?": [15, 60],
-                "b-b?": [45, 60],
-                "b-br?": [75, 60],
-                "br-tl?": [95, 100],
-                "br-t?": [25, 100],
-                "br-tr?": [55, 100],
-                "br-l?": [95, 30],
-                "br-c?": [25, 30],
-                "br-r?": [55, 30],
-                "br-bl?": [95, 60],
-                "br-b?": [25, 60],
-                "br-br?": [55, 60]
-            },
-            positions = [ 'tl', 't', 'tr', 'l', 'c', 'r', 'bl', 'b', 'br' ],
-            alignToEl;
+                    "tl-tl?": [35, 40],
+                    "tl-t?": [65, 40],
+                    "tl-tr?": [95, 40],
+                    "tl-l?": [35, 70],
+                    "tl-c?": [65, 70],
+                    "tl-r?": [95, 70],
+                    "tl-bl?": [35, 100],
+                    "tl-b?": [65, 100],
+                    "tl-br?": [95, 100],
+                    "t-tl?": [15, 40],
+                    "t-t?": [45, 40],
+                    "t-tr?": [75, 40],
+                    "t-l?": [15, 70],
+                    "t-c?": [45, 70],
+                    "t-r?": [75, 70],
+                    "t-bl?": [15, 100],
+                    "t-b?": [45, 100],
+                    "t-br?": [75, 100],
+                    "tr-tl?": [95, 40],
+                    "tr-t?": [25, 40],
+                    "tr-tr?": [55, 40],
+                    "tr-l?": [95, 70],
+                    "tr-c?": [25, 70],
+                    "tr-r?": [55, 70],
+                    "tr-bl?": [15, 100],
+                    "tr-b?": [25, 100],
+                    "tr-br?": [55, 100],
+                    "l-tl?": [35, 20],
+                    "l-t?": [65, 20],
+                    "l-tr?": [95, 20],
+                    "l-l?": [35, 50],
+                    "l-c?": [65, 50],
+                    "l-r?": [95, 50],
+                    "l-bl?": [35, 80],
+                    "l-b?": [65, 80],
+                    "l-br?": [95, 80],
+                    "c-tl?": [15, 20],
+                    "c-t?": [45, 20],
+                    "c-tr?": [75, 20],
+                    "c-l?": [15, 50],
+                    "c-c?": [45, 50],
+                    "c-r?": [75, 50],
+                    "c-bl?": [15, 80],
+                    "c-b?": [45, 80],
+                    "c-br?": [75, 80],
+                    "r-tl?": [95, 20],
+                    "r-t?": [25, 20],
+                    "r-tr?": [55, 20],
+                    "r-l?": [95, 50],
+                    "r-c?": [25, 50],
+                    "r-r?": [55, 50],
+                    "r-bl?": [95, 80],
+                    "r-b?": [25, 80],
+                    "r-br?": [55, 80],
+                    "bl-tl?": [35, 100],
+                    "bl-t?": [65, 100],
+                    "bl-tr?": [95, 20],
+                    "bl-l?": [35, 30],
+                    "bl-c?": [65, 30],
+                    "bl-r?": [95, 30],
+                    "bl-bl?": [35, 60],
+                    "bl-b?": [65, 60],
+                    "bl-br?": [95, 60],
+                    "b-tl?": [15, 100],
+                    "b-t?": [45, 100],
+                    "b-tr?": [75, 100],
+                    "b-l?": [15, 30],
+                    "b-c?": [45, 30],
+                    "b-r?": [75, 30],
+                    "b-bl?": [15, 60],
+                    "b-b?": [45, 60],
+                    "b-br?": [75, 60],
+                    "br-tl?": [95, 100],
+                    "br-t?": [25, 100],
+                    "br-tr?": [55, 100],
+                    "br-l?": [95, 30],
+                    "br-c?": [25, 30],
+                    "br-r?": [55, 30],
+                    "br-bl?": [95, 60],
+                    "br-b?": [25, 60],
+                    "br-br?": [55, 60]
+                },
+                positions = ['tl', 't', 'tr', 'l', 'c', 'r', 'bl', 'b', 'br'],
+                alignToEl;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 isComponent ? createComponent() : createElement();
 
                 wrap.setSize(120, 120);
@@ -221,15 +221,15 @@ describe("Ext.util.Positionable", function() {
                 });
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 alignToEl.destroy();
             });
-            
-            Ext.each(positions, function(pos) {
-                Ext.each(positions, function(alignToPos) {
+
+            Ext.each(positions, function (pos) {
+                Ext.each(positions, function (alignToPos) {
                     var posString = pos + '-' + alignToPos + '?';
 
-                    it('should align "' + posString + '"', function() {
+                    it('should align "' + posString + '"', function () {
                         var xy;
 
                         positionable.alignTo(alignToEl, posString);
@@ -240,8 +240,8 @@ describe("Ext.util.Positionable", function() {
                 });
             });
         });
-        
-        describe("aligning " + suiteType + ' with "!" constraining', function() {
+
+        describe("aligning " + suiteType + ' with "!" constraining', function () {
             // Test tesult with constraining.
             // The only one test is enabled which we need to fix EXTJS-18971
             // The others should be re-enabled in https://sencha.jira.com/browse/EXTJS-19018
@@ -276,7 +276,7 @@ describe("Ext.util.Positionable", function() {
 //                 "l-tl!": [35, 20],
 //                 "l-t!": [65, 20],
 //                 "l-tr!": [95, 20],
-                "l-l!": [35, 50]
+                    "l-l!": [35, 50]
 //                 "l-c!": [65, 50],
 //                 "l-r!": [95, 50],
 //                 "l-bl!": [35, 80],
@@ -327,11 +327,11 @@ describe("Ext.util.Positionable", function() {
 //                 "br-bl!": [95, 60],
 //                 "br-b!": [25, 60],
 //                 "br-br!": [55, 60]
-            },
-            positions = [ 'tl', 't', 'tr', 'l', 'c', 'r', 'bl', 'b', 'br' ],
-            alignToEl;
+                },
+                positions = ['tl', 't', 'tr', 'l', 'c', 'r', 'bl', 'b', 'br'],
+                alignToEl;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 isComponent ? createComponent() : createElement();
 
                 wrap.setSize(120, 120);
@@ -351,18 +351,18 @@ describe("Ext.util.Positionable", function() {
                 });
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 alignToEl.destroy();
             });
-            
-            Ext.each(positions, function(pos) {
-                Ext.each(positions, function(alignToPos) {
+
+            Ext.each(positions, function (pos) {
+                Ext.each(positions, function (alignToPos) {
                     var posString = pos + '-' + alignToPos + '!',
                         todoIt = resultPositions[posString] ? it : xit;
-                    
-                    todoIt('should align "' + posString + '"', function() {
+
+                    todoIt('should align "' + posString + '"', function () {
                         var xy;
-                        
+
                         positionable.alignTo(alignToEl, posString);
                         xy = positionable.getXY();
                         expect(xy[0]).toBe(resultPositions[posString][0]);
@@ -371,14 +371,14 @@ describe("Ext.util.Positionable", function() {
                 });
             });
         });
-        
-        describe("positioning " + suiteType, function() {
-            beforeEach(function() {
+
+        describe("positioning " + suiteType, function () {
+            beforeEach(function () {
                 isComponent ? createComponent() : createElement();
             });
 
-            describe("getBox", function() {
-                it("should get the box", function() {
+            describe("getBox", function () {
+                it("should get the box", function () {
                     expect(positionable.getBox()).toEqual({
                         0: 21,
                         1: 27,
@@ -393,7 +393,7 @@ describe("Ext.util.Positionable", function() {
                     });
                 });
 
-                it("should get the content box", function() {
+                it("should get the content box", function () {
                     positionable.el.setStyle('border', '5px solid #000');
                     expect(positionable.getBox(true)).toEqual({
                         0: 26,
@@ -409,7 +409,7 @@ describe("Ext.util.Positionable", function() {
                     });
                 });
 
-                it("should get the local box", function() {
+                it("should get the local box", function () {
                     expect(positionable.getBox(false, true)).toEqual({
                         0: 6,
                         1: 7,
@@ -424,7 +424,7 @@ describe("Ext.util.Positionable", function() {
                     });
                 });
 
-                it("should get the local content box", function() {
+                it("should get the local content box", function () {
                     positionable.el.setStyle('border', '5px solid #000');
                     expect(positionable.getBox(true, true)).toEqual({
                         0: 11,
@@ -440,31 +440,31 @@ describe("Ext.util.Positionable", function() {
                     });
                 });
             });
-            
-            describe("getConstrainVector", function() {
+
+            describe("getConstrainVector", function () {
                 // TODO
             });
 
-            describe("getLocalX", function() {
-                it("should return the local x position", function(){
+            describe("getLocalX", function () {
+                it("should return the local x position", function () {
                     expect(positionable.getLocalX()).toBe(6);
-                });  
+                });
             });
 
-            describe("getLocalXY", function() {
-                it("should return the local xy position", function(){
-                    expect(positionable.getLocalXY()).toEqual([6,7]);
-                });  
+            describe("getLocalXY", function () {
+                it("should return the local xy position", function () {
+                    expect(positionable.getLocalXY()).toEqual([6, 7]);
+                });
             });
 
-            describe("getLocalY", function() {
-                it("should return the local y position", function(){
+            describe("getLocalY", function () {
+                it("should return the local y position", function () {
                     expect(positionable.getLocalY()).toBe(7);
-                });  
+                });
             });
 
-            describe("getOffsetsTo", function() {
-                it("should get the offsets to an element", function() {
+            describe("getOffsetsTo", function () {
+                it("should get the offsets to an element", function () {
                     var offsetEl = Ext.getBody().createChild({
                         style: {
                             height: '100px',
@@ -480,9 +480,9 @@ describe("Ext.util.Positionable", function() {
                 });
             });
 
-            describe("getRegion", function() {
-                it("should get the Region", function() {
-                    var region = positionable.getRegion(); 
+            describe("getRegion", function () {
+                it("should get the Region", function () {
+                    var region = positionable.getRegion();
                     expect(region.top).toBe(27);
                     expect(region.right).toBe(61);
                     expect(region.bottom).toBe(67);
@@ -490,58 +490,58 @@ describe("Ext.util.Positionable", function() {
                 });
             });
 
-            describe("getX", function() {
-                it("should return the x position", function(){
+            describe("getX", function () {
+                it("should return the x position", function () {
                     expect(positionable.getX()).toBe(21);
-                });  
+                });
             });
 
-            describe("getXY", function(){
+            describe("getXY", function () {
                 var xy;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     xy = positionable.getXY();
                 });
 
-                it("should return the x position", function(){
+                it("should return the x position", function () {
                     expect(xy[0]).toBe(21);
-                });  
+                });
 
-                it("should return the y position", function() {
+                it("should return the y position", function () {
                     expect(xy[1]).toBe(27);
                 });
             });
 
-            describe("getY", function() {
-                it("should return the y position", function(){
+            describe("getY", function () {
+                it("should return the y position", function () {
                     expect(positionable.getY()).toBe(27);
-                });  
+                });
             });
 
-            describe("move", function() {
-                it("should move left", function() {
+            describe("move", function () {
+                it("should move left", function () {
                     positionable.move('l', 10);
                     expect(positionable.getXY()).toEqual([11, 27]);
                 });
 
-                it("should move right", function() {
+                it("should move right", function () {
                     positionable.move('r', 10);
                     expect(positionable.getXY()).toEqual([31, 27]);
                 });
 
-                it("should move top", function() {
+                it("should move top", function () {
                     positionable.move('t', 10);
                     expect(positionable.getXY()).toEqual([21, 17]);
                 });
 
-                it("should move bottom", function() {
+                it("should move bottom", function () {
                     positionable.move('b', 10);
                     expect(positionable.getXY()).toEqual([21, 37]);
                 });
             });
 
-            describe("setBox", function() {
-                it("should set the box", function() {
+            describe("setBox", function () {
+                it("should set the box", function () {
                     positionable.setBox({
                         x: 50,
                         y: 60,
@@ -553,7 +553,7 @@ describe("Ext.util.Positionable", function() {
                     expect(positionable.el.getHeight()).toBe(200);
                 });
 
-                it("should set the region", function() {
+                it("should set the region", function () {
                     positionable.setBox(new Ext.util.Region(60, 150, 260, 50));
                     expect(positionable.getXY()).toEqual([50, 60]);
                     expect(positionable.el.getWidth()).toBe(100);
@@ -562,113 +562,113 @@ describe("Ext.util.Positionable", function() {
                 });
             });
 
-            describe("setLocalX", function() {
-                it("should set the local x coordinate to a pixel value", function() {
+            describe("setLocalX", function () {
+                it("should set the local x coordinate to a pixel value", function () {
                     positionable.setLocalX(100);
                     expect(positionable.el.dom.style.left).toBe('100px');
                 });
 
-                it("should set the local x coordinate to an auto value", function() {
+                it("should set the local x coordinate to an auto value", function () {
                     positionable.setLocalX(null);
                     expect(positionable.el.dom.style.left).toBe('auto');
                 });
             });
 
-            describe("setLocalXY", function() {
-                describe("x and y as separate parameters", function() {
-                    it("should set only the local x coordinate to a pixel value", function() {
+            describe("setLocalXY", function () {
+                describe("x and y as separate parameters", function () {
+                    it("should set only the local x coordinate to a pixel value", function () {
                         positionable.setLocalXY(100);
                         expect(positionable.el.dom.style.left).toBe('100px');
                         expect(positionable.el.dom.style.top).toBe('7px');
                     });
 
-                    it("should set only the local x coordinate to an auto value", function() {
+                    it("should set only the local x coordinate to an auto value", function () {
                         positionable.setLocalXY(null);
                         expect(positionable.el.dom.style.left).toBe('auto');
                         expect(positionable.el.dom.style.top).toBe('7px');
                     });
 
-                    it("should set only the local y coordinate to a pixel value", function() {
+                    it("should set only the local y coordinate to a pixel value", function () {
                         positionable.setLocalXY(undefined, 100);
                         expect(positionable.el.dom.style.left).toBe('6px');
                         expect(positionable.el.dom.style.top).toBe('100px');
                     });
 
-                    it("should set only the local y coordinate to an auto value", function() {
+                    it("should set only the local y coordinate to an auto value", function () {
                         positionable.setLocalXY(undefined, null);
                         expect(positionable.el.dom.style.left).toBe('6px');
                         expect(positionable.el.dom.style.top).toBe('auto');
                     });
 
-                    it("should set pixel x and pixel y", function() {
+                    it("should set pixel x and pixel y", function () {
                         positionable.setLocalXY(100, 200);
                         expect(positionable.el.dom.style.left).toBe('100px');
                         expect(positionable.el.dom.style.top).toBe('200px');
                     });
 
-                    it("should set pixel x and auto y", function() {
+                    it("should set pixel x and auto y", function () {
                         positionable.setLocalXY(100, null);
                         expect(positionable.el.dom.style.left).toBe('100px');
                         expect(positionable.el.dom.style.top).toBe('auto');
                     });
 
-                    it("should set auto x and pixel y", function() {
+                    it("should set auto x and pixel y", function () {
                         positionable.setLocalXY(null, 100);
                         expect(positionable.el.dom.style.left).toBe('auto');
                         expect(positionable.el.dom.style.top).toBe('100px');
                     });
 
-                    it("should set auto x and auto y", function() {
+                    it("should set auto x and auto y", function () {
                         positionable.setLocalXY(null, null);
                         expect(positionable.el.dom.style.left).toBe('auto');
                         expect(positionable.el.dom.style.top).toBe('auto');
                     });
                 });
 
-                describe("x and y as array parameter", function() {
-                    it("should set only the local x coordinate to a pixel value", function() {
+                describe("x and y as array parameter", function () {
+                    it("should set only the local x coordinate to a pixel value", function () {
                         positionable.setLocalXY([100]);
                         expect(positionable.el.dom.style.left).toBe('100px');
                         expect(positionable.el.dom.style.top).toBe('7px');
                     });
 
-                    it("should set only the local x coordinate to an auto value", function() {
+                    it("should set only the local x coordinate to an auto value", function () {
                         positionable.setLocalXY([null]);
                         expect(positionable.el.dom.style.left).toBe('auto');
                         expect(positionable.el.dom.style.top).toBe('7px');
                     });
 
-                    it("should set only the local y coordinate to a pixel value", function() {
+                    it("should set only the local y coordinate to a pixel value", function () {
                         positionable.setLocalXY([undefined, 100]);
                         expect(positionable.el.dom.style.left).toBe('6px');
                         expect(positionable.el.dom.style.top).toBe('100px');
                     });
 
-                    it("should set only the local y coordinate to an auto value", function() {
+                    it("should set only the local y coordinate to an auto value", function () {
                         positionable.setLocalXY([undefined, null]);
                         expect(positionable.el.dom.style.left).toBe('6px');
                         expect(positionable.el.dom.style.top).toBe('auto');
                     });
 
-                    it("should set pixel x and pixel y", function() {
+                    it("should set pixel x and pixel y", function () {
                         positionable.setLocalXY([100, 200]);
                         expect(positionable.el.dom.style.left).toBe('100px');
                         expect(positionable.el.dom.style.top).toBe('200px');
                     });
 
-                    it("should set pixel x and auto y", function() {
+                    it("should set pixel x and auto y", function () {
                         positionable.setLocalXY([100, null]);
                         expect(positionable.el.dom.style.left).toBe('100px');
                         expect(positionable.el.dom.style.top).toBe('auto');
                     });
 
-                    it("should set auto x and pixel y", function() {
+                    it("should set auto x and pixel y", function () {
                         positionable.setLocalXY([null, 100]);
                         expect(positionable.el.dom.style.left).toBe('auto');
                         expect(positionable.el.dom.style.top).toBe('100px');
                     });
 
-                    it("should set auto x and auto y", function() {
+                    it("should set auto x and auto y", function () {
                         positionable.setLocalXY([null, null]);
                         expect(positionable.el.dom.style.left).toBe('auto');
                         expect(positionable.el.dom.style.top).toBe('auto');
@@ -676,47 +676,47 @@ describe("Ext.util.Positionable", function() {
                 });
             });
 
-            describe("setLocalY", function() {
-                it("should set the local y coordinate to a pixel value", function() {
+            describe("setLocalY", function () {
+                it("should set the local y coordinate to a pixel value", function () {
                     positionable.setLocalY(100);
                     expect(positionable.el.dom.style.top).toBe('100px');
                 });
 
-                it("should set the local y coordinate to an auto value", function() {
+                it("should set the local y coordinate to an auto value", function () {
                     positionable.setLocalY(null);
                     expect(positionable.el.dom.style.top).toBe('auto');
                 });
             });
 
-            describe("setX", function() {
-                it("should set the x position", function(){
+            describe("setX", function () {
+                it("should set the x position", function () {
                     positionable.setX(50);
                     expect(positionable.getX()).toBe(50);
-                });  
+                });
             });
 
-            describe("setXY", function(){
+            describe("setXY", function () {
                 var xy;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     positionable.setXY([50, 60]);
                     xy = positionable.getXY();
                 });
 
-                it("should set the x position", function(){
+                it("should set the x position", function () {
                     expect(xy[0]).toBe(50);
-                });  
+                });
 
-                it("should set the y position", function() {
+                it("should set the y position", function () {
                     expect(xy[1]).toBe(60);
                 });
             });
 
-            describe("setY", function() {
-                it("should set the y position", function(){
+            describe("setY", function () {
+                it("should set the y position", function () {
                     positionable.setY(60);
                     expect(positionable.getY()).toBe(60);
-                });  
+                });
             });
         });
     }

@@ -71,7 +71,7 @@ Ext.define('Ext.dd.DropZone', {
      * @param {Event} e The event
      * @return {Object} data The custom data
      */
-    getTargetFromEvent : function(e){
+    getTargetFromEvent: function (e) {
         return Ext.dd.Registry.getTargetFromEvent(e);
     },
 
@@ -80,14 +80,14 @@ Ext.define('Ext.dd.DropZone', {
      * that has either been registered or detected by a configured implementation of {@link #getTargetFromEvent}.
      * This method has no default implementation and should be overridden to provide
      * node-specific processing if necessary.
-     * @param {Object} nodeData The custom data associated with the drop node (this is the same value returned from 
+     * @param {Object} nodeData The custom data associated with the drop node (this is the same value returned from
      * {@link #getTargetFromEvent} for this node)
      * @param {Ext.dd.DragSource} source The drag source that was dragged over this drop zone
      * @param {Event} e The event
      * @param {Object} data An object containing arbitrary data supplied by the drag source
      */
-    onNodeEnter : function(n, dd, e, data){
-        
+    onNodeEnter: function (n, dd, e, data) {
+
     },
 
     /**
@@ -104,7 +104,7 @@ Ext.define('Ext.dd.DropZone', {
      * underlying {@link Ext.dd.StatusProxy} can be updated
      * @template
      */
-    onNodeOver : function(n, dd, e, data){
+    onNodeOver: function (n, dd, e, data) {
         return this.dropAllowed;
     },
 
@@ -119,8 +119,8 @@ Ext.define('Ext.dd.DropZone', {
      * @param {Object} data An object containing arbitrary data supplied by the drag source
      * @template
      */
-    onNodeOut : function(n, dd, e, data){
-        
+    onNodeOut: function (n, dd, e, data) {
+
     },
 
     /**
@@ -135,7 +135,7 @@ Ext.define('Ext.dd.DropZone', {
      * @return {Boolean} True if the drop was valid, else false
      * @template
      */
-    onNodeDrop : function(n, dd, e, data){
+    onNodeDrop: function (n, dd, e, data) {
         return false;
     },
 
@@ -150,7 +150,7 @@ Ext.define('Ext.dd.DropZone', {
      * underlying {@link Ext.dd.StatusProxy} can be updated
      * @template
      */
-    onContainerOver : function(dd, e, data){
+    onContainerOver: function (dd, e, data) {
         return this.dropNotAllowed;
     },
 
@@ -165,7 +165,7 @@ Ext.define('Ext.dd.DropZone', {
      * @return {Boolean} True if the drop was valid, else false
      * @template
      */
-    onContainerDrop : function(dd, e, data){
+    onContainerDrop: function (dd, e, data) {
         return false;
     },
 
@@ -181,7 +181,7 @@ Ext.define('Ext.dd.DropZone', {
      * underlying {@link Ext.dd.StatusProxy} can be updated
      * @template
      */
-    notifyEnter : function(dd, e, data){
+    notifyEnter: function (dd, e, data) {
         return this.dropNotAllowed;
     },
 
@@ -199,7 +199,7 @@ Ext.define('Ext.dd.DropZone', {
      * underlying {@link Ext.dd.StatusProxy} can be updated
      * @template
      */
-    notifyOver : function(dd, e, data){
+    notifyOver: function (dd, e, data) {
         var me = this,
             n = me.getTargetFromEvent(e);
 
@@ -231,8 +231,8 @@ Ext.define('Ext.dd.DropZone', {
      * @param {Object} data An object containing arbitrary data supplied by the drag zone
      * @template
      */
-    notifyOut : function(dd, e, data){
-        if(this.lastOverNode){
+    notifyOut: function (dd, e, data) {
+        if (this.lastOverNode) {
             this.onNodeOut(this.lastOverNode, dd, e, data);
             this.lastOverNode = null;
         }
@@ -249,7 +249,7 @@ Ext.define('Ext.dd.DropZone', {
      * @return {Boolean} False if the drop was invalid.
      * @template
      */
-    notifyDrop : function(dd, e, data){
+    notifyDrop: function (dd, e, data) {
         var me = this,
             n = me.getTargetFromEvent(e),
             result = n ?
@@ -268,7 +268,7 @@ Ext.define('Ext.dd.DropZone', {
     /**
      * @private
      */
-    triggerCacheRefresh : function() {
+    triggerCacheRefresh: function () {
         Ext.dd.DDM.refreshCache(this.groups);
     }
 });

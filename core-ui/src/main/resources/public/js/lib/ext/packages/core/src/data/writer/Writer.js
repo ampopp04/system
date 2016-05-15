@@ -12,13 +12,13 @@
  * {@link Ext.data.proxy.LocalStorage localStorage} and
  * {@link Ext.data.proxy.SessionStorage sessionStorage})
  * or just in memory via a {@link Ext.data.proxy.Memory MemoryProxy}.
- * 
+ *
  * # Dates
  *
  * Before sending dates to the server, they can be formatted using an {@link Ext.Date}
  * format. These formats can be specified both on the field and the writer itself. In terms
  * of precedence, from highest to lowest:
- * 
+ *
  * - {@link #dateFormat Writer.dateFormat} The writer `dateFormat` will always have the
  *   highest precedence.
  * - {@link Ext.data.field.Date#dateWriteFormat} The `dateWriteFormat` given to the field
@@ -146,14 +146,14 @@ Ext.define('Ext.data.writer.Writer', {
          * In the previous release, this was default `true`.
          */
         writeAllFields: false,
-    
+
         /**
          * @cfg {String} dateFormat
          * This is used for each field of type date in the model to format the value before
          * it is sent to the server.
          */
         dateFormat: null,
-    
+
         /**
          * @cfg {String} nameProperty
          * This property is used to read the key for each value that will be sent to the
@@ -188,7 +188,7 @@ Ext.define('Ext.data.writer.Writer', {
          * If the value is not present, the field name will always be used.
          */
         nameProperty: 'name',
-    
+
         /**
          * @cfg {Boolean} [writeRecordId]
          * By default, each record's id is always included in the output for non-phantom
@@ -196,19 +196,19 @@ Ext.define('Ext.data.writer.Writer', {
          * the record action. This is helpful since the id will normally not be modified,
          * and so would not be sent to the server unless {@link #writeAllFields} was
          * explicitly enabled.
-         * 
+         *
          * However, there are cases where it is not desirable for the record id to be passed
          * in the data directly. For example, when using a RESTful API the record id would
          * typically be appended to the url instead.
          */
         writeRecordId: true,
-        
+
         /**
          * @cfg {Function|Object} [transform]
-         * If a transform function is set, it will be invoked just before {@link #writeRecords} 
+         * If a transform function is set, it will be invoked just before {@link #writeRecords}
          * executes. It is passed the unserialized data object and the {@link Ext.data.Request request}
-         * object. The transform function returns a data object, which can be a modified version of the original 
-         * data object, or a completely new data object. The transform can be a function, or an object 
+         * object. The transform function returns a data object, which can be a modified version of the original
+         * data object, or a completely new data object. The transform can be a function, or an object
          * with a 'fn' key and an optional 'scope' key. Example usage:
          *
          *     Ext.create('Ext.data.Store', {
@@ -229,7 +229,7 @@ Ext.define('Ext.data.writer.Writer', {
          *         },
          *     });
          *
-         */ 
+         */
         transform: null
     },
 
@@ -243,14 +243,14 @@ Ext.define('Ext.data.writer.Writer', {
      * Creates new Writer.
      * @param {Object} [config] Config object.
      */
-    constructor: function(config) {
+    constructor: function (config) {
         this.initConfig(config);
     },
-    
-    applyTransform: function(transform) {
+
+    applyTransform: function (transform) {
         if (transform) {
             if (Ext.isFunction(transform)) {
-                transform = {fn:transform};
+                transform = {fn: transform};
             }
             return transform.fn.bind(transform.scope || this);
         }
@@ -262,7 +262,7 @@ Ext.define('Ext.data.writer.Writer', {
      * @param {Ext.data.Request} request The request object.
      * @return {Ext.data.Request} The modified request object.
      */
-    write: function(request) {
+    write: function (request) {
         var operation = request.getOperation(),
             records = operation.getRecords() || [],
             len = records.length,
@@ -275,7 +275,7 @@ Ext.define('Ext.data.writer.Writer', {
 
         return this.writeRecords(request, data);
     },
-    
+
     /**
      * @method
      *

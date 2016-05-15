@@ -26,8 +26,4 @@ $grid-checkcolumn-glyph: dynamic($form-checkbox-glyph);
  */
 $grid-checkcolumn-checked-glyph: dynamic($form-checkbox-checked-glyph);
 
-$grid-checkcolumn-cell-padding:
-    max(ceil(($grid-row-height - $form-checkbox-size) / 2), 0)
-    right($grid-cell-inner-padding)
-    max(floor(($grid-row-height - $form-checkbox-size) / 2), 0)
-    left($grid-cell-inner-padding)
+$grid-checkcolumn-cell-padding: max(ceil(($grid-row-height - $form-checkbox-size) / 2), 0) right($grid-cell-inner-padding) max(floor(($grid-row-height - $form-checkbox-size) / 2), 0) left($grid-cell-inner-padding)

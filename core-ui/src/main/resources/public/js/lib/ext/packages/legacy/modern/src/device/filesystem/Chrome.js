@@ -38,18 +38,18 @@ Ext.define('Ext.device.filesystem.Chrome', {
      * @param {FileError} config.failure.error
      *
      */
-    requestFileSystem: function(config) {
+    requestFileSystem: function (config) {
         var me = this;
         config = Ext.device.filesystem.Abstract.prototype.requestFileSystem(config);
 
-        var successCallback = function(fs) {
+        var successCallback = function (fs) {
             var fileSystem = Ext.create('Ext.device.filesystem.FileSystem', fs);
             config.success.call(config.scope || me, fileSystem);
         };
 
         if (config.type == window.PERSISTENT) {
-            if(navigator.webkitPersistentStorage) {
-                navigator.webkitPersistentStorage.requestQuota(config.size, function(grantedBytes) {
+            if (navigator.webkitPersistentStorage) {
+                navigator.webkitPersistentStorage.requestQuota(config.size, function (grantedBytes) {
                     window.webkitRequestFileSystem(
                         config.type,
                         grantedBytes,
@@ -57,8 +57,8 @@ Ext.define('Ext.device.filesystem.Chrome', {
                         config.failure
                     );
                 })
-            }else {
-                window.webkitStorageInfo.requestQuota(window.PERSISTENT, config.size, function(grantedBytes) {
+            } else {
+                window.webkitStorageInfo.requestQuota(window.PERSISTENT, config.size, function (grantedBytes) {
                     window.webkitRequestFileSystem(
                         config.type,
                         grantedBytes,

@@ -1,8 +1,8 @@
 /**
  * This class implements the controller event domain. All classes extending from
- * {@link Ext.app.Controller} are included in this domain. The selectors are simply id, 
+ * {@link Ext.app.Controller} are included in this domain. The selectors are simply id,
  * alias, or the wildcard "*" to match any controller.
- * 
+ *
  * @private
  */
 Ext.define('Ext.app.domain.Controller', {
@@ -17,17 +17,17 @@ Ext.define('Ext.app.domain.Controller', {
     prefix: 'controller.',
     idMatchRe: /^\#/,
 
-    constructor: function() {
+    constructor: function () {
         var me = this;
-        
+
         me.callParent();
         me.monitor(Ext.app.BaseController);
     },
-    
-    match: function(target, selector) {
+
+    match: function (target, selector) {
         var result = false,
             alias = target.alias;
-        
+
         if (selector === '*') {
             result = true;
         } else if (selector === '#') {

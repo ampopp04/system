@@ -24,22 +24,22 @@ Ext.define('Ext.ux.DataView.LabelEditor', {
         'Ext.form.field.Text'
     ],
 
-    constructor: function(config) {
+    constructor: function (config) {
         config.field = config.field || Ext.create('Ext.form.field.Text', {
-            allowOnlyWhitespace: false,
-            selectOnFocus:true
-        });
+                allowOnlyWhitespace: false,
+                selectOnFocus: true
+            });
         this.callParent([config]);
     },
 
-    init: function(view) {
+    init: function (view) {
         this.view = view;
         this.mon(view, 'afterrender', this.bindEvents, this);
         this.on('complete', this.onSave, this);
     },
 
     // initialize events
-    bindEvents: function() {
+    bindEvents: function () {
         this.mon(this.view.getEl(), {
             click: {
                 fn: this.onClick,
@@ -49,7 +49,7 @@ Ext.define('Ext.ux.DataView.LabelEditor', {
     },
 
     // on mousedown show editor
-    onClick: function(e, target) {
+    onClick: function (e, target) {
         var me = this,
             item, record;
 
@@ -66,7 +66,7 @@ Ext.define('Ext.ux.DataView.LabelEditor', {
     },
 
     // update record
-    onSave: function(ed, value) {
+    onSave: function (ed, value) {
         this.activeRecord.set(this.dataIndex, value);
     }
 });

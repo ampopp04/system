@@ -23,7 +23,7 @@ Ext.define('Ext.ux.desktop.StartMenu', {
 
     width: 300,
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
 
         me.layout.align = 'stretch';
@@ -47,12 +47,12 @@ Ext.define('Ext.ux.desktop.StartMenu', {
         delete me.toolItems;
     },
 
-    addMenuItem: function() {
+    addMenuItem: function () {
         var cmp = this.menu;
         cmp.add.apply(cmp, arguments);
     },
 
-    addToolItem: function() {
+    addToolItem: function () {
         var cmp = this.toolbar;
         cmp.add.apply(cmp, arguments);
     }

@@ -9,7 +9,7 @@ Ext.define('Ext.device.accelerometer.Abstract', {
         frequency: 10000
     },
 
-    getCurrentAcceleration: function(config) {
+    getCurrentAcceleration: function (config) {
         // <debug>
         if (!config.success) {
             Ext.Logger.warn('You need to specify a `success` function for #getCurrentAcceleration');
@@ -19,7 +19,7 @@ Ext.define('Ext.device.accelerometer.Abstract', {
         return config;
     },
 
-    watchAcceleration: function(config) {
+    watchAcceleration: function (config) {
         var defaultConfig = Ext.device.accelerometer.Abstract.prototype.config;
 
         config = Ext.applyIf(config, {

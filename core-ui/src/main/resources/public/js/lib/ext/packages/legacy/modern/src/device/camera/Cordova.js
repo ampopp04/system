@@ -5,7 +5,7 @@ Ext.define('Ext.device.camera.Cordova', {
     alternateClassName: 'Ext.device.camera.PhoneGap',
     extend: 'Ext.device.camera.Abstract',
 
-    getPicture: function (onSuccess, onError, options){
+    getPicture: function (onSuccess, onError, options) {
         try {
             navigator.camera.getPicture(onSuccess, onError, options);
         } catch (e) {
@@ -13,7 +13,7 @@ Ext.define('Ext.device.camera.Cordova', {
         }
     },
 
-    cleanup: function(onSuccess, onError) {
+    cleanup: function (onSuccess, onError) {
         try {
             navigator.camera.cleanup(onSuccess, onError);
         } catch (e) {
@@ -21,7 +21,7 @@ Ext.define('Ext.device.camera.Cordova', {
         }
     },
 
-    capture: function(args) {
+    capture: function (args) {
         var onSuccess = args.success,
             onError = args.failure,
             scope = args.scope,

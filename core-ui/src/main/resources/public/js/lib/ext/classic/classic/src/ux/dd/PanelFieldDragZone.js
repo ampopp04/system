@@ -2,7 +2,7 @@ Ext.define('Ext.ux.dd.PanelFieldDragZone', {
 
     extend: 'Ext.dd.DragZone',
 
-    constructor: function(cfg){
+    constructor: function (cfg) {
         cfg = cfg || {};
         if (cfg.ddGroup) {
             this.ddGroup = cfg.ddGroup;
@@ -10,7 +10,7 @@ Ext.define('Ext.ux.dd.PanelFieldDragZone', {
     },
 
 //  Call the DRagZone's constructor. The Panel must have been rendered.
-    init: function(panel) {
+    init: function (panel) {
         // Panel is an HtmlElement
         if (panel.nodeType) {
             // Called via dragzone::init
@@ -33,7 +33,7 @@ Ext.define('Ext.ux.dd.PanelFieldDragZone', {
 //  If so, we collect data about the draggable object, and return a drag data
 //  object which contains our own data, plus a "ddel" property which is a DOM
 //  node which provides a "view" of the dragged data.
-    getDragData: function(e) {
+    getDragData: function (e) {
         var targetLabel = e.getTarget('label', null, true),
             text,
             oldMark,
@@ -68,7 +68,7 @@ Ext.define('Ext.ux.dd.PanelFieldDragZone', {
     },
 
 //  The coordinates to slide the drag proxy back to on failed drop.
-    getRepairXY: function() {
+    getRepairXY: function () {
         return this.dragData.field.getEl().getXY();
     }
 });

@@ -6,7 +6,7 @@
  * The field that will be used for the editor is defined at the
  * {@link Ext.grid.column.Column#editor editor}. The editor can be a field instance or a field configuration.
  * If an editor is not specified for a particular column then that column won't be editable and the value of
- * the column will be displayed. To provide a custom renderer for non-editable values, use the 
+ * the column will be displayed. To provide a custom renderer for non-editable values, use the
  * {@link Ext.grid.column.Column#editRenderer editRenderer} configuration on the column.
  *
  * The editor may be shared for each column in the grid, or a different one may be specified for each column.
@@ -81,7 +81,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
      */
     errorSummary: true,
 
-    constructor: function() {
+    constructor: function () {
         var me = this;
 
         me.callParent(arguments);
@@ -93,7 +93,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
         me.autoCancel = !!me.autoCancel;
     },
 
-    init: function(grid) {
+    init: function (grid) {
         this.callParent([grid]);
 
         // This plugin has an interest in processing a request for actionable mode.
@@ -106,17 +106,17 @@ Ext.define('Ext.grid.plugin.RowEditing', {
         }
     },
 
-    destroy: function() {
+    destroy: function () {
         Ext.destroy(this.editor);
         this.callParent();
     },
-    
-    onBeforeReconfigure: function() {
+
+    onBeforeReconfigure: function () {
         this.callParent(arguments);
         this.cancelEdit();
     },
-    
-    onReconfigure: function(grid, store, columns) {
+
+    onReconfigure: function (grid, store, columns) {
         var ed = this.editor;
         this.callParent(arguments);
         // Only need to adjust column widths if we have new columns 
@@ -125,7 +125,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
         }
     },
 
-    shouldStartEdit: function(editor) {
+    shouldStartEdit: function (editor) {
         return true;
     },
 
@@ -136,11 +136,11 @@ Ext.define('Ext.grid.plugin.RowEditing', {
      * If not specified, it will default to the first visible column.
      * @return {Boolean} `true` if editing was started, `false` otherwise.
      */
-    startEdit: function(record, columnHeader) {
+    startEdit: function (record, columnHeader) {
         var me = this,
             editor = me.getEditor(),
             context;
-            
+
         if (Ext.isEmpty(columnHeader)) {
             columnHeader = me.grid.getTopLevelVisibleColumnManager().getHeaderAtIndex(0);
         }
@@ -163,17 +163,17 @@ Ext.define('Ext.grid.plugin.RowEditing', {
     },
 
     /**
-     * This method is called when actionable mode is requested for a cell. 
+     * This method is called when actionable mode is requested for a cell.
      * @param {Ext.grid.CellContext} position The position at which actionable mode was requested.
      * @return {Boolean} `false` Actionable mode is *not* entered for RowEditing.
      * @protected
      */
-    activateCell: function(pos) {
+    activateCell: function (pos) {
         // Only activate editing if there are no readily activatable elements in the activate position.
         // We defer to those focusables. Editing may be started on other columns.
         if (!pos.getCell().query('[tabIndex="-1"]').length) {
             this.startEdit(pos.record, pos.column);
-            return true ;
+            return true;
         }
     },
 
@@ -181,7 +181,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
      * @private
      * The {@link Ext.grid.RowEditor RowEditor} hooks up a KeyNav to call this method to complete the edit.
      */
-    onEnterKey: function(e) {
+    onEnterKey: function (e) {
         var me = this,
             targetComponent;
 
@@ -197,7 +197,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
         }
     },
 
-    cancelEdit: function() {
+    cancelEdit: function () {
         var me = this;
 
         if (me.editing) {
@@ -210,7 +210,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
         return true;
     },
 
-    completeEdit: function() {
+    completeEdit: function () {
         var me = this,
             context = me.context;
 
@@ -220,12 +220,12 @@ Ext.define('Ext.grid.plugin.RowEditing', {
         }
     },
 
-    validateEdit: function() {
+    validateEdit: function () {
         this.getContextFieldValues();
         return this.callParent(arguments) && this.getEditor().completeEdit();
     },
 
-    getEditor: function() {
+    getEditor: function () {
         var me = this;
 
         if (!me.editor) {
@@ -235,45 +235,45 @@ Ext.define('Ext.grid.plugin.RowEditing', {
     },
 
     getContextFieldValues: function () {
-        var editor         = this.editor,
-            context        = this.context,
-            record         = context.record,
-            newValues      = {},
+        var editor = this.editor,
+            context = this.context,
+            record = context.record,
+            newValues = {},
             originalValues = {},
-            editors        = editor.query('>[isFormField]'),
-            len            = editors.length,
+            editors = editor.query('>[isFormField]'),
+            len = editors.length,
             i, name, item;
 
         for (i = 0; i < len; i++) {
             item = editors[i];
             name = item.dataIndex;
 
-            newValues[name]      = item.getValue();
+            newValues[name] = item.getValue();
             originalValues[name] = record.get(name);
         }
 
         Ext.apply(context, {
-            newValues      : newValues,
-            originalValues : originalValues
+            newValues: newValues,
+            originalValues: originalValues
         });
     },
 
     /**
      * @private
      */
-    initEditor: function() {
+    initEditor: function () {
         return new Ext.grid.RowEditor(this.initEditorConfig());
     },
-    
-    initEditorConfig: function(){
-        var me       = this,
-            grid     = me.grid,
-            view     = me.view,
+
+    initEditorConfig: function () {
+        var me = this,
+            grid = me.grid,
+            view = me.view,
             headerCt = grid.headerCt,
-            btns     = ['saveBtnText', 'cancelBtnText', 'errorsText', 'dirtyText'],
+            btns = ['saveBtnText', 'cancelBtnText', 'errorsText', 'dirtyText'],
             b,
-            bLen     = btns.length,
-            cfg      = {
+            bLen = btns.length,
+            cfg = {
                 autoCancel: me.autoCancel,
                 errorSummary: me.errorSummary,
                 fields: headerCt.getGridColumns(),
@@ -291,13 +291,13 @@ Ext.define('Ext.grid.plugin.RowEditing', {
                 cfg[item] = me[item];
             }
         }
-        return cfg;    
+        return cfg;
     },
 
     /**
      * @private
      */
-    initEditTriggers: function() {
+    initEditTriggers: function () {
         var me = this,
             view = me.view,
             moveEditorEvent = me.clicksToMoveEditor === 1 ? 'click' : 'dblclick';
@@ -309,7 +309,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
         }
 
         view.on({
-            render: function() {
+            render: function () {
                 me.mon(me.grid.headerCt, {
                     scope: me,
                     columnresize: me.onColumnResize,
@@ -321,7 +321,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
         });
     },
 
-    moveEditorByClick: function() {
+    moveEditorByClick: function () {
         var me = this;
         if (me.editing) {
             me.superclass.onCellClick.apply(me, arguments);
@@ -331,7 +331,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
     /**
      * @private
      */
-    onColumnAdd: function(ct, column) {
+    onColumnAdd: function (ct, column) {
         if (column.isHeader) {
             var me = this,
                 editor;
@@ -348,7 +348,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
     },
 
     // Ensure editors are cleaned up.
-    beforeGridHeaderDestroy: function(headerCt) {
+    beforeGridHeaderDestroy: function (headerCt) {
         var columns = this.grid.getColumnManager().getColumns(),
             len = columns.length,
             i,
@@ -371,7 +371,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
     /**
      * @private
      */
-    onColumnResize: function(ct, column, width) {
+    onColumnResize: function (ct, column, width) {
         if (column.isHeader) {
             var me = this,
                 editor = me.getEditor();
@@ -385,7 +385,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
     /**
      * @private
      */
-    onColumnHide: function(ct, column) {
+    onColumnHide: function (ct, column) {
         // no isHeader check here since its already a columnhide event.
         var me = this,
             editor = me.getEditor();
@@ -398,7 +398,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
     /**
      * @private
      */
-    onColumnShow: function(ct, column) {
+    onColumnShow: function (ct, column) {
         // no isHeader check here since its already a columnshow event.
         var me = this,
             editor = me.getEditor();
@@ -411,7 +411,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
     /**
      * @private
      */
-    onColumnMove: function(ct, column, fromIdx, toIdx) {
+    onColumnMove: function (ct, column, fromIdx, toIdx) {
         // no isHeader check here since its already a columnmove event.
         var me = this,
             editor = me.getEditor();
@@ -430,7 +430,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
     /**
      * @private
      */
-    setColumnField: function(column, field) {
+    setColumnField: function (column, field) {
         var me = this,
             editor = me.getEditor();
 
@@ -446,7 +446,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
         }
     },
 
-    createColumnField: function(column, defaultField) {
+    createColumnField: function (column, defaultField) {
         var editor = this.editor,
             def;
 

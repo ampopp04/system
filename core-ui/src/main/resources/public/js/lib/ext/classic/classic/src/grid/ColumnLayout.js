@@ -12,16 +12,16 @@
 Ext.define('Ext.grid.ColumnLayout', {
     extend: 'Ext.layout.container.HBox',
     alias: 'layout.gridcolumn',
-    type : 'gridcolumn',
+    type: 'gridcolumn',
 
     requires: [
-        'Ext.panel.Table'  
+        'Ext.panel.Table'
     ],
 
     firstHeaderCls: Ext.baseCSSPrefix + 'column-header-first',
     lastHeaderCls: Ext.baseCSSPrefix + 'column-header-last',
 
-    initLayout: function() {
+    initLayout: function () {
         this.callParent();
 
         if (this.scrollbarWidth === undefined) {
@@ -39,7 +39,7 @@ Ext.define('Ext.grid.ColumnLayout', {
             len = items.length,
             i, item;
 
-        me.callParent([ ownerContext ]);
+        me.callParent([ownerContext]);
 
         // Sync the first/lastCls states for all the headers.
         for (i = 0; i < len; i++) {
@@ -99,16 +99,16 @@ Ext.define('Ext.grid.ColumnLayout', {
         var me = this,
             owner = me.owner,
             grid = owner.grid,
-            // locking headerCt can refuse to reserveScrollbar, even if the locking grid
-            // view does reserveScrollbar (special technique for hiding the vertical
-            // scrollbar on the locked side)
+        // locking headerCt can refuse to reserveScrollbar, even if the locking grid
+        // view does reserveScrollbar (special technique for hiding the vertical
+        // scrollbar on the locked side)
             vetoReserveScrollbar = owner.reserveScrollbar === false,
-            // We read this value off of the immediate grid since the locked side of a
-            // locking grid will not have this set. The ownerGrid in that case would have
-            // it set but will pass along true only to the normal side.
+        // We read this value off of the immediate grid since the locked side of a
+        // locking grid will not have this set. The ownerGrid in that case would have
+        // it set but will pass along true only to the normal side.
             reserveScrollbar = grid.reserveScrollbar && !vetoReserveScrollbar,
             manageScrollbar = !reserveScrollbar && !vetoReserveScrollbar &&
-                    grid.view.scrollFlags.y;
+                grid.view.scrollFlags.y;
 
         // If we have reserveScrollbar then we will always have a vertical scrollbar so
         // manageScrollbar should be false. Otherwise it is based on overflow-y:
@@ -132,15 +132,15 @@ Ext.define('Ext.grid.ColumnLayout', {
     calculate: function (ownerContext) {
         var me = this,
             grid = me.owner.grid,
-            // Our TableLayout buddy sets this in its beginLayout so we can work this
-            // out together:
+        // Our TableLayout buddy sets this in its beginLayout so we can work this
+        // out together:
             viewContext = ownerContext.viewContext,
             state = ownerContext.state,
             context = ownerContext.context,
             lockingPartnerContext, ownerGrid,
             columnsChanged, columns, len, i, column, scrollbarAdjustment, viewOverflowY;
 
-        me.callParent([ ownerContext ]);
+        me.callParent([ownerContext]);
 
         if (grid && state.parallelDone) {
             lockingPartnerContext = viewContext.lockingPartnerContext;
@@ -224,15 +224,15 @@ Ext.define('Ext.grid.ColumnLayout', {
                     }
                 }
                 // else {
-                    // We originally assumed we would need the scrollbar and since we do
-                    // not now, we must be on the second pass, so we can move on...
+                // We originally assumed we would need the scrollbar and since we do
+                // not now, we must be on the second pass, so we can move on...
                 // }
             }
         }
     },
 
-    finishedLayout: function(ownerContext) {
-        this.callParent([ ownerContext ]);
+    finishedLayout: function (ownerContext) {
+        this.callParent([ownerContext]);
         if (this.owner.ariaRole === 'rowgroup') {
             this.innerCt.dom.setAttribute('role', 'row');
         }
@@ -242,7 +242,7 @@ Ext.define('Ext.grid.ColumnLayout', {
         ownerContext.props.columnsChanged = null;
     },
 
-    convertWidthsToFlexes: function(ownerContext) {
+    convertWidthsToFlexes: function (ownerContext) {
         var me = this,
             totalWidth = 0,
             calculated = me.sizeModels.calculated,
@@ -283,8 +283,7 @@ Ext.define('Ext.grid.ColumnLayout', {
         if (scrollbarAdjustment === undefined) {
             scrollbarAdjustment = 0;
 
-            if (grid.reserveScrollbar || (ownerContext.manageScrollbar &&
-                    !grid.ownerGrid.layout.ownerContext.heightModel.shrinkWrap)) {
+            if (grid.reserveScrollbar || (ownerContext.manageScrollbar && !grid.ownerGrid.layout.ownerContext.heightModel.shrinkWrap)) {
                 scrollbarAdjustment = me.scrollbarWidth;
             }
 
@@ -303,7 +302,7 @@ Ext.define('Ext.grid.ColumnLayout', {
             got, needed, padding, gotWidth, gotHeight, width, height, result;
 
         if (me.owner.isRootHeader) {
-            result = me.callParent([ ownerContext ]);
+            result = me.callParent([ownerContext]);
 
             if (result.gotWidth) {
                 result.width -= me.getScrollbarAdjustment(ownerContext);
@@ -354,7 +353,7 @@ Ext.define('Ext.grid.ColumnLayout', {
         return result;
     },
 
-    publishInnerCtSize: function(ownerContext) {
+    publishInnerCtSize: function (ownerContext) {
         var me = this,
             owner = me.owner,
             cw = ownerContext.peek('contentWidth'),

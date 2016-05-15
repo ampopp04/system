@@ -2,7 +2,7 @@
  * Greek (Old Version) Translations by Vagelis
  * 03-June-2007
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["ÉáíïõÜñéïò", "ÖåâñïõÜñéïò", "ÌÜñôéïò", "Áðñßëéïò", "ÌÜéïò", "Éïýíéïò", "Éïýëéïò", "Áýãïõóôïò", "ÓåðôÝìâñéïò", "Ïêôþâñéïò", "ÍïÝìâñéïò", "ÄåêÝìâñéïò"];
@@ -103,7 +103,7 @@ Ext.define("Ext.locale.gr.form.field.Date", {
 Ext.define("Ext.locale.gr.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Öüñôùóç..."
     });
@@ -140,10 +140,10 @@ Ext.define("Ext.locale.gr.window.MessageBox", {
         cancel: "Áêýñùóç",
         yes: "Íáé",
         no: "¼÷é"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.gr.Component", {	
+Ext.define("Ext.locale.gr.Component", {
     override: "Ext.Component"
 });

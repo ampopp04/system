@@ -34,7 +34,7 @@ Ext.define('Ext.form.FieldAncestor', {
      * If specified, the properties in this object are used as default config values for each {@link Ext.form.Labelable}
      * instance (e.g. {@link Ext.form.field.Base} or {@link Ext.form.FieldContainer}) that is added as a descendant of
      * this container. Corresponding values specified in an individual field's own configuration, or from the {@link
-     * Ext.container.Container#defaults defaults config} of its parent container, will take precedence. See the
+        * Ext.container.Container#defaults defaults config} of its parent container, will take precedence. See the
      * documentation for {@link Ext.form.Labelable} to see what config options may be specified in the fieldDefaults.
      *
      * Example:
@@ -93,7 +93,7 @@ Ext.define('Ext.form.FieldAncestor', {
      * importing this mixin.
      * @protected
      */
-    initFieldAncestor: function() {
+    initFieldAncestor: function () {
         var me = this;
 
         // We use the monitor here as opposed to event bubbling. The problem with bubbling is it doesn't
@@ -107,9 +107,9 @@ Ext.define('Ext.form.FieldAncestor', {
         });
         me.initFieldDefaults();
     },
-    
-    initMonitor: function() {
-        this.monitor.bind(this);    
+
+    initMonitor: function () {
+        this.monitor.bind(this);
     },
 
     initFieldInheritedState: function (inheritedState) {
@@ -119,20 +119,20 @@ Ext.define('Ext.form.FieldAncestor', {
         if (fieldDefaults) {
             if (inheritedFieldDefaults) {
                 inheritedState.fieldDefaults =
-                        Ext.apply(Ext.Object.chain(inheritedFieldDefaults), fieldDefaults);
+                    Ext.apply(Ext.Object.chain(inheritedFieldDefaults), fieldDefaults);
             } else {
                 inheritedState.fieldDefaults = fieldDefaults;
             }
         }
     },
 
-    onChildFieldAdd: function(field) {
+    onChildFieldAdd: function (field) {
         var me = this;
         me.mon(field, 'errorchange', me.handleFieldErrorChange, me);
         me.mon(field, 'validitychange', me.handleFieldValidityChange, me);
     },
-    
-    onChildFieldRemove: function(field) {
+
+    onChildFieldRemove: function (field) {
         var me = this;
         me.mun(field, 'errorchange', me.handleFieldErrorChange, me);
         me.mun(field, 'validitychange', me.handleFieldValidityChange, me);
@@ -142,7 +142,7 @@ Ext.define('Ext.form.FieldAncestor', {
      * @private
      * Initialize the {@link #fieldDefaults} object
      */
-    initFieldDefaults: function() {
+    initFieldDefaults: function () {
         if (!this.fieldDefaults) {
             this.fieldDefaults = {};
         }
@@ -152,7 +152,7 @@ Ext.define('Ext.form.FieldAncestor', {
      * @private
      * Handle bubbled validitychange events from descendants; invoke the aggregated event and method
      */
-    handleFieldValidityChange: function(field, isValid) {
+    handleFieldValidityChange: function (field, isValid) {
         var me = this;
         if (field !== me) {
             me.fireEvent('fieldvaliditychange', me, field, isValid);
@@ -164,7 +164,7 @@ Ext.define('Ext.form.FieldAncestor', {
      * @private
      * Handle bubbled errorchange events from descendants; invoke the aggregated event and method
      */
-    handleFieldErrorChange: function(labelable, activeError) {
+    handleFieldErrorChange: function (labelable, activeError) {
         var me = this;
         if (labelable !== me) {
             me.fireEvent('fielderrorchange', me, labelable, activeError);
@@ -190,7 +190,7 @@ Ext.define('Ext.form.FieldAncestor', {
      */
     onFieldErrorChange: Ext.emptyFn,
 
-    onBeforeDestroy: function(){
+    onBeforeDestroy: function () {
         this.monitor.unbind();
     }
 

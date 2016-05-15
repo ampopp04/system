@@ -1,7 +1,7 @@
-describe("Ext.data.association.HasOne_legacy", function() {
-    
+describe("Ext.data.association.HasOne_legacy", function () {
+
     var rec;
-    
+
     function definePerson(cfg, fields) {
         Ext.define('spec.Person', {
             extend: 'Ext.data.Model',
@@ -11,11 +11,11 @@ describe("Ext.data.association.HasOne_legacy", function() {
             }, cfg)
         })
     }
-    
+
     function doSet(profile, options, scope) {
         rec.setProfile(profile, options, scope);
     }
-        
+
     function doGet(options, scope) {
         return rec.getProfile(options, scope);
     }
@@ -26,82 +26,82 @@ describe("Ext.data.association.HasOne_legacy", function() {
             responseText: Ext.JSON.encode(data)
         });
     }
-    
-    beforeEach(function() {
+
+    beforeEach(function () {
         MockAjaxManager.addMethods();
         Ext.data.Model.schema.setNamespace('spec');
         Ext.define('spec.Profile', {
             extend: 'Ext.data.Model',
             fields: ['id', 'bio', 'age']
         });
-        
+
         Ext.define('spec.User', {
             extend: 'Ext.data.Model',
             fields: ['id', 'name', 'profile_id'],
             hasOne: 'spec.Profile'
         });
     });
-    
-    afterEach(function() {
+
+    afterEach(function () {
         MockAjaxManager.removeMethods();
         Ext.undefine('spec.User');
         Ext.undefine('spec.Profile');
         Ext.undefine('spec.Person');
-        
+
         Ext.data.Model.schema.clear(true);
-        
+
         rec = null;
     });
-    
-    describe("declarations", function() {
-        afterEach(function() {
+
+    describe("declarations", function () {
+        afterEach(function () {
             Ext.undefine('spec.Foo');
         });
-        
-        var expectGetSet = function(getKey, setKey) {
+
+        var expectGetSet = function (getKey, setKey) {
             var proto = spec.Foo.prototype;
             expect(Ext.isFunction(proto[getKey])).toBe(true);
             expect(Ext.isFunction(proto[setKey])).toBe(true);
         }
-        
-        it("should read a single string", function() {
+
+        it("should read a single string", function () {
             Ext.define('spec.Foo', {
                 extend: 'Ext.data.Model',
                 hasOne: 'spec.Profile'
             });
             expectGetSet('getProfile', 'setProfile');
-        });  
-        
-        it("should read an array of strings", function() {
+        });
+
+        it("should read an array of strings", function () {
             Ext.define('spec.Bar', {
                 extend: 'Ext.data.Model'
             });
-            
+
             Ext.define('spec.Foo', {
                 extend: 'Ext.data.Model',
                 hasOne: ['spec.Profile', 'spec.Bar']
             });
             expectGetSet('getProfile', 'setProfile');
             expectGetSet('getBar', 'setBar');
-            
+
             Ext.undefine('spec.Bar');
         });
-        
-        it("should read a single object", function() {
+
+        it("should read a single object", function () {
             Ext.define('spec.Foo', {
                 extend: 'Ext.data.Model',
                 hasOne: {
                     model: 'spec.Profile'
-                }    
-            });  
+                }
+            });
             expectGetSet('getProfile', 'setProfile');
         });
-        
-        it("should read an array of objects", function() {
+
+        it("should read an array of objects", function () {
             Ext.define('spec.Bar', {
                 extend: 'Ext.data.Model'
             });
-            
+
             Ext.define('spec.Foo', {
                 extend: 'Ext.data.Model',
                 hasOne: [{
@@ -110,18 +110,18 @@ describe("Ext.data.association.HasOne_legacy", function() {
                     model: 'spec.Bar'
                 }]
             });
-            
+
             expectGetSet('getProfile', 'setProfile');
             expectGetSet('getBar', 'setBar');
-            
+
             Ext.undefine('spec.Bar');
         });
-        
-        it("should read an associations array", function() {
+
+        it("should read an associations array", function () {
             Ext.define('spec.Bar', {
                 extend: 'Ext.data.Model'
             });
-            
+
             Ext.define('spec.Foo', {
                 extend: 'Ext.data.Model',
                 associations: [{
@@ -132,14 +132,14 @@ describe("Ext.data.association.HasOne_legacy", function() {
                     model: 'spec.Bar'
                 }]
             });
-            
+
             expectGetSet('getProfile', 'setProfile');
             expectGetSet('getBar', 'setBar');
-            
+
             Ext.undefine('spec.Bar');
         });
 
-        it("should use the name parameter as the role", function() {
+        it("should use the name parameter as the role", function () {
             Ext.define('spec.Foo', {
                 extend: 'Ext.data.Model',
                 hasOne: {
@@ -150,99 +150,99 @@ describe("Ext.data.association.HasOne_legacy", function() {
             expectGetSet('getNoobfile', 'setNoobfile');
         });
     });
-    
-    describe("getter", function() {
+
+    describe("getter", function () {
         var profile, spy;
 
-        beforeEach(function() {
+        beforeEach(function () {
             spy = jasmine.createSpy();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             spy = null;
         });
-        
-        describe("instance already set", function() {
-            beforeEach(function() {
+
+        describe("instance already set", function () {
+            beforeEach(function () {
                 rec = new spec.User({
                     id: 4
                 });
-                
+
                 profile = new spec.Profile({
                     id: 2
                 });
-                
-                
+
+
                 doSet(profile);
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 profile = null;
-            });        
-            
-            it("should return the same instance", function() {
+            });
+
+            it("should return the same instance", function () {
                 expect(doGet()).toBe(profile);
             });
-            
-            it("should not attempt to load", function() {
+
+            it("should not attempt to load", function () {
                 spy = spyOn(spec.Profile.getProxy(), 'read');
                 doGet();
                 expect(spy).not.toHaveBeenCalled();
             });
-            
-            it("should attempt to reload if called with options.reload", function() {
+
+            it("should attempt to reload if called with options.reload", function () {
                 spy = spyOn(spec.Profile.getProxy(), 'read').andReturn();
                 doGet({
                     reload: true
-                });    
+                });
                 expect(spy).toHaveBeenCalled();
             });
-            
-            describe("callbacks", function() {
-                it("should accept a function and default the scope to the model", function() {
+
+            describe("callbacks", function () {
+                it("should accept a function and default the scope to the model", function () {
                     doGet(spy);
                     var call = spy.mostRecentCall;
                     expect(call.args[0]).toBe(profile);
                     expect(call.object).toBe(rec);
                 });
-                
-                it("should accept a function with a scope", function() {
+
+                it("should accept a function with a scope", function () {
                     var o = {};
                     doGet(spy, o);
-                    expect(spy.mostRecentCall.object).toBe(o);   
+                    expect(spy.mostRecentCall.object).toBe(o);
                 });
-                
-                it("should accept an options object and call success", function() {
+
+                it("should accept an options object and call success", function () {
                     doGet({
                         success: spy
                     });
                     var call = spy.mostRecentCall;
                     expect(call.args[0]).toBe(profile);
-                    expect(call.object).toBe(rec);  
+                    expect(call.object).toBe(rec);
                 });
-                
-                it("should accept an options object and call callback", function() {
+
+                it("should accept an options object and call callback", function () {
                     doGet({
-                        callback: spy  
+                        callback: spy
                     });
                     var call = spy.mostRecentCall;
                     expect(call.args[0]).toBe(profile);
-                    expect(call.object).toBe(rec);   
+                    expect(call.object).toBe(rec);
                 });
             });
         });
-        
-        describe("instance not set", function() {
-            describe("keys", function() {
-                it("should default the primaryKey to 'id' and set it on the model", function() {
+
+        describe("instance not set", function () {
+            describe("keys", function () {
+                it("should default the primaryKey to 'id' and set it on the model", function () {
                     rec = new spec.User({
                         'profile_id': 10
                     });
                     profile = doGet();
-                    expect(profile.get('id')).toBe(10);    
+                    expect(profile.get('id')).toBe(10);
                 });
-                
-                it("should use a custom foreign key", function() {
+
+                it("should use a custom foreign key", function () {
                     definePerson({
                         foreignKey: 'aField'
                     });
@@ -250,37 +250,37 @@ describe("Ext.data.association.HasOne_legacy", function() {
                         'aField': 12
                     });
                     profile = doGet();
-                    expect(profile.get('id')).toBe(12); 
+                    expect(profile.get('id')).toBe(12);
                 });
             });
-            
-            describe("callbacks", function() {
-                it("should accept a function and the scope should default to the model", function() {
+
+            describe("callbacks", function () {
+                it("should accept a function and the scope should default to the model", function () {
                     rec = new spec.User({
                         'profile_id': 3
-                    }); 
+                    });
                     profile = doGet(spy);
                     complete({});
                     var call = spy.mostRecentCall;
                     expect(call.args[0]).toBe(profile);
                     expect(call.object).toBe(rec);
                 });
-                
-                it("should accept a function and a scope", function() {
+
+                it("should accept a function and a scope", function () {
                     rec = new spec.User({
                         'profile_id': 3
-                    }); 
+                    });
                     var o = {};
                     doGet(spy, o);
                     complete({});
                     expect(spy.mostRecentCall.object).toBe(o);
-                });   
-                
-                it("should pass the options to load", function() {
-                   rec = new spec.User({
+                });
+
+                it("should pass the options to load", function () {
+                    rec = new spec.User({
                         'profile_id': 3
-                    }); 
-                        
+                    });
+
                     var spy = spyOn(spec.Profile.getProxy(), 'read');
                     doGet({
                         params: {
@@ -292,53 +292,53 @@ describe("Ext.data.association.HasOne_legacy", function() {
                     });
                 });
             });
-            
-            it("should return null if the foreignKey value is empty", function() {
+
+            it("should return null if the foreignKey value is empty", function () {
                 rec = new spec.User();
-                expect(doGet()).toBeNull();    
+                expect(doGet()).toBeNull();
             });
         });
     });
-    
-    describe("setter", function() {
+
+    describe("setter", function () {
         var spy;
-        beforeEach(function() {
+        beforeEach(function () {
             spy = jasmine.createSpy();
             rec = new spec.User({
                 id: 7
             });
         });
 
-        afterEach(function() {
+        afterEach(function () {
             spy = null;
         });
-        
-        describe("instance", function() {
-            it("should have the same record reference", function() {
+
+        describe("instance", function () {
+            it("should have the same record reference", function () {
                 var profile = new spec.Profile({
                     id: 3
                 });
                 doSet(profile);
-            
+
                 expect(doGet()).toBe(profile);
             });
-            
-            it("should set the underlying key value", function() {
+
+            it("should set the underlying key value", function () {
                 var profile = new spec.Profile({
                     id: 3
                 });
                 doSet(profile);
-                expect(rec.get('profile_id')).toBe(3);  
+                expect(rec.get('profile_id')).toBe(3);
             });
         });
-        
-        describe("value", function() {
-            it("should set the underlying key", function() {
+
+        describe("value", function () {
+            it("should set the underlying key", function () {
                 doSet(16);
-                expect(rec.get('profile_id')).toBe(16);    
-            });  
-            
-            it("should keep the same reference if setting the value with a matching id", function() {
+                expect(rec.get('profile_id')).toBe(16);
+            });
+
+            it("should keep the same reference if setting the value with a matching id", function () {
                 var profile = new spec.Profile({
                     id: 3
                 });
@@ -346,8 +346,8 @@ describe("Ext.data.association.HasOne_legacy", function() {
                 doSet(3);
                 expect(doGet()).toBe(profile);
             });
-            
-            it("should clear the reference if a model is already set and a new id is passed", function() {
+
+            it("should clear the reference if a model is already set and a new id is passed", function () {
                 var profile = new spec.Profile({
                     id: 3
                 });
@@ -358,51 +358,51 @@ describe("Ext.data.association.HasOne_legacy", function() {
                 doGet();
                 expect(spy.mostRecentCall.args[0].getId()).toBe(13);
             });
-            
-            it("should set a custom foreignKey", function() {
+
+            it("should set a custom foreignKey", function () {
                 definePerson({
                     foreignKey: 'aField'
                 });
                 rec = new spec.Person({
                     id: 1
-                });    
+                });
                 doSet(13);
                 expect(rec.get('aField')).toBe(13);
-                
+
             });
         });
-        
-        describe("callbacks", function() {
-            it("should accept a function as the second arg, scope should default to the model", function() {
+
+        describe("callbacks", function () {
+            it("should accept a function as the second arg, scope should default to the model", function () {
                 doSet(16, spy);
                 complete({});
                 var call = spy.mostRecentCall;
                 expect(call.args[0]).toBe(rec);
                 expect(call.object).toBe(rec);
-            });    
-            
-            it("should accept a function with a scope", function() {
+            });
+
+            it("should accept a function with a scope", function () {
                 var o = {};
                 doSet(16, spy, o);
                 complete({});
                 expect(spy.mostRecentCall.object).toBe(o);
             });
 
-            describe("options object", function() {
+            describe("options object", function () {
                 var successSpy, failureSpy, callbackSpy;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     successSpy = jasmine.createSpy();
                     failureSpy = jasmine.createSpy();
                     callbackSpy = jasmine.createSpy();
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     successSpy = failureSpy = callbackSpy = null;
                 });
 
-                describe("on success", function() {
-                    it("should call success/callback and scope should default to the model", function() {
+                describe("on success", function () {
+                    it("should call success/callback and scope should default to the model", function () {
                         doSet(16, {
                             success: successSpy,
                             callback: callbackSpy,
@@ -416,7 +416,7 @@ describe("Ext.data.association.HasOne_legacy", function() {
                         expect(callbackSpy.mostRecentCall.object).toBe(rec);
                     });
 
-                    it("should use a passed scope", function() {
+                    it("should use a passed scope", function () {
                         var scope = {};
                         doSet(16, {
                             scope: scope,
@@ -429,8 +429,8 @@ describe("Ext.data.association.HasOne_legacy", function() {
                     });
                 });
 
-                describe("on failure", function() {
-                    it("should call failure/callback and scope should default to the model", function() {
+                describe("on failure", function () {
+                    it("should call failure/callback and scope should default to the model", function () {
                         doSet(16, {
                             success: successSpy,
                             callback: callbackSpy,
@@ -444,7 +444,7 @@ describe("Ext.data.association.HasOne_legacy", function() {
                         expect(callbackSpy.mostRecentCall.object).toBe(rec);
                     });
 
-                    it("should use a passed scope", function() {
+                    it("should use a passed scope", function () {
                         var scope = {};
                         doSet(16, {
                             scope: scope,
@@ -459,29 +459,29 @@ describe("Ext.data.association.HasOne_legacy", function() {
             });
         });
     });
-    
-    describe("reading nested with assocationKey", function() {
-        it("should default the key to the association name", function() {
+
+    describe("reading nested with assocationKey", function () {
+        it("should default the key to the association name", function () {
             var reader = new Ext.data.reader.Json({
                 model: spec.User
             });
-            
+
             rec = reader.read([{
                 id: 1,
                 'profile': {
                     id: 3
                 }
             }]).getRecords()[0];
-            
+
             expect(doGet().getId()).toBe(3);
         });
 
-        it("should read when there is no attached field", function() {
+        it("should read when there is no attached field", function () {
             definePerson(null, ['id']);
             var reader = new Ext.data.reader.Json({
                 model: spec.Person
             });
-            
+
             rec = reader.read([{
                 id: 1,
                 profile: {
@@ -490,22 +490,20 @@ describe("Ext.data.association.HasOne_legacy", function() {
             }]).getRecords()[0];
             expect(doGet().getId()).toBe(3);
         });
-        
-        it("should read a complex association", function() {
+
+        it("should read a complex association", function () {
             definePerson({
                 associationKey: 'nested.another[1].two'
             });
-            
+
             var reader = new Ext.data.reader.Json({
                 model: spec.Person
             });
-            
+
             rec = reader.read([{
                 id: 1,
                 nested: {
-                    another: [{
-                        
-                    }, {
+                    another: [{}, {
                         two: {
                             id: 65
                         }
@@ -515,40 +513,40 @@ describe("Ext.data.association.HasOne_legacy", function() {
             expect(doGet().getId()).toBe(65);
         });
     });
-    
-    describe("inverse association", function() {
-        it("should set the record if it has an inverse belongsTo", function() {
+
+    describe("inverse association", function () {
+        it("should set the record if it has an inverse belongsTo", function () {
             Ext.define('spec.Parent', {
                 extend: 'Ext.data.Model',
                 fields: ['id'],
                 hasOne: 'spec.Child'
             });
-            
+
             spyOn(Ext.log, 'warn');
-            
+
             Ext.define('spec.Child', {
                 extend: 'Ext.data.Model',
                 fields: ['id', 'parent_id'],
                 belongsTo: 'spec.Parent'
             });
-            
+
             var reader = new Ext.data.reader.Json({
                 model: spec.Parent
             });
-            
+
             rec = reader.read([{
                 id: 1,
                 'child': {
-                    id: 17                    
+                    id: 17
                 }
             }]).getRecords()[0];
-            
+
             var child = rec.getChild();
             expect(child.getParent()).toBe(rec);
-            
+
             Ext.undefine('spec.Parent');
             Ext.undefine('spec.Child');
         });
     });
-    
+
 });

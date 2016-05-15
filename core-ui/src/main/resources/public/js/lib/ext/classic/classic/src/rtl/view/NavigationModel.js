@@ -1,7 +1,7 @@
 Ext.define('Ext.rtl.view.NavigationModel', {
     override: 'Ext.view.NavigationModel',
 
-    initKeyNav: function(view) {
+    initKeyNav: function (view) {
         var me = this,
             proto = me.self.prototype;
 

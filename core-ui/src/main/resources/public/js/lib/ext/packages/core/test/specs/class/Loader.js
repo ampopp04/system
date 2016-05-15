@@ -1,10 +1,10 @@
 // These specs have been disabled temporarily because Ext.app.getNamespace()/clearNamespaces()
 // are not available in core.
-xdescribe("Ext.Loader", function() {
+xdescribe("Ext.Loader", function () {
     var Loader = Ext.Loader,
-        app    = Ext.app;
+        app = Ext.app;
 
-    it("should set single namespace with setPath call", function() {
+    it("should set single namespace with setPath call", function () {
         Loader.setPath('ExtLoaderTestNamespace1', '/foo1');
 
         expect(ExtLoaderTestNamespace1.foo.Bar).not.toBeUndefined();
@@ -12,7 +12,7 @@ xdescribe("Ext.Loader", function() {
         expect(ns).toBe('ExtLoaderTestNamespace1');
     });
 
-    it("should set multiple namespaces with setPath call", function() {
+    it("should set multiple namespaces with setPath call", function () {
         Loader.setPath({
             ExtLoaderTestNamespace2: '/foo2',
             ExtLoaderTestNamespace3: '/foo3'
@@ -26,7 +26,7 @@ xdescribe("Ext.Loader", function() {
         expect(ns3).toBe('ExtLoaderTestNamespace3');
     });
 
-    it("should set namespaces with setConfig object", function() {
+    it("should set namespaces with setConfig object", function () {
         Loader.setConfig({
             paths: {
                 ExtLoaderTestNamespace4: '/foo4'
@@ -38,7 +38,7 @@ xdescribe("Ext.Loader", function() {
         expect(ns).toBe('ExtLoaderTestNamespace4');
     });
 
-    it("should set namespaces with setConfig name/value pair", function() {
+    it("should set namespaces with setConfig name/value pair", function () {
         Loader.setConfig('paths', {
             ExtLoaderTestNamespace5: '/foo5'
         });
@@ -48,7 +48,7 @@ xdescribe("Ext.Loader", function() {
         expect(ns).toBe('ExtLoaderTestNamespace5');
     });
 
-    it("should allow nested namespaces 1", function() {
+    it("should allow nested namespaces 1", function () {
         Loader.setPath({
             'ExtLoaderTestNamespace1.foo': '/foobar1'
         });
@@ -58,7 +58,7 @@ xdescribe("Ext.Loader", function() {
         expect(ns).toBe('ExtLoaderTestNamespace1.foo');
     });
 
-    it("should allow nested namespaces 2", function() {
+    it("should allow nested namespaces 2", function () {
         Loader.setPath({
             'ExtLoaderTestNamespace1.foo.Bar': '/foobaroo1'
         });
@@ -68,7 +68,7 @@ xdescribe("Ext.Loader", function() {
         expect(ns).toBe('ExtLoaderTestNamespace1.foo.Bar');
     });
 
-    it("should clean up namespaces (not a test)", function() {
+    it("should clean up namespaces (not a test)", function () {
         var paths = Loader.config.paths;
 
         delete paths.ExtLoaderTestNamespace1;
@@ -101,7 +101,8 @@ xdescribe("Ext.Loader", function() {
             callExt = false;
 
         beforeEach(function () {
-            var F = function () {};
+            var F = function () {
+            };
 
             F.prototype = Ext;
             // Note Foo needs to be a global variable b/c it's looked up in
@@ -152,7 +153,7 @@ xdescribe("Ext.Loader", function() {
         // The test just does a simple indexOf check to make sure that the _dc param has been appended with an ampersand.
         // See EXTJSIV-11994.
         it('should append the cache-busting query param to the querystring in case there is already a querystring', function () {
-            var newSrc; 
+            var newSrc;
 
             Ext.Loader.injectScriptElement = function (src, onScriptLoad, onScriptError) {
                 newSrc = src;

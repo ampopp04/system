@@ -168,7 +168,7 @@ Ext.define('Ext.layout.container.Auto', {
      * @property {Boolean} [managePadding=true]
      * indicates that this layout will correct cross browser padding differences when the
      * container has overflow.
-     * 
+     *
      * In some browsers the right and/or bottom padding of a container is lost when
      * the container has overflow.  If managePadding is true the layout will apply the
      * padding to an inner wrapping element instead of the container element that has the
@@ -176,7 +176,7 @@ Ext.define('Ext.layout.container.Auto', {
      * Note: padding will not be managed if it is configured on the container using
      * a style config or css class.  In order to be managed, padding must be added to the
      * container using the appropriate {@link Ext.Component#contentPaddingProperty
-     * contentPaddingProperty}.  For {@link Ext.panel.Panel Panels} use 
+     * contentPaddingProperty}.  For {@link Ext.panel.Panel Panels} use
      * {@link Ext.panel.Panel#bodyPadding}, and for
      * {@link Ext.container.Container Containers}, use
      * {@link Ext.Component#padding padding}
@@ -220,22 +220,22 @@ Ext.define('Ext.layout.container.Auto', {
         // margins. The table-cell innerCt is required in order to support percentage
         // heights on child elements.
         '<div id="{ownerId}-outerCt" data-ref="outerCt" class="{outerCtCls}" role="presentation">',
-            '<div id="{ownerId}-innerCt" data-ref="innerCt" style="{%this.renderPadding(out, values)%}" ',
-                // If raw HTML is used as the component's content, avoid setting
-                // presentation role so as not to mask the content from screen readers
-                '<tpl if="!$comp.html">role="presentation"</tpl>',
-                'class="{innerCtCls}">',
-                '{%this.renderBody(out,values)%}',
-            '</div>',
+        '<div id="{ownerId}-innerCt" data-ref="innerCt" style="{%this.renderPadding(out, values)%}" ',
+        // If raw HTML is used as the component's content, avoid setting
+        // presentation role so as not to mask the content from screen readers
+        '<tpl if="!$comp.html">role="presentation"</tpl>',
+        'class="{innerCtCls}">',
+        '{%this.renderBody(out,values)%}',
+        '</div>',
         '</div>'
     ],
 
-    beginLayout: function(ownerContext) {
+    beginLayout: function (ownerContext) {
         this.callParent(arguments);
         this.initContextItems(ownerContext);
     },
-    
-    beforeLayoutCycle: function(ownerContext){
+
+    beforeLayoutCycle: function (ownerContext) {
         var comp = this.owner,
             inheritedState = comp.inheritedState,
             inheritedStateInner = comp.inheritedStateInner;
@@ -251,7 +251,7 @@ Ext.define('Ext.layout.container.Auto', {
         }
     },
 
-    beginLayoutCycle: function(ownerContext) {
+    beginLayoutCycle: function (ownerContext) {
         var me = this,
             outerCt = me.outerCt,
             lastOuterCtWidth = me.lastOuterCtWidth || '',
@@ -278,12 +278,11 @@ Ext.define('Ext.layout.container.Auto', {
             // the outerCt to expand to the width of the contents
             overflowXStyle = me.getOverflowXStyle(ownerContext);
             outerCtTableLayout = (inheritedStateInner.inShrinkWrapTable ||
-                                  overflowXStyle === 'auto' || 
-                                  overflowXStyle === 'scroll') ? '' : 'fixed';
+            overflowXStyle === 'auto' ||
+            overflowXStyle === 'scroll') ? '' : 'fixed';
         }
 
-        if (!ownerContext.heightModel.shrinkWrap && 
-            !Ext.supports.PercentageHeightOverflowBug) {
+        if (!ownerContext.heightModel.shrinkWrap && !Ext.supports.PercentageHeightOverflowBug) {
             // if we're not shrink wrapping height, we need to get the outerCt out of the
             // way so that percentage height children will be sized correctly.  We do this
             // by giving the outerCt a height of '100%' unless the browser is affected by
@@ -327,14 +326,14 @@ Ext.define('Ext.layout.container.Auto', {
         state.overflowAdjust = state.overflowAdjust || me.lastOverflowAdjust;
     },
 
-    calculate: function(ownerContext) {
+    calculate: function (ownerContext) {
         var me = this,
             state = ownerContext.state,
             containerSize = me.getContainerSize(ownerContext, true),
-            // If subclass has a calculateItems method, call it and cache the result
+        // If subclass has a calculateItems method, call it and cache the result
             calculatedItems = state.calculatedItems ||
                 (state.calculatedItems = me.calculateItems ?
-                me.calculateItems(ownerContext, containerSize) : true);
+                    me.calculateItems(ownerContext, containerSize) : true);
 
         me.setCtSizeIfNeeded(ownerContext, containerSize);
 
@@ -349,14 +348,14 @@ Ext.define('Ext.layout.container.Auto', {
                 return;
             }
         }
-        
+
         me.done = false;
     },
 
     calculateContentSize: function (ownerContext) {
         var me = this,
             containerDimensions = ((ownerContext.widthModel.shrinkWrap ? 1 : 0) | // jshint ignore:line
-                                   (ownerContext.heightModel.shrinkWrap ? 2 : 0)),
+            (ownerContext.heightModel.shrinkWrap ? 2 : 0)),
             calcWidth = (containerDimensions & 1) || undefined, // jshint ignore:line
             calcHeight = (containerDimensions & 2) || undefined, // jshint ignore:line
             needed = 0,
@@ -398,7 +397,7 @@ Ext.define('Ext.layout.container.Auto', {
      * passed to the {@link #calculate} method, this method also needs the containerSize
      * (the object returned by {@link #getContainerSize}).
      * @protected
-     * 
+     *
      * @param {Ext.layout.ContextItem} ownerContext
      */
     calculateOverflow: function (ownerContext) {
@@ -447,8 +446,8 @@ Ext.define('Ext.layout.container.Auto', {
         }
     },
 
-    completeLayout: function(ownerContext) {
-       this.lastOverflowAdjust = ownerContext.state.overflowAdjust;
+    completeLayout: function (ownerContext) {
+        this.lastOverflowAdjust = ownerContext.state.overflowAdjust;
     },
 
     doRenderBody: function (out, renderData) {
@@ -469,7 +468,7 @@ Ext.define('Ext.layout.container.Auto', {
         }
     },
 
-    doRenderPadding: function(out, renderData) {
+    doRenderPadding: function (out, renderData) {
         // Careful! This method is bolted on to the renderTpl so all we get for context is
         // the renderData! The "this" pointer is the renderTpl instance!
 
@@ -487,7 +486,7 @@ Ext.define('Ext.layout.container.Auto', {
 
         this.callParent(arguments);
 
-        if (Ext.isIE8)  {
+        if (Ext.isIE8) {
             // IE8 needs a repaint to render percentage sized child items.
             innerCt.repaint();
         }
@@ -509,7 +508,7 @@ Ext.define('Ext.layout.container.Auto', {
      *
      * If the {@link #calculateOverflow} method is used and if {@link #manageOverflow} is
      * true, this will adjust the width/height by the size of scrollbars.
-     * 
+     *
      * @param {Ext.layout.ContextItem} ownerContext The owner's context item.
      * @param {Boolean} [inDom=false] True if the container size must be in the DOM.
      * @return {Object} The size
@@ -517,13 +516,13 @@ Ext.define('Ext.layout.container.Auto', {
      * @return {Number} return.height The height
      * @protected
      */
-    getContainerSize : function(ownerContext, inDom) {
+    getContainerSize: function (ownerContext, inDom) {
         // Subtle But Important:
         // 
         // We don't want to call getProp/hasProp et.al. unless we in fact need that value
         // for our results! If we call it and don't need it, the layout manager will think
         // we depend on it and will schedule us again should it change.
-        
+
         var size = this.callParent(arguments),
             overflowAdjust = ownerContext.state.overflowAdjust;
 
@@ -547,13 +546,13 @@ Ext.define('Ext.layout.container.Auto', {
 
     // Overridden method from Ext.layout.container.Container.
     // Used in the beforeLayout method to render all items into.
-    getRenderTarget: function() {
+    getRenderTarget: function () {
         return this.innerCt;
     },
 
     // Overridden method from Ext.layout.container.Container.
     // Used by Container classes to insert special DOM elements which must exist in addition to the child components
-    getElementTarget: function() {
+    getElementTarget: function () {
         return this.innerCt;
     },
 
@@ -567,7 +566,7 @@ Ext.define('Ext.layout.container.Auto', {
      * @param {Ext.layout.ContextItem} ownerContext
      * @return {String}
      */
-    getOverflowXStyle: function(ownerContext) {
+    getOverflowXStyle: function (ownerContext) {
         return ownerContext.overflowXStyle ||
             (ownerContext.overflowXStyle = this.owner.scrollFlags.overflowX || ownerContext.overflowContext.getStyle('overflow-x'));
     },
@@ -582,12 +581,12 @@ Ext.define('Ext.layout.container.Auto', {
      * @param {Ext.layout.ContextItem} ownerContext
      * @return {String}
      */
-    getOverflowYStyle: function(ownerContext) {
-        return ownerContext.overflowYStyle || 
+    getOverflowYStyle: function (ownerContext) {
+        return ownerContext.overflowYStyle ||
             (ownerContext.overflowYStyle = this.owner.scrollFlags.overflowY || ownerContext.overflowContext.getStyle('overflow-y'));
     },
 
-    initContextItems: function(ownerContext) {
+    initContextItems: function (ownerContext) {
         var me = this,
             target = ownerContext.target,
             overflowEl = me.owner.getOverflowEl();
@@ -607,7 +606,7 @@ Ext.define('Ext.layout.container.Auto', {
         }
     },
 
-    initLayout: function() {
+    initLayout: function () {
         var me = this,
             scrollbarWidth = Ext.getScrollbarSize().width,
             owner = me.owner;
@@ -644,7 +643,7 @@ Ext.define('Ext.layout.container.Auto', {
 
     measureContentWidth: function (ownerContext) {
         var dom, style, old, contentWidth, target;
-            
+
         // In the newer Chrome versions, it won't measure the
         // width correctly without repainting the inner
         // cell in some circumstances.
@@ -652,12 +651,12 @@ Ext.define('Ext.layout.container.Auto', {
             dom = this.innerCt.dom;
             style = dom.style;
             old = style.display;
-            
+
             if (old === 'table-cell') {
                 style.display = '';
                 dom.offsetWidth; // jshint ignore:line
                 style.display = old;
-            }    
+            }
         }
 
         if (Ext.isSafari) {
@@ -690,26 +689,26 @@ Ext.define('Ext.layout.container.Auto', {
     /**
      * This method sets the height and/or width of the outerCt/innerCt to adjust for the
      * following browser-specific issues:
-     * 
+     *
      * 1. In some browsers a percentage-height element ignores the horizontal scrollbar
      * of its parent (see Ext.supports.PercentageHeightOverflowBug).  If the browser is
      * affected by this bug the outerCt needs a pixel height in order to support
      * percentage-height children when not shrink-wrapping height. If the browser is not
      * affected by this bug, a height of 100% is assigned to the outerCt (see
      * beginLayoutCycle).
-     * 
+     *
      * 2. IE8 mode has a bug with percentage height children.  if the innerCt has
      * a height of 100%, has padding, and has a child item with a percentage height, that
      * child item will be sized as a percentage of the parent's height plus padding height.
      * In other words, a child with height:50% would have its height caclulated thusly:
      * (parentHeight + parentPaddingHeight) * 0.5
      * To fix this, we have to give the innerCt a pixel height.
-     * 
+     *
      * @protected
      * @param {Ext.layout.ContextItem} ownerContext
      * @param {Object} containerSize
      */
-    setCtSizeIfNeeded: function(ownerContext, containerSize) {
+    setCtSizeIfNeeded: function (ownerContext, containerSize) {
         var me = this,
             height = containerSize.height,
             padding = ownerContext.paddingContext.getPaddingInfo(),
@@ -731,7 +730,7 @@ Ext.define('Ext.layout.container.Auto', {
                 needsInnerHeight = true;
             }
 
-            if ((needsOuterHeight || needsInnerHeight) && canOverflowX && 
+            if ((needsOuterHeight || needsInnerHeight) && canOverflowX &&
                 (targetEl.dom.scrollWidth > targetEl.dom.clientWidth)) {
                 // adjust the height for scrollbar size since it's not accounted for
                 // in the containerSize.
@@ -743,7 +742,7 @@ Ext.define('Ext.layout.container.Auto', {
                 ownerContext.outerCtContext.setProp('height', height + padding.height);
                 me.hasOuterCtPxHeight = true;
             }
-            
+
             if (needsInnerHeight) {
                 ownerContext.innerCtContext.setProp('height', height);
                 me.hasInnerCtPxHeight = true;
@@ -757,14 +756,14 @@ Ext.define('Ext.layout.container.Auto', {
         renderTpl.renderPadding = this.doRenderPadding;
     },
 
-    getContentTarget: function(){
+    getContentTarget: function () {
         return this.innerCt;
     },
 
-    getScrollerEl: function() {
+    getScrollerEl: function () {
         return this.outerCt;
     }
 
-}, function(){
+}, function () {
     this.prototype.chromeCellMeasureBug = Ext.isChrome && Ext.chromeVersion >= 26;
 });

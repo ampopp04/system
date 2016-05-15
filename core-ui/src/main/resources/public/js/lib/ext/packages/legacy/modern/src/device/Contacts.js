@@ -38,7 +38,7 @@ Ext.define('Ext.device.Contacts', {
         'Ext.device.contacts.Cordova'
     ],
 
-    constructor: function() {
+    constructor: function () {
         var browserEnv = Ext.browser.is;
 
         if (browserEnv.WebView) {

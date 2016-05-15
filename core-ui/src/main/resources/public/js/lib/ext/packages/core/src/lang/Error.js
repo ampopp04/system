@@ -68,7 +68,7 @@
  *
  * @class Ext.Error
  */
-(function() {
+(function () {
 // @define Ext.lang.Error
 // @define Ext.Error
 // @require Ext
@@ -91,13 +91,13 @@
         if (cls) {
             method = method ? (cls + '.' + method) : cls;
         }
-        
+
         return method || msg || '';
     }
 
-    Ext.Error = function(config) {
+    Ext.Error = function (config) {
         if (Ext.isString(config)) {
-            config = { msg: config };
+            config = {msg: config};
         }
 
         var error = new Error();
@@ -135,10 +135,10 @@
          * @static
          * @deprecated 6.0.0 Use {@link Ext#raise} instead.
          */
-        raise: function(err) {
+        raise: function (err) {
             err = err || {};
             if (Ext.isString(err)) {
-                err = { msg: err };
+                err = {msg: err};
             }
 
             var me = this,
@@ -212,9 +212,9 @@ Ext.deprecated = function (suggestion) {
         suggestion = '';
     }
 
-    function fail () {
+    function fail() {
         Ext.raise('The method "' + fail.$owner.$className + '.' + fail.$name +
-                  '" has been removed. ' + suggestion);
+            '" has been removed. ' + suggestion);
     }
 
     return fail;
@@ -271,8 +271,8 @@ Ext.raise = function () {
     }
 
     var last = 0,
-        // This method is called to notify the user of the current error status.
-        notify = function() {
+    // This method is called to notify the user of the current error status.
+        notify = function () {
             var cnt = Ext.log && Ext.log.counters,
                 n = cnt && (cnt.error + cnt.warn + cnt.info + cnt.log),
                 msg;

@@ -7,7 +7,7 @@ describe("Ext.view.NodeCache", function () {
 
     beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -16,36 +16,36 @@ describe("Ext.view.NodeCache", function () {
         };
 
         store = Ext.create('Ext.data.Store', {
-            fields      : ['name'],
-            autoDestroy : true,
+            fields: ['name'],
+            autoDestroy: true,
 
-            data : {
-                'items' : [
-                    { 'name' : 'Lisa' },
-                    { 'name' : 'Bart' },
-                    { 'name' : 'Homer' },
-                    { 'name' : 'Marge' }
+            data: {
+                'items': [
+                    {'name': 'Lisa'},
+                    {'name': 'Bart'},
+                    {'name': 'Homer'},
+                    {'name': 'Marge'}
                 ]
             },
 
-            proxy : {
-                type   : 'memory',
-                reader : {
-                    type : 'json',
+            proxy: {
+                type: 'memory',
+                reader: {
+                    type: 'json',
                     rootProperty: 'items'
                 }
             }
         });
 
         grid = Ext.create('Ext.grid.Panel', {
-            store    : store,
-            height   : 100,
-            width    : 100,
-            renderTo : Ext.getBody(),
-            columns  : [
+            store: store,
+            height: 100,
+            width: 100,
+            renderTo: Ext.getBody(),
+            columns: [
                 {
-                    text      : 'Name',
-                    dataIndex : 'name'
+                    text: 'Name',
+                    dataIndex: 'name'
                 }
             ]
         });
@@ -63,14 +63,14 @@ describe("Ext.view.NodeCache", function () {
     // EXTJSIV-9765
     it("Store rejectChanges() should not break NodeCache insert()", function () {
         //have to create a scoped function that because Jasmine expect() changes our scope.
-        var scopedFn = function() {
+        var scopedFn = function () {
             store.rejectChanges();
         };
 
         var count = store.getCount();
 
-        store.removeAt(count-1);
-        store.removeAt(count-2);
+        store.removeAt(count - 1);
+        store.removeAt(count - 2);
 
         expect(scopedFn).not.toThrow();
 
@@ -79,7 +79,7 @@ describe("Ext.view.NodeCache", function () {
     });
 
     // EXTJS-17399
-    it('should not mutate the rendered block on moveBlock(0)', function() {
+    it('should not mutate the rendered block on moveBlock(0)', function () {
         var start = rows.startIndex,
             end = rows.endIndex,
             elements = rows.slice();

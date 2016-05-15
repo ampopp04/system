@@ -76,7 +76,7 @@ Ext.define('Ext.layout.container.Container', {
         this.mixins.elementCt.constructor.call(this);
     },
 
-    destroy: function() {
+    destroy: function () {
         this.callParent();
         this.mixins.elementCt.destroy.call(this);
     },
@@ -136,7 +136,7 @@ Ext.define('Ext.layout.container.Container', {
         this.attachChildEls(owner.el, owner); // from ElementContainer mixin
     },
 
-    calculate: function(ownerContext) {
+    calculate: function (ownerContext) {
         var props = ownerContext.props,
             el = ownerContext.el;
 
@@ -153,7 +153,7 @@ Ext.define('Ext.layout.container.Container', {
      * Adds layout's itemCls and owning Container's itemCls
      * @protected
      */
-    configureItem: function(item) {
+    configureItem: function (item) {
         var me = this,
             itemCls = me.itemCls,
             ownerItemCls = me.owner.itemCls,
@@ -233,7 +233,7 @@ Ext.define('Ext.layout.container.Container', {
      * @private
      * Called for every layout in the layout context after all the layouts have been finally flushed
      */
-    notifyOwner: function() {
+    notifyOwner: function () {
         //<debug>
         if (!this._hasTargetWarning && this.targetCls && !this.getTarget().hasCls(this.targetCls)) {
             this._hasTargetWarning = true;
@@ -255,7 +255,7 @@ Ext.define('Ext.layout.container.Container', {
      * @return {Number} return.height The height
      * @protected
      */
-    getContainerSize : function(ownerContext, inDom) {
+    getContainerSize: function (ownerContext, inDom) {
         // Subtle But Important:
         //
         // We don't want to call getProp/hasProp et.al. unless we in fact need that value
@@ -322,7 +322,7 @@ Ext.define('Ext.layout.container.Container', {
     // created, so when we check the position we need to add an extra offset.
     // Containers that create an innerCt are exempt because this new element
     // preserves the order
-    getPositionOffset: function(position) {
+    getPositionOffset: function (position) {
         if (!this.createsInnerCt) {
             var offset = this.owner.itemNodeOffset;
             if (offset) {
@@ -337,7 +337,7 @@ Ext.define('Ext.layout.container.Container', {
      * method of the layout's base class), or the layout phase (onLayout).
      * @return {Ext.Component[]} of child components
      */
-    getLayoutItems: function() {
+    getLayoutItems: function () {
         var owner = this.owner,
             items = owner && owner.items;
 
@@ -359,7 +359,7 @@ Ext.define('Ext.layout.container.Container', {
      * Returns all items that are rendered
      * @return {Array} All matching items
      */
-    getRenderedItems: function() {
+    getRenderedItems: function () {
         var me = this,
             target = me.getRenderTarget(),
             items = me.getLayoutItems(),
@@ -385,7 +385,7 @@ Ext.define('Ext.layout.container.Container', {
      *
      * @return {Ext.dom.Element}
      */
-    getRenderTarget: function() {
+    getRenderTarget: function () {
         return this.owner.getTargetEl();
     },
 
@@ -396,7 +396,7 @@ Ext.define('Ext.layout.container.Container', {
      * contain child components.
      * @return {Ext.dom.Element}
      */
-    getElementTarget: function() {
+    getElementTarget: function () {
         return this.getRenderTarget();
     },
 
@@ -475,7 +475,7 @@ Ext.define('Ext.layout.container.Container', {
      * Returns the owner component's resize element.
      * @return {Ext.dom.Element}
      */
-    getTarget: function() {
+    getTarget: function () {
         return this.owner.getTargetEl();
     },
 
@@ -484,7 +484,7 @@ Ext.define('Ext.layout.container.Container', {
      * Returns all items that are both rendered and visible
      * @return {Array} All matching items
      */
-    getVisibleItems: function() {
+    getVisibleItems: function () {
         var target = this.getRenderTarget(),
             items = this.getLayoutItems(),
             ln = items.length,
@@ -516,7 +516,7 @@ Ext.define('Ext.layout.container.Container', {
         }
 
         if (before) {
-            toIndex =  items.indexOf(before);
+            toIndex = items.indexOf(before);
             if (index > -1 && index < toIndex) {
                 --toIndex;
             }
@@ -533,7 +533,7 @@ Ext.define('Ext.layout.container.Container', {
         renderTpl.renderItems = this.doRenderItems;
     },
 
-    getContentTarget: function(){
+    getContentTarget: function () {
         return this.owner.getDefaultContentTarget();
     },
 
@@ -544,7 +544,7 @@ Ext.define('Ext.layout.container.Container', {
         this.callParent([item]);
     },
 
-    onRemove: function(item, isDestroying) {
+    onRemove: function (item, isDestroying) {
         if (!item.liquidLayout) {
             --this.activeItemCount;
         }

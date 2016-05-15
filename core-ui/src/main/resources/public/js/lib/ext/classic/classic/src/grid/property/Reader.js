@@ -9,11 +9,11 @@ Ext.define('Ext.grid.property.Reader', {
     totalProperty: null,
     messageProperty: null,
 
-    read: function(dataObject) {
+    read: function (dataObject) {
         return this.readRecords(dataObject);
     },
 
-    readRecords: function(dataObject) {
+    readRecords: function (dataObject) {
         var Model = this.getModel(),
             result = {
                 records: [],
@@ -38,7 +38,7 @@ Ext.define('Ext.grid.property.Reader', {
     /**
      * @private
      */
-    isEditableValue: function(val){
+    isEditableValue: function (val) {
         return Ext.isPrimitive(val) || Ext.isDate(val) || val === null;
     }
 });

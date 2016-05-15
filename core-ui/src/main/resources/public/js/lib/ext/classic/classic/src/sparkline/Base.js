@@ -121,41 +121,41 @@ Ext.define('Ext.sparkline.Base', {
         tagValuesAttribute: 'values',
 
         enableTagOptions: false,
-        
+
         enableHighlight: true,
-        
+
         /**
          * @cfg {String} [highlightColor=null] The hex value for the highlight color to use when mouseing over a graph segment.
          */
         highlightColor: null,
-        
+
         /**
          * @cfg {Number} [highlightLighten=1.4] How much to lighten the highlight color by when mouseing over a graph segment.
          */
         highlightLighten: 1.4,
-        
+
         /**
          * @cfg {Boolean} [tooltipSkipNull=true] Null values will not have a tooltip displayed.
          */
         tooltipSkipNull: true,
-        
+
         /**
          * @cfg {String} [tooltipPrefix] A string to prepend to each field displayed in a tooltip.
          */
         tooltipPrefix: '',
-        
+
         /**
          * @cfg {String} [tooltipSuffix] A string to append to each field displayed in a tooltip.
          */
         tooltipSuffix: '',
-        
+
         /**
          * @cfg {Boolean} [disableTooltips=false] Set to `true` to disable mouseover tooltips.
          */
         disableTooltips: false,
-        
+
         disableInteraction: false,
-        
+
         /**
          * @cfg {String/Ext.XTemplate} [tipTpl] An XTemplate used to display the value or values in a tooltip when hovering over a Sparkline.
          *
@@ -188,7 +188,7 @@ Ext.define('Ext.sparkline.Base', {
         width: 0,
         height: 0
     },
-    
+
     defaultBindProperty: 'values',
 
     // When any config is changed, the canvas needs to be redrawn.
@@ -208,7 +208,7 @@ Ext.define('Ext.sparkline.Base', {
          * @static
          * @inheritable
          */
-        onClassCreated: function(cls) {
+        onClassCreated: function (cls) {
             var proto = cls.prototype,
                 configs = cls.getConfigurator().configs,
                 config;
@@ -219,16 +219,16 @@ Ext.define('Ext.sparkline.Base', {
                 if (config !== 'tipTpl') {
                     proto[Ext.Config.get(config).names.apply] = proto.applyConfigChange;
                 }
-            }    
+            }
         }
     },
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this;
 
         // The canvas sets our element config
         me.canvas = Ext.supports.Canvas ? new Ext.sparkline.CanvasCanvas(me)
-                                        : new Ext.sparkline.VmlCanvas(me);
+            : new Ext.sparkline.VmlCanvas(me);
         if (!me.getDisableTooltips()) {
             me.element.cls = Ext.sparkline.Base.sparkLineTipClass;
         }
@@ -244,7 +244,7 @@ Ext.define('Ext.sparkline.Base', {
     // returns true if the array is empty
     all: function (val, arr, ignoreNull) {
         var i;
-        for (i = arr.length; i--; ) {
+        for (i = arr.length; i--;) {
             if (ignoreNull && arr[i] === null) {
                 continue;
             }
@@ -257,21 +257,21 @@ Ext.define('Ext.sparkline.Base', {
 
     // generic config value applier.
     // Adds this to the queue to do a redraw on the next animation frame
-    applyConfigChange: function(newValue) {
+    applyConfigChange: function (newValue) {
         var me = this;
         me.redrawQueue[me.getId()] = me;
 
         // Ensure that there is a single timer to handle all queued redraws.
         if (!me.redrawTimer) {
             Ext.sparkline.Base.prototype.redrawTimer =
-                    Ext.Function.requestAnimationFrame(me.processRedrawQueue);
+                Ext.Function.requestAnimationFrame(me.processRedrawQueue);
         }
         return newValue;
     },
 
     // Appliers convert an incoming config value.
     // Ensure the tipTpl is an XTemplate
-    applyTipTpl: function(tipTpl) {
+    applyTipTpl: function (tipTpl) {
         if (!tipTpl.isTemplate) {
             tipTpl = new Ext.XTemplate(tipTpl);
         }
@@ -310,7 +310,7 @@ Ext.define('Ext.sparkline.Base', {
         return result;
     },
 
-    updateWidth: function(width, oldWidth) {
+    updateWidth: function (width, oldWidth) {
         var me = this,
             dom = me.element.dom;
 
@@ -324,7 +324,7 @@ Ext.define('Ext.sparkline.Base', {
         }
     },
 
-    updateHeight: function(height, oldHeight) {
+    updateHeight: function (height, oldHeight) {
         var me = this;
 
         me.callParent([height, oldHeight]);
@@ -333,11 +333,11 @@ Ext.define('Ext.sparkline.Base', {
         me.redrawQueue[me.getId()] = me;
     },
 
-    updateValues: function(values) {
+    updateValues: function (values) {
         this.values = values;
     },
 
-    redraw: function() {
+    redraw: function () {
         var me = this;
 
         if (me.getValues()) {
@@ -361,7 +361,7 @@ Ext.define('Ext.sparkline.Base', {
         return ret;
     },
 
-    onMouseEnter: function(e) {
+    onMouseEnter: function (e) {
         this.onMouseMove(e);
     },
 
@@ -375,7 +375,7 @@ Ext.define('Ext.sparkline.Base', {
         var me = this;
         me.currentPageXY = me.targetX = me.targetY = null;
         me.redraw();
-        me.tooltip.target = null;  
+        me.tooltip.target = null;
         me.tooltip.hide();
     },
 
@@ -409,7 +409,7 @@ Ext.define('Ext.sparkline.Base', {
 
         // No tip content; ensure it's hidden
         if (!tooltipHTML) {
-            tooltip.target = null;  
+            tooltip.target = null;
             tooltip.hide();
         }
     },
@@ -422,7 +422,7 @@ Ext.define('Ext.sparkline.Base', {
     /*
      * Fetch the HTML to display as a tooltip
      */
-    getRegionTooltip: function(region) {
+    getRegionTooltip: function (region) {
         var me = this,
             header = me.tooltipChartTitle,
             entries = [],
@@ -475,7 +475,7 @@ Ext.define('Ext.sparkline.Base', {
 
     getRegionFields: Ext.emptyFn,
 
-    calcHighlightColor: function(color) {
+    calcHighlightColor: function (color) {
         var me = this,
             highlightColor = me.getHighlightColor(),
             lighten = me.getHighlightLighten(),
@@ -499,14 +499,14 @@ Ext.define('Ext.sparkline.Base', {
         return color;
     },
 
-    destroy: function() {
+    destroy: function () {
         delete this.redrawQueue[this.getId()];
         this.callParent();
     }
-}, function(SparklineBase) {
+}, function (SparklineBase) {
     var proto = SparklineBase.prototype;
 
-    Ext.onInternalReady(function() {
+    Ext.onInternalReady(function () {
         proto.tooltip = new Ext.tip.ToolTip({
             id: 'sparklines-tooltip',
             showDelay: 0,
@@ -516,7 +516,7 @@ Ext.define('Ext.sparkline.Base', {
     });
 
     SparklineBase.onClassCreated(SparklineBase);
-    
+
     proto.processRedrawQueue = function () {
         var redrawQueue = proto.redrawQueue,
             id;

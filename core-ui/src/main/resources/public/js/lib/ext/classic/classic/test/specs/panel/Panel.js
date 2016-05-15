@@ -1,7 +1,7 @@
 describe("Ext.panel.Panel", function () {
     var panel, ct;
 
-    function makePanel (cfg) {
+    function makePanel(cfg) {
         panel = new Ext.panel.Panel(Ext.apply({
             renderTo: Ext.getBody()
         }, cfg));
@@ -11,15 +11,15 @@ describe("Ext.panel.Panel", function () {
         panel = ct = Ext.destroy(panel, ct);
     });
 
-    function keep () {
+    function keep() {
         panel.el.dom.setAttribute('data-sticky', 'true');
         panel = null;
     }
 
-    describe("toolbars", function() {
-        describe("vertical toolbars", function() {
-            describe("lbar", function() {
-                it("should default to vertical: true", function() {
+    describe("toolbars", function () {
+        describe("vertical toolbars", function () {
+            describe("lbar", function () {
+                it("should default to vertical: true", function () {
                     makePanel({
                         lbar: [{
                             text: 'Foo'
@@ -28,7 +28,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(true);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         lbar: {
                             vertical: false,
@@ -40,7 +40,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         lbar: {
                             vertical: true,
@@ -53,8 +53,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("rbar", function() {
-                it("should default to vertical: true", function() {
+            describe("rbar", function () {
+                it("should default to vertical: true", function () {
                     makePanel({
                         rbar: [{
                             text: 'Foo'
@@ -63,7 +63,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(true);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         rbar: {
                             vertical: false,
@@ -75,7 +75,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         rbar: {
                             vertical: true,
@@ -88,8 +88,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("dock: left", function() {
-                it("should default to vertical: true", function() {
+            describe("dock: left", function () {
+                it("should default to vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -102,7 +102,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(true);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -116,7 +116,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -131,8 +131,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("dock: right", function() {
-                it("should default to vertical: true", function() {
+            describe("dock: right", function () {
+                it("should default to vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -145,7 +145,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(true);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -159,7 +159,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -175,9 +175,9 @@ describe("Ext.panel.Panel", function () {
             });
         });
 
-        describe("horizontal toolbars", function() {
-            describe("tbar", function() {
-                it("should default to vertical: false", function() {
+        describe("horizontal toolbars", function () {
+            describe("tbar", function () {
+                it("should default to vertical: false", function () {
                     makePanel({
                         tbar: [{
                             text: 'Foo'
@@ -186,7 +186,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         tbar: {
                             vertical: false,
@@ -198,7 +198,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         tbar: {
                             vertical: true,
@@ -211,8 +211,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("bbar", function() {
-                it("should default to vertical: false", function() {
+            describe("bbar", function () {
+                it("should default to vertical: false", function () {
                     makePanel({
                         bbar: [{
                             text: 'Foo'
@@ -221,7 +221,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         bbar: {
                             vertical: false,
@@ -233,7 +233,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         bbar: {
                             vertical: true,
@@ -246,8 +246,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("dock: top", function() {
-                it("should default to vertical: false", function() {
+            describe("dock: top", function () {
+                it("should default to vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -260,7 +260,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -274,7 +274,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -289,8 +289,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("dock: bottom", function() {
-                it("should default to vertical: false", function() {
+            describe("dock: bottom", function () {
+                it("should default to vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -303,7 +303,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -317,7 +317,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -334,10 +334,10 @@ describe("Ext.panel.Panel", function () {
         });
     });
 
-    describe("toolbars", function() {
-        describe("vertical toolbars", function() {
-            describe("lbar", function() {
-                it("should default to vertical: true", function() {
+    describe("toolbars", function () {
+        describe("vertical toolbars", function () {
+            describe("lbar", function () {
+                it("should default to vertical: true", function () {
                     makePanel({
                         lbar: [{
                             text: 'Foo'
@@ -346,7 +346,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(true);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         lbar: {
                             vertical: false,
@@ -358,7 +358,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         lbar: {
                             vertical: true,
@@ -371,8 +371,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("rbar", function() {
-                it("should default to vertical: true", function() {
+            describe("rbar", function () {
+                it("should default to vertical: true", function () {
                     makePanel({
                         rbar: [{
                             text: 'Foo'
@@ -381,7 +381,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(true);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         rbar: {
                             vertical: false,
@@ -393,7 +393,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         rbar: {
                             vertical: true,
@@ -406,8 +406,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("dock: left", function() {
-                it("should default to vertical: true", function() {
+            describe("dock: left", function () {
+                it("should default to vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -420,7 +420,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(true);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -434,7 +434,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -449,8 +449,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("dock: right", function() {
-                it("should default to vertical: true", function() {
+            describe("dock: right", function () {
+                it("should default to vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -463,7 +463,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(true);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -477,7 +477,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -493,9 +493,9 @@ describe("Ext.panel.Panel", function () {
             });
         });
 
-        describe("horizontal toolbars", function() {
-            describe("tbar", function() {
-                it("should default to vertical: false", function() {
+        describe("horizontal toolbars", function () {
+            describe("tbar", function () {
+                it("should default to vertical: false", function () {
                     makePanel({
                         tbar: [{
                             text: 'Foo'
@@ -504,7 +504,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         tbar: {
                             vertical: false,
@@ -516,7 +516,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         tbar: {
                             vertical: true,
@@ -529,8 +529,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("bbar", function() {
-                it("should default to vertical: false", function() {
+            describe("bbar", function () {
+                it("should default to vertical: false", function () {
                     makePanel({
                         bbar: [{
                             text: 'Foo'
@@ -539,7 +539,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         bbar: {
                             vertical: false,
@@ -551,7 +551,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         bbar: {
                             vertical: true,
@@ -564,8 +564,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("dock: top", function() {
-                it("should default to vertical: false", function() {
+            describe("dock: top", function () {
+                it("should default to vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -578,7 +578,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -592,7 +592,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -607,8 +607,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("dock: bottom", function() {
-                it("should default to vertical: false", function() {
+            describe("dock: bottom", function () {
+                it("should default to vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -621,7 +621,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: false", function() {
+                it("should respect a configured vertical: false", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -635,7 +635,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.down('toolbar').vertical).toBe(false);
                 });
 
-                it("should respect a configured vertical: true", function() {
+                it("should respect a configured vertical: true", function () {
                     makePanel({
                         dockedItems: {
                             xtype: 'toolbar',
@@ -652,8 +652,8 @@ describe("Ext.panel.Panel", function () {
         });
     });
 
-    describe("percentage width children of fixed width Panel", function() {
-        it("should pass through %age widths to the child's style", function() {
+    describe("percentage width children of fixed width Panel", function () {
+        it("should pass through %age widths to the child's style", function () {
             makePanel({
                 width: 500,
                 height: 280,
@@ -676,11 +676,11 @@ describe("Ext.panel.Panel", function () {
             expect(panel.child('[title=Bottom Inner Panel]').el.dom.style.width).toEqual('75%');
         });
     });
-    
-    describe("collapsible", function(){
 
-        describe("horizontal collapsing", function() {
-            it("should add the correct vertical classes", function() {
+    describe("collapsible", function () {
+
+        describe("horizontal collapsing", function () {
+            it("should add the correct vertical classes", function () {
                 makePanel({
                     width: 100,
                     height: 100,
@@ -697,13 +697,13 @@ describe("Ext.panel.Panel", function () {
             });
         });
 
-        describe("collapse dimensions", function(){
+        describe("collapse dimensions", function () {
 
-            describe("static sizes", function(){
+            describe("static sizes", function () {
 
-                describe("collapse vertical", function(){
+                describe("collapse vertical", function () {
 
-                    it("should restore an auto height", function(){
+                    it("should restore an auto height", function () {
                         makePanel({
                             width: 100,
                             title: 'Foo',
@@ -718,7 +718,7 @@ describe("Ext.panel.Panel", function () {
                         expect(panel.getHeight()).toBe(oldHeight + 30);
                     });
 
-                    it("should restore a fixed height", function(){
+                    it("should restore a fixed height", function () {
                         makePanel({
                             width: 100,
                             height: 100,
@@ -733,9 +733,9 @@ describe("Ext.panel.Panel", function () {
 
                 });
 
-                describe("collapse horizontal", function(){
+                describe("collapse horizontal", function () {
 
-                    it("should restore an auto width", function(){
+                    it("should restore an auto width", function () {
                         // Float to prevent stretching the whole body width
                         makePanel({
                             collapseDirection: 'left',
@@ -755,7 +755,7 @@ describe("Ext.panel.Panel", function () {
                         expect(panel.getWidth()).toBe(oldWidth + 30);
                     });
 
-                    it("should restore a fixed width", function(){
+                    it("should restore a fixed width", function () {
                         makePanel({
                             width: 100,
                             height: 100,
@@ -772,9 +772,9 @@ describe("Ext.panel.Panel", function () {
 
             });
 
-            describe("changing size while collapsed", function(){
+            describe("changing size while collapsed", function () {
 
-                it("should set the width when the width changes while collapsed vertically", function(){
+                it("should set the width when the width changes while collapsed vertically", function () {
                     makePanel({
                         width: 100,
                         height: 100,
@@ -788,7 +788,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.getWidth()).toBe(200);
                 });
 
-                it("should set the height when the height changes while collapsed horizontally", function(){
+                it("should set the height when the height changes while collapsed horizontally", function () {
                     makePanel({
                         collapseDirection: 'left',
                         width: 100,
@@ -803,9 +803,9 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.getHeight()).toBe(200);
                 });
 
-                describe("inside a container", function(){
+                describe("inside a container", function () {
 
-                    it("should resize width", function(){
+                    it("should resize width", function () {
                         ct = Ext.create('Ext.container.Container', {
                             renderTo: Ext.getBody(),
                             width: 100,
@@ -826,7 +826,7 @@ describe("Ext.panel.Panel", function () {
                         expect(panel.getWidth()).toBe(180);
                     });
 
-                    it("should resize height", function(){
+                    it("should resize height", function () {
                         ct = Ext.create('Ext.container.Container', {
                             renderTo: Ext.getBody(),
                             width: 100,
@@ -852,8 +852,8 @@ describe("Ext.panel.Panel", function () {
 
             });
 
-            describe("setCollapsed", function() {
-                it("should call collapse the panel when true is passed", function() {
+            describe("setCollapsed", function () {
+                it("should call collapse the panel when true is passed", function () {
                     makePanel({
                         collapsible: true
                     });
@@ -867,7 +867,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.collapsed).toBeTruthy();
                 });
 
-                it("should call expand() when false is passed", function() {
+                it("should call expand() when false is passed", function () {
                     makePanel({
                         collapsible: true,
                         collapsed: true
@@ -884,20 +884,20 @@ describe("Ext.panel.Panel", function () {
             });
         });
 
-        describe("collapseTool", function(){
+        describe("collapseTool", function () {
             var getTool;
 
-            beforeEach(function(){
-                getTool = function(){
+            beforeEach(function () {
+                getTool = function () {
                     return panel.down('tool');
                 };
             });
 
-            afterEach(function(){
+            afterEach(function () {
                 getTool = null;
             });
 
-            it("should not create a collapse tool if collapsible: false", function(){
+            it("should not create a collapse tool if collapsible: false", function () {
                 makePanel({
                     width: 50,
                     height: 50,
@@ -909,22 +909,22 @@ describe("Ext.panel.Panel", function () {
 
             // collapsed, collapseDirection, expectedTool
             Ext.Array.forEach([
-                        { collapsed: false, collapseDirection: 'top',    expect: 'collapse-top' },
-                        { collapsed: false, collapseDirection: 'right',  expect: 'collapse-right' },
-                        { collapsed: false, collapseDirection: 'bottom', expect: 'collapse-bottom' },
-                        { collapsed: false, collapseDirection: 'left',   expect: 'collapse-left' },
-                        { collapsed: true,  collapseDirection: 'top',    expect: 'expand-bottom' },
-                        { collapsed: true,  collapseDirection: 'right',  expect: 'expand-left' },
-                        { collapsed: true,  collapseDirection: 'bottom', expect: 'expand-top' },
-                        { collapsed: true,  collapseDirection: 'left',   expect: 'expand-right' }
-                    ],
-                function(item){
+                    {collapsed: false, collapseDirection: 'top', expect: 'collapse-top'},
+                    {collapsed: false, collapseDirection: 'right', expect: 'collapse-right'},
+                    {collapsed: false, collapseDirection: 'bottom', expect: 'collapse-bottom'},
+                    {collapsed: false, collapseDirection: 'left', expect: 'collapse-left'},
+                    {collapsed: true, collapseDirection: 'top', expect: 'expand-bottom'},
+                    {collapsed: true, collapseDirection: 'right', expect: 'expand-left'},
+                    {collapsed: true, collapseDirection: 'bottom', expect: 'expand-top'},
+                    {collapsed: true, collapseDirection: 'left', expect: 'expand-right'}
+                ],
+                function (item) {
                     var answer = item.expect;
                     delete item.expect;
 
-                    it("should render the correct tool with default collapseMode "+
-                            Ext.encode(item),
-                        function(){
+                    it("should render the correct tool with default collapseMode " +
+                        Ext.encode(item),
+                        function () {
                             makePanel(Ext.apply({
                                 width: 50,
                                 height: 50,
@@ -937,22 +937,22 @@ describe("Ext.panel.Panel", function () {
 
             // When using placeHolder, it should never modify the tool of the original panel
             Ext.Array.forEach([
-                    { collapsed: false, collapseDirection: 'top',    expect: 'collapse-top' },
-                    { collapsed: false, collapseDirection: 'right',  expect: 'collapse-right' },
-                    { collapsed: false, collapseDirection: 'bottom', expect: 'collapse-bottom' },
-                    { collapsed: false, collapseDirection: 'left',   expect: 'collapse-left' },
-                    { collapsed: true,  collapseDirection: 'top',    expect: 'collapse-top' },
-                    { collapsed: true,  collapseDirection: 'right',  expect: 'collapse-right' },
-                    { collapsed: true,  collapseDirection: 'bottom', expect: 'collapse-bottom' },
-                    { collapsed: true,  collapseDirection: 'left',   expect: 'collapse-left' }
+                    {collapsed: false, collapseDirection: 'top', expect: 'collapse-top'},
+                    {collapsed: false, collapseDirection: 'right', expect: 'collapse-right'},
+                    {collapsed: false, collapseDirection: 'bottom', expect: 'collapse-bottom'},
+                    {collapsed: false, collapseDirection: 'left', expect: 'collapse-left'},
+                    {collapsed: true, collapseDirection: 'top', expect: 'collapse-top'},
+                    {collapsed: true, collapseDirection: 'right', expect: 'collapse-right'},
+                    {collapsed: true, collapseDirection: 'bottom', expect: 'collapse-bottom'},
+                    {collapsed: true, collapseDirection: 'left', expect: 'collapse-left'}
                 ],
-                function(item){
+                function (item) {
                     var answer = item.expect;
                     delete item.expect;
 
-                    it("should render the correct tool with the collapseMode placeHolder "+
-                            Ext.encode(item),
-                        function(){
+                    it("should render the correct tool with the collapseMode placeHolder " +
+                        Ext.encode(item),
+                        function () {
                             // collapsed, collapseDirection, expectedTool
                             var ct = new Ext.container.Container({
                                 renderTo: Ext.getBody()
@@ -971,12 +971,12 @@ describe("Ext.panel.Panel", function () {
                         });
                 });
         });
-        
-        describe("animation", function() {
-        
+
+        describe("animation", function () {
+
             // https://sencha.jira.com/browse/EXTJSIV-8095
-            it("should honor numeric animCollapse value", function() {
-                runs(function() {
+            it("should honor numeric animCollapse value", function () {
+                runs(function () {
                     makePanel({
                         title: 'Hello',
                         animCollapse: 50,
@@ -986,23 +986,23 @@ describe("Ext.panel.Panel", function () {
                         y: 100,
                         html: '<p>World!</p>'
                     });
-                    
+
                     panel.collapse();
                 });
-                
-                waitsFor(function() {
+
+                waitsFor(function () {
                     return panel.collapsed === 'top'
                 }, 'Never collapsed');
-                
-                runs(function() {
+
+                runs(function () {
                     expect(panel.collapsed).toBe('top');
                 });
             });
         });
     });
-    
-    describe("tools", function(){
-        it("should add tools from the config", function(){
+
+    describe("tools", function () {
+        it("should add tools from the config", function () {
             makePanel({
                 renderTo: Ext.getBody(),
                 tools: [{
@@ -1015,7 +1015,7 @@ describe("Ext.panel.Panel", function () {
             expect(panel.tools[1].type).toBe('pin');
         });
 
-        it("should add tools after rendering", function(){
+        it("should add tools after rendering", function () {
             makePanel({
                 renderTo: Ext.getBody(),
                 tools: [{
@@ -1031,14 +1031,14 @@ describe("Ext.panel.Panel", function () {
             expect(panel.tools[2].type).toBe('save');
         });
     });
-    
+
     describe('autoHeight with dock bottom item', function () {
         var failedLayouts = Ext.failedLayouts;
 
         beforeEach(function () {
             failedLayouts = Ext.failedLayouts;
         });
-        
+
         it('should work', function () {
             makePanel({
                 frame: true,
@@ -1064,15 +1064,15 @@ describe("Ext.panel.Panel", function () {
             // case, the problem is *not* this number! :)
             //
             expect(panel.el.getHeight()).toBe(
-                    28 + // header w/1px border
-                    4 + // padding
-                    26 + // top dockedItem
-                    1 + // managed border
-                    125 + // component in body
-                    1 + // managed border
-                    36 + // bottom dockedItem
-                    4 + // padding
-                    1); // border
+                28 + // header w/1px border
+                4 + // padding
+                26 + // top dockedItem
+                1 + // managed border
+                125 + // component in body
+                1 + // managed border
+                36 + // bottom dockedItem
+                4 + // padding
+                1); // border
 
             if (failedLayouts != Ext.failedLayouts) {
                 expect('failedLayout=true').toBe('false');
@@ -1080,15 +1080,15 @@ describe("Ext.panel.Panel", function () {
         });
     });
 
-    describe('render', function() {
-        it('should allow a docked item to veto its render', function() {
+    describe('render', function () {
+        it('should allow a docked item to veto its render', function () {
             panel = new Ext.panel.Panel({
                 renderTo: Ext.getBody(),
                 dockedItems: [{
                     xtype: 'component',
                     itemId: 'paneldockedchild',
                     listeners: {
-                        beforerender: function() {
+                        beforerender: function () {
                             return false;
                         }
                     }
@@ -1098,14 +1098,14 @@ describe("Ext.panel.Panel", function () {
             // Child not rendered
             expect(panel.child('#paneldockedchild').rendered).toBe(false);
         });
-        
-        it("should be able to modify during rendering", function(){
+
+        it("should be able to modify during rendering", function () {
             panel = new Ext.panel.Panel({
                 renderTo: Ext.getBody(),
                 items: {
                     xtype: 'component',
                     listeners: {
-                        beforerender: function(c){
+                        beforerender: function (c) {
                             c.ownerCt.disable();
                         }
                     }
@@ -1114,11 +1114,11 @@ describe("Ext.panel.Panel", function () {
             expect(panel.getEl().hasCls(panel.disabledCls)).toBe(true);
         });
     });
-    
-    describe("header", function(){
+
+    describe("header", function () {
         var fooIcon = 'resources/images/foo.gif';
-        
-        it("should create a header if a header config is passed", function(){
+
+        it("should create a header if a header config is passed", function () {
             makePanel({
                 header: {
                     title: 'Foo'
@@ -1128,70 +1128,70 @@ describe("Ext.panel.Panel", function () {
             expect(header.isHeader).toBe(true);
             expect(header.getTitle().getText()).toBe('Foo');
         });
-        
-        it("should create a header when specifying a title", function() {
+
+        it("should create a header when specifying a title", function () {
             makePanel({
                 title: 'Foo'
             });
             expect(panel.header.isHeader).toBe(true);
-        });  
-            
-        it("should create a header when specifying an icon", function() {
+        });
+
+        it("should create a header when specifying an icon", function () {
             makePanel({
                 icon: fooIcon
             });
             expect(panel.header.isHeader).toBe(true);
-        }); 
-            
-        it("should create a header when specifying a iconCls", function() {
+        });
+
+        it("should create a header when specifying a iconCls", function () {
             makePanel({
                 iconCls: 'Foo'
             });
             expect(panel.header.isHeader).toBe(true);
-        }); 
+        });
 
-        it("should create a header when specifying tools", function() {
+        it("should create a header when specifying tools", function () {
             makePanel({
                 tools: [{
                     type: 'refresh'
                 }]
             });
             expect(panel.header.isHeader).toBe(true);
-        });  
-            
-        it("should create a header when specifying collapsible", function() {
+        });
+
+        it("should create a header when specifying collapsible", function () {
             makePanel({
                 collapsible: true
             });
             expect(panel.header.isHeader).toBe(true);
         });
 
-        describe("with header false", function(){
-            it("should not create a header with header: false when specifying a title", function() {
+        describe("with header false", function () {
+            it("should not create a header with header: false when specifying a title", function () {
                 makePanel({
                     header: false,
                     title: 'Foo'
                 });
                 expect(panel.header).toBe(false);
-            });  
-            
-            it("should not create a header with header: false when specifying an icon", function() {
+            });
+
+            it("should not create a header with header: false when specifying an icon", function () {
                 makePanel({
                     header: false,
                     icon: fooIcon
                 });
                 expect(panel.header).toBe(false);
-            }); 
-            
-            it("should not create a header with header: false when specifying a iconCls", function() {
+            });
+
+            it("should not create a header with header: false when specifying a iconCls", function () {
                 makePanel({
                     header: false,
                     iconCls: 'Foo'
                 });
                 expect(panel.header).toBe(false);
-            }); 
+            });
 
-            it("should not create a header with header: false when specifying tools", function() {
+            it("should not create a header with header: false when specifying tools", function () {
                 makePanel({
                     header: false,
                     tools: [{
@@ -1199,48 +1199,48 @@ describe("Ext.panel.Panel", function () {
                     }]
                 });
                 expect(panel.header).toBe(false);
-            });  
-            
-            it("should not create a header with header: false when specifying collapsible", function() {
+            });
+
+            it("should not create a header with header: false when specifying collapsible", function () {
                 makePanel({
                     header: false,
                     collapsible: true
                 });
                 expect(panel.header).toBe(false);
-            }); 
+            });
         });
     });
-    
-    describe("setTitle", function(){
-        
-        describe("before render", function() {
-            describe("with no title", function() {
-                it("should update the title when rendered", function(){
+
+    describe("setTitle", function () {
+
+        describe("before render", function () {
+            describe("with no title", function () {
+                it("should update the title when rendered", function () {
                     makePanel({
                         renderTo: null
-                    });    
+                    });
                     panel.setTitle('Bar');
                     panel.render(Ext.getBody());
                     expect(panel.header.getTitle().textEl.dom).hasHTML('Bar');
                 });
-                
-                it("should not modify the tools when setting the title", function(){
+
+                it("should not modify the tools when setting the title", function () {
                     makePanel({
                         renderTo: null,
                         tools: [{
                             type: 'close'
                         }]
-                    });    
+                    });
                     panel.setTitle('Bar');
                     panel.render(Ext.getBody());
                     expect(panel.header.query('tool').length).toBe(1);
                 });
 
-                it("should be able to set the title in the beforerender listener", function() {
+                it("should be able to set the title in the beforerender listener", function () {
                     makePanel({
                         renderTo: Ext.getBody(),
                         listeners: {
-                            beforerender: function(p) {
+                            beforerender: function (p) {
                                 p.setTitle('Bar');
                             }
                         }
@@ -1248,10 +1248,10 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.header.getTitle().textEl.dom).hasHTML('Bar');
                 });
 
-                it("should be able to set the title in the beforeRender template method", function() {
+                it("should be able to set the title in the beforeRender template method", function () {
                     var Cls = Ext.define(null, {
                         extend: 'Ext.panel.Panel',
-                        beforeRender : function() {
+                        beforeRender: function () {
                             this.callParent(arguments);
                             this.setTitle('Bar');
                         }
@@ -1263,36 +1263,36 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("with an existing title", function() {
-                it("should update the title when rendered", function(){
+            describe("with an existing title", function () {
+                it("should update the title when rendered", function () {
                     makePanel({
                         renderTo: null,
                         title: 'Foo'
-                    });    
+                    });
                     panel.setTitle('Bar');
                     panel.render(Ext.getBody());
                     expect(panel.header.getTitle().textEl.dom).hasHTML('Bar');
                 });
-                
-                it("should not modify the tools when setting the title", function(){
+
+                it("should not modify the tools when setting the title", function () {
                     makePanel({
                         renderTo: null,
                         tools: [{
                             type: 'close'
                         }],
                         title: 'Foo'
-                    });    
+                    });
                     panel.setTitle('Bar');
                     panel.render(Ext.getBody());
                     expect(panel.header.query('tool').length).toBe(1);
                 });
 
-                it("should be able to set the title in the beforerender listener", function() {
+                it("should be able to set the title in the beforerender listener", function () {
                     makePanel({
                         title: 'Foo',
                         renderTo: Ext.getBody(),
                         listeners: {
-                            beforerender: function(p) {
+                            beforerender: function (p) {
                                 p.setTitle('Bar');
                             }
                         }
@@ -1300,11 +1300,11 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.header.getTitle().textEl.dom).hasHTML('Bar');
                 });
 
-                it("should be able to set the title in the beforeRender template method", function() {
+                it("should be able to set the title in the beforeRender template method", function () {
                     var Cls = Ext.define(null, {
                         extend: 'Ext.panel.Panel',
                         title: 'Foo',
-                        beforeRender : function() {
+                        beforeRender: function () {
                             this.callParent(arguments);
                             this.setTitle('Bar');
                         }
@@ -1315,19 +1315,19 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.header.getTitle().textEl.dom).hasHTML('Bar');
                 });
             });
-        });  
-        
-        describe("after render", function() {
-            describe("with no title", function() {
-                it("should create the title when rendered", function(){
+        });
+
+        describe("after render", function () {
+            describe("with no title", function () {
+                it("should create the title when rendered", function () {
                     makePanel();
                     panel.setTitle('Bar');
                     expect(panel.header.getTitle().textEl.dom).hasHTML('Bar');
                 });
             });
 
-            describe("with a title", function() {
-                it("should update the title when rendered", function(){
+            describe("with a title", function () {
+                it("should update the title when rendered", function () {
                     makePanel({
                         title: 'Foo'
                     });
@@ -1336,7 +1336,7 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            it("should update the layout when the title is set after render", function() {
+            it("should update the layout when the title is set after render", function () {
                 panel = Ext.create({
                     xtype: 'panel',
                     renderTo: document.body,
@@ -1360,24 +1360,23 @@ describe("Ext.panel.Panel", function () {
             });
         });
     });
-    
-    describe("body styling", function(){
+
+    describe("body styling", function () {
 
         var makeUnrenderedPanel = function (cfg) {
-            panel = new Ext.panel.Panel(Ext.apply({
-            }, cfg));
+            panel = new Ext.panel.Panel(Ext.apply({}, cfg));
         };
 
-        describe("setBodyStyle", function(){
-            describe("before rendering", function(){
-                it("should be able to set a single key value pair", function(){
+        describe("setBodyStyle", function () {
+            describe("before rendering", function () {
+                it("should be able to set a single key value pair", function () {
                     makeUnrenderedPanel();
                     panel.setBodyStyle('color', 'red');
                     panel.render(Ext.getBody());
                     expect(panel.body.dom.style.color).toBe('red');
                 });
 
-                it("should be able to set a multiple key value pairs", function(){
+                it("should be able to set a multiple key value pairs", function () {
                     makeUnrenderedPanel();
                     panel.setBodyStyle('color', 'red');
                     panel.setBodyStyle('background-color', 'blue');
@@ -1386,7 +1385,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.body.dom.style.backgroundColor).toBe('blue');
                 });
 
-                it("should be able to set a style string", function(){
+                it("should be able to set a style string", function () {
                     makeUnrenderedPanel();
                     panel.setBodyStyle('color: red; background-color: blue;');
                     panel.render(Ext.getBody());
@@ -1394,7 +1393,7 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.body.dom.style.backgroundColor).toBe('blue');
                 });
 
-                it("should be able to set a style object", function(){
+                it("should be able to set a style object", function () {
                     makeUnrenderedPanel();
                     panel.setBodyStyle({
                         color: 'red',
@@ -1406,14 +1405,14 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("after rendering", function(){
-                it("should be able to set a single key value pair", function(){
+            describe("after rendering", function () {
+                it("should be able to set a single key value pair", function () {
                     makePanel();
                     panel.setBodyStyle('color', 'red');
                     expect(panel.body.dom.style.color).toBe('red');
                 });
 
-                it("should be able to set a multiple key value pairs", function(){
+                it("should be able to set a multiple key value pairs", function () {
                     makePanel();
                     panel.setBodyStyle('color', 'red');
                     panel.setBodyStyle('background-color', 'blue');
@@ -1421,14 +1420,14 @@ describe("Ext.panel.Panel", function () {
                     expect(panel.body.dom.style.backgroundColor).toBe('blue');
                 });
 
-                it("should be able to set a style string", function(){
+                it("should be able to set a style string", function () {
                     makePanel();
                     panel.setBodyStyle('color: red; background-color: blue;');
                     expect(panel.body.dom.style.color).toBe('red');
                     expect(panel.body.dom.style.backgroundColor).toBe('blue');
                 });
 
-                it("should be able to set a style object", function(){
+                it("should be able to set a style object", function () {
                     makePanel();
                     panel.setBodyStyle({
                         color: 'red',
@@ -1440,17 +1439,17 @@ describe("Ext.panel.Panel", function () {
             });
         });
 
-        describe("addBodyCls", function(){
+        describe("addBodyCls", function () {
 
-            describe("before rendering", function(){
-                it("should add a class to the body", function() {
+            describe("before rendering", function () {
+                it("should add a class to the body", function () {
                     makeUnrenderedPanel();
                     panel.addBodyCls('foo');
                     panel.render(Ext.getBody());
                     expect(panel.body.hasCls('foo')).toBe(true);
                 });
 
-                it("should add a class to the body after being removed", function() {
+                it("should add a class to the body after being removed", function () {
                     makeUnrenderedPanel();
                     panel.addBodyCls('foo');
                     panel.removeBodyCls('foo');
@@ -1460,14 +1459,14 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("after rendering", function(){
-                it("should add a class to the body", function() {
+            describe("after rendering", function () {
+                it("should add a class to the body", function () {
                     makePanel();
                     panel.addBodyCls('foo');
                     expect(panel.body.hasCls('foo')).toBe(true);
                 });
 
-                it("should add a class to the body after being removed", function() {
+                it("should add a class to the body after being removed", function () {
                     makePanel();
                     panel.addBodyCls('foo');
                     panel.removeBodyCls('foo');
@@ -1478,9 +1477,9 @@ describe("Ext.panel.Panel", function () {
 
         });
 
-        describe("removeBodyCls", function(){
-            describe("before rendering", function(){
-                it("should remove a class added to the body", function(){
+        describe("removeBodyCls", function () {
+            describe("before rendering", function () {
+                it("should remove a class added to the body", function () {
                     makeUnrenderedPanel();
                     panel.addBodyCls('foo');
                     panel.removeBodyCls('foo');
@@ -1489,8 +1488,8 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("after rendering", function(){
-                it("should remove a class added to the body", function(){
+            describe("after rendering", function () {
+                it("should remove a class added to the body", function () {
                     makePanel();
                     panel.addBodyCls('foo');
                     panel.removeBodyCls('foo');
@@ -1501,8 +1500,8 @@ describe("Ext.panel.Panel", function () {
 
     });
 
-    describe("margin", function() {
-        it("should put configured margins on the element", function() {
+    describe("margin", function () {
+        it("should put configured margins on the element", function () {
             makePanel({
                 margin: 10,
                 width: 200,
@@ -1515,7 +1514,7 @@ describe("Ext.panel.Panel", function () {
             expect(margin.l).toBe(10);
         });
 
-        it("should set margins after render", function() {
+        it("should set margins after render", function () {
             makePanel({
                 width: 200,
                 height: 200
@@ -1528,7 +1527,7 @@ describe("Ext.panel.Panel", function () {
             expect(margin.l).toBe(4);
         });
 
-        it("should relayout a parent to reposition if necessary", function() {
+        it("should relayout a parent to reposition if necessary", function () {
             var ct = new Ext.container.Container({
                 layout: 'hbox',
                 renderTo: Ext.getBody(),
@@ -1552,9 +1551,9 @@ describe("Ext.panel.Panel", function () {
             ct.destroy();
         });
     });
-    
-    describe("minButtonWidth", function(){
-        it("should apply minButtonWidth to button configs", function(){
+
+    describe("minButtonWidth", function () {
+        it("should apply minButtonWidth to button configs", function () {
             makePanel({
                 minButtonWidth: 75,
                 width: 400,
@@ -1566,12 +1565,12 @@ describe("Ext.panel.Panel", function () {
                     itemId: 'b',
                     text: 'B'
                 }]
-            }); 
+            });
             expect(panel.down('#a').minWidth).toBe(75);
             expect(panel.down('#b').minWidth).toBe(75);
         });
-        
-        it("should apply minButtonWidth to button instances", function(){
+
+        it("should apply minButtonWidth to button instances", function () {
             makePanel({
                 minButtonWidth: 75,
                 width: 400,
@@ -1583,17 +1582,17 @@ describe("Ext.panel.Panel", function () {
                     itemId: 'b',
                     text: 'B'
                 })]
-            }); 
+            });
             expect(panel.down('#a').minWidth).toBe(75);
             expect(panel.down('#b').minWidth).toBe(75);
         });
-        
-        it("should apply minButtonWidth to button subclass configs", function(){
+
+        it("should apply minButtonWidth to button subclass configs", function () {
             Ext.define('spec.CustomButton', {
                 extend: 'Ext.button.Button',
                 alias: 'widget.mybutton'
             });
-            
+
             makePanel({
                 minButtonWidth: 75,
                 width: 400,
@@ -1607,13 +1606,13 @@ describe("Ext.panel.Panel", function () {
                     itemId: 'b',
                     text: 'B'
                 }]
-            }); 
+            });
             expect(panel.down('#a').minWidth).toBe(75);
             expect(panel.down('#b').minWidth).toBe(75);
             Ext.undefine('spec.CustomButton');
         });
-        
-        it("should not apply minButtonWidth to non-button components", function(){            
+
+        it("should not apply minButtonWidth to non-button components", function () {
             makePanel({
                 minButtonWidth: 75,
                 width: 400,
@@ -1627,19 +1626,19 @@ describe("Ext.panel.Panel", function () {
                     itemId: 'b',
                     text: 'B'
                 })]
-            }); 
+            });
             expect(panel.down('#a').minWidth).not.toBe(75);
             expect(panel.down('#b').minWidth).not.toBe(75);
         });
     });
-    
+
     describe('draggable', function () {
         var makePanel = function (cfg) {
-            panel = new Ext.panel.Panel(cfg);
-        },
-        spy;
+                panel = new Ext.panel.Panel(cfg);
+            },
+            spy;
 
-        afterEach(function (){
+        afterEach(function () {
             spy = null;
         });
 
@@ -1676,13 +1675,13 @@ describe("Ext.panel.Panel", function () {
                 expect(spy).wasCalled();
             });
 
-            it('should not create a Component Dragger instance  with header: false', function() {
+            it('should not create a Component Dragger instance  with header: false', function () {
                 makePanel({
                     draggable: true,
                     header: false
                 });
                 expect(panel.dd).toBeUndefined();
-            }); 
+            });
         });
 
         describe('draggable false', function () {
@@ -1690,7 +1689,7 @@ describe("Ext.panel.Panel", function () {
                 makePanel({
                     draggable: false
                 });
-                
+
                 spy = spyOn(panel, 'initDraggable');
                 panel.render(Ext.getBody());
 
@@ -1719,7 +1718,7 @@ describe("Ext.panel.Panel", function () {
         });
     });
 
-    describe("ghost", function() {
+    describe("ghost", function () {
         var ghost;
 
         function makePanel(cfg) {
@@ -1736,13 +1735,13 @@ describe("Ext.panel.Panel", function () {
             ghost = panel.ghost();
         }
 
-        it("should instantiate a ghost panel", function() {
+        it("should instantiate a ghost panel", function () {
             makePanel();
 
             expect(ghost.xtype).toBe('panel');
         });
 
-        it("should instantiate a ghost window if the owner is a window", function() {
+        it("should instantiate a ghost window if the owner is a window", function () {
             makePanel({
                 xtype: 'window'
             });
@@ -1750,7 +1749,7 @@ describe("Ext.panel.Panel", function () {
             expect(ghost.xtype).toBe('window');
         });
 
-        it("should pass the owner UI along to the ghost", function() {
+        it("should pass the owner UI along to the ghost", function () {
             makePanel({
                 ui: 'foo'
             });
@@ -1758,7 +1757,7 @@ describe("Ext.panel.Panel", function () {
             expect(ghost.ui).toBe('foo');
         });
 
-        it("should pass the owner's shim config along to the ghost", function() {
+        it("should pass the owner's shim config along to the ghost", function () {
             makePanel({
                 shim: true
             });
@@ -1766,7 +1765,7 @@ describe("Ext.panel.Panel", function () {
             expect(ghost.shim).toBe(true);
         });
 
-        it("should pass header configs along to the ghost header", function() {
+        it("should pass header configs along to the ghost header", function () {
             var header;
 
             makePanel({
@@ -1774,8 +1773,8 @@ describe("Ext.panel.Panel", function () {
                 header: {
                     titlePosition: 2,
                     tools: [
-                        { type: 'close' },
-                        { type: 'pin' }
+                        {type: 'close'},
+                        {type: 'pin'}
                     ]
                 }
             });
@@ -1823,8 +1822,8 @@ describe("Ext.panel.Panel", function () {
             wasCalled = false;
         });
 
-        describe('hiding', function() {
-            it('should hide when collapsed', function() {
+        describe('hiding', function () {
+            it('should hide when collapsed', function () {
                 createViewport(null, true);
 
                 westRegion.collapse();
@@ -1837,22 +1836,22 @@ describe("Ext.panel.Panel", function () {
                 expect(centerRegion.getWidth()).toBe(viewport.getWidth());
             });
 
-            it('should hiding when floated from collapsed', function() {
+            it('should hiding when floated from collapsed', function () {
                 var isFloated;
 
                 createViewport(null, true);
 
-                westRegion.on('float', function() {
+                westRegion.on('float', function () {
                     isFloated = true;
                 });
                 westRegion.collapse();
                 westRegion.floatCollapsedPanel();
 
                 // Wait until it's done
-                waitsFor(function() {
+                waitsFor(function () {
                     return isFloated;
                 });
-                runs(function() {
+                runs(function () {
                     westRegion.hide();
 
                     // West should be completely hidden along with its splitter furniture.
@@ -1955,7 +1954,7 @@ describe("Ext.panel.Panel", function () {
         });
     });
 
-    describe("titleRotation", function() {
+    describe("titleRotation", function () {
         var elementProto = Ext.Element.prototype,
             hooks = {
                 0: elementProto.styleHooks,
@@ -1964,7 +1963,7 @@ describe("Ext.panel.Panel", function () {
             },
             titleEl;
 
-        function  makePanel(cfg) {
+        function makePanel(cfg) {
             panel = Ext.create(Ext.apply({
                 xtype: 'panel',
                 renderTo: document.body,
@@ -1984,38 +1983,38 @@ describe("Ext.panel.Panel", function () {
             expect(titleEl.styleHooks).toBe(hooks[angle]);
         }
 
-        afterEach(function() {
+        afterEach(function () {
             titleEl = null;
         });
 
-        it("should default to non-rotated when headerPosition is top", function() {
+        it("should default to non-rotated when headerPosition is top", function () {
             makePanel();
             expectRotation(0);
         });
 
-        it("should default to non-rotated when headerPosition is bottom", function() {
+        it("should default to non-rotated when headerPosition is bottom", function () {
             makePanel({
                 headerPosition: 'bottom'
             });
             expectRotation(0);
         });
 
-        it("should default to 90 degree rotation when headerPosition is right", function() {
+        it("should default to 90 degree rotation when headerPosition is right", function () {
             makePanel({
                 headerPosition: 'right'
             });
             expectRotation(90);
         });
 
-        it("should default to 90 degree rotation when headerPosition is left", function() {
+        it("should default to 90 degree rotation when headerPosition is left", function () {
             makePanel({
                 headerPosition: 'left'
             });
             expectRotation(90);
         });
 
-        describe("headerPosition: top", function() {
-            it("should rotate 0 degrees", function() {
+        describe("headerPosition: top", function () {
+            it("should rotate 0 degrees", function () {
                 makePanel({
                     headerPosition: 'top',
                     titleRotation: 0
@@ -2023,7 +2022,7 @@ describe("Ext.panel.Panel", function () {
                 expectRotation(0);
             });
 
-            it("should rotate 90 degrees", function() {
+            it("should rotate 90 degrees", function () {
                 makePanel({
                     headerPosition: 'top',
                     titleRotation: 1
@@ -2031,7 +2030,7 @@ describe("Ext.panel.Panel", function () {
                 expectRotation(90);
             });
 
-            it("should rotate 270 degrees", function() {
+            it("should rotate 270 degrees", function () {
                 makePanel({
                     headerPosition: 'top',
                     titleRotation: 2
@@ -2040,8 +2039,8 @@ describe("Ext.panel.Panel", function () {
             });
         });
 
-        describe("headerPosition: right", function() {
-            it("should rotate 0 degrees", function() {
+        describe("headerPosition: right", function () {
+            it("should rotate 0 degrees", function () {
                 makePanel({
                     headerPosition: 'right',
                     titleRotation: 0
@@ -2049,7 +2048,7 @@ describe("Ext.panel.Panel", function () {
                 expectRotation(0);
             });
 
-            it("should rotate 90 degrees", function() {
+            it("should rotate 90 degrees", function () {
                 makePanel({
                     headerPosition: 'right',
                     titleRotation: 1
@@ -2057,7 +2056,7 @@ describe("Ext.panel.Panel", function () {
                 expectRotation(90);
             });
 
-            it("should rotate 270 degrees", function() {
+            it("should rotate 270 degrees", function () {
                 makePanel({
                     headerPosition: 'right',
                     titleRotation: 2
@@ -2066,8 +2065,8 @@ describe("Ext.panel.Panel", function () {
             });
         });
 
-        describe("headerPosition: bottom", function() {
-            it("should rotate 0 degrees", function() {
+        describe("headerPosition: bottom", function () {
+            it("should rotate 0 degrees", function () {
                 makePanel({
                     headerPosition: 'bottom',
                     titleRotation: 0
@@ -2075,7 +2074,7 @@ describe("Ext.panel.Panel", function () {
                 expectRotation(0);
             });
 
-            it("should rotate 90 degrees", function() {
+            it("should rotate 90 degrees", function () {
                 makePanel({
                     headerPosition: 'bottom',
                     titleRotation: 1
@@ -2083,7 +2082,7 @@ describe("Ext.panel.Panel", function () {
                 expectRotation(90);
             });
 
-            it("should rotate 270 degrees", function() {
+            it("should rotate 270 degrees", function () {
                 makePanel({
                     headerPosition: 'bottom',
                     titleRotation: 2
@@ -2092,8 +2091,8 @@ describe("Ext.panel.Panel", function () {
             });
         });
 
-        describe("headerPosition: left", function() {
-            it("should rotate 0 degrees", function() {
+        describe("headerPosition: left", function () {
+            it("should rotate 0 degrees", function () {
                 makePanel({
                     headerPosition: 'left',
                     titleRotation: 0
@@ -2101,7 +2100,7 @@ describe("Ext.panel.Panel", function () {
                 expectRotation(0);
             });
 
-            it("should rotate 90 degrees", function() {
+            it("should rotate 90 degrees", function () {
                 makePanel({
                     headerPosition: 'left',
                     titleRotation: 1
@@ -2109,7 +2108,7 @@ describe("Ext.panel.Panel", function () {
                 expectRotation(90);
             });
 
-            it("should rotate 270 degrees", function() {
+            it("should rotate 270 degrees", function () {
                 makePanel({
                     headerPosition: 'left',
                     titleRotation: 2
@@ -2203,7 +2202,7 @@ describe("Ext.panel.Panel", function () {
                     }
 
                     style = pan2.el.dom.style;
-                    xy = [ pan2.x, pan2.y ];
+                    xy = [pan2.x, pan2.y];
                 }
 
                 describe('the x offset', function () {
@@ -2474,20 +2473,20 @@ describe("Ext.panel.Panel", function () {
     // mechanism (https://sencha.jira.com/browse/EXTJS-15726).
     // Panels are important enough to warrant additional set of
     // defaultFocus tests so here we go.
-    describe("defaultFocus", function() {
+    describe("defaultFocus", function () {
         function makeCt(cfg) {
             makePanel(Ext.apply({
                 width: 100,
                 height: 100
             }, cfg));
-            
+
             ct = panel;
         }
-        
-        describe("with defaultFocus", function() {
+
+        describe("with defaultFocus", function () {
             var fooCmp, barCmp;
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 makeCt({
                     items: [{
                         xtype: 'component',
@@ -2498,54 +2497,54 @@ describe("Ext.panel.Panel", function () {
                         html: 'bar'
                     }]
                 });
-                
+
                 fooCmp = ct.items.getAt(0);
                 barCmp = ct.items.getAt(1);
             });
-            
-            it("should return foo", function() {
+
+            it("should return foo", function () {
                 ct.defaultFocus = 'component';
-                
+
                 var focusEl = ct.getFocusEl();
-                
+
                 expect(focusEl).toBe(fooCmp);
             });
-            
-            it("should return bar", function() {
+
+            it("should return bar", function () {
                 ct.defaultFocus = '#bar';
-                
+
                 var focusEl = ct.getFocusEl();
-                
+
                 expect(focusEl).toBe(barCmp);
             });
         });
-        
-        describe("no defaultFocus", function() {
-            beforeEach(function() {
+
+        describe("no defaultFocus", function () {
+            beforeEach(function () {
                 makeCt();
             });
-            
-            it("should return targetEl when focusable", function() {
+
+            it("should return targetEl when focusable", function () {
                 ct.focusable = true;
-                
+
                 var focusEl = ct.getFocusEl();
-                
+
                 expect(focusEl).toBe(ct.getTargetEl());
             });
-            
-            it("should return undefined when not focusable", function() {
+
+            it("should return undefined when not focusable", function () {
                 var focusEl = ct.getFocusEl();
-                
+
                 expect(focusEl).toBe(undefined);
             });
         });
     });
-    
-    describe("defaultButton referenceHolder == true", function() {
+
+    describe("defaultButton referenceHolder == true", function () {
         var pressKey = jasmine.pressKey,
             okSpy, cancelSpy, keydownSpy, fooInput, barInput, okButton, cancelButton,
             event;
-        
+
         function setupPanel(config) {
             config = Ext.apply({
                 renderTo: undefined,
@@ -2571,190 +2570,190 @@ describe("Ext.panel.Panel", function () {
                     text: 'Cancel'
                 }]
             }, config);
-            
+
             makePanel(config);
 
             fooInput = panel.down('[reference=fooInput]');
             barInput = panel.down('[reference=barInput]');
             okButton = panel.down('[reference=okButton]');
             cancelButton = panel.down('[reference=cancelButton]');
-            
-            panel.on('boxready', function() {
+
+            panel.on('boxready', function () {
                 this.el.on('keydown', keydownSpy);
             });
-            
-            okSpy.andCallFake(function(btn, e) {
+
+            okSpy.andCallFake(function (btn, e) {
                 event = e;
             });
-            
-            keydownSpy.andCallFake(function(e) {
+
+            keydownSpy.andCallFake(function (e) {
                 event = e;
             });
         }
-        
-        beforeEach(function() {
+
+        beforeEach(function () {
             okSpy = jasmine.createSpy('OK button handler');
             cancelSpy = jasmine.createSpy('Cancel button handler');
             keydownSpy = jasmine.createSpy('Panel keydown');
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             if (panel && panel.el) {
                 panel.el.un('keydown', keydownSpy);
             }
-            
+
             okSpy = cancelSpy = keydownSpy = fooInput = barInput = cancelButton = null;
             event = null;
         });
-        
-        describe("w/ referenceHolder == true", function() {
-            beforeEach(function() {
+
+        describe("w/ referenceHolder == true", function () {
+            beforeEach(function () {
                 setupPanel({
                     referenceHolder: true
                 });
-                
+
                 okButton.on('click', okSpy);
                 cancelButton.on('click', cancelSpy);
             });
-            
-            describe("no defaultButton", function() {
-                beforeEach(function() {
+
+            describe("no defaultButton", function () {
+                beforeEach(function () {
                     panel.defaultButton = undefined;
                     panel.render(Ext.getBody());
                 });
-                
-                it("should not fire OK handler", function() {
+
+                it("should not fire OK handler", function () {
                     pressKey(fooInput, 'enter');
-                    
+
                     waitForSpy(keydownSpy);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(okSpy).not.toHaveBeenCalled();
                     });
                 });
-                
-                it("should not have stopped the keydown event", function() {
+
+                it("should not have stopped the keydown event", function () {
                     pressKey(barInput, 'enter');
-                    
+
                     waitForSpy(keydownSpy);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(event.isStopped).toBeFalsy();
                     });
                 });
             });
-            
-            describe("with defaultButton", function() {
-                beforeEach(function() {
+
+            describe("with defaultButton", function () {
+                beforeEach(function () {
                     panel.render(Ext.getBody());
                 });
-                
-                it("should fire OK handler in fooInput", function() {
+
+                it("should fire OK handler in fooInput", function () {
                     pressKey(fooInput, 'enter');
-                    
+
                     waitForSpy(okSpy);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(okSpy).toHaveBeenCalled();
                     });
                 });
-                
-                it("should fire OK handler in barInput", function() {
+
+                it("should fire OK handler in barInput", function () {
                     pressKey(barInput, 'enter');
-                    
+
                     waitForSpy(okSpy);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(okSpy).toHaveBeenCalled();
                     });
                 });
-                
-                it("should not fire OK handler on Cancel button", function() {
+
+                it("should not fire OK handler on Cancel button", function () {
                     pressKey(cancelButton, 'enter');
-                    
+
                     waitForSpy(cancelSpy);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(okSpy).not.toHaveBeenCalled();
                     });
                 });
-                
-                it("should have stopped the keydown event", function() {
+
+                it("should have stopped the keydown event", function () {
                     pressKey(fooInput, 'enter');
-                    
+
                     waitForSpy(okSpy);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(event.isStopped).toBeTruthy();
                     });
                 });
-                
-                it("should not have reached main el keydown listener", function() {
+
+                it("should not have reached main el keydown listener", function () {
                     pressKey(barInput, 'enter');
-                    
+
                     waitForSpy(okSpy);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(keydownSpy).not.toHaveBeenCalled();
                     });
                 });
             });
-            
-            describe("with defaultButton and defaultButtonTarget", function() {
-                beforeEach(function() {
+
+            describe("with defaultButton and defaultButtonTarget", function () {
+                beforeEach(function () {
                     panel.defaultButtonTarget = 'el';
                     panel.render(Ext.getBody());
                 });
-                
-                it("should fire OK handler in fooInput", function() {
+
+                it("should fire OK handler in fooInput", function () {
                     pressKey(fooInput, 'enter');
-                    
+
                     waitForSpy(okSpy);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(okSpy).toHaveBeenCalled();
                     });
                 });
-                
-                it("should fire OK handler in barInput", function() {
+
+                it("should fire OK handler in barInput", function () {
                     pressKey(barInput, 'enter');
-                    
+
                     waitForSpy(okSpy);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(okSpy).toHaveBeenCalled();
                     });
                 });
-                
-                it("should NOT fire OK handler on Cancel button", function() {
+
+                it("should NOT fire OK handler on Cancel button", function () {
                     pressKey(cancelButton, 'enter');
-                    
+
                     waitForSpy(cancelSpy);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(okSpy).not.toHaveBeenCalled();
                     });
                 });
-                
-                it("should have stopped the keydown event", function() {
+
+                it("should have stopped the keydown event", function () {
                     pressKey(fooInput, 'enter');
-                    
+
                     waitForSpy(okSpy);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(event.isStopped).toBeTruthy();
                     });
                 });
             });
-            
-            describe("nested panel", function() {
+
+            describe("nested panel", function () {
                 var nestedPanel, nestedInput, nestedOk, nestedCancel,
                     nestedOkSpy, nestedCancelSpy;
-                
-                beforeEach(function() {
+
+                beforeEach(function () {
                     nestedOkSpy = jasmine.createSpy('Nested OK handler');
                     nestedCancelSpy = jasmine.createSpy('Nested Cancel handler');
-                    
+
                     nestedPanel = panel.add({
                         xtype: 'panel',
                         title: 'nested',
@@ -2773,157 +2772,157 @@ describe("Ext.panel.Panel", function () {
                             handler: nestedCancelSpy
                         }]
                     });
-                    
+
                     nestedInput = panel.lookupReference('nestedInput');
                     nestedOk = panel.lookupReference('nestedOk');
                     nestedCancel = panel.lookupReference('nestedCancel');
-                    
-                    nestedOkSpy.andCallFake(function(btn, e) {
+
+                    nestedOkSpy.andCallFake(function (btn, e) {
                         event = e;
                     });
-                    
-                    nestedCancelSpy.andCallFake(function(btn, e) {
+
+                    nestedCancelSpy.andCallFake(function (btn, e) {
                         event = e;
-                        
+
                         e.stopEvent();
-                        
+
                         return false;
                     });
                 });
-                
-                afterEach(function() {
+
+                afterEach(function () {
                     nestedOkSpy = nestedCancelSpy = null;
                     nestedInput = nestedOk = nestedCancel = null;
                 });
-                
-                describe("no defaultButton config", function() {
-                    beforeEach(function() {
+
+                describe("no defaultButton config", function () {
+                    beforeEach(function () {
                         panel.render(Ext.getBody());
                     });
-                    
-                    it("should fire outer OK handler on nested input", function() {
+
+                    it("should fire outer OK handler on nested input", function () {
                         pressKey(nestedInput, 'enter');
-                        
+
                         waitForSpy(okSpy);
-                        
-                        runs(function() {
+
+                        runs(function () {
                             expect(okSpy).toHaveBeenCalled();
                         });
                     });
-                    
-                    it("should NOT fire outer OK handler on nested OK button", function() {
+
+                    it("should NOT fire outer OK handler on nested OK button", function () {
                         pressKey(nestedOk, 'enter');
-                        
+
                         waitForSpy(nestedOkSpy);
-                        
-                        runs(function() {
+
+                        runs(function () {
                             expect(okSpy).not.toHaveBeenCalled();
                         });
                     });
-                    
-                    it("should NOT fire outer OK handler on nested Cancel button", function() {
+
+                    it("should NOT fire outer OK handler on nested Cancel button", function () {
                         pressKey(nestedCancel, 'enter');
-                        
+
                         waitForSpy(nestedCancelSpy);
-                        
-                        runs(function() {
+
+                        runs(function () {
                             expect(okSpy).not.toHaveBeenCalled();
                         });
                     });
                 });
-                
-                describe("with defaultButton config", function() {
-                    beforeEach(function() {
+
+                describe("with defaultButton config", function () {
+                    beforeEach(function () {
                         nestedPanel.defaultButton = 'nestedOk';
                         panel.render(Ext.getBody());
                     });
-                    
-                    describe("on nested input", function() {
-                        beforeEach(function() {
+
+                    describe("on nested input", function () {
+                        beforeEach(function () {
                             pressKey(nestedInput, 'enter');
-                        
+
                             waitForSpy(nestedOkSpy);
                         });
-                        
-                        it("should fire nested OK handler", function() {
+
+                        it("should fire nested OK handler", function () {
                             expect(nestedOkSpy).toHaveBeenCalled();
                         });
-                        
-                        it("should NOT fire outer OK handler", function() {
+
+                        it("should NOT fire outer OK handler", function () {
                             // Check that OUTER spy hasn't been fired;
                             // we can only get there if the above waitForSpy()
                             // didn't timeout
                             expect(okSpy).not.toHaveBeenCalled();
                         });
-                        
-                        it("should have stopped the event", function() {
+
+                        it("should have stopped the event", function () {
                             expect(event.isStopped).toBeTruthy();
                         });
-                        
-                        it("should not have reached outer keydown handler", function() {
+
+                        it("should not have reached outer keydown handler", function () {
                             expect(keydownSpy).not.toHaveBeenCalled();
                         });
                     });
-                    
-                    describe("on nested OK button", function() {
-                        beforeEach(function() {
+
+                    describe("on nested OK button", function () {
+                        beforeEach(function () {
                             pressKey(nestedOk, 'enter');
-                            
+
                             waitForSpy(nestedOkSpy);
                         });
-                        
-                        it("should fire nested OK handler", function() {
+
+                        it("should fire nested OK handler", function () {
                             expect(nestedOkSpy).toHaveBeenCalled();
                         });
-                        
-                        it("should NOT fire outer OK handler", function() {
+
+                        it("should NOT fire outer OK handler", function () {
                             expect(okSpy).not.toHaveBeenCalled();
                         });
-                        
-                        it("should have stopped the event", function() {
+
+                        it("should have stopped the event", function () {
                             expect(event.isStopped).toBeTruthy();
                         });
-                        
-                        it("should not have reached outer keydown handler", function() {
+
+                        it("should not have reached outer keydown handler", function () {
                             expect(keydownSpy).not.toHaveBeenCalled();
                         });
                     });
-                    
-                    describe("on nested Cancel button", function() {
-                        beforeEach(function() {
+
+                    describe("on nested Cancel button", function () {
+                        beforeEach(function () {
                             pressKey(nestedCancel, 'enter');
-                            
+
                             waitForSpy(nestedCancelSpy);
                         });
-                        
-                        it("should fire nested Cancel handler", function() {
+
+                        it("should fire nested Cancel handler", function () {
                             expect(nestedCancelSpy).toHaveBeenCalled();
                         });
-                        
-                        it("should NOT fire nested OK handler", function() {
+
+                        it("should NOT fire nested OK handler", function () {
                             expect(nestedOkSpy).not.toHaveBeenCalled();
                         });
-                        
-                        it("should NOT fire outer OK handler", function() {
+
+                        it("should NOT fire outer OK handler", function () {
                             expect(okSpy).not.toHaveBeenCalled();
                         });
-                        
-                        it("should have not reached outer keydown handler", function() {
+
+                        it("should have not reached outer keydown handler", function () {
                             expect(keydownSpy).not.toHaveBeenCalled();
                         });
-                        
-                        it("should have stopped the event", function() {
+
+                        it("should have stopped the event", function () {
                             expect(event.isStopped).toBeTruthy();
                         });
                     });
                 });
             });
         });
-        
-        describe("nested w/ parent ViewController", function() {
+
+        describe("nested w/ parent ViewController", function () {
             var outerPanel;
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 setupPanel({
                     buttons: [{
                         reference: 'okButton',
@@ -2938,14 +2937,14 @@ describe("Ext.panel.Panel", function () {
                             click: 'onCancelButton'
                         }
                     }],
-                    
+
                     controller: {
                         xclass: 'Ext.app.ViewController',
                         onOkButton: okSpy,
                         onCancelButton: cancelSpy
                     }
                 });
-                
+
                 outerPanel = new Ext.panel.Panel({
                     renderTo: Ext.getBody(),
                     x: 10,
@@ -2953,74 +2952,74 @@ describe("Ext.panel.Panel", function () {
                     width: 400,
                     height: 400,
                     items: [panel],
-                    
+
                     // Having the outer ViewController triggers the issue
                     controller: {
                         xclass: 'Ext.app.ViewController'
                     }
                 });
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 panel.el.un('keydown', keydownSpy);
-                
+
                 outerPanel.destroy();
                 outerPanel = null;
             });
-            
-            it("should fire OK handler in fooInput", function() {
+
+            it("should fire OK handler in fooInput", function () {
                 pressKey(fooInput, 'enter');
-                
+
                 waitForSpy(okSpy);
-                
-                runs(function() {
+
+                runs(function () {
                     expect(okSpy).toHaveBeenCalled();
                 });
             });
-            
-            it("should fire OK handler in barInput", function() {
+
+            it("should fire OK handler in barInput", function () {
                 pressKey(barInput, 'enter');
-                
+
                 waitForSpy(okSpy);
-                
-                runs(function() {
+
+                runs(function () {
                     expect(okSpy).toHaveBeenCalled();
                 });
             });
-            
-            it("should not fire OK handler on Cancel button", function() {
+
+            it("should not fire OK handler on Cancel button", function () {
                 pressKey(cancelButton, 'enter');
-                
+
                 waitForSpy(cancelSpy);
-                
-                runs(function() {
+
+                runs(function () {
                     expect(okSpy).not.toHaveBeenCalled();
                 });
             });
-            
-            it("should have stopped the keydown event", function() {
+
+            it("should have stopped the keydown event", function () {
                 pressKey(fooInput, 'enter');
-                
+
                 waitForSpy(okSpy);
-                
-                runs(function() {
+
+                runs(function () {
                     expect(event.isStopped).toBeTruthy();
                 });
             });
-            
-            it("should not have reached main el keydown listener", function() {
+
+            it("should not have reached main el keydown listener", function () {
                 pressKey(barInput, 'enter');
-                
+
                 waitForSpy(okSpy);
-                
-                runs(function() {
+
+                runs(function () {
                     expect(keydownSpy).not.toHaveBeenCalled();
                 });
             });
         });
     });
 
-    describe("docked items", function() {
+    describe("docked items", function () {
         var a, b, c;
 
         function makeDockPanel(cfg) {
@@ -3051,24 +3050,24 @@ describe("Ext.panel.Panel", function () {
             c = panel.down('#dockC');
         }
 
-        afterEach(function() {
+        afterEach(function () {
             a = b = c = null;
         });
 
-        describe("remove", function() {
-            it("should forward calls to docked components to removeDocked", function() {
+        describe("remove", function () {
+            it("should forward calls to docked components to removeDocked", function () {
                 makeDockPanel();
                 var spy = spyOn(panel, 'removeDocked').andCallThrough();
                 panel.remove(a);
                 expect(spy.callCount).toBe(1);
                 expect(spy.mostRecentCall.args[0]).toBe(a);
             });
-        }); 
+        });
 
-        describe("addDocked", function() {
+        describe("addDocked", function () {
             var d, e;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 d = new Ext.Component({
                     dock: 'top',
                     height: 50,
@@ -3081,13 +3080,13 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 d = e = Ext.destroy(d, e);
             });
 
-            describe("single item", function() {
-                describe("arg types", function() {
-                    it("should accept a component instance", function() {
+            describe("single item", function () {
+                describe("arg types", function () {
+                    it("should accept a component instance", function () {
                         makeDockPanel();
                         panel.addDocked(d);
                         var items = panel.getDockedItems();
@@ -3095,7 +3094,7 @@ describe("Ext.panel.Panel", function () {
                         expect(Ext.Array.contains(items, d)).toBe(true);
                     });
 
-                    it("should accept a component config", function() {
+                    it("should accept a component config", function () {
                         makeDockPanel();
                         panel.addDocked({
                             xtype: 'component',
@@ -3107,8 +3106,8 @@ describe("Ext.panel.Panel", function () {
                     });
                 });
 
-                describe("position", function() {
-                    it("should default to the end", function() {
+                describe("position", function () {
+                    it("should default to the end", function () {
                         makeDockPanel();
                         panel.addDocked(d);
                         expect(panel.getDockedItems()[3]).toBe(d);
@@ -3116,38 +3115,38 @@ describe("Ext.panel.Panel", function () {
                         expect(panel.getDockedItems()[4]).toBe(e);
                     });
 
-                    it("should be able to insert at the start", function() {
+                    it("should be able to insert at the start", function () {
                         makeDockPanel();
                         panel.addDocked(d, 0);
                         expect(panel.getDockedItems()[0]).toBe(d);
                     });
 
-                    it("should be able to insert into the collection", function() {
+                    it("should be able to insert into the collection", function () {
                         makeDockPanel();
                         panel.addDocked(d, 1);
                         expect(panel.getDockedItems()[1]).toBe(d);
                     });
 
-                    it("should limit the index if it is larger than the index", function() {
+                    it("should limit the index if it is larger than the index", function () {
                         makeDockPanel();
                         panel.addDocked(d, 100);
                         expect(panel.getDockedItems()[3]).toBe(d);
                     });
                 });
 
-                describe("return type", function() {
-                    it("should return an array of the added item", function() {
+                describe("return type", function () {
+                    it("should return an array of the added item", function () {
                         makeDockPanel();
                         expect(panel.addDocked(d)).toEqual([d]);
                     });
                 });
 
-                describe("events/template methods", function() {
-                    beforeEach(function() {
+                describe("events/template methods", function () {
+                    beforeEach(function () {
                         makeDockPanel();
                     });
 
-                    it("should fire the dockedadd event and pass the container, item and index", function() {
+                    it("should fire the dockedadd event and pass the container, item and index", function () {
                         var spy = jasmine.createSpy(),
                             args;
 
@@ -3160,7 +3159,7 @@ describe("Ext.panel.Panel", function () {
                         expect(args[2]).toBe(3);
                     });
 
-                    it("should call the onAdded method on the item", function() {
+                    it("should call the onAdded method on the item", function () {
                         var spy = spyOn(d, 'onAdded').andCallThrough(),
                             args;
 
@@ -3172,7 +3171,7 @@ describe("Ext.panel.Panel", function () {
                         expect(args[2]).toBe(true);
                     });
 
-                    it("should call onDockedAdd", function() {
+                    it("should call onDockedAdd", function () {
                         var spy = spyOn(panel, 'onDockedAdd').andCallThrough();
                         panel.addDocked(d);
                         expect(spy.callCount).toBe(1);
@@ -3180,18 +3179,18 @@ describe("Ext.panel.Panel", function () {
                     });
                 });
 
-                describe("layout", function() {
-                    beforeEach(function() {
+                describe("layout", function () {
+                    beforeEach(function () {
                         makeDockPanel();
                     });
 
-                    it("should execute a layout", function() {
+                    it("should execute a layout", function () {
                         expect(panel.body.getHeight()).toBe(450);
                         panel.addDocked(d);
                         expect(panel.body.getHeight()).toBe(400);
                     });
 
-                    it("should only run a single layout", function() {
+                    it("should only run a single layout", function () {
                         var before = panel.componentLayoutCounter;
                         panel.addDocked(d);
                         expect(panel.componentLayoutCounter).toBe(before + 1);
@@ -3199,9 +3198,9 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("multiple items", function() {
-                describe("arg types", function() {
-                    it("should accept an array of component instance", function() {
+            describe("multiple items", function () {
+                describe("arg types", function () {
+                    it("should accept an array of component instance", function () {
                         makeDockPanel();
                         panel.addDocked([d, e]);
                         var items = panel.getDockedItems();
@@ -3210,7 +3209,7 @@ describe("Ext.panel.Panel", function () {
                         expect(Ext.Array.contains(items, e)).toBe(true);
                     });
 
-                    it("should accept an array of component configs", function() {
+                    it("should accept an array of component configs", function () {
                         makeDockPanel();
                         panel.addDocked([{
                             xtype: 'component',
@@ -3225,7 +3224,7 @@ describe("Ext.panel.Panel", function () {
                         expect(items[4].getItemId()).toBe('bar');
                     });
 
-                    it("should accept a mix of configs and components", function() {
+                    it("should accept a mix of configs and components", function () {
                         makeDockPanel();
                         panel.addDocked([d, {
                             xtype: 'component',
@@ -3238,8 +3237,8 @@ describe("Ext.panel.Panel", function () {
                     });
                 });
 
-                describe("position", function() {
-                    it("should default to the end", function() {
+                describe("position", function () {
+                    it("should default to the end", function () {
                         makeDockPanel();
                         panel.addDocked([d, e]);
                         expect(panel.getDockedItems()[3]).toBe(d);
@@ -3247,21 +3246,21 @@ describe("Ext.panel.Panel", function () {
                         expect(panel.getDockedItems()[4]).toBe(e);
                     });
 
-                    it("should be able to insert at the start", function() {
+                    it("should be able to insert at the start", function () {
                         makeDockPanel();
                         panel.addDocked([d, e], 0);
                         expect(panel.getDockedItems()[0]).toBe(d);
                         expect(panel.getDockedItems()[1]).toBe(e);
                     });
 
-                    it("should be able to insert into the collection", function() {
+                    it("should be able to insert into the collection", function () {
                         makeDockPanel();
                         panel.addDocked([d, e], 1);
                         expect(panel.getDockedItems()[1]).toBe(d);
                         expect(panel.getDockedItems()[2]).toBe(e);
                     });
 
-                    it("should limit the index if it is larger than the index", function() {
+                    it("should limit the index if it is larger than the index", function () {
                         makeDockPanel();
                         panel.addDocked([d, e], 100);
                         expect(panel.getDockedItems()[3]).toBe(d);
@@ -3269,8 +3268,8 @@ describe("Ext.panel.Panel", function () {
                     });
                 });
 
-                describe("return type", function() {
-                    it("should return an array of the added items, but not the same reference", function() {
+                describe("return type", function () {
+                    it("should return an array of the added items, but not the same reference", function () {
                         var add = [d, e],
                             result;
 
@@ -3281,13 +3280,13 @@ describe("Ext.panel.Panel", function () {
                     });
                 });
 
-                describe("events/template methods", function() {
-                    beforeEach(function() {
+                describe("events/template methods", function () {
+                    beforeEach(function () {
                         makeDockPanel();
                     });
 
-                    describe("without position", function() {
-                        it("should fire the dockedadd event and pass the container, item and index", function() {
+                    describe("without position", function () {
+                        it("should fire the dockedadd event and pass the container, item and index", function () {
                             var spy = jasmine.createSpy(),
                                 args;
 
@@ -3306,7 +3305,7 @@ describe("Ext.panel.Panel", function () {
                             expect(args[2]).toBe(4);
                         });
 
-                        it("should call the onAdded method on the item", function() {
+                        it("should call the onAdded method on the item", function () {
                             var dSpy = spyOn(d, 'onAdded').andCallThrough(),
                                 eSpy = spyOn(e, 'onAdded').andCallThrough(),
                                 args;
@@ -3326,7 +3325,7 @@ describe("Ext.panel.Panel", function () {
                             expect(args[2]).toBe(true);
                         });
 
-                        it("should call onDockedAdd", function() {
+                        it("should call onDockedAdd", function () {
                             var spy = spyOn(panel, 'onDockedAdd').andCallThrough();
                             panel.addDocked([d, e]);
                             expect(spy.callCount).toBe(2);
@@ -3335,8 +3334,8 @@ describe("Ext.panel.Panel", function () {
                         });
                     });
 
-                    describe("with position", function() {
-                        it("should fire the dockedadd event and pass the container, item and index", function() {
+                    describe("with position", function () {
+                        it("should fire the dockedadd event and pass the container, item and index", function () {
                             var spy = jasmine.createSpy(),
                                 args;
 
@@ -3355,7 +3354,7 @@ describe("Ext.panel.Panel", function () {
                             expect(args[2]).toBe(2);
                         });
 
-                        it("should call the onAdded method on the item", function() {
+                        it("should call the onAdded method on the item", function () {
                             var dSpy = spyOn(d, 'onAdded').andCallThrough(),
                                 eSpy = spyOn(e, 'onAdded').andCallThrough(),
                                 args;
@@ -3375,7 +3374,7 @@ describe("Ext.panel.Panel", function () {
                             expect(args[2]).toBe(true);
                         });
 
-                        it("should call onDockedAdd", function() {
+                        it("should call onDockedAdd", function () {
                             var spy = spyOn(panel, 'onDockedAdd').andCallThrough();
                             panel.addDocked([d, e], 1);
                             expect(spy.callCount).toBe(2);
@@ -3385,18 +3384,18 @@ describe("Ext.panel.Panel", function () {
                     });
                 });
 
-                describe("layout", function() {
-                    beforeEach(function() {
+                describe("layout", function () {
+                    beforeEach(function () {
                         makeDockPanel();
                     });
 
-                    it("should execute a layout", function() {
+                    it("should execute a layout", function () {
                         expect(panel.body.getHeight()).toBe(450);
                         panel.addDocked([d, e]);
                         expect(panel.body.getHeight()).toBe(350);
                     });
 
-                    it("should only run a single layout", function() {
+                    it("should only run a single layout", function () {
                         var before = panel.componentLayoutCounter;
                         panel.addDocked([d, e]);
                         expect(panel.componentLayoutCounter).toBe(before + 1);
@@ -3405,8 +3404,8 @@ describe("Ext.panel.Panel", function () {
             });
         });
 
-        describe("removeDocked", function() {
-            it("should remove the item from the dockedItems", function() {
+        describe("removeDocked", function () {
+            it("should remove the item from the dockedItems", function () {
                 makeDockPanel();
                 panel.removeDocked(b);
                 var items = panel.getDockedItems();
@@ -3414,23 +3413,23 @@ describe("Ext.panel.Panel", function () {
                 expect(Ext.Array.contains(items, b)).toBe(false);
             });
 
-            describe("return value", function() {
-                it("should return the passed item", function() {
+            describe("return value", function () {
+                it("should return the passed item", function () {
                     makeDockPanel();
                     expect(panel.removeDocked(a)).toBe(a);
                 });
 
-                it("should return the passed item when it is not contained in the docked items", function() {
+                it("should return the passed item when it is not contained in the docked items", function () {
                     var other = new Ext.Component();
                     makeDockPanel();
                     expect(panel.removeDocked(other)).toBe(other);
-                    
+
                     other.destroy();
                 });
             });
 
-            describe("autoDestroy", function() {
-                it("should not destroy with panel.autoDestroy=true & autoDestroy=false", function() {
+            describe("autoDestroy", function () {
+                it("should not destroy with panel.autoDestroy=true & autoDestroy=false", function () {
                     makeDockPanel({
                         autoDestroy: true
                     });
@@ -3439,7 +3438,7 @@ describe("Ext.panel.Panel", function () {
                     a.destroy();
                 });
 
-                it("should destroy with panel.autoDestroy=true & autoDestroy=true", function() {
+                it("should destroy with panel.autoDestroy=true & autoDestroy=true", function () {
                     makeDockPanel({
                         autoDestroy: true
                     });
@@ -3447,7 +3446,7 @@ describe("Ext.panel.Panel", function () {
                     expect(a.destroyed).toBe(true);
                 });
 
-                it("should not destroy with panel.autoDestroy=false & autoDestroy=false", function() {
+                it("should not destroy with panel.autoDestroy=false & autoDestroy=false", function () {
                     makeDockPanel({
                         autoDestroy: false
                     });
@@ -3456,7 +3455,7 @@ describe("Ext.panel.Panel", function () {
                     a.destroy();
                 });
 
-                it("should destroy with panel.autoDestroy=false & autoDestroy=true", function() {
+                it("should destroy with panel.autoDestroy=false & autoDestroy=true", function () {
                     makeDockPanel({
                         autoDestroy: true
                     });
@@ -3465,12 +3464,12 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("events/template methods", function() {
-                beforeEach(function() {
+            describe("events/template methods", function () {
+                beforeEach(function () {
                     makeDockPanel();
                 });
 
-                it("should fire the dockedremove method and pass the container and item", function() {
+                it("should fire the dockedremove method and pass the container and item", function () {
                     var spy = jasmine.createSpy(),
                         args;
 
@@ -3480,16 +3479,16 @@ describe("Ext.panel.Panel", function () {
                     args = spy.mostRecentCall.args;
                     expect(args[0]).toBe(panel);
                     expect(args[1]).toBe(a);
-                }); 
+                });
 
-                it("should call onRemoved on the item and pass the destroying flag", function() {
+                it("should call onRemoved on the item and pass the destroying flag", function () {
                     var spy = spyOn(a, 'onRemoved').andCallThrough();
                     panel.removeDocked(a);
                     expect(spy.callCount).toBe(1);
                     expect(spy.mostRecentCall.args[0]).toBe(true);
                 });
 
-                it("should call onDockedRemove on the panel and pass the item", function() {
+                it("should call onDockedRemove on the panel and pass the item", function () {
                     var spy = spyOn(panel, 'onDockedRemove').andCallThrough();
                     panel.removeDocked(a);
                     expect(spy.callCount).toBe(1);
@@ -3497,18 +3496,18 @@ describe("Ext.panel.Panel", function () {
                 });
             });
 
-            describe("layout", function() {
-                beforeEach(function() {
+            describe("layout", function () {
+                beforeEach(function () {
                     makeDockPanel();
                 });
 
-                it("should execute a layout", function() {
+                it("should execute a layout", function () {
                     expect(panel.body.getHeight()).toBe(450);
                     panel.removeDocked(a);
                     expect(panel.body.getHeight()).toBe(500);
                 });
 
-                it("should only run a single layout", function() {
+                it("should only run a single layout", function () {
                     var before = panel.componentLayoutCounter;
                     panel.removeDocked(a);
                     expect(panel.componentLayoutCounter).toBe(before + 1);
@@ -3516,215 +3515,215 @@ describe("Ext.panel.Panel", function () {
             });
         });
     });
-    
-    describe("ARIA", function() {
+
+    describe("ARIA", function () {
         var expectAriaAttr = jasmine.expectAriaAttr;
-        
+
         function expectAria(attr, value) {
             jasmine.expectAriaAttr(panel, attr, value);
         }
-        
+
         function expectNoAria(attr) {
             jasmine.expectNoAriaAttr(panel, attr);
         }
-        
+
         function expectBodyAria(attr, value) {
             jasmine.expectAriaAttr(panel.body, attr, value);
         }
-        
+
         function expectNoBodyAria(attr) {
             jasmine.expectNoAriaAttr(panel.body, attr);
         }
-        
-        describe("attributes", function() {
-            describe("ariaEl", function() {
-                beforeEach(function() {
+
+        describe("attributes", function () {
+            describe("ariaEl", function () {
+                beforeEach(function () {
                     makePanel();
                 });
-                
-                it("should be main el", function() {
+
+                it("should be main el", function () {
                     expect(panel.ariaEl).toBe(panel.el);
                 });
             });
-            
-            describe("main el", function() {
-                describe("static roles", function() {
-                    beforeEach(function() {
+
+            describe("main el", function () {
+                describe("static roles", function () {
+                    beforeEach(function () {
                         makePanel();
                     });
-                    
-                    it("should have presentation role by default", function() {
+
+                    it("should have presentation role by default", function () {
                         expectAria('role', 'presentation');
                     });
                 });
-                
-                describe("explicit widget role", function() {
-                    describe("in general", function() {
-                        beforeEach(function() {
-                            makePanel({ ariaRole: 'foo' });
+
+                describe("explicit widget role", function () {
+                    describe("in general", function () {
+                        beforeEach(function () {
+                            makePanel({ariaRole: 'foo'});
                         });
-                        
-                        it("should set el role to ariaRole", function() {
+
+                        it("should set el role to ariaRole", function () {
                             expectAria('role', 'foo');
                         });
-                        
-                        it("should not set ariaRole on the body el", function() {
+
+                        it("should not set ariaRole on the body el", function () {
                             expectBodyAria('role', 'presentation');
                         });
-                        
-                        it("should not have aria-expanded", function() {
+
+                        it("should not have aria-expanded", function () {
                             expectNoAria('aria-expanded');
                         });
                     });
-                    
-                    describe("no header no title", function() {
-                        beforeEach(function() {
+
+                    describe("no header no title", function () {
+                        beforeEach(function () {
                             makePanel({
                                 ariaRole: 'throbbe'
                             });
                         });
-                        
-                        it("should not have aria-label", function() {
+
+                        it("should not have aria-label", function () {
                             expectNoAria('aria-label');
                         });
-                        
-                        it("should not have aria-labelledby", function() {
+
+                        it("should not have aria-labelledby", function () {
                             expectNoAria('aria-labelledby');
                         });
-                        
-                        it("should replace aria-labelledby", function() {
+
+                        it("should replace aria-labelledby", function () {
                             panel.ariaEl.dom.setAttribute('aria-labelledby', 'foo');
-                            
+
                             panel.setTitle('blerg');
-                            
+
                             expectAria('aria-labelledby', panel.header.titleCmp.textEl.id);
                         });
                     });
-                    
-                    describe("no header with title", function() {
-                        beforeEach(function() {
+
+                    describe("no header with title", function () {
+                        beforeEach(function () {
                             makePanel({
                                 ariaRole: 'bar',
                                 title: 'blerg',
                                 header: false
                             });
                         });
-                        
-                        it("should not have aria-labelledby", function() {
+
+                        it("should not have aria-labelledby", function () {
                             expectNoAria('aria-labelledby');
                         });
-                        
+
                         // https://sencha.jira.com/browse/EXTJS-18939
-                        xit("should have aria-label", function() {
+                        xit("should have aria-label", function () {
                             expectAria('aria-label', 'blerg');
                         });
-                        
-                        it("should not remove aria-labelledby", function() {
+
+                        it("should not remove aria-labelledby", function () {
                             panel.ariaEl.dom.setAttribute('aria-labelledby', 'xyzzy');
-                            
+
                             panel.setTitle('throbbe');
-                            
+
                             expectAria('aria-labelledby', 'xyzzy');
                         });
-                        
-                        it("should strip HTML markup from title", function() {
+
+                        it("should strip HTML markup from title", function () {
                             panel.setTitle('<span style="background-color: red">foo</span>');
-                            
+
                             expectAria('aria-label', 'foo');
                         });
                     });
-                    
-                    describe("with header", function() {
-                        beforeEach(function() {
+
+                    describe("with header", function () {
+                        beforeEach(function () {
                             makePanel({
                                 ariaRole: 'baz',
                                 title: 'frob'
                             });
                         });
-                        
-                        it("should have aria-labelledby", function() {
+
+                        it("should have aria-labelledby", function () {
                             expectAria('aria-labelledby', panel.header.titleCmp.textEl.id);
                         });
-                        
-                        it("should not have aria-label", function() {
+
+                        it("should not have aria-label", function () {
                             expectNoAria('aria-label');
                         });
-                        
-                        it("should have presentation role on the header with no tools", function() {
+
+                        it("should have presentation role on the header with no tools", function () {
                             expectAriaAttr(panel.header, 'role', 'presentation');
                         });
-                        
-                        it("should have presentation role on titleCmp", function() {
+
+                        it("should have presentation role on titleCmp", function () {
                             expectAriaAttr(panel.header.titleCmp, 'role', 'presentation');
                         });
-                        
-                        it("should not remove aria-labelledby", function() {
+
+                        it("should not remove aria-labelledby", function () {
                             panel.setTitle('bonzo');
-                            
+
                             expectAria('aria-labelledby', panel.header.titleCmp.textEl.id);
                         });
                     });
                 });
-                
-                describe("region role", function() {
-                    beforeEach(function() {
+
+                describe("region role", function () {
+                    beforeEach(function () {
                         makePanel({
                             ariaRole: 'region',
                             title: 'foo'
                         });
                     });
-                    
-                    it("should have aria-labelledby", function() {
+
+                    it("should have aria-labelledby", function () {
                         expectAria('aria-labelledby', panel.headingEl.id);
                     });
-                    
-                    it("should not have aria-label", function() {
+
+                    it("should not have aria-label", function () {
                         expectNoAria('aria-label');
                     });
                 });
-                
+
                 // This one is special with regards to aria-labelledby
-                describe("tabpanel role", function() {
-                    beforeEach(function() {
+                describe("tabpanel role", function () {
+                    beforeEach(function () {
                         makePanel({
                             ariaRole: 'tabpanel',
                             title: 'foo'
                         });
                     });
-                    
+
                     // TabPanel sets it
-                    it("should not set aria-labelledby", function() {
+                    it("should not set aria-labelledby", function () {
                         expectNoAria('aria-labelledby');
                     });
-                    
+
                     // This would get in the way
-                    it("should not set aria-label", function() {
+                    it("should not set aria-label", function () {
                         expectNoAria('aria-label');
                     });
                 });
             });
-            
-            describe("body el", function() {
-                describe("static roles", function() {
-                    beforeEach(function() {
+
+            describe("body el", function () {
+                describe("static roles", function () {
+                    beforeEach(function () {
                         makePanel({
                             bodyAriaRenderAttributes: {
                                 'aria-foo': 'bar'
                             }
                         });
                     });
-                    
-                    it("should have presentation role by default", function() {
+
+                    it("should have presentation role by default", function () {
                         expectBodyAria('role', 'presentation');
                     });
-                    
-                    it("should not render body ARIA attributes", function() {
+
+                    it("should not render body ARIA attributes", function () {
                         expectNoBodyAria('aria-foo');
                     });
                 });
-                
-                describe("widget roles", function() {
-                    beforeEach(function() {
+
+                describe("widget roles", function () {
+                    beforeEach(function () {
                         makePanel({
                             bodyAriaRole: 'frob',
                             bodyAriaRenderAttributes: {
@@ -3732,214 +3731,214 @@ describe("Ext.panel.Panel", function () {
                             }
                         });
                     });
-                    
-                    it("should set role to bodyAriaRole", function() {
+
+                    it("should set role to bodyAriaRole", function () {
                         expectBodyAria('role', 'frob');
                     });
-                    
-                    it("should render body ARIA attributes", function() {
+
+                    it("should render body ARIA attributes", function () {
                         expectBodyAria('aria-qux', 'bonzo');
                     });
-                    
-                    it("should not set bodyAriaRole on the main el", function() {
+
+                    it("should not set bodyAriaRole on the main el", function () {
                         expectAria('role', 'presentation');
                     });
                 });
             });
-            
+
             // The purpose of tool tests is to make sure the attribute munging
             // we're doing for certain cases does not spread beyond these cases.
             // Look for Accordion in Panel to see more.
-            describe("standard tools", function() {
+            describe("standard tools", function () {
                 var closeTool, collapseTool, expandTool;
-                
-                beforeEach(function() {
+
+                beforeEach(function () {
                     makePanel({
                         title: 'foo',
                         closable: true,
                         collapsible: true,
                         animCollapse: false
                     });
-                    
+
                     closeTool = panel.down('tool[type=close]');
                     collapseTool = panel.collapseTool;
                     expandTool = panel.expandTool;
                 });
-                
-                afterEach(function() {
+
+                afterEach(function () {
                     closeTool = collapseTool = expandTool = null;
                 });
-                
-                describe("close tool", function() {
+
+                describe("close tool", function () {
                     // Not tabbable here; panel header is a FocusableContainer!
-                    it("should be focusable", function() {
+                    it("should be focusable", function () {
                         expect(closeTool.el.isFocusable()).toBe(true);
                     });
-                    
-                    it("should have button role", function() {
+
+                    it("should have button role", function () {
                         expectAriaAttr(closeTool, 'role', 'button');
                     });
-                    
-                    it("should have aria-label", function() {
+
+                    it("should have aria-label", function () {
                         expectAriaAttr(closeTool, 'aria-label', 'Close panel');
                     });
                 });
-                
-                describe("collapse tool", function() {
-                    it("should be focusable", function() {
+
+                describe("collapse tool", function () {
+                    it("should be focusable", function () {
                         expect(collapseTool.el.isFocusable()).toBe(true);
                     });
-                    
-                    it("should have button role", function() {
+
+                    it("should have button role", function () {
                         expectAriaAttr(collapseTool, 'role', 'button');
                     });
-                    
-                    it("should have aria-label", function() {
+
+                    it("should have aria-label", function () {
                         expectAriaAttr(collapseTool, 'aria-label', 'Collapse panel');
                     });
                 });
-                
-                describe("expand tool", function() {
-                    beforeEach(function() {
+
+                describe("expand tool", function () {
+                    beforeEach(function () {
                         panel.collapse();
                     });
-                    
-                    it("should be focusable", function() {
+
+                    it("should be focusable", function () {
                         expect(expandTool.el.isFocusable()).toBe(true);
                     });
-                    
-                    it("should have button role", function() {
+
+                    it("should have button role", function () {
                         expectAriaAttr(expandTool, 'role', 'button');
                     });
-                    
-                    it("should have aria-label", function() {
+
+                    it("should have aria-label", function () {
                         expectAriaAttr(expandTool, 'aria-label', 'Expand panel');
                     });
                 });
             });
         }); // attributes
-        
-        describe("regions", function() {
-            describe("automagic ariaRole", function() {
-                it("should work when isViewportBorderChild", function() {
-                    makePanel({ isViewportBorderChild: true, title: 'bonzo' });
-                    
+
+        describe("regions", function () {
+            describe("automagic ariaRole", function () {
+                it("should work when isViewportBorderChild", function () {
+                    makePanel({isViewportBorderChild: true, title: 'bonzo'});
+
                     expect(panel.ariaRole).toBe('region');
                 });
-                
-                it("should not work when isViewportBorderChild and has ariaRole", function() {
+
+                it("should not work when isViewportBorderChild and has ariaRole", function () {
                     makePanel({
                         isViewportBorderChild: true,
                         ariaRole: 'plugh',
                         title: 'xyzzy'
                     });
-                    
+
                     expect(panel.ariaRole).toBe('plugh');
                 });
-                
-                it("should warn when isViewportBorderChild && !title", function() {
+
+                it("should warn when isViewportBorderChild && !title", function () {
                     spyOn(Ext.log, 'warn');
-                    
-                    makePanel({ isViewportBorderChild: true });
-                    
+
+                    makePanel({isViewportBorderChild: true});
+
                     var warn = Ext.log.warn.mostRecentCall.args[0];
-                    
+
                     expect(warn).toMatch(/does not have a title/);
                 });
-                
-                it("should warn when ariaRole == region && !title", function() {
+
+                it("should warn when ariaRole == region && !title", function () {
                     spyOn(Ext.log, 'warn');
-                    
-                    makePanel({ ariaRole: 'region' });
-                    
+
+                    makePanel({ariaRole: 'region'});
+
                     var warn = Ext.log.warn.mostRecentCall.args[0];
-                    
+
                     expect(warn).toMatch(/does not have a title/);
                 });
             });
-            
-            describe("headingEl", function() {
-                describe("creation", function() {
-                    it("should be created when isViewportBorderChild", function() {
-                        makePanel({ isViewportBorderChild: true, title: 'throbbe' });
-                        
+
+            describe("headingEl", function () {
+                describe("creation", function () {
+                    it("should be created when isViewportBorderChild", function () {
+                        makePanel({isViewportBorderChild: true, title: 'throbbe'});
+
                         expect(panel.headingEl).toBeDefined();
                     });
-                    
-                    it("should be created when ariaRole == region", function() {
-                        makePanel({ ariaRole: 'region', title: 'foobaroo' });
-                        
+
+                    it("should be created when ariaRole == region", function () {
+                        makePanel({ariaRole: 'region', title: 'foobaroo'});
+
                         expect(panel.headingEl).toBeDefined();
                     });
                 });
-                
-                describe("position and content", function() {
-                    beforeEach(function() {
+
+                describe("position and content", function () {
+                    beforeEach(function () {
                         makePanel({
                             isViewportBorderChild: true,
                             title: 'frobbe'
                         });
                     });
-                    
-                    it("should be docked above the header", function() {
+
+                    it("should be docked above the header", function () {
                         var dom = panel.el.dom.childNodes[0];
-                        
+
                         expect(dom.getAttribute('role')).toBe('heading');
                     });
-                    
-                    it("should have innerHTML set to the title", function() {
+
+                    it("should have innerHTML set to the title", function () {
                         expect(panel.headingEl.getHtml()).toBe('frobbe');
                     });
-                    
-                    it("should have innerHTML updated when title changes", function() {
+
+                    it("should have innerHTML updated when title changes", function () {
                         panel.setTitle('vita voom');
-                        
+
                         expect(panel.headingEl.getHtml()).toBe('vita voom');
                     });
                 });
-                
-                describe("destruction", function() {
+
+                describe("destruction", function () {
                     var headingEl;
-                    
-                    beforeEach(function() {
+
+                    beforeEach(function () {
                         makePanel({
                             ariaRole: 'region',
                             title: 'blerg'
                         });
-                        
+
                         headingEl = panel.headingEl;
-                        
+
                         // The warning is expected
                         spyOn(Ext.log, 'warn');
-                        
+
                         panel.setTitle(null);
                         panel.header = false;
                         panel.updateHeader();
                     });
-                    
-                    it("should be removed from docked items", function() {
+
+                    it("should be removed from docked items", function () {
                         var els = panel.el.query('[role=heading]');
-                        
+
                         expect(els.length).toBe(0);
                     });
-                    
-                    it("should be destroyed", function() {
+
+                    it("should be destroyed", function () {
                         expect(headingEl.destroyed).toBe(true);
                     });
-                    
-                    it("should be nulled out", function() {
+
+                    it("should be nulled out", function () {
                         expect(panel.headingEl).toBe(null);
                     });
                 });
             });
         }); // regions
-        
-        describe("state", function() {
-            describe("aria-expanded", function() {
+
+        describe("state", function () {
+            describe("aria-expanded", function () {
                 function makeSuite(animate) {
-                    describe("animCollapse: " + animate, function() {
-                        describe("before rendering", function() {
-                            beforeEach(function() {
+                    describe("animCollapse: " + animate, function () {
+                        describe("before rendering", function () {
+                            beforeEach(function () {
                                 makePanel({
                                     ariaRole: 'mymse',
                                     title: 'foo',
@@ -3948,69 +3947,69 @@ describe("Ext.panel.Panel", function () {
                                     renderTo: undefined
                                 });
                             });
-                            
-                            describe("collapsed = false", function() {
-                                beforeEach(function() {
+
+                            describe("collapsed = false", function () {
+                                beforeEach(function () {
                                     panel.collapsed = false;
                                 });
-                                
-                                it("should set aria-expanded to true by default", function() {
+
+                                it("should set aria-expanded to true by default", function () {
                                     panel.render(Ext.getBody());
-                                    
+
                                     expectAria('aria-expanded', 'true');
                                 });
-                                
-                                it("should set aria-expanded to false after collapsing", function() {
+
+                                it("should set aria-expanded to false after collapsing", function () {
                                     panel.collapse();
                                     panel.render(Ext.getBody());
-                                    
+
                                     expectAria('aria-expanded', 'false');
                                 });
-                                
-                                it("should set aria-expanded to true after expanding", function() {
+
+                                it("should set aria-expanded to true after expanding", function () {
                                     panel.collapse();
                                     panel.expand();
                                     panel.render(Ext.getBody());
-                                    
+
                                     expectAria('aria-expanded', 'true');
                                 });
                             });
-                            
-                            describe("collapsed = true", function() {
-                                beforeEach(function() {
+
+                            describe("collapsed = true", function () {
+                                beforeEach(function () {
                                     panel.collapsed = true;
                                 });
-                                
-                                it("should set aria-expanded to false by default", function() {
+
+                                it("should set aria-expanded to false by default", function () {
                                     panel.render(Ext.getBody());
-                                    
+
                                     expectAria('aria-expanded', 'false');
                                 });
-                                
-                                it("should set aria-expanded to true after expanding", function() {
+
+                                it("should set aria-expanded to true after expanding", function () {
                                     panel.expand();
                                     panel.render(Ext.getBody());
-                                    
+
                                     expectAria('aria-expanded', 'true');
                                 });
-                                
-                                it("should set aria-expanded to false after collapsing", function() {
+
+                                it("should set aria-expanded to false after collapsing", function () {
                                     panel.expand();
                                     panel.collapse();
                                     panel.render(Ext.getBody());
-                                    
+
                                     expectAria('aria-expanded', 'false');
                                 });
                             });
                         });
-                        
-                        describe("after rendering", function() {
+
+                        describe("after rendering", function () {
                             var collapseSpy, expandSpy;
-                            
-                            beforeEach(function() {
+
+                            beforeEach(function () {
                                 collapseSpy = jasmine.createSpy('collapse');
                                 expandSpy = jasmine.createSpy('expand');
-                                
+
                                 makePanel({
                                     ariaRole: 'splurge',
                                     title: 'foo',
@@ -4022,44 +4021,44 @@ describe("Ext.panel.Panel", function () {
                                     }
                                 });
                             });
-                            
-                            it("should set aria-expanded to true by default", function() {
+
+                            it("should set aria-expanded to true by default", function () {
                                 expectAria('aria-expanded', 'true');
                             });
-                            
-                            it("should set aria-expanded to false after collapsing", function() {
-                                runs(function() {
+
+                            it("should set aria-expanded to false after collapsing", function () {
+                                runs(function () {
                                     panel.collapse();
                                 });
-                                
+
                                 waitsForSpy(collapseSpy, 'collapse', 1000);
-                                
-                                runs(function() {
+
+                                runs(function () {
                                     expectAria('aria-expanded', 'false');
                                 });
                             });
-                            
-                            it("should set aria-expanded to true after expanding", function() {
-                                runs(function() {
+
+                            it("should set aria-expanded to true after expanding", function () {
+                                runs(function () {
                                     panel.collapse();
                                 });
-                                
+
                                 waitsForSpy(collapseSpy, 'collapse', 1000);
-                                
-                                runs(function() {
+
+                                runs(function () {
                                     panel.expand();
                                 });
-                                
+
                                 waitsForSpy(expandSpy, 'expand', 1000);
-                                
-                                runs(function() {
+
+                                runs(function () {
                                     expectAria('aria-expanded', 'true');
                                 });
                             });
                         });
                     });
                 }
-                
+
                 makeSuite(100);
                 makeSuite(false);
             }); // aria-expanded
@@ -4289,16 +4288,16 @@ describe("Ext.panel.Panel", function () {
         });
     }); // ARIA
 
-    describe("Docked component", function(){
+    describe("Docked component", function () {
         /*
-        This one tests the following scenario:
-        - a panel has a docked item
-        - the panel is collapsed
-        - the docked item is removed and more items are docked to the panel
-        - the panel is expanded
-        - should correctly restore visibility of the new items
-        */
-        it('should restore its visibility when panel is expanded', function(){
+         This one tests the following scenario:
+         - a panel has a docked item
+         - the panel is collapsed
+         - the docked item is removed and more items are docked to the panel
+         - the panel is expanded
+         - should correctly restore visibility of the new items
+         */
+        it('should restore its visibility when panel is expanded', function () {
             var panelCollapsed = false,
                 panelExpanded = false;
 
@@ -4316,18 +4315,22 @@ describe("Ext.panel.Panel", function () {
                 }],
 
                 listeners: {
-                    collapse: function() { panelCollapsed = true; },
-                    expand: function() { panelExpanded = true; }
+                    collapse: function () {
+                        panelCollapsed = true;
+                    },
+                    expand: function () {
+                        panelExpanded = true;
+                    }
                 }
             });
 
             panel.collapse();
 
-            waitsFor(function(){
+            waitsFor(function () {
                 return panelCollapsed;
             });
 
-            runs(function(){
+            runs(function () {
                 var docked = panel.down('#foo');
 
                 expect(docked.el.isVisible()).toBe(false);
@@ -4344,11 +4347,11 @@ describe("Ext.panel.Panel", function () {
 
                 panel.expand();
 
-                waitsFor(function(){
+                waitsFor(function () {
                     return panelExpanded;
                 });
 
-                runs(function(){
+                runs(function () {
                     expect(panel.down('#nofoo').el.isVisible()).toBe(true);
                 });
             });

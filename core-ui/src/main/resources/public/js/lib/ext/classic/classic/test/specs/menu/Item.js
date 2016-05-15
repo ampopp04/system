@@ -11,7 +11,7 @@ describe('Ext.menu.Item', function () {
         item = menu.items.getAt(0);
     }
 
-    afterEach(function() {
+    afterEach(function () {
         Ext.destroy(menu, item);
         menu = item = null;
     });
@@ -19,7 +19,7 @@ describe('Ext.menu.Item', function () {
     function clickItem(theItem, doClick) {
         theItem = theItem || item;
         jasmine.fireMouseEvent(theItem.itemEl.dom, 'click');
-            
+
         // Simulated events does not cause default action on anchors with href
         if (doClick) {
             theItem.itemEl.dom.click();
@@ -27,19 +27,19 @@ describe('Ext.menu.Item', function () {
     }
 
     describe('on click', function () {
-        describe("click event/handler", function() {
+        describe("click event/handler", function () {
             var spy;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 spy = jasmine.createSpy();
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 spy = null;
             });
 
-            describe("handler", function() {
-                it("should fire the handler", function() {
+            describe("handler", function () {
+                it("should fire the handler", function () {
                     makeMenu({
                         text: 'Foo',
                         handler: spy
@@ -48,7 +48,7 @@ describe('Ext.menu.Item', function () {
                     expect(spy.callCount).toBe(1);
                 });
 
-                it("should not fire when disabled", function() {
+                it("should not fire when disabled", function () {
                     makeMenu({
                         text: 'Foo',
                         handler: spy,
@@ -58,7 +58,7 @@ describe('Ext.menu.Item', function () {
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should pass the item and the event object", function() {
+                it("should pass the item and the event object", function () {
                     makeMenu({
                         text: 'Foo',
                         handler: spy
@@ -70,7 +70,7 @@ describe('Ext.menu.Item', function () {
                     expect(args[1] instanceof Ext.event.Event).toBe(true);
                 });
 
-                it("should default the scope to the item", function() {
+                it("should default the scope to the item", function () {
                     makeMenu({
                         text: 'Foo',
                         handler: spy
@@ -79,7 +79,7 @@ describe('Ext.menu.Item', function () {
                     expect(spy.mostRecentCall.object).toBe(item);
                 });
 
-                it("should used the passed scope", function() {
+                it("should used the passed scope", function () {
                     var o = {};
                     makeMenu({
                         text: 'Foo',
@@ -90,7 +90,7 @@ describe('Ext.menu.Item', function () {
                     expect(spy.mostRecentCall.object).toBe(o);
                 });
 
-                it("should be able to route the handler to a view controller", function() {
+                it("should be able to route the handler to a view controller", function () {
                     var ctrl = new Ext.app.ViewController();
                     ctrl.onFoo = spy;
                     makeMenu({
@@ -103,11 +103,11 @@ describe('Ext.menu.Item', function () {
                     expect(spy.callCount).toBe(1);
                 });
 
-                it("should have the menu hidden when the handler fires with hideOnClick: true", function() {
+                it("should have the menu hidden when the handler fires with hideOnClick: true", function () {
                     var visible;
                     makeMenu({
                         text: 'Foo',
-                        handler: spy.andCallFake(function() {
+                        handler: spy.andCallFake(function () {
                             visible = menu.isVisible();
                         })
                     });
@@ -115,16 +115,16 @@ describe('Ext.menu.Item', function () {
                     expect(visible).toBe(false);
                 });
 
-                it("should fire the handler after the click event", function() {
+                it("should fire the handler after the click event", function () {
                     var order = [];
                     makeMenu({
                         text: 'Foo',
                         listeners: {
-                            click: function() {
+                            click: function () {
                                 order.push('click');
                             }
                         },
-                        handler: function() {
+                        handler: function () {
                             order.push('handler')
                         }
                     });
@@ -132,11 +132,11 @@ describe('Ext.menu.Item', function () {
                     expect(order).toEqual(['click', 'handler']);
                 });
 
-                it("should not call the handler if the click event returns false", function() {
+                it("should not call the handler if the click event returns false", function () {
                     makeMenu({
                         text: 'Foo',
                         listeners: {
-                            click: function() {
+                            click: function () {
                                 return false;
                             }
                         },
@@ -146,11 +146,11 @@ describe('Ext.menu.Item', function () {
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("it should not fire the callback if the menu is destroyed in the click event", function() {
+                it("it should not fire the callback if the menu is destroyed in the click event", function () {
                     makeMenu({
                         text: 'Foo',
                         listeners: {
-                            click: function() {
+                            click: function () {
                                 menu.destroy();
                             }
                         },
@@ -161,8 +161,8 @@ describe('Ext.menu.Item', function () {
                 });
             });
 
-            describe("click event", function() {
-                it("should fire the click event", function() {
+            describe("click event", function () {
+                it("should fire the click event", function () {
                     makeMenu({
                         text: 'Foo',
                         listeners: {
@@ -173,7 +173,7 @@ describe('Ext.menu.Item', function () {
                     expect(spy.callCount).toBe(1);
                 });
 
-                it("should not fire when disabled", function() {
+                it("should not fire when disabled", function () {
                     makeMenu({
                         text: 'Foo',
                         listeners: {
@@ -185,7 +185,7 @@ describe('Ext.menu.Item', function () {
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should pass the item and the event object", function() {
+                it("should pass the item and the event object", function () {
                     makeMenu({
                         text: 'Foo',
                         listeners: {
@@ -199,12 +199,12 @@ describe('Ext.menu.Item', function () {
                     expect(args[1] instanceof Ext.event.Event).toBe(true);
                 });
 
-                it("should have the menu hidden when the handler fires with hideOnClick: true", function() {
+                it("should have the menu hidden when the handler fires with hideOnClick: true", function () {
                     var visible;
                     makeMenu({
                         text: 'Foo',
                         listeners: {
-                            click: spy.andCallFake(function() {
+                            click: spy.andCallFake(function () {
                                 visible = menu.isVisible();
                             })
                         }
@@ -215,8 +215,8 @@ describe('Ext.menu.Item', function () {
             });
         });
 
-        describe("hideOnClick", function() {
-            it("should hide the menu with hideOnClick: true", function() {
+        describe("hideOnClick", function () {
+            it("should hide the menu with hideOnClick: true", function () {
                 makeMenu({
                     text: 'Foo',
                     hideOnClick: true
@@ -225,7 +225,7 @@ describe('Ext.menu.Item', function () {
                 expect(menu.isVisible()).toBe(false);
             });
 
-            it("should not hide the menu with hideOnClick: false", function() {
+            it("should not hide the menu with hideOnClick: false", function () {
                 makeMenu({
                     text: 'Foo',
                     hideOnClick: false
@@ -234,14 +234,15 @@ describe('Ext.menu.Item', function () {
                 expect(menu.isVisible()).toBe(true);
             });
 
-            describe("hierarchy", function() {
+            describe("hierarchy", function () {
                 function expand(item) {
                     item.activated = true;
                     item.expandMenu(null, 0);
 
                     return item.menu;
                 }
-                it("should hide a parent menu", function() {
+
+                it("should hide a parent menu", function () {
                     makeMenu({
                         text: 'Foo',
                         menu: {
@@ -260,7 +261,7 @@ describe('Ext.menu.Item', function () {
                     expect(menu.isVisible()).toBe(false);
                 });
 
-                it("should hide all parent menus", function() {
+                it("should hide all parent menus", function () {
                     makeMenu({
                         text: 'Foo',
                         menu: {
@@ -323,7 +324,7 @@ describe('Ext.menu.Item', function () {
                     expect(location.hash).toBe('#ledzep');
                 });
             });
-            
+
             // TODO This test does not work properly in IE10+ due to events being translated
             (Ext.isIE10p ? xit : it)('should not follow the target link if the click listener stops the event', function () {
                 var hashValue = Ext.isIE ? '#' : '';
@@ -366,23 +367,23 @@ describe('Ext.menu.Item', function () {
             });
         });
 
-        it("should gain focus but not activate on mouseover", function() {
+        it("should gain focus but not activate on mouseover", function () {
             makeMenu([{
                 text: 'Foo',
                 disabled: true
             }]);
             var item = menu.items.getAt(0);
             jasmine.fireMouseEvent(item.getEl(), 'mouseover');
-            waitsFor(function() {
+            waitsFor(function () {
                 return item.containsFocus === true;
             }, "Never focused");
-            runs(function() {
+            runs(function () {
                 expect(item.activated).toBe(false);
             });
         });
 
-        describe("submenu", function() {
-            it("should not show a submenu on mouseover", function() {
+        describe("submenu", function () {
+            it("should not show a submenu on mouseover", function () {
                 makeMenu([{
                     text: 'Foo',
                     disabled: true,
@@ -398,10 +399,10 @@ describe('Ext.menu.Item', function () {
                     sub = item.getMenu();
 
                 jasmine.fireMouseEvent(item.getEl(), 'mouseover');
-                waitsFor(function() {
+                waitsFor(function () {
                     return item.containsFocus === true;
                 }, "Never focused");
-                runs(function() {
+                runs(function () {
                     expect(sub.isVisible()).toBe(false);
                 });
             });
@@ -436,8 +437,8 @@ describe('Ext.menu.Item', function () {
         });
     });
 
-    describe("binding", function() {
-        it("should be able to bind properties higher up in the hierarchy", function() {
+    describe("binding", function () {
+        it("should be able to bind properties higher up in the hierarchy", function () {
             var vm = new Ext.app.ViewModel({
                 data: {
                     title: 'someTitle'
@@ -460,72 +461,72 @@ describe('Ext.menu.Item', function () {
             expect(subMenu.getTitle()).toBe('someTitle');
         });
     });
-    
-    describe("ARIA", function() {
+
+    describe("ARIA", function () {
         function expectAria(attr, value) {
             jasmine.expectAriaAttr(item, attr, value);
         }
-        
+
         function expectNoAria(attr) {
             jasmine.expectNoAriaAttr(item, attr);
         }
-        
-        describe("simple", function() {
-            beforeEach(function() {
+
+        describe("simple", function () {
+            beforeEach(function () {
                 makeMenu({
                     text: 'foo'
                 });
-                
+
                 menu.show();
             });
-            
-            it("should have itemEl as ariaEl", function() {
+
+            it("should have itemEl as ariaEl", function () {
                 expect(item.ariaEl).toBe(item.itemEl);
             });
-            
-            it("should have menuitem role", function() {
+
+            it("should have menuitem role", function () {
                 expectAria('role', 'menuitem');
             });
-            
-            it("should not have aria-haspopup", function() {
+
+            it("should not have aria-haspopup", function () {
                 expectNoAria('aria-haspopup');
             });
-            
-            it("should not have aria-owns", function() {
+
+            it("should not have aria-owns", function () {
                 expectNoAria('aria-owns');
             });
         });
-        
-        describe("plain", function() {
-            beforeEach(function() {
+
+        describe("plain", function () {
+            beforeEach(function () {
                 makeMenu({
                     text: 'plain',
                     plain: true
                 });
-                
+
                 menu.show();
             });
-            
-            it("should have el as ariaEl", function() {
+
+            it("should have el as ariaEl", function () {
                 expect(item.ariaEl).toBe(item.el);
             });
-            
-            it("should have menuitem role", function() {
+
+            it("should have menuitem role", function () {
                 expectAria('role', 'menuitem');
             });
 
-            it("should not have aria-haspopup", function() {
+            it("should not have aria-haspopup", function () {
                 expectNoAria('aria-haspopup');
             });
-            
-            it("should not have aria-owns", function() {
+
+            it("should not have aria-owns", function () {
                 expectNoAria('aria-owns');
             });
         });
-        
-        describe("with submenu", function() {
-            describe("via config", function() {
-                beforeEach(function() {
+
+        describe("with submenu", function () {
+            describe("via config", function () {
+                beforeEach(function () {
                     makeMenu({
                         text: 'submenu',
                         menu: {
@@ -534,69 +535,69 @@ describe('Ext.menu.Item', function () {
                             }]
                         }
                     });
-                    
+
                     menu.show();
                 });
-                
-                it("should have aria-haspopup", function() {
+
+                it("should have aria-haspopup", function () {
                     expectAria('aria-haspopup', 'true');
                 });
-                
-                it("should have aria-owns", function() {
+
+                it("should have aria-owns", function () {
                     expectAria('aria-owns', item.menu.id);
                 });
             });
-            
-            describe("adding via setMenu", function() {
-                beforeEach(function() {
+
+            describe("adding via setMenu", function () {
+                beforeEach(function () {
                     makeMenu({
                         text: 'submenu'
                     });
                 });
-                
-                describe("before rendering", function() {
-                    beforeEach(function() {
+
+                describe("before rendering", function () {
+                    beforeEach(function () {
                         item.setMenu({
                             items: [{
                                 text: 'sub-item'
                             }]
                         });
-                        
+
                         menu.show();
                     });
-                    
-                    it("should have aria-haspopup", function() {
+
+                    it("should have aria-haspopup", function () {
                         expectAria('aria-haspopup', 'true');
                     });
-                    
-                    it("should have aria-owns", function() {
+
+                    it("should have aria-owns", function () {
                         expectAria('aria-owns', item.menu.id);
                     });
                 });
-                
-                describe("after rendering", function() {
-                    beforeEach(function() {
+
+                describe("after rendering", function () {
+                    beforeEach(function () {
                         menu.show();
-                        
+
                         item.setMenu({
                             items: [{
                                 text: 'sub-item'
                             }]
                         });
                     });
-                    
-                    it("should have aria-haspopup", function() {
+
+                    it("should have aria-haspopup", function () {
                         expectAria('aria-haspopup', 'true');
                     });
-                    
-                    it("should have aria-owns", function() {
+
+                    it("should have aria-owns", function () {
                         expectAria('aria-owns', item.menu.id);
                     });
                 });
             });
-            
-            describe("removing via setMenu", function() {
-                beforeEach(function() {
+
+            describe("removing via setMenu", function () {
+                beforeEach(function () {
                     makeMenu({
                         text: 'submenu',
                         menu: {
@@ -606,32 +607,32 @@ describe('Ext.menu.Item', function () {
                         }
                     });
                 });
-                
-                describe("before rendering", function() {
-                    beforeEach(function() {
+
+                describe("before rendering", function () {
+                    beforeEach(function () {
                         item.setMenu(null);
                     });
-                    
-                    it("should not have aria-haspopup", function() {
+
+                    it("should not have aria-haspopup", function () {
                         expectNoAria('aria-haspopup');
                     });
-                    
-                    it("should have no aria-owns", function() {
+
+                    it("should have no aria-owns", function () {
                         expectNoAria('aria-owns');
                     });
                 });
-                
-                describe("after rendering", function() {
-                    beforeEach(function() {
+
+                describe("after rendering", function () {
+                    beforeEach(function () {
                         menu.show();
                         item.setMenu(null);
                     });
-                    
-                    it("should not have aria-haspopup", function() {
+
+                    it("should not have aria-haspopup", function () {
                         expectNoAria('aria-haspopup');
                     });
-                    
-                    it("should not have aria-owns", function() {
+
+                    it("should not have aria-owns", function () {
                         expectNoAria('aria-owns');
                     });
                 });

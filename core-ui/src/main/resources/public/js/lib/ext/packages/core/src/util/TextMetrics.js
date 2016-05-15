@@ -1,25 +1,25 @@
 /**
- * Provides precise pixel measurements for blocks of text so that you can determine 
- * the exact pixel height and width of a block of text. 
- * 
- * **Note:** The TextMetrics tool should only be utilized to measure plain text. Attempting to 
+ * Provides precise pixel measurements for blocks of text so that you can determine
+ * the exact pixel height and width of a block of text.
+ *
+ * **Note:** The TextMetrics tool should only be utilized to measure plain text. Attempting to
  * measure text that includes HTML may return inaccurate results.
  *
- * This measurement works by copying the relevant font-related CSS styles from the element  
+ * This measurement works by copying the relevant font-related CSS styles from the element
  * param to the TextMetrics' cached measurement element.  This returns the dimensions of the cached
- * element wrapping the text.  By default, the wrapping element is auto-sized.  
+ * element wrapping the text.  By default, the wrapping element is auto-sized.
  * You must provide a **fixed width** if the passed text is multi-lined.
  *
- * When multiple measurements are being done with the same element styling, you should 
- * create a single, reusable TextMetrics instance.  This is more efficient than using the 
- * static {@link #measure} method.  The element styles are copied to the cached 
- * TextMetrics element once during instantiation versus repeated copying using 
+ * When multiple measurements are being done with the same element styling, you should
+ * create a single, reusable TextMetrics instance.  This is more efficient than using the
+ * static {@link #measure} method.  The element styles are copied to the cached
+ * TextMetrics element once during instantiation versus repeated copying using
  * _measure()_.
  *
- * The following example demonstrates the recommended use of TextMetrics where the custom 
- * textfield class sets up a reusable TextMetrics instance used to measure the label 
- * width. This example assumes that all instances of _mytextfield_ have the same 
- * {@link Ext.form.Labelable#labelClsExtra labelClsExtra} and 
+ * The following example demonstrates the recommended use of TextMetrics where the custom
+ * textfield class sets up a reusable TextMetrics instance used to measure the label
+ * width. This example assumes that all instances of _mytextfield_ have the same
+ * {@link Ext.form.Labelable#labelClsExtra labelClsExtra} and
  * {@link Ext.form.Labelable#labelStyle labelStyle} configs.
  *
  *     Ext.define('MyApp.view.MyTextField', {
@@ -70,9 +70,9 @@
  *         }]
  *     });
  *
- * While less efficient than the preceding example, this example allows each instance of 
- * _mytextfield2_ to have unique labelClsExtra and labelStyle configs.  Each custom 
- * textfield instance uses the static TextMetrics measure method which will copy the 
+ * While less efficient than the preceding example, this example allows each instance of
+ * _mytextfield2_ to have unique labelClsExtra and labelStyle configs.  Each custom
+ * textfield instance uses the static TextMetrics measure method which will copy the
  * label styles repeatedly, thus being less efficient but more versatile.
  *
  *     Ext.define('MyApp.view.MyTextField2', {
@@ -105,7 +105,7 @@
  *             return el;
  *         }
  *     });
- *     
+ *
  *     Ext.create('Ext.form.Panel', {
  *         title: 'Contact Info',
  *         width: 600,
@@ -124,7 +124,7 @@
  *         }]
  *     });
  */
- Ext.define('Ext.util.TextMetrics', {
+Ext.define('Ext.util.TextMetrics', {
     requires: [
         'Ext.dom.Element'
     ],
@@ -141,35 +141,35 @@
          * @return {Object} An object containing the text's size `{width: (width), height: (height)}`
          * @static
          */
-        measure: function(el, text, fixedWidth){
+        measure: function (el, text, fixedWidth) {
             var me = this,
                 shared = me.shared;
-            
-            if(!shared){
+
+            if (!shared) {
                 shared = me.shared = new me(el, fixedWidth);
             }
             shared.bind(el);
             shared.setFixedWidth(fixedWidth || 'auto');
             return shared.getSize(text);
         },
-        
+
         /**
          * Destroy the TextMetrics instance created by {@link #measure}.
          * @static
          */
-        destroy: function(){
+        destroy: function () {
             var me = this;
             Ext.destroy(me.shared);
             me.shared = null;
         }
     },
-    
+
     /**
      * Creates new TextMetrics.
      * @param {String/HTMLElement/Ext.dom.Element} bindTo The element or its ID to bind to.
      * @param {Number} [fixedWidth] A fixed width to apply to the measuring element.
      */
-    constructor: function(bindTo, fixedWidth){
+    constructor: function (bindTo, fixedWidth) {
         var me = this,
             measure = Ext.getBody().createChild({
                 //<debug>
@@ -181,86 +181,86 @@
             });
 
         measure.setVisibilityMode(1);
-            
-        me.measure = measure; 
+
+        me.measure = measure;
         if (bindTo) {
             me.bind(bindTo);
         }
-        
+
         measure.position('absolute');
         measure.setLocalXY(-1000, -1000);
         measure.hide();
 
         if (fixedWidth) {
-           measure.setWidth(fixedWidth);
+            measure.setWidth(fixedWidth);
         }
     },
-    
+
     /**
      * Returns the size of the specified text based on the internal element's style and width properties
      * @param {String} text The text to measure
      * @return {Object} An object containing the text's size `{width: (width), height: (height)}`
      */
-    getSize: function(text){
+    getSize: function (text) {
         var measure = this.measure,
             size;
-        
+
         measure.setHtml(text);
         size = measure.getSize();
         measure.setHtml('');
         return size;
     },
-    
+
     /**
      * Binds this TextMetrics instance to a new element
      * @param {String/HTMLElement/Ext.dom.Element} el The element or its ID.
      */
-    bind: function(el){
+    bind: function (el) {
         var me = this;
-        
+
         me.el = Ext.get(el);
         me.measure.setStyle(
-            me.el.getStyle(['font-size','font-style', 'font-weight', 'font-family','line-height', 'text-transform', 'letter-spacing', 'word-break'])
+            me.el.getStyle(['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'text-transform', 'letter-spacing', 'word-break'])
         );
     },
-    
+
     /**
      * Sets a fixed width on the internal measurement element.  If the text will be multiline, you have
      * to set a fixed width in order to accurately measure the text height.
      * @param {Number} width The width to set on the element
      */
-     setFixedWidth : function(width){
-         this.measure.setWidth(width);
-     },
-     
-     /**
-      * Returns the measured width of the specified text
-      * @param {String} text The text to measure
-      * @return {Number} width The width in pixels
-      */
-     getWidth : function(text){
-         this.measure.dom.style.width = 'auto';
-         return this.getSize(text).width;
-     },
-     
-     /**
-      * Returns the measured height of the specified text
-      * @param {String} text The text to measure
-      * @return {Number} height The height in pixels
-      */
-     getHeight : function(text){
-         return this.getSize(text).height;
-     },
-     
-     /**
-      * Destroy this instance
-      */
-     destroy: function(){
-         var me = this;
-         me.el = me.measure = Ext.destroy(me.measure);
-         me.callParent();
-     }
-}, function(){
+    setFixedWidth: function (width) {
+        this.measure.setWidth(width);
+    },
+
+    /**
+     * Returns the measured width of the specified text
+     * @param {String} text The text to measure
+     * @return {Number} width The width in pixels
+     */
+    getWidth: function (text) {
+        this.measure.dom.style.width = 'auto';
+        return this.getSize(text).width;
+    },
+
+    /**
+     * Returns the measured height of the specified text
+     * @param {String} text The text to measure
+     * @return {Number} height The height in pixels
+     */
+    getHeight: function (text) {
+        return this.getSize(text).height;
+    },
+
+    /**
+     * Destroy this instance
+     */
+    destroy: function () {
+        var me = this;
+        me.el = me.measure = Ext.destroy(me.measure);
+        me.callParent();
+    }
+}, function () {
     Ext.Element.override({
         /**
          * Returns the width in pixels of the passed text, or the width of the text in this Element.
@@ -270,7 +270,7 @@
          * @return {Number} The text width in pixels.
          * @member Ext.dom.Element
          */
-        getTextWidth : function(text, min, max){
+        getTextWidth: function (text, min, max) {
             return Ext.Number.constrain(Ext.util.TextMetrics.measure(this.dom, Ext.valueFrom(text, this.dom.innerHTML, true)).width, min || 0, max || 1000000);
         }
     });

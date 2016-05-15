@@ -12,7 +12,7 @@ Ext.define('Ext.data.field.Integer', {
     isIntegerField: true,
     numericType: 'int',
 
-    convert: function(v) {
+    convert: function (v) {
         // Handle values which are already numbers.
         // Value truncation behaviour of parseInt is historic and must be maintained.
         // parseInt(35.9)  and parseInt("35.9") returns 35
@@ -26,7 +26,7 @@ Ext.define('Ext.data.field.Integer', {
 
         if (empty) {
             out = allowNull ? null : 0;
-        }  else {
+        } else {
             out = this.parse(v);
             if (allowNull && isNaN(out)) {
                 out = null;
@@ -39,11 +39,11 @@ Ext.define('Ext.data.field.Integer', {
         return parseInt(v, 10);
     },
 
-    getType: function() {
+    getType: function () {
         return this.numericType;
     },
 
-    parse: function(v) {
+    parse: function (v) {
         return parseInt(String(v).replace(this.stripRe, ''), 10);
     },
 

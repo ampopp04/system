@@ -123,13 +123,13 @@ Ext.define('Ext.data.Connection', {
         disableCachingParam: '_dc',
 
         /**
-         * @cfg {Number} [timeout=30000] The timeout in milliseconds to be used for 
-         * requests.  
+         * @cfg {Number} [timeout=30000] The timeout in milliseconds to be used for
+         * requests.
          * Defaults to 30000 milliseconds (30 seconds).
-         * 
-         * When a request fails due to timeout the XMLHttpRequest response object will 
+         *
+         * When a request fails due to timeout the XMLHttpRequest response object will
          * contain:
-         * 
+         *
          *     timedout: true
          */
         timeout: 30000,
@@ -164,19 +164,19 @@ Ext.define('Ext.data.Connection', {
          * @cfg {String} defaultPostHeader
          * The default header to be sent out with any post request.
          */
-        defaultPostHeader : 'application/x-www-form-urlencoded; charset=UTF-8',
+        defaultPostHeader: 'application/x-www-form-urlencoded; charset=UTF-8',
 
         /**
          * @cfg {Boolean} useDefaultXhrHeader
          * `true` to send the {@link #defaultXhrHeader} along with any request.
          */
-        useDefaultXhrHeader : true,
+        useDefaultXhrHeader: true,
 
         /**
          * @cfg {String}
          * The header to send with Ajax requests. Also see {@link #useDefaultXhrHeader}.
          */
-        defaultXhrHeader : 'XMLHttpRequest'
+        defaultXhrHeader: 'XMLHttpRequest'
     },
 
     /**
@@ -186,7 +186,7 @@ Ext.define('Ext.data.Connection', {
      * @param {Ext.data.Connection} conn This Connection object.
      * @param {Object} options The options config object passed to the {@link #request} method.
      */
-    
+
     /**
      * @event requestcomplete
      * Fires if the request was successfully completed.
@@ -195,7 +195,7 @@ Ext.define('Ext.data.Connection', {
      * See [The XMLHttpRequest Object](http://www.w3.org/TR/XMLHttpRequest/) for details.
      * @param {Object} options The options config object passed to the {@link #request} method.
      */
-    
+
     /**
      * @event requestexception
      * Fires if an error HTTP status was returned from the server. This event may also
@@ -207,11 +207,11 @@ Ext.define('Ext.data.Connection', {
      * See [The XMLHttpRequest Object](http://www.w3.org/TR/XMLHttpRequest/) for details.
      * @param {Object} options The options config object passed to the {@link #request} method.
      */
-     
-    constructor: function(config) {
+
+    constructor: function (config) {
         // Will call initConfig
         this.mixins.observable.constructor.call(this, config);
-        
+
         this.requests = {};
     },
 
@@ -296,13 +296,13 @@ Ext.define('Ext.data.Connection', {
      * draw values, then this also serves as the scope for those function calls. Defaults to the browser
      * window.
      *
-     * @param {Number} options.timeout The timeout in milliseconds to be used for this 
-     * request.  
+     * @param {Number} options.timeout The timeout in milliseconds to be used for this
+     * request.
      * Defaults to 30000 milliseconds (30 seconds).
-     * 
-     * When a request fails due to timeout the XMLHttpRequest response object will 
+     *
+     * When a request fails due to timeout the XMLHttpRequest response object will
      * contain:
-     * 
+     *
      *     timedout: true
      *
      * @param {Ext.Element/HTMLElement/String} options.form The `<form>` Element or the id of the `<form>`
@@ -365,17 +365,17 @@ Ext.define('Ext.data.Connection', {
      * @return {Ext.data.request.Base} The request object. This may be used to abort the
      * request.
      */
-    request: function(options) {
+    request: function (options) {
         options = options || {};
-        
+
         var me = this,
             requestOptions, request;
-        
+
         if (me.fireEvent('beforerequest', me, options) !== false) {
             requestOptions = me.setOptions(options, options.scope || Ext.global);
-            
+
             request = me.createRequest(options, requestOptions);
-            
+
             return request.start(requestOptions.data);
         }
 
@@ -384,21 +384,21 @@ Ext.define('Ext.data.Connection', {
         return Ext.Deferred.rejected([options, undefined, undefined]);
     },
 
-    createRequest: function(options, requestOptions) {
+    createRequest: function (options, requestOptions) {
         var me = this,
             type = options.type || requestOptions.type,
             request;
-        
+
         // If request type is not specified we have to deduce it
         if (!type) {
             type = me.isFormUpload(options) ? 'form' : 'ajax';
         }
-        
+
         // if autoabort is set, cancel the current transactions
         if (options.autoAbort || me.getAutoAbort()) {
             me.abort();
         }
-        
+
         // It is possible for the original options object to be mutated if somebody
         // had overridden Connection.setOptions method; it is also possible that such
         // override would do a sensible thing and mutate outgoing requestOptions instead.
@@ -413,10 +413,10 @@ Ext.define('Ext.data.Connection', {
             requestOptions: requestOptions,
             ownerConfig: me.getConfig()
         });
-        
+
         me.requests[request.id] = request;
         me.latestId = request.id;
-        
+
         return request;
     },
 
@@ -424,13 +424,13 @@ Ext.define('Ext.data.Connection', {
      * Detects whether the form is intended to be used for an upload.
      * @private
      */
-    isFormUpload: function(options) {
+    isFormUpload: function (options) {
         var form = this.getForm(options);
-        
+
         if (form) {
             return options.isUpload || this.enctypeRe.test(form.getAttribute('enctype'));
         }
-        
+
         return false;
     },
 
@@ -440,7 +440,7 @@ Ext.define('Ext.data.Connection', {
      * @param {Object} options The request options
      * @return {HTMLElement} The form, null if not passed
      */
-    getForm: function(options) {
+    getForm: function (options) {
         return Ext.getDom(options.form);
     },
 
@@ -450,7 +450,7 @@ Ext.define('Ext.data.Connection', {
      * @param {Object} scope The scope to execute in
      * @return {Object} The params for the request
      */
-    setOptions: function(options, scope) {
+    setOptions: function (options, scope) {
         var me = this,
             params = options.params || {},
             extraParams = me.getExtraParams(),
@@ -557,13 +557,13 @@ Ext.define('Ext.data.Connection', {
      * @param {String} url
      * @return {String} The modified url
      */
-    setupUrl: function(options, url) {
+    setupUrl: function (options, url) {
         var form = this.getForm(options);
-        
+
         if (form) {
             url = url || form.action;
         }
-        
+
         return url;
     },
 
@@ -574,15 +574,15 @@ Ext.define('Ext.data.Connection', {
      * @param {String} params
      * @return {String} The modified params
      */
-    setupParams: function(options, params) {
+    setupParams: function (options, params) {
         var form = this.getForm(options),
             serializedForm;
-        
+
         if (form && !this.isFormUpload(options)) {
             serializedForm = Ext.Element.serializeForm(form);
             params = params ? (params + '&' + serializedForm) : serializedForm;
         }
-        
+
         return params;
     },
 
@@ -593,11 +593,11 @@ Ext.define('Ext.data.Connection', {
      * @param {String} method
      * @return {String} The modified method
      */
-    setupMethod: function(options, method) {
+    setupMethod: function (options, method) {
         if (this.isFormUpload(options)) {
             return 'POST';
         }
-        
+
         return method;
     },
 
@@ -608,11 +608,11 @@ Ext.define('Ext.data.Connection', {
      *
      * @return {Boolean} True if there is an outstanding request.
      */
-    isLoading: function(request) {
+    isLoading: function (request) {
         if (!request) {
             request = this.getLatest();
         }
-        
+
         return request ? request.isLoading() : false;
     },
 
@@ -620,7 +620,7 @@ Ext.define('Ext.data.Connection', {
      * Aborts an active request.
      * @param {Ext.ajax.Request} [request] Defaults to the last request
      */
-    abort: function(request) {
+    abort: function (request) {
         if (!request) {
             request = this.getLatest();
         }
@@ -633,7 +633,7 @@ Ext.define('Ext.data.Connection', {
     /**
      * Aborts all active requests
      */
-    abortAll: function() {
+    abortAll: function () {
         var requests = this.requests,
             id;
 
@@ -647,14 +647,14 @@ Ext.define('Ext.data.Connection', {
      * @return {Object} The request. Null if there is no recent request
      * @private
      */
-    getLatest: function() {
+    getLatest: function () {
         var id = this.latestId,
             request;
 
         if (id) {
             request = this.requests[id];
         }
-        
+
         return request || null;
     },
 
@@ -663,25 +663,25 @@ Ext.define('Ext.data.Connection', {
      * @param {Object} request The request
      * @private
      */
-    clearTimeout: function(request) {
+    clearTimeout: function (request) {
         if (!request) {
             request = this.getLatest();
         }
-        
+
         if (request) {
             request.clearTimer();
         }
     },
-    
-    onRequestComplete: function(request) {
+
+    onRequestComplete: function (request) {
         delete this.requests[request.id];
     },
-    
+
     /**
      * @return {Boolean} `true` if the browser can natively post binary data.
      * @private
      */
-    nativeBinaryPostSupport: function() {
+    nativeBinaryPostSupport: function () {
         return Ext.isChrome ||
             (Ext.isSafari && Ext.isDefined(window.Uint8Array)) ||
             (Ext.isGecko && Ext.isDefined(window.Uint8Array));

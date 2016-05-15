@@ -2,14 +2,14 @@
  * Estonian Translations
  * By Rene Saarsoo (2012-05-28)
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Jaanuar", "Veebruar", "Märts", "Aprill", "Mai", "Juuni", "Juuli", "August", "September", "Oktoober", "November", "Detsember"];
 
         // Month names aren't shortened to strictly three letters
         var shortMonthNames = ["Jaan", "Veeb", "Märts", "Apr", "Mai", "Juuni", "Juuli", "Aug", "Sept", "Okt", "Nov", "Dets"];
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return shortMonthNames[month];
         };
 
@@ -28,14 +28,14 @@ Ext.onReady(function() {
             Dec: 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1, 3).toLowerCase()];
         };
 
         Ext.Date.dayNames = ["Pühapäev", "Esmaspäev", "Teisipäev", "Kolmapäev", "Neljapäev", "Reede", "Laupäev"];
 
         // Weekday names are abbreviated to single letter
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day].substring(0, 1);
         };
     }
@@ -139,7 +139,7 @@ Ext.define("Ext.locale.et.form.field.Date", {
 Ext.define("Ext.locale.et.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Laen..."
     });
@@ -148,7 +148,7 @@ Ext.define("Ext.locale.et.form.field.ComboBox", {
 Ext.define("Ext.locale.et.form.field.VTypes", {
     override: "Ext.form.field.VTypes",
     emailText: 'Selle välja sisuks peab olema e-posti aadress kujul "kasutaja@domeen.com"',
-    urlText: 'Selle välja sisuks peab olema veebiaadress kujul "http:/'+'/www.domeen.com"',
+    urlText: 'Selle välja sisuks peab olema veebiaadress kujul "http:/' + '/www.domeen.com"',
     alphaText: 'See väli võib sisaldada vaid tähemärke ja alakriipsu',
     alphanumText: 'See väli võib sisaldada vaid tähemärke, numbreid ja alakriipsu'
 });
@@ -156,7 +156,7 @@ Ext.define("Ext.locale.et.form.field.VTypes", {
 Ext.define("Ext.locale.et.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Palun sisestage selle lingi internetiaadress:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -284,10 +284,10 @@ Ext.define("Ext.locale.et.window.MessageBox", {
         cancel: "Katkesta",
         yes: "Jah",
         no: "Ei"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.et.Component", {	
+Ext.define("Ext.locale.et.Component", {
     override: "Ext.Component"
 });

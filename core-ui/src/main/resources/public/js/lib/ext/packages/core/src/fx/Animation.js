@@ -26,7 +26,7 @@ Ext.define('Ext.fx.Animation', {
      *  - `slideOut` - {@link Ext.fx.animation.SlideOut}
      */
 
-    constructor: function(config) {
+    constructor: function (config) {
         var defaultClass = Ext.fx.animation.Abstract,
             type;
 

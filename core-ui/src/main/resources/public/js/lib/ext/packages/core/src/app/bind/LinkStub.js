@@ -30,7 +30,7 @@ Ext.define('Ext.app.bind.LinkStub', {
     getFullName: function () {
         var me = this;
         return me.fullName ||
-              (me.fullName = '(' + me.callParent() + ' -> ' + me.binding.getFullName() + ')');
+            (me.fullName = '(' + me.callParent() + ' -> ' + me.binding.getFullName() + ')');
     },
 
     getDataObject: function () {
@@ -68,7 +68,7 @@ Ext.define('Ext.app.bind.LinkStub', {
             binding.destroy();
         }
 
-        target = me.target = target || me.owner; 
+        target = me.target = target || me.owner;
         me.linkDescriptor = bindDescriptor;
         me.binding = target.bind(bindDescriptor, me.onChange, me);
         me.binding.deep = true;
@@ -85,16 +85,16 @@ Ext.define('Ext.app.bind.LinkStub', {
         linkData[me.name] = me.getValue();
         me.callParent();
     },
-    
+
     privates: {
-        collect: function() {
+        collect: function () {
             var me = this,
                 result = me.callParent(),
                 binding = me.binding ? 1 : 0;
-            
+
             return result + binding;
         },
-        
+
         sort: function () {
             var binding = this.binding;
 

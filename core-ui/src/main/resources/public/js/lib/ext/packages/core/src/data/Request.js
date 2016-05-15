@@ -103,12 +103,12 @@ Ext.define('Ext.data.Request', {
          * @accessor
          */
         password: null,
-        
+
         /**
-        * @cfg {Boolean} binary
-        * True to request binary data from the server.  This feature requires
-        * the use of a binary reader such as {@link Ext.data.amf.Reader AMF Reader}
-        */
+         * @cfg {Boolean} binary
+         * True to request binary data from the server.  This feature requires
+         * the use of a binary reader such as {@link Ext.data.amf.Reader AMF Reader}
+         */
         binary: false,
 
         callback: null,
@@ -127,31 +127,31 @@ Ext.define('Ext.data.Request', {
      * Creates the Request object.
      * @param {Object} [config] Config object.
      */
-    constructor: function(config) {
+    constructor: function (config) {
         this.initConfig(config);
     },
-    
+
     /**
      * Gets a single param from the {@link #params}.
      * @param {String} key The key for the param.
      * @return {Object} The value for the param. `undefined` if it does not exist.
      */
-    getParam: function(key) {
+    getParam: function (key) {
         var params = this.getParams(),
             val;
-            
+
         if (params) {
             return params[key];
         }
         return val;
     },
-    
+
     /**
      * Sets a single param value in the {@link #params}.
      * @param {String} key The key to set.
      * @param {Object} value The value to set.
      */
-    setParam: function(key, value) {
+    setParam: function (key, value) {
         var params = this.getParams() || {};
         params[key] = value;
         this.setParams(params);

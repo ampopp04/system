@@ -4,11 +4,11 @@
 Ext.define('Ext.tree.ViewDragZone', {
     extend: 'Ext.view.DragZone',
 
-    isPreventDrag: function(e, record) {
+    isPreventDrag: function (e, record) {
         return (record.get('allowDrag') === false) || !!e.getTarget(this.view.expanderSelector);
     },
 
-    getDragText: function() {
+    getDragText: function () {
         var records = this.dragData.records,
             count = records.length,
             text = records[0].get(this.displayField),
@@ -24,13 +24,13 @@ Ext.define('Ext.tree.ViewDragZone', {
         return Ext.String.format(dragText, count, suffix);
     },
 
-    afterRepair: function() {
+    afterRepair: function () {
         var me = this,
             view = me.view,
             selectedRowCls = view.selectedItemCls,
             records = me.dragData.records,
             r,
-            rLen    = records.length,
+            rLen = records.length,
             fly = Ext.fly,
             item;
 
@@ -45,12 +45,12 @@ Ext.define('Ext.tree.ViewDragZone', {
                 // the selected row class declares !important on its background-color.
                 fly(item.firstChild).highlight(me.repairHighlightColor, {
                     listeners: {
-                        beforeanimate: function() {
+                        beforeanimate: function () {
                             if (view.isSelected(item)) {
                                 fly(item).removeCls(selectedRowCls);
                             }
                         },
-                        afteranimate: function() {
+                        afteranimate: function () {
                             if (view.isSelected(item)) {
                                 fly(item).addCls(selectedRowCls);
                             }

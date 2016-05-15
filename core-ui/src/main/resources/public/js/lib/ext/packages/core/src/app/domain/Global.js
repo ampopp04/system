@@ -1,7 +1,7 @@
 /**
  * This class implements the global event domain. This domain represents event fired from
  * {@link Ext.GlobalEvents} Observable instance. No selectors are supported for this domain.
- * 
+ *
  * @private
  */
 Ext.define('Ext.app.domain.Global', {
@@ -11,9 +11,9 @@ Ext.define('Ext.app.domain.Global', {
 
     type: 'global',
 
-    constructor: function() {
+    constructor: function () {
         var me = this;
-        
+
         me.callParent();
         me.monitor(Ext.GlobalEvents);
     },
@@ -35,9 +35,9 @@ Ext.define('Ext.app.domain.Global', {
      * @param {Object} controller A controller to force execution scope on
      *
      * @private
-     */              
-    listen: function(listeners, controller) {
-        this.callParent([{ global: listeners }, controller]);
+     */
+    listen: function (listeners, controller) {
+        this.callParent([{global: listeners}, controller]);
     },
 
     match: Ext.returnTrue

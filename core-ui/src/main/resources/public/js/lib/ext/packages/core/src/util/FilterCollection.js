@@ -83,7 +83,7 @@ Ext.define('Ext.util.FilterCollection', {
             else {
                 // Finally we get to the point where it has to be invalid
                 // <debug>
-                if (!Ext.isObject(filter))  {
+                if (!Ext.isObject(filter)) {
                     Ext.raise('Invalid filter specified: ' + filter);
                 }
                 // </debug>
@@ -94,7 +94,7 @@ Ext.define('Ext.util.FilterCollection', {
                     filterConfig.filterFn = filterConfig.fn;
                     delete filterConfig.fn;
                 }
-                
+
                 if (Ext.util.Filter.isInvalid(filterConfig)) {
                     return false;
                 }
@@ -138,7 +138,7 @@ Ext.define('Ext.util.FilterCollection', {
                     }
                     //</debug>
 
-                    for (n = currentFilters.length; n-- > 0; ) {
+                    for (n = currentFilters.length; n-- > 0;) {
                         item = currentFilters[n];
                         match = false;
 
@@ -150,7 +150,7 @@ Ext.define('Ext.util.FilterCollection', {
                         }
                         else if (isProp) {
                             match = item.getProperty() === filter.property &&
-                                    item.getValue() === filter.value;
+                                item.getValue() === filter.value;
                         }
 
                         if (match) {

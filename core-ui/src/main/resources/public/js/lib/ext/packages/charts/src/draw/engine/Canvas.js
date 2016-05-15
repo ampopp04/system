@@ -262,9 +262,9 @@ Ext.define('Ext.draw.engine.Canvas', {
      */
     createCanvas: function () {
         var canvas = Ext.Element.create({
-                tag: 'canvas',
-                cls: Ext.baseCSSPrefix + 'surface-canvas'
-            });
+            tag: 'canvas',
+            cls: Ext.baseCSSPrefix + 'surface-canvas'
+        });
 
         // Emulate Canvas in IE8 with VML.
         window['G_vmlCanvasManager'] && G_vmlCanvasManager.initElement(canvas.dom);
@@ -748,7 +748,7 @@ Ext.define('Ext.draw.engine.Canvas', {
                 dom = canvases[k].dom;
 
                 dom.style.left = offsetX + 'px';
-                dom.style.top  = offsetY + 'px';
+                dom.style.top = offsetY + 'px';
 
                 // The Canvas doesn't automatically support hi-DPI displays.
                 // We have to actually create a larger canvas (more pixels)
@@ -863,7 +863,7 @@ Ext.define('Ext.draw.engine.Canvas', {
 
                 ctx = me.contexts[k];
 
-                width  = Math.min(splitThreshold, w - offsetX);
+                width = Math.min(splitThreshold, w - offsetX);
                 height = Math.min(splitThreshold, h - offsetY);
 
                 left = offsetX;

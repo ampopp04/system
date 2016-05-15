@@ -5,7 +5,7 @@
  * need to be created directly via the new keyword.
  *
  * Note that when creating a layout via config, the layout-specific config properties must be passed in via the {@link
- * Ext.container.Container#layout} object which will then be applied internally to the layout. In the case of
+    * Ext.container.Container#layout} object which will then be applied internally to the layout. In the case of
  * TableLayout, the only valid layout config properties are {@link #columns} and {@link #tableAttrs}. However, the items
  * added to a TableLayout can supply the following table-specific config properties:
  *
@@ -68,14 +68,14 @@ Ext.define('Ext.layout.container.Table', {
      */
 
     type: 'table',
-    
+
     createsInnerCt: true,
 
     targetCls: Ext.baseCSSPrefix + 'table-layout-ct',
     tableCls: Ext.baseCSSPrefix + 'table-layout',
     cellCls: Ext.baseCSSPrefix + 'table-layout-cell',
-    
-    childEls: [ 'table', 'tbody' ],
+
+    childEls: ['table', 'tbody'],
 
     /**
      * @cfg {Object} tableAttrs
@@ -112,16 +112,16 @@ Ext.define('Ext.layout.container.Table', {
     getItemSizePolicy: function (item) {
         return this.autoSizePolicy;
     },
-    
+
     initInheritedState: function (inheritedState, inheritedStateInner) {
-        inheritedStateInner.inShrinkWrapTable  = true;
+        inheritedStateInner.inShrinkWrapTable = true;
     },
 
-    getLayoutItems: function() {
+    getLayoutItems: function () {
         var me = this,
             result = [],
             items = me.callParent(),
-            len = items.length, 
+            len = items.length,
             item, i;
 
         for (i = 0; i < len; i++) {
@@ -132,19 +132,19 @@ Ext.define('Ext.layout.container.Table', {
         }
         return result;
     },
-    
-    getHiddenItems: function(){
+
+    getHiddenItems: function () {
         var result = [],
             items = this.owner.items.items,
             len = items.length,
             i, item;
-            
+
         for (i = 0; i < len; ++i) {
             item = items[i];
             if (item.rendered && item.hidden) {
                 result.push(item);
             }
-        }    
+        }
         return result;
     },
 
@@ -153,7 +153,7 @@ Ext.define('Ext.layout.container.Table', {
      * Iterates over all passed items, ensuring they are rendered in a cell in the proper
      * location in the table structure.
      */
-    renderChildren: function() {
+    renderChildren: function () {
         var me = this,
             items = me.getLayoutItems(),
             tbody = me.tbody.dom,
@@ -220,23 +220,23 @@ Ext.define('Ext.layout.container.Table', {
         while (tbody.rows[rowIdx]) {
             tbody.deleteRow(rowIdx);
         }
-        
+
         // Check if we've removed any cells that contain a component, we need to move
         // them so they don't get cleaned up by the gc
         for (i = 0, len = hiddenItems.length; i < len; ++i) {
             me.ensureInDocument(hiddenItems[i].getEl());
         }
     },
-    
-    ensureInDocument: function(el){
+
+    ensureInDocument: function (el) {
         var dom = el.dom.parentNode;
         while (dom) {
             if (dom.tagName.toUpperCase() === 'BODY') {
                 return;
             }
             dom = dom.parentNode;
-        } 
-        
+        }
+
         Ext.getDetachedBody().appendChild(el);
     },
 
@@ -268,7 +268,7 @@ Ext.define('Ext.layout.container.Table', {
      * @param {Array} items The layout components
      * @return {Object[]} List of row and cell indexes for each of the components
      */
-    calculateCells: function(items) {
+    calculateCells: function (items) {
         var cells = [],
             rowIdx = 0,
             colIdx = 0,
@@ -317,7 +317,7 @@ Ext.define('Ext.layout.container.Table', {
         return cells;
     },
 
-    getRenderTree: function() {
+    getRenderTree: function () {
         var me = this,
             items = me.getLayoutItems(),
             rows = [],
@@ -345,7 +345,7 @@ Ext.define('Ext.layout.container.Table', {
 
         for (i = 0; i < len; i++) {
             item = items[i];
-            
+
             curCell = cells[i];
             rowIdx = curCell.rowIdx;
             cellIdx = curCell.cellIdx;
@@ -384,7 +384,7 @@ Ext.define('Ext.layout.container.Table', {
         return result;
     },
 
-    isValidParent: function(item, target, rowIdx, cellIdx) {
+    isValidParent: function (item, target, rowIdx, cellIdx) {
         // If we were called with the 3 arg signature just check that the item is within our table,
         if (arguments.length === 3) {
             return this.table.isAncestor(item.el);

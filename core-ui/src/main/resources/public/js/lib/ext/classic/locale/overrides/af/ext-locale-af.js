@@ -5,7 +5,7 @@
  * Afrikaans Translations
  * by Thys Meintjes (20 July 2007)
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Januarie", "Februarie", "Maart", "April", "Mei", "Junie", "Julie", "Augustus", "September", "Oktober", "November", "Desember"];
@@ -108,7 +108,7 @@ Ext.define("Ext.locale.af.form.field.Date", {
 Ext.define("Ext.locale.af.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Besig om te laai..."
     });
@@ -145,10 +145,10 @@ Ext.define("Ext.locale.af.window.MessageBox", {
         cancel: "Kanselleer",
         yes: "Ja",
         no: "Nee"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.af.Component", {	
+Ext.define("Ext.locale.af.Component", {
     override: "Ext.Component"
 });

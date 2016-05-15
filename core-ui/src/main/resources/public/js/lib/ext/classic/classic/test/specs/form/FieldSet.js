@@ -1,6 +1,6 @@
-describe("Ext.form.FieldSet", function() {
+describe("Ext.form.FieldSet", function () {
     var component;
-    
+
     function makeComponent(config, preventRender) {
         config = config || {};
         Ext.apply(config, {
@@ -9,12 +9,12 @@ describe("Ext.form.FieldSet", function() {
         });
         component = new Ext.form.FieldSet(config);
     }
-    
+
     function expectAria(attr, value) {
         jasmine.expectAriaAttr(component, attr, value);
     }
 
-    afterEach(function() {
+    afterEach(function () {
         if (component) {
             component.destroy();
         }
@@ -33,8 +33,8 @@ describe("Ext.form.FieldSet", function() {
             Ext.destroy(ct);
             ct = null;
         });
-        
-        it("should update the hierarchy state when expanding", function(){
+
+        it("should update the hierarchy state when expanding", function () {
             var c = new Ext.Component();
             makeComponent({
                 collapsed: true,
@@ -46,8 +46,8 @@ describe("Ext.form.FieldSet", function() {
             component.expand();
             expect(c.isVisible(true)).toBe(true);
         });
-        
-        it("should update the hierarchy state when collapsing", function(){
+
+        it("should update the hierarchy state when collapsing", function () {
             var c = new Ext.Component();
             makeComponent({
                 collapsible: true,
@@ -81,8 +81,8 @@ describe("Ext.form.FieldSet", function() {
                 expect('failedLayout=true').toBe('false');
             }
         });
-        
-        it("should be able to start collapsed with a minHeight", function(){
+
+        it("should be able to start collapsed with a minHeight", function () {
             ct = new Ext.container.Container({
                 width: 550,
                 height: 300,
@@ -104,8 +104,8 @@ describe("Ext.form.FieldSet", function() {
             }
             ct.destroy();
         });
-        
-        it("should be able to collapse with a minHeight", function(){
+
+        it("should be able to collapse with a minHeight", function () {
             ct = new Ext.container.Container({
                 width: 550,
                 height: 300,
@@ -128,8 +128,8 @@ describe("Ext.form.FieldSet", function() {
             }
             ct.destroy();
         });
-        
-        it("should expand to the minHeight after being collapsed", function(){
+
+        it("should expand to the minHeight after being collapsed", function () {
             ct = new Ext.container.Container({
                 width: 550,
                 height: 300,
@@ -147,14 +147,14 @@ describe("Ext.form.FieldSet", function() {
                 renderTo: Ext.getBody()
             });
             var fs = ct.items.first();
-            
+
             fs.collapse();
             fs.expand();
             expect(fs.getHeight()).toBe(200);
             ct.destroy();
         });
 
-        it("should be able to be shrink wrap collapsed in a box layout", function() {
+        it("should be able to be shrink wrap collapsed in a box layout", function () {
             var ct = new Ext.container.Container({
                 renderTo: Ext.getBody(),
                 layout: 'vbox',
@@ -175,116 +175,116 @@ describe("Ext.form.FieldSet", function() {
         });
     });
 
-    describe("defaults", function() {
-        beforeEach(function() {
+    describe("defaults", function () {
+        beforeEach(function () {
             makeComponent({});
         });
-        it("should default to no title", function() {
+        it("should default to no title", function () {
             expect(component.title).not.toBeDefined();
         });
-        it("should default to falsy checkboxToggle", function() {
+        it("should default to falsy checkboxToggle", function () {
             expect(component.checkboxToggle).toBeFalsy();
         });
-        it("should default to no checkboxName", function() {
+        it("should default to no checkboxName", function () {
             expect(component.checkboxName).not.toBeDefined();
         });
-        it("should default to not collapsible", function() {
+        it("should default to not collapsible", function () {
             expect(component.collapsible).toBeFalsy();
         });
-        it("should default to not collapsed", function() {
+        it("should default to not collapsed", function () {
             expect(component.collapsed).toBeFalsy();
         });
-        it("should default to anchor layout", function() {
+        it("should default to anchor layout", function () {
             expect(component.layout.type).toEqual('anchor');
         });
     });
-    
-    describe("rendering", function() {
-        beforeEach(function() {
-            makeComponent({ title: 'foo' });
-        });
-        
-        it("should have a fieldset as the main element", function(){
-            expect(component.el.dom.tagName.toLowerCase()).toEqual("fieldset");    
+
+    describe("rendering", function () {
+        beforeEach(function () {
+            makeComponent({title: 'foo'});
         });
 
-        it("should give the fieldset a class of 'x-fieldset'", function(){
+        it("should have a fieldset as the main element", function () {
             expect(component.el.dom.tagName.toLowerCase()).toEqual("fieldset");
         });
 
-        it("should create a body element with class 'x-fieldset-body'", function() {
+        it("should give the fieldset a class of 'x-fieldset'", function () {
+            expect(component.el.dom.tagName.toLowerCase()).toEqual("fieldset");
+        });
+
+        it("should create a body element with class 'x-fieldset-body'", function () {
             expect(component.body).toBeDefined();
             expect(component.body.hasCls('x-fieldset-body')).toBeTruthy();
         });
-        
-        it("should have the group role", function() {
+
+        it("should have the group role", function () {
             expectAria('role', 'group');
         });
-        
-        it("should have aria-label", function() {
+
+        it("should have aria-label", function () {
             expectAria('aria-label', 'foo field set');
         });
-        
-        it("should have aria-expanded", function() {
+
+        it("should have aria-expanded", function () {
             expectAria('aria-expanded', 'true');
         });
     });
 
-    describe("legend", function() {
-        it ("should not create the legend component by default", function() {
+    describe("legend", function () {
+        it("should not create the legend component by default", function () {
             makeComponent({});
             expect(component.legend).not.toBeDefined();
         });
-        
-        it("should create a legend component when the 'title' config is set", function(){
+
+        it("should create a legend component when the 'title' config is set", function () {
             makeComponent({
                 title: "Foo"
             });
             expect(component.legend).toBeDefined();
         });
-            
-        it("should create a legend component when the 'checkboxToggle' config is true", function(){
+
+        it("should create a legend component when the 'checkboxToggle' config is true", function () {
             makeComponent({
                 checkboxToggle: true
             });
             expect(component.legend).toBeDefined();
         });
 
-        it("should create a legend element for the legend component", function() {
+        it("should create a legend element for the legend component", function () {
             makeComponent({
                 title: "Foo"
             });
             expect(component.legend.el.dom.tagName.toLowerCase()).toEqual('legend');
         });
 
-        it("should give the legend element a class of 'x-fieldset-header'", function() {
+        it("should give the legend element a class of 'x-fieldset-header'", function () {
             makeComponent({
                 title: "Foo"
             });
             expect(component.legend.el.hasCls('x-fieldset-header')).toBeTruthy();
         });
 
-        describe("title", function() {
-            it("should create a title component when title config is used", function(){
+        describe("title", function () {
+            it("should create a title component when title config is used", function () {
                 makeComponent({
                     title: "Foo"
                 });
                 expect(component.titleCmp).toBeDefined();
             });
-            it("should set the title component's content to the title config value", function(){
+            it("should set the title component's content to the title config value", function () {
                 makeComponent({
                     title: "Foo"
                 });
                 expect(component.titleCmp.el.dom).hasHTML("Foo");
             });
-            it("should give the title component's element a class of 'x-fieldset-header-text'", function(){
+            it("should give the title component's element a class of 'x-fieldset-header-text'", function () {
                 makeComponent({
                     title: "Foo"
                 });
                 expect(component.titleCmp.el.hasCls('x-fieldset-header-text')).toBeTruthy();
             });
-            
-            it("should set a new title if not rendered and configured with a title", function(){
+
+            it("should set a new title if not rendered and configured with a title", function () {
                 makeComponent({
                     title: 'Foo'
                 }, true);
@@ -294,18 +294,17 @@ describe("Ext.form.FieldSet", function() {
                 expect(component.hasCls('x-fieldset-with-title')).toBe(true);
                 expect(component.hasCls('x-fieldset-with-legend')).toBe(true);
             });
-            
-            it("should set a new title if not rendered and configured without a title", function(){
-                makeComponent({
-                }, true);
+
+            it("should set a new title if not rendered and configured without a title", function () {
+                makeComponent({}, true);
                 component.setTitle('Foo');
                 component.render(Ext.getBody());
                 expect(component.titleCmp.el.dom).hasHTML('Foo');
                 expect(component.hasCls('x-fieldset-with-title')).toBe(true);
                 expect(component.hasCls('x-fieldset-with-legend')).toBe(true);
             });
-            
-            it("should set a new title if rendered and configured with a title", function(){
+
+            it("should set a new title if rendered and configured with a title", function () {
                 makeComponent({
                     title: 'Foo'
                 }, true);
@@ -315,10 +314,9 @@ describe("Ext.form.FieldSet", function() {
                 expect(component.hasCls('x-fieldset-with-title')).toBe(true);
                 expect(component.hasCls('x-fieldset-with-legend')).toBe(true);
             });
-            
-            it("should set a new title if rendered and configured without a title", function(){
-                makeComponent({
-                }, true);
+
+            it("should set a new title if rendered and configured without a title", function () {
+                makeComponent({}, true);
                 component.setTitle('Foo');
                 component.render(Ext.getBody());
                 expect(component.titleCmp.el.dom).hasHTML('Foo');
@@ -327,8 +325,8 @@ describe("Ext.form.FieldSet", function() {
             });
         });
 
-        describe("checkbox", function() {
-            it("should allow the checkbox value to be set before render", function(){
+        describe("checkbox", function () {
+            it("should allow the checkbox value to be set before render", function () {
                 component = new Ext.form.FieldSet({
                     checkboxToggle: true,
                     checkboxName: 'a'
@@ -337,15 +335,15 @@ describe("Ext.form.FieldSet", function() {
                 component.render(Ext.getBody());
                 expect(component.checkboxCmp.getValue()).toBe(false);
             });
-            
-            it("should not create a checkbox component by default", function() {
+
+            it("should not create a checkbox component by default", function () {
                 makeComponent({
                     title: 'Foo'
                 });
                 expect(component.legend.down('checkboxfield')).toBeNull();
             });
 
-            it("should create a checkbox component when the checkboxToggle config is true", function() {
+            it("should create a checkbox component when the checkboxToggle config is true", function () {
                 makeComponent({
                     title: 'Foo',
                     checkboxToggle: true
@@ -353,7 +351,7 @@ describe("Ext.form.FieldSet", function() {
                 expect(component.legend.down('checkboxfield')).not.toBeNull();
             });
 
-            it("should give the checkbox a class of 'x-fieldset-header-checkbox'", function() {
+            it("should give the checkbox a class of 'x-fieldset-header-checkbox'", function () {
                 makeComponent({
                     title: 'Foo',
                     checkboxToggle: true
@@ -361,7 +359,7 @@ describe("Ext.form.FieldSet", function() {
                 expect(component.legend.down('checkboxfield').el.hasCls('x-fieldset-header-checkbox')).toBeTruthy();
             });
 
-            it("should set the checkbox's name to the 'checkboxName' config", function() {
+            it("should set the checkbox's name to the 'checkboxName' config", function () {
                 makeComponent({
                     title: 'Foo',
                     checkboxToggle: true,
@@ -370,7 +368,7 @@ describe("Ext.form.FieldSet", function() {
                 expect(component.legend.down('checkboxfield').name).toEqual('theCheckboxName');
             });
 
-            it("should set the checkbox's name to '[fieldset_id]-checkbox' if the 'checkboxName' config is not set", function() {
+            it("should set the checkbox's name to '[fieldset_id]-checkbox' if the 'checkboxName' config is not set", function () {
                 makeComponent({
                     title: 'Foo',
                     checkboxToggle: true
@@ -378,7 +376,7 @@ describe("Ext.form.FieldSet", function() {
                 expect(component.legend.down('checkboxfield').name).toEqual(component.id + '-checkbox');
             });
 
-            it("should set the checkbox to checked by default if the collapsed config is not true", function() {
+            it("should set the checkbox to checked by default if the collapsed config is not true", function () {
                 makeComponent({
                     title: 'Foo',
                     checkboxToggle: true
@@ -386,7 +384,7 @@ describe("Ext.form.FieldSet", function() {
                 expect(component.legend.down('checkboxfield').getValue()).toBeTruthy();
             });
 
-            it("should set the checkbox to unchecked by default if the collapsed config is true", function() {
+            it("should set the checkbox to unchecked by default if the collapsed config is true", function () {
                 makeComponent({
                     title: 'Foo',
                     checkboxToggle: true,
@@ -394,56 +392,56 @@ describe("Ext.form.FieldSet", function() {
                 });
                 expect(component.legend.down('checkboxfield').getValue()).toBeFalsy();
             });
-            
-            it("should set checkbox aria-label", function() {
-                makeComponent({ checkboxToggle: true });
-                
+
+            it("should set checkbox aria-label", function () {
+                makeComponent({checkboxToggle: true});
+
                 var cb = component.legend.down('checkboxfield');
-                
+
                 jasmine.expectAriaAttr(cb, 'aria-label', 'Expand field set');
             });
         });
-        
-        describe("toggle tool", function() {
+
+        describe("toggle tool", function () {
             var tool;
-            
+
             function expectAria(attr, value) {
                 jasmine.expectAriaAttr(tool, attr, value);
             }
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 makeComponent({
                     title: 'foo',
                     collapsible: true
                 });
-                
+
                 tool = component.legend.down('tool');
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 tool = null;
             });
-            
-            it("should have checkbox role", function() {
+
+            it("should have checkbox role", function () {
                 expectAria('role', 'checkbox');
             });
-            
-            it("should have aria-label", function() {
+
+            it("should have aria-label", function () {
                 expectAria('aria-label', 'Expand field set');
             });
-            
-            it("should have aria-checked", function() {
+
+            it("should have aria-checked", function () {
                 expectAria('aria-checked', 'true');
             });
-            
-            it("should update aria-checked when fieldset is collapsed", function() {
+
+            it("should update aria-checked when fieldset is collapsed", function () {
                 component.collapse();
-                
+
                 expectAria('aria-checked', 'false');
             });
         });
 
-        it("should be included in ComponentQuery searches from the fieldset container", function() {
+        it("should be included in ComponentQuery searches from the fieldset container", function () {
             makeComponent({
                 title: "Foo",
                 checkboxToggle: true,
@@ -452,20 +450,20 @@ describe("Ext.form.FieldSet", function() {
             expect(component.down('[name=theCheckboxName]')).not.toBeNull();
         });
 
-        it("should be available before the component is rendered", function() {
+        it("should be available before the component is rendered", function () {
             var myWindow = Ext.create("Ext.window.Window", {
-                width : 400,
-                height : 300,
-                items : [
+                width: 400,
+                height: 300,
+                items: [
                     {
-                        xtype : "form",
-                        items : [
+                        xtype: "form",
+                        items: [
                             {
-                                id : "myFieldSet",
-                                xtype : "fieldset",
-                                checkboxToggle : true,
-                                checkboxName : "a",
-                                title : "test"
+                                id: "myFieldSet",
+                                xtype: "fieldset",
+                                checkboxToggle: true,
+                                checkboxName: "a",
+                                title: "test"
                             }
                         ]
                     }
@@ -479,76 +477,76 @@ describe("Ext.form.FieldSet", function() {
     });
 
 
-    describe("collapse method", function() {
-        it("should set the 'collapsed' property to true", function() {
+    describe("collapse method", function () {
+        it("should set the 'collapsed' property to true", function () {
             makeComponent({collapsed: false});
             component.collapse();
             expect(component.collapsed).toBeTruthy();
         });
 
-        it("should uncheck the checkboxToggle", function() {
+        it("should uncheck the checkboxToggle", function () {
             makeComponent({collapsed: false, checkboxToggle: true});
             component.collapse();
             expect(component.legend.down('checkboxfield').getValue()).toBeFalsy();
         });
 
-        it("should give the main element a class of 'x-fieldset-collapsed'", function() {
+        it("should give the main element a class of 'x-fieldset-collapsed'", function () {
             makeComponent({collapsed: false});
             component.collapse();
             expect(component.el.hasCls('x-fieldset-collapsed')).toBeTruthy();
         });
-        
-        it("should set aria-expanded attribute", function() {
-            makeComponent({ collapsed: false });
+
+        it("should set aria-expanded attribute", function () {
+            makeComponent({collapsed: false});
             component.collapse();
-            
+
             expectAria('aria-expanded', 'false');
         });
     });
 
-    describe("expand method", function() {
-        it("should set the 'collapsed' property to false", function() {
+    describe("expand method", function () {
+        it("should set the 'collapsed' property to false", function () {
             makeComponent({collapsed: true});
             component.expand();
             expect(component.collapsed).toBeFalsy();
         });
 
-        it("should check the checkboxToggle", function() {
+        it("should check the checkboxToggle", function () {
             makeComponent({collapsed: true, checkboxToggle: true});
             component.expand();
             expect(component.legend.down('checkboxfield').getValue()).toBeTruthy();
         });
 
-        it("should remove the 'x-fieldset-collapsed' class from the main element", function() {
+        it("should remove the 'x-fieldset-collapsed' class from the main element", function () {
             makeComponent({collapsed: true});
             component.expand();
             expect(component.el.hasCls('x-fieldset-collapsed')).toBeFalsy();
         });
-        
-        it("should set aria-expanded attribute", function() {
-            makeComponent({ collapsed: true });
+
+        it("should set aria-expanded attribute", function () {
+            makeComponent({collapsed: true});
             component.expand();
-            
+
             expectAria('aria-expanded', 'true');
         });
     });
 
-    describe('toggle method', function() {
-        it("should collapse the fieldset if it is expanded", function() {
+    describe('toggle method', function () {
+        it("should collapse the fieldset if it is expanded", function () {
             makeComponent({collapsed: false});
             component.toggle();
             expect(component.el.hasCls('x-fieldset-collapsed')).toBeTruthy();
         });
 
-        it("should expand the fieldset if it is collapsed", function() {
+        it("should expand the fieldset if it is collapsed", function () {
             makeComponent({collapsed: true});
             component.toggle();
             expect(component.el.hasCls('x-fieldset-collapsed')).toBeFalsy();
         });
     });
-    
-    describe("FieldAncestor", function(){
-        it("should fire an event whenever validitychange fires on a child item", function(){
+
+    describe("FieldAncestor", function () {
+        it("should fire an event whenever validitychange fires on a child item", function () {
             var called;
             makeComponent({
                 items: [{
@@ -556,14 +554,14 @@ describe("Ext.form.FieldSet", function() {
                     allowBlank: false
                 }]
             });
-            component.on('fieldvaliditychange', function(){
+            component.on('fieldvaliditychange', function () {
                 called = true;
             });
             component.items.first().setValue('Foo');
             expect(called).toBe(true);
-        });  
-        
-        it("should fire an event whenever errorchange fires on a child item", function(){
+        });
+
+        it("should fire an event whenever errorchange fires on a child item", function () {
             var called;
             makeComponent({
                 items: [{
@@ -571,16 +569,16 @@ describe("Ext.form.FieldSet", function() {
                     allowBlank: false
                 }]
             });
-            component.on('fielderrorchange', function(){
+            component.on('fielderrorchange', function () {
                 called = true;
             });
             component.items.first().markInvalid('Foo');
             expect(called).toBe(true);
-        });  
+        });
     });
 
-    xdescribe("setTitle method", function() {
-        it("should set the legend title to the argument value", function() {
+    xdescribe("setTitle method", function () {
+        it("should set the legend title to the argument value", function () {
             makeComponent({title: 'Old and busted'});
             component.setTitle('New hotness');
             expect(component.titleCmp.el.dom).hasHTML('New hotness');

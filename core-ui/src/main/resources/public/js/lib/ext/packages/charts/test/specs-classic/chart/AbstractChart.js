@@ -23,7 +23,7 @@ describe('Ext.chart.AbstractChart', function () {
         });
     }
 
-    afterEach(function() {
+    afterEach(function () {
         store = chart = Ext.destroy(chart, store);
     });
 

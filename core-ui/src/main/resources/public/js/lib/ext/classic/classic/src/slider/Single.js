@@ -29,7 +29,7 @@ Ext.define('Ext.slider.Single', {
      */
     defaultBindProperty: 'value',
 
-    initComponent: function() {
+    initComponent: function () {
         if (this.publishOnComplete) {
             this.valuePublishEvent = 'changecomplete';
         }
@@ -50,7 +50,7 @@ Ext.define('Ext.slider.Single', {
      * Returns the current value of the slider
      * @return {Number} The current value of the slider
      */
-    getValue: function() {
+    getValue: function () {
         // just returns the value of the first thumb, which should be the only one in a single slider
         return this.callParent([0]);
     },
@@ -63,9 +63,9 @@ Ext.define('Ext.slider.Single', {
      * animate configuration object, see {@link #cfg-animate}. If this configuration is omitted, the {@link #cfg-animate} configuration
      * will be used.
      */
-    setValue: function(value, animate) {
+    setValue: function (value, animate) {
         var args = arguments,
-            len  = args.length;
+            len = args.length;
 
         // this is to maintain backwards compatibility for sliders with only one thumb. Usually you must pass the thumb
         // index to setValue, but if we only have one thumb we inject the index here first if given the multi-slider
@@ -81,7 +81,7 @@ Ext.define('Ext.slider.Single', {
     /**
      * @private
      */
-    getNearest : function(){
+    getNearest: function () {
         // Since there's only 1 thumb, it's always the nearest
         return this.thumbs[0];
     }

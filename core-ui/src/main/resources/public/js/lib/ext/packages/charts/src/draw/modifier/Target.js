@@ -34,21 +34,21 @@ Ext.define('Ext.draw.modifier.Target', {
             };
             attr.dirty = true;
             /*
-            Maps updaters that have to be called to the attributes that triggered the update.
-            It is basically a reversed `triggers` map (see Ext.draw.sprite.AttributeDefinition),
-            but only for those attributes that have changed.
-            Pending updaters are called by the Ext.draw.sprite.Sprite.callUpdaters method.
+             Maps updaters that have to be called to the attributes that triggered the update.
+             It is basically a reversed `triggers` map (see Ext.draw.sprite.AttributeDefinition),
+             but only for those attributes that have changed.
+             Pending updaters are called by the Ext.draw.sprite.Sprite.callUpdaters method.
 
-            The 'canvas' updater is a special kind of updater that is not actually a function
-            but a flag indicating that the attribute should be applied directly to a canvas
-            context.
-            */
+             The 'canvas' updater is a special kind of updater that is not actually a function
+             but a flag indicating that the attribute should be applied directly to a canvas
+             context.
+             */
             attr.pendingUpdaters = {};
             /*
-            Holds the attributes that triggered the canvas update (attr.pendingUpdaters.canvas).
-            Canvas attributes are applied directly to a canvas context
-            by the sprite.useAttributes method.
-            */
+             Holds the attributes that triggered the canvas update (attr.pendingUpdaters.canvas).
+             Canvas attributes are applied directly to a canvas context
+             by the sprite.useAttributes method.
+             */
             attr.canvasAttributes = {};
             attr.matrix = new Ext.draw.Matrix();
             attr.inverseMatrix = new Ext.draw.Matrix();

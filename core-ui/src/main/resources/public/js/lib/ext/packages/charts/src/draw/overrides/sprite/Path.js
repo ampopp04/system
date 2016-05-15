@@ -93,7 +93,7 @@ Ext.define('Ext.draw.overrides.sprite.Path', {
 
         if (options.fill && options.stroke) {
             isFilled = attr.fillStyle !== Ext.draw.Color.NONE &&
-                       attr.fillStyle !== Ext.draw.Color.RGBA_NONE;
+                attr.fillStyle !== Ext.draw.Color.RGBA_NONE;
             if (isFilled) {
                 if (path.isPointInPath(x, y)) {
                     result = {

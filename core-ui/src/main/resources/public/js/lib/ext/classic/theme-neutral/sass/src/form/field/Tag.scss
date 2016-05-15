@@ -98,158 +98,154 @@
  * @member Ext.form.field.Tag
  */
 @mixin extjs-tag-field-ui(
-    $ui,
-    $ui-padding: $tag-field-padding,
-    $ui-item-height: $tag-field-item-height,
-    $ui-item-border-radius: $tag-field-item-border-radius,
-    $ui-item-color: $tag-field-item-color,
-    $ui-item-over-color: $tag-field-item-over-color,
-    $ui-item-selected-color: $tag-field-item-selected-color,
-    $ui-item-background-color: $tag-field-item-background-color,
-    $ui-item-over-background-color: $tag-field-item-over-background-color,
-    $ui-item-selected-background-color: $tag-field-item-selected-background-color,
-    $ui-item-border-width: $tag-field-item-border-width,
-    $ui-item-border-style: $tag-field-item-border-style,
-    $ui-item-border-color: $tag-field-item-border-color,
-    $ui-item-over-border-color: $tag-field-item-over-border-color,
-    $ui-item-selected-border-color: $tag-field-item-selected-border-color,
-    $ui-item-padding: $tag-field-item-padding,
-    $ui-item-margin: $tag-field-item-margin,
-    $ui-item-close-icon-size: $tag-field-item-close-icon-size,
-    $ui-item-close-icon-top: $tag-field-item-close-icon-top,
-    $ui-item-close-icon-right: $tag-field-item-close-icon-right,
-    $ui-item-close-icon-spacing: $tag-field-item-close-icon-spacing,
-    $ui-item-close-icon-glyph-color: $tag-field-item-close-icon-glyph-color,
-    $ui-item-selected-close-icon-glyph-color: $tag-field-item-selected-close-icon-glyph-color,
-    $ui-item-over-close-icon-glyph-color: $tag-field-item-over-close-icon-glyph-color,
-    $ui-item-selected-over-close-icon-glyph-color: $tag-field-item-selected-over-close-icon-glyph-color,
-    $ui-item-close-icon-glyph: $tag-field-item-close-icon-glyph,
-    $ui-item-close-icon-opacity: $tag-field-item-close-icon-opacity,
-    $ui-item-close-icon-opacity-over: $tag-field-item-close-icon-opacity-over,
-    $ui-item-close-icon-opacity-pressed: $tag-field-item-close-icon-opacity-pressed
+  $ui,
+  $ui-padding: $tag-field-padding,
+  $ui-item-height: $tag-field-item-height,
+  $ui-item-border-radius: $tag-field-item-border-radius,
+  $ui-item-color: $tag-field-item-color,
+  $ui-item-over-color: $tag-field-item-over-color,
+  $ui-item-selected-color: $tag-field-item-selected-color,
+  $ui-item-background-color: $tag-field-item-background-color,
+  $ui-item-over-background-color: $tag-field-item-over-background-color,
+  $ui-item-selected-background-color: $tag-field-item-selected-background-color,
+  $ui-item-border-width: $tag-field-item-border-width,
+  $ui-item-border-style: $tag-field-item-border-style,
+  $ui-item-border-color: $tag-field-item-border-color,
+  $ui-item-over-border-color: $tag-field-item-over-border-color,
+  $ui-item-selected-border-color: $tag-field-item-selected-border-color,
+  $ui-item-padding: $tag-field-item-padding,
+  $ui-item-margin: $tag-field-item-margin,
+  $ui-item-close-icon-size: $tag-field-item-close-icon-size,
+  $ui-item-close-icon-top: $tag-field-item-close-icon-top,
+  $ui-item-close-icon-right: $tag-field-item-close-icon-right,
+  $ui-item-close-icon-spacing: $tag-field-item-close-icon-spacing,
+  $ui-item-close-icon-glyph-color: $tag-field-item-close-icon-glyph-color,
+  $ui-item-selected-close-icon-glyph-color: $tag-field-item-selected-close-icon-glyph-color,
+  $ui-item-over-close-icon-glyph-color: $tag-field-item-over-close-icon-glyph-color,
+  $ui-item-selected-over-close-icon-glyph-color: $tag-field-item-selected-over-close-icon-glyph-color,
+  $ui-item-close-icon-glyph: $tag-field-item-close-icon-glyph,
+  $ui-item-close-icon-opacity: $tag-field-item-close-icon-opacity,
+  $ui-item-close-icon-opacity-over: $tag-field-item-close-icon-opacity-over,
+  $ui-item-close-icon-opacity-pressed: $tag-field-item-close-icon-opacity-pressed
 ) {
-    $ui-item-padding:
-            top($ui-item-padding)
-            max(right($ui-item-padding), $ui-item-close-icon-size + $ui-item-close-icon-right + $ui-item-close-icon-spacing)
-            bottom($ui-item-padding)
-            left($ui-item-padding);
+  $ui-item-padding: top($ui-item-padding) max(right($ui-item-padding), $ui-item-close-icon-size + $ui-item-close-icon-right + $ui-item-close-icon-spacing) bottom($ui-item-padding) left($ui-item-padding);
 
-    .#{$prefix}form-text-#{$ui} {
-        &.#{$prefix}tagfield {
-            padding: $ui-padding;
-        }
-
-        .#{$prefix}tagfield-input {
-            margin: $tag-field-item-margin;
-        }
-
-        .#{$prefix}tagfield-input-field {
-            height: $ui-item-height;
-            line-height: $ui-item-height;
-        }
-
-        .#{$prefix}tagfield-item {
-            @include border-radius($ui-item-border-radius);
-            background-color: $ui-item-background-color;
-            @if ($ui-item-border-width != null) and ($ui-item-border-width != 0) {
-                border: $ui-item-border-width $ui-item-border-style $ui-item-border-color;
-            }
-            padding: $ui-item-padding;
-            margin: $ui-item-margin;
-            color: $ui-item-color;
-            line-height: $ui-item-height - vertical($ui-item-border-width);
-
-            &:hover {
-                background-color: $ui-item-over-background-color;
-                @if $ui-item-over-border-color != $ui-item-border-color {
-                    border-color: $ui-item-over-border-color;
-                }
-                color: $ui-item-over-color;
-            }
-
-            &.#{$prefix}tagfield-item-selected {
-                background-color: $ui-item-selected-background-color;
-                @if $ui-item-selected-border-color != $ui-item-border-color {
-                    border-color: $ui-item-selected-border-color;
-                }
-                color: $ui-item-selected-color;
-            }
-
-            @if $include-rtl {
-                &.#{$prefix}rtl {
-                    padding: rtl($ui-item-padding);
-                }
-            }
-        }
-
-        .#{$prefix}tagfield-item-close {
-            width: $ui-item-close-icon-size;
-            height: $ui-item-close-icon-size;
-            top: $ui-item-close-icon-top;
-            right: $ui-item-close-icon-right;
-
-            @if $ui-item-close-icon-opacity != null {
-                @include opacity($ui-item-close-icon-opacity);
-            }
-
-            @if $enable-font-icons and ($ui-item-close-icon-glyph != null) {
-                @include font-icon($ui-item-close-icon-glyph);
-                color: $ui-item-close-icon-glyph-color;
-            } @else {
-                background-image: theme-background-image('form/tag-field-item-close');
-            }
-
-            &:hover {
-                @if $ui-item-close-icon-opacity-over != null {
-                    @include opacity($ui-item-close-icon-opacity-over);
-                }
-                @if $enable-font-icons and ($ui-item-close-icon-glyph != null) {
-                    color: $ui-item-over-close-icon-glyph-color;
-                } @else {
-                    background-position: (-$ui-item-close-icon-size) 0;
-                }
-            }
-
-            &:active {
-                @if $ui-item-close-icon-opacity-pressed != null {
-                    @include opacity($ui-item-close-icon-opacity-pressed);
-                }
-                @if (not $enable-font-icons) or ($ui-item-close-icon-glyph == null) {
-                    background-position: (-$ui-item-close-icon-size * 2) 0;
-                }
-            }
-
-            @if $include-rtl {
-                &.#{$prefix}rtl {
-                    right: auto;
-                    left: $ui-item-close-icon-right;
-                }
-            }
-        }
-
-        .#{$prefix}tagfield-item-selected .#{$prefix}tagfield-item-close {
-            @if $enable-font-icons and ($ui-item-close-icon-glyph != null) {
-                color: $ui-item-selected-close-icon-glyph-color;
-
-                &:hover {
-                    color: $ui-item-selected-over-close-icon-glyph-color;
-                }
-            } @else {
-                background-position: 0 (-$ui-item-close-icon-size);
-
-                &:hover {
-                    background-position: (-$ui-item-close-icon-size) (-$ui-item-close-icon-size);
-                }
-
-                &:active {
-                    background-position: (-$ui-item-close-icon-size * 2) (-$ui-item-close-icon-size);
-                }
-            }
-        }
+  .#{$prefix}form-text-#{$ui} {
+    &.#{$prefix}tagfield {
+      padding: $ui-padding;
     }
+
+    .#{$prefix}tagfield-input {
+      margin: $tag-field-item-margin;
+    }
+
+    .#{$prefix}tagfield-input-field {
+      height: $ui-item-height;
+      line-height: $ui-item-height;
+    }
+
+    .#{$prefix}tagfield-item {
+      @include border-radius($ui-item-border-radius);
+      background-color: $ui-item-background-color;
+      @if ($ui-item-border-width != null) and ($ui-item-border-width != 0) {
+        border: $ui-item-border-width $ui-item-border-style $ui-item-border-color;
+      }
+      padding: $ui-item-padding;
+      margin: $ui-item-margin;
+      color: $ui-item-color;
+      line-height: $ui-item-height - vertical($ui-item-border-width);
+
+      &:hover {
+        background-color: $ui-item-over-background-color;
+        @if $ui-item-over-border-color != $ui-item-border-color {
+          border-color: $ui-item-over-border-color;
+        }
+        color: $ui-item-over-color;
+      }
+
+      &.#{$prefix}tagfield-item-selected {
+        background-color: $ui-item-selected-background-color;
+        @if $ui-item-selected-border-color != $ui-item-border-color {
+          border-color: $ui-item-selected-border-color;
+        }
+        color: $ui-item-selected-color;
+      }
+
+      @if $include-rtl {
+        &.#{$prefix}rtl {
+          padding: rtl($ui-item-padding);
+        }
+      }
+    }
+
+    .#{$prefix}tagfield-item-close {
+      width: $ui-item-close-icon-size;
+      height: $ui-item-close-icon-size;
+      top: $ui-item-close-icon-top;
+      right: $ui-item-close-icon-right;
+
+      @if $ui-item-close-icon-opacity != null {
+        @include opacity($ui-item-close-icon-opacity);
+      }
+
+      @if $enable-font-icons and ($ui-item-close-icon-glyph != null) {
+        @include font-icon($ui-item-close-icon-glyph);
+        color: $ui-item-close-icon-glyph-color;
+      } @else {
+        background-image: theme-background-image('form/tag-field-item-close');
+      }
+
+      &:hover {
+        @if $ui-item-close-icon-opacity-over != null {
+          @include opacity($ui-item-close-icon-opacity-over);
+        }
+        @if $enable-font-icons and ($ui-item-close-icon-glyph != null) {
+          color: $ui-item-over-close-icon-glyph-color;
+        } @else {
+          background-position: (-$ui-item-close-icon-size) 0;
+        }
+      }
+
+      &:active {
+        @if $ui-item-close-icon-opacity-pressed != null {
+          @include opacity($ui-item-close-icon-opacity-pressed);
+        }
+        @if (not $enable-font-icons) or ($ui-item-close-icon-glyph == null) {
+          background-position: (-$ui-item-close-icon-size * 2) 0;
+        }
+      }
+
+      @if $include-rtl {
+        &.#{$prefix}rtl {
+          right: auto;
+          left: $ui-item-close-icon-right;
+        }
+      }
+    }
+
+    .#{$prefix}tagfield-item-selected .#{$prefix}tagfield-item-close {
+      @if $enable-font-icons and ($ui-item-close-icon-glyph != null) {
+        color: $ui-item-selected-close-icon-glyph-color;
+
+        &:hover {
+          color: $ui-item-selected-over-close-icon-glyph-color;
+        }
+      } @else {
+        background-position: 0 (-$ui-item-close-icon-size);
+
+        &:hover {
+          background-position: (-$ui-item-close-icon-size) (-$ui-item-close-icon-size);
+        }
+
+        &:active {
+          background-position: (-$ui-item-close-icon-size * 2) (-$ui-item-close-icon-size);
+        }
+      }
+    }
+  }
 
 }
 
 @if $include-tag-field-default-ui {
-    @include extjs-tag-field-ui($ui: 'default');
+  @include extjs-tag-field-ui($ui: 'default');
 }

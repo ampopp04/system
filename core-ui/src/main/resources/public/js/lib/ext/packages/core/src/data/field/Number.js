@@ -14,7 +14,7 @@ Ext.define('Ext.data.field.Number', {
 
     getNumber: Ext.identityFn,
 
-    parse: function(v) {
+    parse: function (v) {
         return parseFloat(String(v).replace(this.stripRe, ''));
     }
 });

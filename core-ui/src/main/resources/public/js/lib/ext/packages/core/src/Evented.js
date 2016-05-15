@@ -11,12 +11,12 @@ Ext.define('Ext.Evented', {
 
     initialized: false,
 
-    constructor: function(config) {
+    constructor: function (config) {
         this.mixins.observable.constructor.call(this, config);
         this.initialized = true;
     },
 
-    onClassExtended: function(cls, data) {
+    onClassExtended: function (cls, data) {
         if (!data.hasOwnProperty('eventedConfig')) {
             return;
         }

@@ -1,7 +1,7 @@
 Ext.define("Ext.locale.pt_BR.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Por favor, entre com a URL do link:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {

@@ -9,11 +9,16 @@ describe('Ext.util.ObjectTemplate', function () {
 
     context.text = 'Don';
 
-    var fn1 = function() {},
-        fn2 = function() {},
-        fn3 = function() {},
-        fn4 = function() {},
-        fn5 = function() {};
+    var fn1 = function () {
+        },
+        fn2 = function () {
+        },
+        fn3 = function () {
+        },
+        fn4 = function () {
+        },
+        fn5 = function () {
+        };
 
     beforeEach(function () {
         tpl = new Ext.util.ObjectTemplate({
@@ -49,7 +54,7 @@ describe('Ext.util.ObjectTemplate', function () {
                     fn5
                 ],
                 aNull: null,
-                aZero: 0,   
+                aZero: 0,
                 aBool: false
             },
             aNull: null,
@@ -73,19 +78,19 @@ describe('Ext.util.ObjectTemplate', function () {
             expect(output.baz).toBe(false);
         });
 
-        it('should pass through functions', function() {
+        it('should pass through functions', function () {
             expect(output.rootFn).toBe(fn1);
         });
 
-        it('should pass through null', function() {
+        it('should pass through null', function () {
             expect(output.aNull).toBeNull();
         });
 
-        it('should pass through 0', function() {
+        it('should pass through 0', function () {
             expect(output.aZero).toBe(0);
         });
 
-        it('should pass through false', function() {
+        it('should pass through false', function () {
             expect(output.aBool).toBe(false);
         });
     });
@@ -111,19 +116,19 @@ describe('Ext.util.ObjectTemplate', function () {
             expect(output.array[3]).toBe(false);
         });
 
-        it('should pass through functions', function() {
+        it('should pass through functions', function () {
             expect(output.array[4]).toBe(fn2);
         });
 
-        it('should pass through null', function() {
+        it('should pass through null', function () {
             expect(output.array[5]).toBeNull();
         });
 
-        it('should pass through 0', function() {
+        it('should pass through 0', function () {
             expect(output.array[6]).toBe(0);
         });
 
-        it('should pass through false', function() {
+        it('should pass through false', function () {
             expect(output.array[7]).toBe(false);
         });
     });
@@ -146,15 +151,15 @@ describe('Ext.util.ObjectTemplate', function () {
                 expect(output.object.objFn).toBe(fn3);
             });
 
-            it('should pass through null', function() {
+            it('should pass through null', function () {
                 expect(output.object.aNull).toBeNull();
             });
 
-            it('should pass through 0', function() {
+            it('should pass through 0', function () {
                 expect(output.object.aZero).toBe(0);
             });
 
-            it('should pass through false', function() {
+            it('should pass through false', function () {
                 expect(output.object.aBool).toBe(false);
             });
         });

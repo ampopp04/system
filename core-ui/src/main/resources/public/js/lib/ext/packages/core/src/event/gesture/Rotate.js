@@ -59,7 +59,7 @@ Ext.define('Ext.event.gesture.Rotate', {
 
     lastAngle: null,
 
-    onTouchMove: function(e) {
+    onTouchMove: function (e) {
         if (!this.isTracking) {
             return;
         }
@@ -110,24 +110,24 @@ Ext.define('Ext.event.gesture.Rotate', {
         this.lastTouches = Ext.Array.clone(touches);
     },
 
-    fireEnd: function(e) {
+    fireEnd: function (e) {
         this.lastAngle = null;
         this.fire('rotateend', e);
     },
 
-    fireCancel: function(e) {
+    fireCancel: function (e) {
         this.lastAngle = null;
         this.fire('rotatecancel', e);
     },
 
-    reset: function() {
+    reset: function () {
         var me = this;
 
         me.lastTouches = me.lastAngle = me.startAngle = null;
 
         this.callParent();
     }
-}, function(Rotate) {
+}, function (Rotate) {
     var gestures = Ext.manifest.gestures;
     Rotate.instance = new Rotate(gestures && gestures.rotate);
 });

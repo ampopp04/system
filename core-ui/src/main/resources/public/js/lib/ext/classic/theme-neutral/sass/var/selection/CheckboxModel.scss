@@ -15,18 +15,10 @@ $checkbox-selection-model-cell-spacing-before: dynamic(5px);
 $checkbox-selection-model-cell-spacing-after: dynamic(5px);
 
 // private
-$checkbox-selection-model-column-header-padding:
-    max(ceil(($grid-header-height - $form-checkbox-size) / 2), 0)
-    $checkbox-selection-model-cell-spacing-after
-    max(floor(($grid-header-height - $form-checkbox-size) / 2), 0)
-    $checkbox-selection-model-cell-spacing-before;
+$checkbox-selection-model-column-header-padding: max(ceil(($grid-header-height - $form-checkbox-size) / 2), 0) $checkbox-selection-model-cell-spacing-after max(floor(($grid-header-height - $form-checkbox-size) / 2), 0) $checkbox-selection-model-cell-spacing-before;
 
 // private
-$checkbox-selection-model-cell-padding:
-    max(ceil(($grid-row-height - $form-checkbox-size) / 2), 0)
-    $checkbox-selection-model-cell-spacing-after
-    max(floor(($grid-row-height - $form-checkbox-size) / 2), 0)
-    $checkbox-selection-model-cell-spacing-before;
+$checkbox-selection-model-cell-padding: max(ceil(($grid-row-height - $form-checkbox-size) / 2), 0) $checkbox-selection-model-cell-spacing-after max(floor(($grid-row-height - $form-checkbox-size) / 2), 0) $checkbox-selection-model-cell-spacing-before;
 
 /**
  * @var {color}

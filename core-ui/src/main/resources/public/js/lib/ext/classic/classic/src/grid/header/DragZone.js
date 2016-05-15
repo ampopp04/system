@@ -7,21 +7,21 @@ Ext.define('Ext.grid.header.DragZone', {
     colInnerSelector: '.' + Ext.baseCSSPrefix + 'column-header-inner',
     maxProxyWidth: 120,
 
-    constructor: function(headerCt) {
+    constructor: function (headerCt) {
         var me = this;
-        
+
         me.headerCt = headerCt;
-        me.ddGroup =  me.getDDGroup();
+        me.ddGroup = me.getDDGroup();
         me.autoGroup = true;
         me.callParent([headerCt.el]);
         me.proxy.el.addCls(Ext.baseCSSPrefix + 'grid-col-dd');
     },
-    
-    getDDGroup: function() {
+
+    getDDGroup: function () {
         return 'header-dd-zone-' + this.headerCt.up('[scrollerOwner]').id;
     },
 
-    getDragData: function(e) {
+    getDragData: function (e) {
         if (e.getTarget(this.colInnerSelector)) {
             var header = e.getTarget(this.colHeaderSelector),
                 headerCmp,
@@ -43,35 +43,35 @@ Ext.define('Ext.grid.header.DragZone', {
         return false;
     },
 
-    onBeforeDrag: function() {
+    onBeforeDrag: function () {
         return !(this.headerCt.dragging || this.disabled);
     },
 
-    onInitDrag: function() {
+    onInitDrag: function () {
         this.headerCt.dragging = true;
         this.headerCt.hideMenu();
         this.callParent(arguments);
     },
 
-    onDragDrop: function() {
+    onDragDrop: function () {
         this.headerCt.dragging = false;
         this.callParent(arguments);
     },
 
-    afterRepair: function() {
+    afterRepair: function () {
         this.callParent();
         this.headerCt.dragging = false;
     },
 
-    getRepairXY: function() {
+    getRepairXY: function () {
         return this.dragData.header.el.getXY();
     },
-    
-    disable: function() {
+
+    disable: function () {
         this.disabled = true;
     },
-    
-    enable: function() {
+
+    enable: function () {
         this.disabled = false;
     }
 });

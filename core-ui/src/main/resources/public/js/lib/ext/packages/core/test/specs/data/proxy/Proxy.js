@@ -1,75 +1,75 @@
-describe("Ext.data.proxy.Proxy", function() {
+describe("Ext.data.proxy.Proxy", function () {
     var proxy,
         Proxy = Ext.data.proxy.Proxy,
-        AlienModelName   = 'spec.Alien',
-        AlienModelConfig =  {
+        AlienModelName = 'spec.Alien',
+        AlienModelConfig = {
             extend: 'Ext.data.Model',
             fields: [
-                {name: 'name',  type: 'string'},
-                {name: 'age',   type: 'int'},
+                {name: 'name', type: 'string'},
+                {name: 'age', type: 'int'},
                 {name: 'planet', type: 'string'}
             ]
         },
         AlienModel, HumanModel,
-        HumanModelName   = 'spec.Human',
-        HumanModelConfig =  {
+        HumanModelName = 'spec.Human',
+        HumanModelConfig = {
             extend: 'Ext.data.Model',
             fields: [
-                {name: 'name',  type: 'string'},
-                {name: 'age',   type: 'int'},
+                {name: 'name', type: 'string'},
+                {name: 'age', type: 'int'},
                 {name: 'planet', type: 'string', defaultValue: 'Earth'}
             ]
         };
 
-    beforeEach(function() {
-        Ext.ClassManager.enableNamespaceParseCache = false; 
+    beforeEach(function () {
+        Ext.ClassManager.enableNamespaceParseCache = false;
         proxy = new Proxy({});
-        
+
         AlienModel = Ext.define(AlienModelName, AlienModelConfig);
         HumanModel = Ext.define(HumanModelName, HumanModelConfig);
 
     });
-    
-    afterEach(function(){
-        Ext.ClassManager.enableNamespaceParseCache = true; 
+
+    afterEach(function () {
+        Ext.ClassManager.enableNamespaceParseCache = true;
         Ext.data.Model.schema.clear();
         Ext.undefine('spec.Alien');
         Ext.undefine('spec.Human');
-        
+
         if (proxy) {
             proxy.destroy();
         }
-        
+
         proxy = null;
     });
-    
 
-    it("should mixin Ext.mixins.Observable", function() {
+
+    it("should mixin Ext.mixins.Observable", function () {
         expect(proxy.mixins.observable).toEqual(Ext.mixin.Observable.prototype);
     });
 
-    describe("instantiation", function() {
-        it("should default the batch order to create/update/destroy", function() {
+    describe("instantiation", function () {
+        it("should default the batch order to create/update/destroy", function () {
             expect(proxy.getBatchOrder()).toBe('create,update,destroy');
         });
     });
 
-    describe("methods", function() {
-        describe("getModel", function() {
-            it ("should return the proxy model", function() {
+    describe("methods", function () {
+        describe("getModel", function () {
+            it("should return the proxy model", function () {
                 proxy.setModel(AlienModel);
                 expect(proxy.getModel()).toEqual(AlienModel);
             });
         });
 
-        describe("setModel", function() {
-            it('should have a model equal to AlienModel', function(){
+        describe("setModel", function () {
+            it('should have a model equal to AlienModel', function () {
                 proxy.setModel(AlienModel);
                 expect(proxy.getModel()).toEqual(AlienModel);
             });
 
-            describe("if the Reader has already been instantiated", function() {
-                beforeEach(function() {
+            describe("if the Reader has already been instantiated", function () {
+                beforeEach(function () {
                     proxy.setReader(new Ext.data.reader.Reader({
                         model: null
                     }));
@@ -77,7 +77,7 @@ describe("Ext.data.proxy.Proxy", function() {
                     spyOn(proxy.getReader(), 'setModel').andReturn(true);
                 });
 
-                it("should set the Reader's Model", function() {
+                it("should set the Reader's Model", function () {
                     proxy.setModel(AlienModel);
 
                     expect(proxy.getReader().setModel).toHaveBeenCalledWith(AlienModel);
@@ -85,28 +85,28 @@ describe("Ext.data.proxy.Proxy", function() {
             });
         });
 
-        describe("batch", function() {
+        describe("batch", function () {
             var spy,
                 batchOperations = {
-                    create : [AlienModel, HumanModel],
-                    update : [AlienModel]
+                    create: [AlienModel, HumanModel],
+                    update: [AlienModel]
                 },
                 batchListeners = {
                     complete: {
-                        fn    : Ext.emptyFn,
-                        scope : this
+                        fn: Ext.emptyFn,
+                        scope: this
                     }
                 };
 
-            it('should run Ext.data.Batch.prototype.add 2 times', function() {
+            it('should run Ext.data.Batch.prototype.add 2 times', function () {
                 spy = spyOn(Ext.data.Batch.prototype, 'add').andCallThrough();
-                proxy.batch(batchOperations, batchListeners); 
+                proxy.batch(batchOperations, batchListeners);
                 expect(spy.callCount).toEqual(2);
             });
 
-            it('should run Ext.data.Batch.prototype.start 1 times', function(){
+            it('should run Ext.data.Batch.prototype.start 1 times', function () {
                 spy = spyOn(Ext.data.Batch.prototype, 'start').andCallThrough();
-                proxy.batch(batchOperations, batchListeners); 
+                proxy.batch(batchOperations, batchListeners);
                 expect(spy.callCount).toEqual(1);
             });
         });
@@ -171,46 +171,46 @@ describe("Ext.data.proxy.Proxy", function() {
             expect(args[1]).toBe(metaArg);
         });
     });
-    
-    describe("pending operations", function() {
+
+    describe("pending operations", function () {
         var op1, op2;
-        
-        beforeEach(function() {
+
+        beforeEach(function () {
             op1 = new Ext.data.operation.Operation();
             op2 = new Ext.data.operation.Operation();
-            
+
             spyOn(op1, 'abort');
             spyOn(op2, 'abort');
-            
+
             proxy.pendingOperations[op1._internalId] = op1;
             proxy.pendingOperations[op2._internalId] = op2;
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             op1 = op2 = proxy = null;
         });
-        
-        describe("aborting", function() {
-            beforeEach(function() {
+
+        describe("aborting", function () {
+            beforeEach(function () {
                 op1.execute();
                 proxy.destroy();
             });
-            
-            it("should abort running operations", function() {
+
+            it("should abort running operations", function () {
                 expect(op1.abort).toHaveBeenCalled();
             });
-            
-            it("should not abort non-running operations", function() {
+
+            it("should not abort non-running operations", function () {
                 expect(op2.abort).not.toHaveBeenCalled();
             });
         });
-        
-        describe("cleanup", function() {
-            beforeEach(function() {
+
+        describe("cleanup", function () {
+            beforeEach(function () {
                 proxy.destroy();
             });
-            
-            it("should null pendingOperations", function() {
+
+            it("should null pendingOperations", function () {
                 expect(proxy.pendingOperations).toBe(null);
             });
         });

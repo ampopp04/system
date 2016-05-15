@@ -1,3 +1,3 @@
-describe('Ext.layout.container.Absolute', function() {
+describe('Ext.layout.container.Absolute', function () {
 
 });

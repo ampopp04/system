@@ -37,7 +37,7 @@ Ext.define('Ext.event.gesture.LongPress', {
      * @inheritdoc Ext.dom.Element#longpress
      */
 
-    fireLongPress: function(e) {
+    fireLongPress: function (e) {
         this.fire('longpress', e, {
             touch: e.changedTouches[0],
             duration: this.getMinDuration()
@@ -46,7 +46,7 @@ Ext.define('Ext.event.gesture.LongPress', {
         this.isLongPress = true;
     },
 
-    onTouchStart: function(e) {
+    onTouchStart: function (e) {
         if (this.callParent(arguments) === false) {
             return false;
         }
@@ -57,38 +57,38 @@ Ext.define('Ext.event.gesture.LongPress', {
         this.setLongPressTimer(e);
     },
 
-    setLongPressTimer: function(e) {
+    setLongPressTimer: function (e) {
         var me = this;
 
-        me.timer = Ext.defer(function() {
+        me.timer = Ext.defer(function () {
             me.fireLongPress(e);
         }, me.getMinDuration());
     },
 
-    onTouchMove: function(e) {
+    onTouchMove: function (e) {
         var point = e.changedTouches[0].point;
         if (Math.abs(point.getDistanceTo(this.startPoint)) >= this.getMoveDistance()) {
             return this.fail(this.self.TOUCH_MOVED);
         }
     },
 
-    onTouchEnd: function() {
+    onTouchEnd: function () {
         if (!this.isLongPress) {
             return this.fail(this.self.DURATION_NOT_ENOUGH);
         }
     },
 
-    fail: function() {
+    fail: function () {
         clearTimeout(this.timer);
 
         return this.callParent(arguments);
     },
 
-    reset: function() {
+    reset: function () {
         this.isLongPress = this.startPoint = null;
     },
 
-    fire: function(eventName) {
+    fire: function (eventName) {
         if (eventName === 'longpress') {
             var args = Array.prototype.slice.call(arguments);
             args[0] = 'taphold';
@@ -98,7 +98,7 @@ Ext.define('Ext.event.gesture.LongPress', {
 
         return this.callParent(arguments);
     }
-}, function(LongPress) {
+}, function (LongPress) {
     var gestures = Ext.manifest.gestures;
     LongPress.instance = new LongPress(gestures && gestures.longPress);
 });

@@ -70,9 +70,8 @@ Ext.define('Ext.ux.colorpick.Button', {
     twoWayBindable: 'value',
 
     // Solve issue with IE, when applying a filter the click listener is not being fired.
-    renderTpl:
-        '<div id="{id}-filterEl" data-ref="filterEl" style="height:100%; width:100%; position: absolute;"></div>'+
-        '<a id="{id}-btnEl" data-ref="btnEl" style="height:100%; width:100%; position: absolute;"></a>',
+    renderTpl: '<div id="{id}-filterEl" data-ref="filterEl" style="height:100%; width:100%; position: absolute;"></div>' +
+    '<a id="{id}-btnEl" data-ref="btnEl" style="height:100%; width:100%; position: absolute;"></a>',
 
     listeners: {
         click: 'onClick',
@@ -101,7 +100,7 @@ Ext.define('Ext.ux.colorpick.Button', {
     },
 
     // Sets this.format and color picker's setFormat()
-    updateFormat: function(format) {
+    updateFormat: function (format) {
         var cp = this.colorPicker;
 
         if (cp) {

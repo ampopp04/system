@@ -69,7 +69,7 @@ Ext.define('Ext.grid.column.Date', {
      */
     producesHTML: false,
 
-    initComponent: function(){
+    initComponent: function () {
         if (!this.format) {
             this.format = Ext.Date.defaultFormat;
         }
@@ -77,11 +77,11 @@ Ext.define('Ext.grid.column.Date', {
         this.callParent(arguments);
     },
 
-    defaultRenderer: function(value){
+    defaultRenderer: function (value) {
         return Ext.util.Format.date(value, this.format);
     },
 
-    updater: function(cell, value) {
+    updater: function (cell, value) {
         Ext.fly(cell).down(this.getView().innerSelector, true).innerHTML = Ext.grid.column.Date.prototype.defaultRenderer.call(this, value);
     }
 });

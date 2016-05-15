@@ -1,7 +1,7 @@
 /**
  * This class is a base for all id generators. It also provides lookup of id generators by
  * their id.
- * 
+ *
  * Generally, id generators are used to generate a primary key for new model instances. There
  * are different approaches to solving this problem, so this mechanism has both simple use
  * cases and is open to custom implementations. A {@link Ext.data.Model} requests id generation
@@ -71,7 +71,7 @@
  * good reason to do so for this generator type.
  *
  * # Creating Custom Generators
- * 
+ *
  * An id generator should derive from this class and implement the {@link #generate} method.
  *
  * To register an id generator type, a derived class should provide an `alias` like so:
@@ -133,99 +133,99 @@
  *
  */
 Ext.define('Ext.data.identifier.Generator', {
-    'abstract': true,
+        'abstract': true,
 
-    mixins: [
-        'Ext.mixin.Factoryable'
-    ],
+        mixins: [
+            'Ext.mixin.Factoryable'
+        ],
 
-    alias: 'data.identifier.default',  // this is used by Factoryable
+        alias: 'data.identifier.default',  // this is used by Factoryable
 
-    factoryConfig: {
-        defaultType: 'sequential'  // this is not a suitable type to create
-    },
-
-    /**
-     * @property {Boolean} isGenerator
-     * `true` in this class to identify an object as an instantiated IdGenerator, or subclass thereof.
-     */
-    isGenerator: true,
-
-    config: {
-        /**
-         * @cfg {String} id
-         * The id for this generator.
-         */
-        id: null
-    },
-
-    /**
-     * Initializes a new instance.
-     * @param {Object} config (optional) Configuration object to be applied to the new instance.
-     */
-    constructor: function (config) {
-        var me = this,
-            cache, id;
-
-        me.initConfig(config);
-
-        id = me.getId();
-        if (id) {
-            cache = (config && config.cache) || Ext.data.identifier.Generator.all;
-            cache[id] = me;
-        }
-    },
-
-    /**
-     * Generates and returns the next id. This method must be implemented by the derived
-     * class.
-     *
-     * @return {Number/String} The next id.
-     * @method generate
-     * @abstract
-     */
-
-    privates: {
-        /**
-         * Create a copy of this identifier.
-         * @private
-         * @return {Ext.data.identifier.Generator} The clone
-         */
-        clone: function (config) {
-            var cfg = this.getInitialConfig();
-            cfg = config ? Ext.apply({}, config, cfg) : cfg;
-            return new this.self(cfg);
+        factoryConfig: {
+            defaultType: 'sequential'  // this is not a suitable type to create
         },
 
-        statics: {
+        /**
+         * @property {Boolean} isGenerator
+         * `true` in this class to identify an object as an instantiated IdGenerator, or subclass thereof.
+         */
+        isGenerator: true,
+
+        config: {
             /**
-             * @property {Object} all
-             * This object is keyed by id to lookup instances.
-             * @private
-             * @static
+             * @cfg {String} id
+             * The id for this generator.
              */
-            all: {}
+            id: null
+        },
+
+        /**
+         * Initializes a new instance.
+         * @param {Object} config (optional) Configuration object to be applied to the new instance.
+         */
+        constructor: function (config) {
+            var me = this,
+                cache, id;
+
+            me.initConfig(config);
+
+            id = me.getId();
+            if (id) {
+                cache = (config && config.cache) || Ext.data.identifier.Generator.all;
+                cache[id] = me;
+            }
+        },
+
+        /**
+         * Generates and returns the next id. This method must be implemented by the derived
+         * class.
+         *
+         * @return {Number/String} The next id.
+         * @method generate
+         * @abstract
+         */
+
+        privates: {
+            /**
+             * Create a copy of this identifier.
+             * @private
+             * @return {Ext.data.identifier.Generator} The clone
+             */
+            clone: function (config) {
+                var cfg = this.getInitialConfig();
+                cfg = config ? Ext.apply({}, config, cfg) : cfg;
+                return new this.self(cfg);
+            },
+
+            statics: {
+                /**
+                 * @property {Object} all
+                 * This object is keyed by id to lookup instances.
+                 * @private
+                 * @static
+                 */
+                all: {}
+            }
         }
-    }
-},
-function () {
-    var Generator = this,
-        Factory = Ext.Factory,
-        factory = Factory.dataIdentifier;
+    },
+    function () {
+        var Generator = this,
+            Factory = Ext.Factory,
+            factory = Factory.dataIdentifier;
 
-    // If there is an id property passed we need to lookup that id in the cache. If that
-    // produces a cache miss, call the normal factory.
-    /**
-     * @member Ext.Factory
-     * @method dataIdentifier
-     * Returns an instance of an ID generator based on the ID you pass in.
-     * @param {string} id
-     * @return {Object} Ext.data.identifier.* The data identifier
-     */
-    Factory.dataIdentifier = function (config) {
-        var id = Ext.isString(config) ? config : (config && config.id),
-            existing = id && ((config && config.cache) || Generator.all)[id];
+        // If there is an id property passed we need to lookup that id in the cache. If that
+        // produces a cache miss, call the normal factory.
+        /**
+         * @member Ext.Factory
+         * @method dataIdentifier
+         * Returns an instance of an ID generator based on the ID you pass in.
+         * @param {string} id
+         * @return {Object} Ext.data.identifier.* The data identifier
+         */
+        Factory.dataIdentifier = function (config) {
+            var id = Ext.isString(config) ? config : (config && config.id),
+                existing = id && ((config && config.cache) || Generator.all)[id];
 
-        return existing || factory(config);
-    };
-});
+            return existing || factory(config);
+        };
+    });

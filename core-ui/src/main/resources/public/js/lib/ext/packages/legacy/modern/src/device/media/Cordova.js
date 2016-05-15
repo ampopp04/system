@@ -7,7 +7,7 @@ Ext.define('Ext.device.media.Cordova', {
 
     config: {
         /**
-         * A URI containing the audio content. 
+         * A URI containing the audio content.
          * @type {String}
          */
         src: null,
@@ -18,53 +18,53 @@ Ext.define('Ext.device.media.Cordova', {
         media: null
     },
 
-    updateSrc: function(newSrc, oldSrc) {
+    updateSrc: function (newSrc, oldSrc) {
         this.setMedia(new Media(newSrc));
     },
 
-    play: function() {
+    play: function () {
         var media = this.getMedia();
         if (media) {
             media.play();
         }
     },
 
-    pause: function() {
+    pause: function () {
         var media = this.getMedia();
         if (media) {
             media.pause();
         }
     },
 
-    stop: function() {
+    stop: function () {
         var media = this.getMedia();
         if (media) {
             media.stop();
         }
     },
 
-    release: function() {
+    release: function () {
         var media = this.getMedia();
         if (media) {
             media.release();
         }
     },
 
-    seekTo: function(miliseconds) {
+    seekTo: function (miliseconds) {
         var media = this.getMedia();
         if (media) {
             media.seekTo(miliseconds);
         }
     },
 
-    getDuration: function() {
+    getDuration: function () {
         var media = this.getMedia();
         if (media) {
             media.getDuration();
         }
     },
 
-    startRecord: function() {
+    startRecord: function () {
         var media = this.getMedia();
 
         if (!media) {
@@ -74,7 +74,7 @@ Ext.define('Ext.device.media.Cordova', {
         media.startRecord();
     },
 
-    stopRecord: function() {
+    stopRecord: function () {
         var media = this.getMedia();
         if (media) {
             media.stopRecord();

@@ -1,5 +1,5 @@
-describe("Ext.data.schema.ManyToMany", function() {
-    describe("configuring", function() {
+describe("Ext.data.schema.ManyToMany", function () {
+    describe("configuring", function () {
         var SimpleUser, SimpleGroup, FooBarThing, FooGoo,
             User2, Group2, User3, Group3, User4, Group4, User5, Group5,
             schema;
@@ -133,7 +133,7 @@ describe("Ext.data.schema.ManyToMany", function() {
             Ext.data.Model.schema.setNamespace('spec.many2many');
         });
 
-        afterEach(function() {
+        afterEach(function () {
             Ext.data.Model.schema.clear(true);
             Ext.undefine('spec.many2many.Base');
             Ext.undefine('spec.many2many.User');
@@ -153,7 +153,7 @@ describe("Ext.data.schema.ManyToMany", function() {
 
         //-------------------------------------------------------------------------
 
-        describe("Simple Association", function() {
+        describe("Simple Association", function () {
             var User, Group, userGroups, users, groups;
 
             beforeEach(function () {
@@ -165,65 +165,65 @@ describe("Ext.data.schema.ManyToMany", function() {
                 userGroups = groups.association;
             });
 
-            describe('users role', function() {
-                it("should have a role name", function() {
+            describe('users role', function () {
+                it("should have a role name", function () {
                     expect(users.role).toBe('users');
                 });
 
-                it("should have an id field", function() {
+                it("should have an id field", function () {
                     expect(users.field).toBe('userId');
                 });
 
-                it("should have the proper inverse role", function() {
+                it("should have the proper inverse role", function () {
                     expect(users.inverse).toBe(groups);
                 });
 
-                it("should have the proper class", function() {
+                it("should have the proper class", function () {
                     expect(users.cls).toBe(User);
                 });
 
-                it("should have a reference back to the association", function() {
+                it("should have a reference back to the association", function () {
                     expect(users.association.isManyToMany).toBe(true);
                     expect(groups.association).toBe(users.association);
-                });     
+                });
             });
 
-            describe('groups role', function() {
-                it("should have a role name", function() {
+            describe('groups role', function () {
+                it("should have a role name", function () {
                     expect(groups.role).toBe('groups');
                 });
 
-                it("should have an id field", function() {
+                it("should have an id field", function () {
                     expect(groups.field).toBe('groupId');
                 });
 
-                it("should have the proper inverse role", function() {
+                it("should have the proper inverse role", function () {
                     expect(groups.inverse).toBe(users);
                 });
 
-                it("should have the proper class", function() {
+                it("should have the proper class", function () {
                     expect(groups.cls).toBe(Group);
                 });
             });
-            
+
             describe('Common properties', function () {
-                it("should set the assoc name", function() {
+                it("should set the assoc name", function () {
                     expect(userGroups.name).toBe('GroupUsers');
                 });
 
-                it("should have a schema set", function() {
-                    expect(userGroups.schema).toBe(schema);    
+                it("should have a schema set", function () {
+                    expect(userGroups.schema).toBe(schema);
                 });
 
-                it("should have no reference field set", function() {
+                it("should have no reference field set", function () {
                     expect(userGroups.field).toBeNull();
-                });  
-
-                it("should set definedBy to the key holder", function() {
-                    expect(userGroups.definedBy).toBe(User);    
                 });
 
-                it("should have the owner as null", function() {
+                it("should set definedBy to the key holder", function () {
+                    expect(userGroups.definedBy).toBe(User);
+                });
+
+                it("should have the owner as null", function () {
                     expect(userGroups.owner).toBeNull();
                 });
             });
@@ -241,7 +241,7 @@ describe("Ext.data.schema.ManyToMany", function() {
 
         //-------------------------------------------------------------------------
 
-        describe("Side-specified Association", function() {
+        describe("Side-specified Association", function () {
             var User, Group, userGroups, users, groups;
 
             beforeEach(function () {
@@ -253,65 +253,65 @@ describe("Ext.data.schema.ManyToMany", function() {
                 userGroups = groups.association;
             });
 
-            describe('users role', function() {
-                it("should have a role name", function() {
+            describe('users role', function () {
+                it("should have a role name", function () {
                     expect(users.role).toBe('user2s');
                 });
 
-                it("should have an id field", function() {
+                it("should have an id field", function () {
                     expect(users.field).toBe('user2Id');
                 });
 
-                it("should have the proper inverse role", function() {
+                it("should have the proper inverse role", function () {
                     expect(users.inverse).toBe(groups);
                 });
 
-                it("should have the proper class", function() {
+                it("should have the proper class", function () {
                     expect(users.cls).toBe(User);
                 });
 
-                it("should have a reference back to the association", function() {
+                it("should have a reference back to the association", function () {
                     expect(users.association.isManyToMany).toBe(true);
                     expect(groups.association).toBe(users.association);
-                });     
+                });
             });
 
-            describe('groups role', function() {
-                it("should have a role name", function() {
+            describe('groups role', function () {
+                it("should have a role name", function () {
                     expect(groups.role).toBe('group2s');
                 });
 
-                it("should have an id field", function() {
+                it("should have an id field", function () {
                     expect(groups.field).toBe('group2Id');
                 });
 
-                it("should have the proper inverse role", function() {
+                it("should have the proper inverse role", function () {
                     expect(groups.inverse).toBe(users);
                 });
 
-                it("should have the proper class", function() {
+                it("should have the proper class", function () {
                     expect(groups.cls).toBe(Group);
                 });
             });
-            
+
             describe('Common properties', function () {
-                it("should set the assoc name", function() {
+                it("should set the assoc name", function () {
                     expect(userGroups.name).toBe('User2Group2s');
                 });
 
-                it("should have a schema set", function() {
-                    expect(userGroups.schema).toBe(schema);    
+                it("should have a schema set", function () {
+                    expect(userGroups.schema).toBe(schema);
                 });
 
-                it("should have no reference field set", function() {
+                it("should have no reference field set", function () {
                     expect(userGroups.field).toBeNull();
-                });  
-
-                it("should set definedBy to the key holder", function() {
-                    expect(userGroups.definedBy).toBe(User);    
                 });
 
-                it("should have the owner as null", function() {
+                it("should set definedBy to the key holder", function () {
+                    expect(userGroups.definedBy).toBe(User);
+                });
+
+                it("should have the owner as null", function () {
                     expect(userGroups.owner).toBeNull();
                 });
             });
@@ -319,7 +319,7 @@ describe("Ext.data.schema.ManyToMany", function() {
 
         //-------------------------------------------------------------------------
 
-        describe("Simple Object-Form Association", function() {
+        describe("Simple Object-Form Association", function () {
             var User, Group, userGroups, users, groups;
 
             beforeEach(function () {
@@ -331,65 +331,65 @@ describe("Ext.data.schema.ManyToMany", function() {
                 userGroups = groups.association;
             });
 
-            describe('users role', function() {
-                it("should have a role name", function() {
+            describe('users role', function () {
+                it("should have a role name", function () {
                     expect(users.role).toBe('user3s');
                 });
 
-                it("should have an id field", function() {
+                it("should have an id field", function () {
                     expect(users.field).toBe('user3Id');
                 });
 
-                it("should have the proper inverse role", function() {
+                it("should have the proper inverse role", function () {
                     expect(users.inverse).toBe(groups);
                 });
 
-                it("should have the proper class", function() {
+                it("should have the proper class", function () {
                     expect(users.cls).toBe(User);
                 });
 
-                it("should have a reference back to the association", function() {
+                it("should have a reference back to the association", function () {
                     expect(users.association.isManyToMany).toBe(true);
                     expect(groups.association).toBe(users.association);
-                });     
+                });
             });
 
-            describe('groups role', function() {
-                it("should have a role name", function() {
+            describe('groups role', function () {
+                it("should have a role name", function () {
                     expect(groups.role).toBe('group3s');
                 });
 
-                it("should have an id field", function() {
+                it("should have an id field", function () {
                     expect(groups.field).toBe('group3Id');
                 });
 
-                it("should have the proper inverse role", function() {
+                it("should have the proper inverse role", function () {
                     expect(groups.inverse).toBe(users);
                 });
 
-                it("should have the proper class", function() {
+                it("should have the proper class", function () {
                     expect(groups.cls).toBe(Group);
                 });
             });
-            
+
             describe('Common properties', function () {
-                it("should set the assoc name", function() {
+                it("should set the assoc name", function () {
                     expect(userGroups.name).toBe('User3Group3s');
                 });
 
-                it("should have a schema set", function() {
-                    expect(userGroups.schema).toBe(schema);    
+                it("should have a schema set", function () {
+                    expect(userGroups.schema).toBe(schema);
                 });
 
-                it("should have no reference field set", function() {
+                it("should have no reference field set", function () {
                     expect(userGroups.field).toBeNull();
-                });  
-
-                it("should set definedBy to the key holder", function() {
-                    expect(userGroups.definedBy).toBe(User);    
                 });
 
-                it("should have the owner as null", function() {
+                it("should set definedBy to the key holder", function () {
+                    expect(userGroups.definedBy).toBe(User);
+                });
+
+                it("should have the owner as null", function () {
                     expect(userGroups.owner).toBeNull();
                 });
             });
@@ -397,7 +397,7 @@ describe("Ext.data.schema.ManyToMany", function() {
 
         //-------------------------------------------------------------------------
 
-        describe("Full Object-Form Association", function() {
+        describe("Full Object-Form Association", function () {
             var User, Group, userGroups, users, groups;
 
             beforeEach(function () {
@@ -409,65 +409,65 @@ describe("Ext.data.schema.ManyToMany", function() {
                 userGroups = groups.association;
             });
 
-            describe('users role', function() {
-                it("should have a role name", function() {
+            describe('users role', function () {
+                it("should have a role name", function () {
                     expect(users.role).toBe('users');
                 });
 
-                it("should have an id field", function() {
+                it("should have an id field", function () {
                     expect(users.field).toBe('userId');
                 });
 
-                it("should have the proper inverse role", function() {
+                it("should have the proper inverse role", function () {
                     expect(users.inverse).toBe(groups);
                 });
 
-                it("should have the proper class", function() {
+                it("should have the proper class", function () {
                     expect(users.cls).toBe(User);
                 });
 
-                it("should have a reference back to the association", function() {
+                it("should have a reference back to the association", function () {
                     expect(users.association.isManyToMany).toBe(true);
                     expect(groups.association).toBe(users.association);
-                });     
+                });
             });
 
-            describe('groups role', function() {
-                it("should have a role name", function() {
+            describe('groups role', function () {
+                it("should have a role name", function () {
                     expect(groups.role).toBe('groups');
                 });
 
-                it("should have an id field", function() {
+                it("should have an id field", function () {
                     expect(groups.field).toBe('groupId');
                 });
 
-                it("should have the proper inverse role", function() {
+                it("should have the proper inverse role", function () {
                     expect(groups.inverse).toBe(users);
                 });
 
-                it("should have the proper class", function() {
+                it("should have the proper class", function () {
                     expect(groups.cls).toBe(Group);
                 });
             });
-            
+
             describe('Common properties', function () {
-                it("should set the assoc name", function() {
+                it("should set the assoc name", function () {
                     expect(userGroups.name).toBe('User4Group4s');
                 });
 
-                it("should have a schema set", function() {
-                    expect(userGroups.schema).toBe(schema);    
+                it("should have a schema set", function () {
+                    expect(userGroups.schema).toBe(schema);
                 });
 
-                it("should have no reference field set", function() {
+                it("should have no reference field set", function () {
                     expect(userGroups.field).toBeNull();
-                });  
-
-                it("should set definedBy to the key holder", function() {
-                    expect(userGroups.definedBy).toBe(User);    
                 });
 
-                it("should have the owner as null", function() {
+                it("should set definedBy to the key holder", function () {
+                    expect(userGroups.definedBy).toBe(User);
+                });
+
+                it("should have the owner as null", function () {
                     expect(userGroups.owner).toBeNull();
                 });
             });
@@ -475,7 +475,7 @@ describe("Ext.data.schema.ManyToMany", function() {
 
         //-------------------------------------------------------------------------
 
-        describe("Named Full Object-Form Association", function() {
+        describe("Named Full Object-Form Association", function () {
             var User, Group, userGroups, users, groups;
 
             beforeEach(function () {
@@ -487,65 +487,65 @@ describe("Ext.data.schema.ManyToMany", function() {
                 userGroups = groups.association;
             });
 
-            describe('users role', function() {
-                it("should have a role name", function() {
+            describe('users role', function () {
+                it("should have a role name", function () {
                     expect(users.role).toBe('theUsers');
                 });
 
-                it("should have an id field", function() {
+                it("should have an id field", function () {
                     expect(users.field).toBe('theUser_id');
                 });
 
-                it("should have the proper inverse role", function() {
+                it("should have the proper inverse role", function () {
                     expect(users.inverse).toBe(groups);
                 });
 
-                it("should have the proper class", function() {
+                it("should have the proper class", function () {
                     expect(users.cls).toBe(User);
                 });
 
-                it("should have a reference back to the association", function() {
+                it("should have a reference back to the association", function () {
                     expect(users.association.isManyToMany).toBe(true);
                     expect(groups.association).toBe(users.association);
-                });     
+                });
             });
 
-            describe('groups role', function() {
-                it("should have a role name", function() {
+            describe('groups role', function () {
+                it("should have a role name", function () {
                     expect(groups.role).toBe('theGroups');
                 });
 
-                it("should have an id field", function() {
+                it("should have an id field", function () {
                     expect(groups.field).toBe('theGroup_id');
                 });
 
-                it("should have the proper inverse role", function() {
+                it("should have the proper inverse role", function () {
                     expect(groups.inverse).toBe(users);
                 });
 
-                it("should have the proper class", function() {
+                it("should have the proper class", function () {
                     expect(groups.cls).toBe(Group);
                 });
             });
-            
+
             describe('Common properties', function () {
-                it("should set the assoc name", function() {
+                it("should set the assoc name", function () {
                     expect(userGroups.name).toBe('foo');
                 });
 
-                it("should have a schema set", function() {
-                    expect(userGroups.schema).toBe(schema);    
+                it("should have a schema set", function () {
+                    expect(userGroups.schema).toBe(schema);
                 });
 
-                it("should have no reference field set", function() {
+                it("should have no reference field set", function () {
                     expect(userGroups.field).toBeNull();
-                });  
-
-                it("should set definedBy to the key holder", function() {
-                    expect(userGroups.definedBy).toBe(User);    
                 });
 
-                it("should have the owner as null", function() {
+                it("should set definedBy to the key holder", function () {
+                    expect(userGroups.definedBy).toBe(User);
+                });
+
+                it("should have the owner as null", function () {
                     expect(userGroups.owner).toBeNull();
                 });
             });
@@ -553,20 +553,20 @@ describe("Ext.data.schema.ManyToMany", function() {
 
         //-------------------------------------------------------------------------
 
-        describe("Nested Namespace Association", function() {
+        describe("Nested Namespace Association", function () {
             var assoc, fooBarThings, fooGoos;
 
             /*
-            FooBarThing = Ext.define('spec.many2many.foo.bar.Thing', {
-                extend: 'spec.many2many.FooBase',
-                manyToMany: 'foo.Goo'
-            });
+             FooBarThing = Ext.define('spec.many2many.foo.bar.Thing', {
+             extend: 'spec.many2many.FooBase',
+             manyToMany: 'foo.Goo'
+             });
 
-            FooGoo = Ext.define('spec.many2many.foo.Goo', {
-                extend: 'spec.many2many.FooBase',
-                manyToMany: 'foo.bar.Thing'
-            });
-            */
+             FooGoo = Ext.define('spec.many2many.foo.Goo', {
+             extend: 'spec.many2many.FooBase',
+             manyToMany: 'foo.bar.Thing'
+             });
+             */
 
             beforeEach(function () {
                 fooGoos = FooBarThing.associations.fooGoos;
@@ -574,25 +574,25 @@ describe("Ext.data.schema.ManyToMany", function() {
                 assoc = fooGoos.association;
             });
 
-            it("should have proper left name", function() {
+            it("should have proper left name", function () {
                 expect(fooBarThings.association.left.role).toBe('fooBarThings');
             });
 
-            it("should have proper right name", function() {
+            it("should have proper right name", function () {
                 expect(fooBarThings.association.right.role).toBe('fooGoos');
             });
 
-            it("should have proper left getter", function() {
+            it("should have proper left getter", function () {
                 expect(typeof FooBarThing.prototype.fooGoos).toBe('function');
             });
 
-            it("should have proper right getter", function() {
+            it("should have proper right getter", function () {
                 expect(typeof FooGoo.prototype.fooBarThings).toBe('function');
             });
         });
     });
 
-    describe("nested loading", function() {
+    describe("nested loading", function () {
         var User, Group;
 
         function makeAssociations(cfg) {
@@ -608,12 +608,12 @@ describe("Ext.data.schema.ManyToMany", function() {
             });
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             Ext.data.Model.schema.setNamespace('spec');
             MockAjaxManager.addMethods();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             MockAjaxManager.removeMethods();
             Ext.undefine('spec.Group');
             Ext.undefine('spec.User');
@@ -628,8 +628,8 @@ describe("Ext.data.schema.ManyToMany", function() {
             });
         }
 
-        describe("associationKey", function() {
-            beforeEach(function() {
+        describe("associationKey", function () {
+            beforeEach(function () {
                 makeAssociations({
                     GroupUsers: {
                         type: 'Group',
@@ -644,7 +644,7 @@ describe("Ext.data.schema.ManyToMany", function() {
                 });
             });
 
-            it("should use the associatioKey when loading the left", function() {
+            it("should use the associatioKey when loading the left", function () {
                 var group = Group.load(1);
                 complete({
                     id: 1,
@@ -662,7 +662,7 @@ describe("Ext.data.schema.ManyToMany", function() {
                 expect(users.getAt(1).getId()).toBe(102);
             });
 
-            it("should use the associatioKey when loading the right", function() {
+            it("should use the associatioKey when loading the right", function () {
                 var user = User.load(1);
                 complete({
                     id: 1,
@@ -681,12 +681,12 @@ describe("Ext.data.schema.ManyToMany", function() {
             });
         });
 
-        describe("without session", function() {
-            beforeEach(function() {
+        describe("without session", function () {
+            beforeEach(function () {
                 makeAssociations();
             });
 
-            it("should load child records of the left", function() {
+            it("should load child records of the left", function () {
                 var group = Group.load(1);
                 complete({
                     id: 1,
@@ -708,7 +708,7 @@ describe("Ext.data.schema.ManyToMany", function() {
                 expect(users.getAt(2).getId()).toBe(103);
             });
 
-            it("should load child records of the right", function() {
+            it("should load child records of the right", function () {
                 var user = User.load(1);
                 complete({
                     id: 1,
@@ -731,19 +731,19 @@ describe("Ext.data.schema.ManyToMany", function() {
             });
         });
 
-        describe("with session", function() {
+        describe("with session", function () {
             var session;
-            beforeEach(function() {
+            beforeEach(function () {
                 makeAssociations();
                 session = new Ext.data.Session();
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 session.destroy();
                 session = null;
             });
 
-            it("should load child records of the left", function() {
+            it("should load child records of the left", function () {
                 var group = Group.load(1, {}, session);
                 complete({
                     id: 1,
@@ -765,7 +765,7 @@ describe("Ext.data.schema.ManyToMany", function() {
                 expect(users.getAt(2).getId()).toBe(103);
             });
 
-            it("should set up reflexive relationships for right records", function() {
+            it("should set up reflexive relationships for right records", function () {
                 var group = Group.load(1, {}, session);
                 complete({
                     id: 1,
@@ -796,7 +796,7 @@ describe("Ext.data.schema.ManyToMany", function() {
                 expect(groups.getAt(0)).toBe(group);
             });
 
-            it("should load child records of the right", function() {
+            it("should load child records of the right", function () {
                 var user = User.load(1, {}, session);
                 complete({
                     id: 1,
@@ -818,7 +818,7 @@ describe("Ext.data.schema.ManyToMany", function() {
                 expect(groups.getAt(2).getId()).toBe(103);
             });
 
-            it("should set up reflexive relationships for left records", function() {
+            it("should set up reflexive relationships for left records", function () {
                 var user = User.load(1, {}, session);
                 complete({
                     id: 1,
@@ -851,10 +851,10 @@ describe("Ext.data.schema.ManyToMany", function() {
         });
     });
 
-    describe("store membership", function() {
+    describe("store membership", function () {
         var User, Group, session;
 
-        beforeEach(function() {
+        beforeEach(function () {
             Ext.data.Model.schema.setNamespace('spec');
             Group = Ext.define('spec.Group', {
                 extend: 'Ext.data.Model',
@@ -870,7 +870,7 @@ describe("Ext.data.schema.ManyToMany", function() {
             session = new Ext.data.Session();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             Ext.undefine('spec.Group');
             Ext.undefine('spec.User');
             Ext.data.Model.schema.clear(true);
@@ -878,9 +878,9 @@ describe("Ext.data.schema.ManyToMany", function() {
             session = User = Group = null;
         });
 
-        describe("adding", function() {
-            describe("with the inverse store not created", function() {
-                it("should exist in the inverse store", function() {
+        describe("adding", function () {
+            describe("with the inverse store not created", function () {
+                it("should exist in the inverse store", function () {
                     var user = session.createRecord('User', 1),
                         group = session.createRecord('Group', 1),
                         users;
@@ -893,8 +893,8 @@ describe("Ext.data.schema.ManyToMany", function() {
                 });
             });
 
-            describe("with the inverse store created", function() {
-                it("should exist in the inverse store", function() {
+            describe("with the inverse store created", function () {
+                it("should exist in the inverse store", function () {
                     var user = session.createRecord('User', 1),
                         group = session.createRecord('Group', 1),
                         users = group.users();
@@ -907,9 +907,9 @@ describe("Ext.data.schema.ManyToMany", function() {
             });
         });
 
-        describe("removing", function() {
-            describe("with the inverse store not created", function() {
-                it("should not exist in the inverse store", function() {
+        describe("removing", function () {
+            describe("with the inverse store not created", function () {
+                it("should not exist in the inverse store", function () {
                     var user = session.createRecord('User', 1),
                         group = session.createRecord('Group', 1),
                         groups = user.groups(),
@@ -923,8 +923,8 @@ describe("Ext.data.schema.ManyToMany", function() {
                 });
             });
 
-            describe("with the inverse store created", function() {
-                it("should not exist in the inverse store", function() {
+            describe("with the inverse store created", function () {
+                it("should not exist in the inverse store", function () {
                     var user = session.createRecord('User', 1),
                         group = session.createRecord('Group', 1),
                         groups = user.groups(),
@@ -938,5 +938,5 @@ describe("Ext.data.schema.ManyToMany", function() {
             });
         });
     });
-    
+
 });

@@ -1,74 +1,74 @@
-describe("Ext.util.Sorter", function() {
+describe("Ext.util.Sorter", function () {
     var sorter;
 
-    describe("instantiation", function() {
-        var createSorter = function(config) {
-            return function() {
+    describe("instantiation", function () {
+        var createSorter = function (config) {
+            return function () {
                 new Ext.util.Sorter(config);
             };
         };
 
-        it("should require either a property or a function", function() {
+        it("should require either a property or a function", function () {
             expect(createSorter({})).toRaiseExtError();
         });
 
-        it("should accept a property config", function() {
+        it("should accept a property config", function () {
             expect(createSorter({property: 'test'})).not.toRaiseExtError();
         });
 
-        it("should accept a sorter function", function() {
+        it("should accept a sorter function", function () {
             expect(createSorter({sorterFn: Ext.emptyFn})).not.toRaiseExtError();
         });
 
-        it("should have no transform method", function(){
+        it("should have no transform method", function () {
             expect(createSorter().transform).toBeUndefined();
         });
     });
 
-    describe("building sorter functions", function() {
-        it("should default to sorting ASC", function() {
+    describe("building sorter functions", function () {
+        it("should default to sorting ASC", function () {
             sorter = new Ext.util.Sorter({
                 property: 'age'
             });
 
-            var rec1   = {age: 24},
-                rec2   = {age: 25},
+            var rec1 = {age: 24},
+                rec2 = {age: 25},
                 result = sorter.sort(rec1, rec2);
 
             expect(result).toEqual(-1);
         });
 
-        it("should accept DESC direction", function() {
+        it("should accept DESC direction", function () {
             sorter = new Ext.util.Sorter({
-                property : 'age',
+                property: 'age',
                 direction: 'DESC'
             });
 
-            var rec1   = {age: 24},
-                rec2   = {age: 25},
+            var rec1 = {age: 24},
+                rec2 = {age: 25},
                 result = sorter.sort(rec1, rec2);
 
             expect(result).toEqual(1);
         });
 
-        it("should allow specification of the root property", function() {
+        it("should allow specification of the root property", function () {
             sorter = new Ext.util.Sorter({
-                root    : 'data',
+                root: 'data',
                 property: 'age'
             });
 
-            var rec1   = {data: {age: 24}},
-                rec2   = {data: {age: 25}},
+            var rec1 = {data: {age: 24}},
+                rec2 = {data: {age: 25}},
                 result = sorter.sort(rec1, rec2);
 
             expect(result).toEqual(-1);
         });
     });
 
-    it("should accept some custom transform function", function(){
+    it("should accept some custom transform function", function () {
         sorter = new Ext.util.Sorter({
             property: 'age',
-            transform: function(v){
+            transform: function (v) {
                 return v * -1;
             }
         });
@@ -81,23 +81,55 @@ describe("Ext.util.Sorter", function() {
     });
 
     // https://sencha.jira.com/browse/EXTJS-18836
-    it('should sort an array of Records by multiple sorters where the first returns equality', function() {
-        var edRaw = {name: 'Ed Spencer',   email: 'ed@sencha.com',    evilness: 100, group: 'code',  old: false, age: 25, valid: 'yes'},
-            abeRaw = {name: 'Abe Elias',    email: 'abe@sencha.com',   evilness: 70,  group: 'admin', old: false, age: 20, valid: 'yes'},
-            aaronRaw = {name: 'Aaron Conran', email: 'aaron@sencha.com', evilness: 5,   group: 'admin', old: true, age: 26, valid: 'yes'},
-            tommyRaw = {name: 'Tommy Maintz', email: 'tommy@sencha.com', evilness: -15, group: 'code',  old: true, age: 70, valid: 'yes'},
+    it('should sort an array of Records by multiple sorters where the first returns equality', function () {
+        var edRaw = {
+                name: 'Ed Spencer',
+                email: 'ed@sencha.com',
+                evilness: 100,
+                group: 'code',
+                old: false,
+                age: 25,
+                valid: 'yes'
+            },
+            abeRaw = {
+                name: 'Abe Elias',
+                email: 'abe@sencha.com',
+                evilness: 70,
+                group: 'admin',
+                old: false,
+                age: 20,
+                valid: 'yes'
+            },
+            aaronRaw = {
+                name: 'Aaron Conran',
+                email: 'aaron@sencha.com',
+                evilness: 5,
+                group: 'admin',
+                old: true,
+                age: 26,
+                valid: 'yes'
+            },
+            tommyRaw = {
+                name: 'Tommy Maintz',
+                email: 'tommy@sencha.com',
+                evilness: -15,
+                group: 'code',
+                old: true,
+                age: 70,
+                valid: 'yes'
+            },
             User = Ext.define(null, {
                 extend: 'Ext.data.Model',
                 idProperty: 'email',
 
                 fields: [
-                    {name: 'name',      type: 'string'},
-                    {name: 'email',     type: 'string'},
-                    {name: 'evilness',  type: 'int'},
-                    {name: 'group',     type: 'string'},
-                    {name: 'old',       type: 'boolean'},
-                    {name: 'valid',     type: 'string'},
-                    {name: 'age',       type: 'int'}
+                    {name: 'name', type: 'string'},
+                    {name: 'email', type: 'string'},
+                    {name: 'evilness', type: 'int'},
+                    {name: 'group', type: 'string'},
+                    {name: 'old', type: 'boolean'},
+                    {name: 'valid', type: 'string'},
+                    {name: 'age', type: 'int'}
                 ]
             }),
             records = [
@@ -108,7 +140,7 @@ describe("Ext.util.Sorter", function() {
             ],
             sorters = [
                 new Ext.util.Sorter({
-                    sorterFn : function() {
+                    sorterFn: function () {
                         return 0;
                     }
                 }),

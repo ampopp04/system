@@ -3,12 +3,12 @@
  * Vladas Saulis (vladas at prodata dot lt),  03-29-2009
  * Vladas Saulis (vladas at prodata dot lt),  10-18-2007
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa", "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"];
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             // Uncommons
             if (month == 7) return "Rgp";
             if (month == 8) return "Rgs";
@@ -31,7 +31,7 @@ Ext.onReady(function() {
             Grd: 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
 
             // Some uncommons
             if (name == "Rugpjūtis") return 7;
@@ -44,7 +44,7 @@ Ext.onReady(function() {
 
         Ext.Date.parseCodes.S.s = "(?:as|as|as|as)";
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day].substring(0, 3);
         };
     }
@@ -155,7 +155,7 @@ Ext.define("Ext.locale.lt.form.field.Date", {
 Ext.define("Ext.locale.lt.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Kraunasi..."
     });
@@ -172,7 +172,7 @@ Ext.define("Ext.locale.lt.form.field.VTypes", {
 Ext.define("Ext.locale.lt.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Įveskite URL šiai nuorodai:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -303,10 +303,10 @@ Ext.define("Ext.locale.lt.window.MessageBox", {
         cancel: "Atsisakyti",
         yes: "Taip",
         no: "Ne"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.lt.Component", {	
+Ext.define("Ext.locale.lt.Component", {
     override: "Ext.Component"
 });

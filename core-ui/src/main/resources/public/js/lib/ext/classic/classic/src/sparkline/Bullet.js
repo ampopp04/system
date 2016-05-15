@@ -18,29 +18,29 @@ Ext.define('Ext.sparkline.Bullet', {
          * @cfg {String} [targetColor=#f33] The colour of the vertical target marker.
          */
         targetColor: '#f33',
-        
+
         /**
          * @cfg {Number} [targetWidth=3] Width of the target bar in pixels.
          */
         targetWidth: 3,
-        
+
         /**
          * @cfg {String} [performanceColor=#33f] The color of the performance measure horizontal bar.
          */
         performanceColor: '#33f',
-        
+
         /**
          * @cfg {String[]} [rangeColors] An array of colors to use for each qualitative range background color.
          */
         rangeColors: ['#d3dafe', '#a8b6ff', '#7f94ff'],
-        
+
         /**
          * @cfg {Number} [base] Set this to a number to change the base start number.
          */
         base: null,
-        
+
         tipTpl: new Ext.XTemplate('{fieldkey:this.fields} - {value}', {
-            fields: function(v) {
+            fields: function (v) {
                 if (v === 'r') {
                     return 'Range';
                 }
@@ -55,13 +55,13 @@ Ext.define('Ext.sparkline.Bullet', {
     },
 
     // Ensure values is an array of normalized values
-    applyValues: function(newValues) {
+    applyValues: function (newValues) {
         newValues = Ext.Array.map(Ext.Array.from(newValues), this.normalizeValue);
         this.disabled = !(newValues && newValues.length);
         return newValues;
     },
 
-    onUpdate: function() {
+    onUpdate: function () {
         var me = this,
             values = me.values,
             min, max, vals,
@@ -91,12 +91,12 @@ Ext.define('Ext.sparkline.Bullet', {
         }
     },
 
-    getRegion: function(x, y) {
+    getRegion: function (x, y) {
         var shapeid = this.canvas.getShapeAt(x, y);
         return (shapeid !== undefined && this.shapes[shapeid] !== undefined) ? this.shapes[shapeid] : undefined;
     },
 
-    getRegionFields: function(region) {
+    getRegionFields: function (region) {
         return {
             fieldkey: region.substr(0, 1),
             value: this.values[region.substr(1)],
@@ -104,7 +104,7 @@ Ext.define('Ext.sparkline.Bullet', {
         };
     },
 
-    renderHighlight: function(region) {
+    renderHighlight: function (region) {
         switch (region.substr(0, 1)) {
             case 'r':
                 this.renderRange(region.substr(1), true).append();
@@ -118,7 +118,7 @@ Ext.define('Ext.sparkline.Bullet', {
         }
     },
 
-    renderRange: function(region, highlight) {
+    renderRange: function (region, highlight) {
         var rangeval = this.values[region],
             rangewidth = Math.round(this.getWidth() * ((rangeval - this.min) / this.range)),
             color = this.getRangeColors()[region - 2];
@@ -128,7 +128,7 @@ Ext.define('Ext.sparkline.Bullet', {
         return this.canvas.drawRect(0, 0, rangewidth - 1, this.getHeight() - 1, color, color);
     },
 
-    renderPerformance: function(highlight) {
+    renderPerformance: function (highlight) {
         var perfval = this.values[1],
             perfwidth = Math.round(this.getWidth() * ((perfval - this.min) / this.range)),
             color = this.getPerformanceColor();
@@ -139,7 +139,7 @@ Ext.define('Ext.sparkline.Bullet', {
             Math.round(this.getHeight() * 0.4) - 1, color, color);
     },
 
-    renderTarget: function(highlight) {
+    renderTarget: function (highlight) {
         var targetval = this.values[0],
             targetWidth = this.getTargetWidth(),
             x = Math.round(this.getWidth() * ((targetval - this.min) / this.range) - (targetWidth / 2)),

@@ -31,8 +31,8 @@
  *
  * ## Image Dimensions
  *
- * You should include height and width dimensions for any image owned by a parent 
- * container.  By omitting dimensions, an owning container will not know how to 
+ * You should include height and width dimensions for any image owned by a parent
+ * container.  By omitting dimensions, an owning container will not know how to
  * size and position the image in the initial layout.
  */
 Ext.define('Ext.Img', {
@@ -79,10 +79,10 @@ Ext.define('Ext.Img', {
      * this config option accepts a string with the charCode and font-family separated by
      * the `@` symbol. For example '65@My Font Family'.
      */
-    
+
     maskOnDisable: false,
 
-    initComponent: function() {
+    initComponent: function () {
         if (this.glyph) {
             this.autoEl = 'div';
         }
@@ -94,7 +94,7 @@ Ext.define('Ext.Img', {
         return src && Ext.resolveResource(src);
     },
 
-    getElConfig: function() {
+    getElConfig: function () {
         var me = this,
             autoEl = me.autoEl,
             config = me.callParent(),
@@ -113,14 +113,14 @@ Ext.define('Ext.Img', {
                 glyph = glyphParts[0];
                 glyphFontFamily = glyphParts[1] || glyphFontFamily;
             }
-            
+
             config.html = '&#' + glyph + ';';
-            
+
             if (glyphFontFamily) {
                 config.style = config.style || {};
                 config.style.fontFamily = glyphFontFamily;
             }
-            
+
             // A glyph is a graphic which is not an <img> tag so it should have
             // the corresponding role for Accessibility interface to recognize
             config.role = 'img';
@@ -150,7 +150,7 @@ Ext.define('Ext.Img', {
             // base-64 encoded string. :/
             // That will make the application totally unusable for blind people.
             (img || config).alt = '';
-            
+
             //<debug>
             Ext.log.warn('For WAI-ARIA compliance, IMG elements SHOULD have an alt attribute.');
             //</debug>
@@ -171,7 +171,7 @@ Ext.define('Ext.Img', {
         me.callParent(arguments);
 
         el = me.el;
-        
+
         if (autoEl === 'img' || (Ext.isObject(autoEl) && autoEl.tag === 'img')) {
             me.imgEl = el;
         } else {

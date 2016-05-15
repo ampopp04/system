@@ -9,14 +9,14 @@
  * + added Ext.Date.monthNumbers
  * + added Ext.grid.feature.Grouping
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος"];
 
         Ext.Date.shortMonthNames = ["Ιαν", "Φεβ", "Μάρ", "Απρ", "Μάι", "Ιού", "Ιού", "Αύγ", "Σεπ", "Οκτ", "Νοέ", "Δεκ"];
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return Ext.Date.monthNames[month].substring(0, 3);
         };
 
@@ -35,7 +35,7 @@ Ext.onReady(function() {
             Dec: 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1, 3).toLowerCase()];
         };
 
@@ -135,7 +135,7 @@ Ext.define("Ext.locale.el_GR.form.field.Date", {
 Ext.define("Ext.locale.el_GR.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Μεταφόρτωση δεδομένων..."
     });
@@ -152,7 +152,7 @@ Ext.define("Ext.locale.el_GR.form.field.VTypes", {
 Ext.define("Ext.locale.el_GR.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Δώστε τη διεύθυνση (URL) για το σύνδεσμο (link):'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -259,10 +259,10 @@ Ext.define("Ext.locale.el_GR.window.MessageBox", {
         cancel: "Άκυρο",
         yes: "Ναι",
         no: "Όχι"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.el_GR.Component", {	
+Ext.define("Ext.locale.el_GR.Component", {
     override: "Ext.Component"
 });

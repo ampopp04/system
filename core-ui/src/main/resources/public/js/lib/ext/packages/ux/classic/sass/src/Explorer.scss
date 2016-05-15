@@ -1,21 +1,21 @@
 .#{$prefix}explorer-view {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .#{$prefix}explorer-item {
-    float: left;
+  float: left;
 }
 
 .#{$prefix}explorer-item-text {
-    text-align: center;
+  text-align: center;
 }
 
 .#{$prefix}explorer-node-icon {
-    height: 100px;
-    width: 100px;
-    background: theme-background-image('explorer/node', 'png');
+  height: 100px;
+  width: 100px;
+  background: theme-background-image('explorer/node', 'png');
 }
 
 .#{$prefix}explorer-leaf-icon {
-    background: theme-background-image('explorer/leaf', 'png');
+  background: theme-background-image('explorer/leaf', 'png');
 }

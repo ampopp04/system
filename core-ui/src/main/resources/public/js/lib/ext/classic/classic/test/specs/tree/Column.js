@@ -1,4 +1,4 @@
-describe("Ext.tree.Column", function() {
+describe("Ext.tree.Column", function () {
 
     var tree, colRef;
 
@@ -18,11 +18,11 @@ describe("Ext.tree.Column", function() {
         colRef = tree.getColumnManager().getColumns();
     }
 
-    afterEach(function() {
+    afterEach(function () {
         tree = Ext.destroy(tree);
     });
 
-    it("should retain scope when assigned before calling parent initComponent & subclassing", function() {
+    it("should retain scope when assigned before calling parent initComponent & subclassing", function () {
         var spy = jasmine.createSpy(),
             o = {};
 
@@ -30,7 +30,7 @@ describe("Ext.tree.Column", function() {
             extend: 'Ext.tree.Column',
             alias: 'widget.spectreecolumn',
 
-            initComponent: function() {
+            initComponent: function () {
                 this.scope = o;
                 this.callParent();
             }

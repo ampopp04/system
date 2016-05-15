@@ -1,6 +1,6 @@
-describe("Ext.data.proxy.Ajax", function() {
+describe("Ext.data.proxy.Ajax", function () {
     var proxy;
-    
+
     function makeProxy(cfg) {
         cfg = cfg || {};
         cfg = Ext.applyIf(cfg, {
@@ -9,52 +9,52 @@ describe("Ext.data.proxy.Ajax", function() {
         proxy = new Ext.data.proxy.Ajax(cfg);
     }
 
-    afterEach(function() {
+    afterEach(function () {
         Ext.data.Model.schema.clear();
         Ext.undefine('spec.Company');
         proxy = null;
     });
 
-    describe("instantiation", function() {
-        beforeEach(function() {
+    describe("instantiation", function () {
+        beforeEach(function () {
             makeProxy();
         });
-        
-        it("should extend Ext.data.proxy.Server", function() {
+
+        it("should extend Ext.data.proxy.Server", function () {
             expect(proxy.superclass).toBe(Ext.data.proxy.Server.prototype);
         });
 
-        it("should have correct actionMethods", function() {
+        it("should have correct actionMethods", function () {
             expect(proxy.getActionMethods()).toEqual({
-                create : "POST",
-                read   : "GET",
-                update : "POST",
+                create: "POST",
+                read: "GET",
+                update: "POST",
                 destroy: "POST"
             });
         });
     });
-    
-    describe("parameters", function() {
+
+    describe("parameters", function () {
         var ajax, operation;
-        beforeEach(function() {
-            spyOn(Ext.Ajax, 'request').andCallFake(function(o) {
+        beforeEach(function () {
+            spyOn(Ext.Ajax, 'request').andCallFake(function (o) {
                 ajax = o;
             });
             operation = new Ext.data.operation.Read();
         });
-        
-        afterEach(function(){
+
+        afterEach(function () {
             ajax = operation = null;
         });
-        
-        describe("binary", function() {
-            it("should default to binary false", function() {
+
+        describe("binary", function () {
+            it("should default to binary false", function () {
                 makeProxy();
                 proxy.read(operation);
                 expect(ajax.binary).toBe(false);
             });
-            
-            it("should pass binary when set on the proxy", function() {
+
+            it("should pass binary when set on the proxy", function () {
                 makeProxy({
                     binary: true
                 });
@@ -62,15 +62,15 @@ describe("Ext.data.proxy.Ajax", function() {
                 expect(ajax.binary).toBe(true);
             });
         });
-        
-        describe("headers", function() {
-            it("should default to no headers", function() {
+
+        describe("headers", function () {
+            it("should default to no headers", function () {
                 makeProxy();
                 proxy.read(operation);
                 expect(ajax.headers).toBeUndefined();
             });
-            
-            it("should pass headers", function() {
+
+            it("should pass headers", function () {
                 makeProxy({
                     headers: {
                         'Content-Type': 'text/plain'
@@ -82,15 +82,15 @@ describe("Ext.data.proxy.Ajax", function() {
                 });
             });
         });
-        
-        describe("timeout", function() {
-            it("should use the default timeout", function() {
+
+        describe("timeout", function () {
+            it("should use the default timeout", function () {
                 makeProxy();
                 proxy.read(operation);
                 expect(ajax.timeout).toBe(proxy.getTimeout());
             });
-            
-            it("should use a passed timeout", function() {
+
+            it("should use a passed timeout", function () {
                 makeProxy({
                     timeout: 1000
                 });
@@ -98,15 +98,15 @@ describe("Ext.data.proxy.Ajax", function() {
                 expect(ajax.timeout).toBe(1000);
             });
         });
-        
-        describe("useDefaultXhrHeader", function() {
-            it("should default to true", function() {
+
+        describe("useDefaultXhrHeader", function () {
+            it("should default to true", function () {
                 makeProxy();
                 proxy.read(operation);
                 expect(ajax.useDefaultXhrHeader).toBe(true);
             });
-            
-            it("should pass along useDefaultXhrHeader", function() {
+
+            it("should pass along useDefaultXhrHeader", function () {
                 makeProxy({
                     useDefaultXhrHeader: true
                 });
@@ -114,15 +114,15 @@ describe("Ext.data.proxy.Ajax", function() {
                 expect(ajax.useDefaultXhrHeader).toBe(true);
             });
         });
-        
-        describe("withCredentials", function() {
-            it("should default to false", function() {
+
+        describe("withCredentials", function () {
+            it("should default to false", function () {
                 makeProxy();
                 proxy.read(operation);
                 expect(ajax.withCredentials).toBe(false);
             });
-            
-            it("should should pass the username/password", function() {
+
+            it("should should pass the username/password", function () {
                 makeProxy({
                     withCredentials: true,
                     username: 'foo',
@@ -134,9 +134,9 @@ describe("Ext.data.proxy.Ajax", function() {
                 expect(ajax.password).toBe('bar');
             });
         });
-        
-        describe("paramsAsJson", function(){
-            it("should always send as params when using get", function(){
+
+        describe("paramsAsJson", function () {
+            it("should always send as params when using get", function () {
                 proxy = new Ext.data.proxy.Ajax({
                     url: 'fake',
                     paramsAsJson: true
@@ -149,7 +149,7 @@ describe("Ext.data.proxy.Ajax", function() {
                 expect(ajax.jsonData).toBeUndefined();
             });
 
-            it("should send as params when paramsAsJson is false", function(){
+            it("should send as params when paramsAsJson is false", function () {
                 proxy = new Ext.data.proxy.Ajax({
                     url: 'fake',
                     paramsAsJson: false
@@ -163,7 +163,7 @@ describe("Ext.data.proxy.Ajax", function() {
                 expect(ajax.jsonData).toBeUndefined();
             });
 
-            it("should send as jsonData with non-get action and paramsAsJson: true", function(){
+            it("should send as jsonData with non-get action and paramsAsJson: true", function () {
                 proxy = new Ext.data.proxy.Ajax({
                     url: 'fake',
                     paramsAsJson: true
@@ -179,7 +179,7 @@ describe("Ext.data.proxy.Ajax", function() {
                 expect(ajax.params).toBeUndefined();
             });
 
-            it("should not overwrite existing jsonData, but merge them", function() {
+            it("should not overwrite existing jsonData, but merge them", function () {
                 proxy = new Ext.data.proxy.Ajax({
                     url: 'fake',
                     paramsAsJson: true,
@@ -209,9 +209,10 @@ describe("Ext.data.proxy.Ajax", function() {
             });
         });
     });
-    
-    describe("request result", function() {
+
+    describe("request result", function () {
         var operation, request;
+
         function complete(status, statusText, responseText) {
             Ext.Ajax.mockComplete({
                 status: status || 200,
@@ -219,13 +220,13 @@ describe("Ext.data.proxy.Ajax", function() {
                 responseText: Ext.isDefined(responseText) ? responseText : '{"success": true, "data": []}'
             });
         }
-        
-        beforeEach(function() {
+
+        beforeEach(function () {
             Ext.define('spec.AjaxModel', {
                 extend: 'Ext.data.Model',
                 fields: ['id']
             });
-            
+
             MockAjaxManager.addMethods();
             operation = new Ext.data.operation.Read();
             makeProxy({
@@ -237,37 +238,37 @@ describe("Ext.data.proxy.Ajax", function() {
                 }
             });
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             request = operation = null;
             MockAjaxManager.removeMethods();
             Ext.undefine('spec.AjaxModel');
         });
 
-        it("should return the null result set if status 204 is returned", function() {
+        it("should return the null result set if status 204 is returned", function () {
             request = proxy.read(operation);
             spyOn(proxy, 'afterRequest');
             complete(204, 'No Content', '');
             expect(operation.getResultSet()).toBe(Ext.data.reader.Reader.prototype.nullResultSet);
         });
-        
-        describe("successful request", function() {
-            it("should call afterRequest with the request & the success status", function() {
+
+        describe("successful request", function () {
+            it("should call afterRequest with the request & the success status", function () {
                 request = proxy.read(operation);
                 spyOn(proxy, 'afterRequest');
                 complete(200);
                 expect(proxy.afterRequest).toHaveBeenCalledWith(request, true);
             });
-            
-            describe("reader success", function() {
-                it("should process the operation", function() {
+
+            describe("reader success", function () {
+                it("should process the operation", function () {
                     proxy.read(operation);
                     spyOn(operation, 'process');
                     complete(200);
                     expect(operation.process).toHaveBeenCalled();
                 });
-                
-                it("should not fire the exception event", function() {
+
+                it("should not fire the exception event", function () {
                     var spy = jasmine.createSpy();
                     proxy.on('exception', spy);
                     proxy.read(operation);
@@ -275,16 +276,16 @@ describe("Ext.data.proxy.Ajax", function() {
                     expect(spy).not.toHaveBeenCalled();
                 });
             });
-            
-            describe("reader failure", function() {
-                it("should process the operation", function() {
+
+            describe("reader failure", function () {
+                it("should process the operation", function () {
                     spyOn(operation, 'process');
                     proxy.read(operation);
                     complete(200, '', '{"success": false}');
                     expect(operation.process).toHaveBeenCalled();
                 });
-                
-                it("should fire the exception event", function() {
+
+                it("should fire the exception event", function () {
                     var spy = jasmine.createSpy();
                     proxy.on('exception', spy);
                     proxy.read(operation);
@@ -296,21 +297,21 @@ describe("Ext.data.proxy.Ajax", function() {
                 });
             });
         });
-        
-        describe("failed request", function() {
-            it("should call afterRequest with the request & the success status", function() {
+
+        describe("failed request", function () {
+            it("should call afterRequest with the request & the success status", function () {
                 request = proxy.read(operation);
                 spyOn(proxy, 'afterRequest');
                 complete(500);
                 expect(proxy.afterRequest).toHaveBeenCalledWith(request, false);
             });
-            
-            describe("server error", function() {
-                beforeEach(function() {
+
+            describe("server error", function () {
+                beforeEach(function () {
                     proxy.read(operation);
                 });
-                
-                it("should set an exception on the operation", function() {
+
+                it("should set an exception on the operation", function () {
                     complete(500, 'failStatus');
                     expect(operation.wasSuccessful()).toBe(false);
                     expect(operation.getError()).toEqual({
@@ -319,8 +320,8 @@ describe("Ext.data.proxy.Ajax", function() {
                         response: jasmine.any(Object)
                     });
                 });
-                
-                it("should fire the exception event and pass the proxy, response & operation", function() {
+
+                it("should fire the exception event and pass the proxy, response & operation", function () {
                     var spy = jasmine.createSpy();
                     proxy.on('exception', spy);
                     complete(500, '', 'someResponse');
@@ -330,16 +331,16 @@ describe("Ext.data.proxy.Ajax", function() {
                     expect(args[2]).toBe(operation);
                 });
             });
-            
-            describe("timeout", function() {
-                it("should set an exception on the operation", function() {
+
+            describe("timeout", function () {
+                it("should set an exception on the operation", function () {
                     proxy.setTimeout(1);
                     request = proxy.read(operation);
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return operation.isComplete();
                     }, "Operation never completed");
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(operation.wasSuccessful()).toBe(false);
                         expect(operation.getError()).toEqual({
                             status: 0,
@@ -348,19 +349,19 @@ describe("Ext.data.proxy.Ajax", function() {
                         });
                     });
                 });
-                
-                it("should fire the exception event and pass the proxy, response & operation", function() {
+
+                it("should fire the exception event and pass the proxy, response & operation", function () {
                     var spy = jasmine.createSpy();
                     proxy.on('exception', spy);
-                    
+
                     proxy.setTimeout(1);
                     request = proxy.read(operation);
-                    
-                    waitsFor(function() {
+
+                    waitsFor(function () {
                         return operation.isComplete();
                     }, "Operation never completed");
-                    
-                    runs(function() {
+
+                    runs(function () {
                         var args = spy.mostRecentCall.args;
                         expect(args[0]).toBe(proxy);
                         expect(args[1].statusText).toBe('communication failure');
@@ -371,9 +372,9 @@ describe("Ext.data.proxy.Ajax", function() {
         });
     });
 
-    describe("getMethod", function(){
+    describe("getMethod", function () {
         var request;
-        beforeEach(function() {
+        beforeEach(function () {
             makeProxy();
             request = new Ext.data.Request({
                 url: "/",
@@ -381,18 +382,18 @@ describe("Ext.data.proxy.Ajax", function() {
             });
         });
 
-        it("should return the HTTP method name for a given request", function() {
+        it("should return the HTTP method name for a given request", function () {
             expect(proxy.getMethod(request)).toBe('GET');
         });
-        
-        it("should return a the default action method if the actionMethods property is overridden", function() {
+
+        it("should return a the default action method if the actionMethods property is overridden", function () {
             proxy.setActionMethods({
-                update: 'PUT'    
+                update: 'PUT'
             });
             expect(proxy.getMethod(request)).toBe('GET');
         });
-        
-        it("should return a value when actionMethods is undefined/null", function() {
+
+        it("should return a value when actionMethods is undefined/null", function () {
             proxy.setActionMethods(undefined);
             expect(proxy.getMethod(request)).toBe('GET');
         });

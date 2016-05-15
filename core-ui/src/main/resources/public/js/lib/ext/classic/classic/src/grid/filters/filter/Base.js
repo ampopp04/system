@@ -116,7 +116,7 @@ Ext.define('Ext.grid.filters.filter.Base', {
     /**
      * Destroys this filter by purging any event listeners, and removing any menus.
      */
-    destroy: function() {
+    destroy: function () {
         this.grid = this.menu = Ext.destroy(this.menu);
         this.callParent();
     },
@@ -131,7 +131,7 @@ Ext.define('Ext.grid.filters.filter.Base', {
 
     // Note that some derived classes may need to do specific processing and will have its own version of this method
     // before calling parent (see the List filter).
-    getFilterConfig: function(config, key) {
+    getFilterConfig: function (config, key) {
         config.id = this.getBaseIdPrefix();
 
         if (!config.property) {
@@ -173,7 +173,7 @@ Ext.define('Ext.grid.filters.filter.Base', {
         return Ext.apply({}, this.getMenuDefaults());
     },
 
-    getGridStore: function() {
+    getGridStore: function () {
         return this.grid.getStore();
     },
 
@@ -246,7 +246,7 @@ Ext.define('Ext.grid.filters.filter.Base', {
      * @param {Object} data The value to set the filter
      * @template
      */
-    
+
     /**
      * Sets the status of the filter and fires the appropriate events.
      * @param {Boolean} active The new filter state.
@@ -286,7 +286,7 @@ Ext.define('Ext.grid.filters.filter.Base', {
         }
     },
 
-    setColumnActive: function(active) {
+    setColumnActive: function (active) {
         this.column[active ? 'addCls' : 'removeCls'](this.owner.filterCls);
     },
 

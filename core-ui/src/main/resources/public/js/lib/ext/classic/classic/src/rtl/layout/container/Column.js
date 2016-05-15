@@ -26,7 +26,7 @@ Ext.define('Ext.rtl.layout.container.Column', {
             renderData.innerCtCls =
                 (renderData.innerCtCls || '') + ' ' + Ext.baseCSSPrefix + 'rtl';
         }
-        
+
         return renderData;
     }
 });

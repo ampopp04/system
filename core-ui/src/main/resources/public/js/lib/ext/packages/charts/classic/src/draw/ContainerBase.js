@@ -6,12 +6,12 @@ Ext.define('Ext.draw.ContainerBase', {
     extend: 'Ext.panel.Panel',
 
     requires: ['Ext.window.Window'],
-    
+
     /**
      * @cfg {String} previewTitleText The text to place in Preview Chart window title.
      */
     previewTitleText: 'Chart Preview',
-    
+
     /**
      * @cfg {String} previewAltText The text to place in the Preview image alt attribute.
      */
@@ -22,20 +22,20 @@ Ext.define('Ext.draw.ContainerBase', {
     // Adds a listener to this draw container's element. If the element does not yet exist
     // addition of the listener will be deferred until onRender.  Useful when listeners
     // need to be attached during initConfig.
-    addElementListener: function() {
+    addElementListener: function () {
         var me = this,
             args = arguments;
 
         if (me.rendered) {
             me.el.on.apply(me.el, args);
         } else {
-            me.on('render', function() {
+            me.on('render', function () {
                 me.el.on.apply(me.el, args);
             });
         }
     },
 
-    removeElementListener: function() {
+    removeElementListener: function () {
         var me = this,
             args = arguments;
         if (me.rendered) {
@@ -43,12 +43,12 @@ Ext.define('Ext.draw.ContainerBase', {
         }
     },
 
-    afterRender: function() {
+    afterRender: function () {
         this.callParent(arguments);
         this.initAnimator();
     },
 
-    getItems: function() {
+    getItems: function () {
         var me = this,
             items = me.items;
 
@@ -62,19 +62,19 @@ Ext.define('Ext.draw.ContainerBase', {
         return me.items;
     },
 
-    onRender: function() {
+    onRender: function () {
         this.callParent(arguments);
         this.element = this.el;
         this.innerElement = this.body;
     },
 
-    setItems: function(items) {
+    setItems: function (items) {
         this.items = items;
         return items;
     },
 
-    setSurfaceSize: function(width, height) {
-        this.resizeHandler({width:width, height:height});
+    setSurfaceSize: function (width, height) {
+        this.resizeHandler({width: width, height: height});
         this.renderFrame();
     },
 
@@ -138,11 +138,11 @@ Ext.define('Ext.draw.ContainerBase', {
     },
 
     privates: {
-        getTargetEl: function() {
+        getTargetEl: function () {
             return this.innerElement;
         },
 
-        reattachToBody: function() {
+        reattachToBody: function () {
             // This is to ensure charts work properly as grid column widgets.
             var me = this;
             if (me.pendingDetachSize) {

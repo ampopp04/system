@@ -225,7 +225,7 @@ Ext.define('Ext.draw.Surface', {
     applyBackground: function (background, oldBackground) {
         this.setDirty(true);
         if (Ext.isString(background)) {
-            background = { fillStyle: background };
+            background = {fillStyle: background};
         }
         return Ext.factory(background, Ext.draw.sprite.Rect, oldBackground);
     },

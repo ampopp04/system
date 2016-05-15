@@ -5,9 +5,9 @@
  *
  * This class is used by {@link Ext.Component components} and {@link Ext.layout.container.Container container layouts} to
  * manage their child elements.
- * 
+ *
  * A typical component that uses these features might look something like this:
- * 
+ *
  *      Ext.define('Ext.ux.SomeComponent', {
  *          extend: 'Ext.Component',
  *          
@@ -21,7 +21,7 @@
  *          
  *          // ...
  *      });
- * 
+ *
  * The `{@link #childEls}` config lists one or more relationships to child elements managed
  * by the component. The items in this array can be objects that more fully specify the
  * child. For example, the above could have used this instead to achieve the same result:
@@ -35,7 +35,7 @@
  * up the class hierarchy so that they are effectively inherited. In other words, if a
  * class where to derive from `Ext.ux.SomeComponent` in the example above, it could also
  * have a `childEls` property in the same way as `Ext.ux.SomeComponent`.
- * 
+ *
  *      Ext.define('Ext.ux.AnotherComponent', {
  *          extend: 'Ext.ux.SomeComponent',
  *          
@@ -59,7 +59,7 @@
  * rendered on to child elements that do not use `select` or `selectNode` options. This
  * is done for performance reasons on IE8 where element lookup (even by id) is not very
  * efficient.
- * 
+ *
  * @private
  */
 Ext.define('Ext.util.ElementContainer', {
@@ -135,10 +135,10 @@ Ext.define('Ext.util.ElementContainer', {
          *             }
          *         }
          *     });
-         * 
-         * **Note:** `childEl`s in the {@link Ext.Component#cfg-renderTpl renderTpl} 
-         * must be referenced in a **data-ref** attribute.  Notice in the above example 
-         * that the "title" `childEl` is set in the `renderTpl` using 
+         *
+         * **Note:** `childEl`s in the {@link Ext.Component#cfg-renderTpl renderTpl}
+         * must be referenced in a **data-ref** attribute.  Notice in the above example
+         * that the "title" `childEl` is set in the `renderTpl` using
          * **data-ref="title"**.
          *
          * When using `select`, the property will be an instance of {@link Ext.CompositeElement}.
@@ -167,25 +167,25 @@ Ext.define('Ext.util.ElementContainer', {
 
                 // We'd use mergeSets except it assumes array elements are just names.
                 if (newValue instanceof Array) {
-                    for (i = newValue.length; i--; ) {
+                    for (i = newValue.length; i--;) {
                         val = newValue[i];
                         if (!mixinClass || !(val in childEls)) {
                             if (typeof val === 'string') {
-                                childEls[val] = { name: val, itemId: val };
+                                childEls[val] = {name: val, itemId: val};
                             } else {
                                 childEls[val.name] = val;
                             }
                         }
                     }
-                } else  if (newValue) {
+                } else if (newValue) {
                     if (newValue.constructor === Object) {
                         for (i in newValue) {
                             if (!mixinClass || !(i in childEls)) {
                                 val = newValue[i];
                                 if (val === true) {
-                                    childEls[i] = { itemId: i };
+                                    childEls[i] = {itemId: i};
                                 } else if (typeof val === 'string') {
-                                    childEls[i] = { itemId: val };
+                                    childEls[i] = {itemId: val};
                                 } else {
                                     childEls[i] = val;
                                     if (!('itemId' in val)) {
@@ -197,7 +197,7 @@ Ext.define('Ext.util.ElementContainer', {
                         }
                     } else {
                         if (!mixinClass || !(newValue in childEls)) {
-                            childEls[newValue] = { name: newValue, itemId: newValue };
+                            childEls[newValue] = {name: newValue, itemId: newValue};
                         }
                     }
                 }
@@ -241,7 +241,7 @@ Ext.define('Ext.util.ElementContainer', {
             }
 
             if (typeof childEl === 'string') {
-                childEl = { name: childEl, itemId: childEl };
+                childEl = {name: childEl, itemId: childEl};
             }
 
             childEls[childEl.name] = childEl;

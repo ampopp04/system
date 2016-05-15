@@ -17,12 +17,12 @@ Ext.define('Ext.grid.ColumnComponentLayout', {
 
     columnAutoCls: Ext.baseCSSPrefix + 'column-header-text-container-auto',
 
-    beginLayout: function(ownerContext) {
+    beginLayout: function (ownerContext) {
         this.callParent(arguments);
         ownerContext.titleContext = ownerContext.getEl('titleEl');
     },
 
-    beginLayoutCycle: function(ownerContext) {
+    beginLayoutCycle: function (ownerContext) {
         var me = this,
             owner = me.owner,
             shrinkWrap = ownerContext.widthModel.shrinkWrap;
@@ -38,11 +38,11 @@ Ext.define('Ext.grid.ColumnComponentLayout', {
     },
 
     // If not shrink wrapping, push height info down into child items
-    publishInnerHeight: function(ownerContext, outerHeight) {
+    publishInnerHeight: function (ownerContext, outerHeight) {
         var me = this,
             owner = me.owner,
             innerHeight;
-            
+
         // TreePanels (and grids with hideHeaders: true) set their column container height to zero to hide them.
         // This is because they need to lay out in order to calculate widths for the columns (eg flexes).
         // If there is no height to lay out, bail out early.
@@ -50,7 +50,7 @@ Ext.define('Ext.grid.ColumnComponentLayout', {
             ownerContext.setProp('innerHeight', 0);
             return;
         }
-        
+
 
         // If this ia a group header; that is, it contains subheaders...
         // hasRawContent = !(target.isContainer && target.items.items.length > 0)
@@ -69,12 +69,12 @@ Ext.define('Ext.grid.ColumnComponentLayout', {
     // We do not need the Direct2D sub pixel measurement here. Just the offsetHeight will do.
     // TODO: When https://sencha.jira.com/browse/EXTJSIV-7734 is fixed to not do subpixel adjustment on height,
     // remove this override.
-    measureContentHeight: function(ownerContext) {
+    measureContentHeight: function (ownerContext) {
         return ownerContext.el.dom.offsetHeight;
     },
 
     // If not shrink wrapping, push width info down into child items
-    publishInnerWidth: function(ownerContext, outerWidth) {
+    publishInnerWidth: function (ownerContext, outerWidth) {
         // If we are acting as a container, publish the innerWidth for the ColumnLayout to use
         if (!ownerContext.hasRawContent) {
             ownerContext.setProp('innerWidth', outerWidth - ownerContext.getBorderInfo().width, false);
@@ -105,7 +105,7 @@ Ext.define('Ext.grid.ColumnComponentLayout', {
             padWidth = ownerContext.getPaddingInfo().width,
             triggerOffset = this.getTriggerOffset(owner, ownerContext),
             inner;
-            
+
         // Only measure the content if we're not grouped, otherwise
         // the size should be governed by the children
         if (owner.isGroupHeader) {
@@ -115,10 +115,10 @@ Ext.define('Ext.grid.ColumnComponentLayout', {
         }
         return inner + padWidth + triggerOffset;
     },
-    
-    getTriggerOffset: function(owner, ownerContext) {
+
+    getTriggerOffset: function (owner, ownerContext) {
         var width = 0;
-        
+
         if (ownerContext.widthModel.shrinkWrap && !owner.menuDisabled) {
             // If we have any children underneath, then we already have space reserved
             if (owner.query('>:not([hidden])').length === 0) {

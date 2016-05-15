@@ -43,14 +43,14 @@ Ext.define('Ext.device.filesystem.HTML5', {
      * @param {Object} config.scope
      * The scope object
      */
-    requestFileSystem: function(config) {
+    requestFileSystem: function (config) {
         if (!config.success) {
             Ext.Logger.error('Ext.device.filesystem#requestFileSystem: You must specify a `success` callback.');
             return null;
         }
 
         var me = this;
-        var successCallback = function(fs) {
+        var successCallback = function (fs) {
             var fileSystem = Ext.create('Ext.device.filesystem.FileSystem', fs);
             config.success.call(config.scope || me, fileSystem);
         };
@@ -62,7 +62,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
             config.failure || Ext.emptyFn
         );
     }
-}, function() {
+}, function () {
     /**
      * The FileSystem class which is used to represent a file system.
      */
@@ -70,7 +70,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
         fs: null,
         root: null,
 
-        constructor: function(fs) {
+        constructor: function (fs) {
             this.fs = fs;
             this.root = Ext.create('Ext.device.filesystem.DirectoryEntry', '/', this);
         },
@@ -81,10 +81,10 @@ Ext.define('Ext.device.filesystem.HTML5', {
          * @return {Ext.device.filesystem.DirectoryEntry}
          * The file system root directory.
          */
-        getRoot: function() {
+        getRoot: function () {
             return this.root;
         }
-    }, function() {
+    }, function () {
         /**
          * The Entry class which is used to represent entries in a file system,
          * each of which may be a {@link Ext.device.filesystem.FileEntry} or a {@link Ext.device.filesystem.DirectoryEntry}.
@@ -98,7 +98,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
             fileSystem: null,
             entry: null,
 
-            constructor: function(directory, path, fileSystem) {
+            constructor: function (directory, path, fileSystem) {
                 this.directory = directory;
                 this.path = path;
                 this.fileSystem = fileSystem;
@@ -110,7 +110,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @return {Boolean}
              * The entry is a file.
              */
-            isFile: function() {
+            isFile: function () {
                 return !this.directory;
             },
 
@@ -120,7 +120,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @return {Boolean}
              * The entry is a directory.
              */
-            isDirectory: function() {
+            isDirectory: function () {
                 return this.directory;
             },
 
@@ -130,7 +130,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @return {String}
              * The entry name.
              */
-            getName: function() {
+            getName: function () {
                 var components = this.path.split('/');
                 for (var i = components.length - 1; i >= 0; --i) {
                     if (components[i].length > 0) {
@@ -147,7 +147,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @return {String}
              * The entry full path.
              */
-            getFullPath: function() {
+            getFullPath: function () {
                 return this.path;
             },
 
@@ -157,11 +157,11 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @return {Ext.device.filesystem.FileSystem}
              * The entry file system.
              */
-            getFileSystem: function() {
+            getFileSystem: function () {
                 return this.fileSystem;
             },
 
-            getEntry: function() {
+            getEntry: function () {
                 return null;
             },
 
@@ -192,7 +192,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @param {Object} config.scope
              * The scope object
              */
-            moveTo: function(config) {
+            moveTo: function (config) {
                 if (config.parent == null) {
                     Ext.Logger.error('Ext.device.filesystem.Entry#moveTo: You must specify a new `parent` of the entry.');
                     return null;
@@ -203,20 +203,20 @@ Ext.define('Ext.device.filesystem.HTML5', {
                 this.getEntry(
                     {
                         options: config.options || {},
-                        success: function(sourceEntry) {
+                        success: function (sourceEntry) {
                             config.parent.getEntry(
                                 {
                                     options: config.options || {},
-                                    success: function(destinationEntry) {
+                                    success: function (destinationEntry) {
                                         if (config.copy) {
-                                            sourceEntry.copyTo(destinationEntry, config.newName, function(entry) {
+                                            sourceEntry.copyTo(destinationEntry, config.newName, function (entry) {
                                                 config.success.call(
                                                     config.scope || me,
                                                     entry.isDirectory ? Ext.create('Ext.device.filesystem.DirectoryEntry', entry.fullPath, me.fileSystem) : Ext.create('Ext.device.filesystem.FileEntry', entry.fullPath, me.fileSystem)
                                                 );
                                             }, config.failure);
                                         } else {
-                                            sourceEntry.moveTo(destinationEntry, config.newName, function(entry) {
+                                            sourceEntry.moveTo(destinationEntry, config.newName, function (entry) {
                                                 config.success.call(
                                                     config.scope || me,
                                                     entry.isDirectory ? Ext.create('Ext.device.filesystem.DirectoryEntry', entry.fullPath, me.fileSystem) : Ext.create('Ext.device.filesystem.FileEntry', entry.fullPath, me.fileSystem)
@@ -236,7 +236,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
             /**
              * Works the same way as {@link Ext.device.filesystem.Entry#moveTo}, but copies the entry.
              */
-            copyTo: function(config) {
+            copyTo: function (config) {
                 this.moveTo(Ext.apply(config, {
                     copy: true
                 }));
@@ -263,10 +263,10 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @param {Object} config.scope
              * The scope object
              */
-            remove: function(config) {
+            remove: function (config) {
                 this.getEntry(
                     {
-                        success: function(entry) {
+                        success: function (entry) {
                             if (config.recursively && this.directory) {
                                 entry.removeRecursively(config.success, config.failure)
                             } else {
@@ -299,7 +299,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @param {Object} config.scope
              * The scope object
              */
-            getParent: function(config) {
+            getParent: function (config) {
                 if (!config.success) {
                     Ext.Logger.error('Ext.device.filesystem.Entry#getParent: You must specify a `success` callback.');
                     return null;
@@ -309,9 +309,9 @@ Ext.define('Ext.device.filesystem.HTML5', {
                 this.getEntry(
                     {
                         options: config.options || {},
-                        success: function(entry) {
+                        success: function (entry) {
                             entry.getParent(
-                                function(parentEntry) {
+                                function (parentEntry) {
                                     config.success.call(
                                         config.scope || me,
                                         parentEntry.isDirectory
@@ -336,7 +336,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
             extend: 'Ext.device.filesystem.Entry',
             cachedDirectory: null,
 
-            constructor: function(path, fileSystem) {
+            constructor: function (path, fileSystem) {
                 this.callParent([true, path, fileSystem]);
             },
 
@@ -344,7 +344,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * Requests a Directory from the Local File System
              *
              * @param {Object} config
-             * 
+             *
              * @param {Object} config.options
              * File creation options {create:true, exclusive:false}
              *
@@ -365,7 +365,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              *
              * @param {FileError} config.failure.error
              */
-            getEntry: function(config) {
+            getEntry: function (config) {
                 var me = this;
                 var callback = config.success;
 
@@ -375,7 +375,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
                         folders = folders.slice(1);
                     }
 
-                    var recursiveCreation = function(dirEntry) {
+                    var recursiveCreation = function (dirEntry) {
                         if (folders.length) {
                             dirEntry.getDirectory(folders.shift(), config.options, recursiveCreation, config.failure);
                         } else {
@@ -386,7 +386,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
                     recursiveCreation(this.fileSystem.fs.root);
                 } else {
                     this.fileSystem.fs.root.getDirectory(this.path, config.options,
-                        function(directory) {
+                        function (directory) {
                             config.success.call(config.scope || me, directory);
                         },
                         config.failure
@@ -415,7 +415,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @param {Object} config.scope
              * The scope object
              */
-            readEntries: function(config) {
+            readEntries: function (config) {
                 if (!config.success) {
                     Ext.Logger.error('Ext.device.filesystem.DirectoryEntry#readEntries: You must specify a `success` callback.');
                     return null;
@@ -424,10 +424,10 @@ Ext.define('Ext.device.filesystem.HTML5', {
                 var me = this;
                 this.getEntry(
                     {
-                        success: function(dirEntry) {
+                        success: function (dirEntry) {
                             var directoryReader = dirEntry.createReader();
                             directoryReader.readEntries(
-                                function(entryInfos) {
+                                function (entryInfos) {
                                     var entries = [],
                                         i = 0,
                                         len = entryInfos.length;
@@ -440,7 +440,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
                                     }
                                     config.success.call(config.scope || this, entries);
                                 },
-                                function(error) {
+                                function (error) {
                                     if (config.failure) {
                                         config.failure.call(config.scope || this, error);
                                     }
@@ -485,7 +485,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @param {Object} config.scope
              * The scope object
              */
-            getFile: function(config) {
+            getFile: function (config) {
                 if (config.path == null) {
                     Ext.Logger.error('Ext.device.filesystem.DirectoryEntry#getFile: You must specify a `path` of the file.');
                     return null;
@@ -496,7 +496,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
                 var fileEntry = Ext.create('Ext.device.filesystem.FileEntry', fullPath, this.fileSystem);
                 fileEntry.getEntry(
                     {
-                        success: function() {
+                        success: function () {
                             config.success.call(config.scope || me, fileEntry);
                         },
                         options: config.options || {},
@@ -509,7 +509,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * Works the same way as {@link Ext.device.filesystem.DirectoryEntry#getFile},
              * but creates or looks up a directory.
              */
-            getDirectory: function(config) {
+            getDirectory: function (config) {
                 if (config.path == null) {
                     Ext.Logger.error('Ext.device.filesystem.DirectoryEntry#getFile: You must specify a `path` of the file.');
                     return null;
@@ -520,7 +520,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
                 var directoryEntry = Ext.create('Ext.device.filesystem.DirectoryEntry', fullPath, this.fileSystem);
                 directoryEntry.getEntry(
                     {
-                        success: function() {
+                        success: function () {
                             config.success.call(config.scope || me, directoryEntry);
                         },
                         options: config.options || {},
@@ -533,7 +533,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * Works the same way as {@link Ext.device.filesystem.Entry#remove},
              * but removes the directory and all of its contents, if any.
              */
-            removeRecursively: function(config) {
+            removeRecursively: function (config) {
                 this.remove(Ext.apply(config, {
                     recursively: true
                 }));
@@ -549,7 +549,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
             length: 0,
             offset: 0,
 
-            constructor: function(path, fileSystem) {
+            constructor: function (path, fileSystem) {
                 this.callParent([false, path, fileSystem]);
                 this.offset = 0;
                 this.length = 0;
@@ -559,7 +559,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * Requests a File Handle from the Local File System
              *
              * @param {Object} config
-             * 
+             *
              * @param {String} config.file
              * Filename optionally including path in string format '/tmp/debug.txt' or a File Object
              *
@@ -583,11 +583,11 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @param {FileError} config.failure.error
              *
              */
-            getEntry: function(config) {
+            getEntry: function (config) {
                 var me = this;
                 var originalConfig = Ext.applyIf({}, config);
                 if (this.fileSystem) {
-                    var failure = function(evt) {
+                    var failure = function (evt) {
                         if ((config.options && config.options.create) && Ext.isString(this.path)) {
                             var folders = this.path.split("/");
                             if (folders[0] == '.' || folders[0] == '') {
@@ -601,7 +601,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
                                 dirEntry.getEntry(
                                     {
                                         options: config.options,
-                                        success: function() {
+                                        success: function () {
                                             originalConfig.recursive = true;
                                             me.getEntry(originalConfig);
                                         },
@@ -621,18 +621,18 @@ Ext.define('Ext.device.filesystem.HTML5', {
                     };
 
                     this.fileSystem.fs.root.getFile(this.path, config.options || null,
-                        function(fileEntry) {
+                        function (fileEntry) {
                             fileEntry.file(
-                                function(file) {
+                                function (file) {
                                     me.length = file.size;
                                     originalConfig.success.call(config.scope || me, fileEntry);
                                 },
-                                function(error) {
+                                function (error) {
                                     failure.call(config.scope || me, error);
                                 }
                             );
                         },
-                        function(error) {
+                        function (error) {
                             failure.call(config.scope || me, error);
                         }
                     );
@@ -647,7 +647,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @return {Number}
              * The file offset.
              */
-            getOffset: function() {
+            getOffset: function () {
                 return this.offset;
             },
 
@@ -672,7 +672,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @param {Object} config.scope
              * The scope object
              */
-            seek: function(config) {
+            seek: function (config) {
                 if (config.offset == null) {
                     Ext.Logger.error('Ext.device.filesystem.FileEntry#seek: You must specify an `offset` in the file.');
                     return null;
@@ -725,30 +725,33 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @param {Object} config.scope
              * The scope object
              */
-            read: function(config) {
+            read: function (config) {
                 var me = this;
                 this.getEntry(
                     {
-                        success: function(fileEntry) {
+                        success: function (fileEntry) {
                             fileEntry.file(
-                                function(file) {
+                                function (file) {
                                     if (Ext.isNumber(config.length)) {
                                         if (Ext.isFunction(file.slice)) {
                                             file = file.slice(me.offset, config.length);
                                         } else {
                                             if (config.failure) {
-                                                config.failure.call(config.scope || me, {code: -2, message: "File missing slice functionality"});
+                                                config.failure.call(config.scope || me, {
+                                                    code: -2,
+                                                    message: "File missing slice functionality"
+                                                });
                                             }
                                             return;
                                         }
                                     }
 
                                     var reader = new FileReader();
-                                    reader.onloadend = function(evt) {
+                                    reader.onloadend = function (evt) {
                                         config.success.call(config.scope || me, evt.target.result);
                                     };
 
-                                    reader.onerror = function(error) {
+                                    reader.onerror = function (error) {
                                         config.failure.call(config.scope || me, error);
                                     };
 
@@ -774,12 +777,12 @@ Ext.define('Ext.device.filesystem.HTML5', {
                                             break;
                                     }
                                 },
-                                function(error) {
+                                function (error) {
                                     config.failure.call(config.scope || me, error)
                                 }
                             );
                         },
-                        failure: function(error) {
+                        failure: function (error) {
                             config.failure.call(config.scope || me, error)
                         }
                     }
@@ -820,7 +823,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @param {Object} config.scope
              * The scope object
              */
-            write: function(config) {
+            write: function (config) {
                 if (config.data == null) {
                     Ext.Logger.error('Ext.device.filesystem.FileEntry#write: You must specify `data` to write into the file.');
                     return null;
@@ -830,15 +833,15 @@ Ext.define('Ext.device.filesystem.HTML5', {
                 this.getEntry(
                     {
                         options: config.options || {},
-                        success: function(fileEntry) {
+                        success: function (fileEntry) {
                             fileEntry.createWriter(
-                                function(writer) {
-                                    writer.onwriteend = function(evt) {
+                                function (writer) {
+                                    writer.onwriteend = function (evt) {
                                         me.length = evt.target.length;
                                         config.success.call(config.scope || me, evt.result);
                                     };
 
-                                    writer.onerror = function(error) {
+                                    writer.onerror = function (error) {
                                         config.failure.call(config.scope || me, error);
                                     };
 
@@ -852,21 +855,21 @@ Ext.define('Ext.device.filesystem.HTML5', {
                                         writer.seek(me.length);
                                     }
 
-                                    me.writeData (writer, config.data);
+                                    me.writeData(writer, config.data);
                                 },
-                                function(error) {
+                                function (error) {
                                     config.failure.call(config.scope || me, error)
                                 }
                             )
                         },
-                        failure: function(error) {
+                        failure: function (error) {
                             config.failure.call(config.scope || me, error)
                         }
                     }
                 )
             },
 
-            writeData: function(writer, data) {
+            writeData: function (writer, data) {
                 writer.write(new Blob([data]));
             },
 
@@ -892,7 +895,7 @@ Ext.define('Ext.device.filesystem.HTML5', {
              * @param {Object} config.scope
              * The scope object
              */
-            truncate: function(config) {
+            truncate: function (config) {
                 if (config.size == null) {
                     Ext.Logger.error('Ext.device.filesystem.FileEntry#write: You must specify a `size` of the file.');
                     return null;
@@ -902,18 +905,18 @@ Ext.define('Ext.device.filesystem.HTML5', {
                 //noinspection JSValidateTypes
                 this.getEntry(
                     {
-                        success: function(fileEntry) {
+                        success: function (fileEntry) {
                             fileEntry.createWriter(
-                                function(writer) {
+                                function (writer) {
                                     writer.truncate(config.size);
                                     config.success.call(config.scope || me, me);
                                 },
-                                function(error) {
+                                function (error) {
                                     config.failure.call(config.scope || me, error)
                                 }
                             )
                         },
-                        failure: function(error) {
+                        failure: function (error) {
                             config.failure.call(config.scope || me, error)
                         }
                     }

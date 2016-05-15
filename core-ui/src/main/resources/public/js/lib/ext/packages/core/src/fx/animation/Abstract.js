@@ -30,7 +30,7 @@ Ext.define('Ext.fx.animation.Abstract', {
 
         states: {},
 
-        duration:  300,
+        duration: 300,
 
         /**
          * @cfg
@@ -75,7 +75,7 @@ Ext.define('Ext.fx.animation.Abstract', {
 
     stateNameRegex: /^(?:[\d\.]+)%$/,
 
-    constructor: function() {
+    constructor: function () {
         this.states = {};
 
         this.callParent(arguments);
@@ -83,39 +83,39 @@ Ext.define('Ext.fx.animation.Abstract', {
         return this;
     },
 
-    applyElement: function(element) {
+    applyElement: function (element) {
         return Ext.get(element);
     },
 
-    applyBefore: function(before, current) {
+    applyBefore: function (before, current) {
         if (before) {
             return Ext.factory(before, Ext.fx.State, current);
         }
     },
 
-    applyAfter: function(after, current) {
+    applyAfter: function (after, current) {
         if (after) {
             return Ext.factory(after, Ext.fx.State, current);
         }
     },
 
-    setFrom: function(from) {
+    setFrom: function (from) {
         return this.setState(this.STATE_FROM, from);
     },
 
-    setTo: function(to) {
+    setTo: function (to) {
         return this.setState(this.STATE_TO, to);
     },
 
-    getFrom: function() {
+    getFrom: function () {
         return this.getState(this.STATE_FROM);
     },
 
-    getTo: function() {
+    getTo: function () {
         return this.getState(this.STATE_TO);
     },
 
-    setStates: function(states) {
+    setStates: function (states) {
         var validNameRegex = this.stateNameRegex,
             name;
 
@@ -128,32 +128,32 @@ Ext.define('Ext.fx.animation.Abstract', {
         return this;
     },
 
-    getStates: function() {
+    getStates: function () {
         return this.states;
     },
 
-    updateCallback: function(callback) {
+    updateCallback: function (callback) {
         if (callback) {
             this.setOnEnd(callback);
         }
     },
 
-    end: function() {
+    end: function () {
         // alias for stop so that the following api is the same between ext/touch:
         // element.getActiveAnimation().end()
         this.stop();
     },
 
-    stop: function() {
+    stop: function () {
         this.fireEvent('stop', this);
     },
 
-    destroy: function() {
+    destroy: function () {
         this.stop();
         this.callParent();
     },
 
-    setState: function(name, state) {
+    setState: function (name, state) {
         var states = this.getStates(),
             stateInstance;
 
@@ -171,11 +171,11 @@ Ext.define('Ext.fx.animation.Abstract', {
         return this;
     },
 
-    getState: function(name) {
+    getState: function (name) {
         return this.getStates()[name];
     },
 
-    getData: function() {
+    getData: function () {
         var me = this,
             states = me.getStates(),
             statesData = {},

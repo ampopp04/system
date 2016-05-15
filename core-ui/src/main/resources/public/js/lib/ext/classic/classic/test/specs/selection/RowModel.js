@@ -6,7 +6,7 @@ describe('Ext.selection.RowModel', function () {
         cellSelectedCls = Ext.view.Table.prototype.selectedCellCls,
         itemSelectedCls = Ext.view.Table.prototype.selectedItemCls;
 
-    function createStore (config) {
+    function createStore(config) {
         return new Ext.data.Store(Ext.apply({
             fields: ['name'],
             proxy: {
@@ -22,7 +22,7 @@ describe('Ext.selection.RowModel', function () {
         grid = new Ext.grid.Panel(Ext.apply({
             store: (gridCfg && gridCfg.store) || createStore(storeCfg),
             columns: [
-                { text: 'Name',  dataIndex: 'name' }
+                {text: 'Name', dataIndex: 'name'}
             ],
             selModel: selModel,
             height: 200,
@@ -42,9 +42,9 @@ describe('Ext.selection.RowModel', function () {
         columns = grid.view.getVisibleColumnManager().getColumns();
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -53,12 +53,12 @@ describe('Ext.selection.RowModel', function () {
         };
 
         rawData = [
-            { id: 1, name: 'Phil' },
-            { id: 2, name: 'Ben' },
-            { id: 3, name: 'Evan' },
-            { id: 4, name: 'Don' },
-            { id: 5, name: 'Nige' },
-            { id: 6, name: 'Alex' }
+            {id: 1, name: 'Phil'},
+            {id: 2, name: 'Ben'},
+            {id: 3, name: 'Evan'},
+            {id: 4, name: 'Don'},
+            {id: 5, name: 'Nige'},
+            {id: 6, name: 'Alex'}
         ];
     });
 
@@ -73,8 +73,8 @@ describe('Ext.selection.RowModel', function () {
     it('should not select the row upon in-row navigation', function () {
         createGrid({
             columns: [
-                { text: 'ID', dataIndex: 'id' },
-                { text: 'Name',  dataIndex: 'name' }
+                {text: 'ID', dataIndex: 'id'},
+                {text: 'Name', dataIndex: 'name'}
             ]
         });
         var navModel = view.getNavigationModel();
@@ -82,11 +82,11 @@ describe('Ext.selection.RowModel', function () {
         navModel.setPosition(0, 0, null, null, true);
 
         // Wait for the nav model to be fully away of the focus
-        waitsFor(function(){
+        waitsFor(function () {
             return !!navModel.getPosition();
         });
 
-        runs(function() {
+        runs(function () {
             jasmine.fireKeyEvent(navModel.getPosition().getCell(true), 'keydown', Ext.event.Event.RIGHT);
 
             // No selection should take place navigating INSIDE a row
@@ -111,7 +111,7 @@ describe('Ext.selection.RowModel', function () {
         expect(grid.getView().getNode(2).firstChild).not.toHaveCls(cellSelectedCls);
     });
 
-    it('SINGLE select mode should not select on CTRL/click (EXTJS-18592)', function() {
+    it('SINGLE select mode should not select on CTRL/click (EXTJS-18592)', function () {
         createGrid({}, {
             selType: 'rowmodel', // rowmodel is the default selection model
             mode: 'SINGLE',
@@ -177,14 +177,14 @@ describe('Ext.selection.RowModel', function () {
         expect(selection.length).toBe(0);
     });
 
-    describe("deselectOnContainerClick", function() {
-        it("should default to false", function() {
+    describe("deselectOnContainerClick", function () {
+        it("should default to false", function () {
             createGrid();
             expect(selModel.deselectOnContainerClick).toBe(false);
         });
 
-        describe("deselectOnContainerClick: false", function() {
-            it("should not deselect when clicking the container", function() {
+        describe("deselectOnContainerClick: false", function () {
+            it("should not deselect when clicking the container", function () {
                 createGrid(null, {
                     deselectOnContainerClick: false
                 });
@@ -194,8 +194,8 @@ describe('Ext.selection.RowModel', function () {
             });
         });
 
-        describe("deselectOnContainerClick: true", function() {
-            it("should deselect when clicking the container", function() {
+        describe("deselectOnContainerClick: true", function () {
+            it("should deselect when clicking the container", function () {
                 createGrid(null, {
                     deselectOnContainerClick: true
                 });
@@ -206,9 +206,9 @@ describe('Ext.selection.RowModel', function () {
         });
     });
 
-    describe("pruneRemoved", function() {
-        describe('pruneRemoved: true', function() {
-            it('should remove records from selection by default when removed from the store', function() {
+    describe("pruneRemoved", function () {
+        describe('pruneRemoved: true', function () {
+            it('should remove records from selection by default when removed from the store', function () {
                 createGrid({
                     bbar: {
                         xtype: 'pagingtoolbar'
@@ -252,8 +252,8 @@ describe('Ext.selection.RowModel', function () {
             });
         });
 
-        describe('pruneRemoved: false', function() {
-            it('should NOT remove records from selection if pruneRemoved:false when they are removed from the store', function() {
+        describe('pruneRemoved: false', function () {
+            it('should NOT remove records from selection if pruneRemoved:false when they are removed from the store', function () {
                 createGrid({
                     bbar: {
                         xtype: 'pagingtoolbar'
@@ -334,8 +334,7 @@ describe('Ext.selection.RowModel', function () {
 
     describe('contextmenu', function () {
         beforeEach(function () {
-            createGrid({
-            }, {
+            createGrid({}, {
                 mode: 'MULTI'
             });
         });
@@ -373,7 +372,7 @@ describe('Ext.selection.RowModel', function () {
         });
     });
 
-    describe("selected cls", function() {
+    describe("selected cls", function () {
         var phil, ben, evan, don, nige, alex;
 
         function isSelected(record) {
@@ -401,12 +400,12 @@ describe('Ext.selection.RowModel', function () {
             alex = store.getAt(5);
         }
 
-        afterEach(function() {
+        afterEach(function () {
             phil = ben = evan = don = nige = alex = null;
         });
 
-        describe("before render", function() {
-            beforeEach(function() {
+        describe("before render", function () {
+            beforeEach(function () {
                 createGrid({
                     renderTo: null
                 }, {
@@ -415,7 +414,7 @@ describe('Ext.selection.RowModel', function () {
                 setupRecords();
             });
 
-            it("should add the selected cls to a selected record", function() {
+            it("should add the selected cls to a selected record", function () {
                 selModel.select(phil);
                 grid.render(Ext.getBody());
                 expectSelected(phil);
@@ -426,7 +425,7 @@ describe('Ext.selection.RowModel', function () {
                 expectNotSelected(alex);
             });
 
-            it("should add the selected cls to multiple selected records", function() {
+            it("should add the selected cls to multiple selected records", function () {
                 selModel.select([phil, evan, alex]);
                 grid.render(Ext.getBody());
                 expectSelected(phil);
@@ -437,7 +436,7 @@ describe('Ext.selection.RowModel', function () {
                 expectSelected(alex);
             });
 
-            it("should not add the selected cls to deselected records", function() {
+            it("should not add the selected cls to deselected records", function () {
                 selModel.select(phil);
                 selModel.deselect(phil);
                 grid.render(Ext.getBody());
@@ -445,15 +444,15 @@ describe('Ext.selection.RowModel', function () {
             });
         });
 
-        describe("after render", function() {
-            beforeEach(function() {
+        describe("after render", function () {
+            beforeEach(function () {
                 createGrid(null, {
                     mode: 'MULTI'
                 });
                 setupRecords();
             });
 
-            it("should add the selected cls to a selected record", function() {
+            it("should add the selected cls to a selected record", function () {
                 selModel.select(phil);
                 expectSelected(phil);
                 expectNotSelected(ben);
@@ -463,7 +462,7 @@ describe('Ext.selection.RowModel', function () {
                 expectNotSelected(alex);
             });
 
-            it("should add the selected cls to multiple selected records", function() {
+            it("should add the selected cls to multiple selected records", function () {
                 selModel.select([phil, evan, alex]);
                 expectSelected(phil);
                 expectNotSelected(ben);
@@ -473,14 +472,14 @@ describe('Ext.selection.RowModel', function () {
                 expectSelected(alex);
             });
 
-            it("should not add the selected cls to deselected records", function() {
+            it("should not add the selected cls to deselected records", function () {
                 selModel.select(phil);
                 selModel.deselect(phil);
                 expectNotSelected(phil);
             });
         });
 
-        it("should maintain the selected cls after a cell update", function() {
+        it("should maintain the selected cls after a cell update", function () {
             createGrid();
             setupRecords();
             selModel.select(phil);
@@ -488,7 +487,7 @@ describe('Ext.selection.RowModel', function () {
             expectSelected(phil);
         });
 
-        it("should remain selected after a whole row update", function() {
+        it("should remain selected after a whole row update", function () {
             createGrid();
             setupRecords();
             selModel.select(phil);
@@ -499,7 +498,7 @@ describe('Ext.selection.RowModel', function () {
             expectSelected(phil);
         });
 
-        it("should maintain the selected cls after being sorted", function() {
+        it("should maintain the selected cls after being sorted", function () {
             createGrid();
             setupRecords();
             selModel.select(phil);
@@ -508,35 +507,35 @@ describe('Ext.selection.RowModel', function () {
         });
     });
 
-    it("should remove selections the selection is filtered out of a tree store", function() {
+    it("should remove selections the selection is filtered out of a tree store", function () {
         var tree = Ext.widget({
-                xtype: 'treepanel',
-                renderTo: document.body,
-                rootVisible: false,
-                root: {
-                    expanded: true,
-                    children: [
-                        { text: 'foo', leaf: true },
-                        { text: 'bar', leaf: true }
-                    ]
-                }
-            });
+            xtype: 'treepanel',
+            renderTo: document.body,
+            rootVisible: false,
+            root: {
+                expanded: true,
+                children: [
+                    {text: 'foo', leaf: true},
+                    {text: 'bar', leaf: true}
+                ]
+            }
+        });
 
         tree.selModel.select(0);
-        tree.store.filter({ property: 'text', value: 'bar' });
+        tree.store.filter({property: 'text', value: 'bar'});
         expect(tree.selModel.getSelection().length).toBe(0);
         tree.destroy();
     });
 
-    describe("view model selection", function() {
+    describe("view model selection", function () {
         var viewModel, spy;
 
-        beforeEach(function() {
+        beforeEach(function () {
             spy = jasmine.createSpy();
             viewModel = new Ext.app.ViewModel();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             spy = selModel = viewModel = null;
         });
 
@@ -550,8 +549,8 @@ describe('Ext.selection.RowModel', function () {
             return store.getAt(index);
         }
 
-        describe("reference", function() {
-            beforeEach(function() {
+        describe("reference", function () {
+            beforeEach(function () {
                 createGrid({
                     reference: 'userList',
                     viewModel: viewModel
@@ -560,13 +559,13 @@ describe('Ext.selection.RowModel', function () {
                 viewModel.notify();
             });
 
-            it("should publish null by default", function() {
+            it("should publish null by default", function () {
                 var args = spy.mostRecentCall.args;
                 expect(args[0]).toBeNull();
                 expect(args[1]).toBeUndefined();
             });
 
-            it("should publish the value when selected", function() {
+            it("should publish the value when selected", function () {
                 var rec = byName('Ben');
                 selectNotify(rec);
                 var args = spy.mostRecentCall.args;
@@ -574,7 +573,7 @@ describe('Ext.selection.RowModel', function () {
                 expect(args[1]).toBeNull();
             });
 
-            it("should publish when the selection is changed", function() {
+            it("should publish when the selection is changed", function () {
                 var rec1 = byName('Ben'),
                     rec2 = byName('Nige');
 
@@ -586,7 +585,7 @@ describe('Ext.selection.RowModel', function () {
                 expect(args[1]).toBe(rec1);
             });
 
-            it("should publish when an item is deselected", function() {
+            it("should publish when an item is deselected", function () {
                 var rec = byName('Ben');
                 selectNotify(rec);
                 spy.reset();
@@ -598,8 +597,8 @@ describe('Ext.selection.RowModel', function () {
             });
         });
 
-        describe("two way binding", function() {
-            beforeEach(function() {
+        describe("two way binding", function () {
+            beforeEach(function () {
                 createGrid({
                     viewModel: viewModel,
                     bind: {
@@ -610,8 +609,8 @@ describe('Ext.selection.RowModel', function () {
                 viewModel.notify();
             });
 
-            describe("changing the selection", function() {
-                it("should trigger the binding when adding a selection", function() {
+            describe("changing the selection", function () {
+                it("should trigger the binding when adding a selection", function () {
                     var rec = byName('Don');
                     selectNotify(rec);
                     var args = spy.mostRecentCall.args;
@@ -619,7 +618,7 @@ describe('Ext.selection.RowModel', function () {
                     expect(args[1]).toBeUndefined();
                 });
 
-                it("should trigger the binding when changing the selection", function() {
+                it("should trigger the binding when changing the selection", function () {
                     var rec1 = byName('Ben'),
                         rec2 = byName('Nige');
 
@@ -631,7 +630,7 @@ describe('Ext.selection.RowModel', function () {
                     expect(args[1]).toBe(rec1);
                 });
 
-                it("should trigger the binding when an item is deselected", function() {
+                it("should trigger the binding when an item is deselected", function () {
                     var rec = byName('Don');
                     selectNotify(rec);
                     spy.reset();
@@ -643,15 +642,15 @@ describe('Ext.selection.RowModel', function () {
                 });
             });
 
-            describe("changing the viewmodel value", function() {
-                it("should select the record when setting the value", function() {
+            describe("changing the viewmodel value", function () {
+                it("should select the record when setting the value", function () {
                     var rec = byName('Phil');
                     viewModel.set('foo', rec);
                     viewModel.notify();
                     expect(selModel.isSelected(rec)).toBe(true);
                 });
 
-                it("should select the record when updating the value", function() {
+                it("should select the record when updating the value", function () {
                     var rec1 = byName('Phil'),
                         rec2 = byName('Ben');
 
@@ -663,7 +662,7 @@ describe('Ext.selection.RowModel', function () {
                     expect(selModel.isSelected(rec2)).toBe(true);
                 });
 
-                it("should deselect when clearing the value", function() {
+                it("should deselect when clearing the value", function () {
                     var rec = byName('Evan');
 
                     viewModel.set('foo', rec);
@@ -674,8 +673,8 @@ describe('Ext.selection.RowModel', function () {
                 });
             });
 
-            describe("reloading the store", function() {
-                beforeEach(function() {
+            describe("reloading the store", function () {
+                beforeEach(function () {
                     MockAjaxManager.addMethods();
                     selectNotify(byName('Phil'));
                     spy.reset();
@@ -687,12 +686,12 @@ describe('Ext.selection.RowModel', function () {
                     store.load();
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     MockAjaxManager.removeMethods();
                 });
 
-                describe("when the selected record is in the result set", function() {
-                    it("should trigger the selection binding", function() {
+                describe("when the selected record is in the result set", function () {
+                    it("should trigger the selection binding", function () {
                         Ext.Ajax.mockComplete({
                             status: 200,
                             responseText: Ext.encode(rawData.slice(0, 4))
@@ -703,8 +702,8 @@ describe('Ext.selection.RowModel', function () {
                     });
                 });
 
-                describe("when the selected record is not in the result set", function() {
-                    it("should trigger the selection binding", function() {
+                describe("when the selected record is not in the result set", function () {
+                    it("should trigger the selection binding", function () {
                         Ext.Ajax.mockComplete({
                             status: 200,
                             responseText: '[]'
@@ -719,7 +718,7 @@ describe('Ext.selection.RowModel', function () {
     });
 
     describe('chained stores', function () {
-        it('should remove records from selection by default when removed from source', function() {
+        it('should remove records from selection by default when removed from source', function () {
             // See EXTJS-16067
             createGrid({
                 bbar: {

@@ -41,9 +41,9 @@ Ext.define('Ext.draw.Container', {
     ],
     /**
      * @cfg {String} [engine="Ext.draw.engine.Canvas"]
-     * Defines the engine (type of surface) used to render draw container contents.  
-     * 
-     * The render engine is selected automatically depending on the platform used. Priority 
+     * Defines the engine (type of surface) used to render draw container contents.
+     *
+     * The render engine is selected automatically depending on the platform used. Priority
      * is given to the {@link Ext.draw.engine.Canvas} engine due to its performance advantage.
      *
      * You may also set the engine config to be `Ext.draw.engine.Svg` if so desired.
@@ -139,7 +139,7 @@ Ext.define('Ext.draw.Container', {
          *           x: 100,
          *           y: 100
          *      }]
-         * 
+         *
          */
         sprites: null,
 
@@ -215,7 +215,7 @@ Ext.define('Ext.draw.Container', {
         jpeg: Ext.isObject
     },
 
-    initAnimator: function() {
+    initAnimator: function () {
         this.frameCallbackId = Ext.draw.Animator.addFrameCallback('renderFrame', this);
     },
 
@@ -357,8 +357,8 @@ Ext.define('Ext.draw.Container', {
 
     /**
      * Produces an image of the chart / drawing.
-     * @param {String} [format] Possible options are 'image' (the method will return an 
-     * Image object) and 'stream' (the method will return the image as a byte stream).  
+     * @param {String} [format] Possible options are 'image' (the method will return an
+     * Image object) and 'stream' (the method will return the image as a byte stream).
      * If missing, the DataURL of the drawing's (or chart's) image will be returned.
      * @return {Object}
      * @return {String} return.data Image element, byte stream or DataURL.
@@ -399,9 +399,9 @@ Ext.define('Ext.draw.Container', {
     },
 
     /**
-     * Downloads an image or PDF of the chart / drawing or opens it in a separate 
-     * browser tab/window if the download can't be triggered. The exact behavior is 
-     * platform and browser specific. For more consistent results on mobile devices use 
+     * Downloads an image or PDF of the chart / drawing or opens it in a separate
+     * browser tab/window if the download can't be triggered. The exact behavior is
+     * platform and browser specific. For more consistent results on mobile devices use
      * the {@link #preview} method instead.
      *
      * @param {Object} [config] The following config options are supported:

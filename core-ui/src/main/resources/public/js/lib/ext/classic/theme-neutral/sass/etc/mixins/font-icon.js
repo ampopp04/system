@@ -1,9 +1,9 @@
-exports.init = function(runtime) {
+exports.init = function (runtime) {
     runtime.register({
         // This function parses arguments from all formats accepted by the font-icon()
         // sass mixin and returns an array that always contains 4 elements in the following
         // order: character, font-size, font-family, rotation
-        parseFontIconArgs: function(glyph) {
+        parseFontIconArgs: function (glyph) {
             var newItems = [null, null, null, null],
                 items, item, len;
 

@@ -23,7 +23,7 @@ Ext.define('Ext.form.field.Picker', {
             }
         }
     },
-    
+
     renderConfig: {
         /**
          * @cfg {Boolean} editable
@@ -31,7 +31,7 @@ Ext.define('Ext.form.field.Picker', {
          * selecting a value from the picker. In this state, the picker can also be opened by clicking directly on the input
          * field itself.
          */
-        editable: true        
+        editable: true
     },
 
     /**
@@ -96,7 +96,7 @@ Ext.define('Ext.form.field.Picker', {
      * the individual field and picker implementations.
      */
 
-    applyTriggers: function(triggers) {
+    applyTriggers: function (triggers) {
         var me = this,
             picker = triggers.picker;
 
@@ -106,28 +106,28 @@ Ext.define('Ext.form.field.Picker', {
 
         return me.callParent([triggers]);
     },
-    
-    getSubTplData: function(fieldData) {
+
+    getSubTplData: function (fieldData) {
         var me = this,
             data, inputElAttr;
-        
+
         data = me.callParent([fieldData]);
-        
+
         if (me.ariaRole) {
             inputElAttr = data.inputElAriaAttributes;
-            
+
             if (inputElAttr) {
                 inputElAttr['aria-haspopup'] = true;
-                
+
                 // Picker fields start as collapsed
                 inputElAttr['aria-expanded'] = false;
             }
         }
-        
+
         return data;
     },
 
-    initEvents: function() {
+    initEvents: function () {
         var me = this;
         me.callParent();
 
@@ -149,7 +149,7 @@ Ext.define('Ext.form.field.Picker', {
         }
     },
 
-    updateEditable: function(editable, oldEditable) {
+    updateEditable: function (editable, oldEditable) {
         var me = this;
 
         // Non-editable allows opening the picker by clicking the field
@@ -164,7 +164,7 @@ Ext.define('Ext.form.field.Picker', {
     /**
      * @private
      */
-    onEsc: function(e) {
+    onEsc: function (e) {
         if (Ext.isIE) {
             // Stop the esc key from "restoring" the previous value in IE
             // For example, type "foo". Highlight all the text, hit backspace.
@@ -179,13 +179,13 @@ Ext.define('Ext.form.field.Picker', {
         }
     },
 
-    onDownArrow: function(e) {
+    onDownArrow: function (e) {
         var me = this;
-        
+
         if ((e.time - me.lastDownArrow) > 150) {
             delete me.lastDownArrow;
         }
-        
+
         if (!me.isExpanded) {
             // Do not let the down arrow event propagate into the picker
             e.stopEvent();
@@ -193,7 +193,7 @@ Ext.define('Ext.form.field.Picker', {
             // Don't call expand() directly as there may be additional processing involved before
             // expanding, e.g. in the case of a ComboBox query.
             me.onTriggerClick();
-            
+
             me.lastDownArrow = e.time;
         }
         else if (!e.isStopped && (e.time - me.lastDownArrow) < 150) {
@@ -204,7 +204,7 @@ Ext.define('Ext.form.field.Picker', {
     /**
      * Expands this field's picker dropdown.
      */
-    expand: function() {
+    expand: function () {
         var me = this,
             bodyEl, ariaDom, picker, doc;
 
@@ -213,7 +213,7 @@ Ext.define('Ext.form.field.Picker', {
             picker = me.getPicker();
             doc = Ext.getDoc();
             picker.setMaxHeight(picker.initialConfig.maxHeight);
-            
+
             if (me.matchFieldWidth) {
                 picker.setWidth(me.bodyEl.getWidth());
             }
@@ -223,10 +223,10 @@ Ext.define('Ext.form.field.Picker', {
             me.isExpanded = true;
             me.alignPicker();
             bodyEl.addCls(me.openCls);
-            
+
             if (me.ariaRole) {
                 ariaDom = me.ariaEl.dom;
-                
+
                 ariaDom.setAttribute('aria-owns', picker.listEl ? picker.listEl.id : picker.el.id);
                 ariaDom.setAttribute('aria-expanded', true);
             }
@@ -237,7 +237,7 @@ Ext.define('Ext.form.field.Picker', {
             me.touchListeners = doc.on({
                 // Do not translate on non-touch platforms.
                 // mousedown will blur the field.
-                translate:false,
+                translate: false,
                 touchstart: me.collapseIf,
                 scope: me,
                 delegated: false,
@@ -250,7 +250,7 @@ Ext.define('Ext.form.field.Picker', {
                 scope: me,
                 destroyable: true
             });
-            
+
             // Buffer is used to allow any layouts to complete before we align
             Ext.on('resize', me.alignPicker, me, {buffer: 1});
             me.fireEvent('expand', me);
@@ -264,7 +264,7 @@ Ext.define('Ext.form.field.Picker', {
      * Aligns the picker to the input element
      * @protected
      */
-    alignPicker: function() {
+    alignPicker: function () {
         if (!this.destroyed) {
             var picker = this.getPicker();
 
@@ -278,7 +278,7 @@ Ext.define('Ext.form.field.Picker', {
      * Performs the alignment on the picker using the class defaults
      * @private
      */
-    doAlign: function(){
+    doAlign: function () {
         var me = this,
             picker = me.picker,
             aboveSfx = '-above',
@@ -297,9 +297,9 @@ Ext.define('Ext.form.field.Picker', {
     /**
      * Collapses this field's picker dropdown.
      */
-    collapse: function() {
+    collapse: function () {
         var me = this;
-        
+
         if (me.isExpanded && !me.destroyed && !me.destroying) {
             var openCls = me.openCls,
                 picker = me.picker,
@@ -312,7 +312,7 @@ Ext.define('Ext.form.field.Picker', {
             // remove the openCls
             me.bodyEl.removeCls([openCls, openCls + aboveSfx]);
             picker.el.removeCls(picker.baseCls + aboveSfx);
-            
+
             if (me.ariaRole) {
                 me.ariaEl.dom.setAttribute('aria-expanded', false);
             }
@@ -332,7 +332,7 @@ Ext.define('Ext.form.field.Picker', {
      * @private
      * Runs on touchstart of doc to check to see if we should collapse the picker.
      */
-    collapseIf: function(e) {
+    collapseIf: function (e) {
         var me = this;
 
         // If what was mousedowned on is outside of this Field, and is not focusable, then collapse.
@@ -347,7 +347,7 @@ Ext.define('Ext.form.field.Picker', {
      * calling {@link #createPicker}.
      * @return {Ext.Component} The picker component
      */
-    getPicker: function() {
+    getPicker: function () {
         var me = this,
             picker = me.picker;
 
@@ -364,7 +364,7 @@ Ext.define('Ext.form.field.Picker', {
 
     // When focus leaves the picker component, if it's to outside of this
     // Component's hierarchy
-    onFocusLeave: function(e) {
+    onFocusLeave: function (e) {
         this.collapse();
         this.callParent([e]);
     },
@@ -375,7 +375,7 @@ Ext.define('Ext.form.field.Picker', {
      * Important for determining whether an event took place in the bounds of some
      * higher level containing component. See AbstractComponent#owns
      */
-    getRefItems: function() {
+    getRefItems: function () {
         var result = [];
         if (this.picker) {
             result[0] = this.picker;
@@ -393,7 +393,7 @@ Ext.define('Ext.form.field.Picker', {
      * Handles the trigger click; by default toggles between expanding and collapsing the picker component.
      * @protected
      */
-    onTriggerClick: function(e) {
+    onTriggerClick: function (e) {
         var me = this;
         if (!me.readOnly && !me.disabled) {
             if (me.isExpanded) {
@@ -404,7 +404,7 @@ Ext.define('Ext.form.field.Picker', {
         }
     },
 
-    beforeDestroy : function(){
+    beforeDestroy: function () {
         var me = this,
             picker = me.picker;
 
@@ -419,8 +419,8 @@ Ext.define('Ext.form.field.Picker', {
     privates: {
         onGlobalScroll: function (scroller) {
             var scrollPosition,
-               newScrollPosition,
-               targetEl = this.el;
+                newScrollPosition,
+                targetEl = this.el;
 
             // Collapse if this field being moved by the scroll the scroll
             if (scroller.getElement().contains(targetEl)) {

@@ -44,7 +44,7 @@ Ext.define('Ext.container.ButtonGroup', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.buttongroup',
     alternateClassName: 'Ext.ButtonGroup',
-    
+
     requires: [
         'Ext.layout.container.Table'
     ],
@@ -52,7 +52,7 @@ Ext.define('Ext.container.ButtonGroup', {
     mixins: [
         'Ext.util.FocusableContainer'
     ],
-    
+
     /**
      * @cfg {Number} columns
      * The `columns` configuration property passed to the {@link #layout configured layout manager}.
@@ -95,10 +95,10 @@ Ext.define('Ext.container.ButtonGroup', {
     titleAlign: 'center',
 
     noTitleCls: 'notitle',
-    
+
     bodyAriaRole: 'toolbar',
 
-    initComponent: function() {
+    initComponent: function () {
         // Copy the component's columns config to the layout if specified
         var me = this,
             cols = me.columns;
@@ -110,17 +110,16 @@ Ext.define('Ext.container.ButtonGroup', {
         if (!me.title) {
             me.addClsWithUI(me.noTitleCls);
         }
-        
+
         me.callParent();
     },
 
     /**
      * @private
      */
-    onBeforeAdd: function(component) {
+    onBeforeAdd: function (component) {
         if (component.isButton) {
-            if (this.defaultButtonUI && component.ui === 'default' &&
-                !component.hasOwnProperty('ui')) {
+            if (this.defaultButtonUI && component.ui === 'default' && !component.hasOwnProperty('ui')) {
                 component.ui = this.defaultButtonUI;
             } else {
                 component.ui = component.ui + '-toolbar';
@@ -128,29 +127,29 @@ Ext.define('Ext.container.ButtonGroup', {
         }
         this.callParent(arguments);
     },
-    
-    beforeRender: function() {
+
+    beforeRender: function () {
         var me = this,
             ariaAttr;
-        
+
         me.callParent();
-        
+
         // If header is off we need to set aria-label
         if (me.afterHeaderInit && !me.header && me.title) {
             ariaAttr = me.bodyAriaRenderAttributes || (me.bodyAriaRenderAttributes = {});
             ariaAttr['aria-label'] = me.title;
         }
     },
-    
-    updateHeader: function(force) {
+
+    updateHeader: function (force) {
         var me = this,
             bodyEl = me.body,
             header, ariaAttr;
-        
+
         me.callParent([force]);
-        
+
         header = me.header;
-        
+
         if (header) {
             if (bodyEl) {
                 bodyEl.dom.setAttribute('aria-labelledby', header.id + '-title-textEl');
@@ -182,8 +181,8 @@ Ext.define('Ext.container.ButtonGroup', {
             }
             return c;
         },
-        
-        getFocusableContainerEl: function() {
+
+        getFocusableContainerEl: function () {
             return this.body;
         }
     }

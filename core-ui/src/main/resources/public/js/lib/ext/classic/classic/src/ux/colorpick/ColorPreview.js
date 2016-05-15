@@ -3,8 +3,8 @@
  * support (checkered background image and IE8 support).
  */
 Ext.define('Ext.ux.colorpick.ColorPreview', {
-    extend     : 'Ext.Component',
-    alias      : 'widget.colorpickercolorpreview',
+    extend: 'Ext.Component',
+    alias: 'widget.colorpickercolorpreview',
 
     requires: [
         'Ext.util.Format'
@@ -12,8 +12,8 @@ Ext.define('Ext.ux.colorpick.ColorPreview', {
 
     //hack to solve issue with IE, when applying a filter the click listener is not being fired.
     style: 'position: relative',
-    html: '<div class="filter" style="height:100%; width:100%; position: absolute;"></div>'+
-          '<a class="btn" style="height:100%; width:100%; position: absolute;"></a>',
+    html: '<div class="filter" style="height:100%; width:100%; position: absolute;"></div>' +
+    '<a class="btn" style="height:100%; width:100%; position: absolute;"></a>',
     //eo hack
 
     cls: 'x-colorpreview',
@@ -33,7 +33,7 @@ Ext.define('Ext.ux.colorpick.ColorPreview', {
     },
 
     // Called via databinding - update background color whenever ViewModel changes
-    setColor: function(color) {
+    setColor: function (color) {
         var me = this,
             el = me.getEl();
 
@@ -48,19 +48,19 @@ Ext.define('Ext.ux.colorpick.ColorPreview', {
 
     bgStyleTpl: Ext.create('Ext.XTemplate',
         Ext.isIE && Ext.ieVersion < 10 ?
-          'filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=\'#{hexAlpha}{hex}\', endColorstr=\'#{hexAlpha}{hex}\');' /* IE6-9 */
-        : 'background: {rgba};'
+            'filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=\'#{hexAlpha}{hex}\', endColorstr=\'#{hexAlpha}{hex}\');' /* IE6-9 */
+            : 'background: {rgba};'
     ),
 
     applyBgStyle: function (color) {
-        var me         = this,
+        var me = this,
             colorUtils = Ext.ux.colorpick.ColorUtils,
-            el         = me.getEl().down('.filter'),
+            el = me.getEl().down('.filter'),
             hex, alpha, rgba, bgStyle;
 
-        hex     = colorUtils.rgb2hex(color.r, color.g, color.b);
-        alpha   = Ext.util.Format.hex(Math.floor(color.a * 255), 2);
-        rgba    = colorUtils.getRGBAString(color);
+        hex = colorUtils.rgb2hex(color.r, color.g, color.b);
+        alpha = Ext.util.Format.hex(Math.floor(color.a * 255), 2);
+        rgba = colorUtils.getRGBAString(color);
         bgStyle = this.bgStyleTpl.apply({hex: hex, hexAlpha: alpha, rgba: rgba});
 
         el.applyStyles(bgStyle);

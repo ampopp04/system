@@ -9,19 +9,19 @@ Ext.define('Ext.fx.runner.CssTransition', {
 
     listenersAttached: false,
 
-    constructor: function() {
+    constructor: function () {
         this.runningAnimationsData = {};
 
         return this.callParent(arguments);
     },
 
-    attachListeners: function() {
+    attachListeners: function () {
         this.listenersAttached = true;
 
         Ext.getWin().on('transitionend', 'onTransitionEnd', this);
     },
 
-    onTransitionEnd: function(e) {
+    onTransitionEnd: function (e) {
         var target = e.target,
             id = target.id;
 
@@ -30,7 +30,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
         }
     },
 
-    onAnimationEnd: function(element, data, animation, isInterrupted, isReplaced) {
+    onAnimationEnd: function (element, data, animation, isInterrupted, isReplaced) {
         var id = element.getId(),
             runningData = this.runningAnimationsData[id],
             endRules = {},
@@ -55,7 +55,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
         if (isReplaced || (!isInterrupted && !data.preserveEndState)) {
             toPropertyNames = data.toPropertyNames;
 
-            for (i = 0,ln = toPropertyNames.length; i < ln; i++) {
+            for (i = 0, ln = toPropertyNames.length; i < ln; i++) {
                 name = toPropertyNames[i];
 
                 if (runningNameMap && !runningNameMap.hasOwnProperty(name)) {
@@ -79,7 +79,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
         Ext.AnimationQueue.stop(Ext.emptyFn, animation);
     },
 
-    onAllAnimationsEnd: function(element) {
+    onAllAnimationsEnd: function (element) {
         var id = element.getId(),
             endRules = {};
 
@@ -96,14 +96,14 @@ Ext.define('Ext.fx.runner.CssTransition', {
         this.fireEvent('animationallend', this, element);
     },
 
-    hasRunningAnimations: function(element) {
+    hasRunningAnimations: function (element) {
         var id = element.getId(),
             runningAnimationsData = this.runningAnimationsData;
 
         return runningAnimationsData.hasOwnProperty(id) && runningAnimationsData[id].sessions.length > 0;
     },
 
-    refreshRunningAnimationsData: function(element, propertyNames, interrupt, replace) {
+    refreshRunningAnimationsData: function (element, propertyNames, interrupt, replace) {
         var id = element.getId(),
             runningAnimationsData = this.runningAnimationsData,
             runningData = runningAnimationsData[id];
@@ -149,7 +149,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
                 map = session.map;
                 list = session.list;
 
-                for (j = 0,subLn = propertyNames.length; j < subLn; j++) {
+                for (j = 0, subLn = propertyNames.length; j < subLn; j++) {
                     name = propertyNames[j];
 
                     if (map[name]) {
@@ -179,7 +179,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
         }
     },
 
-    getRunningData: function(id) {
+    getRunningData: function (id) {
         var runningAnimationsData = this.runningAnimationsData;
 
         if (!runningAnimationsData.hasOwnProperty(id)) {
@@ -193,7 +193,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
         return runningAnimationsData[id];
     },
 
-    getTestElement: function() {
+    getTestElement: function () {
         var testElement = this.testElement,
             iframe, iframeDocument, iframeStyle;
 
@@ -229,7 +229,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
         return testElement;
     },
 
-    getCssStyleValue: function(name, value) {
+    getCssStyleValue: function (name, value) {
         var testElement = this.getTestElement(),
             computedStyle = this.testElementComputedStyle,
             style = testElement.style;
@@ -247,7 +247,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
         return value;
     },
 
-    run: function(animations) {
+    run: function (animations) {
         var me = this,
             isLengthPropertyMap = me.lengthProperties,
             fromData = {},
@@ -268,7 +268,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
 
         animations = Ext.Array.from(animations);
 
-        for (i = 0,ln = animations.length; i < ln; i++) {
+        for (i = 0, ln = animations.length; i < ln; i++) {
             animation = animations[i];
             animation = Ext.factory(animation, Ext.fx.Animation);
             element = animation.getElement();
@@ -398,7 +398,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
 
         me.applyStyles(fromData);
 
-        doApplyTo = function(e) {
+        doApplyTo = function (e) {
             if (e.data === message && e.source === window) {
                 window.removeEventListener('message', doApplyTo, false);
                 me.applyStyles(toData);
@@ -406,19 +406,19 @@ Ext.define('Ext.fx.runner.CssTransition', {
         };
 
         if (window.requestAnimationFrame) {
-            window.requestAnimationFrame(function() {
+            window.requestAnimationFrame(function () {
                 window.addEventListener('message', doApplyTo, false);
                 window.postMessage(message, '*');
             });
-        }else {
-            Ext.defer(function() {
+        } else {
+            Ext.defer(function () {
                 window.addEventListener('message', doApplyTo, false);
                 window.postMessage(message, '*');
             }, 1)
         }
     },
 
-    onAnimationStop: function(animation) {
+    onAnimationStop: function (animation) {
         var runningAnimationsData = this.runningAnimationsData,
             id, runningData, sessions, i, ln, session;
 
@@ -427,7 +427,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
                 runningData = runningAnimationsData[id];
                 sessions = runningData.sessions;
 
-                for (i = 0,ln = sessions.length; i < ln; i++) {
+                for (i = 0, ln = sessions.length; i < ln; i++) {
                     session = sessions[i];
                     if (session.animation === animation) {
                         this.refreshRunningAnimationsData(session.element, session.list.slice(), false);

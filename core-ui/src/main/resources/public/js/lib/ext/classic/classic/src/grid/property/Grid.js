@@ -28,15 +28,15 @@ Ext.define('Ext.grid.property.Grid', {
     alternateClassName: 'Ext.grid.PropertyGrid',
 
     uses: [
-       'Ext.grid.plugin.CellEditing',
-       'Ext.grid.property.Store',
-       'Ext.grid.property.HeaderContainer',
-       'Ext.XTemplate',
-       'Ext.grid.CellEditor',
-       'Ext.form.field.Date',
-       'Ext.form.field.Text',
-       'Ext.form.field.Number',
-       'Ext.form.field.ComboBox'
+        'Ext.grid.plugin.CellEditing',
+        'Ext.grid.property.Store',
+        'Ext.grid.property.HeaderContainer',
+        'Ext.XTemplate',
+        'Ext.grid.CellEditor',
+        'Ext.form.field.Date',
+        'Ext.form.field.Text',
+        'Ext.form.field.Number',
+        'Ext.form.field.ComboBox'
     ],
 
     /**
@@ -124,12 +124,12 @@ Ext.define('Ext.grid.property.Grid', {
      *     });
      */
 
-   /**
-    * @cfg {Object} propertyNames
-    * An object containing custom property name/display name pairs.
-    * If specified, the display name will be shown in the name column instead of the property name.
-    * @deprecated See {@link #sourceConfig} displayName
-    */
+    /**
+     * @cfg {Object} propertyNames
+     * An object containing custom property name/display name pairs.
+     * If specified, the display name will be shown in the name column instead of the property name.
+     * @deprecated See {@link #sourceConfig} displayName
+     */
 
     /**
      * @cfg {Object} source
@@ -247,7 +247,7 @@ Ext.define('Ext.grid.property.Grid', {
      * @param {Object} oldValue The original property value prior to editing
      */
 
-    initComponent : function() {
+    initComponent: function () {
         var me = this;
 
         me.source = me.source || {};
@@ -259,7 +259,7 @@ Ext.define('Ext.grid.property.Grid', {
             clicksToEdit: me.clicksToEdit,
 
             // Inject a startEdit which always edits the value column
-            startEdit: function(record, column) {
+            startEdit: function (record, column) {
                 // Maintainer: Do not change this 'this' to 'me'! It is the CellEditing object's own scope.
                 return this.self.prototype.startEdit.call(this, record, me.valueColumn);
             }
@@ -267,7 +267,7 @@ Ext.define('Ext.grid.property.Grid', {
 
         me.selModel = {
             type: 'cellmodel',
-            onCellSelect: function(position) {
+            onCellSelect: function (position) {
                 // We are only allowed to select the value column.
                 position.column = me.valueColumn;
                 position.colIdx = me.valueColumn.getVisibleIndex();
@@ -295,20 +295,22 @@ Ext.define('Ext.grid.property.Grid', {
 
         // Set up our default editor set for the 4 atomic data types
         me.editors = {
-            'date'    : new Ext.grid.CellEditor({ field: new Ext.form.field.Date({selectOnFocus: true})}),
-            'string'  : new Ext.grid.CellEditor({ field: new Ext.form.field.Text({selectOnFocus: true})}),
-            'number'  : new Ext.grid.CellEditor({ field: new Ext.form.field.Number({selectOnFocus: true})}),
-            'boolean' : new Ext.grid.CellEditor({ field: new Ext.form.field.ComboBox({
-                editable: false,
-                store: [[ true, me.headerCt.trueText ], [false, me.headerCt.falseText ]]
-            })})
+            'date': new Ext.grid.CellEditor({field: new Ext.form.field.Date({selectOnFocus: true})}),
+            'string': new Ext.grid.CellEditor({field: new Ext.form.field.Text({selectOnFocus: true})}),
+            'number': new Ext.grid.CellEditor({field: new Ext.form.field.Number({selectOnFocus: true})}),
+            'boolean': new Ext.grid.CellEditor({
+                field: new Ext.form.field.ComboBox({
+                    editable: false,
+                    store: [[true, me.headerCt.trueText], [false, me.headerCt.falseText]]
+                })
+            })
         };
 
         // Track changes to the data so we can fire our events.
         me.store.on('update', me.onUpdate, me);
     },
 
-    configure: function(config){
+    configure: function (config) {
         var me = this,
             store = me.store,
             i = 0,
@@ -340,7 +342,7 @@ Ext.define('Ext.grid.property.Grid', {
         }
     },
 
-    getConfigProp: function(fieldName, key, defaultValue) {
+    getConfigProp: function (fieldName, key, defaultValue) {
         var config = this.sourceConfig[fieldName],
             out;
 
@@ -350,7 +352,7 @@ Ext.define('Ext.grid.property.Grid', {
         return out || defaultValue;
     },
 
-    setConfigProp: function(fieldName, key, value) {
+    setConfigProp: function (fieldName, key, value) {
         var sourceCfg = this.sourceConfig,
             o = sourceCfg[fieldName];
 
@@ -369,7 +371,7 @@ Ext.define('Ext.grid.property.Grid', {
     },
 
     // to be deprecated in 4.2
-    configureLegacy: function(config){
+    configureLegacy: function (config) {
         var me = this;
 
         me.copyLegacyObject(config, me.customRenderers, 'renderer');
@@ -386,7 +388,7 @@ Ext.define('Ext.grid.property.Grid', {
         //</debug>
     },
 
-    copyLegacyObject: function(config, o, keyName){
+    copyLegacyObject: function (config, o, keyName) {
         var key;
 
         for (key in o) {
@@ -402,7 +404,7 @@ Ext.define('Ext.grid.property.Grid', {
     /**
      * @private
      */
-    onUpdate : function(store, record, operation) {
+    onUpdate: function (store, record, operation) {
         var me = this,
             v, oldValue;
 
@@ -423,7 +425,7 @@ Ext.define('Ext.grid.property.Grid', {
 
     // Custom implementation of walkCells which only goes up and down.
     // Runs in the scope of the TableView
-    walkCells: function(pos, direction, e, preventWrap, verifierFn, scope) {
+    walkCells: function (pos, direction, e, preventWrap, verifierFn, scope) {
         var me = this,
             valueColumn = me.ownerCt.valueColumn;
 
@@ -444,7 +446,7 @@ Ext.define('Ext.grid.property.Grid', {
      * @private
      * Returns the correct editor type for the property type, or a custom one keyed by the property name
      */
-    getCellEditor : function(record, column) {
+    getCellEditor: function (record, column) {
         var me = this,
             propName = record.get(me.nameField),
             val = record.get(me.valueField),
@@ -460,7 +462,7 @@ Ext.define('Ext.grid.property.Grid', {
                 if (!(editor instanceof Ext.form.field.Base)) {
                     editor = Ext.ComponentManager.create(editor, 'textfield');
                 }
-                editor = me.setConfigProp(propName, 'editor', new Ext.grid.CellEditor({ field: editor }));
+                editor = me.setConfigProp(propName, 'editor', new Ext.grid.CellEditor({field: editor}));
             }
         } else if (type) {
             switch (type) {
@@ -500,7 +502,7 @@ Ext.define('Ext.grid.property.Grid', {
         return editor;
     },
 
-    beforeDestroy: function() {
+    beforeDestroy: function () {
         var me = this;
         me.callParent();
         me.destroyEditors(me.editors);
@@ -535,7 +537,7 @@ Ext.define('Ext.grid.property.Grid', {
      * @param {Object} [sourceConfig] A new {@link #sourceConfig object}. If this argument is not passed
      * the current configuration will be re-used. To reset the config, pass `null` or an empty object literal.
      */
-    setSource: function(source, sourceConfig) {
+    setSource: function (source, sourceConfig) {
         var me = this;
 
         me.source = source;
@@ -551,7 +553,7 @@ Ext.define('Ext.grid.property.Grid', {
      * format of the data object.
      * @return {Object} The data object.
      */
-    getSource: function() {
+    getSource: function () {
         return this.propStore.getSource();
     },
 
@@ -562,7 +564,7 @@ Ext.define('Ext.grid.property.Grid', {
      *
      * @since 5.1.1
      */
-    getProperty: function(prop) {
+    getProperty: function (prop) {
         return this.propStore.getProperty(prop);
     },
 
@@ -572,7 +574,7 @@ Ext.define('Ext.grid.property.Grid', {
      * @param {Object} value The value to test.
      * @param {Boolean} [create=false] `true` to create the property if it doesn't already exist.
      */
-    setProperty: function(prop, value, create) {
+    setProperty: function (prop, value, create) {
         this.propStore.setValue(prop, value, create);
     },
 
@@ -580,7 +582,7 @@ Ext.define('Ext.grid.property.Grid', {
      * Removes a property from the grid.
      * @param {String} prop The name of the property to remove.
      */
-    removeProperty: function(prop) {
+    removeProperty: function (prop) {
         this.propStore.remove(prop);
     }
 

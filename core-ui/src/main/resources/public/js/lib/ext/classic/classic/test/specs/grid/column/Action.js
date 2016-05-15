@@ -1,16 +1,16 @@
-describe("Ext.grid.column.Action", function(){
+describe("Ext.grid.column.Action", function () {
     var store, grid, view, actionColumn,
         synchronousLoad = true,
         proxyStoreLoad = Ext.data.ProxyStore.prototype.load,
         loadStore;
-    
+
     function getCell(rowIdx, colIdx) {
         return grid.getView().getCellInclusive({
             row: rowIdx,
             column: colIdx
         });
     }
-    
+
     function triggerAction(type, row, colIdx) {
         var cell = getCell(row || 0, colIdx || 1);
         jasmine.fireMouseEvent(cell.down('.' + Ext.grid.column.Action.prototype.actionIconCls, true), type || 'click');
@@ -26,7 +26,7 @@ describe("Ext.grid.column.Action", function(){
             }],
             autoDestroy: true
         }, storeCfg || {}));
-        
+
         grid = new Ext.grid.Panel(Ext.apply({
             store: store,
             columns: [{
@@ -49,9 +49,9 @@ describe("Ext.grid.column.Action", function(){
         actionColumn = grid.columnManager.getHeaderByDataIndex('actionCls');
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -60,7 +60,7 @@ describe("Ext.grid.column.Action", function(){
         };
     });
 
-    afterEach(function() {
+    afterEach(function () {
         // Undo the overrides.
         Ext.data.ProxyStore.prototype.load = proxyStoreLoad;
 
@@ -103,7 +103,7 @@ describe("Ext.grid.column.Action", function(){
         });
     });
 
-    it("should not be sortable if there is no dataIndex even if sortable: true", function() {
+    it("should not be sortable if there is no dataIndex even if sortable: true", function () {
         makeGrid({
             sortableColumns: true,
             columns: [{
@@ -119,8 +119,8 @@ describe("Ext.grid.column.Action", function(){
         expect(columns[1].sortable).toBe(false);
     });
 
-    describe("getClass", function() {
-        it("should use the dataIndex and pass it to getClass", function() {
+    describe("getClass", function () {
+        it("should use the dataIndex and pass it to getClass", function () {
             var handlerSpy = jasmine.createSpy(),
                 classSpy = jasmine.createSpy();
 
@@ -157,8 +157,8 @@ describe("Ext.grid.column.Action", function(){
         });
     });
 
-    describe("stopSelection", function() {
-        it("should not select the row when clicking the action with stopSelection: true", function() {
+    describe("stopSelection", function () {
+        it("should not select the row when clicking the action with stopSelection: true", function () {
             makeGrid({
                 columns: [{}, {
                     xtype: 'actioncolumn',
@@ -174,7 +174,7 @@ describe("Ext.grid.column.Action", function(){
             expect(grid.getSelectionModel().getSelection().length).toBe(0);
         });
 
-        it("should select the row & focus the cell when clicking the action with stopSelection: false", function() {
+        it("should select the row & focus the cell when clicking the action with stopSelection: false", function () {
             makeGrid({
                 columns: [{}, {
                     xtype: 'actioncolumn',
@@ -194,9 +194,10 @@ describe("Ext.grid.column.Action", function(){
             expect(pos.column).toBe(grid.down('actioncolumn'));
         });
     });
-    
-    describe("handler", function() {
+
+    describe("handler", function () {
         var spy1, spy2, col, scope1, scope2;
+
         function makeHandlerGrid(actionCfg) {
             actionCfg = Ext.apply({
                 xtype: 'actioncolumn',
@@ -212,34 +213,36 @@ describe("Ext.grid.column.Action", function(){
             });
             col = grid.down('#theAction');
         }
-        
-        beforeEach(function() {
+
+        beforeEach(function () {
             spy1 = jasmine.createSpy();
             spy2 = jasmine.createSpy();
             scope1 = {
-                foo: function() {}
+                foo: function () {
+                }
             };
             scope2 = {
-                foo: function() {}
+                foo: function () {
+                }
             };
             spyOn(scope1, 'foo');
             spyOn(scope2, 'foo');
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             scope1 = scope2 = col = null;
         });
-        
-        describe("handler priority", function() {
-            it("should use a handler on the column", function() {
+
+        describe("handler priority", function () {
+            it("should use a handler on the column", function () {
                 makeHandlerGrid({
                     handler: spy1
                 });
                 triggerAction();
                 expect(spy1).toHaveBeenCalled();
             });
-            
-            it("should use a handler on the item", function() {
+
+            it("should use a handler on the item", function () {
                 makeHandlerGrid({
                     items: [{
                         handler: spy1
@@ -248,8 +251,8 @@ describe("Ext.grid.column.Action", function(){
                 triggerAction();
                 expect(spy1).toHaveBeenCalled();
             });
-            
-            it("should favour the handler on the item", function() {
+
+            it("should favour the handler on the item", function () {
                 makeHandlerGrid({
                     handler: spy1,
                     items: [{
@@ -261,39 +264,39 @@ describe("Ext.grid.column.Action", function(){
                 expect(spy2).toHaveBeenCalled();
             });
         });
-        
-        describe("enabled/disabled state", function() {
-            it("should not fire the handler if configured as disabled", function() {
+
+        describe("enabled/disabled state", function () {
+            it("should not fire the handler if configured as disabled", function () {
                 makeHandlerGrid({
                     handler: spy1,
                     items: [{
                         disabled: true,
-                        iconCls : 'icon-pencil'
+                        iconCls: 'icon-pencil'
                     }]
                 });
 
-                var view   = grid.getView(),
-                    rowEl  = view.getNode(0),
-                    img    = Ext.get(rowEl).down('.x-action-col-icon'),
+                var view = grid.getView(),
+                    rowEl = view.getNode(0),
+                    img = Ext.get(rowEl).down('.x-action-col-icon'),
                     imgCls = img.hasCls('x-item-disabled');
 
                 triggerAction();
                 expect(spy1).not.toHaveBeenCalled();
                 expect(imgCls).toBe(true);
             });
-            
-            it("should fire if enabled dynamically", function() {
+
+            it("should fire if enabled dynamically", function () {
                 makeHandlerGrid({
                     handler: spy1,
                     items: [{
                         disabled: true,
-                        iconCls : 'icon-pencil'
+                        iconCls: 'icon-pencil'
                     }]
                 });
 
-                var view   = grid.getView(),
-                    rowEl  = view.getNode(0),
-                    img    = Ext.get(rowEl).down('.x-action-col-icon'),
+                var view = grid.getView(),
+                    rowEl = view.getNode(0),
+                    img = Ext.get(rowEl).down('.x-action-col-icon'),
                     imgCls = img.hasCls('x-item-disabled');
 
                 col.enableAction(0);
@@ -301,17 +304,16 @@ describe("Ext.grid.column.Action", function(){
                 expect(spy1).toHaveBeenCalled();
                 expect(imgCls).toBe(true);
             });
-            
-            it("should not fire if disabled dynamically", function() {
+
+            it("should not fire if disabled dynamically", function () {
                 makeHandlerGrid({
                     handler: spy1,
-                    items: [{
-                    }]
+                    items: [{}]
                 });
 
-                var view   = grid.getView(),
-                    rowEl  = view.getNode(0),
-                    img    = Ext.get(rowEl).down('.x-action-col-icon');
+                var view = grid.getView(),
+                    rowEl = view.getNode(0),
+                    img = Ext.get(rowEl).down('.x-action-col-icon');
 
                 expect(img.hasCls('x-item-disabled')).toBe(false);
                 col.disableAction(0);
@@ -321,29 +323,28 @@ describe("Ext.grid.column.Action", function(){
                 expect(spy1).not.toHaveBeenCalled();
             });
         });
-        
-        describe("scoping", function() {
-            it("should default the scope to the column", function() {
+
+        describe("scoping", function () {
+            it("should default the scope to the column", function () {
                 makeHandlerGrid({
                     handler: spy1
                 });
                 triggerAction();
                 expect(spy1.mostRecentCall.object).toBe(col);
             });
-            
-            describe("with handler on the column", function() {
-                it("should use the scope on the column", function() {
+
+            describe("with handler on the column", function () {
+                it("should use the scope on the column", function () {
                     makeHandlerGrid({
                         handler: spy1,
                         scope: scope1,
-                        items: [{
-                        }]
+                        items: [{}]
                     });
                     triggerAction();
                     expect(spy1.mostRecentCall.object).toBe(scope1);
                 });
-                
-                it("should use the scope on the item", function() {
+
+                it("should use the scope on the item", function () {
                     makeHandlerGrid({
                         handler: spy1,
                         items: [{
@@ -353,8 +354,8 @@ describe("Ext.grid.column.Action", function(){
                     triggerAction();
                     expect(spy1.mostRecentCall.object).toBe(scope1);
                 });
-                
-                it("should favour the scope on the item", function() {
+
+                it("should favour the scope on the item", function () {
                     makeHandlerGrid({
                         handler: spy1,
                         scope: scope1,
@@ -366,9 +367,9 @@ describe("Ext.grid.column.Action", function(){
                     expect(spy1.mostRecentCall.object).toBe(scope2);
                 });
             });
-            
-            describe("with handler on the item", function() {
-                it("should use the scope on the column", function() {
+
+            describe("with handler on the item", function () {
+                it("should use the scope on the column", function () {
                     makeHandlerGrid({
                         scope: scope1,
                         items: [{
@@ -378,8 +379,8 @@ describe("Ext.grid.column.Action", function(){
                     triggerAction();
                     expect(spy1.mostRecentCall.object).toBe(scope1);
                 });
-                
-                it("should use the scope on the item", function() {
+
+                it("should use the scope on the item", function () {
                     makeHandlerGrid({
                         items: [{
                             handler: spy1,
@@ -389,8 +390,8 @@ describe("Ext.grid.column.Action", function(){
                     triggerAction();
                     expect(spy1.mostRecentCall.object).toBe(scope1);
                 });
-                
-                it("should favour the scope on the item", function() {
+
+                it("should favour the scope on the item", function () {
                     makeHandlerGrid({
                         scope: scope1,
                         items: [{
@@ -403,10 +404,10 @@ describe("Ext.grid.column.Action", function(){
                 });
             });
         });
-        
-        describe("string handler", function() {
-            describe("handler on the column", function() {
-                it("should lookup a scope on the column", function() {
+
+        describe("string handler", function () {
+            describe("handler on the column", function () {
+                it("should lookup a scope on the column", function () {
                     makeHandlerGrid({
                         scope: scope1,
                         handler: 'foo',
@@ -415,8 +416,8 @@ describe("Ext.grid.column.Action", function(){
                     triggerAction();
                     expect(scope1.foo).toHaveBeenCalled();
                 });
-                
-                it("should lookup a scope on the item", function() {
+
+                it("should lookup a scope on the item", function () {
                     makeHandlerGrid({
                         handler: 'foo',
                         items: [{
@@ -426,8 +427,8 @@ describe("Ext.grid.column.Action", function(){
                     triggerAction();
                     expect(scope1.foo).toHaveBeenCalled();
                 });
-                
-                it("should favour the scope on the item", function() {
+
+                it("should favour the scope on the item", function () {
                     makeHandlerGrid({
                         handler: 'foo',
                         scope: scope1,
@@ -440,9 +441,9 @@ describe("Ext.grid.column.Action", function(){
                     expect(scope2.foo).toHaveBeenCalled();
                 });
             });
-            
-            describe("handler on the item", function() {
-                it("should lookup a scope on the column", function() {
+
+            describe("handler on the item", function () {
+                it("should lookup a scope on the column", function () {
                     makeHandlerGrid({
                         scope: scope1,
                         items: [{
@@ -452,8 +453,8 @@ describe("Ext.grid.column.Action", function(){
                     triggerAction();
                     expect(scope1.foo).toHaveBeenCalled();
                 });
-                
-                it("should lookup a scope on the item", function() {
+
+                it("should lookup a scope on the item", function () {
                     makeHandlerGrid({
                         items: [{
                             handler: 'foo',
@@ -463,8 +464,8 @@ describe("Ext.grid.column.Action", function(){
                     triggerAction();
                     expect(scope1.foo).toHaveBeenCalled();
                 });
-                
-                it("should favour the scope on the item", function() {
+
+                it("should favour the scope on the item", function () {
                     makeHandlerGrid({
                         scope: scope1,
                         items: [{
@@ -477,14 +478,14 @@ describe("Ext.grid.column.Action", function(){
                     expect(scope2.foo).toHaveBeenCalled();
                 });
             });
-            
-            describe("no scope", function() {
-                it("should resolve the scope", function() {
+
+            describe("no scope", function () {
+                it("should resolve the scope", function () {
                     makeHandlerGrid({
                         handler: 'foo'
                     });
-                    
-                    col.resolveListenerScope = function() {
+
+                    col.resolveListenerScope = function () {
                         return scope2;
                     };
                     triggerAction();
@@ -492,8 +493,8 @@ describe("Ext.grid.column.Action", function(){
                 });
             });
         });
-        
-        it("should pass view, rowIdx, cellIndex, item, e, record, row", function() {
+
+        it("should pass view, rowIdx, cellIndex, item, e, record, row", function () {
             makeHandlerGrid({
                 handler: spy1
             });
@@ -509,8 +510,8 @@ describe("Ext.grid.column.Action", function(){
         });
     });
 
-    describe("destroy", function() {
-        describe("as a subclass with items on the class", function() {
+    describe("destroy", function () {
+        describe("as a subclass with items on the class", function () {
             var Cls = Ext.define(null, {
                 extend: 'Ext.grid.column.Action',
                 items: [{
@@ -518,43 +519,43 @@ describe("Ext.grid.column.Action", function(){
                 }]
             });
 
-            it("should not cause an exception when not rendered", function() {
+            it("should not cause an exception when not rendered", function () {
                 makeGrid({
                     renderTo: null,
                     columns: [new Cls()]
                 });
 
-                expect(function() {
+                expect(function () {
                     grid.destroy();
                 }).not.toThrow();
             });
 
-            it("should not cause an exception when rendered", function() {
+            it("should not cause an exception when rendered", function () {
                 makeGrid({
                     columns: [new Cls()]
                 });
 
-                expect(function() {
+                expect(function () {
                     grid.destroy();
                 }).not.toThrow();
             });
         });
 
-        describe("as a config with items on the class", function() {
-            it("should not cause an exception when not rendered", function() {
+        describe("as a config with items on the class", function () {
+            it("should not cause an exception when not rendered", function () {
                 makeGrid({
                     renderTo: null
                 });
 
-                expect(function() {
+                expect(function () {
                     grid.destroy();
                 }).not.toThrow();
             });
 
-            it("should not cause an exception when rendered", function() {
+            it("should not cause an exception when rendered", function () {
                 makeGrid();
 
-                expect(function() {
+                expect(function () {
                     grid.destroy();
                 }).not.toThrow();
             });

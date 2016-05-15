@@ -9,10 +9,10 @@
  */
 Ext.define('Ext.tree.NavigationModel', {
     extend: 'Ext.grid.NavigationModel',
-    
+
     alias: 'view.navigation.tree',
-    
-    initKeyNav: function(view) {
+
+    initKeyNav: function (view) {
         var me = this,
             columns = me.view.ownerGrid.columns,
             len, i;
@@ -40,13 +40,13 @@ Ext.define('Ext.tree.NavigationModel', {
         });
     },
 
-    onColumnsChanged: function() {
+    onColumnsChanged: function () {
         // Must go up to any possible locking assembly to find total number of columns
         this.isTreeGrid = this.view.ownerGrid.getVisibleColumnManager().getColumns().length > 1;
     },
 
 
-    onCellClick: function(view, cell, cellIndex, record, row, recordIndex, clickEvent) {
+    onCellClick: function (view, cell, cellIndex, record, row, recordIndex, clickEvent) {
         this.callParent([view, cell, cellIndex, record, row, recordIndex, clickEvent]);
 
         // Return false if node toggled.
@@ -54,7 +54,7 @@ Ext.define('Ext.tree.NavigationModel', {
         return !clickEvent.nodeToggled;
     },
 
-    onKeyLeft: function(keyEvent) {
+    onKeyLeft: function (keyEvent) {
         var me = this,
             view = keyEvent.view,
             record = me.record;
@@ -77,7 +77,7 @@ Ext.define('Ext.tree.NavigationModel', {
         }
     },
 
-    onKeyRight: function(keyEvent) {
+    onKeyRight: function (keyEvent) {
         var me = this,
             record = me.record;
 
@@ -99,7 +99,7 @@ Ext.define('Ext.tree.NavigationModel', {
         }
     },
 
-    onKeyEnter: function(keyEvent) {
+    onKeyEnter: function (keyEvent) {
         if (this.record.data.checked != null) {
             this.toggleCheck(keyEvent);
         } else {
@@ -107,7 +107,7 @@ Ext.define('Ext.tree.NavigationModel', {
         }
     },
 
-    onKeySpace: function(keyEvent) {
+    onKeySpace: function (keyEvent) {
         if (this.record.data.checked != null) {
             this.toggleCheck(keyEvent);
         } else {
@@ -115,12 +115,12 @@ Ext.define('Ext.tree.NavigationModel', {
         }
     },
 
-    toggleCheck: function(keyEvent) {
+    toggleCheck: function (keyEvent) {
         this.view.onCheckChange(keyEvent);
     },
 
     // (asterisk) on keypad expands all nodes.
-    onAsterisk: function(keyEvent) {
+    onAsterisk: function (keyEvent) {
         this.view.ownerCt.expandAll();
     }
 });

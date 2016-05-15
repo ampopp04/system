@@ -46,8 +46,8 @@ Ext.define('Ext.draw.PathUtil', function () {
                 B = c / a,
                 C = d / a,
 
-                Q = (3*B - pow(A, 2)) / 9,
-                R = (9*A*B - 27*C - 2*pow(A, 3)) / 54,
+                Q = (3 * B - pow(A, 2)) / 9,
+                R = (9 * A * B - 27 * C - 2 * pow(A, 3)) / 54,
                 D = pow(Q, 3) + pow(R, 2), // Polynomial discriminant.
                 t = [],
                 S, T, Im, th, i,
@@ -55,26 +55,26 @@ Ext.define('Ext.draw.PathUtil', function () {
                 sign = Ext.Number.sign;
 
             if (D >= 0) { // Complex or duplicate roots.
-                S = sign(R + sqrt(D)) * pow(abs(R + sqrt(D)), 1/3);
-                T = sign(R - sqrt(D)) * pow(abs(R - sqrt(D)), 1/3);
+                S = sign(R + sqrt(D)) * pow(abs(R + sqrt(D)), 1 / 3);
+                T = sign(R - sqrt(D)) * pow(abs(R - sqrt(D)), 1 / 3);
 
-                t[0] = -A/3 + (S + T);          // Real root.
-                t[1] = -A/3 - (S + T)/2;        // Real part of complex root.
+                t[0] = -A / 3 + (S + T);          // Real root.
+                t[1] = -A / 3 - (S + T) / 2;        // Real part of complex root.
                 t[2] = t[1];                    // Real part of complex root.
-                Im = abs(sqrt(3) * (S - T)/2);  // Complex part of root pair.
+                Im = abs(sqrt(3) * (S - T) / 2);  // Complex part of root pair.
 
                 // Discard complex roots.
                 if (Im !== 0) {
-                    t[1] =- 1;
-                    t[2] =- 1;
+                    t[1] = -1;
+                    t[2] = -1;
                 }
 
             } else { // Distinct real roots.
                 th = acos(R / sqrt(-pow(Q, 3)));
 
-                t[0] = 2*sqrt(-Q)*cos(th/3) - A/3;
-                t[1] = 2*sqrt(-Q)*cos((th + 2*PI)/3) - A/3;
-                t[2] = 2*sqrt(-Q)*cos((th + 4*PI)/3) - A/3;
+                t[0] = 2 * sqrt(-Q) * cos(th / 3) - A / 3;
+                t[1] = 2 * sqrt(-Q) * cos((th + 2 * PI) / 3) - A / 3;
+                t[2] = 2 * sqrt(-Q) * cos((th + 4 * PI) / 3) - A / 3;
             }
 
             // Discard out of spec roots.
@@ -101,12 +101,12 @@ Ext.define('Ext.draw.PathUtil', function () {
             if (a === 0) {
                 return this.linearRoot(b, c);
             }
-            D = b*b - 4*a*c;
+            D = b * b - 4 * a * c;
             if (D === 0) { // One real root.
-                t = [-b/(2*a)];
+                t = [-b / (2 * a)];
             } else if (D > 0) { // Distinct real roots.
                 rD = sqrt(D);
-                t = [(-b - rD) / (2*a), (-b + rD) / (2*a)];
+                t = [(-b - rD) / (2 * a), (-b + rD) / (2 * a)];
             } else { // Complex roots.
                 return [];
             }
@@ -127,7 +127,7 @@ Ext.define('Ext.draw.PathUtil', function () {
          * @return {Array}
          */
         linearRoot: function (a, b) {
-            var t = -b/a;
+            var t = -b / a;
             if (a === 0 || t < 0 || t > 1) {
                 return [];
             }
@@ -145,9 +145,9 @@ Ext.define('Ext.draw.PathUtil', function () {
          */
         bezierCoeffs: function (P0, P1, P2, P3) {
             var Z = [];
-            Z[0] = -P0 + 3*P1 - 3*P2 + P3;
-            Z[1] = 3*P0 - 6*P1 + 3*P2;
-            Z[2] = -3*P0 + 3*P1;
+            Z[0] = -P0 + 3 * P1 - 3 * P2 + P3;
+            Z[1] = 3 * P0 - 6 * P1 + 3 * P2;
+            Z[2] = -3 * P0 + 3 * P1;
             Z[3] = P0;
             return Z;
         },
@@ -177,12 +177,12 @@ Ext.define('Ext.draw.PathUtil', function () {
             var P = [],
                 intersections = [],
 
-                // Finding line equation coefficients.
+            // Finding line equation coefficients.
                 A = y1 - y2,
                 B = x2 - x1,
                 C = x1 * (y2 - y1) - y1 * (x2 - x1),
 
-                // Finding cubic Bezier curve equation coefficients.
+            // Finding cubic Bezier curve equation coefficients.
                 bx = this.bezierCoeffs(px1, px2, px3, px4),
                 by = this.bezierCoeffs(py1, py2, py3, py4),
 
@@ -190,10 +190,10 @@ Ext.define('Ext.draw.PathUtil', function () {
                 t, tt, ttt,
                 cx, cy;
 
-            P[0] = A*bx[0] + B*by[0];		// t^3
-            P[1] = A*bx[1] + B*by[1];		// t^2
-            P[2] = A*bx[2] + B*by[2];		// t
-            P[3] = A*bx[3] + B*by[3] + C;	// 1
+            P[0] = A * bx[0] + B * by[0];		// t^3
+            P[1] = A * bx[1] + B * by[1];		// t^2
+            P[2] = A * bx[2] + B * by[2];		// t
+            P[3] = A * bx[3] + B * by[3] + C;	// 1
 
             r = this.cubicRoots(P);
 
@@ -205,11 +205,11 @@ Ext.define('Ext.draw.PathUtil', function () {
                     continue;
                 }
 
-                tt = t*t;
-                ttt = tt*t;
+                tt = t * t;
+                ttt = tt * t;
 
-                cx = bx[0]*ttt + bx[1]*tt + bx[2]*t + bx[3];
-                cy = by[0]*ttt + by[1]*tt + by[2]*t + by[3];
+                cx = bx[0] * ttt + bx[1] * tt + bx[2] * t + bx[3];
+                cy = by[0] * ttt + by[1] * tt + by[2] * t + by[3];
 
                 // Above is intersection point assuming infinitely long line segment,
                 // make sure we are also in bounds of the line.
@@ -245,7 +245,7 @@ Ext.define('Ext.draw.PathUtil', function () {
                 iz = z - 1,
                 izz = iz * iz,
                 izzz = iz * izz,
-                // Common point for both curves.
+            // Common point for both curves.
                 P = zzz * P4 - 3 * zz * iz * P3 + 3 * z * izz * P2 - izzz * P1;
 
             return [
@@ -377,7 +377,7 @@ Ext.define('Ext.draw.PathUtil', function () {
             // Both curves occupy sub-pixel areas which is effectively their intersection point.
             if (abs(ay1 - ay2) < 1 && abs(ay3 - ay4) < 1 && abs(ax1 - ax4) < 1 && abs(ax2 - ax3) < 1 &&
                 abs(by1 - by2) < 1 && abs(by3 - by4) < 1 && abs(bx1 - bx4) < 1 && abs(bx2 - bx3) < 1) {
-                return [[ (ax1 + ax4) * 0.5, (ay1 + ay2) * 0.5 ]];
+                return [[(ax1 + ax4) * 0.5, (ay1 + ay2) * 0.5]];
             }
 
             splitAx = me.splitCubic(ax1, ax2, ax3, ax4, 0.5);

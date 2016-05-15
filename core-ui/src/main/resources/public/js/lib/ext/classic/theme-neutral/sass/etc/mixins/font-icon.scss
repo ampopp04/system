@@ -1,4 +1,8 @@
-require('font-icon');
+require
+(
+'font-icon'
+)
+;
 
 /**
  * Applies a font icon to an element.
@@ -89,95 +93,95 @@ require('font-icon');
  * @private
  */
 @mixin font-icon($glyph, $pseudo: true, $line-height: 1, $color: null, $style-pseudo: false) {
-    $args: parseFontIconArgs($glyph);
+  $args: parseFontIconArgs($glyph);
 
-    $char: nth($args, 1);
-    $font-size: nth($args, 2);
-    $font-family: nth($args, 3);
-    @if $font-family == null {
-        $font-family: $font-icon-font-family;
+  $char: nth($args, 1);
+  $font-size: nth($args, 2);
+  $font-family: nth($args, 3);
+  @if $font-family == null {
+    $font-family: $font-icon-font-family;
+  }
+  $angle: nth($args, 4);
+  $rotation: null;
+  $rotation-origin: 50% 50%;
+  $ie-rotation: null;
+
+  @if $angle != null {
+    $rotation: rotate(#{$angle}deg);
+    @if $angle == 90 {
+      $ie-rotation: 1;
+    } @else if $angle == 180 {
+      $ie-rotation: 2;
+    } @else if $angle == 270 {
+      $ie-rotation: 3;
     }
-    $angle: nth($args, 4);
-    $rotation: null;
-    $rotation-origin: 50% 50%;
-    $ie-rotation: null;
+  }
 
-    @if $angle != null {
-        $rotation: rotate(#{$angle}deg);
-        @if $angle == 90 {
-            $ie-rotation: 1;
-        } @else if $angle == 180 {
-            $ie-rotation: 2;
-        } @else if $angle == 270 {
-            $ie-rotation: 3;
-        }
-    }
+  @if $char != null {
+    @if $pseudo == false {
+      @include font-icon-pseudo-content($char, $rotation, $rotation-origin);
+      @include font-icon-style($font-size, $line-height, $font-family, $color);
+    } @else {
+      @if not $style-pseudo {
+        @include font-icon-style($font-size, $line-height, $font-family, $color);
+      }
 
-    @if $char != null {
-        @if $pseudo == false {
-            @include font-icon-pseudo-content($char, $rotation, $rotation-origin);
+      @if $pseudo == before or $pseudo == true {
+        &:before {
+          @include font-icon-pseudo-content($char, $rotation, $rotation-origin);
+          @if $style-pseudo {
             @include font-icon-style($font-size, $line-height, $font-family, $color);
-        } @else {
-            @if not $style-pseudo {
-                @include font-icon-style($font-size, $line-height, $font-family, $color);
-            }
-
-            @if $pseudo == before or $pseudo == true {
-                &:before {
-                    @include font-icon-pseudo-content($char, $rotation, $rotation-origin);
-                    @if $style-pseudo {
-                        @include font-icon-style($font-size, $line-height, $font-family, $color);
-                    }
-                }
-            } @else if $pseudo == after {
-                &:after {
-                    @include font-icon-pseudo-content($char, $rotation, $rotation-origin);
-                    @if $style-pseudo {
-                        @include font-icon-style($font-size, $line-height, $font-family, $color);
-                    }
-                }
-            }
+          }
         }
-
-        @if ($rotation != null) and $pseudo and $include-ie {
-            // IE8 does not support filters on pseudo elements, so we have to rotate the
-            // containing element instead of the pseudo element
-            .#{$prefix}ie8 & {
-                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=#{$ie-rotation});
-            }
+      } @else if $pseudo == after {
+        &:after {
+          @include font-icon-pseudo-content($char, $rotation, $rotation-origin);
+          @if $style-pseudo {
+            @include font-icon-style($font-size, $line-height, $font-family, $color);
+          }
         }
+      }
     }
+
+    @if ($rotation != null) and $pseudo and $include-ie {
+      // IE8 does not support filters on pseudo elements, so we have to rotate the
+      // containing element instead of the pseudo element
+      .#{$prefix}ie8 & {
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=#{$ie-rotation});
+      }
+    }
+  }
 }
 
 @mixin font-icon-style($font-size, $line-height, $font-family, $color) {
-    @if $font-size != null {
-        @if $line-height != null {
-            font: #{$font-size}/#{$line-height} $font-family;
-        } @else {
-            // use separate properties for font-size and font-family so that line-height
-            // will be preserved from prior font declarations
-            font-size: $font-size;
-            font-family: $font-family;
-        }
+  @if $font-size != null {
+    @if $line-height != null {
+      font: #{$font-size}/#{$line-height} $font-family;
     } @else {
-        font-family: $font-family;
-        line-height: $line-height;
+      // use separate properties for font-size and font-family so that line-height
+      // will be preserved from prior font declarations
+      font-size: $font-size;
+      font-family: $font-family;
     }
-    color: $color;
+  } @else {
+    font-family: $font-family;
+    line-height: $line-height;
+  }
+  color: $color;
 }
 
 @mixin font-icon-pseudo-content($char, $rotation, $rotation-origin) {
-    content: $char;
+  content: $char;
 
-    @if $rotation != null {
-        display: inline-block;
-        -webkit-transform: $rotation;
-        -webkit-transform-origin: $rotation-origin;
-        -moz-transform: $rotation;
-        -moz-transform-origin: $rotation-origin;
-        -ms-transform: $rotation;
-        -ms-transform-origin: $rotation-origin;
-        transform: $rotation;
-        transform-origin: $rotation-origin;
-    }
+  @if $rotation != null {
+    display: inline-block;
+    -webkit-transform: $rotation;
+    -webkit-transform-origin: $rotation-origin;
+    -moz-transform: $rotation;
+    -moz-transform-origin: $rotation-origin;
+    -ms-transform: $rotation;
+    -ms-transform-origin: $rotation-origin;
+    transform: $rotation;
+    transform-origin: $rotation-origin;
+  }
 }

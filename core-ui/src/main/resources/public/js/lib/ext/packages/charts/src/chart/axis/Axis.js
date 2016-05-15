@@ -355,7 +355,7 @@ Ext.define('Ext.chart.axis.Axis', {
         /**
          * @cfg {Number|Object}
          * If `floating` is a number, then it's a percentage displacement of the axis from its initial {@link #position}
-         * in the direction opposite to the axis' direction. For instance, '{position:"left", floating:75}' displays a vertical 
+         * in the direction opposite to the axis' direction. For instance, '{position:"left", floating:75}' displays a vertical
          * axis at 3/4 of the chart, starting from the left. It is equivalent to '{position:"right", floating:25}'.
          * If `floating` is an object, then `floating.value` is the position of this axis along another axis,
          * defined by `floating.alongAxis`, where `alongAxis` is an ID, an {@link Ext.chart.AbstractChart#axes} config index,
@@ -433,7 +433,7 @@ Ext.define('Ext.chart.axis.Axis', {
         var surface;
 
         if (Ext.isString(title)) {
-            title = { text: title };
+            title = {text: title};
         }
 
         if (!oldTitle) {
@@ -813,10 +813,12 @@ Ext.define('Ext.chart.axis.Axis', {
 
     linkAxis: function (masterAxis) {
         var me = this;
+
         function link(action, slave, master) {
             master.getLayout()[action]('datachange', 'onDataChange', slave);
             master[action]('rangechange', 'onMasterAxisRangeChange', slave);
         }
+
         if (me.masterAxis) {
             link('un', me, me.masterAxis);
             me.masterAxis = null;
@@ -975,7 +977,7 @@ Ext.define('Ext.chart.axis.Axis', {
             }
         }
 
-        if (!Ext.Array.equals(me.range, me.oldRange || []) ) {
+        if (!Ext.Array.equals(me.range, me.oldRange || [])) {
             me.fireEvent('rangechange', me, me.range);
             me.oldRange = me.range;
         }
@@ -1162,7 +1164,7 @@ Ext.define('Ext.chart.axis.Axis', {
         var me = this,
             length = me.getLength();
 
-        if ( !me.sprites[0] || !Ext.isNumber(length) ) {
+        if (!me.sprites[0] || !Ext.isNumber(length)) {
             return;
         }
 

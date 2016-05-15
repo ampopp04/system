@@ -4,12 +4,12 @@
  *
  * Thailand Translations
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["รยกรร’โฌร", "ยกรรลธร’ร“ลธร‘ยนลพรฌ", "รร•ยนร’โฌร", "ร รรร’รยน", "ลธรรร€ร’โฌร", "รร”ยถรยนร’รยน", "ยกรยกยฏร’โฌร", "รร”ยงรร’โฌร", "ยกร‘ยนรร’รยน", "ยตรร…ร’โฌร", "ลธรรลกร”ยกร’รยน", "ลพร‘ยนรร’โฌร"];
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return Ext.Date.monthNames[month].substring(0, 3);
         };
 
@@ -28,13 +28,13 @@ Ext.onReady(function() {
             "ลพโฌ": 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1, 3).toLowerCase()];
         };
 
         Ext.Date.dayNames = ["รร’ยทร”ยตรรฌ", "ลกร‘ยนยทรรฌ", "รร‘ยงโฌร’ร", "ลธรร—ลพ", "ลธรรร‘รยบลฝร•", "รรยกรรฌ", "ร รร’รรฌ"];
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day].substring(0, 3);
         };
     }
@@ -140,7 +140,7 @@ Ext.define("Ext.locale.th.form.field.Date", {
 Ext.define("Ext.locale.th.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "ยกร“ร…ร‘ยงรขรร…ลฝ..."
     });
@@ -157,7 +157,7 @@ Ext.define("Ext.locale.th.form.field.VTypes", {
 Ext.define("Ext.locale.th.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Please enter the URL for the link:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -264,10 +264,10 @@ Ext.define("Ext.locale.th.window.MessageBox", {
         cancel: "รยกร ร…ร”ยก",
         yes: "รฃยชรจ",
         no: "รครรจรฃยชรจ"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.th.Component", {	
+Ext.define("Ext.locale.th.Component", {
     override: "Ext.Component"
 });

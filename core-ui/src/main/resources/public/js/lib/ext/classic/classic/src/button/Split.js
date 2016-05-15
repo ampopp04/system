@@ -38,7 +38,7 @@ Ext.define('Ext.button.Split', {
     alias: 'widget.splitbutton',
 
     isSplitButton: true,
-    
+
     /**
      * @cfg {Function/String} arrowHandler
      * A function called when the arrow button is clicked (can be used instead of click event)
@@ -46,7 +46,7 @@ Ext.define('Ext.button.Split', {
      * @cfg {Event} arrowHandler.e The click event.
      * @declarativeHandler
      */
-    
+
     /**
      * @cfg {String} arrowTooltip
      * The title attribute of the arrow.
@@ -71,15 +71,15 @@ Ext.define('Ext.button.Split', {
     // dynamically but we don't want to run these checks at run time so there's a limit
     // to what we can do about it.
     //<debug>
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
-        
+
         // Don't warn if we're under the slicer
         if (Ext.enableAriaButtons && !Ext.slicer && me.menu &&
             (me.arrowHandler || me.hasListeners.hasOwnProperty('arrowclick'))) {
             // Hard error if full ARIA compatibility is enabled, otherwise a warning
             var logFn = Ext.enableAria ? Ext.log.error : Ext.log.warn;
-            
+
             logFn(
                 "Using both menu and arrowHandler config options in Split buttons " +
                 "leads to confusing user experience and conflicts with accessibility " +
@@ -87,46 +87,46 @@ Ext.define('Ext.button.Split', {
                 "http://www.w3.org/TR/wai-aria-practices/#menubutton"
             );
         }
-        
+
         me.callParent();
     },
     //</debug>
-    
-    getTemplateArgs: function() {
+
+    getTemplateArgs: function () {
         var me = this,
             ariaAttr, data;
-        
+
         data = me.callParent();
-        
+
         if (me.disabled) {
             data.tabIndex = null;
         }
-        
+
         ariaAttr = me.ariaArrowElAttributes || {};
-        
-        ariaAttr['aria-hidden']   = !!me.hidden;
+
+        ariaAttr['aria-hidden'] = !!me.hidden;
         ariaAttr['aria-disabled'] = !!me.disabled;
-        
+
         if (me.arrowTooltip) {
             ariaAttr['aria-label'] = me.arrowTooltip;
         }
         else {
             ariaAttr['aria-labelledby'] = me.id;
         }
-        
+
         data.arrowElAttributes = ariaAttr;
-        
+
         return data;
     },
 
-    onRender: function() {
+    onRender: function () {
         var me = this,
             el;
-        
+
         me.callParent();
-        
+
         el = me.getFocusEl();
-        
+
         if (el) {
             el.on({
                 scope: me,
@@ -134,13 +134,13 @@ Ext.define('Ext.button.Split', {
                 blur: me.onMainElBlur
             });
         }
-        
+
         el = me.arrowEl;
-        
+
         if (el) {
             el.dom.setAttribute('data-componentid', me.id);
             el.setVisibilityMode(Ext.dom.Element.DISPLAY);
-            
+
             el.on({
                 scope: me,
                 focus: me.onArrowElFocus,
@@ -154,7 +154,7 @@ Ext.define('Ext.button.Split', {
      * @param {Function} handler The function to call when the arrow is clicked.
      * @param {Object} scope (optional) Scope for the function passed above.
      */
-    setArrowHandler: function(handler, scope) {
+    setArrowHandler: function (handler, scope) {
         this.arrowHandler = handler;
         this.scope = scope;
     },
@@ -162,12 +162,12 @@ Ext.define('Ext.button.Split', {
     /**
      * @private
      */
-    onClick: function(e) {
+    onClick: function (e) {
         var me = this,
             arrowKeydown = e.type === 'keydown' && e.target === me.arrowEl.dom;
 
         me.doPreventDefault(e);
-        
+
         if (!me.disabled) {
             if (arrowKeydown || me.isWithinTrigger(e)) {
                 // Force prevent default here, if we click on the arrow part
@@ -184,72 +184,72 @@ Ext.define('Ext.button.Split', {
             }
         }
     },
-    
-    enable: function(silent) {
+
+    enable: function (silent) {
         var me = this,
             arrowEl = me.arrowEl;
-        
+
         me.callParent([silent]);
-        
+
         // May not be rendered yet
         if (arrowEl) {
             arrowEl.dom.setAttribute('tabIndex', me.tabIndex);
             arrowEl.dom.setAttribute('aria-disabled', 'false');
         }
     },
-    
-    disable: function(silent) {
+
+    disable: function (silent) {
         var me = this,
             arrowEl = me.arrowEl;
-        
+
         me.callParent([silent]);
-        
+
         // May not be rendered yet
         if (arrowEl) {
             arrowEl.dom.removeAttribute('tabIndex');
             arrowEl.dom.setAttribute('aria-disabled', 'true');
         }
     },
-    
-    afterHide: function(cb, scope) {
+
+    afterHide: function (cb, scope) {
         this.callParent([cb, scope]);
         this.arrowEl.dom.setAttribute('aria-hidden', 'true');
     },
-    
-    afterShow: function(animateTarget, cb, scope) {
+
+    afterShow: function (animateTarget, cb, scope) {
         this.callParent([animateTarget, cb, scope]);
         this.arrowEl.dom.setAttribute('aria-hidden', 'false');
     },
-    
+
     privates: {
-        isFocusing: function(e) {
+        isFocusing: function (e) {
             var me = this,
                 from = e.fromElement,
                 to = e.toElement,
                 focusEl = me.focusEl && me.focusEl.dom,
                 arrowEl = me.arrowEl && me.arrowEl.dom;
-            
+
             if (me.focusable) {
-                if (to === focusEl) { 
+                if (to === focusEl) {
                     return from === arrowEl ? false : true;
                 }
                 else if (to === arrowEl) {
                     return from === focusEl ? false : true;
                 }
-                
+
                 return true;
             }
-            
+
             return false;
         },
-        
-        isBlurring: function(e) {
+
+        isBlurring: function (e) {
             var me = this,
                 from = e.fromElement,
                 to = e.toElement,
                 focusEl = me.focusEl && me.focusEl.dom,
                 arrowEl = me.arrowEl && me.arrowEl.dom;
-            
+
             if (me.focusable) {
                 if (from === focusEl) {
                     return to === arrowEl ? false : true;
@@ -257,56 +257,56 @@ Ext.define('Ext.button.Split', {
                 else if (from === arrowEl) {
                     return to === focusEl ? false : true;
                 }
-            
+
                 return true;
             }
-            
+
             return false;
         },
-        
+
         // We roll our own focus style handling for Split button, see below
         getFocusClsEl: Ext.privateFn,
-        
-        onMainElFocus: function(e) {
+
+        onMainElFocus: function (e) {
             this.el.addCls(this._focusCls);
         },
-        
-        onMainElBlur: function(e) {
+
+        onMainElBlur: function (e) {
             this.el.removeCls(this._focusCls);
         },
-        
-        onArrowElFocus: function(e) {
+
+        onArrowElFocus: function (e) {
             this.el.addCls(this._arrowFocusCls);
         },
-        
-        onArrowElBlur: function() {
+
+        onArrowElBlur: function () {
             this.el.removeCls(this._arrowFocusCls);
         },
-        
-        setTabIndex: function(newTabIndex) {
+
+        setTabIndex: function (newTabIndex) {
             this.callParent([newTabIndex]);
-            
+
             // May not be rendered yet
             if (this.arrowEl) {
-                this.arrowEl.set({ tabIndex: newTabIndex });
+                this.arrowEl.set({tabIndex: newTabIndex});
             }
         },
-        
+
         // This and below are called by the setMenu method in the parent class.
-        _addSplitCls: function() {
+        _addSplitCls: function () {
             var arrowEl = this.arrowEl;
-            
+
             this.callParent();
-            
+
             arrowEl.dom.setAttribute('tabIndex', this.tabIndex);
             arrowEl.setVisible(true);
         },
-        
-        _removeSplitCls: function() {
+
+        _removeSplitCls: function () {
             var arrowEl = this.arrowEl;
-            
+
             this.callParent();
-            
+
             arrowEl.dom.removeAttribute('tabIndex');
             arrowEl.setVisible(false);
         }

@@ -13,13 +13,13 @@ Ext.define('Ext.ux.ajax.XmlSimlet', {
      */
     xmlTpl: [
         '<{root}>\n',
-            '<tpl for="data">',
+        '<tpl for="data">',
         '    <{parent.record}>\n',
-                '<tpl for="parent.fields">',
+        '<tpl for="parent.fields">',
         '        <{name}>{[parent[values.name]]}</{name}>\n',
-                '</tpl>',
+        '</tpl>',
         '    </{parent.record}>\n',
-            '</tpl>',
+        '</tpl>',
         '</{root}>'
     ],
 
@@ -66,19 +66,19 @@ Ext.define('Ext.ux.ajax.XmlSimlet', {
         return ret;
     },
 
-    fixTree: function() {
+    fixTree: function () {
         this.callParent(arguments);
         var buffer = [];
         this.buildTreeXml(this.data, buffer);
         this.data = buffer.join('');
     },
 
-    buildTreeXml: function(nodes, buffer) {
+    buildTreeXml: function (nodes, buffer) {
         var rootProperty = this.rootProperty,
             recordProperty = this.recordProperty;
 
         buffer.push('<', rootProperty, '>');
-        Ext.Array.forEach(nodes, function(node) {
+        Ext.Array.forEach(nodes, function (node) {
             buffer.push('<', recordProperty, '>');
             for (var key in node) {
                 if (key == 'children') {

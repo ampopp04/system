@@ -137,7 +137,7 @@ Ext.define('Ext.util.KeyMap', {
      */
     eventName: 'keydown',
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this;
 
         // Handle legacy arg list in which the first argument is the target.
@@ -169,7 +169,7 @@ Ext.define('Ext.util.KeyMap', {
      * @param {Object} binding The binding (see {@link #addBinding})
      * @param {String} [eventName="keydown"] The event to bind to
      */
-    legacyConstructor: function(el, binding, eventName){
+    legacyConstructor: function (el, binding, eventName) {
         var me = this;
 
         Ext.apply(me, {
@@ -221,7 +221,7 @@ Ext.define('Ext.util.KeyMap', {
      * Possible values are: stopEvent, stopPropagation, preventDefault. If no value is
      * set no action is performed..
      */
-    addBinding : function(binding){
+    addBinding: function (binding) {
         var me = this,
             keyCode = binding.key,
             i,
@@ -230,7 +230,7 @@ Ext.define('Ext.util.KeyMap', {
         if (me.processing) {
             me.bindings = me.bindings.slice(0);
         }
-        
+
         if (Ext.isArray(binding)) {
             for (i = 0, len = binding.length; i < len; i++) {
                 me.addBinding(binding[i]);
@@ -247,7 +247,7 @@ Ext.define('Ext.util.KeyMap', {
      * Remove a binding from this KeyMap.
      * @param {Object} binding See {@link #addBinding for options}
      */
-    removeBinding: function(binding){
+    removeBinding: function (binding) {
         var me = this,
             bindings = me.bindings,
             len = bindings.length,
@@ -271,7 +271,7 @@ Ext.define('Ext.util.KeyMap', {
         }
     },
 
-    processKeys: function(keyCode){
+    processKeys: function (keyCode) {
         var processed = false,
             key, keys, keyString, len, i;
 
@@ -285,7 +285,7 @@ Ext.define('Ext.util.KeyMap', {
             keys = [];
             keyString = keyCode.toUpperCase();
 
-            for (i = 0, len = keyString.length; i < len; ++i){
+            for (i = 0, len = keyString.length; i < len; ++i) {
                 keys.push(keyString.charCodeAt(i));
             }
             keyCode = keys;
@@ -313,7 +313,7 @@ Ext.define('Ext.util.KeyMap', {
      * @private
      * @param {Ext.event.Event} event
      */
-    handleTargetEvent: function(event) {
+    handleTargetEvent: function (event) {
         var me = this,
             bindings, i, len, result;
 
@@ -339,19 +339,19 @@ Ext.define('Ext.util.KeyMap', {
                 if (!event.getKey) {
                     return event;
                 }
-                
+
                 me.processing = true;
-                
-                for (; i < len; ++i){
+
+                for (; i < len; ++i) {
                     result = me.processBinding(bindings[i], event);
-                    
+
                     if (result === false) {
                         me.processing = false;
-                        
+
                         return result;
                     }
                 }
-                
+
                 me.processing = false;
             }
         }
@@ -376,7 +376,7 @@ Ext.define('Ext.util.KeyMap', {
      * @param {Object} binding The binding information
      * @param {Ext.event.Event} event
      */
-    processBinding: function(binding, event){
+    processBinding: function (binding, event) {
         if (this.checkModifiers(binding, event)) {
             var key = event.getKey(),
                 handler = binding.fn || binding.handler,
@@ -389,11 +389,11 @@ Ext.define('Ext.util.KeyMap', {
             if (keyCode.test) {
                 if (keyCode.test(String.fromCharCode(event.getCharCode()))) {
                     result = handler.call(scope, key, event);
-                    
+
                     if (result !== true && defaultEventAction) {
                         event[defaultEventAction]();
                     }
-                    
+
                     if (result === false) {
                         return result;
                     }
@@ -404,15 +404,15 @@ Ext.define('Ext.util.KeyMap', {
                 for (i = 0, len = keyCode.length; i < len; ++i) {
                     if (key === keyCode[i]) {
                         result = handler.call(scope, key, event);
-                        
+
                         if (result !== true && defaultEventAction) {
                             event[defaultEventAction]();
                         }
-                        
+
                         if (result === false) {
                             return result;
                         }
-                        
+
                         break;
                     }
                 }
@@ -427,13 +427,13 @@ Ext.define('Ext.util.KeyMap', {
      * @param {Ext.event.Event} event
      * @return {Boolean} True if the event matches the binding
      */
-    checkModifiers: function(binding, event) {
+    checkModifiers: function (binding, event) {
         var keys = ['shift', 'ctrl', 'alt'],
             i = 0,
             len = keys.length,
             val, key;
 
-        for (; i < len; ++i){
+        for (; i < len; ++i) {
             key = keys[i];
             val = binding[key];
             if (!(val === undefined || (val === event[key + 'Key']))) {
@@ -452,7 +452,7 @@ Ext.define('Ext.util.KeyMap', {
      * @param {Object} [scope] The scope (`this` reference) in which the function is executed.
      * Defaults to the browser window.
      */
-    on: function(key, fn, scope) {
+    on: function (key, fn, scope) {
         var keyCode, shift, ctrl, alt;
         if (Ext.isObject(key) && !Ext.isArray(key)) {
             keyCode = key.key;
@@ -471,7 +471,7 @@ Ext.define('Ext.util.KeyMap', {
             scope: scope
         });
     },
-    
+
     /**
      * Shorthand for removing a single key listener.
      *
@@ -481,7 +481,7 @@ Ext.define('Ext.util.KeyMap', {
      * @param {Object} [scope] The scope (`this` reference) in which the function is executed.
      * Defaults to the browser window.
      */
-    un: function(key, fn, scope) {
+    un: function (key, fn, scope) {
         var keyCode, shift, ctrl, alt;
         if (Ext.isObject(key) && !Ext.isArray(key)) {
             keyCode = key.key;
@@ -505,16 +505,16 @@ Ext.define('Ext.util.KeyMap', {
      * Returns true if this KeyMap is enabled
      * @return {Boolean}
      */
-    isEnabled : function() {
+    isEnabled: function () {
         return this.enabled;
     },
 
     /**
      * Enables this KeyMap
      */
-    enable: function() {
+    enable: function () {
         var me = this;
-        
+
         if (!me.enabled) {
             me.target.on(me.eventName, me.handleTargetEvent, me, {capture: me.capture, priority: me.priority});
             me.enabled = true;
@@ -524,9 +524,9 @@ Ext.define('Ext.util.KeyMap', {
     /**
      * Disable this KeyMap
      */
-    disable: function() {
+    disable: function () {
         var me = this;
-        
+
         if (me.enabled) {
             me.target.removeListener(me.eventName, me.handleTargetEvent, me);
             me.enabled = false;
@@ -537,7 +537,7 @@ Ext.define('Ext.util.KeyMap', {
      * Convenience function for setting disabled/enabled by boolean.
      * @param {Boolean} disabled
      */
-    setDisabled : function(disabled) {
+    setDisabled: function (disabled) {
         if (disabled) {
             this.disable();
         } else {
@@ -549,7 +549,7 @@ Ext.define('Ext.util.KeyMap', {
      * Destroys the KeyMap instance and removes all handlers.
      * @param {Boolean} removeTarget True to also remove the {@link #target}
      */
-    destroy: function(removeTarget) {
+    destroy: function (removeTarget) {
         var me = this,
             target = me.target;
 

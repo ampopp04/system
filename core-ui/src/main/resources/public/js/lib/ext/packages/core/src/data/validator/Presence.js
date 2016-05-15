@@ -6,7 +6,7 @@ Ext.define('Ext.data.validator.Presence', {
     alias: 'data.validator.presence',
 
     type: 'presence',
-    
+
     config: {
         /**
          * @cfg {String} message
@@ -20,8 +20,8 @@ Ext.define('Ext.data.validator.Presence', {
          */
         allowEmpty: false
     },
-    
-    validate: function(value) {
+
+    validate: function (value) {
         var valid = !(value === undefined || value === null);
         if (valid && !this.getAllowEmpty()) {
             valid = !(value === '');

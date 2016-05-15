@@ -1,4 +1,4 @@
-describe("Ext.data.NodeStore", function() {
+describe("Ext.data.NodeStore", function () {
 
     var Model = Ext.define(null, {
         extend: 'Ext.data.TreeModel'
@@ -13,7 +13,7 @@ describe("Ext.data.NodeStore", function() {
         });
 
         if (children) {
-            Ext.Array.forEach(children, function(child) {
+            Ext.Array.forEach(children, function (child) {
                 node.appendChild(child);
             });
         }
@@ -32,7 +32,7 @@ describe("Ext.data.NodeStore", function() {
         }, cfg));
     }
 
-    afterEach(function() {
+    afterEach(function () {
         store = Ext.destroy(store);
     });
 
@@ -41,9 +41,9 @@ describe("Ext.data.NodeStore", function() {
         expect(ids).toEqual(expected);
     }
 
-    describe("folderSort", function() {
+    describe("folderSort", function () {
         var node;
-        beforeEach(function() {
+        beforeEach(function () {
             node = makeNode('root', false, [
                 makeNode(2, true),
                 makeNode(6),
@@ -54,14 +54,14 @@ describe("Ext.data.NodeStore", function() {
             ]);
         });
 
-        afterEach(function() {
+        afterEach(function () {
             node = null;
         });
 
-        describe("with no sorters", function() {
-            describe("configuration", function() {
-                describe("with folderSort: true", function() {
-                    it("should sort nodes", function() {
+        describe("with no sorters", function () {
+            describe("configuration", function () {
+                describe("with folderSort: true", function () {
+                    it("should sort nodes", function () {
                         makeStore({
                             folderSort: true
                         }, node);
@@ -70,8 +70,8 @@ describe("Ext.data.NodeStore", function() {
                     });
                 });
 
-                describe("with folderSort: false", function() {
-                    it("should leave nodes in place", function() {
+                describe("with folderSort: false", function () {
+                    it("should leave nodes in place", function () {
                         makeStore({
                             folderSort: false
                         }, node);
@@ -81,9 +81,9 @@ describe("Ext.data.NodeStore", function() {
                 });
             });
 
-            describe("setting dynamically", function() {
-                describe("setting folderSort: true", function() {
-                    it("should sort nodes", function() {
+            describe("setting dynamically", function () {
+                describe("setting folderSort: true", function () {
+                    it("should sort nodes", function () {
                         makeStore({
                             folderSort: false
                         }, node);
@@ -93,8 +93,8 @@ describe("Ext.data.NodeStore", function() {
                     });
                 });
 
-                describe("setting folderSort: false", function() {
-                    it("should leave nodes in place", function() {
+                describe("setting folderSort: false", function () {
+                    it("should leave nodes in place", function () {
                         makeStore({
                             folderSort: true
                         }, node);
@@ -106,10 +106,10 @@ describe("Ext.data.NodeStore", function() {
             });
         });
 
-        describe("with sorters", function() {
-            describe("configuration", function() {
-                describe("with folderSort: true", function() {
-                    it("should sort and give priority to folderSort", function() {
+        describe("with sorters", function () {
+            describe("configuration", function () {
+                describe("with folderSort: true", function () {
+                    it("should sort and give priority to folderSort", function () {
                         makeStore({
                             folderSort: true,
                             sorters: [{
@@ -122,8 +122,8 @@ describe("Ext.data.NodeStore", function() {
                     });
                 });
 
-                describe("with folderSort: false", function() {
-                    it("should sort according to the sorter", function() {
+                describe("with folderSort: false", function () {
+                    it("should sort according to the sorter", function () {
                         makeStore({
                             folderSort: false,
                             sorters: [{
@@ -137,9 +137,9 @@ describe("Ext.data.NodeStore", function() {
                 });
             });
 
-            describe("setting sorters dynamically", function() {
-                describe("with folderSort: true", function() {
-                    beforeEach(function() {
+            describe("setting sorters dynamically", function () {
+                describe("with folderSort: true", function () {
+                    beforeEach(function () {
                         makeStore({
                             folderSort: true
                         }, node);
@@ -150,22 +150,22 @@ describe("Ext.data.NodeStore", function() {
                         });
                     });
 
-                    describe("adding a sorter", function() {
-                        it("should sort and give priority to folderSort", function() {
+                    describe("adding a sorter", function () {
+                        it("should sort and give priority to folderSort", function () {
                             expectIds([6, 5, 3, 4, 2, 1]);
                         });
                     });
 
-                    describe("removing a sorter", function() {
-                        it("should leave nodes in place", function() {
+                    describe("removing a sorter", function () {
+                        it("should leave nodes in place", function () {
                             store.getSorters().removeAll();
                             expectIds([6, 5, 3, 4, 2, 1]);
                         });
                     });
                 });
 
-                describe("with folderSort: false", function() {
-                    beforeEach(function() {
+                describe("with folderSort: false", function () {
+                    beforeEach(function () {
                         makeStore({
                             folderSort: false
                         }, node);
@@ -176,14 +176,14 @@ describe("Ext.data.NodeStore", function() {
                         });
                     });
 
-                    describe("adding a sorter", function() {
-                        it("should sort nodes", function() {
+                    describe("adding a sorter", function () {
+                        it("should sort nodes", function () {
                             expectIds([6, 5, 4, 3, 2, 1]);
                         });
                     });
 
-                    describe("removing a sorter", function() {
-                        it("should leave nodes in place", function() {
+                    describe("removing a sorter", function () {
+                        it("should leave nodes in place", function () {
                             store.getSorters().removeAll();
                             expectIds([6, 5, 4, 3, 2, 1]);
                         });
@@ -191,9 +191,9 @@ describe("Ext.data.NodeStore", function() {
                 });
             });
 
-            describe("setting folderSort dynamically", function() {
-                describe("setting folderSort: true", function() {
-                    it("should sort and give priority to folderSort", function() {
+            describe("setting folderSort dynamically", function () {
+                describe("setting folderSort: true", function () {
+                    it("should sort and give priority to folderSort", function () {
                         makeStore({
                             folderSort: false,
                             sorters: [{
@@ -207,8 +207,8 @@ describe("Ext.data.NodeStore", function() {
                     });
                 });
 
-                describe("setting folderSort: false", function() {
-                    it("should sort nodes", function() {
+                describe("setting folderSort: false", function () {
+                    it("should sort nodes", function () {
                         makeStore({
                             folderSort: false,
                             sorters: [{
@@ -224,8 +224,8 @@ describe("Ext.data.NodeStore", function() {
         });
     });
 
-    describe("node", function() {
-        it("should accept an object", function() {
+    describe("node", function () {
+        it("should accept an object", function () {
             makeStore({
                 node: {
                     id: 'foo'
@@ -237,7 +237,7 @@ describe("Ext.data.NodeStore", function() {
             expect(node.id).toBe('foo');
         });
 
-        it("should accept a node instance", function() {
+        it("should accept a node instance", function () {
             var node = makeNode();
             makeStore({
                 node: node
@@ -246,9 +246,9 @@ describe("Ext.data.NodeStore", function() {
         });
     });
 
-    describe("store content", function() {
-        describe("configuring with a node", function() {
-            it("should load node children", function() {
+    describe("store content", function () {
+        describe("configuring with a node", function () {
+            it("should load node children", function () {
                 var node = makeNode('root', false, [
                     makeNode(1),
                     makeNode(2),
@@ -260,7 +260,7 @@ describe("Ext.data.NodeStore", function() {
                 expectIds([1, 2, 3]);
             });
 
-            it("should only include children of the node", function() {
+            it("should only include children of the node", function () {
                 var node = makeNode('root', false, [
                     makeNode(1, false, [
                         makeNode(2),
@@ -282,8 +282,8 @@ describe("Ext.data.NodeStore", function() {
             });
         });
 
-        describe("dynamic updates", function() {
-            it("should add a child that is appended to the node", function() {
+        describe("dynamic updates", function () {
+            it("should add a child that is appended to the node", function () {
                 makeStore();
                 var node = makeNode();
                 store.getNode().appendChild(node);
@@ -291,7 +291,7 @@ describe("Ext.data.NodeStore", function() {
                 expect(store.getAt(0)).toBe(node);
             });
 
-            it("should insert a child that is inserted into the node", function() {
+            it("should insert a child that is inserted into the node", function () {
                 var existing = makeNode(1);
 
                 var node = makeNode('root', false, [
@@ -307,7 +307,7 @@ describe("Ext.data.NodeStore", function() {
                 expect(store.getAt(1)).toBe(existing);
             });
 
-            it("should remove a child removed from the node", function() {
+            it("should remove a child removed from the node", function () {
                 var existing = makeNode(1);
 
                 var node = makeNode('root', false, [
@@ -319,7 +319,7 @@ describe("Ext.data.NodeStore", function() {
                 expect(store.getCount()).toBe(0);
             });
 
-            it("should not add granchildren of the node", function() {
+            it("should not add granchildren of the node", function () {
                 var existing = makeNode(1);
 
                 var node = makeNode('root', false, [
@@ -332,7 +332,7 @@ describe("Ext.data.NodeStore", function() {
                 expect(store.getCount()).toBe(1);
             });
 
-            it("should not cause an error when removing grandchildren of the node", function() {
+            it("should not cause an error when removing grandchildren of the node", function () {
                 var grandchild = makeNode(2);
                 var existing = makeNode(1, false, [grandchild]);
 
@@ -342,7 +342,7 @@ describe("Ext.data.NodeStore", function() {
 
                 makeStore(null, node);
 
-                expect(function() {
+                expect(function () {
                     existing.removeChild(grandchild);
                 }).not.toThrow();
             });

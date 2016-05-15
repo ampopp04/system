@@ -2,13 +2,13 @@
  * A class that provides an underlay element which displays behind an absolutely positioned
  * target element and tracks its size and position. Abstract base class for
  * {@link Ext.dom.Shadow} and {@link Ext.dom.Shim}
- *  
- * 
+ *
+ *
  * @private
  * @abstract
  */
 Ext.define('Ext.dom.Underlay', {
-    requires: [ 'Ext.dom.UnderlayPool' ],
+    requires: ['Ext.dom.UnderlayPool'],
 
     /**
      * @cfg {Ext.dom.Element} target
@@ -20,7 +20,7 @@ Ext.define('Ext.dom.Underlay', {
      * The CSS z-index to use for this underlay.  Defaults to the z-index of {@link #target}.
      */
 
-    constructor: function(config) {
+    constructor: function (config) {
         Ext.apply(this, config);
     },
 
@@ -37,7 +37,7 @@ Ext.define('Ext.dom.Underlay', {
      * Defaults to the target element
      * @return {Ext.dom.Element}
      */
-    getInsertionTarget: function() {
+    getInsertionTarget: function () {
         return this.target;
     },
 
@@ -45,7 +45,7 @@ Ext.define('Ext.dom.Underlay', {
      * @protected
      * @return {Ext.dom.UnderlayPool}
      */
-    getPool: function() {
+    getPool: function () {
         return this.pool ||
             (this.self.prototype.pool = new Ext.dom.UnderlayPool(this.elementConfig));
     },
@@ -53,10 +53,10 @@ Ext.define('Ext.dom.Underlay', {
     /**
      * Hides the underlay
      */
-    hide: function() {
+    hide: function () {
         var me = this,
             el = me.el;
-        
+
         if (el) {
             el.hide();
             me.getPool().checkIn(el);
@@ -67,7 +67,7 @@ Ext.define('Ext.dom.Underlay', {
 
     /**
      * Aligns the underlay to its target element
-     * @param {Number} [x] The x position of the target element.  If not provided, the 
+     * @param {Number} [x] The x position of the target element.  If not provided, the
      * x position will be read from the DOM.
      * @param {Number} [y] The y position of the target element.  If not provided, the
      * y position will be read from the DOM.
@@ -76,7 +76,7 @@ Ext.define('Ext.dom.Underlay', {
      * @param {Number} [height] The height of the target element.  If not provided, the
      * height will be read from the DOM.
      */
-    realign: function(x, y, width, height) {
+    realign: function (x, y, width, height) {
         var me = this,
             el = me.el,
             target = me.target,
@@ -116,7 +116,7 @@ Ext.define('Ext.dom.Underlay', {
      * Adjust the z-index of this underlay
      * @param {Number} zIndex The new z-index
      */
-    setZIndex: function(zIndex) {
+    setZIndex: function (zIndex) {
         this.zIndex = zIndex;
 
         if (this.el) {
@@ -127,7 +127,7 @@ Ext.define('Ext.dom.Underlay', {
     /**
      * Shows the underlay
      */
-    show: function() {
+    show: function () {
         var me = this,
             target = me.target,
             zIndex = me.zIndex,
@@ -170,5 +170,5 @@ Ext.define('Ext.dom.Underlay', {
         me.realign();
         me.hidden = false;
     }
-    
+
 });

@@ -37,7 +37,7 @@ Ext.define('Ext.event.publisher.Gesture', {
     handledEvents: [],
     handledDomEvents: [],
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this,
             handledDomEvents = me.handledDomEvents,
             supports = Ext.supports,
@@ -46,28 +46,28 @@ Ext.define('Ext.event.publisher.Gesture', {
             onTouchStart = me.onTouchStart,
             onTouchMove = me.onTouchMove,
             onTouchEnd = me.onTouchEnd,
-            // onTouchMove runs on requestAnimationFrame for performance reasons.
-            // onTouchEnd must follow the same pattern, to avoid a scenario where touchend
-            // could potentially be processed before the last touchmove
-            //
-            // Although it may seem unintuitive, onTouchStart must also run using
-            // requestAnimationFrame timing. This is necessary mainly on muli-input devices
-            // such as Windows 8 with Chrome (see https://sencha.jira.com/browse/EXTJS-14945)
-            // on such browsers, if you click the mouse and then touch the screen in a
-            // different location, the browser will simulate a "mousemove" event before
-            // the touchstart event, as if you moved the mouse to the new location before
-            // touching the screen.  In this scenario we need to ensure that the simulated
-            // mousemove happens BEFORE the touchstart event, or gesture recognizers can
-            // get out of sync
-            //
-            // onTouchMove invocations are queued in such a way that the last invocation
-            // wins if multiple invocations occur within a single animation frame
-            // (this is the default behavior of createAnimationFrame)
-            //
-            // onTouchStart and onTouchEnd invocations are queued in FIFO order.  This is
-            // different from how onTouchMove behaves because when multiple "start" or
-            // "end" events occur in quick succession, we need to handle them all so we
-            // can sync the state of activeTouches and activeTouchesMap.
+        // onTouchMove runs on requestAnimationFrame for performance reasons.
+        // onTouchEnd must follow the same pattern, to avoid a scenario where touchend
+        // could potentially be processed before the last touchmove
+        //
+        // Although it may seem unintuitive, onTouchStart must also run using
+        // requestAnimationFrame timing. This is necessary mainly on muli-input devices
+        // such as Windows 8 with Chrome (see https://sencha.jira.com/browse/EXTJS-14945)
+        // on such browsers, if you click the mouse and then touch the screen in a
+        // different location, the browser will simulate a "mousemove" event before
+        // the touchstart event, as if you moved the mouse to the new location before
+        // touching the screen.  In this scenario we need to ensure that the simulated
+        // mousemove happens BEFORE the touchstart event, or gesture recognizers can
+        // get out of sync
+        //
+        // onTouchMove invocations are queued in such a way that the last invocation
+        // wins if multiple invocations occur within a single animation frame
+        // (this is the default behavior of createAnimationFrame)
+        //
+        // onTouchStart and onTouchEnd invocations are queued in FIFO order.  This is
+        // different from how onTouchMove behaves because when multiple "start" or
+        // "end" events occur in quick succession, we need to handle them all so we
+        // can sync the state of activeTouches and activeTouchesMap.
             asyncTouchStart = Fn.createAnimationFrame(me.onTouchStart, me, null, 1),
             asyncTouchMove = Fn.createAnimationFrame(me.onTouchMove, me),
             asyncTouchEnd = Fn.createAnimationFrame(me.onTouchEnd, me, null, 1);
@@ -146,10 +146,10 @@ Ext.define('Ext.event.publisher.Gesture', {
         return me.callParent();
     },
 
-    onReady: function() {
+    onReady: function () {
         this.callParent();
 
-        Ext.Array.sort(this.recognizers, function(recognizerA, recognizerB) {
+        Ext.Array.sort(this.recognizers, function (recognizerA, recognizerB) {
             var a = recognizerA.priority,
                 b = recognizerB.priority;
 
@@ -157,7 +157,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         });
     },
 
-    registerRecognizer: function(recognizer) {
+    registerRecognizer: function (recognizer) {
         var me = this,
             handledEvents = recognizer.handledEvents,
             ln = handledEvents.length,
@@ -179,7 +179,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         me.recognizers.push(recognizer);
     },
 
-    onRecognized: function(eventName, e, info) {
+    onRecognized: function (eventName, e, info) {
         var me = this,
             changedTouches = e.changedTouches,
             ln = changedTouches.length,
@@ -227,7 +227,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         me.publish(eventName, targets, e);
     },
 
-    getCommonTargets: function(targetGroups) {
+    getCommonTargets: function (targetGroups) {
         var firstTargetGroup = targetGroups[0],
             ln = targetGroups.length;
 
@@ -261,7 +261,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         return commonTargets;
     },
 
-    invokeRecognizers: function(methodName, e) {
+    invokeRecognizers: function (methodName, e) {
         var recognizers = this.recognizers,
             ln = recognizers.length,
             i, recognizer;
@@ -280,13 +280,13 @@ Ext.define('Ext.event.publisher.Gesture', {
         }
     },
 
-    updateTouches: function(e, isEnd) {
+    updateTouches: function (e, isEnd) {
         var me = this,
             browserEvent = e.browserEvent,
-            // the touchSource is the object from which we get data about the changed touch
-            // point or points related to an event object, such as identifier, target, and
-            // coordinates. For touch event the source is changedTouches, for mouse and
-            // pointer events it is the event object itself.
+        // the touchSource is the object from which we get data about the changed touch
+        // point or points related to an event object, such as identifier, target, and
+        // coordinates. For touch event the source is changedTouches, for mouse and
+        // pointer events it is the event object itself.
             touchSources = browserEvent.changedTouches || [browserEvent],
             activeTouches = me.activeTouches,
             activeTouchesMap = me.activeTouchesMap,
@@ -352,7 +352,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         e.changedTouches = changedTouches;
     },
 
-    doDelegatedEvent: function(e) {
+    doDelegatedEvent: function (e) {
         var me = this;
 
         // call parent method to dispatch the browser event (e.g. touchstart, mousemove)
@@ -379,7 +379,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         }
     },
 
-    onTouchStart: function(e) {
+    onTouchStart: function (e) {
         var me = this,
             target = e.target,
             touches = e.browserEvent.touches;
@@ -421,7 +421,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         me.invokeRecognizers('onTouchStart', e);
     },
 
-    onTouchMove: function(e) {
+    onTouchMove: function (e) {
         var me = this,
             mousePointerType = me.mousePointerType;
 
@@ -445,7 +445,7 @@ Ext.define('Ext.event.publisher.Gesture', {
     // This method serves as the handler for both "end" and "cancel" events.  This is
     // because they are handled identically with the exception of the recognizer method
     // that is called.
-    onTouchEnd: function(e) {
+    onTouchEnd: function (e) {
         var me = this;
 
         if (!me.isStarted) {
@@ -469,7 +469,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         }
     },
 
-    onTargetTouchMove: function(e) {
+    onTargetTouchMove: function (e) {
         if (Ext.elevateFunction) {
             // using [e] is faster than using arguments in most browsers
             // http://jsperf.com/passing-arguments
@@ -479,7 +479,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         }
     },
 
-    doTargetTouchMove: function(e) {
+    doTargetTouchMove: function (e) {
         // handle touchmove if the target el was removed from dom mid-gesture.
         // see onTouchStart/onTargetTouchEnd for further explanation
         if (!Ext.getBody().contains(e.target)) {
@@ -487,7 +487,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         }
     },
 
-    onTargetTouchEnd: function(e) {
+    onTargetTouchEnd: function (e) {
         if (Ext.elevateFunction) {
             // using [e] is faster than using arguments in most browsers
             // http://jsperf.com/passing-arguments
@@ -497,7 +497,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         }
     },
 
-    doTargetTouchEnd: function(e) {
+    doTargetTouchEnd: function (e) {
         var me = this,
             target = e.target;
 
@@ -522,7 +522,7 @@ Ext.define('Ext.event.publisher.Gesture', {
         }
     },
 
-    updateAsync: function(async) {
+    updateAsync: function (async) {
         this.handlers = async ? this._asyncHandlers : this._handlers;
     },
 
@@ -533,7 +533,7 @@ Ext.define('Ext.event.publisher.Gesture', {
      *
      * Calling this method will also reset the state of Ext.event.publisher.Dom
      */
-    reset: function() {
+    reset: function () {
         var me = this,
             recognizers = me.recognizers,
             ln = recognizers.length,
@@ -554,8 +554,8 @@ Ext.define('Ext.event.publisher.Gesture', {
     },
 
     privates: {
-        removeGhostTouches: function(touches) {
-            var ids = {}, 
+        removeGhostTouches: function (touches) {
+            var ids = {},
                 len = touches.length,
                 activeTouches = this.activeTouches,
                 map = this.activeTouchesMap,
@@ -577,6 +577,6 @@ Ext.define('Ext.event.publisher.Gesture', {
             }
         }
     }
-}, function(Gesture) {
+}, function (Gesture) {
     Gesture.instance = new Gesture();
 });

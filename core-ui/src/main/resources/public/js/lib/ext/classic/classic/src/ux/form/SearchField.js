@@ -19,21 +19,21 @@ Ext.define('Ext.ux.form.SearchField', {
         }
     },
 
-    hasSearch : false,
-    paramName : 'query',
+    hasSearch: false,
+    paramName: 'query',
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this,
             store = me.store,
             proxy;
 
         me.callParent(arguments);
-        me.on('specialkey', function(f, e){
+        me.on('specialkey', function (f, e) {
             if (e.getKey() == e.ENTER) {
                 me.onSearchClick();
             }
         });
-        
+
         if (!store || !store.isStore) {
             store = me.store = Ext.data.StoreManager.lookup(store);
         }
@@ -44,12 +44,12 @@ Ext.define('Ext.ux.form.SearchField', {
         // Set up the proxy to encode the filter in the simplest way as a name/value pair
         proxy = me.store.getProxy();
         proxy.setFilterParam(me.paramName);
-        proxy.encodeFilters = function(filters) {
+        proxy.encodeFilters = function (filters) {
             return filters[0].getValue();
         }
     },
 
-    onClearClick : function(){
+    onClearClick: function () {
         var me = this,
             activeFilter = me.activeFilter;
 
@@ -62,7 +62,7 @@ Ext.define('Ext.ux.form.SearchField', {
         }
     },
 
-    onSearchClick : function(){
+    onSearchClick: function () {
         var me = this,
             value = me.getValue();
 

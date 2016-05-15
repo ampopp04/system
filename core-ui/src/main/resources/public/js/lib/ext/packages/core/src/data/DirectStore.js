@@ -22,16 +22,16 @@
  */
 Ext.define('Ext.data.DirectStore', {
     /* Begin Definitions */
-    
+
     extend: 'Ext.data.Store',
-    
+
     alias: 'store.direct',
-    
+
     requires: ['Ext.data.proxy.Direct'],
-   
+
     /* End Definitions */
 
-    constructor : function(config){
+    constructor: function (config) {
         config = Ext.apply({}, config);
         if (!config.proxy) {
             var proxy = {
@@ -45,5 +45,5 @@ Ext.define('Ext.data.DirectStore', {
             config.proxy = proxy;
         }
         this.callParent([config]);
-    }    
+    }
 });

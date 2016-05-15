@@ -32,7 +32,7 @@
  *
  * An object literal of this form could also be used as the {@link #cfg-data} config option.
  */
-Ext.define('Ext.data.JsonStore',  {
+Ext.define('Ext.data.JsonStore', {
     extend: 'Ext.data.Store',
     alias: 'store.json',
     requires: [
@@ -41,10 +41,10 @@ Ext.define('Ext.data.JsonStore',  {
         'Ext.data.writer.Json'
     ],
 
-    constructor: function(config) {
+    constructor: function (config) {
         config = Ext.apply({
             proxy: {
-                type  : 'ajax',
+                type: 'ajax',
                 reader: 'json',
                 writer: 'json'
             }

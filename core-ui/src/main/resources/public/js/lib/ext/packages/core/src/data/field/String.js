@@ -9,12 +9,12 @@ Ext.define('Ext.data.field.String', {
 
     isStringField: true,
 
-    convert: function(v) {
+    convert: function (v) {
         var defaultValue = this.allowNull ? null : '';
         return (v === undefined || v === null) ? defaultValue : String(v);
     },
 
-    getType: function() {
+    getType: function () {
         return 'string';
     }
 });

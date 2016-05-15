@@ -4,7 +4,7 @@
  * 24 April 2007
  * Changed by Cariad, 29 July 2007
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
     if (Ext.Date) {
         Ext.Date.monthNames = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
 

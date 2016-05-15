@@ -93,7 +93,7 @@ Ext.define('Ext.layout.container.Accordion', {
      * and expanding, *not* the child Panels.
      */
     animate: true,
-    
+
     /**
      * @cfg {Boolean} activeOnTop
      * Only valid when {@link #multi} is `false` and {@link #animate} is `false`.
@@ -102,13 +102,13 @@ Ext.define('Ext.layout.container.Accordion', {
      * false to keep the panels in the rendered order.
      */
     activeOnTop: false,
-    
+
     /**
      * @cfg {Boolean} multi
      * Set to true to enable multiple accordion items to be open at once.
      */
     multi: false,
-    
+
     /**
      * @cfg {Boolean} [wrapOver=true] When `true`, pressing Down or Right arrow key on the
      * focused last accordion panel header will navigate to the first panel; pressing Up
@@ -125,7 +125,7 @@ Ext.define('Ext.layout.container.Accordion', {
         height: true
     },
 
-    constructor: function() {
+    constructor: function () {
         var me = this;
 
         me.callParent(arguments);
@@ -134,12 +134,12 @@ Ext.define('Ext.layout.container.Accordion', {
             me.animatePolicy = {};
 
             /* Animate our parallel dimension and position.
-               So in the default vertical accordion, this will be
-                {
-                    y: true,
-                    height: true
-                }
-            */
+             So in the default vertical accordion, this will be
+             {
+             y: true,
+             height: true
+             }
+             */
             me.animatePolicy[me.names.x] = true;
             me.animatePolicy[me.names.width] = true;
         } else {
@@ -159,13 +159,13 @@ Ext.define('Ext.layout.container.Accordion', {
 
         for (i = 0; i < ln; i++) {
             comp = items[i];
-            
+
             if (!comp.rendered) {
                 // Set up initial properties for Panels in an accordion.
                 comp.isAccordionPanel = true;
                 comp.bodyAriaRole = 'tabpanel';
                 comp.accordionWrapOver = me.wrapOver;
-                
+
                 if (!multi || comp.collapsible !== false) {
                     comp.collapsible = true;
                 }
@@ -226,18 +226,18 @@ Ext.define('Ext.layout.container.Accordion', {
         }
     },
 
-    getItemsRenderTree: function(items) {
+    getItemsRenderTree: function (items) {
         this.beforeRenderItems(items);
         return this.callParent(arguments);
     },
 
-    renderItems : function(items, target) {
+    renderItems: function (items, target) {
         this.beforeRenderItems(items);
 
         this.callParent(arguments);
     },
 
-    configureItem: function(item) {
+    configureItem: function (item) {
         this.callParent(arguments);
 
         // Accordion headers are immune to dock layout's border-management rules
@@ -255,7 +255,7 @@ Ext.define('Ext.layout.container.Accordion', {
 
     beginLayout: function (ownerContext) {
         this.callParent(arguments);
-        
+
         // Accordion widgets have the role of tablist along with the attribute
         // aria-multiselectable="true" to indicate that it's an accordion
         // and not just a simple tab panel.
@@ -267,11 +267,11 @@ Ext.define('Ext.layout.container.Accordion', {
         // innerCt seems to be the most logical choice here.
         this.innerCt.dom.setAttribute('role', 'tablist');
         this.innerCt.dom.setAttribute('aria-multiselectable', true);
-        
+
         this.updatePanelClasses(ownerContext);
     },
 
-    updatePanelClasses: function(ownerContext) {
+    updatePanelClasses: function (ownerContext) {
         var children = ownerContext.visibleItems,
             ln = children.length,
             siblingCollapsed = true,
@@ -301,7 +301,7 @@ Ext.define('Ext.layout.container.Accordion', {
     // When a Component expands, adjust the heights of the other Components to be just enough to accommodate
     // their headers.
     // The expanded Component receives the only flex value, and so gets all remaining space.
-    onBeforeComponentExpand: function(toExpand) {
+    onBeforeComponentExpand: function (toExpand) {
         var me = this,
             owner = me.owner,
             multi = me.multi,
@@ -313,7 +313,7 @@ Ext.define('Ext.layout.container.Accordion', {
             me.processing = true;
             previousValue = owner.deferLayouts;
             owner.deferLayouts = true;
-            
+
             if (!multi) {
                 expanded = me.getExpanded()[0];
                 if (expanded && expanded !== toExpand) {
@@ -338,7 +338,7 @@ Ext.define('Ext.layout.container.Accordion', {
         }
     },
 
-    onBeforeComponentCollapse: function(comp) {
+    onBeforeComponentCollapse: function (comp) {
         var me = this,
             owner = me.owner,
             toExpand,
@@ -375,7 +375,7 @@ Ext.define('Ext.layout.container.Accordion', {
         }
     },
 
-    onComponentShow: function(comp) {
+    onComponentShow: function (comp) {
         this.onBeforeComponentExpand(comp);
     },
 
@@ -402,12 +402,12 @@ Ext.define('Ext.layout.container.Accordion', {
         }
     },
 
-    onRemove: function(panel, destroying){
+    onRemove: function (panel, destroying) {
         var me = this,
             item;
-            
+
         me.callParent(arguments);
-        
+
         if (!me.owner.destroying && !me.multi && !panel.collapsed) {
             item = me.owner.items.first();
             if (item) {
@@ -416,7 +416,7 @@ Ext.define('Ext.layout.container.Accordion', {
         }
     },
 
-    getExpanded: function(explicitCheck){
+    getExpanded: function (explicitCheck) {
         var items = this.owner.items.items,
             len = items.length,
             i = 0,

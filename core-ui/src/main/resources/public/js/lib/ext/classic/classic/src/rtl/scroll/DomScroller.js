@@ -2,7 +2,7 @@ Ext.define('Ext.rtl.scroll.DomScroller', {
     override: 'Ext.scroll.DomScroller',
 
     privates: {
-        convertX: function(x) {
+        convertX: function (x) {
             var element;
 
             if (this.getRtl()) {
@@ -16,7 +16,7 @@ Ext.define('Ext.rtl.scroll.DomScroller', {
             return x;
         },
 
-        getElementScroll: function(element) {
+        getElementScroll: function (element) {
             return this.getRtl() ? element.rtlGetScroll() : element.getScroll();
         }
     }

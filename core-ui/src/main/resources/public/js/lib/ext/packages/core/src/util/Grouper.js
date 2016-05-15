@@ -23,8 +23,8 @@ Ext.define('Ext.util.Grouper', {
         groupFn: null,
 
         /**
-         * @cfg {String} property The field by which records are grouped. Groups are 
-         * sorted alphabetically by group value as the default. To sort groups by a different 
+         * @cfg {String} property The field by which records are grouped. Groups are
+         * sorted alphabetically by group value as the default. To sort groups by a different
          * property, use the {@link #sortProperty} configuration.
          */
 
@@ -36,7 +36,7 @@ Ext.define('Ext.util.Grouper', {
         sortProperty: null
     },
 
-    constructor: function(config) {
+    constructor: function (config) {
         //<debug>
         if (config) {
             if (config.getGroupString) {

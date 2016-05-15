@@ -1,4 +1,4 @@
-describe("Ext.Component", function(){
+describe("Ext.Component", function () {
     var Component = Ext.Component,
         proto = Component.prototype,
         compIdAttr = 'data-componentid',
@@ -27,76 +27,77 @@ describe("Ext.Component", function(){
         return text.join(' ');
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Suppress console warnings about elements already destroyed
         spyOn(Ext.Logger, 'warn');
     });
 
-    afterEach(function(){
+    afterEach(function () {
         if (c) {
             c.destroy();
         }
         c = null;
     });
 
-    describe("configuration", function() {
-        it("should have a hideMode", function() {
+    describe("configuration", function () {
+        it("should have a hideMode", function () {
             expect(proto.hideMode).toEqual('display');
         });
 
-        it("should have no bubbleEvents", function() {
+        it("should have no bubbleEvents", function () {
             expect(proto.bubbleEvents).toBeUndefined();
         });
 
-        it("should have a renderTpl", function() {
+        it("should have a renderTpl", function () {
             expect(proto.renderTpl).toBeDefined();
         });
     });
-    
-    
-    describe("ids", function(){
-        it("should generate an id if one isn't specified", function(){
+
+
+    describe("ids", function () {
+        it("should generate an id if one isn't specified", function () {
             makeComponent();
             expect(c.id).toBeDefined();
         });
 
-        it("should use an id if one is specified", function(){
+        it("should use an id if one is specified", function () {
             makeComponent({
                 id: 'foo'
             });
             expect(c.id).toEqual('foo');
         });
 
-        it("should return the itemId if one exists", function(){
+        it("should return the itemId if one exists", function () {
             makeComponent({
                 itemId: 'a'
-            });      
+            });
             expect(c.getItemId()).toEqual('a');
         });
 
-        it("should fall back on the id if no itemId is specified", function(){
+        it("should fall back on the id if no itemId is specified", function () {
             makeComponent({
                 id: 'foo'
             });
-            expect(c.getItemId()).toEqual('foo');    
+            expect(c.getItemId()).toEqual('foo');
         });
 
-        it("should give the itemId precedence", function(){
+        it("should give the itemId precedence", function () {
             makeComponent({
                 id: 'foo',
                 itemId: 'bar'
-            });    
+            });
             expect(c.getItemId()).toEqual('bar');
         });
 
-        it("should throw error if the Component has an invalid id", function() {
+        it("should throw error if the Component has an invalid id", function () {
             function expectError(id) {
-                expect(function() {
+                expect(function () {
                     new Ext.Component({
                         id: id
                     });
                 }).toThrow('Invalid component "id": "' + id + '"');
             }
+
             expectError('.abcdef');
             expectError('0a...');
             expectError('12345');
@@ -106,31 +107,31 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("registering with ComponentManager", function(){
-        it("should register itself upon creation", function(){
+    describe("registering with ComponentManager", function () {
+        it("should register itself upon creation", function () {
             makeComponent({
                 id: 'foo'
             });
-            expect(Ext.ComponentManager.get('foo')).toEqual(c);    
-        });  
+            expect(Ext.ComponentManager.get('foo')).toEqual(c);
+        });
 
-        it("should unregister on destroy", function(){
+        it("should unregister on destroy", function () {
             makeComponent({
                 id: 'foo'
-            });    
+            });
             c.destroy();
             expect(Ext.ComponentManager.get('foo')).toBeUndefined();
         });
     });
 
-    describe("setHtml/setData", function() {
+    describe("setHtml/setData", function () {
         var MyModel = Ext.define(null, {
             extend: 'Ext.data.Model',
             fields: ['name']
         });
 
-        describe("during construction", function() {
-            it("should add the html", function() {
+        describe("during construction", function () {
+            it("should add the html", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     html: 'Foo'
@@ -138,7 +139,7 @@ describe("Ext.Component", function(){
                 expect(c.getEl().dom.innerHTML).toBe('Foo');
             });
 
-            it("should add the data according to the template", function() {
+            it("should add the data according to the template", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     tpl: '{x}/{y}',
@@ -150,7 +151,7 @@ describe("Ext.Component", function(){
                 expect(c.getEl().dom.innerHTML).toBe('1/2');
             });
 
-            it("should add data from a record", function() {
+            it("should add data from a record", function () {
                 var rec = new MyModel({
                     name: 'recName'
                 });
@@ -162,7 +163,7 @@ describe("Ext.Component", function(){
                 expect(c.getEl().dom.innerHTML).toBe('recName');
             });
 
-            it("should retain the data on the object", function() {
+            it("should retain the data on the object", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     tpl: '{x}/{y}',
@@ -177,7 +178,7 @@ describe("Ext.Component", function(){
                 });
             });
 
-            it("should retain record data", function() {
+            it("should retain record data", function () {
                 var rec = new MyModel({
                     id: 1,
                     name: 'recName'
@@ -194,15 +195,15 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("before rendering", function() {
-            it("should add the html", function() {
+        describe("before rendering", function () {
+            it("should add the html", function () {
                 makeComponent();
                 c.setHtml('Foo');
                 c.render(Ext.getBody());
                 expect(c.getEl().dom.innerHTML).toBe('Foo');
             });
 
-            it("should add the data according to the template", function() {
+            it("should add the data according to the template", function () {
                 makeComponent({
                     tpl: '{x}/{y}'
                 });
@@ -214,7 +215,7 @@ describe("Ext.Component", function(){
                 expect(c.getEl().dom.innerHTML).toBe('1/2');
             });
 
-            it("should add data from a record", function() {
+            it("should add data from a record", function () {
                 var rec = new MyModel({
                     name: 'recName'
                 });
@@ -227,8 +228,8 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("after rendering", function() {
-            it("should add the html", function() {
+        describe("after rendering", function () {
+            it("should add the html", function () {
                 makeComponent({
                     renderTo: Ext.getBody()
                 });
@@ -236,7 +237,7 @@ describe("Ext.Component", function(){
                 expect(c.getEl().dom.innerHTML).toBe('Foo');
             });
 
-            it("should add the data according to the template", function() {
+            it("should add the data according to the template", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     tpl: '{x}/{y}'
@@ -248,7 +249,7 @@ describe("Ext.Component", function(){
                 expect(c.getEl().dom.innerHTML).toBe('1/2');
             });
 
-            it("should add data from a record", function() {
+            it("should add data from a record", function () {
                 var rec = new MyModel({
                     name: 'recName'
                 });
@@ -262,48 +263,49 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("view controllers", function() {
+    describe("view controllers", function () {
         var Controller;
-        beforeEach(function() {
+        beforeEach(function () {
             // Suppress console warning about mapping being overridden
             spyOn(Ext.log, 'warn');
-            
+
             Controller = Ext.define('spec.TestController', {
                 extend: 'Ext.app.ViewController',
                 alias: 'controller.test',
 
-                someFn: function() {}
+                someFn: function () {
+                }
             });
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             Ext.undefine('spec.TestController');
             Controller = null;
             Ext.Factory.controller.instance.clearCache();
         });
-        
-        describe("initializing", function() {
-            it("should accept an alias string", function() {
+
+        describe("initializing", function () {
+            it("should accept an alias string", function () {
                 makeComponent({
                     controller: 'test'
-                }); 
-                var controller = c.getController();   
+                });
+                var controller = c.getController();
                 expect(controller instanceof spec.TestController).toBe(true);
                 expect(controller.getView()).toBe(c);
             });
-            
-            it("should accept a controller config", function() {
+
+            it("should accept a controller config", function () {
                 makeComponent({
                     controller: {
                         type: 'test'
                     }
-                });    
-                var controller = c.getController();   
+                });
+                var controller = c.getController();
                 expect(controller instanceof spec.TestController).toBe(true);
                 expect(controller.getView()).toBe(c);
-            }); 
-            
-            it("should accept a controller instance", function() {
+            });
+
+            it("should accept a controller instance", function () {
                 var controller = new spec.TestController();
                 makeComponent({
                     controller: controller
@@ -312,15 +314,15 @@ describe("Ext.Component", function(){
                 expect(controller.getView()).toBe(c);
             });
 
-            it("should be able to pass null", function() {
+            it("should be able to pass null", function () {
                 makeComponent({
                     controller: null
                 });
                 expect(c.getController()).toBeNull();
             });
-        });  
-        
-        it("should destroy the controller when destroying the component", function() {
+        });
+
+        it("should destroy the controller when destroying the component", function () {
             makeComponent({
                 controller: 'test'
             });
@@ -330,14 +332,14 @@ describe("Ext.Component", function(){
             expect(controller.destroy).toHaveBeenCalled();
         });
 
-        describe("lookupController", function() {
-            describe("skipThis: false", function() {
-                it("should return null when there is no controller attached to the view", function() {
+        describe("lookupController", function () {
+            describe("skipThis: false", function () {
+                it("should return null when there is no controller attached to the view", function () {
                     makeComponent();
                     expect(c.lookupController(false)).toBeNull();
                 });
 
-                it("should return null when there is no controller in the hierarchy", function() {
+                it("should return null when there is no controller in the hierarchy", function () {
                     var ct = new Ext.container.Container({
                         items: {
                             xtype: 'component'
@@ -347,7 +349,7 @@ describe("Ext.Component", function(){
                     ct.destroy();
                 });
 
-                it("should return the controller attached to the component when it is at the root", function() {
+                it("should return the controller attached to the component when it is at the root", function () {
                     var controller = new spec.TestController();
                     makeComponent({
                         controller: controller
@@ -355,7 +357,7 @@ describe("Ext.Component", function(){
                     expect(c.lookupController(false)).toBe(controller);
                 });
 
-                it("should return the controller attached to the component when it is in a hierarchy", function() {
+                it("should return the controller attached to the component when it is in a hierarchy", function () {
                     var controller = new spec.TestController();
                     var ct = new Ext.container.Container({
                         items: {
@@ -367,7 +369,7 @@ describe("Ext.Component", function(){
                     ct.destroy();
                 });
 
-                it("should return a controller above it in the hierarchy", function() {
+                it("should return a controller above it in the hierarchy", function () {
                     var controller = new spec.TestController();
 
                     var ct = new Ext.container.Container({
@@ -380,7 +382,7 @@ describe("Ext.Component", function(){
                     ct.destroy();
                 });
 
-                it("should return the closest controller in the hierarchy", function() {
+                it("should return the closest controller in the hierarchy", function () {
                     var controller1 = new spec.TestController(),
                         controller2 = new spec.TestController();
 
@@ -400,13 +402,13 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("skipThis: true", function() {
-                it("should return null when there is no controller attached to the view", function() {
+            describe("skipThis: true", function () {
+                it("should return null when there is no controller attached to the view", function () {
                     makeComponent();
                     expect(c.lookupController(true)).toBeNull();
                 });
 
-                it("should return null when there is no controller in the hierarchy", function() {
+                it("should return null when there is no controller in the hierarchy", function () {
                     var ct = new Ext.container.Container({
                         items: {
                             xtype: 'component'
@@ -416,7 +418,7 @@ describe("Ext.Component", function(){
                     ct.destroy();
                 });
 
-                it("should not return the controller attached to the component when it is at the root", function() {
+                it("should not return the controller attached to the component when it is at the root", function () {
                     var controller = new spec.TestController();
                     makeComponent({
                         controller: controller
@@ -424,7 +426,7 @@ describe("Ext.Component", function(){
                     expect(c.lookupController(true)).toBeNull();
                 });
 
-                it("should not return the controller attached to the component when it is in a hierarchy and no controllers exist above it", function() {
+                it("should not return the controller attached to the component when it is in a hierarchy and no controllers exist above it", function () {
                     var controller = new spec.TestController();
                     var ct = new Ext.container.Container({
                         items: {
@@ -436,7 +438,7 @@ describe("Ext.Component", function(){
                     ct.destroy();
                 });
 
-                it("should return a controller above it in the hierarchy", function() {
+                it("should return a controller above it in the hierarchy", function () {
                     var controller = new spec.TestController();
 
                     var ct = new Ext.container.Container({
@@ -449,7 +451,7 @@ describe("Ext.Component", function(){
                     ct.destroy();
                 });
 
-                it("should return the closest controller in the hierarchy", function() {
+                it("should return the closest controller in the hierarchy", function () {
                     var controller1 = new spec.TestController(),
                         controller2 = new spec.TestController();
 
@@ -469,7 +471,7 @@ describe("Ext.Component", function(){
                 });
             });
 
-            it("should default to skipThis: false", function() {
+            it("should default to skipThis: false", function () {
                 var controller = new spec.TestController();
                 makeComponent({
                     controller: controller
@@ -479,15 +481,15 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("viewmodel", function() {
+    describe("viewmodel", function () {
         var spy, order, called;
 
-        beforeEach(function() {
+        beforeEach(function () {
             called = false;
             Ext.define('spec.ViewModel', {
                 extend: 'Ext.app.ViewModel',
                 alias: 'viewmodel.test',
-                constructor: function() {
+                constructor: function () {
                     this.callParent(arguments);
                     order.push(this.getId());
                     called = true;
@@ -496,21 +498,21 @@ describe("Ext.Component", function(){
             order = [];
         });
 
-        afterEach(function() {
+        afterEach(function () {
             Ext.undefine('spec.ViewModel');
             Ext.Factory.viewModel.instance.clearCache();
             order = null;
             called = false;
         });
 
-        it("should accept a string alias", function() {
+        it("should accept a string alias", function () {
             makeComponent({
                 viewModel: 'test'
             });
             expect(c.getViewModel() instanceof spec.ViewModel).toBe(true);
         });
 
-        it("should accept an object config", function() {
+        it("should accept an object config", function () {
             makeComponent({
                 viewModel: {
                     type: 'test'
@@ -519,7 +521,7 @@ describe("Ext.Component", function(){
             expect(c.getViewModel() instanceof spec.ViewModel).toBe(true);
         });
 
-        it("should accept an object instance", function() {
+        it("should accept an object instance", function () {
             var vm = new spec.ViewModel();
             makeComponent({
                 viewModel: vm
@@ -527,7 +529,7 @@ describe("Ext.Component", function(){
             expect(c.getViewModel()).toBe(vm);
         });
 
-        it("should not create the instance while constructing the component", function() {
+        it("should not create the instance while constructing the component", function () {
             makeComponent({
                 viewModel: {
                     type: 'test'
@@ -536,7 +538,7 @@ describe("Ext.Component", function(){
             expect(called).toBe(false);
         });
 
-        it("should not create an instance during render", function() {
+        it("should not create an instance during render", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 viewModel: {
@@ -546,7 +548,7 @@ describe("Ext.Component", function(){
             expect(called).toBe(false);
         });
 
-        it("should not create an instance while constructing with binds", function() {
+        it("should not create an instance while constructing with binds", function () {
             makeComponent({
                 bind: '{html}',
                 viewModel: {
@@ -556,7 +558,7 @@ describe("Ext.Component", function(){
             expect(called).toBe(false);
         });
 
-        it("should create an instance while rendering with binds", function() {
+        it("should create an instance while rendering with binds", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 bind: '{html}',
@@ -567,7 +569,7 @@ describe("Ext.Component", function(){
             expect(called).toBe(true);
         });
 
-        it("should create an instance when getViewModel is called", function() {
+        it("should create an instance when getViewModel is called", function () {
             makeComponent({
                 viewModel: {
                     type: 'test'
@@ -577,7 +579,7 @@ describe("Ext.Component", function(){
             expect(called).toBe(true);
         });
 
-        it("should create an instance when lookupViewModel is called", function() {
+        it("should create an instance when lookupViewModel is called", function () {
             makeComponent({
                 viewModel: {
                     type: 'test'
@@ -587,12 +589,12 @@ describe("Ext.Component", function(){
             expect(called).toBe(true);
         });
 
-        describe("calling initViewController", function() {
+        describe("calling initViewController", function () {
             var TestController = Ext.define(null, {
                 extend: 'Ext.app.ViewController'
             });
 
-            it("should call initViewController when creating an instance during rendering", function() {
+            it("should call initViewController when creating an instance during rendering", function () {
                 var ctrl = new TestController();
                 makeComponent({
                     controller: ctrl,
@@ -606,7 +608,7 @@ describe("Ext.Component", function(){
                 expect(ctrl.initViewModel).toHaveBeenCalledWith(c.getViewModel());
             });
 
-            it("should call initViewController when creating view a direct call to getViewModel", function() {
+            it("should call initViewController when creating view a direct call to getViewModel", function () {
                 var ctrl = new TestController();
                 makeComponent({
                     controller: ctrl,
@@ -621,7 +623,7 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("hierarchy", function() {
+        describe("hierarchy", function () {
             var ct, inner;
 
             function vm(id) {
@@ -648,23 +650,23 @@ describe("Ext.Component", function(){
                 c = inner.items.first();
             }
 
-            afterEach(function() {
+            afterEach(function () {
                 ct.destroy();
                 ct = inner = null;
             });
 
-            it("should not initialize any view models", function() {
+            it("should not initialize any view models", function () {
                 makeHierarchy();
                 expect(called).toBe(false);
             });
 
-            it("should initialize viewmodels top down", function() {
+            it("should initialize viewmodels top down", function () {
                 makeHierarchy();
                 c.getViewModel();
                 expect(order).toEqual(['top', 'middle', 'bottom']);
             });
 
-            it("should only initialize view models as needed when calling getViewModel", function() {
+            it("should only initialize view models as needed when calling getViewModel", function () {
                 makeHierarchy();
                 ct.getViewModel();
                 expect(order).toEqual(['top']);
@@ -674,7 +676,7 @@ describe("Ext.Component", function(){
                 expect(order).toEqual(['top', 'middle', 'bottom']);
             });
 
-            it("should only initialize view models as needed when calling lookupViewModel", function() {
+            it("should only initialize view models as needed when calling lookupViewModel", function () {
                 makeHierarchy();
                 ct.lookupViewModel();
                 expect(order).toEqual(['top']);
@@ -684,21 +686,21 @@ describe("Ext.Component", function(){
                 expect(order).toEqual(['top', 'middle', 'bottom']);
             });
 
-            it("should not create the instance when calling getInherited and skipping ourselves", function() {
+            it("should not create the instance when calling getInherited and skipping ourselves", function () {
                 makeHierarchy();
                 c.lookupViewModel(true);
                 expect(order).toEqual(['top', 'middle']);
             });
 
-            it("should automatically create the hierarchy during render with a bind", function() {
+            it("should automatically create the hierarchy during render with a bind", function () {
                 makeHierarchy('{html}');
                 ct.render(Ext.getBody());
                 expect(order).toEqual(['top', 'middle', 'bottom']);
             });
         });
 
-        describe("session", function() {
-            it("should attach the view model to the session", function() {
+        describe("session", function () {
+            it("should attach the view model to the session", function () {
                 var session = new Ext.data.Session();
                 makeComponent({
                     session: session,
@@ -707,7 +709,7 @@ describe("Ext.Component", function(){
                 expect(c.getViewModel().getSession()).toBe(session);
             });
 
-            it("should attach the view model to a session higher up in the hierarchy", function() {
+            it("should attach the view model to a session higher up in the hierarchy", function () {
                 var session = new Ext.data.Session();
                 var ct = new Ext.container.Container({
                     session: session,
@@ -720,7 +722,7 @@ describe("Ext.Component", function(){
                 ct.destroy();
             });
 
-            it("should use an attached session at the same level instead of a higher one", function() {
+            it("should use an attached session at the same level instead of a higher one", function () {
                 var session1 = new Ext.data.Session(),
                     session2 = new Ext.data.Session();
 
@@ -738,13 +740,13 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("session", function() {
-        it("should not have a session by default", function() {
+    describe("session", function () {
+        it("should not have a session by default", function () {
             makeComponent();
             expect(c.getSession()).toBeNull();
         });
 
-        it("should use a passed session", function() {
+        it("should use a passed session", function () {
             var session = new Ext.data.Session();
             makeComponent({
                 session: session
@@ -752,14 +754,14 @@ describe("Ext.Component", function(){
             expect(c.getSession()).toBe(session);
         });
 
-        it("should create a session when session: true is specified", function() {
+        it("should create a session when session: true is specified", function () {
             makeComponent({
                 session: true
             });
             expect(c.getSession().isSession).toBe(true);
         });
 
-        it("should destroy the session when the component is destroyed", function() {
+        it("should destroy the session when the component is destroyed", function () {
             var session = new Ext.data.Session(),
                 spy = spyOn(session, 'destroy').andCallThrough();
 
@@ -770,7 +772,7 @@ describe("Ext.Component", function(){
             expect(spy).toHaveBeenCalled();
         });
 
-        it("should not destroy the session with autoDestroy: false", function() {
+        it("should not destroy the session with autoDestroy: false", function () {
             var session = new Ext.data.Session({
                 autoDestroy: false
             });
@@ -783,8 +785,8 @@ describe("Ext.Component", function(){
             session.destroy();
         });
 
-        describe("hierarchy", function() {
-            it("should use a parent session", function() {
+        describe("hierarchy", function () {
+            it("should use a parent session", function () {
                 var session = new Ext.data.Session();
 
                 var ct = new Ext.container.Container({
@@ -797,7 +799,7 @@ describe("Ext.Component", function(){
                 ct.destroy();
             });
 
-            it("should spawn a session from the parent if specifying session: true", function() {
+            it("should spawn a session from the parent if specifying session: true", function () {
                 var session = new Ext.data.Session();
 
                 var ct = new Ext.container.Container({
@@ -810,15 +812,15 @@ describe("Ext.Component", function(){
 
                 var child = ct.items.first().getSession();
                 expect(child.getParent()).toBe(session);
-                
+
                 ct.destroy();
             });
         });
     });
 
-    describe("bind", function() {
-        describe("defaultBindProperty", function() {
-            it("should bind with a string", function() {
+    describe("bind", function () {
+        describe("defaultBindProperty", function () {
+            it("should bind with a string", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     viewModel: {
@@ -832,8 +834,8 @@ describe("Ext.Component", function(){
                 expect(c.getEl().dom.innerHTML).toBe('foo');
             });
 
-            it("should throw an exception if we have no default bind", function() {
-                expect(function() {
+            it("should throw an exception if we have no default bind", function () {
+                expect(function () {
                     makeComponent({
                         defaultBindProperty: '',
                         viewModel: {
@@ -848,7 +850,7 @@ describe("Ext.Component", function(){
             });
         });
 
-        it("should be able to bind to multiple properties", function() {
+        it("should be able to bind to multiple properties", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 viewModel: {
@@ -867,10 +869,10 @@ describe("Ext.Component", function(){
             expect(c.getHeight()).toBe(200);
         });
 
-        describe("twoWayBindable", function() {
+        describe("twoWayBindable", function () {
             var Cls, viewModel;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 Cls = Ext.define(null, {
                     extend: 'Ext.Component',
                     config: {
@@ -883,7 +885,7 @@ describe("Ext.Component", function(){
                 });
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 viewModel = Cls = null;
             });
 
@@ -894,7 +896,7 @@ describe("Ext.Component", function(){
                 viewModel = c.getViewModel();
             }
 
-            it("should not be twoWayBindable by default", function() {
+            it("should not be twoWayBindable by default", function () {
                 makeCls({
                     viewModel: {
                         data: {
@@ -910,8 +912,8 @@ describe("Ext.Component", function(){
                 expect(viewModel.get('a')).toBe(1);
             });
 
-            it("should not cause an error if a twoWayBindable is not bound", function() {
-                expect(function() {
+            it("should not cause an error if a twoWayBindable is not bound", function () {
+                expect(function () {
                     makeCls({
                         viewModel: {},
                         bind: {}
@@ -919,8 +921,8 @@ describe("Ext.Component", function(){
                 }).not.toThrow();
             });
 
-            describe("when the binding has not fired", function() {
-                it("should not publish when the value is undefined", function() {
+            describe("when the binding has not fired", function () {
+                it("should not publish when the value is undefined", function () {
                     makeCls({
                         viewModel: {
                             data: {
@@ -936,7 +938,7 @@ describe("Ext.Component", function(){
                     expect(c.getCustomC()).toBe(100);
                 });
 
-                it("should not publish when the value is null", function() {
+                it("should not publish when the value is null", function () {
                     makeCls({
                         viewModel: {
                             data: {
@@ -952,7 +954,7 @@ describe("Ext.Component", function(){
                     expect(c.getCustomB()).toBe(200);
                 });
 
-                it("should not publish when the value is equal to the class default", function() {
+                it("should not publish when the value is equal to the class default", function () {
                     makeCls({
                         viewModel: {
                             data: {
@@ -968,7 +970,7 @@ describe("Ext.Component", function(){
                     expect(c.getCustomD()).toBe('bar');
                 });
 
-                it("should not publish when the value is equal to the instance config value", function() {
+                it("should not publish when the value is equal to the instance config value", function () {
                     makeCls({
                         customD: 'baz',
                         viewModel: {
@@ -985,7 +987,7 @@ describe("Ext.Component", function(){
                     expect(c.getCustomD()).toBe('bar');
                 });
 
-                it("should publish any other value", function() {
+                it("should publish any other value", function () {
                     makeCls({
                         viewModel: {
                             data: {
@@ -1001,8 +1003,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("when the binding has fired", function() {
-                it("should publish undefined", function() {
+            describe("when the binding has fired", function () {
+                it("should publish undefined", function () {
                     makeCls({
                         viewModel: {
                             b: 'x'
@@ -1017,7 +1019,7 @@ describe("Ext.Component", function(){
                     expect(viewModel.get('b')).toBeNull();
                 });
 
-                it("should publish null", function() {
+                it("should publish null", function () {
                     makeCls({
                         viewModel: {
                             b: 'x'
@@ -1031,7 +1033,7 @@ describe("Ext.Component", function(){
                     expect(viewModel.get('b')).toBeNull();
                 });
 
-                it("should publish the class default", function() {
+                it("should publish the class default", function () {
                     makeCls({
                         viewModel: {
                             data: {
@@ -1047,7 +1049,7 @@ describe("Ext.Component", function(){
                     expect(viewModel.get('d')).toBe('foo');
                 });
 
-                it("should publish the instance config value", function() {
+                it("should publish the instance config value", function () {
                     makeCls({
                         customD: 'baz',
                         viewModel: {
@@ -1067,7 +1069,7 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("listener scope resolution", function() {
+    describe("listener scope resolution", function () {
         var spies, scopes, Cmp, cmp, Parent, parent, Grandparent, grandparent,
             Controller, ParentController, GrandparentController;
 
@@ -1108,7 +1110,7 @@ describe("Ext.Component", function(){
             }
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             spies = {
                 component: jasmine.createSpy(),
                 controller: jasmine.createSpy(),
@@ -1134,7 +1136,7 @@ describe("Ext.Component", function(){
             });
         });
 
-        afterEach(function() {
+        afterEach(function () {
             if (cmp) {
                 cmp.destroy();
             }
@@ -1146,7 +1148,7 @@ describe("Ext.Component", function(){
             }
         });
 
-        describe("listener declared on class body", function() {
+        describe("listener declared on class body", function () {
             function defineCmp(cfg) {
                 Cmp = Ext.define(null, Ext.merge({
                     extend: 'Ext.Component',
@@ -1157,26 +1159,26 @@ describe("Ext.Component", function(){
                 }, cfg));
             }
 
-            it("should resolve to the component with unspecified scope", function() {
+            it("should resolve to the component with unspecified scope", function () {
                 defineCmp();
                 cmp = new Cmp();
                 cmp.fireEvent('foo');
                 expectScope('component');
             });
 
-            it("should fail with scope:'controller'", function() {
+            it("should fail with scope:'controller'", function () {
                 defineCmp({
                     listeners: {
                         scope: 'controller'
                     }
                 });
                 cmp = new Cmp();
-                expect(function() {
+                expect(function () {
                     cmp.fireEvent('foo');
                 }).toThrow();
             });
 
-            it("should resolve to the component with scope:'this'", function() {
+            it("should resolve to the component with scope:'this'", function () {
                 defineCmp({
                     listeners: {
                         scope: 'this'
@@ -1187,8 +1189,8 @@ describe("Ext.Component", function(){
                 expectScope('component');
             });
 
-            describe("with view controller", function() {
-                it("should resolve to the view controller with unspecified scope", function() {
+            describe("with view controller", function () {
+                it("should resolve to the view controller with unspecified scope", function () {
                     defineCmp({
                         controller: new Controller()
                     });
@@ -1197,7 +1199,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to the view controller with scope:'controller'", function() {
+                it("should resolve to the view controller with scope:'controller'", function () {
                     defineCmp({
                         controller: new Controller(),
                         listeners: {
@@ -1209,7 +1211,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         controller: new Controller(),
                         listeners: {
@@ -1222,8 +1224,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with defaultListenerScope", function() {
-                it("should resolve to the component with unspecified scope", function() {
+            describe("with defaultListenerScope", function () {
+                it("should resolve to the component with unspecified scope", function () {
                     defineCmp({
                         defaultListenerScope: true
                     });
@@ -1232,7 +1234,7 @@ describe("Ext.Component", function(){
                     expectScope('component');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     defineCmp({
                         defaultListenerScope: true,
                         listeners: {
@@ -1240,12 +1242,12 @@ describe("Ext.Component", function(){
                         }
                     });
                     cmp = new Cmp();
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         defaultListenerScope: true,
                         listeners: {
@@ -1258,8 +1260,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller and defaultListenerScope", function() {
-                it("should resolve to the component with unspecified scope", function() {
+            describe("with view controller and defaultListenerScope", function () {
+                it("should resolve to the component with unspecified scope", function () {
                     defineCmp({
                         controller: new Controller(),
                         defaultListenerScope: true
@@ -1269,7 +1271,7 @@ describe("Ext.Component", function(){
                     expectScope('component');
                 });
 
-                it("should resolve to the view controller with scope:'controller'", function() {
+                it("should resolve to the view controller with scope:'controller'", function () {
                     defineCmp({
                         controller: new Controller(),
                         defaultListenerScope: true,
@@ -1282,7 +1284,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         controller: new Controller(),
                         defaultListenerScope: true,
@@ -1296,14 +1298,14 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with defaultListenerScope on parent", function() {
-                beforeEach(function() {
+            describe("with defaultListenerScope on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to the parent with unspecified scope", function() {
+                it("should resolve to the parent with unspecified scope", function () {
                     defineCmp();
                     cmp = new Cmp();
                     parent = new Parent({
@@ -1313,7 +1315,7 @@ describe("Ext.Component", function(){
                     expectScope('parent');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'controller'
@@ -1323,12 +1325,12 @@ describe("Ext.Component", function(){
                     parent = new Parent({
                         items: cmp
                     });
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'this'
@@ -1343,14 +1345,14 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on parent", function() {
-                beforeEach(function() {
+            describe("with view controller on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController()
                     });
                 });
 
-                it("should resolve to the parent view controller with unspecified scope", function() {
+                it("should resolve to the parent view controller with unspecified scope", function () {
                     defineCmp();
                     cmp = new Cmp();
                     parent = new Parent({
@@ -1360,7 +1362,7 @@ describe("Ext.Component", function(){
                     expectScope('parentController');
                 });
 
-                it("should resolve to the parent view controller with scope:'controller'", function() {
+                it("should resolve to the parent view controller with scope:'controller'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'controller'
@@ -1374,7 +1376,7 @@ describe("Ext.Component", function(){
                     expectScope('parentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'this'
@@ -1389,15 +1391,15 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller and defaultListenerScope on parent", function() {
-                beforeEach(function() {
+            describe("with view controller and defaultListenerScope on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController(),
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to the parent with unspecified scope", function() {
+                it("should resolve to the parent with unspecified scope", function () {
                     defineCmp();
                     cmp = new Cmp();
                     parent = new Parent({
@@ -1407,7 +1409,7 @@ describe("Ext.Component", function(){
                     expectScope('parent');
                 });
 
-                it("should resolve to the parent view controller with scope:'controller'", function() {
+                it("should resolve to the parent view controller with scope:'controller'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'controller'
@@ -1421,7 +1423,7 @@ describe("Ext.Component", function(){
                     expectScope('parentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'this'
@@ -1436,14 +1438,14 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with defaultListenerScope on grandparent", function() {
-                beforeEach(function() {
+            describe("with defaultListenerScope on grandparent", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to the grandparent with unspecified scope", function() {
+                it("should resolve to the grandparent with unspecified scope", function () {
                     defineCmp();
                     cmp = new Cmp();
                     grandparent = new Grandparent({
@@ -1455,7 +1457,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparent');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'controller'
@@ -1467,12 +1469,12 @@ describe("Ext.Component", function(){
                             items: cmp
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'this'
@@ -1489,14 +1491,14 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on grandparent", function() {
-                beforeEach(function() {
+            describe("with view controller on grandparent", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         controller: new GrandparentController()
                     });
                 });
 
-                it("should resolve to the grandparent view controller with unspecified scope", function() {
+                it("should resolve to the grandparent view controller with unspecified scope", function () {
                     defineCmp();
                     cmp = new Cmp();
                     grandparent = new Grandparent({
@@ -1508,7 +1510,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparentController');
                 });
 
-                it("should resolve to the grandparent view controller with scope:'controller'", function() {
+                it("should resolve to the grandparent view controller with scope:'controller'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'controller'
@@ -1524,7 +1526,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'this'
@@ -1541,15 +1543,15 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller and defaultListenerScope on grandparent", function() {
-                beforeEach(function() {
+            describe("with view controller and defaultListenerScope on grandparent", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         controller: new GrandparentController(),
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to the grandparent with unspecified scope", function() {
+                it("should resolve to the grandparent with unspecified scope", function () {
                     defineCmp();
                     cmp = new Cmp();
                     grandparent = new Grandparent({
@@ -1561,7 +1563,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparent');
                 });
 
-                it("should resolve to the grandparent view controller with scope:'controller'", function() {
+                it("should resolve to the grandparent view controller with scope:'controller'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'controller'
@@ -1577,7 +1579,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'this'
@@ -1594,14 +1596,14 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on child and view controller on parent", function() {
-                beforeEach(function() {
+            describe("with view controller on child and view controller on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController()
                     });
                 });
 
-                it("should resolve to the child view controller with unspecified scope", function() {
+                it("should resolve to the child view controller with unspecified scope", function () {
                     defineCmp({
                         controller: new Controller()
                     });
@@ -1613,7 +1615,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to the child view controller with scope:'controller'", function() {
+                it("should resolve to the child view controller with scope:'controller'", function () {
                     defineCmp({
                         controller: new Controller(),
                         listeners: {
@@ -1628,7 +1630,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         controller: new Controller(),
                         listeners: {
@@ -1644,14 +1646,14 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on child and view controller on grandparent", function() {
-                beforeEach(function() {
+            describe("with view controller on child and view controller on grandparent", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         controller: new GrandparentController()
                     });
                 });
 
-                it("should resolve to the child view controller with unspecified scope", function() {
+                it("should resolve to the child view controller with unspecified scope", function () {
                     defineCmp({
                         controller: new Controller()
                     });
@@ -1665,7 +1667,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to the child view controller with scope:'controller'", function() {
+                it("should resolve to the child view controller with scope:'controller'", function () {
                     defineCmp({
                         controller: new Controller(),
                         listeners: {
@@ -1682,7 +1684,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         controller: new Controller(),
                         listeners: {
@@ -1700,14 +1702,14 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on child and defaultListenerScope on parent", function() {
-                beforeEach(function() {
+            describe("with view controller on child and defaultListenerScope on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to the child view controller with unspecified scope", function() {
+                it("should resolve to the child view controller with unspecified scope", function () {
                     defineCmp({
                         controller: new Controller()
                     });
@@ -1719,7 +1721,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to the child view controller with scope:'controller'", function() {
+                it("should resolve to the child view controller with scope:'controller'", function () {
                     defineCmp({
                         controller: new Controller(),
                         listeners: {
@@ -1734,7 +1736,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         controller: new Controller(),
                         listeners: {
@@ -1750,14 +1752,14 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on parent and defaultListenerScope on child", function() {
-                beforeEach(function() {
+            describe("with view controller on parent and defaultListenerScope on child", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController()
                     });
                 });
 
-                it("should resolve to the component with unspecified scope", function() {
+                it("should resolve to the component with unspecified scope", function () {
                     defineCmp({
                         defaultListenerScope: true
                     });
@@ -1769,7 +1771,7 @@ describe("Ext.Component", function(){
                     expectScope('component');
                 });
 
-                it("should resolve to the parent view controller with scope:'controller'", function() {
+                it("should resolve to the parent view controller with scope:'controller'", function () {
                     defineCmp({
                         defaultListenerScope: true,
                         listeners: {
@@ -1784,7 +1786,7 @@ describe("Ext.Component", function(){
                     expectScope('parentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         defaultListenerScope: true,
                         listeners: {
@@ -1800,14 +1802,14 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on child and defaultListenerScope on grandparent", function() {
-                beforeEach(function() {
+            describe("with view controller on child and defaultListenerScope on grandparent", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to the child view controller with unspecified scope", function() {
+                it("should resolve to the child view controller with unspecified scope", function () {
                     defineCmp({
                         controller: new Controller()
                     });
@@ -1821,7 +1823,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to the child view controller with scope:'controller'", function() {
+                it("should resolve to the child view controller with scope:'controller'", function () {
                     defineCmp({
                         controller: new Controller(),
                         listeners: {
@@ -1838,7 +1840,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         controller: new Controller(),
                         listeners: {
@@ -1856,14 +1858,14 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on grandparent and defaultListenerScope on child", function() {
-                beforeEach(function() {
+            describe("with view controller on grandparent and defaultListenerScope on child", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         controller: new GrandparentController()
                     });
                 });
 
-                it("should resolve to the component with unspecified scope", function() {
+                it("should resolve to the component with unspecified scope", function () {
                     defineCmp({
                         defaultListenerScope: true
                     });
@@ -1877,7 +1879,7 @@ describe("Ext.Component", function(){
                     expectScope('component');
                 });
 
-                it("should resolve to the grandparent view controller with scope:'controller'", function() {
+                it("should resolve to the grandparent view controller with scope:'controller'", function () {
                     defineCmp({
                         defaultListenerScope: true,
                         listeners: {
@@ -1894,7 +1896,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     defineCmp({
                         defaultListenerScope: true,
                         listeners: {
@@ -1912,8 +1914,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with scope declared on inner object", function() {
-                it("should resolve to controller with unspecified outer scope", function() {
+            describe("with scope declared on inner object", function () {
+                it("should resolve to controller with unspecified outer scope", function () {
                     defineCmp({
                         defaultListenerScope: true,
                         controller: new Controller(),
@@ -1929,7 +1931,7 @@ describe("Ext.Component", function(){
                     expectScope('controller');
                 });
 
-                it("should resolve to controller with outer scope of controller", function() {
+                it("should resolve to controller with outer scope of controller", function () {
                     defineCmp({
                         defaultListenerScope: true,
                         controller: new Controller(),
@@ -1947,7 +1949,7 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with handler declared as a function reference", function() {
+            describe("with handler declared as a function reference", function () {
                 var handler, scope;
 
                 function defineCmp(cfg) {
@@ -1959,18 +1961,18 @@ describe("Ext.Component", function(){
                     }, cfg));
                 }
 
-                beforeEach(function() {
+                beforeEach(function () {
                     handler = jasmine.createSpy();
-                    handler.andCallFake(function() {
+                    handler.andCallFake(function () {
                         scope = this;
                     });
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     scope = null;
                 });
 
-                it("should use the component as the default scope", function() {
+                it("should use the component as the default scope", function () {
                     defineCmp();
                     cmp = new Cmp();
                     cmp.fireEvent('foo');
@@ -1978,7 +1980,7 @@ describe("Ext.Component", function(){
                     expect(handler.mostRecentCall.object).toBe(cmp);
                 });
 
-                it("should use an arbitrary object as the scope", function() {
+                it("should use an arbitrary object as the scope", function () {
                     var obj = {};
 
                     defineCmp({
@@ -1991,7 +1993,7 @@ describe("Ext.Component", function(){
                     expect(scope).toBe(scope);
                 });
 
-                it("should use the component with scope:'this'", function() {
+                it("should use the component with scope:'this'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'this'
@@ -2002,19 +2004,19 @@ describe("Ext.Component", function(){
                     expect(scope).toBe(cmp);
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     defineCmp({
                         listeners: {
                             scope: 'controller'
                         }
                     });
                     cmp = new Cmp();
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should use the component with scope:'this' specified on an inner object", function() {
+                it("should use the component with scope:'this' specified on an inner object", function () {
                     defineCmp({
                         listeners: {
                             foo: {
@@ -2028,7 +2030,7 @@ describe("Ext.Component", function(){
                     expect(scope).toBe(cmp);
                 });
 
-                it("should fail with scope:'controller' specified on an inner object", function() {
+                it("should fail with scope:'controller' specified on an inner object", function () {
                     defineCmp({
                         listeners: {
                             foo: {
@@ -2038,13 +2040,13 @@ describe("Ext.Component", function(){
                         }
                     });
                     cmp = new Cmp();
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                describe("with view controller", function() {
-                    it("should resolve to the component with unspecified scope", function() {
+                describe("with view controller", function () {
+                    it("should resolve to the component with unspecified scope", function () {
                         defineCmp({
                             controller: new Controller()
                         });
@@ -2053,7 +2055,7 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(cmp);
                     });
 
-                    it("should resolve to the view controller with scope:'controller'", function() {
+                    it("should resolve to the view controller with scope:'controller'", function () {
                         defineCmp({
                             controller: new Controller(),
                             listeners: {
@@ -2065,7 +2067,7 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(cmp.getController());
                     });
 
-                    it("should resolve to the component with scope:'this'", function() {
+                    it("should resolve to the component with scope:'this'", function () {
                         defineCmp({
                             controller: new Controller(),
                             listeners: {
@@ -2078,8 +2080,8 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("with defaultListenerScope", function() {
-                    it("should resolve to the component with unspecified scope", function() {
+                describe("with defaultListenerScope", function () {
+                    it("should resolve to the component with unspecified scope", function () {
                         defineCmp({
                             defaultListenerScope: true
                         });
@@ -2088,7 +2090,7 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(cmp);
                     });
 
-                    it("should fail with scope:'controller'", function() {
+                    it("should fail with scope:'controller'", function () {
                         defineCmp({
                             defaultListenerScope: true,
                             listeners: {
@@ -2096,12 +2098,12 @@ describe("Ext.Component", function(){
                             }
                         });
                         cmp = new Cmp();
-                        expect(function() {
+                        expect(function () {
                             cmp.fireEvent('foo');
                         }).toThrow();
                     });
 
-                    it("should resolve to the component with scope:'this'", function() {
+                    it("should resolve to the component with scope:'this'", function () {
                         defineCmp({
                             defaultListenerScope: true,
                             listeners: {
@@ -2114,8 +2116,8 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("with view controller and defaultListenerScope", function() {
-                    it("should resolve to the component with unspecified scope", function() {
+                describe("with view controller and defaultListenerScope", function () {
+                    it("should resolve to the component with unspecified scope", function () {
                         defineCmp({
                             controller: new Controller(),
                             defaultListenerScope: true
@@ -2125,7 +2127,7 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(cmp);
                     });
 
-                    it("should resolve to the view controller with scope:'controller'", function() {
+                    it("should resolve to the view controller with scope:'controller'", function () {
                         defineCmp({
                             controller: new Controller(),
                             defaultListenerScope: true,
@@ -2138,7 +2140,7 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(cmp.getController());
                     });
 
-                    it("should resolve to the component with scope:'this'", function() {
+                    it("should resolve to the component with scope:'this'", function () {
                         defineCmp({
                             controller: new Controller(),
                             defaultListenerScope: true,
@@ -2152,14 +2154,14 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("with defaultListenerScope on parent", function() {
-                    beforeEach(function() {
+                describe("with defaultListenerScope on parent", function () {
+                    beforeEach(function () {
                         defineParent({
                             defaultListenerScope: true
                         });
                     });
 
-                    it("should resolve to the component with unspecified scope", function() {
+                    it("should resolve to the component with unspecified scope", function () {
                         defineCmp();
                         cmp = new Cmp();
                         parent = new Parent({
@@ -2169,7 +2171,7 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(cmp);
                     });
 
-                    it("should fail with scope:'controller'", function() {
+                    it("should fail with scope:'controller'", function () {
                         defineCmp({
                             listeners: {
                                 scope: 'controller'
@@ -2179,12 +2181,12 @@ describe("Ext.Component", function(){
                         parent = new Parent({
                             items: cmp
                         });
-                        expect(function() {
+                        expect(function () {
                             cmp.fireEvent('foo');
                         }).toThrow();
                     });
 
-                    it("should resolve to the component with scope:'this'", function() {
+                    it("should resolve to the component with scope:'this'", function () {
                         defineCmp({
                             listeners: {
                                 scope: 'this'
@@ -2199,14 +2201,14 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("with view controller on parent", function() {
-                    beforeEach(function() {
+                describe("with view controller on parent", function () {
+                    beforeEach(function () {
                         defineParent({
                             controller: new ParentController()
                         });
                     });
 
-                    it("should resolve to the component with unspecified scope", function() {
+                    it("should resolve to the component with unspecified scope", function () {
                         defineCmp();
                         cmp = new Cmp();
                         parent = new Parent({
@@ -2216,7 +2218,7 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(cmp);
                     });
 
-                    it("should resolve to the parent view controller with scope:'controller'", function() {
+                    it("should resolve to the parent view controller with scope:'controller'", function () {
                         defineCmp({
                             listeners: {
                                 scope: 'controller'
@@ -2230,7 +2232,7 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(parent.getController());
                     });
 
-                    it("should resolve to the component with scope:'this'", function() {
+                    it("should resolve to the component with scope:'this'", function () {
                         defineCmp({
                             listeners: {
                                 scope: 'this'
@@ -2247,7 +2249,7 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("listener declared on instance config", function() {
+        describe("listener declared on instance config", function () {
             function defineCmp(cfg) {
                 Cmp = Ext.define(null, Ext.merge({
                     extend: 'Ext.Component',
@@ -2255,7 +2257,7 @@ describe("Ext.Component", function(){
                 }, cfg));
             }
 
-            it("should resolve to the component with unspecified scope", function() {
+            it("should resolve to the component with unspecified scope", function () {
                 defineCmp();
                 cmp = new Cmp({
                     listeners: {
@@ -2266,7 +2268,7 @@ describe("Ext.Component", function(){
                 expectScope('component');
             });
 
-            it("should fail with scope:'controller'", function() {
+            it("should fail with scope:'controller'", function () {
                 defineCmp();
                 cmp = new Cmp({
                     listeners: {
@@ -2274,12 +2276,12 @@ describe("Ext.Component", function(){
                         scope: 'controller'
                     }
                 });
-                expect(function() {
+                expect(function () {
                     cmp.fireEvent('foo');
                 }).toThrow();
             });
 
-            it("should resolve to the component with scope:'this'", function() {
+            it("should resolve to the component with scope:'this'", function () {
                 defineCmp();
                 cmp = new Cmp({
                     listeners: {
@@ -2291,14 +2293,14 @@ describe("Ext.Component", function(){
                 expectScope('component');
             });
 
-            describe("with view controller", function() {
-                beforeEach(function() {
+            describe("with view controller", function () {
+                beforeEach(function () {
                     defineCmp({
                         controller: new Controller()
                     });
                 });
 
-                it("should resolve to the component with unspecified scope", function() {
+                it("should resolve to the component with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2308,19 +2310,19 @@ describe("Ext.Component", function(){
                     expectScope('component');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
                             scope: 'controller'
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2332,14 +2334,14 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with defaultListenerScope", function() {
-                beforeEach(function() {
+            describe("with defaultListenerScope", function () {
+                beforeEach(function () {
                     defineCmp({
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to fail with unspecified scope", function() {
+                it("should resolve to fail with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2349,19 +2351,19 @@ describe("Ext.Component", function(){
                     expectScope('component');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
                             scope: 'controller'
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2373,15 +2375,15 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller and defaultListenerScope", function() {
-                beforeEach(function() {
+            describe("with view controller and defaultListenerScope", function () {
+                beforeEach(function () {
                     defineCmp({
                         controller: new Controller(),
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to the component with unspecified scope", function() {
+                it("should resolve to the component with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2391,19 +2393,19 @@ describe("Ext.Component", function(){
                     expectScope('component');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
                             scope: 'controller'
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2415,15 +2417,15 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with defaultListenerScope on parent", function() {
-                beforeEach(function() {
+            describe("with defaultListenerScope on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         defaultListenerScope: true
                     });
                     defineCmp();
                 });
 
-                it("should resolve to the parent with unspecified scope", function() {
+                it("should resolve to the parent with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2436,7 +2438,7 @@ describe("Ext.Component", function(){
                     expectScope('parent');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2446,12 +2448,12 @@ describe("Ext.Component", function(){
                     parent = new Parent({
                         items: cmp
                     });
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2466,15 +2468,15 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on parent", function() {
-                beforeEach(function() {
+            describe("with view controller on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController()
                     });
                     defineCmp();
                 });
 
-                it("should resolve to the parent view controller with unspecified scope", function() {
+                it("should resolve to the parent view controller with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2487,7 +2489,7 @@ describe("Ext.Component", function(){
                     expectScope('parentController');
                 });
 
-                it("should resolve to the parent view controller with scope:'controller'", function() {
+                it("should resolve to the parent view controller with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2501,7 +2503,7 @@ describe("Ext.Component", function(){
                     expectScope('parentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2516,8 +2518,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller and defaultListenerScope on parent", function() {
-                beforeEach(function() {
+            describe("with view controller and defaultListenerScope on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController(),
                         defaultListenerScope: true
@@ -2525,7 +2527,7 @@ describe("Ext.Component", function(){
                     defineCmp();
                 });
 
-                it("should resolve to the parent with unspecified scope", function() {
+                it("should resolve to the parent with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2538,7 +2540,7 @@ describe("Ext.Component", function(){
                     expectScope('parent');
                 });
 
-                it("should resolve to the parent view controller with scope:'controller'", function() {
+                it("should resolve to the parent view controller with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2552,7 +2554,7 @@ describe("Ext.Component", function(){
                     expectScope('parentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2567,15 +2569,15 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with defaultListenerScope on grandparent", function() {
-                beforeEach(function() {
+            describe("with defaultListenerScope on grandparent", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         defaultListenerScope: true
                     });
                     defineCmp();
                 });
 
-                it("should resolve to the grandparent with unspecified scope", function() {
+                it("should resolve to the grandparent with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2590,7 +2592,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparent');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2602,12 +2604,12 @@ describe("Ext.Component", function(){
                             items: cmp
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2624,15 +2626,15 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on grandparent", function() {
-                beforeEach(function() {
+            describe("with view controller on grandparent", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         controller: new GrandparentController()
                     });
                     defineCmp();
                 });
 
-                it("should resolve to the grandparent view controller with unspecified scope", function() {
+                it("should resolve to the grandparent view controller with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2647,7 +2649,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparentController');
                 });
 
-                it("should resolve to the grandparent view controller with scope:'controller'", function() {
+                it("should resolve to the grandparent view controller with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2663,7 +2665,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2680,8 +2682,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller and defaultListenerScope on grandparent", function() {
-                beforeEach(function() {
+            describe("with view controller and defaultListenerScope on grandparent", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         controller: new GrandparentController(),
                         defaultListenerScope: true
@@ -2689,7 +2691,7 @@ describe("Ext.Component", function(){
                     defineCmp();
                 });
 
-                it("should resolve to the grandparent with unspecified scope", function() {
+                it("should resolve to the grandparent with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2704,7 +2706,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparent');
                 });
 
-                it("should resolve to the grandparent view controller with scope:'controller'", function() {
+                it("should resolve to the grandparent view controller with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2720,7 +2722,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2737,8 +2739,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on child and view controller on parent", function() {
-                beforeEach(function() {
+            describe("with view controller on child and view controller on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController()
                     });
@@ -2748,7 +2750,7 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                it("should resolve to the parent view controller with unspecified scope", function() {
+                it("should resolve to the parent view controller with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2761,7 +2763,7 @@ describe("Ext.Component", function(){
                     expectScope('parentController');
                 });
 
-                it("should resolve to the parent view controller with scope:'controller'", function() {
+                it("should resolve to the parent view controller with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2775,7 +2777,7 @@ describe("Ext.Component", function(){
                     expectScope('parentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2790,8 +2792,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on child and view controller on grandparent", function() {
-                beforeEach(function() {
+            describe("with view controller on child and view controller on grandparent", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         controller: new GrandparentController()
                     });
@@ -2801,7 +2803,7 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                it("should resolve to the grandparent view controller with unspecified scope", function() {
+                it("should resolve to the grandparent view controller with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2816,7 +2818,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparentController');
                 });
 
-                it("should resolve to the grandparent view controller with scope:'controller'", function() {
+                it("should resolve to the grandparent view controller with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2832,7 +2834,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2849,8 +2851,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on child and defaultListenerScope on parent", function() {
-                beforeEach(function() {
+            describe("with view controller on child and defaultListenerScope on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         defaultListenerScope: true
                     });
@@ -2860,7 +2862,7 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                it("should resolve to the parent with unspecified scope", function() {
+                it("should resolve to the parent with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2873,7 +2875,7 @@ describe("Ext.Component", function(){
                     expectScope('parent');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2883,12 +2885,12 @@ describe("Ext.Component", function(){
                     parent = new Parent({
                         items: cmp
                     });
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2903,8 +2905,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on parent and defaultListenerScope on child", function() {
-                beforeEach(function() {
+            describe("with view controller on parent and defaultListenerScope on child", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController()
                     });
@@ -2914,7 +2916,7 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                it("should resolve to the parent view controller with unspecified scope", function() {
+                it("should resolve to the parent view controller with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2927,7 +2929,7 @@ describe("Ext.Component", function(){
                     expectScope('parentController');
                 });
 
-                it("should resolve to the parent view controller with scope:'controller'", function() {
+                it("should resolve to the parent view controller with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2941,7 +2943,7 @@ describe("Ext.Component", function(){
                     expectScope('parentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2956,8 +2958,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on child and defaultListenerScope on grandparent", function() {
-                beforeEach(function() {
+            describe("with view controller on child and defaultListenerScope on grandparent", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         defaultListenerScope: true
                     });
@@ -2967,7 +2969,7 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                it("should resolve to the grandparent with unspecified scope", function() {
+                it("should resolve to the grandparent with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -2982,7 +2984,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparent');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -2994,12 +2996,12 @@ describe("Ext.Component", function(){
                             items: cmp
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -3016,8 +3018,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with view controller on grandparent and defaultListenerScope on child", function() {
-                beforeEach(function() {
+            describe("with view controller on grandparent and defaultListenerScope on child", function () {
+                beforeEach(function () {
                     defineGrandparent({
                         controller: new GrandparentController()
                     });
@@ -3027,7 +3029,7 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                it("should resolve to the grandparent view controller with unspecified scope", function() {
+                it("should resolve to the grandparent view controller with unspecified scope", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo'
@@ -3042,7 +3044,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparentController');
                 });
 
-                it("should resolve to the grandparent view controller with scope:'controller'", function() {
+                it("should resolve to the grandparent view controller with scope:'controller'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -3058,7 +3060,7 @@ describe("Ext.Component", function(){
                     expectScope('grandparentController');
                 });
 
-                it("should resolve to the component with scope:'this'", function() {
+                it("should resolve to the component with scope:'this'", function () {
                     cmp = new Cmp({
                         listeners: {
                             foo: 'onFoo',
@@ -3075,7 +3077,7 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with handler declared as a function reference", function() {
+            describe("with handler declared as a function reference", function () {
                 var handler, scope;
 
                 function defineCmp(cfg) {
@@ -3084,18 +3086,18 @@ describe("Ext.Component", function(){
                     }, cfg));
                 }
 
-                beforeEach(function() {
+                beforeEach(function () {
                     handler = jasmine.createSpy();
-                    handler.andCallFake(function() {
+                    handler.andCallFake(function () {
                         scope = this;
                     });
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     scope = null;
                 });
 
-                it("should use the component as the default scope", function() {
+                it("should use the component as the default scope", function () {
                     defineCmp();
                     cmp = new Cmp({
                         listeners: {
@@ -3106,7 +3108,7 @@ describe("Ext.Component", function(){
                     expect(scope).toBe(cmp);
                 });
 
-                it("should use an arbitrary object as the scope", function() {
+                it("should use an arbitrary object as the scope", function () {
                     defineCmp();
                     var scope = {};
 
@@ -3120,7 +3122,7 @@ describe("Ext.Component", function(){
                     expect(scope).toBe(scope);
                 });
 
-                it("should use the component with scope:'this'", function() {
+                it("should use the component with scope:'this'", function () {
                     defineCmp();
                     cmp = new Cmp({
                         listeners: {
@@ -3132,7 +3134,7 @@ describe("Ext.Component", function(){
                     expect(scope).toBe(cmp);
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     defineCmp();
                     cmp = new Cmp({
                         listeners: {
@@ -3140,12 +3142,12 @@ describe("Ext.Component", function(){
                             scope: 'controller'
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should use the component with scope:'this' specified on an inner object", function() {
+                it("should use the component with scope:'this' specified on an inner object", function () {
                     defineCmp();
                     cmp = new Cmp({
                         listeners: {
@@ -3159,7 +3161,7 @@ describe("Ext.Component", function(){
                     expect(scope).toBe(cmp);
                 });
 
-                it("should fail with scope:'controller' specified on an inner object", function() {
+                it("should fail with scope:'controller' specified on an inner object", function () {
                     defineCmp();
                     cmp = new Cmp({
                         listeners: {
@@ -3169,19 +3171,19 @@ describe("Ext.Component", function(){
                             }
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         cmp.fireEvent('foo');
                     }).toThrow();
                 });
 
-                describe("with view controller", function() {
-                    beforeEach(function() {
+                describe("with view controller", function () {
+                    beforeEach(function () {
                         defineCmp({
                             controller: new Controller()
                         });
                     });
 
-                    it("should resolve to the component with unspecified scope", function() {
+                    it("should resolve to the component with unspecified scope", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler
@@ -3191,19 +3193,19 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(cmp);
                     });
 
-                    it("should fail with scope:'controller'", function() {
+                    it("should fail with scope:'controller'", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler,
                                 scope: 'controller'
                             }
                         });
-                        expect(function() {
+                        expect(function () {
                             cmp.fireEvent('foo');
                         }).toThrow();
                     });
 
-                    it("should resolve to the component with scope:'this'", function() {
+                    it("should resolve to the component with scope:'this'", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler,
@@ -3215,14 +3217,14 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("with defaultListenerScope", function() {
-                    beforeEach(function() {
+                describe("with defaultListenerScope", function () {
+                    beforeEach(function () {
                         defineCmp({
                             defaultListenerScope: true
                         });
                     });
 
-                    it("should resolve to the component with unspecified scope", function() {
+                    it("should resolve to the component with unspecified scope", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler
@@ -3232,19 +3234,19 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(cmp);
                     });
 
-                    it("should fail with scope:'controller'", function() {
+                    it("should fail with scope:'controller'", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler,
                                 scope: 'controller'
                             }
                         });
-                        expect(function() {
+                        expect(function () {
                             cmp.fireEvent('foo');
                         }).toThrow();
                     });
 
-                    it("should resolve to the component with scope:'this'", function() {
+                    it("should resolve to the component with scope:'this'", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler,
@@ -3256,15 +3258,15 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("with defaultListenerScope on parent", function() {
-                    beforeEach(function() {
+                describe("with defaultListenerScope on parent", function () {
+                    beforeEach(function () {
                         defineParent({
                             defaultListenerScope: true
                         });
                         defineCmp();
                     });
 
-                    it("should resolve to the component with unspecified scope", function() {
+                    it("should resolve to the component with unspecified scope", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler
@@ -3277,7 +3279,7 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(cmp);
                     });
 
-                    it("should fail with scope:'controller'", function() {
+                    it("should fail with scope:'controller'", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler,
@@ -3287,12 +3289,12 @@ describe("Ext.Component", function(){
                         parent = new Parent({
                             items: cmp
                         });
-                        expect(function() {
+                        expect(function () {
                             cmp.fireEvent('foo');
                         }).toThrow();
                     });
 
-                    it("should resolve to the component with scope:'this'", function() {
+                    it("should resolve to the component with scope:'this'", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler,
@@ -3307,15 +3309,15 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("with view controller on parent", function() {
-                    beforeEach(function() {
+                describe("with view controller on parent", function () {
+                    beforeEach(function () {
                         defineParent({
                             controller: new ParentController()
                         });
                         defineCmp();
                     });
 
-                    it("should resolve to the component with unspecified scope", function() {
+                    it("should resolve to the component with unspecified scope", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler
@@ -3328,7 +3330,7 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(cmp);
                     });
 
-                    it("should resolve to the parent view controller with scope:'controller'", function() {
+                    it("should resolve to the parent view controller with scope:'controller'", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler,
@@ -3342,7 +3344,7 @@ describe("Ext.Component", function(){
                         expect(scope).toBe(parent.getController());
                     });
 
-                    it("should resolve to the component with scope:'this'", function() {
+                    it("should resolve to the component with scope:'this'", function () {
                         cmp = new Cmp({
                             listeners: {
                                 foo: handler,
@@ -3359,42 +3361,42 @@ describe("Ext.Component", function(){
             });
         });
     });
-    
-    describe("suspend/resume layouts", function() {
-        beforeEach(function() {
+
+    describe("suspend/resume layouts", function () {
+        beforeEach(function () {
             makeComponent({
                 renderTo: Ext.getBody()
             });
         });
-        
+
         function s() {
             c.suspendLayouts();
         }
-        
+
         function r() {
             c.resumeLayouts();
         }
-        
+
         function expectSuspended(suspended) {
             expect(c.isLayoutSuspended()).toBe(suspended);
         }
-        
-        it("should not be suspended by default", function() {
+
+        it("should not be suspended by default", function () {
             expectSuspended(false);
         });
-        
-        it("should suspend layouts when suspend is called", function() {
+
+        it("should suspend layouts when suspend is called", function () {
             s();
             expectSuspended(true);
         });
-        
-        it("should not suspend when resume is called", function() {
+
+        it("should not suspend when resume is called", function () {
             s();
             r();
-            expectSuspended(false);    
+            expectSuspended(false);
         });
-        
-        it("should be suspended after calling suspend more times than resume", function() {
+
+        it("should be suspended after calling suspend more times than resume", function () {
             s();
             s();
             s();
@@ -3402,11 +3404,11 @@ describe("Ext.Component", function(){
             r();
             expectSuspended(true);
         });
-        
-        it("should not be suspended after calling resume more times than suspend", function() {
+
+        it("should not be suspended after calling resume more times than suspend", function () {
             // Suppress console warning about mismatched resumeLayout call
             spyOn(Ext.log, 'warn');
-            
+
             s();
             s();
             r();
@@ -3414,29 +3416,29 @@ describe("Ext.Component", function(){
             r();
             expectSuspended(false);
         });
-        
-        it("should not run a layout while suspended", function() {
+
+        it("should not run a layout while suspended", function () {
             var spy = jasmine.createSpy();
             c.on('resize', spy);
             c.suspendLayouts();
             c.setSize(200, 200);
             expect(spy).not.toHaveBeenCalled();
         });
-        
-        it("should keep any layout pending if resume is called without the flush param", function() {
+
+        it("should keep any layout pending if resume is called without the flush param", function () {
             var spy = jasmine.createSpy();
             c.on('resize', spy);
             c.suspendLayouts();
             c.setSize(200, 200);
             c.resumeLayouts();
             expect(spy).not.toHaveBeenCalled();
-            
+
             c.updateLayout();
             expect(c.el.getWidth()).toBe(200);
             expect(c.el.getHeight()).toBe(200);
         });
-        
-        it("should run the layout straight away when resuming layouts with flush", function() {
+
+        it("should run the layout straight away when resuming layouts with flush", function () {
             var spy = jasmine.createSpy();
             c.on('resize', spy);
             c.suspendLayouts();
@@ -3445,7 +3447,7 @@ describe("Ext.Component", function(){
             expect(spy.callCount).toBe(1);
         });
 
-        it("should layout correctly when the sizeModel is altered during a suspend and the component is pending", function() {
+        it("should layout correctly when the sizeModel is altered during a suspend and the component is pending", function () {
             c.destroy();
             makeComponent({
                 floating: true,
@@ -3470,9 +3472,9 @@ describe("Ext.Component", function(){
             expect(c.componentLayoutCounter).toBe(count + 1);
             expect(c.getWidth()).toBe(50);
             expect(c.getHeight()).toBe(30);
-         });
+        });
 
-        it("should update the size model correctly while suspended as state changes", function() {
+        it("should update the size model correctly while suspended as state changes", function () {
             var sizeModels = Ext.layout.SizeModel.sizeModels,
                 cCount, ctCount;
 
@@ -3524,10 +3526,10 @@ describe("Ext.Component", function(){
             expect(ct.componentLayoutCounter).toBe(ctCount + 1);
 
             ct.destroy();
-         });
+        });
     });
 
-    describe("layouts", function() {
+    describe("layouts", function () {
         var count;
 
         function makeLayoutComponent(cfg) {
@@ -3537,119 +3539,119 @@ describe("Ext.Component", function(){
             count = c.componentLayoutCounter;
         }
 
-        afterEach(function() {
+        afterEach(function () {
             count = 0;
         });
 
-        describe("when setting dimensions", function() {
-            describe("setWidth", function() {
-                describe("with a configured width", function() {
-                    beforeEach(function() {
+        describe("when setting dimensions", function () {
+            describe("setWidth", function () {
+                describe("with a configured width", function () {
+                    beforeEach(function () {
                         makeLayoutComponent({
                             width: 200
                         });
                     });
 
-                    it("should trigger a layout when setting a different width", function() {
+                    it("should trigger a layout when setting a different width", function () {
                         c.setWidth(300);
                         expect(c.componentLayoutCounter).toBe(count + 1);
                     });
 
-                    it("should trigger a layout when clearing the width", function() {
+                    it("should trigger a layout when clearing the width", function () {
                         c.setWidth(null);
                         expect(c.componentLayoutCounter).toBe(count + 1);
                     });
 
-                    it("should not trigger a layout when setting the same width", function() {
+                    it("should not trigger a layout when setting the same width", function () {
                         c.setWidth(200);
                         expect(c.componentLayoutCounter).toBe(count);
                     });
 
-                    it("should not trigger a layout when passing undefined", function() {
+                    it("should not trigger a layout when passing undefined", function () {
                         c.setWidth(undefined);
                         expect(c.componentLayoutCounter).toBe(count);
                     });
                 });
 
-                describe("without a configured width", function() {
-                    beforeEach(function() {
+                describe("without a configured width", function () {
+                    beforeEach(function () {
                         makeLayoutComponent();
                     });
 
-                    it("should trigger a layout when setting a width", function() {
+                    it("should trigger a layout when setting a width", function () {
                         c.setWidth(300);
                         expect(c.componentLayoutCounter).toBe(count + 1);
                     });
 
-                    it("should not trigger a layout when clearing the width", function() {
+                    it("should not trigger a layout when clearing the width", function () {
                         c.setWidth(null);
                         expect(c.componentLayoutCounter).toBe(count);
                     });
 
-                    it("should not trigger a layout when passing undefined", function() {
+                    it("should not trigger a layout when passing undefined", function () {
                         c.setWidth(undefined);
                         expect(c.componentLayoutCounter).toBe(count);
                     });
                 });
             });
 
-            describe("setHeight", function() {
-                describe("with a configured height", function() {
-                    beforeEach(function() {
+            describe("setHeight", function () {
+                describe("with a configured height", function () {
+                    beforeEach(function () {
                         makeLayoutComponent({
                             height: 200
                         });
                     });
 
-                    it("should trigger a layout when setting a different height", function() {
+                    it("should trigger a layout when setting a different height", function () {
                         c.setHeight(300);
                         expect(c.componentLayoutCounter).toBe(count + 1);
                     });
 
-                    it("should trigger a layout when clearing the height", function() {
+                    it("should trigger a layout when clearing the height", function () {
                         c.setHeight(null);
                         expect(c.componentLayoutCounter).toBe(count + 1);
                     });
 
-                    it("should not trigger a layout when setting the same height", function() {
+                    it("should not trigger a layout when setting the same height", function () {
                         c.setHeight(200);
                         expect(c.componentLayoutCounter).toBe(count);
                     });
 
-                    it("should not trigger a layout when passing undefined", function() {
+                    it("should not trigger a layout when passing undefined", function () {
                         c.setHeight(undefined);
                         expect(c.componentLayoutCounter).toBe(count);
                     });
                 });
 
-                describe("without a configured height", function() {
-                    beforeEach(function() {
+                describe("without a configured height", function () {
+                    beforeEach(function () {
                         makeLayoutComponent();
                     });
 
-                    it("should trigger a layout when setting a height", function() {
+                    it("should trigger a layout when setting a height", function () {
                         c.setHeight(300);
                         expect(c.componentLayoutCounter).toBe(count + 1);
                     });
 
-                    it("should not trigger a layout when clearing the height", function() {
+                    it("should not trigger a layout when clearing the height", function () {
                         c.setHeight(null);
                         expect(c.componentLayoutCounter).toBe(count);
                     });
 
-                    it("should not trigger a layout when passing undefined", function() {
+                    it("should not trigger a layout when passing undefined", function () {
                         c.setHeight(undefined);
                         expect(c.componentLayoutCounter).toBe(count);
                     });
                 });
             });
 
-            describe("setSize", function() {
+            describe("setSize", function () {
                 function makeSuite(widthOptions, heightOptions, expected) {
-                    Ext.each(widthOptions, function(widthItem, i) {
-                        Ext.each(heightOptions, function(heightItem, j) {
+                    Ext.each(widthOptions, function (widthItem, i) {
+                        Ext.each(heightOptions, function (heightItem, j) {
                             var offset = expected[i][j];
-                            it("should" + (!offset ? " not " : "") + " layout when " + widthItem.name + " width and " + heightItem.name + " height", function() {
+                            it("should" + (!offset ? " not " : "") + " layout when " + widthItem.name + " width and " + heightItem.name + " height", function () {
                                 c.setSize(widthItem.value, heightItem.value);
                                 expect(c.componentLayoutCounter).toBe(count + offset);
                             });
@@ -3657,8 +3659,8 @@ describe("Ext.Component", function(){
                     });
                 }
 
-                describe("with a configured width and configured height", function() {
-                    beforeEach(function() {
+                describe("with a configured width and configured height", function () {
+                    beforeEach(function () {
                         makeLayoutComponent({
                             width: 200,
                             height: 200
@@ -3690,16 +3692,16 @@ describe("Ext.Component", function(){
                         name: 'leaving the',
                         value: undefined
                     }], [
-                        [0, 1, 1, 0], 
-                        [1, 1, 1, 1], 
-                        [1, 1, 1, 1], 
+                        [0, 1, 1, 0],
+                        [1, 1, 1, 1],
+                        [1, 1, 1, 1],
                         [0, 1, 1, 0]
                     ]);
-                    
+
                 });
 
-                describe("with a configured width and without a configured height", function() {
-                    beforeEach(function() {
+                describe("with a configured width and without a configured height", function () {
+                    beforeEach(function () {
                         makeLayoutComponent({
                             width: 200
                         });
@@ -3730,8 +3732,8 @@ describe("Ext.Component", function(){
                     ]);
                 });
 
-                describe("without a configured width and with a configured height", function() {
-                    beforeEach(function() {
+                describe("without a configured width and with a configured height", function () {
+                    beforeEach(function () {
                         makeLayoutComponent({
                             height: 200
                         });
@@ -3760,8 +3762,8 @@ describe("Ext.Component", function(){
                     ]);
                 });
 
-                describe("without a configured width and without a configured height", function() {
-                    beforeEach(function() {
+                describe("without a configured width and without a configured height", function () {
+                    beforeEach(function () {
                         makeLayoutComponent();
                     });
 
@@ -3784,36 +3786,36 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("xtypes",  function(){
-        it("should work with a string", function(){
+    describe("xtypes", function () {
+        it("should work with a string", function () {
             makeComponent();
-            expect(c.isXType('component')).toBe(true);   
-        });    
-
-        it("should not match incorrectly", function(){
-            makeComponent();
-            expect(c.isXType('panel')).toBe(false);    
+            expect(c.isXType('component')).toBe(true);
         });
 
-        it("should match subclasses by default", function(){
+        it("should not match incorrectly", function () {
+            makeComponent();
+            expect(c.isXType('panel')).toBe(false);
+        });
+
+        it("should match subclasses by default", function () {
             var ct = new Ext.container.Container();
             expect(ct.isXType('component')).toBe(true);
             ct.destroy();
         });
 
-        it("should match exactly if shallow is true", function(){
+        it("should match exactly if shallow is true", function () {
             var ct = new Ext.container.Container();
             expect(ct.isXType('component', true)).toBe(false);
-            ct.destroy();    
+            ct.destroy();
         });
     });
 
-    describe('render', function() {
-        it('should veto its render', function() {
+    describe('render', function () {
+        it('should veto its render', function () {
             var comp = new Ext.Component({
                 renderTo: document.body,
                 listeners: {
-                    beforerender: function() {
+                    beforerender: function () {
                         return false;
                     }
                 }
@@ -3825,13 +3827,13 @@ describe("Ext.Component", function(){
             comp.destroy();
         });
 
-        describe("with an existing element", function() {
+        describe("with an existing element", function () {
             var ct;
             afterEach(function () {
                 ct = Ext.destroy(ct);
             });
 
-            it("should be able to render", function() {
+            it("should be able to render", function () {
                 var el = Ext.getBody().createChild();
                 makeComponent({
                     el: el,
@@ -3840,7 +3842,7 @@ describe("Ext.Component", function(){
                 expect(c.getEl()).toBe(el);
             });
 
-            it("should be able to render a panel with component in a fit layout", function() {
+            it("should be able to render a panel with component in a fit layout", function () {
                 var body = Ext.getBody(),
                     el = body.createChild();
 
@@ -3867,7 +3869,7 @@ describe("Ext.Component", function(){
                 expect(item.el.component).toBe(item);
             });
 
-            it("should be able to render a panel in panel using fit layout", function() {
+            it("should be able to render a panel in panel using fit layout", function () {
                 var body = Ext.getBody(),
                     el = body.createChild(),
                     el2 = body.createChild();
@@ -3906,7 +3908,7 @@ describe("Ext.Component", function(){
                 expect(item.el.component).toBe(item);
             });
 
-            it("should be able to render a panel with component in an anchor layout", function() {
+            it("should be able to render a panel with component in an anchor layout", function () {
                 var body = Ext.getBody(),
                     el = body.createChild();
 
@@ -3941,7 +3943,7 @@ describe("Ext.Component", function(){
                 expect(item.el.component).toBe(item);
             });
 
-            it("should be able to render a panel with component in an hbox layout", function() {
+            it("should be able to render a panel with component in an hbox layout", function () {
                 var body = Ext.getBody(),
                     el = body.createChild();
 
@@ -3976,7 +3978,7 @@ describe("Ext.Component", function(){
                 expect(item.el.component).toBe(item);
             });
 
-            it("should be able to render a panel with component in a vbox layout", function() {
+            it("should be able to render a panel with component in a vbox layout", function () {
                 var body = Ext.getBody(),
                     el = body.createChild();
 
@@ -4013,7 +4015,7 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("enable/disable", function() {
+    describe("enable/disable", function () {
         var enableSpy, disableSpy;
 
         var C = Ext.define(null, {
@@ -4023,33 +4025,33 @@ describe("Ext.Component", function(){
             unmaskCount: 0,
             maskCount: 0,
 
-            onDisable: function() {
+            onDisable: function () {
                 ++this.onDisableCount;
                 this.callParent(arguments);
             },
 
-            onEnable: function() {
+            onEnable: function () {
                 ++this.onEnableCount;
                 this.callParent(arguments);
             },
 
-            unmask: function() {
+            unmask: function () {
                 ++this.unmaskCount;
                 this.callParent(arguments);
             },
 
-            mask: function() {
+            mask: function () {
                 ++this.maskCount;
                 this.callParent(arguments);
             }
         });
 
-        beforeEach(function() {
+        beforeEach(function () {
             enableSpy = jasmine.createSpy();
             disableSpy = jasmine.createSpy();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             enableSpy = disableSpy = null;
         });
 
@@ -4063,21 +4065,21 @@ describe("Ext.Component", function(){
             c = new C(cfg);
         }
 
-        describe("configuration", function() {
-            describe("default", function() {
-                it("should be enabled", function(){
+        describe("configuration", function () {
+            describe("default", function () {
+                it("should be enabled", function () {
                     makeDisableComp();
                     expect(c.isDisabled()).toBe(false);
                     expect(c.disabled).toBe(false);
                 });
 
-                describe("events/template methods", function() {
-                    it("should not fire the enable event", function() {
+                describe("events/template methods", function () {
+                    it("should not fire the enable event", function () {
                         makeDisableComp();
                         expect(enableSpy).not.toHaveBeenCalled();
                     });
 
-                    it("should not call onEnable before or after rendered", function() {
+                    it("should not call onEnable before or after rendered", function () {
                         makeDisableComp();
                         expect(c.onEnableCount).toBe(0);
                         c.render(Ext.getBody());
@@ -4085,8 +4087,8 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("disabledCls", function() {
-                    it("should not have the disabledCls after render", function() {
+                describe("disabledCls", function () {
+                    it("should not have the disabledCls after render", function () {
                         makeDisableComp({
                             renderTo: Ext.getBody()
                         });
@@ -4095,8 +4097,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("disabled: true", function() {
-                it("should be disabled", function() {
+            describe("disabled: true", function () {
+                it("should be disabled", function () {
                     makeDisableComp({
                         disabled: true
                     });
@@ -4104,15 +4106,15 @@ describe("Ext.Component", function(){
                     expect(c.disabled).toBe(true);
                 });
 
-                describe("events/template methods", function() {
-                    it("should not fire the disable event", function() {
+                describe("events/template methods", function () {
+                    it("should not fire the disable event", function () {
                         makeDisableComp({
                             disabled: true
                         });
                         expect(disableSpy).not.toHaveBeenCalled();
                     });
 
-                    it("should call onDisable when rendered", function() {
+                    it("should call onDisable when rendered", function () {
                         makeDisableComp({
                             disabled: true
                         });
@@ -4122,8 +4124,8 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("disabledCls", function() {
-                    it("should have the disabledCls after render", function() {
+                describe("disabledCls", function () {
+                    it("should have the disabledCls after render", function () {
                         makeDisableComp({
                             renderTo: Ext.getBody(),
                             disabled: true
@@ -4134,12 +4136,12 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("methods", function() {
-            describe("enable", function() {
-                describe("before render", function() {
-                    describe("return type", function() {
-                        describe("when disabled", function() {
-                            it("should return the component", function() {
+        describe("methods", function () {
+            describe("enable", function () {
+                describe("before render", function () {
+                    describe("return type", function () {
+                        describe("when disabled", function () {
+                            it("should return the component", function () {
                                 makeDisableComp({
                                     disabled: true
                                 });
@@ -4147,17 +4149,17 @@ describe("Ext.Component", function(){
                             });
                         });
 
-                        describe("when enabled", function() {
-                            it("should return the component", function() {
+                        describe("when enabled", function () {
+                            it("should return the component", function () {
                                 makeDisableComp();
                                 expect(c.enable()).toBe(c);
                             });
                         });
                     });
 
-                    describe("events/template methods", function() {
-                        describe("when disabled", function() {
-                            it("should fire the enable event", function() {
+                    describe("events/template methods", function () {
+                        describe("when disabled", function () {
+                            it("should fire the enable event", function () {
                                 makeDisableComp({
                                     disabled: true
                                 });
@@ -4166,7 +4168,7 @@ describe("Ext.Component", function(){
                                 expect(enableSpy.mostRecentCall.args[0]).toBe(c);
                             });
 
-                            it("should not fire the enable event when passing silent: true", function() {
+                            it("should not fire the enable event when passing silent: true", function () {
                                 makeDisableComp({
                                     disabled: true
                                 });
@@ -4174,7 +4176,7 @@ describe("Ext.Component", function(){
                                 expect(enableSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should not call onEnable", function() {
+                            it("should not call onEnable", function () {
                                 makeDisableComp({
                                     disabled: true
                                 });
@@ -4182,7 +4184,7 @@ describe("Ext.Component", function(){
                                 expect(c.onEnableCount).toBe(0);
                             });
 
-                            it("should not call onEnable after rendering", function() {
+                            it("should not call onEnable after rendering", function () {
                                 makeDisableComp({
                                     disabled: true
                                 });
@@ -4192,20 +4194,20 @@ describe("Ext.Component", function(){
                             });
                         });
 
-                        describe("when enabled", function() {
-                            it("should not fire the enable event", function() {
+                        describe("when enabled", function () {
+                            it("should not fire the enable event", function () {
                                 makeDisableComp();
                                 c.enable();
                                 expect(enableSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should not call onEnable", function() {
+                            it("should not call onEnable", function () {
                                 makeDisableComp();
                                 c.enable();
                                 expect(c.onEnableCount).toBe(0);
                             });
 
-                            it("should not call onEnable after rendering", function() {
+                            it("should not call onEnable after rendering", function () {
                                 makeDisableComp();
                                 c.enable();
                                 c.render(Ext.getBody());
@@ -4214,8 +4216,8 @@ describe("Ext.Component", function(){
                         });
                     });
 
-                    describe("disabledCls", function() {
-                        it("should not have the disabledCls after render", function() {
+                    describe("disabledCls", function () {
+                        it("should not have the disabledCls after render", function () {
                             makeDisableComp({
                                 disabled: true
                             });
@@ -4226,10 +4228,10 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("after render", function() {
-                    describe("return type", function() {
-                        describe("when disabled", function() {
-                            it("should return the component", function() {
+                describe("after render", function () {
+                    describe("return type", function () {
+                        describe("when disabled", function () {
+                            it("should return the component", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody(),
                                     disabled: true
@@ -4238,8 +4240,8 @@ describe("Ext.Component", function(){
                             });
                         });
 
-                        describe("when enabled", function() {
-                            it("should return the component", function() {
+                        describe("when enabled", function () {
+                            it("should return the component", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody()
                                 });
@@ -4248,9 +4250,9 @@ describe("Ext.Component", function(){
                         });
                     });
 
-                    describe("events/template methods", function() {
-                        describe("when disabled", function() {
-                            it("should fire the enable event", function() {
+                    describe("events/template methods", function () {
+                        describe("when disabled", function () {
+                            it("should fire the enable event", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody(),
                                     disabled: true
@@ -4260,7 +4262,7 @@ describe("Ext.Component", function(){
                                 expect(enableSpy.mostRecentCall.args[0]).toBe(c);
                             });
 
-                            it("should not fire the enable event when passing silent: true", function() {
+                            it("should not fire the enable event when passing silent: true", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody(),
                                     disabled: true
@@ -4269,7 +4271,7 @@ describe("Ext.Component", function(){
                                 expect(enableSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should call onEnable", function() {
+                            it("should call onEnable", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody(),
                                     disabled: true
@@ -4280,8 +4282,8 @@ describe("Ext.Component", function(){
                             });
                         });
 
-                        describe("when enabled", function() {
-                            it("should not fire the enable event", function() {
+                        describe("when enabled", function () {
+                            it("should not fire the enable event", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody()
                                 });
@@ -4289,7 +4291,7 @@ describe("Ext.Component", function(){
                                 expect(enableSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should not call onEnable", function() {
+                            it("should not call onEnable", function () {
                                 makeDisableComp();
                                 c.enable();
                                 expect(c.onEnableCount).toBe(0);
@@ -4297,8 +4299,8 @@ describe("Ext.Component", function(){
                         });
                     });
 
-                    describe("disabledCls", function() {
-                        it("should not have the disabledCls", function() {
+                    describe("disabledCls", function () {
+                        it("should not have the disabledCls", function () {
                             makeDisableComp({
                                 renderTo: Ext.getBody(),
                                 disabled: true
@@ -4310,18 +4312,18 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("disable", function() {
-                describe("before render", function() {
-                    describe("return type", function() {
-                        describe("when enabled", function() {
-                            it("should return the component", function() {
+            describe("disable", function () {
+                describe("before render", function () {
+                    describe("return type", function () {
+                        describe("when enabled", function () {
+                            it("should return the component", function () {
                                 makeDisableComp();
                                 expect(c.disable()).toBe(c);
                             });
                         });
 
-                        describe("when disabled", function() {
-                            it("should return the component", function() {
+                        describe("when disabled", function () {
+                            it("should return the component", function () {
                                 makeDisableComp({
                                     disabled: true
                                 });
@@ -4330,28 +4332,28 @@ describe("Ext.Component", function(){
                         });
                     });
 
-                    describe("events/template methods", function() {
-                        describe("when enabled", function() {
-                            it("should fire the disable event", function() {
+                    describe("events/template methods", function () {
+                        describe("when enabled", function () {
+                            it("should fire the disable event", function () {
                                 makeDisableComp();
                                 c.disable();
                                 expect(disableSpy.callCount).toBe(1);
                                 expect(disableSpy.mostRecentCall.args[0]).toBe(c);
                             });
 
-                            it("should not fire the disable event when passing silent: true", function() {
+                            it("should not fire the disable event when passing silent: true", function () {
                                 makeDisableComp();
                                 c.disable(true);
                                 expect(disableSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should not call onDisable", function() {
+                            it("should not call onDisable", function () {
                                 makeDisableComp();
                                 c.disable();
                                 expect(c.onDisableCount).toBe(0);
                             });
 
-                            it("should call onDisable after rendering", function() {
+                            it("should call onDisable after rendering", function () {
                                 makeDisableComp();
                                 c.disable();
                                 expect(c.onDisableCount).toBe(0);
@@ -4360,8 +4362,8 @@ describe("Ext.Component", function(){
                             });
                         });
 
-                        describe("when disabled", function() {
-                            it("should not fire the enable event", function() {
+                        describe("when disabled", function () {
+                            it("should not fire the enable event", function () {
                                 makeDisableComp({
                                     disabled: true
                                 });
@@ -4369,7 +4371,7 @@ describe("Ext.Component", function(){
                                 expect(disableSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should not call onDisable", function() {
+                            it("should not call onDisable", function () {
                                 makeDisableComp({
                                     disabled: true
                                 });
@@ -4377,7 +4379,7 @@ describe("Ext.Component", function(){
                                 expect(c.onDisableCount).toBe(0);
                             });
 
-                            it("should call onDisable after rendering", function() {
+                            it("should call onDisable after rendering", function () {
                                 makeDisableComp({
                                     disabled: true
                                 });
@@ -4389,8 +4391,8 @@ describe("Ext.Component", function(){
                         });
                     });
 
-                    describe("disabledCls", function() {
-                        it("should have the disabledCls after render", function() {
+                    describe("disabledCls", function () {
+                        it("should have the disabledCls after render", function () {
                             makeDisableComp();
                             c.disable();
                             c.render(Ext.getBody());
@@ -4399,10 +4401,10 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("after render", function() {
-                    describe("return type", function() {
-                        describe("when enabled", function() {
-                            it("should return the component", function() {
+                describe("after render", function () {
+                    describe("return type", function () {
+                        describe("when enabled", function () {
+                            it("should return the component", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody()
                                 });
@@ -4410,8 +4412,8 @@ describe("Ext.Component", function(){
                             });
                         });
 
-                        describe("when disabled", function() {
-                            it("should return the component", function() {
+                        describe("when disabled", function () {
+                            it("should return the component", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody(),
                                     disabled: true
@@ -4421,9 +4423,9 @@ describe("Ext.Component", function(){
                         });
                     });
 
-                    describe("events/template methods", function() {
-                        describe("when disabled", function() {
-                            it("should not fire the disable event", function() {
+                    describe("events/template methods", function () {
+                        describe("when disabled", function () {
+                            it("should not fire the disable event", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody(),
                                     disabled: true
@@ -4432,15 +4434,15 @@ describe("Ext.Component", function(){
                                 expect(disableSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should not call onDisable", function() {
+                            it("should not call onDisable", function () {
                                 makeDisableComp();
                                 c.disable();
                                 expect(c.onDisableCount).toBe(0);
                             });
                         });
 
-                        describe("when enabled", function() {
-                            it("should fire the disable event", function() {
+                        describe("when enabled", function () {
+                            it("should fire the disable event", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody()
                                 });
@@ -4449,7 +4451,7 @@ describe("Ext.Component", function(){
                                 expect(disableSpy.mostRecentCall.args[0]).toBe(c);
                             });
 
-                            it("should not fire the disable event when passing silent: true", function() {
+                            it("should not fire the disable event when passing silent: true", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody()
                                 });
@@ -4457,7 +4459,7 @@ describe("Ext.Component", function(){
                                 expect(disableSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should call onDisable", function() {
+                            it("should call onDisable", function () {
                                 makeDisableComp({
                                     renderTo: Ext.getBody()
                                 });
@@ -4468,8 +4470,8 @@ describe("Ext.Component", function(){
                         });
                     });
 
-                    describe("disabledCls", function() {
-                        it("should have the disabledCls", function() {
+                    describe("disabledCls", function () {
+                        it("should have the disabledCls", function () {
                             makeDisableComp({
                                 renderTo: Ext.getBody()
                             });
@@ -4480,16 +4482,16 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("setDisabled", function() {
-                describe("before render", function() {
-                    it("should call the disabled method when a truthy value is passed", function() {
+            describe("setDisabled", function () {
+                describe("before render", function () {
+                    it("should call the disabled method when a truthy value is passed", function () {
                         makeDisableComp();
                         var spy = spyOn(c, 'disable');
                         c.setDisabled(true);
                         expect(spy).toHaveBeenCalled();
                     });
 
-                    it("should call the enable method when a falsy value is passed", function() {
+                    it("should call the enable method when a falsy value is passed", function () {
                         makeDisableComp();
                         var spy = spyOn(c, 'enable');
                         c.setDisabled(false);
@@ -4497,8 +4499,8 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("after render", function() {
-                    it("should call the disabled method when a truthy value is passed", function() {
+                describe("after render", function () {
+                    it("should call the disabled method when a truthy value is passed", function () {
                         makeDisableComp({
                             renderTo: Ext.getBody()
                         });
@@ -4507,7 +4509,7 @@ describe("Ext.Component", function(){
                         expect(spy).toHaveBeenCalled();
                     });
 
-                    it("should call the enable method when a falsy value is passed", function() {
+                    it("should call the enable method when a falsy value is passed", function () {
                         makeDisableComp({
                             renderTo: Ext.getBody()
                         });
@@ -4519,10 +4521,10 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("masking", function() {
-            describe("with maskOnDisable: false", function() {
-                describe("configured", function() {
-                    it("should not mask", function() {
+        describe("masking", function () {
+            describe("with maskOnDisable: false", function () {
+                describe("configured", function () {
+                    it("should not mask", function () {
                         makeDisableComp({
                             renderTo: Ext.getBody(),
                             disabled: true,
@@ -4532,8 +4534,8 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("before render", function() {
-                    it("should not mask when rendered", function() {
+                describe("before render", function () {
+                    it("should not mask when rendered", function () {
                         makeDisableComp({
                             maskOnDisable: false
                         });
@@ -4543,8 +4545,8 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("after render", function() {
-                    it("should not mask when rendered", function() {
+                describe("after render", function () {
+                    it("should not mask when rendered", function () {
                         makeDisableComp({
                             renderTo: Ext.getBody(),
                             maskOnDisable: false
@@ -4555,10 +4557,10 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with maskOnDisable: true", function() {
-                describe("disable", function() {
-                    describe("configured", function() {
-                        it("should mask", function() {
+            describe("with maskOnDisable: true", function () {
+                describe("disable", function () {
+                    describe("configured", function () {
+                        it("should mask", function () {
                             makeDisableComp({
                                 renderTo: Ext.getBody(),
                                 disabled: true,
@@ -4568,8 +4570,8 @@ describe("Ext.Component", function(){
                         });
                     });
 
-                    describe("before render", function() {
-                        it("should mask when rendered", function() {
+                    describe("before render", function () {
+                        it("should mask when rendered", function () {
                             makeDisableComp({
                                 maskOnDisable: true
                             });
@@ -4579,8 +4581,8 @@ describe("Ext.Component", function(){
                         });
                     });
 
-                    describe("after render", function() {
-                        it("should mask", function() {
+                    describe("after render", function () {
+                        it("should mask", function () {
                             makeDisableComp({
                                 renderTo: Ext.getBody(),
                                 maskOnDisable: true
@@ -4591,9 +4593,9 @@ describe("Ext.Component", function(){
                     });
                 });
 
-                describe("enable", function() {
-                    describe("before render", function() {
-                        it("should not mask when rendered", function() {
+                describe("enable", function () {
+                    describe("before render", function () {
+                        it("should not mask when rendered", function () {
                             makeDisableComp({
                                 maskOnDisable: true,
                                 disabled: true
@@ -4604,8 +4606,8 @@ describe("Ext.Component", function(){
                         });
                     });
 
-                    describe("after render", function() {
-                        it("should clear the mask", function() {
+                    describe("after render", function () {
+                        it("should clear the mask", function () {
                             makeDisableComp({
                                 renderTo: Ext.getBody(),
                                 maskOnDisable: true,
@@ -4701,86 +4703,86 @@ describe("Ext.Component", function(){
             });
         });
     });
-    
-    describe("component lookup by element", function() {
-        describe("focusable components", function() {
-            beforeEach(function() {
+
+    describe("component lookup by element", function () {
+        describe("focusable components", function () {
+            beforeEach(function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     autoEl: 'button',
-                    childEls: [ 'divEl', 'spanEl' ],
+                    childEls: ['divEl', 'spanEl'],
                     focusable: true,
                     renderTpl: [
                         '<div id="{id}-divEl" data-ref="divEl">',
-                            '<span id="{id}-spanEl" data-ref="spanEl">foo bar</span>',
+                        '<span id="{id}-spanEl" data-ref="spanEl">foo bar</span>',
                         '</div>'
                     ],
-                    getFocusEl: function() {
+                    getFocusEl: function () {
                         return this.el;
                     }
                 });
             });
-            
-            it("should add " + compIdAttr + " attribute to the focusable element", function() {
+
+            it("should add " + compIdAttr + " attribute to the focusable element", function () {
                 var cmpId = c.getFocusEl().getAttribute(compIdAttr);
-                
+
                 expect(cmpId).toBe(c.id);
             });
-            
-            it("should be able to look Component up by " + compIdAttr + " attribute", function() {
+
+            it("should be able to look Component up by " + compIdAttr + " attribute", function () {
                 var cmp = Ext.Component.fromElement(c.getFocusEl());
-                
+
                 expect(cmp).toEqual(c);
             });
-            
-            it("should be able to look Component up by its inner element", function() {
+
+            it("should be able to look Component up by its inner element", function () {
                 var cmp = Ext.Component.fromElement(c.spanEl);
-                
+
                 expect(cmp).toEqual(c);
             });
-            
+
             // We don't have a Viewport here, so lookup on the body element should fail
-            it("should return null if no Component is found", function() {
+            it("should return null if no Component is found", function () {
                 var cmp = Ext.Component.fromElement(Ext.getBody());
-                
+
                 expect(cmp).toBe(null);
             });
         });
-        
-        describe("non-focusable components", function() {
-            beforeEach(function() {
+
+        describe("non-focusable components", function () {
+            beforeEach(function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
-                    childEls: [ 'divEl' ],
+                    childEls: ['divEl'],
                     renderTpl: [
                         '<div id="{id}-divEl" data-ref="divEl">',
-                            'foo bar',
+                        'foo bar',
                         '</div>'
                     ]
                 });
             });
-            
-            it("should not add " + compIdAttr + " attribute to Component's elements", function() {
+
+            it("should not add " + compIdAttr + " attribute to Component's elements", function () {
                 var el = c.el.down('[' + compIdAttr + ']');
-                
+
                 expect(el).toEqual(null);
             });
-            
-            it("should be able to look Component up by its main element", function() {
+
+            it("should be able to look Component up by its main element", function () {
                 var cmp = Ext.Component.fromElement(c.el);
-                
+
                 expect(cmp).toEqual(c);
             });
-            
-            it("should be able to look Component up by its inner elements", function() {
+
+            it("should be able to look Component up by its inner elements", function () {
                 var cmp = Ext.Component.fromElement(c.divEl);
-                
+
                 expect(cmp).toEqual(c);
             });
         });
     });
 
-    describe('focusenter/focusleave', function() {
+    describe('focusenter/focusleave', function () {
         var inner1,
             inner11,
             textfield1,
@@ -4802,7 +4804,7 @@ describe("Ext.Component", function(){
             inner21FocusLeaveSpy,
             textfield2FocusLeaveSpy;
 
-        beforeEach(function() {
+        beforeEach(function () {
             c = new Ext.container.Container({
                 renderTo: document.body,
                 items: [{
@@ -4850,7 +4852,7 @@ describe("Ext.Component", function(){
             inner21FocusLeaveSpy = spyOn(inner21, 'onFocusLeave').andCallThrough();
             textfield2FocusLeaveSpy = spyOn(textfield2, 'onFocusLeave').andCallThrough();
         });
-        it('should fire focusEnter on the whole tree into which focus enters, and focusleave on the whole tree from which focus leaves', function() {
+        it('should fire focusEnter on the whole tree into which focus enters, and focusleave on the whole tree from which focus leaves', function () {
             expect(c.containsFocus).toBeFalsy();
             expect(inner1.containsFocus).toBeFalsy();
             expect(inner11.containsFocus).toBeFalsy();
@@ -4861,10 +4863,10 @@ describe("Ext.Component", function(){
             textfield1.focus();
 
             // Some browsers deliver the focus event asynchronously
-            waitsFor(function() {
+            waitsFor(function () {
                 return c.containsFocus;
             });
-            runs(function() {
+            runs(function () {
                 // Focus has entered "c" and inner1 (and all inner1's descendants)
                 expect(cFocusEnterSpy.callCount).toBe(1);
                 expect(inner1FocusEnterSpy.callCount).toBe(1);
@@ -4887,10 +4889,10 @@ describe("Ext.Component", function(){
             });
 
             // Some browsers deliver the focus event asynchronously
-            waitsFor(function() {
+            waitsFor(function () {
                 return inner2.containsFocus;
             });
-            runs(function() {
+            runs(function () {
                 expect(cFocusEnterSpy.callCount).toBe(1);
                 expect(inner1FocusEnterSpy.callCount).toBe(1);
                 expect(inner11FocusEnterSpy.callCount).toBe(1);
@@ -4921,43 +4923,43 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("visibility", function(){
+    describe("visibility", function () {
         //TODO: need to change show/hide to be testable
     });
 
-    describe("rendering", function(){
+    describe("rendering", function () {
 
-        it("should set the rendered property  when it's rendered", function(){
+        it("should set the rendered property  when it's rendered", function () {
             makeComponent();
             expect(c.rendered).toBeFalsy();
             c.render(Ext.getBody());
-            expect(c.rendered).toBeTruthy();    
+            expect(c.rendered).toBeTruthy();
         });
-        
-        describe("cancelling render", function(){
-            it("should not create an element if we veto beforerender and do not provide an el", function() {
+
+        describe("cancelling render", function () {
+            it("should not create an element if we veto beforerender and do not provide an el", function () {
                 makeComponent({
                     id: 'testComp'
                 });
-                c.on('beforerender', function(){
+                c.on('beforerender', function () {
                     return false;
-                });    
+                });
                 c.render(Ext.getBody());
                 expect(Ext.get('testComp')).toBeNull();
             });
-            
-            it("should not move the element if we veto beforerender and we do provide an el", function(){
+
+            it("should not move the element if we veto beforerender and we do provide an el", function () {
                 var a = Ext.getBody().createChild({
                     id: 'a'
-                });    
+                });
                 var b = Ext.getBody().createChild({
                     id: 'b'
                 });
-                
+
                 makeComponent({
                     el: a
                 });
-                c.on('beforerender', function(){
+                c.on('beforerender', function () {
                     return false;
                 });
                 c.render(b);
@@ -4968,15 +4970,15 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("renderTpl", function(){
-            it("should not use any renderTpl by default", function(){
+        describe("renderTpl", function () {
+            it("should not use any renderTpl by default", function () {
                 makeComponent({
                     renderTo: Ext.getBody()
-                });    
+                });
                 expect(c.el.dom.firstChild).toBeNull();
             });
 
-            it("should take a renderTpl", function(){
+            it("should take a renderTpl", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     renderTpl: '<div><span>a</span></div>'
@@ -4986,8 +4988,8 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("rendering to the dom", function(){
-            it("should use the renderTo option", function(){
+        describe("rendering to the dom", function () {
+            it("should use the renderTo option", function () {
                 var el = Ext.getBody().createChild();
                 makeComponent({
                     renderTo: el
@@ -4995,15 +4997,15 @@ describe("Ext.Component", function(){
                 expect(el.dom.getElementsByTagName('div')[0]).toEqual(c.el.dom);
                 el.remove();
             });
-            
-            it("should not render if not explicitly told to", function(){
+
+            it("should not render if not explicitly told to", function () {
                 var total = document.body.getElementsByTagName('div').length;
                 makeComponent();
                 expect(document.body.getElementsByTagName('div').length).toEqual(total);
             });
 
-            it("should render to a specific element", function(){
-                var el = Ext.getBody().createChild();    
+            it("should render to a specific element", function () {
+                var el = Ext.getBody().createChild();
                 makeComponent();
                 c.render(el);
                 expect(el.dom.getElementsByTagName('div')[0]).toEqual(c.el.dom);
@@ -5011,18 +5013,18 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("content", function(){
+        describe("content", function () {
 
-            describe("initialization", function(){
-                it("should accept an html string", function(){
+            describe("initialization", function () {
+                it("should accept an html string", function () {
                     makeComponent({
                         html: 'foo',
                         renderTo: Ext.getBody()
-                    });    
+                    });
                     expect(c.el.dom).hasHTML('foo');
-                });  
+                });
 
-                it("should accept a markup config for html", function(){
+                it("should accept a markup config for html", function () {
                     makeComponent({
                         html: {
                             tag: 'span',
@@ -5035,7 +5037,7 @@ describe("Ext.Component", function(){
 
                 });
 
-                it("should accept a contentEl", function(){
+                it("should accept a contentEl", function () {
                     var div = Ext.getBody().createChild({
                         tag: 'div',
                         html: 'foo'
@@ -5047,9 +5049,9 @@ describe("Ext.Component", function(){
                     expect(c.el.dom.firstChild).hasHTML('foo');
                 });
 
-                describe("tpl", function(){
+                describe("tpl", function () {
 
-                    it("should accept a raw template", function(){
+                    it("should accept a raw template", function () {
                         makeComponent({
                             renderTo: Ext.getBody(),
                             tpl: '{first} - {last}',
@@ -5057,42 +5059,42 @@ describe("Ext.Component", function(){
                                 first: 'John',
                                 last: 'Foo'
                             }
-                        });    
+                        });
                         expect(c.el.dom).hasHTML('John - Foo');
                     });
 
-                    it("should take a template instance", function(){
+                    it("should take a template instance", function () {
                         makeComponent({
                             tpl: new Ext.XTemplate('{0} - {1}'),
                             data: [3, 7],
                             renderTo: Ext.getBody()
-                        });    
+                        });
                         expect(c.el.dom).hasHTML('3 - 7');
                     });
 
                 });
-            }); 
+            });
 
-            describe("before render", function(){
-                it("should be able to change the html before render", function(){
+            describe("before render", function () {
+                it("should be able to change the html before render", function () {
                     makeComponent();
                     c.update('foo');
                     c.render(Ext.getBody());
-                    expect(c.el.dom).hasHTML('foo');    
-                });  
+                    expect(c.el.dom).hasHTML('foo');
+                });
 
-                it("should be able to update the markup when not rendered", function(){
+                it("should be able to update the markup when not rendered", function () {
                     makeComponent();
                     c.update({
                         tag: 'span',
                         html: 'bar'
-                    });    
+                    });
                     c.render(Ext.getBody());
 
                     expect(c.el.dom).hasHTML('<span>bar</span>');
                 });
 
-                it("should be able to change the data when not rendered", function(){
+                it("should be able to change the data when not rendered", function () {
                     makeComponent({
                         tpl: '{a} - {b}'
                     });
@@ -5101,22 +5103,22 @@ describe("Ext.Component", function(){
                         b: 'bar'
                     });
                     c.render(Ext.getBody());
-                    expect(c.el.dom).hasHTML('foo - bar');   
+                    expect(c.el.dom).hasHTML('foo - bar');
                 });
-            });   
+            });
 
-            describe("after render", function(){
-                it("should change the html after being rendered", function(){
+            describe("after render", function () {
+                it("should change the html after being rendered", function () {
                     makeComponent({
                         renderTo: Ext.getBody(),
                         html: 'foo'
-                    });    
+                    });
                     expect(c.el.dom).hasHTML('foo');
                     c.update('bar');
                     expect(c.el.dom).hasHTML('bar');
-                });  
+                });
 
-                it("should change markup if an html config is provided", function(){
+                it("should change markup if an html config is provided", function () {
                     makeComponent({
                         renderTo: Ext.getBody(),
                         html: {
@@ -5133,7 +5135,7 @@ describe("Ext.Component", function(){
                     expect(c.el.dom).hasHTML('<div>2</div>');
                 });
 
-                it("should update tpl data", function(){
+                it("should update tpl data", function () {
                     makeComponent({
                         renderTo: Ext.getBody(),
                         tpl: '{a} - {b}',
@@ -5150,7 +5152,7 @@ describe("Ext.Component", function(){
                     expect(c.el.dom).hasHTML('v3 - v4');
                 });
 
-                it("should use the correct writeMode", function(){
+                it("should use the correct writeMode", function () {
                     makeComponent({
                         renderTo: Ext.getBody(),
                         tpl: '{a} - {b}',
@@ -5159,32 +5161,35 @@ describe("Ext.Component", function(){
                             a: 'v1',
                             b: 'v2'
                         }
-                    });    
+                    });
                     expect(c.el.dom).hasHTML('v1 - v2');
                     c.update({
                         a: 'v3',
-                        b: 'v4'    
+                        b: 'v4'
                     });
                     expect(c.el.dom).hasHTML('v1 - v2v3 - v4');
                 });
             });
-        }); 
+        });
 
-        describe('afterrender event', function(){
+        describe('afterrender event', function () {
             var mock, fireEventSpy;
-            beforeEach(function(){
-                mock = {handler: function(){}};
+            beforeEach(function () {
+                mock = {
+                    handler: function () {
+                    }
+                };
                 fireEventSpy = spyOn(mock, 'handler');
             });
 
-            it('should fire "afterrender" after render', function(){
+            it('should fire "afterrender" after render', function () {
                 expect(fireEventSpy.callCount).toEqual(0);
-                
+
                 makeComponent({
-                    listeners:{afterrender:mock.handler},
+                    listeners: {afterrender: mock.handler},
                     renderTo: Ext.getBody()
                 });
-                
+
                 expect(fireEventSpy.callCount).toEqual(1);
             });
 
@@ -5192,59 +5197,59 @@ describe("Ext.Component", function(){
 
     });
 
-    describe("addCls/removeCls", function(){
-        it("should be able to add class when not rendered", function(){
+    describe("addCls/removeCls", function () {
+        it("should be able to add class when not rendered", function () {
             makeComponent();
             c.addCls('foo');
             c.render(Ext.getBody());
-            expect(c.el.hasCls('foo')).toBe(true);    
+            expect(c.el.hasCls('foo')).toBe(true);
         });
 
-        it("should add the class if the item is rendered", function(){
+        it("should add the class if the item is rendered", function () {
             makeComponent({
                 renderTo: Ext.getBody()
-            });    
+            });
             c.addCls('foo');
             expect(c.el.hasCls('foo')).toBe(true);
-        });  
+        });
 
-        it("should be able to remove class when not rendered", function(){
+        it("should be able to remove class when not rendered", function () {
             makeComponent({
                 additionalCls: ['foo']
-            });    
+            });
             c.removeCls('foo');
             c.render(Ext.getBody());
             expect(c.el.hasCls('foo')).toBe(false);
         });
 
-        it("should remove the class if the item is rendered", function(){
+        it("should remove the class if the item is rendered", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 additionalCls: ['foo']
-            });    
+            });
             c.removeCls('foo');
             expect(c.el.hasCls('foo')).toBe(false);
         });
     });
 
-    describe("styling", function(){
-        it("should apply the cls to the element", function(){
+    describe("styling", function () {
+        it("should apply the cls to the element", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 cls: 'foo'
-            });    
+            });
             expect(c.el.hasCls('foo')).toBe(true);
-        }); 
-        
-        it("should add the baseCls to the element", function(){
+        });
+
+        it("should add the baseCls to the element", function () {
             makeComponent({
                 renderTo: Ext.getBody()
-            });    
+            });
             expect(c.el.hasCls(c.baseCls)).toBe(true);
         });
 
-        describe("style", function(){
-            it("should accept a style string", function(){
+        describe("style", function () {
+            it("should accept a style string", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     style: 'background-color: red;'
@@ -5252,31 +5257,31 @@ describe("Ext.Component", function(){
                 expect(c.el.dom.style.backgroundColor).toMatch('^(red|#ff0000)$');
             });
 
-            it("should accept a style config", function(){
+            it("should accept a style config", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     style: {
                         color: 'red'
                     }
-                });    
+                });
                 expect(c.el.dom.style.color).toMatch('^(red|#ff0000)$');
             });
         });
 
-        describe("padding", function(){
-            it("should accept a single number", function(){
+        describe("padding", function () {
+            it("should accept a single number", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     padding: 5
-                });    
+                });
                 var style = c.el.dom.style;
                 expect(style.paddingTop).toEqual('5px');
                 expect(style.paddingRight).toEqual('5px');
                 expect(style.paddingBottom).toEqual('5px');
                 expect(style.paddingLeft).toEqual('5px');
-            });  
+            });
 
-            it("should accept a css style string", function(){
+            it("should accept a css style string", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     padding: '1 2 3 4'
@@ -5285,24 +5290,24 @@ describe("Ext.Component", function(){
                 expect(style.paddingTop).toEqual('1px');
                 expect(style.paddingRight).toEqual('2px');
                 expect(style.paddingBottom).toEqual('3px');
-                expect(style.paddingLeft).toEqual('4px');    
+                expect(style.paddingLeft).toEqual('4px');
             });
         });
 
-        describe("margin", function(){
-            it("should accept a single number", function(){
+        describe("margin", function () {
+            it("should accept a single number", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     margin: 1
-                });    
+                });
                 var style = c.el.dom.style;
                 expect(style.marginTop).toEqual('1px');
                 expect(style.marginRight).toEqual('1px');
                 expect(style.marginBottom).toEqual('1px');
                 expect(style.marginLeft).toEqual('1px');
-            });  
+            });
 
-            it("should accept a css style string", function(){
+            it("should accept a css style string", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     margin: '4 5 6 7'
@@ -5311,33 +5316,33 @@ describe("Ext.Component", function(){
                 expect(style.marginTop).toEqual('4px');
                 expect(style.marginRight).toEqual('5px');
                 expect(style.marginBottom).toEqual('6px');
-                expect(style.marginLeft).toEqual('7px');    
+                expect(style.marginLeft).toEqual('7px');
             });
         });
     });
 
-    describe("plugins", function(){
+    describe("plugins", function () {
         var Plugin;
-        
-        beforeEach(function(){
+
+        beforeEach(function () {
             Plugin = Ext.define('MyPlugin', {
                 alias: 'plugin.myplug',
 
-                constructor: function(cfg){
+                constructor: function (cfg) {
                     this.marked = (cfg || {}).marked;
                 },
 
-                init: function(c){
+                init: function (c) {
                     c.marked = this.marked || true;
-                }    
+                }
             });
         });
 
-        afterEach(function(){
+        afterEach(function () {
             Ext.undefine('MyPlugin');
-        });   
+        });
 
-        it("should accept a single plugin", function(){
+        it("should accept a single plugin", function () {
             var p = new Plugin();
             spyOn(p, 'init');
             makeComponent({
@@ -5346,7 +5351,7 @@ describe("Ext.Component", function(){
             expect(p.init).toHaveBeenCalledWith(c);
         });
 
-        it("should accept an array of plugins", function(){
+        it("should accept an array of plugins", function () {
             var p1 = new Plugin(),
                 p2 = new Plugin(),
                 p3 = new Plugin();
@@ -5357,31 +5362,31 @@ describe("Ext.Component", function(){
 
             makeComponent({
                 plugins: [p1, p2, p3]
-            });    
+            });
             expect(p1.init).toHaveBeenCalledWith(c);
             expect(p2.init).toHaveBeenCalledWith(c);
             expect(p3.init).toHaveBeenCalledWith(c);
         });
 
-        it("should be able to create string plugins", function(){
+        it("should be able to create string plugins", function () {
             makeComponent({
                 plugins: 'myplug'
             });
             expect(c.marked).toBeTruthy();
         });
 
-        it("should be able to create config object plugins", function(){
+        it("should be able to create config object plugins", function () {
             makeComponent({
                 plugins: {
                     ptype: 'myplug',
                     marked: 'foo'
                 }
-            });        
+            });
             expect(c.marked).toBe('foo');
         });
 
-        describe("adding dynamically", function() {
-            it("should be able to add if there are no existing plugins", function() {
+        describe("adding dynamically", function () {
+            it("should be able to add if there are no existing plugins", function () {
                 var p1 = new Plugin(),
                     p2 = new Plugin();
 
@@ -5394,7 +5399,7 @@ describe("Ext.Component", function(){
                 expect(p2.init).toHaveBeenCalled();
             });
 
-            it("should be able to add if there are existing plugins", function() {
+            it("should be able to add if there are existing plugins", function () {
                 var p = new Plugin();
 
                 spyOn(p, 'init');
@@ -5404,63 +5409,63 @@ describe("Ext.Component", function(){
                 expect(p.init).toHaveBeenCalled();
             });
         });
-        
+
         // https://sencha.jira.com/browse/EXTJSIV-8568
-        it("should not break on getPlugin when there are no plugins", function() {
+        it("should not break on getPlugin when there are no plugins", function () {
             makeComponent();
-            
+
             var p = c.getPlugin('foo');
-            
+
             expect(p).toBe(null);
         });
 
         it("should be able to add a plugin");
     });
-    
-    describe("previousSibling", function(){
+
+    describe("previousSibling", function () {
         var ct;
-        beforeEach(function(){
+        beforeEach(function () {
             makeComponent();
             ct = new Ext.container.Container();
         });
-        
-        afterEach(function(){
+
+        afterEach(function () {
             ct.destroy();
         });
-        it("should return null if it is not in a container", function(){
+        it("should return null if it is not in a container", function () {
             expect(c.previousSibling()).toBeNull();
-        });    
-        
-        it("should return null if it is the only item in the container", function(){
+        });
+
+        it("should return null if it is the only item in the container", function () {
             ct.add(c);
             expect(c.previousSibling()).toBeNull();
         });
-        
-        it("should return null if it is the first item in the container", function(){
+
+        it("should return null if it is the first item in the container", function () {
             ct.add([c, {}, {}, {}, {}]);
-            expect(c.previousSibling()).toBeNull();    
+            expect(c.previousSibling()).toBeNull();
         });
-        
-        it("should return the closest previous sibling", function(){
+
+        it("should return the closest previous sibling", function () {
             var other = new Ext.Component();
             ct.add([{}, {}, {}, other, c, {}]);
-            expect(c.previousSibling()).toBe(other);    
+            expect(c.previousSibling()).toBe(other);
         });
-        
-        it("should return null if no previous items match the selector", function(){
+
+        it("should return null if no previous items match the selector", function () {
             ct.add([{}, {}, {}, {}, c]);
             expect(c.previousSibling('*[aProp=1]')).toBeNull();
         });
-        
-        it("should return an item matching the selector", function(){
+
+        it("should return an item matching the selector", function () {
             var other = new Ext.Component({
                 aProp: 1
             });
             ct.add([{}, other, {}, {}, {}, c]);
             expect(c.previousSibling('*[aProp=1]')).toBe(other);
         });
-        
-        it("should return the first item matching the selector", function(){
+
+        it("should return the first item matching the selector", function () {
             var other = new Ext.Component({
                 aProp: 1
             });
@@ -5468,94 +5473,94 @@ describe("Ext.Component", function(){
             expect(c.previousSibling('*[aProp=1]')).toBe(other);
         });
     });
-    
-    describe("previousNode", function(){
+
+    describe("previousNode", function () {
         var ct, mainCt;
-        
-        beforeEach(function(){
+
+        beforeEach(function () {
             makeComponent();
             ct = new Ext.container.Container();
             mainCt = new Ext.container.Container();
         });
-        
-        afterEach(function(){
+
+        afterEach(function () {
             ct.destroy();
             mainCt.destroy();
             ct = mainCt = null;
         });
-        
-        describe("without selectors", function() {
-        
-            it("should return null if it is not in a container", function(){
+
+        describe("without selectors", function () {
+
+            it("should return null if it is not in a container", function () {
                 expect(c.previousNode()).toBeNull();
             });
-        
-            it("should return the owner container if there are no siblings", function(){
+
+            it("should return the owner container if there are no siblings", function () {
                 ct.add(c);
                 expect(c.previousNode()).toBe(ct);
             });
-        
-            it("should return the previous sibling if it exists", function(){
+
+            it("should return the previous sibling if it exists", function () {
                 var prev = new Ext.Component();
                 ct.add(prev, c);
                 expect(c.previousNode()).toBe(prev);
             });
-        
-            it("should be able to select itself if includeSelf is passed", function(){
+
+            it("should be able to select itself if includeSelf is passed", function () {
                 ct.add(c);
-                expect(c.previousNode(null, true)).toBe(c);    
+                expect(c.previousNode(null, true)).toBe(c);
             });
         });
-        
-        describe("with selectors", function(){
-            
-            describe("flat", function() {
-            
-                it("should return null if no component matches the selector", function(){
+
+        describe("with selectors", function () {
+
+            describe("flat", function () {
+
+                it("should return null if no component matches the selector", function () {
                     ct.add(c);
-                    expect(c.previousNode('foo')).toBeNull();    
-                });  
-            
-                it("should return the previous sibling if it matches the selector", function(){
+                    expect(c.previousNode('foo')).toBeNull();
+                });
+
+                it("should return the previous sibling if it matches the selector", function () {
                     var prev = new Ext.Component({
                         type: 'foo'
-                    });    
+                    });
                     ct.add(prev, c);
                     expect(c.previousNode('[type=foo]')).toBe(prev);
                 });
-                
-                it("should return any previous sibling that matches the selector", function(){
+
+                it("should return any previous sibling that matches the selector", function () {
                     var prev = new Ext.Component({
                         type: 'foo'
                     });
                     ct.add(prev, {}, {}, {}, c);
-                    expect(c.previousNode('[type=foo]')).toBe(prev);    
+                    expect(c.previousNode('[type=foo]')).toBe(prev);
                 });
-                
-                it("should return the closest previous sibling that matches the selector", function(){
+
+                it("should return the closest previous sibling that matches the selector", function () {
                     var prev = new Ext.Component({
                         type: 'foo'
-                    });    
+                    });
                     ct.add({}, {
                         type: 'foo'
                     }, prev, {}, c);
-                    expect(c.previousNode('[type=foo]')).toBe(prev);    
+                    expect(c.previousNode('[type=foo]')).toBe(prev);
                 });
-                
-                it("should return the container if the container matches the selector and no siblings do", function(){
-                    ct.add({}, {}, {}, c);    
+
+                it("should return the container if the container matches the selector and no siblings do", function () {
+                    ct.add({}, {}, {}, c);
                     ct.type = 'foo';
                     expect(c.previousNode('[type=foo]')).toBe(ct);
                 });
             });
-            
-            describe("nested", function(){
-                
-                it("should give precedence to children", function(){
+
+            describe("nested", function () {
+
+                it("should give precedence to children", function () {
                     var prev = new Ext.Component({
                         type: 'foo'
-                    });    
-                    
+                    });
+
                     mainCt.add(prev);
                     ct.add({
                         xtype: 'component',
@@ -5563,8 +5568,8 @@ describe("Ext.Component", function(){
                     }, mainCt, c);
                     expect(c.previousNode('[type=foo]')).toBe(prev);
                 });
-                
-                it("should match the deepest, last child", function(){
+
+                it("should match the deepest, last child", function () {
                     var prev = new Ext.Component({
                         type: 'foo'
                     });
@@ -5587,12 +5592,12 @@ describe("Ext.Component", function(){
                                 xtype: 'component'
                             }]
                         }]
-                    }); 
+                    });
                     ct.add(mainCt, c);
-                    expect(c.previousNode('[type=foo]')).toBe(prev);   
+                    expect(c.previousNode('[type=foo]')).toBe(prev);
                 });
-                
-                it("should match any sibling if children don't match", function(){
+
+                it("should match any sibling if children don't match", function () {
                     var prev = new Ext.Component({
                         type: 'foo'
                     });
@@ -5616,59 +5621,59 @@ describe("Ext.Component", function(){
                                 xtype: 'component'
                             }]
                         }]
-                    }); 
+                    });
                     ct.add(prev, mainCt, c);
-                    expect(c.previousNode('[type=foo]')).toBe(prev);   
+                    expect(c.previousNode('[type=foo]')).toBe(prev);
                 });
             });
-            
+
         });
     });
-    
-    describe("nextSibling", function(){
+
+    describe("nextSibling", function () {
         var ct;
-        beforeEach(function(){
+        beforeEach(function () {
             makeComponent();
             ct = new Ext.container.Container();
         });
-        
-        afterEach(function(){
+
+        afterEach(function () {
             ct.destroy();
         });
-        it("should return null if it is not in a container", function(){
+        it("should return null if it is not in a container", function () {
             expect(c.nextSibling()).toBeNull();
-        });    
-        
-        it("should return null if it is the only item in the container", function(){
+        });
+
+        it("should return null if it is the only item in the container", function () {
             ct.add(c);
             expect(c.nextSibling()).toBeNull();
         });
-        
-        it("should return null if it is the last item in the container", function(){
+
+        it("should return null if it is the last item in the container", function () {
             ct.add([{}, {}, {}, {}, c]);
-            expect(c.nextSibling()).toBeNull();    
+            expect(c.nextSibling()).toBeNull();
         });
-        
-        it("should return the closest next sibling", function(){
+
+        it("should return the closest next sibling", function () {
             var other = new Ext.Component();
             ct.add([{}, {}, {}, c, other, {}]);
-            expect(c.nextSibling()).toBe(other);    
+            expect(c.nextSibling()).toBe(other);
         });
-        
-        it("should return null if no next items match the selector", function(){
+
+        it("should return null if no next items match the selector", function () {
             ct.add([c, {}, {}, {}, {}]);
             expect(c.nextSibling('*[aProp=1]')).toBeNull();
         });
-        
-        it("should return an item matching the selector", function(){
+
+        it("should return an item matching the selector", function () {
             var other = new Ext.Component({
                 aProp: 1
             });
             ct.add([c, {}, {}, other, {}]);
             expect(c.nextSibling('*[aProp=1]')).toBe(other);
         });
-        
-        it("should return the first item matching the selector", function(){
+
+        it("should return the first item matching the selector", function () {
             var other = new Ext.Component({
                 aProp: 1
             });
@@ -5676,99 +5681,99 @@ describe("Ext.Component", function(){
             expect(c.nextSibling('*[aProp=1]')).toBe(other);
         });
     });
-    
-    describe("nextNode", function(){
+
+    describe("nextNode", function () {
         var ct, mainCt;
-        
-        beforeEach(function(){
+
+        beforeEach(function () {
             makeComponent();
             ct = new Ext.container.Container();
             mainCt = new Ext.container.Container();
         });
-        
-        afterEach(function(){
+
+        afterEach(function () {
             ct.destroy();
             mainCt.destroy();
             ct = mainCt = null;
         });
-        
-        describe("without selectors", function() {
-        
-            it("should return null if it is not in a container", function(){
+
+        describe("without selectors", function () {
+
+            it("should return null if it is not in a container", function () {
                 expect(c.nextNode()).toBeNull();
             });
-        
-            it("should return the nextNode of the owner container if there are no siblings", function(){
+
+            it("should return the nextNode of the owner container if there are no siblings", function () {
                 var next = new Ext.Component();
                 mainCt.add(c);
                 ct.add(mainCt, next);
                 expect(c.nextNode()).toBe(next);
             });
-        
-            it("should return the next sibling if it exists", function(){
+
+            it("should return the next sibling if it exists", function () {
                 var next = new Ext.Component();
                 ct.add(c, next);
                 expect(c.nextNode()).toBe(next);
             });
-        
-            it("should be able to select itself if includeSelf is passed", function(){
+
+            it("should be able to select itself if includeSelf is passed", function () {
                 ct.add(c);
-                expect(c.nextNode(null, true)).toBe(c);    
+                expect(c.nextNode(null, true)).toBe(c);
             });
         });
-        
-        describe("with selectors", function(){
-            
-            describe("flat", function() {
-            
-                it("should return null if no component matches the selector", function(){
+
+        describe("with selectors", function () {
+
+            describe("flat", function () {
+
+                it("should return null if no component matches the selector", function () {
                     ct.add(c);
-                    expect(c.nextNode('foo')).toBeNull();    
-                });  
-            
-                it("should return the next sibling if it matches the selector", function(){
+                    expect(c.nextNode('foo')).toBeNull();
+                });
+
+                it("should return the next sibling if it matches the selector", function () {
                     var next = new Ext.Component({
                         type: 'foo'
-                    });    
+                    });
                     ct.add(c, next);
                     expect(c.nextNode('[type=foo]')).toBe(next);
                 });
-                
-                it("should return any next sibling that matches the selector", function(){
+
+                it("should return any next sibling that matches the selector", function () {
                     var next = new Ext.Component({
                         type: 'foo'
                     });
                     ct.add(c, {}, {}, {}, next);
-                    expect(c.nextNode('[type=foo]')).toBe(next);    
+                    expect(c.nextNode('[type=foo]')).toBe(next);
                 });
-                
-                it("should return the closest next sibling that matches the selector", function(){
-                    var next = new Ext.Component({
-                        type: 'foo'
-                    });    
-                    ct.add(c, {}, next, {}, {
-                        type: 'foo'
-                    }, {});
-                    expect(c.nextNode('[type=foo]')).toBe(next);    
-                });
-                
-                it("should return the owner container nextNode if the nextNode matches the selector and no siblings do", function(){
+
+                it("should return the closest next sibling that matches the selector", function () {
                     var next = new Ext.Component({
                         type: 'foo'
                     });
-                    mainCt.add(c, {}, {}, {});  
-                    ct.add(mainCt, next);  
+                    ct.add(c, {}, next, {}, {
+                        type: 'foo'
+                    }, {});
+                    expect(c.nextNode('[type=foo]')).toBe(next);
+                });
+
+                it("should return the owner container nextNode if the nextNode matches the selector and no siblings do", function () {
+                    var next = new Ext.Component({
+                        type: 'foo'
+                    });
+                    mainCt.add(c, {}, {}, {});
+                    ct.add(mainCt, next);
                     expect(c.nextNode('[type=foo]')).toBe(next);
                 });
             });
-            
-            describe("nested", function(){
-                
-                it("should give precedence to children", function(){
+
+            describe("nested", function () {
+
+                it("should give precedence to children", function () {
                     var next = new Ext.Component({
                         type: 'foo'
-                    });    
-                    
+                    });
+
                     mainCt.add(next);
                     ct.add(c, mainCt, {
                         xtype: 'component',
@@ -5776,8 +5781,8 @@ describe("Ext.Component", function(){
                     });
                     expect(c.nextNode('[type=foo]')).toBe(next);
                 });
-                
-                it("should match the least deep, first child", function(){
+
+                it("should match the least deep, first child", function () {
                     var next = new Ext.Component({
                         type: 'foo'
                     });
@@ -5800,12 +5805,12 @@ describe("Ext.Component", function(){
                                 xtype: 'component'
                             }]
                         }]
-                    }); 
+                    });
                     ct.add(c, mainCt);
-                    expect(c.nextNode('[type=foo]')).toBe(next);   
+                    expect(c.nextNode('[type=foo]')).toBe(next);
                 });
-                
-                it("should match any sibling if children don't match", function(){
+
+                it("should match any sibling if children don't match", function () {
                     var next = new Ext.Component({
                         type: 'foo'
                     });
@@ -5829,28 +5834,28 @@ describe("Ext.Component", function(){
                                 xtype: 'component'
                             }]
                         }]
-                    }); 
+                    });
                     ct.add(c, mainCt, next);
-                    expect(c.nextNode('[type=foo]')).toBe(next);   
+                    expect(c.nextNode('[type=foo]')).toBe(next);
                 });
             });
-            
+
         });
     });
-    
-    describe("rendering cycle", function(){
+
+    describe("rendering cycle", function () {
         var makeContainer,
             ct;
-            
-        beforeEach(function(){
-            makeContainer = function(event, fn1, fn2){
-                
+
+        beforeEach(function () {
+            makeContainer = function (event, fn1, fn2) {
+
                 var l1 = {},
                     l2 = {};
-                    
+
                 l1[event + 'render'] = fn1;
                 l2[event + 'render'] = fn2;
-                
+
                 ct = new Ext.container.Container({
                     defaultType: 'component',
                     items: [{
@@ -5869,150 +5874,150 @@ describe("Ext.Component", function(){
                 });
             };
         });
-        
-        afterEach(function(){
+
+        afterEach(function () {
             makeContainer = null;
             Ext.destroy(ct);
             ct = null;
         });
-        
-        it("should be able to add a class in beforerender using the API", function(){
-            makeContainer('before', function(c){
+
+        it("should be able to add a class in beforerender using the API", function () {
+            makeContainer('before', function (c) {
                 c.next().addCls('foo');
-            }, function(c){
+            }, function (c) {
                 c.prev().addCls('bar');
             });
             ct.render(Ext.getBody());
-            
+
             expect(Ext.getCmp('b').el.hasCls('foo')).toBe(true);
             expect(Ext.getCmp('c').el.hasCls('bar')).toBe(true);
         });
-        
-        it("should be able to add a class in beforerender using this.cls", function(){
-            makeContainer('before', function(c){
+
+        it("should be able to add a class in beforerender using this.cls", function () {
+            makeContainer('before', function (c) {
                 c.next().cls += ' foo';
-            }, function(c){
+            }, function (c) {
             });
             ct.render(Ext.getBody());
-            
+
             expect(Ext.getCmp('b').el.hasCls('foo')).toBe(true);
         });
-        
-        it("should be able to check if a class exists in beforerender", function(){
+
+        it("should be able to check if a class exists in beforerender", function () {
             var hasB,
                 hasC;
-                
-            makeContainer('before', function(c){
+
+            makeContainer('before', function (c) {
                 hasB = c.next().hasCls('clsB');
-            }, function(c){
+            }, function (c) {
                 hasC = c.prev().hasCls('clsC');
             });
             ct.render(Ext.getBody());
-            
+
             expect(hasB).toBe(true);
             expect(hasC).toBe(true);
         });
-        
-        it("should be able to remove a class in beforerender", function(){
-            makeContainer('before', function(c){
+
+        it("should be able to remove a class in beforerender", function () {
+            makeContainer('before', function (c) {
                 c.next().removeCls('clsB');
-            }, function(c){
+            }, function (c) {
                 c.prev().removeCls('clsC');
             });
             ct.render(Ext.getBody());
-            
+
             expect(Ext.getCmp('b').el.hasCls('clsB')).toBe(false);
             expect(Ext.getCmp('c').el.hasCls('clsC')).toBe(false);
         });
-        
-        it("should be able to add a class in aftererender", function(){
-            makeContainer('after', function(c){
+
+        it("should be able to add a class in aftererender", function () {
+            makeContainer('after', function (c) {
                 c.next().addCls('foo');
-            }, function(c){
+            }, function (c) {
                 c.prev().addCls('bar');
             });
             ct.render(Ext.getBody());
-            
+
             expect(Ext.getCmp('b').el.hasCls('foo')).toBe(true);
             expect(Ext.getCmp('c').el.hasCls('bar')).toBe(true);
         });
-        
-        it("should be able to check if a class exists in afterrender", function(){
+
+        it("should be able to check if a class exists in afterrender", function () {
             var hasB,
                 hasC;
-                
-            makeContainer('before', function(c){
+
+            makeContainer('before', function (c) {
                 hasB = c.next().hasCls('clsB');
-            }, function(c){
+            }, function (c) {
                 hasC = c.prev().hasCls('clsC');
             });
             ct.render(Ext.getBody());
-            
+
             expect(hasB).toBe(true);
             expect(hasC).toBe(true);
         });
-        
-        it("should be able to remove a class in afterrender", function(){
-            makeContainer('after', function(c){
+
+        it("should be able to remove a class in afterrender", function () {
+            makeContainer('after', function (c) {
                 c.next().removeCls('clsB');
-            }, function(c){
+            }, function (c) {
                 c.prev().removeCls('clsC');
             });
             ct.render(Ext.getBody());
-            
+
             expect(Ext.getCmp('b').el.hasCls('clsB')).toBe(false);
             expect(Ext.getCmp('c').el.hasCls('clsC')).toBe(false);
         });
     });
 
-    describe("destruction", function(){
-        it("should be destroyed if not rendered", function() {
+    describe("destruction", function () {
+        it("should be destroyed if not rendered", function () {
             makeComponent();
             expect(c.destroyed).toBe(false);
-            
+
             c.destroy();
             expect(c.destroyed).toBe(true);
         });
-        
-        it("should be destroyed if rendered", function(){
+
+        it("should be destroyed if rendered", function () {
             makeComponent({
                 renderTo: Ext.getBody()
             });
-            
+
             expect(c.destroyed).toBe(false);
             expect(Ext.get(c.id).dom.id).toBe(c.id);
-            
+
             c.destroy();
-            
+
             // component and el should be cleaned up
             expect(c.destroyed).toBe(true);
             expect(Ext.get(c.id)).toBe(null);
         });
-        
-        it("should be destroyed and child els removed if childEls defined", function() {
+
+        it("should be destroyed and child els removed if childEls defined", function () {
             // Button is a convenient component to use since it already has childEls defined
             c = Ext.createWidget('button', {
                 renderTo: Ext.getBody()
             });
-            
+
             expect(c.destroyed).toBe(false);
             expect(Ext.get(c.id).dom.id).toBe(c.id);
-            
+
             var childId = c.btnEl.id;
             expect(Ext.get(childId).dom.id).toBe(childId);
-            
+
             c.destroy();
-            
+
             // component and child refs should be cleaned up
             expect(c.destroyed).toBe(true);
             expect(c.btnEl).toBe(null);
-            
+
             // component and child els should be gone
             expect(Ext.get(c.id)).toBeNull();
             expect(Ext.get(childId)).toBeNull();
         });
-        
-        it("should be destroyed and child els removed if renderSelectors defined", function() {
+
+        it("should be destroyed and child els removed if renderSelectors defined", function () {
             // Button does not have renderSelectors (since they were converted to childEls)
             // but it's an easy component to add selectors for to verify this case.
             c = Ext.createWidget('button', {
@@ -6022,25 +6027,25 @@ describe("Ext.Component", function(){
                     btnSelector2: '.x-btn-button'
                 }
             });
-            
+
             expect(c.destroyed).toBe(false);
             expect(Ext.get(c.id).dom.id).toBe(c.id);
-            
+
             var childId = c.btnSelector.id;
             expect(Ext.get(childId).dom.id).toBe(childId);
-            
+
             c.destroy();
-            
+
             // component and child refs should be cleaned up
             expect(c.destroyed).toBe(true);
             expect(c.btnSelector).not.toBeDefined();
-            
+
             // component and child els should be gone
             expect(Ext.get(c.id)).toBeNull();
             expect(Ext.get(childId)).toBeNull();
         });
-        
-        it("should be destroyed when a childEl and a renderSelector have duplicate names", function() {
+
+        it("should be destroyed when a childEl and a renderSelector have duplicate names", function () {
             // This should not normally happen, but is possible, especially when subclassing.
             // This test verifies the fix for a bug that happened in real code.
             c = Ext.createWidget('button', {
@@ -6050,26 +6055,26 @@ describe("Ext.Component", function(){
                     btnEl: '.x-btn-button'
                 }
             });
-            
+
             expect(c.destroyed).toBe(false);
             expect(Ext.get(c.id).dom.id).toBe(c.id);
-            
+
             var childId = c.btnEl.id;
             expect(Ext.get(childId).dom.id).toBe(childId);
-            
+
             c.destroy();
-            
+
             // component and child refs should be cleaned up
             expect(c.destroyed).toBe(true);
             expect(c.btnEl).toBeNull();
-            
+
             // component and child els should be gone
             expect(Ext.get(c.id)).toBeNull();
             expect(Ext.get(childId)).toBeNull();
         });
 
-        describe("before render", function() {
-            it("should remove itself from a container", function() {
+        describe("before render", function () {
+            it("should remove itself from a container", function () {
                 makeComponent({
                     itemId: 'foo'
                 });
@@ -6090,7 +6095,7 @@ describe("Ext.Component", function(){
                 ct.destroy();
             });
 
-            it("should remove itself from a container when floating", function() {
+            it("should remove itself from a container when floating", function () {
                 makeComponent({
                     itemId: 'foo',
                     floating: true
@@ -6113,8 +6118,8 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("after render", function() {
-            it("should remove itself from a container", function() {
+        describe("after render", function () {
+            it("should remove itself from a container", function () {
                 makeComponent({
                     itemId: 'foo'
                 });
@@ -6137,7 +6142,7 @@ describe("Ext.Component", function(){
                 ct.destroy();
             });
 
-            it("should remove itself from a container when floating", function() {
+            it("should remove itself from a container when floating", function () {
                 makeComponent({
                     itemId: 'foo',
                     floating: true
@@ -6164,36 +6169,36 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("afterRender", function() {
+    describe("afterRender", function () {
         var spy;
 
-        describe("when pageX/pageY is set", function() {
-            describe("call setPagePosition", function() {
-                it("pageX", function() {
-                    makeComponent({pageX:10});
-                    
+        describe("when pageX/pageY is set", function () {
+            describe("call setPagePosition", function () {
+                it("pageX", function () {
+                    makeComponent({pageX: 10});
+
                     spy = spyOn(c, "setPagePosition");
-                    
+
                     c.render(Ext.getBody());
-                    
+
                     expect(spy).wasCalledWith(10, undefined);
                 });
-                
-                it("pageY", function() {
-                    makeComponent({pageY:10});
-                    
+
+                it("pageY", function () {
+                    makeComponent({pageY: 10});
+
                     spy = spyOn(c, "setPagePosition");
-                    
+
                     c.render(Ext.getBody());
-                    
+
                     expect(spy).wasCalledWith(undefined, 10);
                 });
             });
         });
-        
-        describe("resizable", function() {
-            it("should call initResizable", function() {
-                makeComponent({resizable:true});
+
+        describe("resizable", function () {
+            it("should call initResizable", function () {
+                makeComponent({resizable: true});
 
                 spy = spyOn(c, "initResizable");
 
@@ -6202,50 +6207,50 @@ describe("Ext.Component", function(){
                 expect(spy).wasCalled();
             });
         });
-        
-        describe("draggable", function() {
-            it("should call initDraggable", function() {
-                makeComponent({draggable:true});
-                
+
+        describe("draggable", function () {
+            it("should call initDraggable", function () {
+                makeComponent({draggable: true});
+
                 spy = spyOn(c, "initDraggable");
-                
+
                 c.render(Ext.getBody());
-                
+
                 expect(spy).wasCalled();
             });
         });
 
-        describe("setAutoScroll", function() {
-            describe("if autoScroll is not defined", function() {
-                it("should not call setAutoScroll", function() {
+        describe("setAutoScroll", function () {
+            describe("if autoScroll is not defined", function () {
+                it("should not call setAutoScroll", function () {
                     makeComponent();
-            
+
                     spy = spyOn(c, "getOverflowStyle").andCallThrough();
-            
+
                     c.render(Ext.getBody());
-            
+
                     expect(spy).toHaveBeenCalled();
                 });
             });
-            describe("if autoScroll is  defined", function() {
-                it("should  call setAutoScroll", function() {
+            describe("if autoScroll is  defined", function () {
+                it("should  call setAutoScroll", function () {
                     makeComponent({
                         autoScroll: false
                     });
-            
+
                     spy = spyOn(c, "getOverflowStyle").andCallThrough();
-            
+
                     c.render(Ext.getBody());
-            
+
                     expect(spy).toHaveBeenCalled();
                 });
             });
         });
     });
 
-    describe("scrollable", function() {
-        describe("initial configuration", function() {
-            it("should not create a scroller by default", function() {
+    describe("scrollable", function () {
+        describe("initial configuration", function () {
+            it("should not create a scroller by default", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6253,7 +6258,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable()).toBe(null);
             });
 
-            it("should not create a scroller if scrollable is false", function() {
+            it("should not create a scroller if scrollable is false", function () {
                 makeComponent({
                     renderTo: document.body,
                     scrollable: false
@@ -6262,7 +6267,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable()).toBe(false);
             });
 
-            it("should configure a default scroller if scrollable is true", function() {
+            it("should configure a default scroller if scrollable is true", function () {
                 makeComponent({
                     renderTo: document.body,
                     scrollable: true
@@ -6273,7 +6278,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(true);
             });
 
-            it("should configure a default scroller if scrollable is 'both'", function() {
+            it("should configure a default scroller if scrollable is 'both'", function () {
                 makeComponent({
                     renderTo: document.body,
                     scrollable: 'both'
@@ -6284,7 +6289,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(true);
             });
 
-            it("should configure a vertical scroller if scrollable is 'y'", function() {
+            it("should configure a vertical scroller if scrollable is 'y'", function () {
                 makeComponent({
                     renderTo: document.body,
                     scrollable: 'y'
@@ -6295,7 +6300,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(true);
             });
 
-            it("should configure a vertical scroller if scrollable is 'vertical'", function() {
+            it("should configure a vertical scroller if scrollable is 'vertical'", function () {
                 makeComponent({
                     renderTo: document.body,
                     scrollable: 'vertical'
@@ -6306,7 +6311,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(true);
             });
 
-            it("should configure a horizontal scrollbar if scrollable is 'x'", function() {
+            it("should configure a horizontal scrollbar if scrollable is 'x'", function () {
                 makeComponent({
                     renderTo: document.body,
                     scrollable: 'x'
@@ -6317,7 +6322,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should configure a horizontal scrollbar if scrollable is 'horizontal'", function() {
+            it("should configure a horizontal scrollbar if scrollable is 'horizontal'", function () {
                 makeComponent({
                     renderTo: document.body,
                     scrollable: 'horizontal'
@@ -6328,7 +6333,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should configure a non user-scrollable scroller if x and y are both false", function() {
+            it("should configure a non user-scrollable scroller if x and y are both false", function () {
                 // useful when you need a scroller so you can set scroll positions
                 // programmatically, but you don't want the user to be able to scroll
                 makeComponent({
@@ -6344,7 +6349,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should pass along a scroller config object to the Scroller constructor", function() {
+            it("should pass along a scroller config object to the Scroller constructor", function () {
                 makeComponent({
                     renderTo: document.body,
                     scrollable: {
@@ -6358,8 +6363,8 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should thow an error if configured with an invalid string", function() {
-                expect(function() {
+            it("should thow an error if configured with an invalid string", function () {
+                expect(function () {
                     makeComponent({
                         renderTo: document.body,
                         id: 'foo',
@@ -6369,8 +6374,8 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("reconfiguring the scroller", function() {
-            it("should reconfigure the existing scroller if there is one", function() {
+        describe("reconfiguring the scroller", function () {
+            it("should reconfigure the existing scroller if there is one", function () {
                 var scroller;
 
                 makeComponent({
@@ -6391,7 +6396,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(true);
             });
 
-            it("should create a new scroller if one does not already exist", function() {
+            it("should create a new scroller if one does not already exist", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6403,7 +6408,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(true);
             });
 
-            it("should be able to clear the old scroller", function() {
+            it("should be able to clear the old scroller", function () {
                 makeComponent({
                     renderTo: document.body,
                     width: 300,
@@ -6515,9 +6520,9 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("autoScroll", function() {
-        describe("initial configuration", function() {
-            it("should configure a scroller if autoScroll is true", function() {
+    describe("autoScroll", function () {
+        describe("initial configuration", function () {
+            it("should configure a scroller if autoScroll is true", function () {
                 makeComponent({
                     renderTo: document.body,
                     autoScroll: true
@@ -6528,7 +6533,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(true);
             });
 
-            it("should not configure a scroller if autoScroll is false", function() {
+            it("should not configure a scroller if autoScroll is false", function () {
                 makeComponent({
                     renderTo: document.body,
                     autoScroll: false
@@ -6537,7 +6542,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable()).toBe(null);
             });
 
-            it("should not override a scrollable config (autoScroll: true)", function() {
+            it("should not override a scrollable config (autoScroll: true)", function () {
                 makeComponent({
                     renderTo: document.body,
                     autoScroll: true,
@@ -6547,7 +6552,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable()).toBe(false);
             });
 
-            it("should not override a scrollable config (autoScroll: false)", function() {
+            it("should not override a scrollable config (autoScroll: false)", function () {
                 makeComponent({
                     renderTo: document.body,
                     autoScroll: false,
@@ -6560,8 +6565,8 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("setAutoScroll", function() {
-            it("should set scrollable with autoScroll:true", function() {
+        describe("setAutoScroll", function () {
+            it("should set scrollable with autoScroll:true", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6573,7 +6578,7 @@ describe("Ext.Component", function(){
                 expect(c.setScrollable).toHaveBeenCalledWith(true);
             });
 
-            it("should set scrollable with autoScroll:false", function() {
+            it("should set scrollable with autoScroll:false", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6587,9 +6592,9 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("overflowX and overflowY", function() {
-        describe("initial configuration", function() {
-            it("should set overflowX:true", function() {
+    describe("overflowX and overflowY", function () {
+        describe("initial configuration", function () {
+            it("should set overflowX:true", function () {
                 makeComponent({
                     renderTo: document.body,
                     overflowX: true
@@ -6600,7 +6605,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should set overflowX:'auto'", function() {
+            it("should set overflowX:'auto'", function () {
                 makeComponent({
                     renderTo: document.body,
                     overflowX: 'auto'
@@ -6611,7 +6616,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should set overflowX:'scroll'", function() {
+            it("should set overflowX:'scroll'", function () {
                 makeComponent({
                     renderTo: document.body,
                     overflowX: 'scroll'
@@ -6622,7 +6627,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should set overflowX:'hidden'", function() {
+            it("should set overflowX:'hidden'", function () {
                 makeComponent({
                     renderTo: document.body,
                     overflowX: 'hidden'
@@ -6633,7 +6638,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should set overflowY:true", function() {
+            it("should set overflowY:true", function () {
                 makeComponent({
                     renderTo: document.body,
                     overflowY: true
@@ -6644,7 +6649,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(true);
             });
 
-            it("should set overflowY:'auto'", function() {
+            it("should set overflowY:'auto'", function () {
                 makeComponent({
                     renderTo: document.body,
                     overflowY: 'auto'
@@ -6655,7 +6660,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe('auto');
             });
 
-            it("should set overflowY:'scroll'", function() {
+            it("should set overflowY:'scroll'", function () {
                 makeComponent({
                     renderTo: document.body,
                     overflowY: 'scroll'
@@ -6666,7 +6671,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe('scroll');
             });
 
-            it("should set overflowY:'hidden'", function() {
+            it("should set overflowY:'hidden'", function () {
                 makeComponent({
                     renderTo: document.body,
                     overflowY: 'hidden'
@@ -6678,8 +6683,8 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("setOverflowXY", function() {
-            it("should set overflowX:true", function() {
+        describe("setOverflowXY", function () {
+            it("should set overflowX:true", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6691,7 +6696,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should set overflowX:'auto'", function() {
+            it("should set overflowX:'auto'", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6703,7 +6708,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should set overflowX:'scroll'", function() {
+            it("should set overflowX:'scroll'", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6715,7 +6720,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should set overflowX:'hidden'", function() {
+            it("should set overflowX:'hidden'", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6727,7 +6732,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(false);
             });
 
-            it("should set overflowY:true", function() {
+            it("should set overflowY:true", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6739,7 +6744,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe(true);
             });
 
-            it("should set overflowY:'auto'", function() {
+            it("should set overflowY:'auto'", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6751,7 +6756,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe('auto');
             });
 
-            it("should set overflowY:'scroll'", function() {
+            it("should set overflowY:'scroll'", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6763,7 +6768,7 @@ describe("Ext.Component", function(){
                 expect(c.getScrollable().getY()).toBe('scroll');
             });
 
-            it("should set overflowY:'hidden'", function() {
+            it("should set overflowY:'hidden'", function () {
                 makeComponent({
                     renderTo: document.body
                 });
@@ -6777,10 +6782,10 @@ describe("Ext.Component", function(){
         });
     });
 
-    (Ext.supports.Touch ? xdescribe : describe)("scroll template methods", function() {
+    (Ext.supports.Touch ? xdescribe : describe)("scroll template methods", function () {
         var startSpy, moveSpy, endSpy;
 
-        beforeEach(function() {
+        beforeEach(function () {
             startSpy = jasmine.createSpy();
             moveSpy = jasmine.createSpy();
             endSpy = jasmine.createSpy();
@@ -6799,223 +6804,227 @@ describe("Ext.Component", function(){
             });
         });
 
-        it("should call onScrollStart when scrolling begins", function() {
+        it("should call onScrollStart when scrolling begins", function () {
             // scroll twice, make sure onScrollStart only ran once
             c.scrollTo(10, 20);
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return startSpy.callCount === 1;
             }, 'startSpy to fire', 1000);
 
-            runs(function() {
+            runs(function () {
                 expect(startSpy.mostRecentCall.args).toEqual([10, 20]);
                 c.scrollTo(20, 30);
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return moveSpy.callCount === 2;
             }, 'moveSpy to fire', 1000);
 
-            runs(function() {
+            runs(function () {
                 expect(startSpy.callCount).toBe(1);
             });
         });
 
-        it("should call onScrollMove during scrolling", function() {
+        it("should call onScrollMove during scrolling", function () {
             c.scrollTo(10, 20);
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return moveSpy.callCount === 1;
             }, 'moveSpy to fire the first time', 1000);
 
-            runs(function() {
+            runs(function () {
                 expect(moveSpy.mostRecentCall.args).toEqual([10, 20]);
                 c.scrollTo(20, 30);
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return moveSpy.callCount === 2;
             }, 'moveSpy to fire the second time', 1000);
 
-            runs(function() {
+            runs(function () {
                 expect(moveSpy.mostRecentCall.args).toEqual([20, 30]);
             });
         });
 
-        it("should call onScrollEnd when scrolling ends", function() {
+        it("should call onScrollEnd when scrolling ends", function () {
             c.scrollTo(10, 20);
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return moveSpy.callCount === 1;
             }, 'moveSpy to fire', 1000);
 
-            runs(function() {
+            runs(function () {
                 c.scrollTo(20, 30);
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return endSpy.callCount === 1;
             }, 'endSpy to fire', 1000);
 
-            runs(function() {
+            runs(function () {
                 expect(endSpy.mostRecentCall.args).toEqual([20, 30]);
             });
         });
     });
 
-    describe("initResizer", function() {
-        beforeEach(function() {
+    describe("initResizer", function () {
+        beforeEach(function () {
             makeComponent({renderTo: Ext.getBody()});
         });
-        
-        it("should create this.resizer", function() {
+
+        it("should create this.resizer", function () {
             expect(c.resizer).not.toBeDefined();
-            
+
             c.initResizable();
-            
+
             expect(c.resizer).toBeDefined();
         });
     });
-    
-    xdescribe("initDraggable", function() {
-        
+
+    xdescribe("initDraggable", function () {
+
     });
-    
-    describe("setPosition", function() {
-        beforeEach(function() {
+
+    describe("setPosition", function () {
+        beforeEach(function () {
             makeComponent({renderTo: Ext.getBody()});
         });
-        
-        describe("when arguments", function() {
-            it("should set x", function() {
+
+        describe("when arguments", function () {
+            it("should set x", function () {
                 c.setPosition(10, 0);
-                
+
                 expect(c.x).toEqual(10);
             });
-            
-            it("should set y", function() {
+
+            it("should set y", function () {
                 c.setPosition(0, 10);
-                
+
                 expect(c.y).toEqual(10);
             });
         });
-        
-        describe("when array", function() {
-            it("should set x", function() {
+
+        describe("when array", function () {
+            it("should set x", function () {
                 c.setPosition([10, 0]);
-                
+
                 expect(c.x).toEqual(10);
             });
-            
-            it("should set y", function() {
+
+            it("should set y", function () {
                 c.setPosition([0, 10]);
-                
+
                 expect(c.y).toEqual(10);
             });
         });
-        
-        describe("when rendered", function() {
-            it("should call adjustPosition", function() {
+
+        describe("when rendered", function () {
+            it("should call adjustPosition", function () {
                 var spy = spyOn(c, "adjustPosition").andCallThrough();
-                
+
                 c.setPosition(10, 0);
-                
+
                 expect(spy).wasCalled();
             });
-            
-            it("should call onPosition", function() {
+
+            it("should call onPosition", function () {
                 var spy = spyOn(c, "onPosition");
-                
+
                 c.setPosition(10, 0);
-                
+
                 expect(spy).wasCalled();
             });
-            
-            it("should fire the move event", function() {
+
+            it("should fire the move event", function () {
                 var fired = false;
-                
-                c.on({move:function() {fired = true;}});
-                
+
+                c.on({
+                    move: function () {
+                        fired = true;
+                    }
+                });
+
                 c.setPosition(10, 0);
-                
+
                 expect(fired).toBeTruthy();
             });
         });
     });
-    
-    describe("showAt", function() {
-        beforeEach(function() {
+
+    describe("showAt", function () {
+        beforeEach(function () {
             makeComponent({renderTo: Ext.getBody()});
         });
-        
-        it("should call setPagePosition", function() {
+
+        it("should call setPagePosition", function () {
             var spy = spyOn(c, "setPagePosition");
-            
+
             c.showAt(10, 0, true);
-            
+
             expect(spy).wasCalledWith(10, 0, true);
         });
-        
-        it("should call show", function() {
+
+        it("should call show", function () {
             var spy = spyOn(c, "show");
-            
+
             c.showAt(10, 0);
-            
+
             expect(spy).wasCalled();
         });
     });
-    
-    describe("setPagePosition", function() {
-        beforeEach(function() {
+
+    describe("setPagePosition", function () {
+        beforeEach(function () {
             makeComponent({renderTo: Ext.getBody()});
         });
-        
-        describe("when arguments", function() {
-            it("should set x", function() {
+
+        describe("when arguments", function () {
+            it("should set x", function () {
                 c.setPagePosition(10, 0);
-                
+
                 expect(c.pageX).toEqual(10);
             });
-            
-            it("should set y", function() {
+
+            it("should set y", function () {
                 c.setPagePosition(0, 10);
-                
-                expect(c.pageY).toEqual(10);
-            });
-        });
-        
-        describe("when array", function() {
-            it("should set x", function() {
-                c.setPagePosition([10, 0]);
-                
-                expect(c.pageX).toEqual(10);
-            });
-            
-            it("should set y", function() {
-                c.setPagePosition([0, 10]);
-                
+
                 expect(c.pageY).toEqual(10);
             });
         });
 
-        it("should set the element's X", function() {
+        describe("when array", function () {
+            it("should set x", function () {
+                c.setPagePosition([10, 0]);
+
+                expect(c.pageX).toEqual(10);
+            });
+
+            it("should set y", function () {
+                c.setPagePosition([0, 10]);
+
+                expect(c.pageY).toEqual(10);
+            });
+        });
+
+        it("should set the element's X", function () {
             c.el.dom.style.position = 'absolute';
             c.setPagePosition(10, 0);
             expect(c.el.getX()).toEqual(10);
         });
 
-        it("should set the element's Y", function() {
+        it("should set the element's Y", function () {
             c.el.dom.style.position = 'absolute';
             c.setPagePosition(0, 10);
             expect(c.el.getY()).toEqual(10);
         });
     });
 
-    describe("Component traversal", function() {
+    describe("Component traversal", function () {
         var cq = Ext.ComponentQuery,
             result, f1, f2, f3, f4, f5, fieldset, p;
-        
-        beforeEach(function() {
+
+        beforeEach(function () {
             p = new Ext.Panel({
                 layout: 'card',
                 items: fieldset = new Ext.form.FieldSet({
@@ -7041,56 +7050,56 @@ describe("Ext.Component", function(){
                 })
             });
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             p.destroy();
             p = fieldset = f1 = f2 = f3 = f4 = f5 = null;
         });
 
-        describe("Component.prev()", function() {
-            it("Should select f2", function() {
+        describe("Component.prev()", function () {
+            it("Should select f2", function () {
                 result = f3.prev();
                 expect(result).toEqual(f2);
             });
         });
 
-        describe("Component.prev('selector')", function() {
-            it("Should select f1", function() {
+        describe("Component.prev('selector')", function () {
+            it("Should select f1", function () {
                 result = f3.prev('numberfield');
                 expect(result).toEqual(f1);
             });
         });
 
-        describe("Component.prev() on first child", function() {
-            it("Should select null", function() {
+        describe("Component.prev() on first child", function () {
+            it("Should select null", function () {
                 result = f1.prev();
                 expect(result).toBeNull();
             });
         });
 
-        describe("Component.next()", function() {
-            it("Should select f2", function() {
+        describe("Component.next()", function () {
+            it("Should select f2", function () {
                 result = f1.next();
                 expect(result).toEqual(f2);
             });
         });
 
-        describe("Component.next('selector')", function() {
-            it("Should select f3", function() {
+        describe("Component.next('selector')", function () {
+            it("Should select f3", function () {
                 result = f1.next('textfield(true)');
                 expect(result).toEqual(f3);
             });
         });
 
-        describe("Component.next() on last child", function() {
-            it("Should select null", function() {
+        describe("Component.next() on last child", function () {
+            it("Should select null", function () {
                 result = f4.next();
                 expect(result).toBeNull();
             });
         });
 
-        describe("Component.up()", function() {
-            it("Should select fieldset", function() {
+        describe("Component.up()", function () {
+            it("Should select fieldset", function () {
                 result = f3.up();
                 expect(result).toEqual(fieldset);
             });
@@ -7120,7 +7129,7 @@ describe("Ext.Component", function(){
 
             describe("Component.up(':pseudo-class')", function () {
                 beforeEach(function () {
-                    cq.pseudos.cardLayout = function(items) {
+                    cq.pseudos.cardLayout = function (items) {
                         var result = [], c, i = 0, l = items.length;
                         for (; i < l; i++) {
                             if ((c = items[i]).getLayout() instanceof Ext.layout.CardLayout) {
@@ -7159,16 +7168,16 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("getPosition of static Component", function() {
-        it("should report the element position of a component rendered to the body", function() {
-            c = Ext.create('Ext.Component', {floating:true, x:10, y:10, renderTo:document.body});
+    describe("getPosition of static Component", function () {
+        it("should report the element position of a component rendered to the body", function () {
+            c = Ext.create('Ext.Component', {floating: true, x: 10, y: 10, renderTo: document.body});
             expect(c.getPosition()).toEqual([10, 10]);
             expect(c.getPosition(true)).toEqual([10, 10]);
         });
-        
+
         // This test seems to be failing intermittently in all browsers
-        xit("should report the element position when not local, and the container-relative position when local", function() {
-            c = Ext.create('Ext.container.Container', { 
+        xit("should report the element position when not local, and the container-relative position when local", function () {
+            c = Ext.create('Ext.container.Container', {
                 margin: 10,
                 renderTo: document.body,
                 items: {
@@ -7186,17 +7195,17 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("floaters with %age size", function() {
-        it("should use the natural width of the window to calculate the header's width", function() {
+    describe("floaters with %age size", function () {
+        it("should use the natural width of the window to calculate the header's width", function () {
             document.body.style.height = '100%';
             var body = Ext.getBody(),
-                w = Math.floor(body.getWidth()/2),
-                h = Math.floor(Ext.dom.Element.getViewportHeight()/2);
-            
+                w = Math.floor(body.getWidth() / 2),
+                h = Math.floor(Ext.dom.Element.getViewportHeight() / 2);
+
             // account for rounding errors
             w = [w, w + (Ext.isIE9m ? 10 : 1)];
             h = [h, h + 1];
-    
+
             c = Ext.create('Ext.panel.Panel', {
                 floating: {
                     shadow: false
@@ -7228,13 +7237,13 @@ describe("Ext.Component", function(){
         it("should use the natural height of the window to calculate the header's height", function () {
             document.body.style.height = '100%';
             var body = Ext.getBody(),
-                w = Math.floor(body.getWidth()/2),
-                h = Math.floor(Ext.dom.Element.getViewportHeight()/2);
+                w = Math.floor(body.getWidth() / 2),
+                h = Math.floor(Ext.dom.Element.getViewportHeight() / 2);
 
             // account for rounding errors
             w = [w, w + (Ext.isIE9m ? 10 : 1)];
             h = [h, h + 1];
-    
+
             c = Ext.create('Ext.panel.Panel', {
                 floating: {
                     shadow: false
@@ -7264,9 +7273,9 @@ describe("Ext.Component", function(){
             document.body.style.height = '';
         });
     });
-    
-    describe("scrollFlags", function() {
-        it("should set default flags", function() {
+
+    describe("scrollFlags", function () {
+        it("should set default flags", function () {
             makeComponent({
                 renderTo: Ext.getBody()
             });
@@ -7278,8 +7287,8 @@ describe("Ext.Component", function(){
                 both: false
             });
         });
-        
-        it("should set flags with scrollable: true", function() {
+
+        it("should set flags with scrollable: true", function () {
             makeComponent({
                 scrollable: true,
                 renderTo: Ext.getBody()
@@ -7292,8 +7301,8 @@ describe("Ext.Component", function(){
                 both: true
             });
         });
-        
-        it("should set flags with scrollable: false", function() {
+
+        it("should set flags with scrollable: false", function () {
             makeComponent({
                 scrollable: false,
                 renderTo: Ext.getBody()
@@ -7307,7 +7316,7 @@ describe("Ext.Component", function(){
             });
         });
 
-        it("should set flags with scrollable: { x: false, y: false }", function() {
+        it("should set flags with scrollable: { x: false, y: false }", function () {
             // in this case we have a scroller instance so we can control the scroll
             // position programmatically, but the component is not users scrollable.
             // the only difference between this and not having a scroller as far as
@@ -7328,8 +7337,8 @@ describe("Ext.Component", function(){
                 both: false
             });
         });
-        
-        it("should set flags with horizontal auto-scrolling", function() {
+
+        it("should set flags with horizontal auto-scrolling", function () {
             makeComponent({
                 scrollable: 'x',
                 renderTo: Ext.getBody()
@@ -7342,8 +7351,8 @@ describe("Ext.Component", function(){
                 both: false
             });
         });
-        
-        it("should set flags with horizontal scroll", function() {
+
+        it("should set flags with horizontal scroll", function () {
             makeComponent({
                 scrollable: {
                     x: 'scroll',
@@ -7359,8 +7368,8 @@ describe("Ext.Component", function(){
                 both: false
             });
         });
-        
-        it("should set flags with vertical auto-scrolling", function() {
+
+        it("should set flags with vertical auto-scrolling", function () {
             makeComponent({
                 scrollable: 'y',
                 renderTo: Ext.getBody()
@@ -7373,8 +7382,8 @@ describe("Ext.Component", function(){
                 both: false
             });
         });
-        
-        it("should set flags with vertical scroll", function() {
+
+        it("should set flags with vertical scroll", function () {
             makeComponent({
                 scrollable: {
                     x: false,
@@ -7390,9 +7399,9 @@ describe("Ext.Component", function(){
                 both: false
             });
         });
-        
+
         function createBothScrollSuite(ox, oy, expectX, expectY) {
-            it("should set flags with overflowX: " + ox + ' & overflowY: ' + oy, function() {
+            it("should set flags with overflowX: " + ox + ' & overflowY: ' + oy, function () {
                 makeComponent({
                     scrollable: {
                         x: ox,
@@ -7409,49 +7418,49 @@ describe("Ext.Component", function(){
                 });
             });
         }
-        
+
         // All x values, Y true
         createBothScrollSuite(true, true, 'auto', 'auto');
         createBothScrollSuite('auto', true, 'auto', 'auto');
         createBothScrollSuite('scroll', true, 'scroll', 'auto');
-        
+
         // All x values, Y 'auto'
         createBothScrollSuite(true, 'auto', 'auto', 'auto');
         createBothScrollSuite('auto', 'auto', 'auto', 'auto');
         createBothScrollSuite('scroll', 'auto', 'scroll', 'auto');
-        
+
         // All x values, Y 'scroll'
         createBothScrollSuite(true, 'scroll', 'auto', 'scroll');
         createBothScrollSuite('auto', 'scroll', 'auto', 'scroll');
         createBothScrollSuite('scroll', 'scroll', 'scroll', 'scroll');
     });
 
-    describe("initStyles", function() {
+    describe("initStyles", function () {
         function createSuite(scopeCss) {
-            describe("root classes" + (scopeCss ? ' - with Ext.scopeCss == true' : '') , function() {
+            describe("root classes" + (scopeCss ? ' - with Ext.scopeCss == true' : ''), function () {
                 if (scopeCss) {
-                    beforeEach(function() {
+                    beforeEach(function () {
                         Ext.scopeCss = true;
                     });
-                    afterEach(function() {
+                    afterEach(function () {
                         Ext.scopeCss = undefined;
                     });
                 }
-                it("should apply root classes to root level components", function() {
+                it("should apply root classes to root level components", function () {
                     var container = Ext.widget({
-                        xtype: 'container',
-                        renderTo: document.body,
-                        items: [{
-                            id: 'child',
                             xtype: 'container',
-                            items: {
-                                id: 'grandchild',
-                                xtype: 'component'
-                            }
-                        }]
-                    }),
-                    child = Ext.getCmp('child'),
-                    grandchild = Ext.getCmp('grandchild');
+                            renderTo: document.body,
+                            items: [{
+                                id: 'child',
+                                xtype: 'container',
+                                items: {
+                                    id: 'grandchild',
+                                    xtype: 'component'
+                                }
+                            }]
+                        }),
+                        child = Ext.getCmp('child'),
+                        grandchild = Ext.getCmp('grandchild');
 
                     if (scopeCss) {
                         expect(container.el).toHaveCls(Ext.baseCSSPrefix + 'body');
@@ -7466,30 +7475,30 @@ describe("Ext.Component", function(){
                     container.destroy();
                 });
 
-                it("should apply root classes to floaters, but not to their descendants", function() {
+                it("should apply root classes to floaters, but not to their descendants", function () {
                     var container = Ext.widget({
-                        xtype: 'container',
-                        floating: {
-                            shadow: false
-                        },
-                        items: [{
-                            id: 'child',
                             xtype: 'container',
-                            items: {
-                                id: 'grandchild',
-                                xtype: 'component'
-                            }
-                        }]
-                    }),
-                    child = Ext.getCmp('child'),
-                    grandchild = Ext.getCmp('grandchild'),
+                            floating: {
+                                shadow: false
+                            },
+                            items: [{
+                                id: 'child',
+                                xtype: 'container',
+                                items: {
+                                    id: 'grandchild',
+                                    xtype: 'component'
+                                }
+                            }]
+                        }),
+                        child = Ext.getCmp('child'),
+                        grandchild = Ext.getCmp('grandchild'),
                     // make a floater that it is not root level, but should still get the root
                     // classes since it is rendered to DOM root
-                    owner = Ext.widget({
-                        xtype: 'container',
-                        renderTo: document.body,
-                        items: [container]
-                    });
+                        owner = Ext.widget({
+                            xtype: 'container',
+                            renderTo: document.body,
+                            items: [container]
+                        });
 
                     container.show();
 
@@ -7507,12 +7516,13 @@ describe("Ext.Component", function(){
 
             });
         }
+
         createSuite();
         createSuite(true);
     });
 
-    describe('Updating with raw HTML', function() {
-        it('should not cause a layout if no dimensions are shrinkwrapped', function() {
+    describe('Updating with raw HTML', function () {
+        it('should not cause a layout if no dimensions are shrinkwrapped', function () {
 
             var c = new Ext.container.Container({
                     items: {
@@ -7530,8 +7540,8 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe('mask()/unmask() methods', function() {
-        beforeEach(function() {
+    describe('mask()/unmask() methods', function () {
+        beforeEach(function () {
             makeComponent({
                 height: 100,
                 width: 100,
@@ -7539,38 +7549,40 @@ describe("Ext.Component", function(){
                 style: 'background-color:red'
             });
         });
-        
-        it('should render the mask into the Component el by default', function() {
+
+        it('should render the mask into the Component el by default', function () {
             c.mask();
-            
+
             expect(c.el.dom.childNodes.length).toBe(1);
             expect(c.el.dom.firstChild.className).toBe(Ext.baseCSSPrefix + 'mask ' + Ext.baseCSSPrefix + 'border-box');
             expect(Ext.fly(c.el.dom.firstChild).getBox()).toEqual(c.el.getBox());
         });
-        
-        it('should render the mask into the Component el if getMaskTarget has been overridden to return null', function() {
-            c.getMaskTarget = function() { return null; };
+
+        it('should render the mask into the Component el if getMaskTarget has been overridden to return null', function () {
+            c.getMaskTarget = function () {
+                return null;
+            };
             c.mask();
-            
+
             expect(c.el.dom.childNodes.length).toBe(1);
             expect(c.el.dom.firstChild.className).toBe(Ext.baseCSSPrefix + 'mask ' + Ext.baseCSSPrefix + 'border-box');
             expect(Ext.fly(c.el.dom.firstChild).getBox()).toEqual(c.el.getBox());
         });
-        
-        it("should remove the mask on unmask()", function() {
+
+        it("should remove the mask on unmask()", function () {
             c.mask();
             expect(c.el.dom.childNodes.length).toBe(1);
-            
+
             c.unmask();
             expect(c.el.dom.childNodes.length).toBe(0);
         });
-        
-        describe("tabbable elements", function() {
-            beforeEach(function() {
+
+        describe("tabbable elements", function () {
+            beforeEach(function () {
                 if (c) {
                     Ext.destroy(c);
                 }
-                
+
                 makeComponent({
                     height: 100,
                     width: 100,
@@ -7584,74 +7596,74 @@ describe("Ext.Component", function(){
                     renderTpl: [
                         '<input />',
                         '<div>',
-                            '<textarea>foo</textarea>',
+                        '<textarea>foo</textarea>',
                         '</div>'
                     ]
                 });
-                
+
                 c.mask();
             });
-            
-            describe("masking", function() {
-                it("should remove itself from tab order", function() {
+
+            describe("masking", function () {
+                it("should remove itself from tab order", function () {
                     expect(c.el.isTabbable()).toBeFalsy();
                 });
-                
-                it("should remove its children from tab order", function() {
+
+                it("should remove its children from tab order", function () {
                     var tabbables = c.el.findTabbableElements({
                         skipSelf: true
                     });
-                
+
                     expect(tabbables.length).toBe(0);
                 });
             });
-            
-            describe("unmasking", function() {
-                beforeEach(function() {
+
+            describe("unmasking", function () {
+                beforeEach(function () {
                     c.unmask();
                 });
-                
-                it("should restore itself in tab order", function() {
+
+                it("should restore itself in tab order", function () {
                     expect(c.el.isTabbable()).toBeTruthy();
                 });
-                
-                it("should restore its children tabbable state", function() {
+
+                it("should restore its children tabbable state", function () {
                     var tabbables = c.el.findTabbableElements({
                         skipSelf: true
                     });
-                    
+
                     expect(tabbables.length).toBe(2);
                 });
             });
         });
-        
-        describe("masked hierarchy state", function() {
-            it("should be undefined before masking", function() {
+
+        describe("masked hierarchy state", function () {
+            it("should be undefined before masking", function () {
                 expect(c.getInherited().masked).not.toBeDefined();
             });
-            
-            it("should be true when masked", function() {
+
+            it("should be true when masked", function () {
                 c.mask();
-                
+
                 expect(c.getInherited().masked).toBe(true);
             });
-            
-            it("should be undefined again after masking", function() {
+
+            it("should be undefined again after masking", function () {
                 c.mask();
                 c.unmask();
-                
+
                 expect(c.getInherited().masked).not.toBeDefined();
             });
         });
-        
-        describe("isMasked", function() {
+
+        describe("isMasked", function () {
             var ct;
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 if (c) {
                     Ext.destroy(c);
                 }
-                
+
                 ct = new Ext.container.Container({
                     renderTo: document.body,
                     height: 100,
@@ -7663,52 +7675,52 @@ describe("Ext.Component", function(){
                         style: 'background-color: green'
                     }]
                 });
-                
+
                 c = ct.down();
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 if (ct) {
                     Ext.destroy(ct);
                 }
-                
+
                 ct = null;
             });
-            
-            it("should return false when component is not masked", function() {
+
+            it("should return false when component is not masked", function () {
                 expect(c.isMasked()).toBeFalsy();
             });
-            
-            it("should return false when parent is masked but !hierarchy", function() {
+
+            it("should return false when parent is masked but !hierarchy", function () {
                 ct.mask();
-                
+
                 expect(c.isMasked()).toBeFalsy();
             });
-            
-            it("should return true when component is masked", function() {
+
+            it("should return true when component is masked", function () {
                 c.mask();
-                
+
                 expect(c.isMasked()).toBeTruthy();
             });
-            
-            it("should return true when parent is masked && hierarchy", function() {
+
+            it("should return true when parent is masked && hierarchy", function () {
                 ct.mask();
-                
+
                 expect(c.isMasked(true)).toBeTruthy();
             });
-            
-            it("should return false again when parent is unmasked", function() {
+
+            it("should return false again when parent is unmasked", function () {
                 ct.mask();
                 ct.unmask();
-                
+
                 expect(c.isMasked(true)).toBeFalsy();
             });
         });
     });
 
-    describe('setLoading() method', function() {
-        describe("mask target === main el", function() {
-            beforeEach(function() {
+    describe('setLoading() method', function () {
+        describe("mask target === main el", function () {
+            beforeEach(function () {
                 makeComponent({
                     height: 100,
                     width: 100,
@@ -7716,77 +7728,77 @@ describe("Ext.Component", function(){
                     style: 'background-color:red',
                     maskElement: 'el'
                 });
-            
+
                 c.setLoading(true);
             });
-            
-            it('should render the LoadMask into the Component', function() {
+
+            it('should render the LoadMask into the Component', function () {
                 expect(c.el.dom.childNodes.length).toBe(1);
             });
-            
-            it("should set " + Ext.baseCSSPrefix + "mask class on the mask", function() {
+
+            it("should set " + Ext.baseCSSPrefix + "mask class on the mask", function () {
                 var maskEl = Ext.get(c.el.dom.firstChild);
-                
+
                 expect(maskEl.hasCls(Ext.baseCSSPrefix + 'mask')).toBe(true);
             });
-            
-            it("should size the mask to target el", function() {
+
+            it("should size the mask to target el", function () {
                 expect(Ext.fly(c.el.dom.firstChild).getBox()).toEqual(c.el.getBox());
             });
-            
-            it("should move the mask with the Component", function() {
+
+            it("should move the mask with the Component", function () {
                 // Mask should follow target component
-                c.setXY([100,100]);
+                c.setXY([100, 100]);
                 expect(Ext.fly(c.el.dom.firstChild).getBox()).toEqual(c.el.getBox());
             });
         });
-        
-        describe("Default mask target (document body)", function() {
+
+        describe("Default mask target (document body)", function () {
             var childNo, maskNode;
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 body = document.body;
                 childNo = body.children.length;
-                
+
                 makeComponent({
                     height: 100,
                     width: 100,
                     renderTo: document.body,
                     style: 'background-color:red'
                 });
-                
+
                 c.setLoading(true);
-                
+
                 maskNode = body.children[childNo + 1];
             });
-            
-            it("should render LoadMask", function() {
+
+            it("should render LoadMask", function () {
                 expect(body.childNodes.length).toBe(childNo + 2); // target + mask = 2
             });
-            
-            it("should set " + Ext.baseCSSPrefix + "mask class on the mask el", function() {
+
+            it("should set " + Ext.baseCSSPrefix + "mask class on the mask el", function () {
                 var maskEl = Ext.get(maskNode);
-                
+
                 expect(maskEl.hasCls(Ext.baseCSSPrefix + 'mask')).toBe(true);
             });
-            
-            it("should size the mask to the target component", function() {
+
+            it("should size the mask to the target component", function () {
                 expect(Ext.fly(maskNode).getBox()).toEqual(c.el.getBox());
             });
-        
-            it("should unmask document.body on destroy", function() {
+
+            it("should unmask document.body on destroy", function () {
                 c.destroy();
-                
+
                 expect(body.childNodes.length).toBe(childNo);
-                
+
                 c = null;
             });
         });
-        
-        describe("isMasked", function() {
+
+        describe("isMasked", function () {
             var ct;
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 ct = new Ext.container.Container({
                     renderTo: document.body,
                     height: 100,
@@ -7798,50 +7810,50 @@ describe("Ext.Component", function(){
                         style: 'background-color: red'
                     }]
                 });
-                
+
                 c = ct.down();
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 if (ct) {
                     Ext.destroy(ct);
                 }
-                
+
                 ct = c = null;
             });
-            
-            it("should return false when component is not masked", function() {
+
+            it("should return false when component is not masked", function () {
                 expect(c.isMasked()).toBeFalsy();
             });
-            
-            it("should return false when parent is masked but !hierarchy", function() {
+
+            it("should return false when parent is masked but !hierarchy", function () {
                 ct.setLoading(true);
-                
+
                 expect(c.isMasked()).toBeFalsy();
             });
-            
-            it("should return true when component is masked", function() {
+
+            it("should return true when component is masked", function () {
                 c.setLoading(true);
-                
+
                 expect(c.isMasked()).toBeTruthy();
             });
-            
-            it("should return true when parent is masked && hierarchy", function() {
+
+            it("should return true when parent is masked && hierarchy", function () {
                 ct.setLoading(true);
-                
+
                 expect(c.isMasked(true)).toBeTruthy();
             });
-            
-            it("should return false again when parent is unmasked", function() {
+
+            it("should return false again when parent is unmasked", function () {
                 ct.setLoading(true);
                 ct.setLoading(false);
-                
+
                 expect(c.isMasked(true)).toBeFalsy();
             });
         });
 
-        describe("tabbable elements", function() {
-            beforeEach(function() {
+        describe("tabbable elements", function () {
+            beforeEach(function () {
                 if (c) {
                     Ext.destroy(c);
                 }
@@ -7859,57 +7871,57 @@ describe("Ext.Component", function(){
                     renderTpl: [
                         '<input />',
                         '<div>',
-                            '<textarea>foo</textarea>',
+                        '<textarea>foo</textarea>',
                         '</div>'
                     ],
-                    getFocusEl: function() {
+                    getFocusEl: function () {
                         return this.el;
                     }
                 });
             });
-            
-            it("should be tabbable initially (sanity check)", function() {
+
+            it("should be tabbable initially (sanity check)", function () {
                 expect(c.el.isTabbable()).toBeTruthy();
             });
-            
-            describe("masking", function() {
-                beforeEach(function() {
+
+            describe("masking", function () {
+                beforeEach(function () {
                     c.setLoading(true);
                 });
-                
-                it("should remove itself from tab order", function() {
+
+                it("should remove itself from tab order", function () {
                     expect(c.el.isTabbable()).toBeFalsy();
                 });
-                
-                it("should remove its children from tab order", function() {
+
+                it("should remove its children from tab order", function () {
                     var tabbables = c.el.findTabbableElements({
                         skipSelf: true
                     });
-                
+
                     expect(tabbables.length).toBe(0);
                 });
             });
-            
-            describe("unmasking", function() {
-                beforeEach(function() {
+
+            describe("unmasking", function () {
+                beforeEach(function () {
                     c.setLoading(true);
                     c.setLoading(false);
                 });
-                
-                it("should restore itself in tab order", function() {
+
+                it("should restore itself in tab order", function () {
                     expect(c.el.isTabbable()).toBeTruthy();
                 });
-                
-                it("should restore its children tabbable state", function() {
+
+                it("should restore its children tabbable state", function () {
                     var tabbables = c.el.findTabbableElements({
                         skipSelf: true
                     });
-                    
+
                     expect(tabbables.length).toBe(2);
                 });
             });
         });
-        
+
         describe('function args', function () {
             var c, loadMask;
 
@@ -7999,8 +8011,8 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("size constraints", function() {
-        it("should constrain if width is greater than maxWidth", function() {
+    describe("size constraints", function () {
+        it("should constrain if width is greater than maxWidth", function () {
             makeComponent({
                 renderTo: document.body,
                 width: 300,
@@ -8010,7 +8022,7 @@ describe("Ext.Component", function(){
             expect(c.getWidth()).toBe(200);
         });
 
-        it("should not constrain if width is less than maxWidth", function() {
+        it("should not constrain if width is less than maxWidth", function () {
             makeComponent({
                 renderTo: document.body,
                 width: 200,
@@ -8020,7 +8032,7 @@ describe("Ext.Component", function(){
             expect(c.getWidth()).toBe(200);
         });
 
-        it("should constrain if width is less than minWidth", function() {
+        it("should constrain if width is less than minWidth", function () {
             makeComponent({
                 renderTo: document.body,
                 width: 200,
@@ -8030,7 +8042,7 @@ describe("Ext.Component", function(){
             expect(c.getWidth()).toBe(300);
         });
 
-        it("should not constrain if width is greater than minWidth", function() {
+        it("should not constrain if width is greater than minWidth", function () {
             makeComponent({
                 renderTo: document.body,
                 width: 300,
@@ -8040,7 +8052,7 @@ describe("Ext.Component", function(){
             expect(c.getWidth()).toBe(300);
         });
 
-        it("should constrain if height is greater than maxHeight", function() {
+        it("should constrain if height is greater than maxHeight", function () {
             makeComponent({
                 renderTo: document.body,
                 height: 300,
@@ -8050,7 +8062,7 @@ describe("Ext.Component", function(){
             expect(c.getHeight()).toBe(200);
         });
 
-        it("should not constrain if height is less than maxHeight", function() {
+        it("should not constrain if height is less than maxHeight", function () {
             makeComponent({
                 renderTo: document.body,
                 height: 200,
@@ -8060,7 +8072,7 @@ describe("Ext.Component", function(){
             expect(c.getHeight()).toBe(200);
         });
 
-        it("should constrain if height is less than minHeight", function() {
+        it("should constrain if height is less than minHeight", function () {
             makeComponent({
                 renderTo: document.body,
                 height: 200,
@@ -8070,7 +8082,7 @@ describe("Ext.Component", function(){
             expect(c.getHeight()).toBe(300);
         });
 
-        it("should not constrain if height is greater than minHeight", function() {
+        it("should not constrain if height is greater than minHeight", function () {
             makeComponent({
                 renderTo: document.body,
                 height: 300,
@@ -8080,8 +8092,8 @@ describe("Ext.Component", function(){
             expect(c.getHeight()).toBe(300);
         });
 
-        describe("after initial render", function() {
-            it("should constrain if width is greater than maxWidth", function() {
+        describe("after initial render", function () {
+            it("should constrain if width is greater than maxWidth", function () {
                 makeComponent({
                     renderTo: document.body,
                     width: 300
@@ -8092,7 +8104,7 @@ describe("Ext.Component", function(){
                 expect(c.getWidth()).toBe(200);
             });
 
-            it("should not constrain if width is less than maxWidth", function() {
+            it("should not constrain if width is less than maxWidth", function () {
                 makeComponent({
                     renderTo: document.body,
                     width: 200
@@ -8103,7 +8115,7 @@ describe("Ext.Component", function(){
                 expect(c.getWidth()).toBe(200);
             });
 
-            it("should constrain if width is less than minWidth", function() {
+            it("should constrain if width is less than minWidth", function () {
                 makeComponent({
                     renderTo: document.body,
                     width: 200
@@ -8114,7 +8126,7 @@ describe("Ext.Component", function(){
                 expect(c.getWidth()).toBe(300);
             });
 
-            it("should not constrain if width is greater than minWidth", function() {
+            it("should not constrain if width is greater than minWidth", function () {
                 makeComponent({
                     renderTo: document.body,
                     width: 300
@@ -8125,7 +8137,7 @@ describe("Ext.Component", function(){
                 expect(c.getWidth()).toBe(300);
             });
 
-            it("should constrain if height is greater than maxHeight", function() {
+            it("should constrain if height is greater than maxHeight", function () {
                 makeComponent({
                     renderTo: document.body,
                     height: 300
@@ -8136,7 +8148,7 @@ describe("Ext.Component", function(){
                 expect(c.getHeight()).toBe(200);
             });
 
-            it("should not constrain if height is less than maxHeight", function() {
+            it("should not constrain if height is less than maxHeight", function () {
                 makeComponent({
                     renderTo: document.body,
                     height: 200
@@ -8147,7 +8159,7 @@ describe("Ext.Component", function(){
                 expect(c.getHeight()).toBe(200);
             });
 
-            it("should constrain if height is less than minHeight", function() {
+            it("should constrain if height is less than minHeight", function () {
                 makeComponent({
                     renderTo: document.body,
                     height: 200
@@ -8158,7 +8170,7 @@ describe("Ext.Component", function(){
                 expect(c.getHeight()).toBe(300);
             });
 
-            it("should not constrain if height is greater than minHeight", function() {
+            it("should not constrain if height is greater than minHeight", function () {
                 makeComponent({
                     renderTo: document.body,
                     height: 300
@@ -8171,8 +8183,8 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("liquidLayout", function() {
-        it("should set minWidth as an inline style", function() {
+    describe("liquidLayout", function () {
+        it("should set minWidth as an inline style", function () {
             makeComponent({
                 renderTo: document.body,
                 liquidLayout: true,
@@ -8183,7 +8195,7 @@ describe("Ext.Component", function(){
             expect(c.el.isStyle('min-width', '50px')).toBe(true);
         });
 
-        it("should set maxWidth as an inline style", function() {
+        it("should set maxWidth as an inline style", function () {
             makeComponent({
                 renderTo: document.body,
                 liquidLayout: true,
@@ -8193,7 +8205,7 @@ describe("Ext.Component", function(){
             expect(c.el.isStyle('max-width', '50px')).toBe(true);
         });
 
-        it("should set minHeight as an inline style", function() {
+        it("should set minHeight as an inline style", function () {
             makeComponent({
                 renderTo: document.body,
                 liquidLayout: true,
@@ -8203,7 +8215,7 @@ describe("Ext.Component", function(){
             expect(c.el.isStyle('min-height', '50px')).toBe(true);
         });
 
-        it("should set maxHeight as an inline style", function() {
+        it("should set maxHeight as an inline style", function () {
             makeComponent({
                 renderTo: document.body,
                 liquidLayout: true,
@@ -8213,8 +8225,8 @@ describe("Ext.Component", function(){
             expect(c.el.isStyle('max-height', '50px')).toBe(true);
         });
 
-        describe("before render", function() {
-            it("should set minWidth as an inline style", function() {
+        describe("before render", function () {
+            it("should set minWidth as an inline style", function () {
                 makeComponent({
                     liquidLayout: true
                 });
@@ -8225,7 +8237,7 @@ describe("Ext.Component", function(){
                 expect(c.el.isStyle('min-width', '50px')).toBe(true);
             });
 
-            it("should set maxWidth as an inline style", function() {
+            it("should set maxWidth as an inline style", function () {
                 makeComponent({
                     liquidLayout: true
                 });
@@ -8236,7 +8248,7 @@ describe("Ext.Component", function(){
                 expect(c.el.isStyle('max-width', '50px')).toBe(true);
             });
 
-            it("should set minHeight as an inline style", function() {
+            it("should set minHeight as an inline style", function () {
                 makeComponent({
                     liquidLayout: true
                 });
@@ -8247,7 +8259,7 @@ describe("Ext.Component", function(){
                 expect(c.el.isStyle('min-height', '50px')).toBe(true);
             });
 
-            it("should set maxHeight as an inline style", function() {
+            it("should set maxHeight as an inline style", function () {
                 makeComponent({
                     liquidLayout: true
                 });
@@ -8258,7 +8270,7 @@ describe("Ext.Component", function(){
                 expect(c.el.isStyle('max-height', '50px')).toBe(true);
             });
 
-            it("should remove minWidth", function() {
+            it("should remove minWidth", function () {
                 makeComponent({
                     liquidLayout: true,
                     minWidth: 50
@@ -8270,7 +8282,7 @@ describe("Ext.Component", function(){
                 expect(c.el.dom.style.minWidth).toBe('');
             });
 
-            it("should remove maxWidth", function() {
+            it("should remove maxWidth", function () {
                 makeComponent({
                     liquidLayout: true,
                     maxWidth: 50
@@ -8282,7 +8294,7 @@ describe("Ext.Component", function(){
                 expect(c.el.dom.style.maxWidth).toBe('');
             });
 
-            it("should remove minHeight", function() {
+            it("should remove minHeight", function () {
                 makeComponent({
                     liquidLayout: true,
                     minHeight: 50
@@ -8294,7 +8306,7 @@ describe("Ext.Component", function(){
                 expect(c.el.dom.style.minHeight).toBe('');
             });
 
-            it("should remove maxHeight", function() {
+            it("should remove maxHeight", function () {
                 makeComponent({
                     liquidLayout: true,
                     maxHeight: 50
@@ -8307,8 +8319,8 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("after initial render", function() {
-            it("should set minWidth as an inline style", function() {
+        describe("after initial render", function () {
+            it("should set minWidth as an inline style", function () {
                 makeComponent({
                     renderTo: document.body,
                     liquidLayout: true
@@ -8319,7 +8331,7 @@ describe("Ext.Component", function(){
                 expect(c.el.isStyle('min-width', '50px')).toBe(true);
             });
 
-            it("should set maxWidth as an inline style", function() {
+            it("should set maxWidth as an inline style", function () {
                 makeComponent({
                     renderTo: document.body,
                     liquidLayout: true
@@ -8330,7 +8342,7 @@ describe("Ext.Component", function(){
                 expect(c.el.isStyle('max-width', '50px')).toBe(true);
             });
 
-            it("should set minHeight as an inline style", function() {
+            it("should set minHeight as an inline style", function () {
                 makeComponent({
                     renderTo: document.body,
                     liquidLayout: true
@@ -8341,7 +8353,7 @@ describe("Ext.Component", function(){
                 expect(c.el.isStyle('min-height', '50px')).toBe(true);
             });
 
-            it("should set maxHeight as an inline style", function() {
+            it("should set maxHeight as an inline style", function () {
                 makeComponent({
                     renderTo: document.body,
                     liquidLayout: true
@@ -8352,7 +8364,7 @@ describe("Ext.Component", function(){
                 expect(c.el.isStyle('max-height', '50px')).toBe(true);
             });
 
-            it("should remove minWidth", function() {
+            it("should remove minWidth", function () {
                 makeComponent({
                     renderTo: document.body,
                     liquidLayout: true,
@@ -8364,7 +8376,7 @@ describe("Ext.Component", function(){
                 expect(c.el.dom.style.minWidth).toBe('');
             });
 
-            it("should remove maxWidth", function() {
+            it("should remove maxWidth", function () {
                 makeComponent({
                     renderTo: document.body,
                     liquidLayout: true,
@@ -8376,7 +8388,7 @@ describe("Ext.Component", function(){
                 expect(c.el.dom.style.maxWidth).toBe('');
             });
 
-            it("should remove minHeight", function() {
+            it("should remove minHeight", function () {
                 makeComponent({
                     renderTo: document.body,
                     liquidLayout: true,
@@ -8388,7 +8400,7 @@ describe("Ext.Component", function(){
                 expect(c.el.dom.style.minHeight).toBe('');
             });
 
-            it("should remove maxHeight", function() {
+            it("should remove maxHeight", function () {
                 makeComponent({
                     renderTo: document.body,
                     liquidLayout: true,
@@ -8402,11 +8414,11 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("listeners", function() {
+    describe("listeners", function () {
         var Foo, Bar, foo, bar, destroyer1, destroyer2,
             elHandler, childElHandler, barHandler;
 
-        beforeEach(function() {
+        beforeEach(function () {
             elHandler = jasmine.createSpy();
             childElHandler = jasmine.createSpy();
             barHandler = jasmine.createSpy();
@@ -8442,11 +8454,11 @@ describe("Ext.Component", function(){
             });
         });
 
-        afterEach(function() {
+        afterEach(function () {
             foo.destroy();
         });
 
-        it("should add an element listener", function() {
+        it("should add an element listener", function () {
             jasmine.fireMouseEvent(foo.getEl(), 'click');
 
             // Ensure handler only got called once
@@ -8454,12 +8466,12 @@ describe("Ext.Component", function(){
             expect(elHandler.callCount).toBe(1);
         });
 
-        it("should add an element listener defined using element name as a property of the options object", function() {
+        it("should add an element listener defined using element name as a property of the options object", function () {
             jasmine.fireMouseEvent(foo.childEl, 'click');
             expect(childElHandler.callCount).toBe(1);
         });
 
-        it("should add a listener to an arbitrary observable as a property of the options object", function() {
+        it("should add a listener to an arbitrary observable as a property of the options object", function () {
             // this one is really creepy... supports syntax like:
             //
             // grid.on({
@@ -8472,7 +8484,7 @@ describe("Ext.Component", function(){
             expect(barHandler.callCount).toBe(1);
         });
 
-        it("should remove an element listener", function() {
+        it("should remove an element listener", function () {
             foo.el.un({
                 click: elHandler
             });
@@ -8482,42 +8494,42 @@ describe("Ext.Component", function(){
         });
 
         // TODO: make this work
-        xdescribe("removal using a destroyer", function() {
-            it("should remove an element listener", function() {
+        xdescribe("removal using a destroyer", function () {
+            it("should remove an element listener", function () {
                 destroyer1.destroy();
                 jasmine.fireMouseEvent(foo.getEl(), 'click');
                 expect(elHandler.callCount).toBe(0);
             });
 
-            it("should remove an element listener defined using element name as a property of the options object", function() {
+            it("should remove an element listener defined using element name as a property of the options object", function () {
                 destroyer2.destroy();
                 jasmine.fireMouseEvent(foo.childEl, 'click');
                 expect(childElHandler.callCount).toBe(0);
             });
 
-            it("should remove a listener from an arbitrary observable as a property of the options object", function() {
+            it("should remove a listener from an arbitrary observable as a property of the options object", function () {
                 destroyer2.destroy();
                 bar.fireEvent('baz');
                 expect(barHandler.callCount).toBe(0);
             });
         });
 
-        (Ext.isIE9m ? xdescribe : describe)("element event options", function() {
-            it("should add capture and non-delegated element listeners", function() {
+        (Ext.isIE9m ? xdescribe : describe)("element event options", function () {
+            it("should add capture and non-delegated element listeners", function () {
                 // The purpose of this this spec is to ensure that we pass the proper
                 // event options along to the element when we attach an event listener using
                 // the element event option.
                 var result = [];
                 foo.on({
                     element: 'el',
-                    mousedown: function() {
+                    mousedown: function () {
                         result.push('p');
                     }
                 });
 
                 foo.on({
                     element: 'el',
-                    mousedown: function() {
+                    mousedown: function () {
                         result.push('pc');
                     },
                     capture: true
@@ -8525,7 +8537,7 @@ describe("Ext.Component", function(){
 
                 foo.on({
                     element: 'el',
-                    mousedown: function() {
+                    mousedown: function () {
                         result.push('pd');
                     },
                     delegated: false
@@ -8533,7 +8545,7 @@ describe("Ext.Component", function(){
 
                 foo.on({
                     element: 'el',
-                    mousedown: function() {
+                    mousedown: function () {
                         result.push('pdc');
                     },
                     delegated: false,
@@ -8542,14 +8554,14 @@ describe("Ext.Component", function(){
 
                 foo.on({
                     element: 'childEl',
-                    mousedown: function() {
+                    mousedown: function () {
                         result.push('c');
                     }
                 });
 
                 foo.on({
                     element: 'childEl',
-                    mousedown: function() {
+                    mousedown: function () {
                         result.push('cc');
                     },
                     capture: true
@@ -8557,7 +8569,7 @@ describe("Ext.Component", function(){
 
                 foo.on({
                     element: 'childEl',
-                    mousedown: function() {
+                    mousedown: function () {
                         result.push('cdc');
                     },
                     delegated: false,
@@ -8566,7 +8578,7 @@ describe("Ext.Component", function(){
 
                 foo.on({
                     element: 'childEl',
-                    mousedown: function() {
+                    mousedown: function () {
                         result.push('cd');
                     },
                     delegated: false
@@ -8578,7 +8590,7 @@ describe("Ext.Component", function(){
                 expect(result).toEqual(['pdc', 'cdc', 'cd', 'pd', 'pc', 'cc', 'c', 'p'])
             });
 
-            it("should allow element options to be used as event names", function() {
+            it("should allow element options to be used as event names", function () {
                 var translateFn = jasmine.createSpy(),
                     captureFn = jasmine.createSpy(),
                     delegatedFn = jasmine.createSpy(),
@@ -8613,11 +8625,11 @@ describe("Ext.Component", function(){
             });
         });
 
-        describe("the delegate event option", function() {
+        describe("the delegate event option", function () {
             var handler, container, result;
 
-            beforeEach(function() {
-                handler = jasmine.createSpy().andCallFake(function(cmp) {
+            beforeEach(function () {
+                handler = jasmine.createSpy().andCallFake(function (cmp) {
                     result.push(cmp.id);
                 });
                 result = [];
@@ -8657,11 +8669,11 @@ describe("Ext.Component", function(){
                 });
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 container.destroy();
             });
 
-            it("should listen on direct children by xtype", function() {
+            it("should listen on direct children by xtype", function () {
                 container.on({
                     render: handler,
                     delegate: '> button'
@@ -8672,7 +8684,7 @@ describe("Ext.Component", function(){
                 expect(result).toEqual(['foo']);
             });
 
-            it("should listen on descendants by xtype", function() {
+            it("should listen on descendants by xtype", function () {
                 container.on({
                     render: handler,
                     delegate: 'button'
@@ -8683,7 +8695,7 @@ describe("Ext.Component", function(){
                 expect(result).toEqual(['foo', 'myBtn']);
             });
 
-            it("should listen on a direct child by id", function() {
+            it("should listen on a direct child by id", function () {
                 container.on({
                     render: handler,
                     delegate: '> #baz'
@@ -8694,7 +8706,7 @@ describe("Ext.Component", function(){
                 expect(result).toEqual(['baz']);
             });
 
-            it("should listen on a descendant by id", function() {
+            it("should listen on a descendant by id", function () {
                 container.on({
                     render: handler,
                     delegate: '#myCmp'
@@ -8705,7 +8717,7 @@ describe("Ext.Component", function(){
                 expect(result).toEqual(['myCmp']);
             });
 
-            it("should listen on direct children by attribute value", function() {
+            it("should listen on direct children by attribute value", function () {
                 container.on({
                     render: handler,
                     delegate: '> [cls="field"]'
@@ -8716,7 +8728,7 @@ describe("Ext.Component", function(){
                 expect(result).toEqual(['baz']);
             });
 
-            it("should listen on a descendant by attribute value", function() {
+            it("should listen on a descendant by attribute value", function () {
                 container.on({
                     render: handler,
                     delegate: '[cls="field"]'
@@ -8727,7 +8739,7 @@ describe("Ext.Component", function(){
                 expect(result).toEqual(['myField', 'baz']);
             });
 
-            it("should listen on descendant widgets", function() {
+            it("should listen on descendant widgets", function () {
                 container.on({
                     fubar: handler,
                     delegate: 'widget'
@@ -8739,7 +8751,7 @@ describe("Ext.Component", function(){
                 expect(handler.callCount).toBe(1);
             });
 
-            it("should increment Ext.Component class-level hasListeners", function() {
+            it("should increment Ext.Component class-level hasListeners", function () {
                 expect(Ext.Component.hasListeners.derp).toBeFalsy();
 
                 container.on({
@@ -8750,7 +8762,7 @@ describe("Ext.Component", function(){
                 expect(Ext.Component.hasListeners.derp).toBe(1);
             });
 
-            it("should call delegate listeners in bottom up hierarchy order", function() {
+            it("should call delegate listeners in bottom up hierarchy order", function () {
                 function handler(cmp) {
                     result.push(this.id + ' ' + cmp.id);
                 }
@@ -8770,8 +8782,8 @@ describe("Ext.Component", function(){
                 expect(result).toEqual(['bar myCmp', 'parentContainer myCmp']);
             });
 
-            describe("removal", function() {
-                it("should remove a delegated listener", function() {
+            describe("removal", function () {
+                it("should remove a delegated listener", function () {
                     var handler = jasmine.createSpy(),
                         cmp = Ext.getCmp('myCmp');
 
@@ -8790,7 +8802,7 @@ describe("Ext.Component", function(){
                     expect(handler.callCount).toBe(1);
                 });
 
-                it("should remove all delegated listeners using clearListeners", function() {
+                it("should remove all delegated listeners using clearListeners", function () {
                     var derpHandler = jasmine.createSpy(),
                         merpHandler = jasmine.createSpy(),
                         cmp = Ext.getCmp('myCmp');
@@ -8815,7 +8827,7 @@ describe("Ext.Component", function(){
                     expect(merpHandler.callCount).toBe(1);
                 });
 
-                it("should decrement class-level hasListeners", function() {
+                it("should decrement class-level hasListeners", function () {
                     container.on({
                         derp: handler,
                         delegate: 'merp'
@@ -8828,7 +8840,7 @@ describe("Ext.Component", function(){
                     expect(Ext.Component.hasListeners.derp).toBeFalsy();
                 });
 
-                it("should decrement class-level hasListeners when clearListeners is called", function() {
+                it("should decrement class-level hasListeners when clearListeners is called", function () {
                     var derpHandler = jasmine.createSpy(),
                         merpHandler = jasmine.createSpy();
 
@@ -8855,10 +8867,10 @@ describe("Ext.Component", function(){
                     expect(Ext.Component.hasListeners.merp).toBe(1);
                 });
 
-                it("should remove a delegated listener using destroyable", function() {
+                it("should remove a delegated listener using destroyable", function () {
                     var handler = jasmine.createSpy(),
                         cmp = Ext.getCmp('myCmp'),
-                        destroyable =   container.on({
+                        destroyable = container.on({
                             derp: handler,
                             delegate: '#myCmp',
                             destroyable: true
@@ -8875,8 +8887,8 @@ describe("Ext.Component", function(){
                 });
             });
 
-            describe("with other event options", function() {
-                it("should attach a delegate listener with the scope option", function() {
+            describe("with other event options", function () {
+                it("should attach a delegate listener with the scope option", function () {
                     var myScope = {};
 
                     container.on({
@@ -8890,7 +8902,7 @@ describe("Ext.Component", function(){
                     expect(handler.mostRecentCall.object).toBe(myScope);
                 });
 
-                it("should attach a delegate listener with the delay option", function() {
+                it("should attach a delegate listener with the delay option", function () {
                     container.on({
                         render: handler,
                         delegate: '#baz',
@@ -8902,17 +8914,17 @@ describe("Ext.Component", function(){
 
                     expect(handler).not.toHaveBeenCalled();
 
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return handler.wasCalled;
                     });
 
-                    runs(function() {
+                    runs(function () {
                         var elapsedTime = Ext.now() - startTime;
                         expect(elapsedTime >= 20).toBe(true);
                     });
                 });
 
-                it("should attach a delegate listener with the single option", function() {
+                it("should attach a delegate listener with the single option", function () {
                     container.on({
                         foo: handler,
                         delegate: '#baz',
@@ -8926,7 +8938,7 @@ describe("Ext.Component", function(){
                     expect(handler.callCount).toBe(1);
                 });
 
-                it("should attach a delegate listener with the buffer option", function() {
+                it("should attach a delegate listener with the buffer option", function () {
                     container.on({
                         foo: handler,
                         delegate: '#baz',
@@ -8937,16 +8949,16 @@ describe("Ext.Component", function(){
                     Ext.getCmp('baz').fireEvent('foo');
                     Ext.getCmp('baz').fireEvent('foo');
 
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return handler.wasCalled;
                     });
 
-                    runs(function() {
+                    runs(function () {
                         expect(handler.callCount).toBe(1);
                     });
                 });
 
-                it("should attach a delegate listener with the args option", function() {
+                it("should attach a delegate listener with the args option", function () {
                     var opts = {
                         foo: handler,
                         delegate: '#baz',
@@ -8960,11 +8972,11 @@ describe("Ext.Component", function(){
                     expect(handler.mostRecentCall.args).toEqual(['a', 'b', 'c', opts]);
                 });
 
-                it("should attach delegate listeners with the priority option", function() {
+                it("should attach delegate listeners with the priority option", function () {
                     var result = [];
 
                     container.on({
-                        foo: function() {
+                        foo: function () {
                             result.push(5);
                         },
                         delegate: '#baz',
@@ -8972,7 +8984,7 @@ describe("Ext.Component", function(){
                     });
 
                     container.on({
-                        foo: function() {
+                        foo: function () {
                             result.push(1);
                         },
                         delegate: '#baz',
@@ -8980,7 +8992,7 @@ describe("Ext.Component", function(){
                     });
 
                     container.on({
-                        foo: function() {
+                        foo: function () {
                             result.push(10);
                         },
                         delegate: '#baz',
@@ -8992,11 +9004,11 @@ describe("Ext.Component", function(){
                     expect(result).toEqual([10, 5, 1]);
                 });
 
-                it("should attach delegate listeners with the order option", function() {
+                it("should attach delegate listeners with the order option", function () {
                     var result = [];
 
                     container.on({
-                        foo: function() {
+                        foo: function () {
                             result.push('current');
                         },
                         delegate: '#baz',
@@ -9004,7 +9016,7 @@ describe("Ext.Component", function(){
                     });
 
                     container.on({
-                        foo: function() {
+                        foo: function () {
                             result.push('before');
                         },
                         delegate: '#baz',
@@ -9012,7 +9024,7 @@ describe("Ext.Component", function(){
                     });
 
                     container.on({
-                        foo: function() {
+                        foo: function () {
                             result.push('after');
                         },
                         delegate: '#baz',
@@ -9024,8 +9036,8 @@ describe("Ext.Component", function(){
                     expect(result).toEqual(['before', 'current', 'after']);
                 });
 
-                it("should throw an error with the target option", function() {
-                    expect(function() {
+                it("should throw an error with the target option", function () {
+                    expect(function () {
                         container.on({
                             foo: handler,
                             delegate: 'bar',
@@ -9034,7 +9046,7 @@ describe("Ext.Component", function(){
                     }).toThrow("Cannot add 'foo' listener to component: 'parentContainer' - 'delegate' and 'target' event options are incompatible.");
                 });
 
-                it("should attach an element listener with the delegate option", function() {
+                it("should attach an element listener with the delegate option", function () {
                     container.on({
                         click: handler,
                         element: 'el',
@@ -9053,8 +9065,8 @@ describe("Ext.Component", function(){
         });
     });
 
-    describe("hideMode", function() {
-        it("should default to 'display'", function() {
+    describe("hideMode", function () {
+        it("should default to 'display'", function () {
             makeComponent({
                 renderTo: document.body
             });
@@ -9063,7 +9075,7 @@ describe("Ext.Component", function(){
             expect(c.getEl().getVisibilityMode()).toBe(Ext.Element.DISPLAY);
         });
 
-        it("should set a visibility mode of 'DISPLAY' on the element", function() {
+        it("should set a visibility mode of 'DISPLAY' on the element", function () {
             makeComponent({
                 renderTo: document.body,
                 hideMode: 'display'
@@ -9072,7 +9084,7 @@ describe("Ext.Component", function(){
             expect(c.getEl().getVisibilityMode()).toBe(Ext.Element.DISPLAY);
         });
 
-        it("should set a visibility mode of 'VISIBILITY' on the element", function() {
+        it("should set a visibility mode of 'VISIBILITY' on the element", function () {
             makeComponent({
                 renderTo: document.body,
                 hideMode: 'visibility'
@@ -9081,7 +9093,7 @@ describe("Ext.Component", function(){
             expect(c.getEl().getVisibilityMode()).toBe(Ext.Element.VISIBILITY);
         });
 
-        it("should set a visibility mode of 'OFFSETS' on the element", function() {
+        it("should set a visibility mode of 'OFFSETS' on the element", function () {
             makeComponent({
                 renderTo: document.body,
                 hideMode: 'offsets'
@@ -9142,113 +9154,113 @@ describe("Ext.Component", function(){
             });
         });
     });
-    
-    describe("ARIA attributes", function() {
+
+    describe("ARIA attributes", function () {
         function expectAttr(attr, value) {
             jasmine.expectAriaAttr(c, attr, value);
         }
-        
+
         function expectNoAttr(attr) {
             jasmine.expectNoAriaAttr(c, attr);
         }
-        
-        describe("static roles", function() {
+
+        describe("static roles", function () {
             function createSuite(role) {
-                describe(role, function() {
-                    beforeEach(function() {
+                describe(role, function () {
+                    beforeEach(function () {
                         makeComponent({
                             ariaRole: role,
                             renderTo: Ext.getBody()
                         });
                     });
-                    
-                    describe('aria-hidden', function() {
-                        it("should not be present after render", function() {
+
+                    describe('aria-hidden', function () {
+                        it("should not be present after render", function () {
                             expectNoAttr('aria-hidden');
                         });
-                        
-                        it("should not be present after hiding", function() {
+
+                        it("should not be present after hiding", function () {
                             c.hide();
-                            
+
                             expectNoAttr('aria-hidden');
                         });
-                        
-                        it("should not be present after showing", function() {
+
+                        it("should not be present after showing", function () {
                             c.hide();
                             c.show();
-                            
+
                             expectNoAttr('aria-hidden');
                         });
                     });
-                    
-                    describe('aria-disabled', function() {
-                        it("should not be present after render", function() {
+
+                    describe('aria-disabled', function () {
+                        it("should not be present after render", function () {
                             expectNoAttr('aria-disabled');
                         });
-                        
-                        it("should not be present after disabling", function() {
+
+                        it("should not be present after disabling", function () {
                             c.disable();
-                            
+
                             expectNoAttr('aria-disabled');
                         });
-                        
-                        it("should not be present after enabling", function() {
+
+                        it("should not be present after enabling", function () {
                             c.disable();
                             c.enable();
-                            
+
                             expectNoAttr('aria-disabled');
                         });
                     });
                 });
             }
-            
+
             createSuite(undefined);
             createSuite('presentation');
             createSuite('document');
         });
-        
-        describe("widget roles", function() {
-            beforeEach(function() {
+
+        describe("widget roles", function () {
+            beforeEach(function () {
                 makeComponent({
                     ariaRole: 'widget',
                     renderTo: Ext.getBody()
                 });
             });
-            
-            describe("aria-hidden", function() {
-                it("should be false after render", function() {
+
+            describe("aria-hidden", function () {
+                it("should be false after render", function () {
                     expectAttr('aria-hidden', 'false');
                 });
-            
-                it("should be true after hiding", function() {
+
+                it("should be true after hiding", function () {
                     c.hide();
-                
+
                     expectAttr('aria-hidden', 'true');
                 });
-            
-                it("should be false again after showing", function() {
+
+                it("should be false again after showing", function () {
                     c.hide();
                     c.show();
-                
+
                     expectAttr('aria-hidden', 'false');
                 });
             });
-        
-            describe("aria-disabled", function() {
-                it("should be false after render", function() {
+
+            describe("aria-disabled", function () {
+                it("should be false after render", function () {
                     expectAttr('aria-disabled', 'false');
                 });
-            
-                it("should be true after disabling", function() {
+
+                it("should be true after disabling", function () {
                     c.disable();
-                
+
                     expectAttr('aria-disabled', 'true');
                 });
-            
-                it("should be false again after enabling", function() {
+
+                it("should be false again after enabling", function () {
                     c.disable();
                     c.enable();
-                
+
                     expectAttr('aria-disabled', 'false');
                 });
             });

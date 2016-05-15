@@ -15,13 +15,13 @@ Ext.define('Ext.fx.layout.card.Abstract', {
         layout: null
     },
 
-    updateLayout: function(layout) {
+    updateLayout: function (layout) {
         if (layout) {
             this.enable();
         }
     },
 
-    enable: function() {
+    enable: function () {
         var layout = this.getLayout();
 
         if (layout) {
@@ -29,7 +29,7 @@ Ext.define('Ext.fx.layout.card.Abstract', {
         }
     },
 
-    disable: function() {
+    disable: function () {
         var layout = this.getLayout();
 
         if (this.isAnimating) {
@@ -43,7 +43,7 @@ Ext.define('Ext.fx.layout.card.Abstract', {
 
     onActiveItemChange: Ext.emptyFn,
 
-    destroy: function() {
+    destroy: function () {
         var me = this,
             layout = me.getLayout();
 

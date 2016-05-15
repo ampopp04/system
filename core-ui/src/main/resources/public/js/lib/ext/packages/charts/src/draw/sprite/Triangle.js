@@ -15,7 +15,7 @@
  *            fillStyle: '#1F6D91'
  *        }]
  *     });
- * 
+ *
  */
 Ext.define('Ext.draw.sprite.Triangle', {
     extend: 'Ext.draw.sprite.Path',

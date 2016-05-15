@@ -28,172 +28,174 @@
  * @since 6.0.0
  * @private
  */
-Ext.define('Ext.promise.Consequence', function(Consequence) { return {
-    /**
-     * @property {Ext.promise.Promise}
-     * Promise of the future value of this Consequence.
-     */
-    promise: null,
-
-    /**
-     * @property {Ext.promise.Deferred} deferred Internal Deferred for this Consequence.
-     *
-     * @private
-     */
-    deferred: null,
-
-    /**
-     * @property {Function} onFulfilled Callback to execute when this Consequence is triggered
-     * with a fulfillment value.
-     *
-     * @private
-     */
-    onFulfilled: null,
-
-    /**
-     * @property {Function} onRejected Callback to execute when this Consequence is triggered
-     * with a rejection reason.
-     *
-     * @private
-     */
-    onRejected: null,
-
-    /**
-     * @property {Function} onProgress Callback to execute when this Consequence is updated
-     * with a progress value.
-     *
-     * @private
-     */
-    onProgress: null,
-
-    /**
-     * @param {Function} onFulfilled Callback to execute to transform a fulfillment value.
-     * @param {Function} onRejected Callback to execute to transform a rejection reason.
-     */
-    constructor: function(onFulfilled, onRejected, onProgress) {
-        var me = this;
-
-        me.onFulfilled = onFulfilled;
-        me.onRejected = onRejected;
-        me.onProgress = onProgress;
-        me.deferred = new Ext.promise.Deferred();
-        me.promise = me.deferred.promise;
-    },
-
-    /**
-     * Trigger this Consequence with the specified action and value.
-     *
-     * @param {String} action Completion action (i.e. fulfill or reject).
-     * @param {Mixed} value Fulfillment value or rejection reason.
-     */
-    trigger: function(action, value) {
-        var me = this,
-            deferred = me.deferred;
-
-        switch (action) {
-            case 'fulfill':
-                me.propagate(value, me.onFulfilled, deferred, deferred.resolve);
-                break;
-
-            case 'reject':
-                me.propagate(value, me.onRejected, deferred, deferred.reject);
-                break;
-        }
-    },
-
-    /**
-     * Update this Consequence with the specified progress value.
-     *
-     * @param {Mixed} value Progress value.
-     */
-    update: function(progress) {
-        if (Ext.isFunction(this.onProgress)) {
-            progress = this.onProgress(progress);
-        }
-        
-        this.deferred.update(progress);
-    },
-
-    /**
-     * Transform and propagate the specified value using the
-     * optional callback and propagate the transformed result.
-     *
-     * @param {Mixed} value Value to transform and/or propagate.
-     * @param {Function} [callback] Callback to use to transform the value.
-     * @param {Function} deferred Deferred to use to propagate the value, if no callback
-     * was specified.
-     * @param {Function} deferredMethod Deferred method to call to propagate the value,
-     * if no callback was specified.
-     *
-     * @private
-     */
-    propagate: function(value, callback, deferred, deferredMethod) {
-        if (Ext.isFunction(callback)) {
-            this.schedule(function() {
-                try {
-                    deferred.resolve(callback(value));
-                }
-                catch (e) {
-                    deferred.reject(e);
-                }
-            });
-        }
-        else {
-            deferredMethod.call(this.deferred, value);
-        }
-    },
-
-    /**
-     * Schedules the specified callback function to be executed on the next turn of the
-     * event loop.
-     *
-     * @param {Function} callback Callback function.
-     *
-     * @private
-     */
-    schedule: function(callback) {
-        var n = Consequence.queueSize++;
-
-        Consequence.queue[n] = callback;
-
-        if (!n) { // if (queue was empty)
-            Ext.asap(Consequence.dispatch);
-        }
-    },
-
-    statics: {
+Ext.define('Ext.promise.Consequence', function (Consequence) {
+    return {
         /**
-         * @property {Function[]} queue The queue of callbacks pending. This array is never
-         * shrunk to reduce GC thrash but instead its elements will be set to `null`.
+         * @property {Ext.promise.Promise}
+         * Promise of the future value of this Consequence.
+         */
+        promise: null,
+
+        /**
+         * @property {Ext.promise.Deferred} deferred Internal Deferred for this Consequence.
          *
          * @private
          */
-        queue: new Array(10000),
+        deferred: null,
 
         /**
-         * @property {Number} queueSize The number of callbacks in the `queue`.
+         * @property {Function} onFulfilled Callback to execute when this Consequence is triggered
+         * with a fulfillment value.
          *
          * @private
          */
-        queueSize: 0,
+        onFulfilled: null,
 
         /**
-         * This method drains the callback queue and calls each callback in order.
+         * @property {Function} onRejected Callback to execute when this Consequence is triggered
+         * with a rejection reason.
          *
          * @private
          */
-        dispatch: function() {
-            var queue = Consequence.queue,
-                fn, i;
+        onRejected: null,
 
-            // The queue could grow on each call, so we cannot cache queueSize here.
-            for (i = 0; i < Consequence.queueSize; ++i) {
-                fn = queue[i];
-                queue[i] = null; // release our reference on the callback
-                fn();
+        /**
+         * @property {Function} onProgress Callback to execute when this Consequence is updated
+         * with a progress value.
+         *
+         * @private
+         */
+        onProgress: null,
+
+        /**
+         * @param {Function} onFulfilled Callback to execute to transform a fulfillment value.
+         * @param {Function} onRejected Callback to execute to transform a rejection reason.
+         */
+        constructor: function (onFulfilled, onRejected, onProgress) {
+            var me = this;
+
+            me.onFulfilled = onFulfilled;
+            me.onRejected = onRejected;
+            me.onProgress = onProgress;
+            me.deferred = new Ext.promise.Deferred();
+            me.promise = me.deferred.promise;
+        },
+
+        /**
+         * Trigger this Consequence with the specified action and value.
+         *
+         * @param {String} action Completion action (i.e. fulfill or reject).
+         * @param {Mixed} value Fulfillment value or rejection reason.
+         */
+        trigger: function (action, value) {
+            var me = this,
+                deferred = me.deferred;
+
+            switch (action) {
+                case 'fulfill':
+                    me.propagate(value, me.onFulfilled, deferred, deferred.resolve);
+                    break;
+
+                case 'reject':
+                    me.propagate(value, me.onRejected, deferred, deferred.reject);
+                    break;
+            }
+        },
+
+        /**
+         * Update this Consequence with the specified progress value.
+         *
+         * @param {Mixed} value Progress value.
+         */
+        update: function (progress) {
+            if (Ext.isFunction(this.onProgress)) {
+                progress = this.onProgress(progress);
             }
 
-            Consequence.queueSize = 0;
+            this.deferred.update(progress);
+        },
+
+        /**
+         * Transform and propagate the specified value using the
+         * optional callback and propagate the transformed result.
+         *
+         * @param {Mixed} value Value to transform and/or propagate.
+         * @param {Function} [callback] Callback to use to transform the value.
+         * @param {Function} deferred Deferred to use to propagate the value, if no callback
+         * was specified.
+         * @param {Function} deferredMethod Deferred method to call to propagate the value,
+         * if no callback was specified.
+         *
+         * @private
+         */
+        propagate: function (value, callback, deferred, deferredMethod) {
+            if (Ext.isFunction(callback)) {
+                this.schedule(function () {
+                    try {
+                        deferred.resolve(callback(value));
+                    }
+                    catch (e) {
+                        deferred.reject(e);
+                    }
+                });
+            }
+            else {
+                deferredMethod.call(this.deferred, value);
+            }
+        },
+
+        /**
+         * Schedules the specified callback function to be executed on the next turn of the
+         * event loop.
+         *
+         * @param {Function} callback Callback function.
+         *
+         * @private
+         */
+        schedule: function (callback) {
+            var n = Consequence.queueSize++;
+
+            Consequence.queue[n] = callback;
+
+            if (!n) { // if (queue was empty)
+                Ext.asap(Consequence.dispatch);
+            }
+        },
+
+        statics: {
+            /**
+             * @property {Function[]} queue The queue of callbacks pending. This array is never
+             * shrunk to reduce GC thrash but instead its elements will be set to `null`.
+             *
+             * @private
+             */
+            queue: new Array(10000),
+
+            /**
+             * @property {Number} queueSize The number of callbacks in the `queue`.
+             *
+             * @private
+             */
+            queueSize: 0,
+
+            /**
+             * This method drains the callback queue and calls each callback in order.
+             *
+             * @private
+             */
+            dispatch: function () {
+                var queue = Consequence.queue,
+                    fn, i;
+
+                // The queue could grow on each call, so we cannot cache queueSize here.
+                for (i = 0; i < Consequence.queueSize; ++i) {
+                    fn = queue[i];
+                    queue[i] = null; // release our reference on the callback
+                    fn();
+                }
+
+                Consequence.queueSize = 0;
+            }
         }
     }
-}});
+});

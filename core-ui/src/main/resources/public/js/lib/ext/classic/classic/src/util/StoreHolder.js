@@ -19,7 +19,7 @@ Ext.define('Ext.util.StoreHolder', {
      * @param {Ext.data.AbstractStore/String} [store] The store to bind or ID of the store.
      * When no store given (or when `null` or `undefined` passed), unbinds the existing store.
      */
-    bindStore: function(store, initial, propertyName) {
+    bindStore: function (store, initial, propertyName) {
         // Private params
         // @param {Boolean} [initial=false] True to not remove listeners from existing store.
         // @param {String} [propertyName="store"] The property in this object under which to cache the passed Store.
@@ -77,7 +77,7 @@ Ext.define('Ext.util.StoreHolder', {
      * @protected
      * @param {Ext.data.AbstractStore} store The store to unbind from
      */
-    unbindStoreListeners: function(store) {
+    unbindStoreListeners: function (store) {
         // Can be overridden in the subclass for more complex removal
         var listeners = this.storeListeners;
         if (listeners) {
@@ -92,7 +92,7 @@ Ext.define('Ext.util.StoreHolder', {
      * @protected
      * @param {Ext.data.AbstractStore} store The store to bind to
      */
-    bindStoreListeners: function(store) {
+    bindStoreListeners: function (store) {
         // Can be overridden in the subclass for more complex binding
         var listeners = this.getStoreListeners(store);
 

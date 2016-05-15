@@ -73,7 +73,7 @@ Ext.define('Ext.layout.container.Absolute', {
     /**
      * @private
      */
-    adjustWidthAnchor: function(value, childContext) {
+    adjustWidthAnchor: function (value, childContext) {
         var padding = this.targetPadding,
             x = childContext.getStyle('left');
 
@@ -83,7 +83,7 @@ Ext.define('Ext.layout.container.Absolute', {
     /**
      * @private
      */
-    adjustHeightAnchor: function(value, childContext) {
+    adjustHeightAnchor: function (value, childContext) {
         var padding = this.targetPadding,
             y = childContext.getStyle('top');
 
@@ -126,8 +126,8 @@ Ext.define('Ext.layout.container.Absolute', {
     calculateContentSize: function (ownerContext, dimensions) {
         var me = this,
             containerDimensions = (dimensions || 0) | // jshint ignore:line
-                   ((ownerContext.widthModel.shrinkWrap ? 1 : 0) | // jshint ignore:line
-                    (ownerContext.heightModel.shrinkWrap ? 2 : 0)),
+                ((ownerContext.widthModel.shrinkWrap ? 1 : 0) | // jshint ignore:line
+                (ownerContext.heightModel.shrinkWrap ? 2 : 0)),
             calcWidth = (containerDimensions & 1) || undefined,// jshint ignore:line
             calcHeight = (containerDimensions & 2) || undefined,// jshint ignore:line
             childItems = ownerContext.childItems,
@@ -162,7 +162,7 @@ Ext.define('Ext.layout.container.Absolute', {
                 margins = childContext.getMarginInfo();
 
                 height += margins.bottom;
-                width  += margins.right;
+                width += margins.right;
 
                 contentHeight = Math.max(contentHeight, (child.y || 0) + height);
                 contentWidth = Math.max(contentWidth, (child.x || 0) + width);
@@ -184,11 +184,11 @@ Ext.define('Ext.layout.container.Absolute', {
             }
 
             /* add a '/' to turn on this log ('//* enables, '/*' disables)
-            if (me.done) {
-                var el = ownerContext.targetContext.el.dom;
-                Ext.log(this.owner.id, '.contentSize: ', contentWidth, 'x', contentHeight,
-                    ' => scrollSize: ', el.scrollWidth, 'x', el.scrollHeight);
-            }/**/
+             if (me.done) {
+             var el = ownerContext.targetContext.el.dom;
+             Ext.log(this.owner.id, '.contentSize: ', contentWidth, 'x', contentHeight,
+             ' => scrollSize: ', el.scrollWidth, 'x', el.scrollHeight);
+             }/**/
         }
     }
 });

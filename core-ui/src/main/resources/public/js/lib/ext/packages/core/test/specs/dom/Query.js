@@ -1,4 +1,4 @@
-describe("Ext.dom.Query", function(){
+describe("Ext.dom.Query", function () {
 
     var body = Ext.getBody().dom,
         useQuerySelectorAll = false,
@@ -19,13 +19,13 @@ describe("Ext.dom.Query", function(){
             '<div id="oddClass" class="#odd-class-name"></div>',
             '<div id="\nn">yz</div>',
             ('<div id=":id">' +
-                '<span id=":only-child-span">some more text</span>' +
-                '<div id="n6e">asdf</div>' +
-                '<div id="n6g">asdf</div>' +
+            '<span id=":only-child-span">some more text</span>' +
+            '<div id="n6e">asdf</div>' +
+            '<div id="n6g">asdf</div>' +
             '</div>'),
             ('<span id="myspan" class="myclass isSpan">' +
-                '<span id="AAA" class="beginning">some</span>' +
-                '<span id="BBB" class="ending">text</span>' +
+            '<span id="AAA" class="beginning">some</span>' +
+            '<span id="BBB" class="ending">text</span>' +
             '</span>')
         ],
         content = defs.join(''),
@@ -37,7 +37,7 @@ describe("Ext.dom.Query", function(){
             : Ext.dom.Query.jsSelect(query, element);
     }
 
-    beforeEach(function(){
+    beforeEach(function () {
         elem = document.createElement('div');
         elem.innerHTML = content;
         elem.id = 'elemNode';
@@ -45,23 +45,23 @@ describe("Ext.dom.Query", function(){
         targetSpan = doQuery("#myspan", elem)[0];
     });
 
-    afterEach(function(){
-        if(elem) {
+    afterEach(function () {
+        if (elem) {
             body.removeChild(elem);
             elem = targetSpan = null;
         }
     });
 
-    describe("selectValue", function() {
-        it("should return defaultValue if nothing is found", function() {
+    describe("selectValue", function () {
+        it("should return defaultValue if nothing is found", function () {
             var result = Ext.dom.Query.selectValue("testing", document, "empty");
             expect(result).toBe('empty');
         });
     });
-    
-    describe("jsSelect", function(){
 
-        it("should throw error for an invalid query", function(){
+    describe("jsSelect", function () {
+
+        it("should throw error for an invalid query", function () {
             try {
                 var found = Ext.dom.Query("$#@$%", elem);
                 expect(false).toBe(true);
@@ -70,9 +70,9 @@ describe("Ext.dom.Query", function(){
             }
         });
 
-        describe("Standard CSS Selectors", function(){
+        describe("Standard CSS Selectors", function () {
 
-            it("should locate elements by id", function(){
+            it("should locate elements by id", function () {
                 var found = doQuery("#nn", elem),
                     len = found.length;
 
@@ -91,7 +91,7 @@ describe("Ext.dom.Query", function(){
                 expect(len).toBe(1);
                 expect(found[0]).toBe(targetSpan.childNodes[1]);
 
-                if(useQuerySelectorAll) {
+                if (useQuerySelectorAll) {
                     found = doQuery("#\\31 2345 + div", elem);
                     len = found.length;
 
@@ -110,7 +110,7 @@ describe("Ext.dom.Query", function(){
 
             });
 
-            it("should locate elements by class", function(){
+            it("should locate elements by class", function () {
                 var found = doQuery(".myclass", elem),
                     len = found.length;
 
@@ -134,7 +134,7 @@ describe("Ext.dom.Query", function(){
                 expect(found[0]).toBe(targetSpan.childNodes[1]);
             });
 
-            it("should find elements by pseudo class", function(){
+            it("should find elements by pseudo class", function () {
                 var found = doQuery(":last-child", elem),
                     len = found.length;
 
@@ -173,7 +173,7 @@ describe("Ext.dom.Query", function(){
 
             });
 
-            it("should find elements by attribute value", function(){
+            it("should find elements by attribute value", function () {
                 var found = doQuery('div[customAttr="12345678"]', elem),
                     len = found.length;
 
@@ -190,9 +190,9 @@ describe("Ext.dom.Query", function(){
             });
         });
 
-        describe("CSS Escape Sequences", function(){
+        describe("CSS Escape Sequences", function () {
 
-            it("should handle escapes sequences for IDs", function(){
+            it("should handle escapes sequences for IDs", function () {
                 var found = doQuery("#\\00006en", elem),
                     len = found.length;
 
@@ -302,8 +302,8 @@ describe("Ext.dom.Query", function(){
                 expect(len).toBe(1);
                 expect(found[0]).toBe(elem.childNodes[5]);
             });
-            
-            it("should handle escape sequences for class names", function(){
+
+            it("should handle escape sequences for class names", function () {
                 var found = doQuery("div.\\#odd-class-name", elem),
                     len = found.length;
 
@@ -323,7 +323,7 @@ describe("Ext.dom.Query", function(){
                 expect(found[0]).toBe(elem.childNodes[3]);
             });
 
-            it("should handle escape sequences for psuedos", function(){
+            it("should handle escape sequences for psuedos", function () {
                 var found = doQuery('#\\:id :first-child', elem),
                     len = found.length;
 
@@ -347,7 +347,7 @@ describe("Ext.dom.Query", function(){
                 }
             });
 
-            it("should handle escape sequences for attributes", function(){
+            it("should handle escape sequences for attributes", function () {
                 var found, len;
 
                 if (Ext.isFF3_6) {
@@ -406,17 +406,17 @@ describe("Ext.dom.Query", function(){
             });
         });
 
-        describe("XML", function() {
-            describe("selecting elements with namespace prefixes", function() {
+        describe("XML", function () {
+            describe("selecting elements with namespace prefixes", function () {
                 var doc;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     var xml = [
                         '<a>',
-                            '<x:b xmlns:x="xns">x1</x:b>',
-                            '<y:b xmlns:y="yns">y1</y:b>',
-                            '<x:b xmlns:x="xns">x2</x:b>',
-                            '<y:b xmlns:y="yns">y2</y:b>',
+                        '<x:b xmlns:x="xns">x1</x:b>',
+                        '<y:b xmlns:y="yns">y1</y:b>',
+                        '<x:b xmlns:x="xns">x2</x:b>',
+                        '<y:b xmlns:y="yns">y2</y:b>',
                         '</a>'
                     ].join('');
 
@@ -430,7 +430,7 @@ describe("Ext.dom.Query", function(){
                     }
                 });
 
-                it("should select elements with namespace prefixes using the '|' namespace selector", function() {
+                it("should select elements with namespace prefixes using the '|' namespace selector", function () {
                     var xResult = doQuery('x|b', doc),
                         yResult = doQuery('y|b', doc);
 
@@ -442,7 +442,7 @@ describe("Ext.dom.Query", function(){
                     expect(yResult[1].firstChild.nodeValue).toBe('y2');
                 });
 
-                it("should select elements with namespace prefixes using the undocumented escaped colon method", function() {
+                it("should select elements with namespace prefixes using the undocumented escaped colon method", function () {
                     var xResult = doQuery('x\\:b', doc),
                         yResult = doQuery('y\\:b', doc);
 
@@ -454,13 +454,13 @@ describe("Ext.dom.Query", function(){
                     expect(yResult[1].firstChild.nodeValue).toBe('y2');
                 });
             });
-            describe("selecting attributes with non-word characters", function() {
+            describe("selecting attributes with non-word characters", function () {
                 var doc;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     var xml = [
                         '<a>',
-                            '<b att.name-part="x1">x1</b>',
+                        '<b att.name-part="x1">x1</b>',
                         '</a>'
                     ].join('');
 
@@ -474,7 +474,7 @@ describe("Ext.dom.Query", function(){
                     }
                 });
 
-                it("should select attributes non-word characters '.' and '-'", function() {
+                it("should select attributes non-word characters '.' and '-'", function () {
                     var result = doQuery('b @att.name-part', doc);
 
                     expect(result.length).toBe(1);
@@ -482,7 +482,7 @@ describe("Ext.dom.Query", function(){
                 });
             });
         });
-        
+
     });
 
 });

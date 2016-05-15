@@ -56,7 +56,7 @@ Ext.define('Ext.ux.ajax.SimXhr', {
     schedule: function () {
         var me = this,
             delay = me.mgr.delay;
-            
+
         if (delay) {
             me.timer = Ext.defer(function () {
                 me.onTick();

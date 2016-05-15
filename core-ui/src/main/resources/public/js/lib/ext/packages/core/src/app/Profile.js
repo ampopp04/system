@@ -61,7 +61,7 @@
  *
  * For a fuller understanding of the ideas behind Profiles and how best to use them in your app, we suggest you read
  * the [device profiles guide](/touch/2.4/core_concepts/device_profiles.html).
- * 
+ *
  */
 Ext.define('Ext.app.Profile', {
     mixins: [
@@ -262,7 +262,7 @@ Ext.define('Ext.app.Profile', {
     onClassExtended: function (cls, data, hooks) {
         var onBeforeClassCreated = hooks.onBeforeCreated;
 
-        hooks.onBeforeCreated = function(cls, data) {
+        hooks.onBeforeCreated = function (cls, data) {
             var Controller = Ext.app.Controller,
                 className = cls.$className,
                 requires = [],

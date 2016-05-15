@@ -24,12 +24,12 @@
 Ext.define('Ext.menu.CheckItem', {
     extend: 'Ext.menu.Item',
     alias: 'widget.menucheckitem',
-    
+
     /**
      * @cfg {Boolean} [checked=false]
      * True to render the menuitem initially checked.
      */
-    
+
     /**
      * @cfg {Function/String} checkHandler
      * Alternative for the {@link #checkchange} event.  Gets called with the same parameters.
@@ -40,7 +40,7 @@ Ext.define('Ext.menu.CheckItem', {
      * @cfg {Object} scope
      * Scope for the {@link #checkHandler} callback.
      */
-    
+
     /**
      * @cfg {String} group
      * Name of a radio group that the item belongs.
@@ -56,14 +56,14 @@ Ext.define('Ext.menu.CheckItem', {
      * Defaults to `Ext.baseCSSPrefix + 'menu-item-checked'`.
      */
     checkedCls: Ext.baseCSSPrefix + 'menu-item-checked',
-    
+
     /**
      * @cfg {String} uncheckedCls
      * The CSS class used by {@link #cls} to show the unchecked state.
      * Defaults to `Ext.baseCSSPrefix + 'menu-item-unchecked'`.
      */
     uncheckedCls: Ext.baseCSSPrefix + 'menu-item-unchecked',
-    
+
     /**
      * @cfg {String} groupCls
      * The CSS class applied to this item's icon image to denote being a part of a radio group.
@@ -78,13 +78,13 @@ Ext.define('Ext.menu.CheckItem', {
      * Defaults to `false` for checkbox items, and to `true` for radio group items.
      */
     hideOnClick: false,
-    
+
     /**
      * @cfg {Boolean} [checkChangeDisabled=false]
      * True to prevent the checked item from being toggled. Any submenu will still be accessible.
      */
     checkChangeDisabled: false,
-    
+
     //<locale>
     /**
      * @cfg {String} submenuText Text to be announced by screen readers when a check item
@@ -92,13 +92,13 @@ Ext.define('Ext.menu.CheckItem', {
      */
     submenuText: '{0} submenu',
     //</locale>
-    
+
     ariaRole: 'menuitemcheckbox',
 
     childEls: [
         'checkEl'
     ],
-    
+
     showCheckbox: true,
 
     isMenuCheckItem: true,
@@ -119,9 +119,9 @@ Ext.define('Ext.menu.CheckItem', {
      * @param {Boolean} checked
      */
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
-        
+
         // coerce to bool straight away
         me.checked = !!me.checked;
 
@@ -134,8 +134,8 @@ Ext.define('Ext.menu.CheckItem', {
             }
         }
     },
-    
-    beforeRender: function() {
+
+    beforeRender: function () {
         var me = this,
             ariaAttr;
 
@@ -144,29 +144,29 @@ Ext.define('Ext.menu.CheckItem', {
             checkboxCls: me.checkboxCls,
             showCheckbox: me.showCheckbox
         });
-        
+
         ariaAttr = (me.ariaRenderAttributes || (me.ariaRenderAttributes = {}));
         ariaAttr['aria-checked'] = me.menu ? 'mixed' : me.checked;
-        
+
         // For some reason JAWS will not announce that a check item has a submenu
         // so users will get no indication whatsoever, unless we set the label.
         if (me.menu) {
             ariaAttr['aria-label'] = Ext.String.formatEncode(me.submenuText, me.text);
         }
     },
-    
-    afterRender: function() {
+
+    afterRender: function () {
         var me = this;
-        
+
         me.callParent();
-        
+
         me.checked = !me.checked;
         me.setChecked(!me.checked, true);
-        
+
         if (me.checkChangeDisabled) {
             me.disableCheckChange();
         }
-        
+
         // For reasons unknown, clicking a div inside anchor element might cause
         // the anchor to be blurred in Firefox. We can't allow this to happen
         // because blurring will cause focusleave which will hide the menu
@@ -175,12 +175,12 @@ Ext.define('Ext.menu.CheckItem', {
             me.checkEl.on('mousedown', me.onMouseDownCheck);
         }
     },
-    
+
     /**
      * Disables just the checkbox functionality of this menu Item. If this menu item has a submenu, that submenu
      * will still be accessible
      */
-    disableCheckChange: function() {
+    disableCheckChange: function () {
         var me = this,
             checkEl = me.checkEl;
 
@@ -195,24 +195,24 @@ Ext.define('Ext.menu.CheckItem', {
     },
 
     /**
-     * Re-enables the checkbox functionality of this menu item after having been 
+     * Re-enables the checkbox functionality of this menu item after having been
      * disabled by {@link #disableCheckChange}
      */
-    enableCheckChange: function() {
+    enableCheckChange: function () {
         var me = this,
             checkEl = me.checkEl;
-            
+
         if (checkEl) {
             checkEl.removeCls(me.disabledCls);
         }
         me.checkChangeDisabled = false;
     },
-    
-    onMouseDownCheck: function(e) {
+
+    onMouseDownCheck: function (e) {
         e.preventDefault();
     },
 
-    onClick: function(e) {
+    onClick: function (e) {
         var me = this;
 
         // If pointer type is touch, we should only toggle check status if there's no submenu or they tapped in the checkEl
@@ -230,17 +230,17 @@ Ext.define('Ext.menu.CheckItem', {
         this.callParent([e]);
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         Ext.menu.Manager.unregisterCheckable(this);
         this.callParent(arguments);
     },
-    
-    setText: function(text) {
+
+    setText: function (text) {
         var me = this,
             ariaDom = me.ariaEl.dom;
-        
+
         me.callParent([text]);
-        
+
         if (ariaDom && me.menu) {
             ariaDom.setAttribute('aria-label', Ext.String.formatEncode(me.submenuText, text));
         }
@@ -251,7 +251,7 @@ Ext.define('Ext.menu.CheckItem', {
      * @param {Boolean} checked True to check, false to un-check
      * @param {Boolean} [suppressEvents=false] True to prevent firing the checkchange events.
      */
-    setChecked: function(checked, suppressEvents) {
+    setChecked: function (checked, suppressEvents) {
         var me = this,
             checkedCls = me.checkedCls,
             uncheckedCls = me.uncheckedCls,
@@ -268,7 +268,7 @@ Ext.define('Ext.menu.CheckItem', {
                     el.removeCls(checkedCls);
                 }
             }
-            
+
             if (ariaDom) {
                 ariaDom.setAttribute('aria-checked', me.menu ? 'mixed' : !!checked);
             }

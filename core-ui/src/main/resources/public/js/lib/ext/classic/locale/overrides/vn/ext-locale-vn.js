@@ -5,13 +5,13 @@
  * By bpmtri
  * 12-April-2007 04:06PM
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
 
         Ext.Date.dayNames = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
-        
+
         Ext.Date.monthNumbers = {
             "Tháng 1": 0,
             "Tháng 2": 1,
@@ -26,16 +26,16 @@ Ext.onReady(function() {
             "Tháng 11": 10,
             "Tháng 12": 11
         };
-        
-        Ext.Date.getShortMonthName = function(month){
+
+        Ext.Date.getShortMonthName = function (month) {
             return Ext.Date.monthNames[month];
         };
-        
-        Ext.Date.getMonthNumber = function(name){
-            return Ext.Date.monthNumbers[name];    
+
+        Ext.Date.getMonthNumber = function (name) {
+            return Ext.Date.monthNumbers[name];
         };
-        
-        Ext.Date.getShortDayName = function(day) {
+
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day];
         };
     }
@@ -133,7 +133,7 @@ Ext.define("Ext.locale.vn.form.field.Date", {
 Ext.define("Ext.locale.vn.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Đang tải..."
     });
@@ -170,10 +170,10 @@ Ext.define("Ext.locale.vn.window.MessageBox", {
         cancel: "Hủy bỏ",
         yes: "Có",
         no: "Không"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.vn.Component", {	
+Ext.define("Ext.locale.vn.Component", {
     override: "Ext.Component"
 });

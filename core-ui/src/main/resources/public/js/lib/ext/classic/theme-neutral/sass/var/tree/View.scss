@@ -43,10 +43,7 @@ $tree-expander-cursor: dynamic(pointer);
  * The amount of padding to apply to the tree cell's inner div element
  */
 $tree-cell-inner-padding: dynamic(
-    top($grid-cell-inner-padding)
-    right($grid-cell-inner-padding)
-    bottom($grid-cell-inner-padding)
-    0
+                top($grid-cell-inner-padding) right($grid-cell-inner-padding) bottom($grid-cell-inner-padding) 0
 );
 
 /**

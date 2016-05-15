@@ -1,8 +1,8 @@
-describe("Ext.picker.Time", function() {
+describe("Ext.picker.Time", function () {
     var component, makeComponent;
 
-    beforeEach(function() {
-        makeComponent = function(config) {
+    beforeEach(function () {
+        makeComponent = function (config) {
             config = Ext.applyIf(config || {}, {
                 renderTo: Ext.getBody()
             });
@@ -10,11 +10,11 @@ describe("Ext.picker.Time", function() {
         };
     });
 
-    function componentHasTimes () {
+    function componentHasTimes() {
         return component.rendered && component.all.elements.length;
     }
 
-    afterEach(function() {
+    afterEach(function () {
         if (component) {
             component.destroy();
         }
@@ -22,80 +22,79 @@ describe("Ext.picker.Time", function() {
     });
 
 
-
     ///// SPECS /////
 
-    it("should extend Ext.BoundList", function() {
+    it("should extend Ext.BoundList", function () {
         makeComponent();
         expect(component instanceof Ext.BoundList).toBe(true);
     });
 
-    describe("defaults", function() {
-        beforeEach(function() {
+    describe("defaults", function () {
+        beforeEach(function () {
             makeComponent();
         });
 
-        it("should have minValue = undefined", function() {
+        it("should have minValue = undefined", function () {
             expect(component.minValue).not.toBeDefined();
         });
 
-        it("should have maxValue = undefined", function() {
+        it("should have maxValue = undefined", function () {
             expect(component.maxValue).not.toBeDefined();
         });
 
-        it("should have increment = 15", function() {
+        it("should have increment = 15", function () {
             expect(component.increment).toEqual(15);
         });
 
-        it("should have format = 'g:i A'", function() {
+        it("should have format = 'g:i A'", function () {
             expect(component.format).toEqual('g:i A');
         });
 
-        it("should have componentCls = 'x-timepicker'", function() {
+        it("should have componentCls = 'x-timepicker'", function () {
             expect(component.componentCls).toEqual('x-timepicker');
         });
     });
 
 
-    describe("rendering", function() {
-        it("should render items", function() {
+    describe("rendering", function () {
+        it("should render items", function () {
             makeComponent();
             waitsFor(componentHasTimes);
-            runs(function() {
+            runs(function () {
                 expect(component.getNodes().length).toEqual(96);
             });
-            
+
         });
 
-        it("should render formatted times into the items", function() {
+        it("should render formatted times into the items", function () {
             makeComponent();
             waitsFor(componentHasTimes);
-            runs(function() {
+            runs(function () {
                 var nodes = component.getNodes();
                 expect(nodes[0]).hasHTML('12:00 AM');
                 expect(nodes[nodes.length - 1]).hasHTML('11:45 PM');
             });
         });
 
-        it("should honor the 'format' config when rendering the times", function() {
+        it("should honor the 'format' config when rendering the times", function () {
             makeComponent({
                 format: 'G,i,s'
             });
             waitsFor(componentHasTimes);
-            runs(function() {
+            runs(function () {
                 expect(component.getNode(0)).hasHTML('0,00,00');
             });
         });
     });
 
 
-    describe("increment", function() {
-        it("should set the number of minutes between times in the list", function() {
+    describe("increment", function () {
+        it("should set the number of minutes between times in the list", function () {
             makeComponent({
                 increment: 30
             });
             waitsFor(componentHasTimes);
-            runs(function() {
+            runs(function () {
                 var nodes = component.getNodes();
                 expect(nodes.length).toEqual(48);
                 expect(nodes[1]).hasHTML('12:30 AM');
@@ -105,8 +104,8 @@ describe("Ext.picker.Time", function() {
     });
 
 
-    describe("minValue", function() {
-        it("should be used as the minimum time in the list", function() {
+    describe("minValue", function () {
+        it("should be used as the minimum time in the list", function () {
             var date = new Date('1/1/2011 06:30:00');
             // opera 10.5 awful bug fix !!!
             if (jasmine.browser.isOpera) {
@@ -117,14 +116,14 @@ describe("Ext.picker.Time", function() {
                 minValue: date
             });
             waitsFor(componentHasTimes);
-            runs(function() {
+            runs(function () {
                 var nodes = component.getNodes();
                 expect(nodes[0]).hasHTML('6:30 AM');
             });
         });
 
-        describe("setMinValue method", function() {
-            it("should set the minValue config", function() {
+        describe("setMinValue method", function () {
+            it("should set the minValue config", function () {
                 makeComponent({
                     minValue: new Date('1/1/2011 06:30:00')
                 });
@@ -134,7 +133,7 @@ describe("Ext.picker.Time", function() {
                 expect(component.minValue).toEqual(newMinValue);
             });
 
-            it("should update the list to match the new minValue", function() {
+            it("should update the list to match the new minValue", function () {
                 makeComponent({
                     minValue: new Date('1/1/2011 06:30:00')
                 });
@@ -151,20 +150,20 @@ describe("Ext.picker.Time", function() {
         });
     });
 
-    describe("maxValue", function() {
-        it("should be used as the maximum time in the list", function() {
+    describe("maxValue", function () {
+        it("should be used as the maximum time in the list", function () {
             makeComponent({
                 maxValue: new Date('1/1/2011 21:30:00')
             });
             waitsFor(componentHasTimes);
-            runs(function() {
+            runs(function () {
                 var nodes = component.getNodes();
                 expect(nodes[nodes.length - 1]).hasHTML('9:30 PM');
             });
         });
 
-        describe("setMaxValue method", function() {
-            it("should set the maxValue config", function() {
+        describe("setMaxValue method", function () {
+            it("should set the maxValue config", function () {
                 makeComponent({
                     maxValue: new Date('1/1/2011 21:30:00')
                 });
@@ -173,7 +172,7 @@ describe("Ext.picker.Time", function() {
                 expect(component.maxValue).toEqual(newMaxValue);
             });
 
-            it("should update the list to match the new maxValue", function() {
+            it("should update the list to match the new maxValue", function () {
                 makeComponent({
                     maxValue: new Date('1/1/2011 21:30:00')
                 });

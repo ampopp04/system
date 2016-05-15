@@ -34,14 +34,14 @@
  */
 Ext.define('Ext.layout.container.Center', {
     extend: 'Ext.layout.container.Fit',
-    alias: [ 
+    alias: [
         'layout.center',
         'layout.ux.center'
     ],
 
     alternateClassName: 'Ext.ux.layout.Center',
     type: 'center',
-    
+
     percentRe: /^\d+(?:\.\d+)?\%$/,
 
     itemCls: Ext.baseCSSPrefix + 'center-layout-item',
@@ -52,20 +52,20 @@ Ext.define('Ext.layout.container.Center', {
 
     renderTpl: [
         '<div id="{ownerId}-targetEl" data-ref="targetEl" class="{targetElCls}" role="presentation">' +
-            '{%this.renderBody(out, values)%}' +
+        '{%this.renderBody(out, values)%}' +
         '</div>'
     ],
 
     targetElCls: Ext.baseCSSPrefix + 'center-target',
 
-    beginLayout: function(ownerContext) {
+    beginLayout: function (ownerContext) {
         var me = this,
             percentRe = me.percentRe,
             childItems, len, i, itemContext, item,
             widthModel, heightModel;
 
         me.callParent([ownerContext]);
-        
+
         childItems = ownerContext.childItems;
         for (i = 0, len = childItems.length; i < len; ++i) {
             itemContext = childItems[i];
@@ -83,14 +83,14 @@ Ext.define('Ext.layout.container.Center', {
         ownerContext.targetElContext = ownerContext.getEl('targetEl', me);
     },
 
-    beginLayoutCycle: function(ownerContext, firstCycle) {
+    beginLayoutCycle: function (ownerContext, firstCycle) {
         var targetEl = this.targetEl;
         this.callParent([ownerContext, firstCycle]);
         targetEl.setStyle('width', '');
         targetEl.setStyle('height', '');
     },
 
-    getRenderData: function() {
+    getRenderData: function () {
         var data = this.callParent();
 
         data.targetElCls = this.targetElCls;
@@ -98,7 +98,7 @@ Ext.define('Ext.layout.container.Center', {
         return data;
     },
 
-    getRenderTarget: function() {
+    getRenderTarget: function () {
         return this.targetEl;
     },
 
@@ -107,7 +107,7 @@ Ext.define('Ext.layout.container.Center', {
             sizeModel = ownerSizeModel || me.owner.getSizeModel(),
             percentRe = me.percentRe,
             mode = ((sizeModel.width.shrinkWrap || !percentRe.test(item.width)) ? 0 : 1) | // jshint ignore:line
-                  ((sizeModel.height.shrinkWrap || !percentRe.test(item.height)) ? 0 : 2);
+                ((sizeModel.height.shrinkWrap || !percentRe.test(item.height)) ? 0 : 2);
 
         return me.sizePolicies[mode];
     },
@@ -116,11 +116,11 @@ Ext.define('Ext.layout.container.Center', {
         return true;
     },
 
-    isItemShrinkWrap: function(item) {
+    isItemShrinkWrap: function (item) {
         return true;
     },
 
-    calculate: function(ownerContext) {
+    calculate: function (ownerContext) {
         var targetElContext = ownerContext.targetElContext,
             info;
 
@@ -141,7 +141,7 @@ Ext.define('Ext.layout.container.Center', {
             pos = 0;
 
         if (!itemContext[modelName].calculated) {
-             size += info.margins[dimension];
+            size += info.margins[dimension];
         }
 
         if (!info.ownerContext[modelName].shrinkWrap) {

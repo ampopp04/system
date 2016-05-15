@@ -41,28 +41,28 @@ Ext.define('Ext.layout.container.Fit', {
      */
     itemCls: Ext.baseCSSPrefix + 'fit-item',
     type: 'fit',
-   
+
     manageMargins: true,
 
     sizePolicies: {
-        0: { readsWidth: 1, readsHeight: 1, setsWidth: 0, setsHeight: 0 },
-        1: { readsWidth: 0, readsHeight: 1, setsWidth: 1, setsHeight: 0 },
-        2: { readsWidth: 1, readsHeight: 0, setsWidth: 0, setsHeight: 1 },
-        3: { readsWidth: 0, readsHeight: 0, setsWidth: 1, setsHeight: 1 }
+        0: {readsWidth: 1, readsHeight: 1, setsWidth: 0, setsHeight: 0},
+        1: {readsWidth: 0, readsHeight: 1, setsWidth: 1, setsHeight: 0},
+        2: {readsWidth: 1, readsHeight: 0, setsWidth: 0, setsHeight: 1},
+        3: {readsWidth: 0, readsHeight: 0, setsWidth: 1, setsHeight: 1}
     },
 
     getItemSizePolicy: function (item, ownerSizeModel) {
         // this layout's sizePolicy is derived from its owner's sizeModel:
         var sizeModel = ownerSizeModel || this.owner.getSizeModel(),
             mode = (sizeModel.width.shrinkWrap ? 0 : 1) | // jshint ignore:line
-                   (sizeModel.height.shrinkWrap ? 0 : 2);
+                (sizeModel.height.shrinkWrap ? 0 : 2);
 
-       return this.sizePolicies[mode];
+        return this.sizePolicies[mode];
     },
 
     beginLayoutCycle: function (ownerContext, firstCycle) {
         var me = this,
-            // determine these before the lastSizeModels get updated:
+        // determine these before the lastSizeModels get updated:
             resetHeight = me.lastHeightModel && me.lastHeightModel.calculated,
             resetWidth = me.lastWidthModel && me.lastWidthModel.calculated,
             resetSizes = resetWidth || resetHeight,
@@ -132,13 +132,13 @@ Ext.define('Ext.layout.container.Fit', {
         // won't be triggering overflow in that case) and false if we have no minSize (so
         // no child to trigger an overflow).
         c = ownerContext.target;
-        ownerContext.overflowX = (!ownerContext.widthModel.shrinkWrap && 
-                                   ownerContext.maxChildMinWidth &&
-                                   c.scrollFlags.x) || undef;
+        ownerContext.overflowX = (!ownerContext.widthModel.shrinkWrap &&
+            ownerContext.maxChildMinWidth &&
+            c.scrollFlags.x) || undef;
 
         ownerContext.overflowY = (!ownerContext.heightModel.shrinkWrap &&
-                                   ownerContext.maxChildMinHeight &&
-                                   c.scrollFlags.y) || undef;
+            ownerContext.maxChildMinHeight &&
+            c.scrollFlags.y) || undef;
     },
 
     calculate: function (ownerContext) {
@@ -163,8 +163,8 @@ Ext.define('Ext.layout.container.Fit', {
             // and gain scrollbars. If so, we want to remove their space from the other
             // axis so that we fit things inside the scrollbars rather than under them.
             scrollbars = me.getScrollbarsNeeded(
-                    overflowX && containerSize.width, overflowY && containerSize.height,
-                    ownerContext.maxChildMinWidth, ownerContext.maxChildMinHeight);
+                overflowX && containerSize.width, overflowY && containerSize.height,
+                ownerContext.maxChildMinWidth, ownerContext.maxChildMinHeight);
 
             if (scrollbars) {
                 scrollbarSize = Ext.getScrollbarSize();
@@ -192,7 +192,7 @@ Ext.define('Ext.layout.container.Fit', {
 
         if (shrinkWrapHeight || shrinkWrapWidth) {
             padding = ownerContext.targetContext.getPaddingInfo();
-            
+
             if (shrinkWrapWidth) {
                 if (overflowY && !containerSize.gotHeight) {
                     // if we might overflow vertically and don't have the container height,

@@ -108,14 +108,14 @@
  * of the data set itself or are used to reconfigure the Reader. To pass metadata in the response you simply
  * add a `metaData` attribute to the root of the response data. The metaData attribute can contain anything,
  * but supports a specific set of properties that are handled by the Reader if they are present:
- * 
+ *
  * - {@link #rootProperty}: the property name of the root response node containing the record data
  * - {@link #totalProperty}: property name for the total number of records in the data
  * - {@link #successProperty}: property name for the success status of the response
  * - {@link #messageProperty}: property name for an optional response message
  * - {@link Ext.data.Model#cfg-fields fields}: Config used to reconfigure the Model's fields before converting the
  * response data into records
- * 
+ *
  * An initial Reader configuration containing all of these properties might look like this ("fields" would be
  * included in the Model definition, not shown):
  *
@@ -151,7 +151,7 @@
  * but will be accessible via the Reader's {@link #metaData} property (which is also passed to listeners via the Proxy's
  * {@link Ext.data.proxy.Proxy#metachange metachange} event (also relayed by the store). Application code can then
  * process the passed metadata in any way it chooses.
- * 
+ *
  * A simple example for how this can be used would be customizing the fields for a Model that is bound to a grid. By passing
  * the `fields` property the Model will be automatically updated by the Reader internally, but that change will not be
  * reflected automatically in the grid unless you also update the column configuration. You could do this manually, or you
@@ -191,44 +191,44 @@
  */
 Ext.define('Ext.data.reader.Json', {
     extend: 'Ext.data.reader.Reader',
-    
+
     requires: [
         'Ext.JSON'
     ],
-    
+
     alternateClassName: 'Ext.data.JsonReader',
-    alias : 'reader.json',
+    alias: 'reader.json',
 
     config: {
         /**
-        * @cfg {String} record The optional location within the JSON response that the record data itself can be found at.
-        * See the JsonReader intro docs for more details. This is not often needed.
-        */
-       record: null,
-    
+         * @cfg {String} record The optional location within the JSON response that the record data itself can be found at.
+         * See the JsonReader intro docs for more details. This is not often needed.
+         */
+        record: null,
+
         /**
-        * @cfg {String} [metaProperty]
-        * Name of the property from which to retrieve the `metaData` attribute. See {@link #metaData}.
-        */
+         * @cfg {String} [metaProperty]
+         * Name of the property from which to retrieve the `metaData` attribute. See {@link #metaData}.
+         */
         metaProperty: 'metaData',
 
         /**
-        * @cfg {Boolean} useSimpleAccessors True to ensure that field names/mappings are treated as literals when
-        * reading values.
-        *
-        * For example, by default, using the mapping "foo.bar.baz" will try and read a property foo from the root, then a property bar
-        * from foo, then a property baz from bar. Setting the simple accessors to true will read the property with the name
-        * "foo.bar.baz" direct from the root object.
-        */
+         * @cfg {Boolean} useSimpleAccessors True to ensure that field names/mappings are treated as literals when
+         * reading values.
+         *
+         * For example, by default, using the mapping "foo.bar.baz" will try and read a property foo from the root, then a property bar
+         * from foo, then a property baz from bar. Setting the simple accessors to true will read the property with the name
+         * "foo.bar.baz" direct from the root object.
+         */
         useSimpleAccessors: false,
-        
+
         /**
          * @cfg {Boolean} preserveRawData
          * The reader will keep a copy of the most recent request in the {@link #rawData} property. For performance reasons,
          * the data object for each record is used directly as the model data. This means that these objects may be modified and
-         * thus modify the raw data. To ensure the objects are copied, set this option to `true`. NB: This only applies to items 
+         * thus modify the raw data. To ensure the objects are copied, set this option to `true`. NB: This only applies to items
          * that are read as part of the data array, any other metadata will not be modified:
-         * 
+         *
          *     {
          *         "someOtherData": 1, // Won't be modified
          *         "root": [{}, {}, {}] // The objects here will be modified
@@ -236,12 +236,12 @@ Ext.define('Ext.data.reader.Json', {
          */
         preserveRawData: false
     },
-    
-    updateRootProperty: function() {
-        this.forceBuildExtractors();    
+
+    updateRootProperty: function () {
+        this.forceBuildExtractors();
     },
-    
-    updateMetaProperty: function() {
+
+    updateMetaProperty: function () {
         this.forceBuildExtractors();
     },
 
@@ -252,10 +252,10 @@ Ext.define('Ext.data.reader.Json', {
      * @param {Object} [readOptions] See {@link #read} for details.
      * @return {Ext.data.ResultSet} A ResultSet containing model instances and meta data about the results
      */
-    readRecords: function(data, readOptions, /* private */ internalReadOptions) {
+    readRecords: function (data, readOptions, /* private */ internalReadOptions) {
         var me = this,
             meta;
-            
+
         //this has to be before the call to super because we use the meta data in the superclass readRecords
         if (me.getMeta) {
             meta = me.getMeta(data);
@@ -269,7 +269,7 @@ Ext.define('Ext.data.reader.Json', {
         return me.callParent([data, readOptions, internalReadOptions]);
     },
 
-    getResponseData: function(response) {
+    getResponseData: function (response) {
         var error;
 
         try {
@@ -283,7 +283,7 @@ Ext.define('Ext.data.reader.Json', {
         }
     },
 
-    buildExtractors : function() {
+    buildExtractors: function () {
         var me = this,
             metaProp, rootProp;
 
@@ -296,7 +296,7 @@ Ext.define('Ext.data.reader.Json', {
             } else {
                 me.getRoot = Ext.identityFn;
             }
-        
+
             if (metaProp) {
                 me.getMeta = me.getAccessor(metaProp);
             }
@@ -311,14 +311,14 @@ Ext.define('Ext.data.reader.Json', {
      * @param {Object} [readOptions] See {@link #read} for details.
      * @return {Ext.data.Model[]} The records
      */
-    extractData: function(root, readOptions) {
+    extractData: function (root, readOptions) {
         var recordName = this.getRecord(),
             data = [],
             length, i;
 
         if (recordName) {
             length = root.length;
-            
+
             if (!length && Ext.isObject(root)) {
                 length = 1;
                 root = [root];
@@ -332,9 +332,9 @@ Ext.define('Ext.data.reader.Json', {
         }
         return this.callParent([data, readOptions]);
     },
-    
-    getModelData: function(raw) {
-        return this.getPreserveRawData() ? Ext.apply({}, raw) : raw;    
+
+    getModelData: function (raw) {
+        return this.getPreserveRawData() ? Ext.apply({}, raw) : raw;
     },
 
     /**
@@ -346,14 +346,14 @@ Ext.define('Ext.data.reader.Json', {
      * - 'some.property'
      * - '["someProperty"]'
      * - 'values[0]'
-     * 
+     *
      * This is used by {@link #buildExtractors} to create optimized extractor functions for properties that are looked
      * up directly on the source object (e.g. {@link #successProperty}, {@link #messageProperty}, etc.).
      */
-    createAccessor: (function() {
+    createAccessor: (function () {
         var re = /[\[\.]/;
 
-        return function(expr) {
+        return function (expr) {
             var me = this,
                 simple = me.getUseSimpleAccessors(),
                 operatorIndex, result,
@@ -368,13 +368,13 @@ Ext.define('Ext.data.reader.Json', {
             if (typeof expr === 'function') {
                 return expr;
             }
-            
+
             if (!simple) {
                 operatorIndex = String(expr).search(re);
             }
-            
+
             if (simple === true || operatorIndex < 0) {
-                result = function(raw) {
+                result = function (raw) {
                     return raw[expr];
                 };
             } else {
@@ -441,40 +441,40 @@ Ext.define('Ext.data.reader.Json', {
      * @private
      * @method
      * Returns an accessor function for the passed Field. Gives support for properties such as the following:
-     * 
+     *
      * - 'someProperty'
      * - 'some.property'
      * - '["someProperty"]'
      * - 'values[0]'
-     * 
+     *
      * This is used by {@link #buildExtractors} to create optimized extractor expressions when converting raw
      * data into model instances. This method is used at the field level to dynamically map values to model fields.
      */
-    createFieldAccessor: function(field) {
+    createFieldAccessor: function (field) {
         // Need to capture me for the extractor
         var me = this,
             mapping = field.mapping,
             hasMap = mapping || mapping === 0,
-            map    = hasMap ? mapping : field.name;
-            
+            map = hasMap ? mapping : field.name;
+
         if (hasMap) {
             if (typeof map === 'function') {
-                return function(raw) {
+                return function (raw) {
                     return field.mapping(raw, me);
                 };
             } else {
                 return me.createAccessor(map);
-            }    
+            }
         }
     },
 
-    getAccessorKey: function(prop) {
+    getAccessorKey: function (prop) {
         var simple = this.getUseSimpleAccessors() ? 'simple' : '';
         return this.$className + simple + prop;
     },
 
     privates: {
-        copyFrom: function(reader) {
+        copyFrom: function (reader) {
             this.callParent([reader]);
             this.getRoot = reader.getRoot;
         }

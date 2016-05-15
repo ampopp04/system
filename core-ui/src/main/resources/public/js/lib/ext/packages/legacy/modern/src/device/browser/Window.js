@@ -4,30 +4,30 @@
 Ext.define('Ext.device.browser.Window', {
     extend: 'Ext.Evented',
 
-    open: function(config) {
+    open: function (config) {
         var me = this;
 
         this._window = window.open(config.url, config.showToolbar ? '_blank' : '_self', config.options || null);
 
         // Add events
-        this._window.addEventListener('loadstart', function() {
+        this._window.addEventListener('loadstart', function () {
             me.fireEvent('loadstart', me);
         });
 
-        this._window.addEventListener('loadstop', function() {
+        this._window.addEventListener('loadstop', function () {
             me.fireEvent('loadstop', me);
         });
 
-        this._window.addEventListener('loaderror', function() {
+        this._window.addEventListener('loaderror', function () {
             me.fireEvent('loaderror', me);
         });
 
-        this._window.addEventListener('exit', function() {
+        this._window.addEventListener('exit', function () {
             me.fireEvent('close', me);
         });
     },
 
-    close: function() {
+    close: function () {
         if (!this._window) {
             return;
         }

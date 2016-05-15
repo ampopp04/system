@@ -43,7 +43,7 @@ Ext.define('Ext.util.Filter', {
         /**
          * @cfg {RegExp/Mixed} [value=null]
          * The value you want to match against. Required unless a {@link #filterFn} is passed.
-         * 
+         *
          * Can be a regular expression which will be used as a matcher or any other value
          * such as an object or an array of objects. This value is compared using the configured
          * {@link #operator}.
@@ -121,7 +121,7 @@ Ext.define('Ext.util.Filter', {
          *
          * The `in` and `notin` operator expects this filter's {@link #cfg-value} to be an array and matches
          * values that are present in that array.
-         * 
+         *
          * The `like` operator matches values that contain this filter's {@link #cfg-value} as a
          * substring.
          */
@@ -195,28 +195,28 @@ Ext.define('Ext.util.Filter', {
                 return match;
             };
         },
-        
+
         /**
          * Checks whether the filter will produce a meaningful value. Since filters
          * may be used in conjunction with data binding, this is a sanity check to
          * check whether the resulting filter will be able to match.
-         * 
+         *
          * @param {Object} cfg The filter config object
          * @return {Boolean} `true` if the filter will produce a valid value
-         * 
+         *
          * @private
          */
-        isInvalid: function(cfg) {
+        isInvalid: function (cfg) {
             if (!cfg.filterFn) {
                 // If we don't have a filterFn, we must have a property
                 if (!cfg.property) {
                     return 'A Filter requires either a property or a filterFn to be set';
                 }
-                
+
                 if (!cfg.hasOwnProperty('value') && !cfg.operator) {
                     return 'A Filter requires either a property and value, or a filterFn to be set';
                 }
-                
+
             }
             return false;
         }
@@ -226,7 +226,7 @@ Ext.define('Ext.util.Filter', {
      * Creates new Filter.
      * @param {Object} config Config object
      */
-    constructor: function(config) {
+    constructor: function (config) {
         //<debug>
         var warn = Ext.util.Filter.isInvalid(config);
         if (warn) {
@@ -302,16 +302,16 @@ Ext.define('Ext.util.Filter', {
      * for this Filter.
      */
     createRegexFilter: function () {
-        var me       = this,
+        var me = this,
             anyMatch = !!me.getAnyMatch(),
-            exact    = !!me.getExactMatch(),
-            value    = me.getValue(),
-            matcher  = Ext.String.createRegex(value,
-                                              !anyMatch,  // startsWith
-                                              !anyMatch && exact, // endsWith
-                                              !me.getCaseSensitive());
+            exact = !!me.getExactMatch(),
+            value = me.getValue(),
+            matcher = Ext.String.createRegex(value,
+                !anyMatch,  // startsWith
+                !anyMatch && exact, // endsWith
+                !me.getCaseSensitive());
 
-        return function(item) {
+        return function (item) {
             var val = me.getPropertyValue(item);
             return matcher ? matcher.test(val) : (val == null);
         };
@@ -336,9 +336,9 @@ Ext.define('Ext.util.Filter', {
      * @return {Object}
      */
     getState: function () {
-         var config = this.getInitialConfig(),
-             result = {},
-             name;
+        var config = this.getInitialConfig(),
+            result = {},
+            name;
 
         for (name in config) {
             // We only want the instance properties in this case, not inherited ones,
@@ -353,7 +353,7 @@ Ext.define('Ext.util.Filter', {
         return result;
     },
 
-    getScope: function() {
+    getScope: function () {
         return this.scope;
     },
 
@@ -376,18 +376,18 @@ Ext.define('Ext.util.Filter', {
         return result;
     },
 
-    updateOperator: function() {
+    updateOperator: function () {
         this._filterFn = null;
     },
 
-    updateValue: function(value) {
+    updateValue: function (value) {
         this._filterFn = null;
         if (this.getDisableOnEmpty()) {
             this.setDisabled(Ext.isEmpty(value));
         }
     },
 
-    updateDisableOnEmpty: function(disableOnEmpty) {
+    updateDisableOnEmpty: function (disableOnEmpty) {
         var disabled = false;
         if (disableOnEmpty) {
             disabled = Ext.isEmpty(this.getValue());
@@ -396,7 +396,7 @@ Ext.define('Ext.util.Filter', {
     },
 
     privates: {
-        getCandidateValue: function(candidate, v, preventCoerce) {
+        getCandidateValue: function (candidate, v, preventCoerce) {
             var me = this,
                 convert = me._convert,
                 result = me.getPropertyValue(candidate);
@@ -409,7 +409,7 @@ Ext.define('Ext.util.Filter', {
             return result;
         }
     }
-}, function() {
+}, function () {
     var prototype = this.prototype,
         operatorFns = (prototype.operatorFns = {
             "<": function (candidate) {
@@ -432,7 +432,7 @@ Ext.define('Ext.util.Filter', {
                 }
                 return candidate == v;
             },
-            "===": function(candidate) {
+            "===": function (candidate) {
                 var me = this,
                     v = me._filterValue;
 
@@ -464,7 +464,7 @@ Ext.define('Ext.util.Filter', {
                 }
                 return candidate != v;
             },
-            "!==": function(candidate) {
+            "!==": function (candidate) {
                 var me = this,
                     v = me._filterValue;
 
@@ -480,7 +480,7 @@ Ext.define('Ext.util.Filter', {
                 var v = this._filterValue;
                 return Ext.Array.contains(v, this.getCandidateValue(candidate, v));
             },
-            notin: function(candidate) {
+            notin: function (candidate) {
                 var v = this._filterValue;
                 return !Ext.Array.contains(v, this.getCandidateValue(candidate, v));
             },

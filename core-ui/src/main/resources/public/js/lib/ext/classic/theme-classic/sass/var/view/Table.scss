@@ -2,8 +2,7 @@
 $grid-row-cell-font-size: dynamic(ceil($font-size * .9));
 $grid-cell-inner-padding: dynamic(3px 6px 4px);
 
-$grid-row-cell-border-color: dynamic(#ededed
-    adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: -2.549%));
+$grid-row-cell-border-color: dynamic(#ededed adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: -2.549%));
 
 // special cells
 $grid-cell-special-background-color: dynamic(#f6f6f6);

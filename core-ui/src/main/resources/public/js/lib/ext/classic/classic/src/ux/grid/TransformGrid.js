@@ -12,7 +12,7 @@ Ext.define('Ext.ux.grid.TransformGrid', {
      * @param {Object} [config] A config object that sets properties on this grid and has two additional (optional)
      * properties: fields and columns which allow for customizing data fields and columns for this grid.
      */
-    constructor: function(table, config) {
+    constructor: function (table, config) {
         config = Ext.apply({}, config);
         table = this.table = Ext.get(table);
 
@@ -78,7 +78,7 @@ Ext.define('Ext.ux.grid.TransformGrid', {
             height: height
         });
         this.callParent([config]);
-        
+
         if (config.remove !== false) {
             // Don't use table.remove() as that destroys the row/cell data in the table in
             // IE6-7 so it cannot be read by the data reader.
@@ -86,7 +86,7 @@ Ext.define('Ext.ux.grid.TransformGrid', {
         }
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         this.callParent();
         this.table.remove();
         delete this.table;

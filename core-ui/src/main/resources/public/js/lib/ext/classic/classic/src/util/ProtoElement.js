@@ -71,7 +71,7 @@ Ext.define('Ext.util.ProtoElement', function () {
          * Indicates that the current state of the object has been flushed to the DOM, so we need
          * to track any subsequent changes
          */
-        flush: function(){
+        flush: function () {
             this.flushClassList = [];
             this.removedClasses = {};
             // clear the style, it will be recreated if we add anything new
@@ -176,7 +176,7 @@ Ext.define('Ext.util.ProtoElement', function () {
             return me;
         },
 
-        unselectable: function() {
+        unselectable: function () {
             // See Ext.dom.Element.unselectable for an explanation of what is required to make an element unselectable
             this.addCls(Ext.dom.Element.unselectableCls);
 

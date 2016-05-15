@@ -1,76 +1,76 @@
-describe("Ext.form.field.TextArea", function() {
+describe("Ext.form.field.TextArea", function () {
     var component, makeComponent;
-    
+
     function expectAria(attr, value) {
         jasmine.expectAriaAttr(component, attr, value);
     }
-    
-    beforeEach(function() {
-        makeComponent = function(config) {
+
+    beforeEach(function () {
+        makeComponent = function (config) {
             config = config || {};
             Ext.applyIf(config, {
                 name: 'test'
             });
-            
+
             if (component) {
                 component.destroy();
             }
-            
+
             component = new Ext.form.field.TextArea(config);
         };
     });
-    
-    afterEach(function() {
+
+    afterEach(function () {
         if (component) {
             component.destroy();
         }
         component = makeComponent = null;
     });
 
-    it("should encode the input value in the template", function(){
+    it("should encode the input value in the template", function () {
         makeComponent({
             renderTo: Ext.getBody(),
             value: 'test "  <br/> test'
         });
         expect(component.inputEl.dom.value).toBe('test "  <br/> test');
     });
-    
-    it("should be able to set a numeric value", function(){
+
+    it("should be able to set a numeric value", function () {
         makeComponent({
             renderTo: Ext.getBody()
-        });    
+        });
         component.setValue(100);
         expect(component.getValue()).toBe('100');
     });
 
 
-    describe("defaults", function() {
-        beforeEach(function() {
+    describe("defaults", function () {
+        beforeEach(function () {
             makeComponent();
         });
 
-        it("should have growMin = 60", function() {
+        it("should have growMin = 60", function () {
             expect(component.growMin).toEqual(60);
         });
-        it("should have growMax = 1000", function() {
+        it("should have growMax = 1000", function () {
             expect(component.growMax).toEqual(1000);
         });
-        it("should have growAppend = '\n-'", function() {
+        it("should have growAppend = '\n-'", function () {
             expect(component.growAppend).toEqual('\n-');
         });
-        it("should have enterIsSpecial = false", function() {
+        it("should have enterIsSpecial = false", function () {
             expect(component.enterIsSpecial).toBe(false);
         });
-        it("should have preventScrollbars = false", function() {
+        it("should have preventScrollbars = false", function () {
             expect(component.preventScrollbars).toBe(false);
         });
     });
 
 
-    describe("rendering", function() {
+    describe("rendering", function () {
         // NOTE this doesn't yet test the main label, error icon, etc. just the parts specific to TextArea.
 
-        beforeEach(function() {
+        beforeEach(function () {
             makeComponent({
                 name: 'fieldName',
                 value: 'fieldValue',
@@ -79,68 +79,68 @@ describe("Ext.form.field.TextArea", function() {
             });
         });
 
-        describe("bodyEl", function() {
-            it("should have the class 'x-form-item-body'", function() {
+        describe("bodyEl", function () {
+            it("should have the class 'x-form-item-body'", function () {
                 expect(component.bodyEl.hasCls('x-form-item-body')).toBe(true);
             });
 
-            it("should have the id '[id]-bodyEl'", function() {
+            it("should have the id '[id]-bodyEl'", function () {
                 expect(component.bodyEl.dom.id).toEqual(component.id + '-bodyEl');
             });
         });
 
-        describe("inputEl", function() {
-            it("should be a textarea element", function() {
+        describe("inputEl", function () {
+            it("should be a textarea element", function () {
                 expect(component.inputEl.dom.tagName.toLowerCase()).toEqual('textarea');
             });
 
-            it("should have the component's inputId as its id", function() {
+            it("should have the component's inputId as its id", function () {
                 expect(component.inputEl.dom.id).toEqual(component.inputId);
             });
 
-            it("should have the 'fieldCls' config as a class", function() {
+            it("should have the 'fieldCls' config as a class", function () {
                 expect(component.inputEl.hasCls(component.fieldCls)).toBe(true);
             });
 
-            it("should have a class of 'x-form-text'", function() {
+            it("should have a class of 'x-form-text'", function () {
                 expect(component.inputEl.hasCls('x-form-text')).toBe(true);
             });
 
-            it("should have its name set to the 'name' config", function() {
+            it("should have its name set to the 'name' config", function () {
                 expect(component.inputEl.dom.name).toEqual('fieldName');
             });
 
-            it("should have its value set to the 'value' config", function() {
+            it("should have its value set to the 'value' config", function () {
                 expect(component.inputEl.dom.value).toEqual('fieldValue');
             });
 
-            it("should have autocomplete = 'off'", function() {
+            it("should have autocomplete = 'off'", function () {
                 expect(component.inputEl.dom.getAttribute('autocomplete')).toEqual('off');
             });
 
-            it("should have tabindex set to the tabIndex config", function() {
+            it("should have tabindex set to the tabIndex config", function () {
                 expect('' + component.inputEl.dom.getAttribute("tabIndex")).toEqual('5');
             });
         });
-        
-        describe("ariaEl", function() {
-            it("should be inputEl", function() {
+
+        describe("ariaEl", function () {
+            it("should be inputEl", function () {
                 expect(component.ariaEl).toBe(component.inputEl);
             });
         });
-        
-        describe("ARIA attributes", function() {
-            it("should have textbox role", function() {
+
+        describe("ARIA attributes", function () {
+            it("should have textbox role", function () {
                 expectAria('role', 'textbox');
             });
-            
-            it("should have aria-multiline attribute", function() {
+
+            it("should have aria-multiline attribute", function () {
                 expectAria('aria-multiline', 'true');
             });
         });
-        
-        xdescribe("sizing", function(){
-            it("should have the cols property affect size when shrink wrapping", function(){
+
+        xdescribe("sizing", function () {
+            it("should have the cols property affect size when shrink wrapping", function () {
                 var width = component.getWidth();
                 component.destroy();
                 makeComponent({
@@ -157,8 +157,8 @@ describe("Ext.form.field.TextArea", function() {
                 });
                 expect(component.getWidth()).toBeLessThan(width);
             });
-            
-            it("should give preference to a calculated/configured width", function(){
+
+            it("should give preference to a calculated/configured width", function () {
                 component.destroy();
                 makeComponent({
                     rows: 10,
@@ -168,8 +168,8 @@ describe("Ext.form.field.TextArea", function() {
                 });
                 expect(component.getWidth()).toBe(500);
             });
-            
-            it("should account for a top label when sizing", function() {
+
+            it("should account for a top label when sizing", function () {
                 component.destroy();
                 makeComponent({
                     renderTo: Ext.getBody(),
@@ -178,17 +178,17 @@ describe("Ext.form.field.TextArea", function() {
                     labelAlign: 'top',
                     fieldLabel: 'A label'
                 });
-                
+
                 var label = component.labelEl,
                     expected = 100 - (label.getHeight() + label.getMargin('tb'));
-                      
+
                 expect(component.inputEl.getHeight()).toBe(expected);
             });
         });
     });
 
     // TODO: https://sencha.jira.com/browse/EXTJS-18488
-    (Ext.isIE8 ? xdescribe : describe)("autoSize method and grow configs", function() {
+    (Ext.isIE8 ? xdescribe : describe)("autoSize method and grow configs", function () {
         function makeLines(n) {
             var out = [],
                 i;
@@ -199,8 +199,8 @@ describe("Ext.form.field.TextArea", function() {
             return out.join('\n')
         }
 
-        describe("with an auto height", function() {
-            beforeEach(function() {
+        describe("with an auto height", function () {
+            beforeEach(function () {
                 makeComponent({
                     grow: true,
                     growMin: 40,
@@ -209,7 +209,7 @@ describe("Ext.form.field.TextArea", function() {
                 });
             });
 
-            it("should auto height with an initial value", function() {
+            it("should auto height with an initial value", function () {
                 component.destroy();
                 makeComponent({
                     grow: true,
@@ -221,12 +221,12 @@ describe("Ext.form.field.TextArea", function() {
                 expect(component.getHeight()).toBeLessThan(500);
                 expect(component.getHeight()).toBeGreaterThan(40);
             });
-            
-            it("should set the initial textarea height to growMin", function() {
+
+            it("should set the initial textarea height to growMin", function () {
                 expect(component.getHeight()).toBe(40);
             });
 
-            it("should increase the height of the input as the value becomes taller", function() {
+            it("should increase the height of the input as the value becomes taller", function () {
                 component.setValue(makeLines(4));
                 var height1 = component.getHeight();
                 component.setValue(makeLines(5));
@@ -234,7 +234,7 @@ describe("Ext.form.field.TextArea", function() {
                 expect(height2).toBeGreaterThan(height1);
             });
 
-            it("should decrease the height of the input as the value becomes shorter", function() {
+            it("should decrease the height of the input as the value becomes shorter", function () {
                 component.setValue('A\nB\nC\nD\nE');
                 var height1 = component.inputEl.getHeight();
                 component.setValue('A\nB\nC\nD');
@@ -242,26 +242,26 @@ describe("Ext.form.field.TextArea", function() {
                 expect(height2).toBeLessThan(height1);
             });
 
-            it("should not increase the height above the growMax config", function() {
+            it("should not increase the height above the growMax config", function () {
                 component.setValue(makeLines(50));
                 var height = component.getHeight();
                 expect(height).toBe(200);
             });
 
-            it("should not decrease the height below the growMin config", function() {
+            it("should not decrease the height below the growMin config", function () {
                 component.setValue('');
                 var height = component.getHeight();
                 expect(height).toBe(40);
             });
-            
-            it("should work with markup", function(){
+
+            it("should work with markup", function () {
                 component.setValue('<fake tag appears here with longer text that should cause the field to grow');
                 expect(component.getHeight()).toBeGreaterThan(40);
             });
         });
 
-        describe("with a fixed height", function() {
-            it("should have no effect on a configured height", function() {
+        describe("with a fixed height", function () {
+            it("should have no effect on a configured height", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     grow: true,
@@ -273,7 +273,7 @@ describe("Ext.form.field.TextArea", function() {
                 expect(component.getHeight()).toBe(150);
             });
 
-            it("should have no effect on a calculated height", function() {
+            it("should have no effect on a calculated height", function () {
                 makeComponent({
                     grow: true,
                     growMin: 100,
@@ -295,9 +295,9 @@ describe("Ext.form.field.TextArea", function() {
     });
 
 
-    describe("readOnly", function() {
-        describe("readOnly config", function() {
-            it("should set the readonly attribute of the field when rendered", function() {
+    describe("readOnly", function () {
+        describe("readOnly config", function () {
+            it("should set the readonly attribute of the field when rendered", function () {
                 makeComponent({
                     readOnly: true,
                     renderTo: Ext.getBody()
@@ -306,8 +306,8 @@ describe("Ext.form.field.TextArea", function() {
             });
         });
 
-        describe("setReadOnly method", function() {
-            it("should set the readOnly state of the field immediately if rendered", function() {
+        describe("setReadOnly method", function () {
+            it("should set the readOnly state of the field immediately if rendered", function () {
                 makeComponent({
                     renderTo: Ext.getBody()
                 });
@@ -315,7 +315,7 @@ describe("Ext.form.field.TextArea", function() {
                 expect(component.inputEl.dom.readOnly).toBe(true);
             });
 
-            it("should remember the value if the field has not yet been rendered", function() {
+            it("should remember the value if the field has not yet been rendered", function () {
                 makeComponent();
                 component.setReadOnly(true);
                 component.render(Ext.getBody());
@@ -324,8 +324,8 @@ describe("Ext.form.field.TextArea", function() {
         });
     });
 
-    describe("preventScrollbars config", function() {
-        it("should set overflow:hidden on the textarea if true", function() {
+    describe("preventScrollbars config", function () {
+        it("should set overflow:hidden on the textarea if true", function () {
             makeComponent({
                 grow: true,
                 preventScrollbars: true,
@@ -333,7 +333,7 @@ describe("Ext.form.field.TextArea", function() {
             });
             expect(component.inputEl.getStyle('overflow')).toEqual('hidden');
         });
-        it("should should do nothing if preventScrollbars is false", function() {
+        it("should should do nothing if preventScrollbars is false", function () {
             makeComponent({
                 grow: true,
                 preventScrollbars: false,
@@ -341,7 +341,7 @@ describe("Ext.form.field.TextArea", function() {
             });
             expect(component.inputEl.dom.style.overflow).not.toEqual('hidden');
         });
-        it("should should do nothing if grow is false", function() {
+        it("should should do nothing if grow is false", function () {
             makeComponent({
                 grow: false,
                 preventScrollbars: true,
@@ -350,25 +350,25 @@ describe("Ext.form.field.TextArea", function() {
             expect(component.inputEl.getStyle('overflow')).not.toEqual('hidden');
         });
     });
-    
-    describe("initial value", function() {
-        var makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty = function(initialValue) {
+
+    describe("initial value", function () {
+        var makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty = function (initialValue) {
             makeComponent({
                 value: initialValue
             });
             expect(component.getValue()).toBe(initialValue);
             expect(component.isDirty()).toBeFalsy();
         };
-        
-        it("should not insert unspecified new lines", function() {
+
+        it("should not insert unspecified new lines", function () {
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty('initial value');
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty(' initial  value ');
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty('  initial   value  ');
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty(' ');
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty('  ');
         });
-        
-        it("should preserve new lines", function() {
+
+        it("should preserve new lines", function () {
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty('\ninitial value');
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty('\n\ninitial value');
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty('   initial value');
@@ -381,8 +381,8 @@ describe("Ext.form.field.TextArea", function() {
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty('initial value\n');
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty('initial value\n\n');
         });
-        
-        it("should preserve empty strings", function() {
+
+        it("should preserve empty strings", function () {
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty('\n');
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty(' \n ');
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty('  \n  ');
@@ -392,41 +392,41 @@ describe("Ext.form.field.TextArea", function() {
             makeComponentWithInitialValueAndExpectValueToBeExactAndNonDirty('\n  \n');
         });
     });
-    
-    describe("carriage returns", function(){
+
+    describe("carriage returns", function () {
         var s = 'line1\r\nline2';
-        
-        var expectNoCarriageReturns = function(){
-            expect(component.getValue().indexOf('\r')).toBe(-1);   
+
+        var expectNoCarriageReturns = function () {
+            expect(component.getValue().indexOf('\r')).toBe(-1);
         };
-        
-        var expectNoCarriageReturnsAndNotDirty = function() {
-            expectNoCarriageReturns(); 
-            expect(component.isDirty()).toBe(false); 
+
+        var expectNoCarriageReturnsAndNotDirty = function () {
+            expectNoCarriageReturns();
+            expect(component.isDirty()).toBe(false);
         };
-        
-        it("should strip carriage returns from the initial value before render", function(){
+
+        it("should strip carriage returns from the initial value before render", function () {
             makeComponent({
                 value: s
             });
             expectNoCarriageReturnsAndNotDirty();
         });
-        
-        it("should strip carriage returns from the initial value after render", function(){
+
+        it("should strip carriage returns from the initial value after render", function () {
             makeComponent({
                 value: s,
                 renderTo: Ext.getBody()
             });
             expectNoCarriageReturnsAndNotDirty();
         });
-        
-        it("should strip carriage returns when we call setValue before rendering", function(){
-            makeComponent();    
+
+        it("should strip carriage returns when we call setValue before rendering", function () {
+            makeComponent();
             component.setValue(s);
             expectNoCarriageReturns();
         });
-        
-        it("should strip carriage returns when we call setValue after rendering", function(){
+
+        it("should strip carriage returns when we call setValue after rendering", function () {
             makeComponent({
                 renderTo: Ext.getBody()
             });
@@ -434,21 +434,21 @@ describe("Ext.form.field.TextArea", function() {
             expectNoCarriageReturns();
         });
     });
-    
-    describe("validation", function(){
-        describe("allowBlank", function(){
-            it("should not allow only newlines and spaces when used with allowOnlyWhitespace: false", function(){
+
+    describe("validation", function () {
+        describe("allowBlank", function () {
+            it("should not allow only newlines and spaces when used with allowOnlyWhitespace: false", function () {
                 makeComponent({
                     allowOnlyWhitespace: false,
                     value: '  \n\n    \n\n'
-                });   
-                expect(component.getErrors()).toContain('This field is required'); 
-            });  
-        });  
+                });
+                expect(component.getErrors()).toContain('This field is required');
+            });
+        });
     });
 
-    (Ext.isIE8 ? xdescribe : describe)("foo", function() {
-        it("should start out at growMin", function() {
+    (Ext.isIE8 ? xdescribe : describe)("foo", function () {
+        it("should start out at growMin", function () {
             makeComponent({
                 renderTo: document.body,
                 grow: true,
@@ -458,7 +458,7 @@ describe("Ext.form.field.TextArea", function() {
             expect(component.getHeight()).toBe(50);
         });
 
-        it("should initially render at the height of the text", function() {
+        it("should initially render at the height of the text", function () {
             makeComponent({
                 renderTo: document.body,
                 value: 'm\nm\nm\nm\nm\nm\nm',
@@ -469,7 +469,7 @@ describe("Ext.form.field.TextArea", function() {
             expect(component.getHeight()).toBe(117);
         });
 
-        it("should initially render with a height of growMax if initial text height exceeds growMax", function() {
+        it("should initially render with a height of growMax if initial text height exceeds growMax", function () {
             makeComponent({
                 renderTo: document.body,
                 value: 'm\nm\nm\nm\nm\nm\nm\nm\nm\nm\nm\nm\nm\nm\nm\nm\nm\nm',
@@ -480,7 +480,7 @@ describe("Ext.form.field.TextArea", function() {
             expect(component.getHeight()).toBe(200);
         });
 
-        it("should grow and shrink", function() {
+        it("should grow and shrink", function () {
             makeComponent({
                 renderTo: document.body,
                 grow: true,
@@ -508,7 +508,7 @@ describe("Ext.form.field.TextArea", function() {
         });
     });
 
-    describe('layout', function() {
+    describe('layout', function () {
         var dimensions = {
             1: 'width',
             2: 'height',
@@ -517,7 +517,7 @@ describe("Ext.form.field.TextArea", function() {
 
         function makeLayoutSuite(shrinkWrap, autoFitErrors) {
             describe((shrinkWrap ? ("shrink wrap " + dimensions[shrinkWrap]) : "fixed width and height") +
-                    " autoFitErrors: " + autoFitErrors, function() {
+                " autoFitErrors: " + autoFitErrors, function () {
                 var shrinkWidth = (shrinkWrap & 1),
                     shrinkHeight = (shrinkWrap & 2),
                     errorWidth = 18, // the width of the error when side aligned
@@ -532,7 +532,7 @@ describe("Ext.form.field.TextArea", function() {
                     bodyWidth = 150, // the width of the bodyEl
                     bodyHeight = shrinkHeight ? 58 : 100, // the height of the bodyEl
                     labelHeight = 23, // the height of the label when top aligned
-                    hideLabel, topLabel,  width, height;
+                    hideLabel, topLabel, width, height;
 
                 function create(cfg) {
                     cfg = cfg || {};
@@ -566,7 +566,7 @@ describe("Ext.form.field.TextArea", function() {
                         // use a fixed size element vs. text for the field label for
                         // consistency of measurement cross-browser
                         fieldLabel: '<span style="display:inline-block;width:' + labelInnerWidth +
-                            'px;background-color:red;">&nbsp;</span>',
+                        'px;background-color:red;">&nbsp;</span>',
                         labelSeparator: ''
                     }, cfg));
                 }
@@ -580,11 +580,11 @@ describe("Ext.form.field.TextArea", function() {
                 // and right alignment, with the exception of the text align of the
                 // label's inner element.
                 function makeSideLabelSuite(labelAlign) {
-                    describe(labelAlign + " label", function() {
+                    describe(labelAlign + " label", function () {
                         var leftLabel = (labelAlign === 'left');
 
                         // TODO: EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout", function() {
+                        (Ext.isIE8 ? xit : it)("should layout", function () {
                             create({
                                 labelAlign: labelAlign
                             });
@@ -622,7 +622,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
 
                         // TODO: EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout with side error", function() {
+                        (Ext.isIE8 ? xit : it)("should layout with side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 msgTarget: 'side'
@@ -674,7 +674,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
 
                         // TODO: EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout with hidden side error", function() {
+                        (Ext.isIE8 ? xit : it)("should layout with hidden side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 msgTarget: 'side'
@@ -726,7 +726,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
 
                         // TODO: EXTJS-12634
-                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with under error", function() {
+                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with under error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 msgTarget: 'under'
@@ -778,7 +778,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
 
                         // TODO: EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout with hidden label", function() {
+                        (Ext.isIE8 ? xit : it)("should layout with hidden label", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true
@@ -803,7 +803,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
 
                         // TODO: EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout with hidden label and side error", function() {
+                        (Ext.isIE8 ? xit : it)("should layout with hidden label and side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true,
@@ -848,7 +848,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
 
                         // TODO: EXTJS-12634
-                        (Ext.isIE8 ? xit : it)("should layout with hidden label and hidden side error", function() {
+                        (Ext.isIE8 ? xit : it)("should layout with hidden label and hidden side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true,
@@ -893,7 +893,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
 
                         // TODO: EXTJS-12634
-                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with hidden label and under error", function() {
+                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with hidden label and under error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true,
@@ -943,8 +943,8 @@ describe("Ext.form.field.TextArea", function() {
                 makeSideLabelSuite('right'); // labelAlign: 'right'
 
                 // TODO: EXTJS-12634
-                (Ext.isIE10m && !shrinkHeight ? xdescribe : describe)("top label", function() {
-                    it("should layout", function() {
+                (Ext.isIE10m && !shrinkHeight ? xdescribe : describe)("top label", function () {
+                    it("should layout", function () {
                         create({
                             labelAlign: 'top'
                         });
@@ -982,7 +982,7 @@ describe("Ext.form.field.TextArea", function() {
                         expect(component.errorWrapEl).toBeNull();
                     });
 
-                    it("should layout with side error", function() {
+                    it("should layout with side error", function () {
                         create({
                             labelAlign: 'top',
                             msgTarget: 'side'
@@ -1034,7 +1034,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
                     });
 
-                    it("should layout with hidden side error", function() {
+                    it("should layout with hidden side error", function () {
                         create({
                             labelAlign: 'top',
                             msgTarget: 'side'
@@ -1087,7 +1087,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
                     });
 
-                    it("should layout with under error", function() {
+                    it("should layout with under error", function () {
                         create({
                             labelAlign: 'top',
                             msgTarget: 'under'
@@ -1139,7 +1139,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
                     });
 
-                    it("should layout with hidden label", function() {
+                    it("should layout with hidden label", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true
@@ -1169,7 +1169,7 @@ describe("Ext.form.field.TextArea", function() {
                         expect(component.errorWrapEl).toBeNull();
                     });
 
-                    it("should layout with hidden label and side error", function() {
+                    it("should layout with hidden label and side error", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true,
@@ -1213,7 +1213,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
                     });
 
-                    it("should layout with hidden label and hidden side error", function() {
+                    it("should layout with hidden label and hidden side error", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true,
@@ -1257,7 +1257,7 @@ describe("Ext.form.field.TextArea", function() {
                         });
                     });
 
-                    it("should layout with hidden label and under error", function() {
+                    it("should layout with hidden label and under error", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true,

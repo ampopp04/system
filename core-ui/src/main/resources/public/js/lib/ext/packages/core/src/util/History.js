@@ -40,7 +40,7 @@ Ext.define('Ext.util.History', {
      * @param {String} token An identifier associated with the page state at that point in its history.
      */
 
-    constructor: function() {
+    constructor: function () {
         var me = this;
 
         me.hiddenField = null;
@@ -56,7 +56,7 @@ Ext.define('Ext.util.History', {
      * @return {String} The hash from the window object.
      * @private
      */
-    getHash: function() {
+    getHash: function () {
         return this.win.location.hash.substr(1);
     },
 
@@ -67,7 +67,7 @@ Ext.define('Ext.util.History', {
      * @param {String} hash The hash to use
      * @private
      */
-    setHash: function(hash) {
+    setHash: function (hash) {
         try {
             this.win.location.hash = hash;
             this.currentToken = hash;
@@ -82,7 +82,7 @@ Ext.define('Ext.util.History', {
      * @param {String} token The token that was changed to
      * @private
      */
-    handleStateChange: function(token) {
+    handleStateChange: function (token) {
         this.currentToken = token;
         this.fireEvent('change', token);
     },
@@ -92,7 +92,7 @@ Ext.define('Ext.util.History', {
      * This will setup the {@link Ext.TaskManager} to poll for hash changes every 50ms.
      * @private
      */
-    startUp: function() {
+    startUp: function () {
         var me = this;
 
         me.currentToken = me.getHash();
@@ -128,7 +128,7 @@ Ext.define('Ext.util.History', {
      * @param {Object} [scope] The scope (`this` reference) in which the callback is executed.
      * Defaults to the browser window.
      */
-    init: function(onReady, scope) {
+    init: function (onReady, scope) {
         var me = this;
 
         if (me.ready) {
@@ -137,7 +137,7 @@ Ext.define('Ext.util.History', {
         }
 
         if (!Ext.isReady) {
-            Ext.onInternalReady(function() {
+            Ext.onInternalReady(function () {
                 me.init(onReady, scope);
             });
             return;
@@ -167,7 +167,7 @@ Ext.define('Ext.util.History', {
      * it will not save a new history step. Set to false if the same state can be saved more than once
      * at the same history stack location.
      */
-    add: function(token, preventDuplicates) {
+    add: function (token, preventDuplicates) {
         var me = this,
             set = false;
 
@@ -182,7 +182,7 @@ Ext.define('Ext.util.History', {
     /**
      * Programmatically steps back one step in browser history (equivalent to the user pressing the Back button).
      */
-    back: function() {
+    back: function () {
         var win = this.useTopWindow ? window.top : window;
         win.history.go(-1);
     },
@@ -190,7 +190,7 @@ Ext.define('Ext.util.History', {
     /**
      * Programmatically steps forward one step in browser history (equivalent to the user pressing the Forward button).
      */
-    forward: function(){
+    forward: function () {
         var win = this.useTopWindow ? window.top : window;
         win.history.go(1);
     },
@@ -199,7 +199,7 @@ Ext.define('Ext.util.History', {
      * Retrieves the currently-active history token.
      * @return {String} The token
      */
-    getToken: function() {
+    getToken: function () {
         return this.ready ? this.currentToken : this.getHash();
     }
 });

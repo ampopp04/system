@@ -2,12 +2,14 @@
  * Utility class for manipulating CSS rules
  * @singleton
  */
-Ext.define('Ext.util.CSS', function() {
+Ext.define('Ext.util.CSS', function () {
     var CSS,
         rules = null,
         doc = document,
         camelRe = /(-[a-z])/gi,
-        camelFn = function(m, a){ return a.charAt(1).toUpperCase(); };
+        camelFn = function (m, a) {
+            return a.charAt(1).toUpperCase();
+        };
 
     return {
 
@@ -20,7 +22,7 @@ Ext.define('Ext.util.CSS', function() {
         /**
          * @private
          */
-        constructor: function() {
+        constructor: function () {
             // Cache a reference to the singleton
             CSS = this;
         },
@@ -40,7 +42,7 @@ Ext.define('Ext.util.CSS', function() {
             styleEl.setAttribute('type', 'text/css');
 
             if (id) {
-               styleEl.setAttribute('id', id);
+                styleEl.setAttribute('id', id);
             }
 
             // Feature detect old IE
@@ -62,7 +64,7 @@ Ext.define('Ext.util.CSS', function() {
          * Removes a style or link tag by id
          * @param {String} id The id of the tag
          */
-        removeStyleSheet : function(id) {
+        removeStyleSheet: function (id) {
             var existing = doc.getElementById(id);
             if (existing) {
                 existing.parentNode.removeChild(existing);
@@ -74,7 +76,7 @@ Ext.define('Ext.util.CSS', function() {
          * @param {String} id The id of an existing link tag to remove
          * @param {String} url The href of the new stylesheet to include
          */
-        swapStyleSheet : function(id, url) {
+        swapStyleSheet: function (id, url) {
             var ss;
             CSS.removeStyleSheet(id);
             ss = doc.createElement("link");
@@ -88,7 +90,7 @@ Ext.define('Ext.util.CSS', function() {
         /**
          * @private
          */
-        cacheStyleSheet : function(ss) {
+        cacheStyleSheet: function (ss) {
             if (!rules) {
                 rules = CSS.rules = {};
             }
@@ -98,7 +100,7 @@ Ext.define('Ext.util.CSS', function() {
                     imports = ss.imports,
                     len = imports ? imports.length : 0,
                     rule, j;
-                    
+
                 // Old IE has a different way of handling imports
                 for (j = 0; j < len; ++j) {
                     CSS.cacheStyleSheet(imports[j]);
@@ -112,10 +114,11 @@ Ext.define('Ext.util.CSS', function() {
                     }
                     CSS.cacheRule(rule, ss);
                 }
-            } catch(e) {}
+            } catch (e) {
+            }
         },
 
-        cacheRule: function(cssRule, styleSheet) {
+        cacheRule: function (cssRule, styleSheet) {
             // If it's an @import rule, import its stylesheet
             if (cssRule.styleSheet) {
                 return CSS.cacheStyleSheet(cssRule.styleSheet);
@@ -145,7 +148,7 @@ Ext.define('Ext.util.CSS', function() {
          * @param {Boolean} refreshCache true to refresh the internal cache
          * @return {Object} An object (hash) of rules indexed by selector
          */
-        getRules : function(refreshCache) {
+        getRules: function (refreshCache) {
             var result = {},
                 selector;
 
@@ -157,12 +160,12 @@ Ext.define('Ext.util.CSS', function() {
             }
             return result;
         },
-        
+
         /**
          * Refresh the rule cache if you have dynamically added stylesheets
          * @return {Object} An object (hash) of rules indexed by selector
          */
-        refreshCache: function() {
+        refreshCache: function () {
             var ds = doc.styleSheets,
                 i = 0,
                 len = ds.length;
@@ -173,7 +176,8 @@ Ext.define('Ext.util.CSS', function() {
                     if (!ds[i].disabled) {
                         CSS.cacheStyleSheet(ds[i]);
                     }
-                } catch(e) {}
+                } catch (e) {
+                }
             }
         },
 
@@ -183,7 +187,7 @@ Ext.define('Ext.util.CSS', function() {
          * @param {Boolean} refreshCache true to refresh the internal cache if you have recently updated any rules or added styles dynamically
          * @return {CSSStyleRule} The CSS rule or null if one is not found
          */
-        getRule: function(selector, refreshCache, rawCache) {
+        getRule: function (selector, refreshCache, rawCache) {
             var i, result;
 
             if (!rules || refreshCache) {
@@ -211,7 +215,7 @@ Ext.define('Ext.util.CSS', function() {
          * @param {String} property The cssText specification eg `"color:red;font-weight:bold;text-decoration:underline"`
          * @return {CSSStyleRule} The created rule
          */
-        createRule: function(styleSheet, selector, cssText) {
+        createRule: function (styleSheet, selector, cssText) {
             var result,
                 ruleSet = styleSheet.cssRules || styleSheet.rules,
                 index = ruleSet.length;
@@ -219,7 +223,7 @@ Ext.define('Ext.util.CSS', function() {
             if (styleSheet.insertRule) {
                 styleSheet.insertRule(selector + ' {' + cssText + '}', index);
             } else {
-                styleSheet.addRule(selector, cssText||' ');
+                styleSheet.addRule(selector, cssText || ' ');
             }
             CSS.cacheRule(result = ruleSet[index], styleSheet);
             return result;
@@ -232,7 +236,7 @@ Ext.define('Ext.util.CSS', function() {
          * @param {String} value The new value for the property
          * @return {Boolean} true If a rule was found and updated
          */
-        updateRule : function(selector, property, value) {
+        updateRule: function (selector, property, value) {
             var rule, i, styles;
             if (!Ext.isArray(selector)) {
                 rule = CSS.getRule(selector);
@@ -258,7 +262,7 @@ Ext.define('Ext.util.CSS', function() {
             return false;
         },
 
-        deleteRule: function(selector) {
+        deleteRule: function (selector) {
             var rule = CSS.getRule(selector, false, true),
                 styleSheet, index;
 

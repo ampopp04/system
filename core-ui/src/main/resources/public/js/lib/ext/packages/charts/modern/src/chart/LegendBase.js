@@ -27,7 +27,7 @@ Ext.define('Ext.chart.LegendBase', {
     },
 
     //<debug>
-    applyPosition: function(position) {
+    applyPosition: function (position) {
         if (!position) {
             Ext.raise('Legend position must be "top", "right", "bottom" or "left".');
         }
@@ -35,7 +35,7 @@ Ext.define('Ext.chart.LegendBase', {
     },
     //</debug>
 
-    updatePosition: function(position) {
+    updatePosition: function (position) {
         this.setDocked(position);
     },
 

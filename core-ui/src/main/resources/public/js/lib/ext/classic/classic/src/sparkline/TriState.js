@@ -2,7 +2,7 @@
  * @class Ext.sparkline.TriState
  *
  * Plots bars based upon "win"/"draw" or "lose" status of the input {@link #values} array. Positive values mean
- * a win, zero a draw, and negative a lose. 
+ * a win, zero a draw, and negative a lose.
  *
  * See {@link Ext.sparkline.Base the base class} for a simple example.
  */
@@ -20,27 +20,27 @@ Ext.define('Ext.sparkline.TriState', {
          * @cfg {Number} [barWidth=4] The pixel width of each bar.
          */
         barWidth: 4,
-        
+
         /**
          * @cfg {Number} [barSpacing=1] The pixel spacing between each bar.
          */
         barSpacing: 1,
-        
+
         /**
          * @cfg {String} [posBarColor=#6f6] The color for positive value bars.
          */
         posBarColor: '#6f6',
-        
+
         /**
          * @cfg {String} [negBarColor=#f44] The color for negative value bars.
          */
         negBarColor: '#f44',
-        
+
         /**
          * @cfg {String} [zeroBarColor=#999] The color for zero value bars.
          */
         zeroBarColor: '#999',
-        
+
         /**
          * @cfg {Object} [colorMap] An object that uses range specifiers as keys to
          * indicate bar color values for a range of values. A range specifier is
@@ -59,9 +59,9 @@ Ext.define('Ext.sparkline.TriState', {
          *     }
          */
         colorMap: {},
-        
+
         tipTpl: new Ext.XTemplate('&#9679; {value:this.states}', {
-            states: function(v) {
+            states: function (v) {
                 var value = Number(v);
                 if (value === -1) {
                     return 'Loss';
@@ -77,7 +77,7 @@ Ext.define('Ext.sparkline.TriState', {
         })
     },
 
-    applyColorMap: function(colorMap) {
+    applyColorMap: function (colorMap) {
         var me = this;
 
         if (Ext.isArray(colorMap)) {
@@ -94,17 +94,17 @@ Ext.define('Ext.sparkline.TriState', {
     },
 
     // Ensure values is an array of numbers
-    applyValues: function(newValues) {
+    applyValues: function (newValues) {
         newValues = Ext.Array.map(Ext.Array.from(newValues), Number);
         this.disabled = !(newValues && newValues.length);
         return newValues;
     },
 
-    onUpdate: function() {
+    onUpdate: function () {
         this.totalBarWidth = this.getBarWidth() + this.getBarSpacing();
     },
 
-    getBarWidth: function() {
+    getBarWidth: function () {
         var values = this.values;
 
         return this._barWidth || (this.getWidth() - (values.length - 1) * this.getBarSpacing()) / values.length;

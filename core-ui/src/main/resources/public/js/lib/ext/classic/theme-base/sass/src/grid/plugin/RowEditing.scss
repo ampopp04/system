@@ -1,15 +1,15 @@
 .#{$prefix}grid-row-editor-wrap {
-    position: absolute;
-    overflow: visible;
-    // Floting editor's z-index must be higher than z-index of focused grid-cell-inner
-    z-index: 2;
+  position: absolute;
+  overflow: visible;
+  // Floting editor's z-index must be higher than z-index of focused grid-cell-inner
+  z-index: 2;
 }
 
 .#{$prefix}grid-row-editor {
-    position: absolute;
+  position: absolute;
 }
 
 .#{$prefix}grid-row-editor-buttons {
-    position: absolute;
-    white-space: nowrap;
+  position: absolute;
+  white-space: nowrap;
 }

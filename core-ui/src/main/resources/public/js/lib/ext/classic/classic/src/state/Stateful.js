@@ -129,7 +129,7 @@ Ext.define('Ext.state.Stateful', {
      * has a null implementation.
      */
 
-    constructor: function() {
+    constructor: function () {
         var me = this;
 
         if (!me.stateEvents) {
@@ -155,11 +155,11 @@ Ext.define('Ext.state.Stateful', {
             eventArray;
 
         if (me.stateful && me.getStateId()) {
-            eventArray =  (typeof events === 'string') ? arguments : events;
+            eventArray = (typeof events === 'string') ? arguments : events;
 
             stateEventsByName = me.stateEventsByName || (me.stateEventsByName = {});
 
-            for (i = eventArray.length; i--; ) {
+            for (i = eventArray.length; i--;) {
                 event = eventArray[i];
 
                 if (event && !stateEventsByName[event]) {
@@ -174,7 +174,7 @@ Ext.define('Ext.state.Stateful', {
      * This method is called when any of the {@link #stateEvents} are fired.
      * @private
      */
-    onStateChange: function(){
+    onStateChange: function () {
         var me = this,
             delay = me.saveDelay,
             statics, runner;
@@ -206,7 +206,7 @@ Ext.define('Ext.state.Stateful', {
     /**
      * Saves the state of the object to the persistence store.
      */
-    saveState: function() {
+    saveState: function () {
         var me = this,
             id = me.stateful && me.getStateId(),
             hasListeners = me.hasListeners,
@@ -247,7 +247,7 @@ Ext.define('Ext.state.Stateful', {
      * it should be overridden in subclasses to implement methods for getting the state.
      * @return {Object} The current state
      */
-    getState: function(){
+    getState: function () {
         return null;
     },
 
@@ -257,7 +257,7 @@ Ext.define('Ext.state.Stateful', {
      * the current object.
      * @param {Object} state The state
      */
-    applyState: function(state) {
+    applyState: function (state) {
         if (state) {
             Ext.apply(this, state);
         }
@@ -268,7 +268,7 @@ Ext.define('Ext.state.Stateful', {
      * @return {String} The 'stateId' or the implicit 'id' specified by component configuration.
      * @private
      */
-    getStateId: function() {
+    getStateId: function () {
         var me = this;
         return me.stateId || (me.autoGenId ? null : me.id);
     },
@@ -277,7 +277,7 @@ Ext.define('Ext.state.Stateful', {
      * Initializes the state of the object upon construction.
      * @private
      */
-    initState: function(){
+    initState: function () {
         var me = this,
             id = me.stateful && me.getStateId(),
             hasListeners = me.hasListeners,
@@ -368,7 +368,7 @@ Ext.define('Ext.state.Stateful', {
     /**
      * Destroys this stateful object.
      */
-    destroy: function(){
+    destroy: function () {
         var me = this,
             task = me.stateTask;
 

@@ -1,14 +1,14 @@
 SenchaTestRunner.bindings = {
 
-    setCurrentScript : function(script) {
+    setCurrentScript: function (script) {
         jasmine.setCurrentScript(script);
     },
 
-    waitUntilPageIsReady : function(callbackFunction) {
+    waitUntilPageIsReady: function (callbackFunction) {
         var args = arguments;
         if (typeof Ext !== 'undefined') {
             Ext.require('*');
-            Ext.onReady(function() {
+            Ext.onReady(function () {
                 window.__pageIsReady = true;
             });
         } else {
@@ -16,7 +16,7 @@ SenchaTestRunner.bindings = {
         }
     },
 
-    startTestRunner : function(jsonOptions, contextDirectoryMapping) {
+    startTestRunner: function (jsonOptions, contextDirectoryMapping) {
 //        jasmine.contextMapping = JSON.parse(contextDirectoryMapping);
         jasmine.setOptions(jsonOptions);
         jasmine.initDebug();
@@ -24,11 +24,11 @@ SenchaTestRunner.bindings = {
         jasmine.getEnv().execute();
     },
 
-    testsAreRunning : function() {
+    testsAreRunning: function () {
         return SenchaTestRunner.isRunning();
     },
 
-    getTestResultsAsJson : function() {
+    getTestResultsAsJson: function () {
         return JSON.stringify(SenchaTestRunner.results);
     }
 

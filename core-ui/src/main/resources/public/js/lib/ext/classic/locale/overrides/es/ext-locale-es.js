@@ -6,12 +6,12 @@
  * Synchronized with 2.2 version of ext-lang-en.js (provided by Condor 8 aug 2008)
  *     by halkon_polako 14-aug-2008
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return Ext.Date.monthNames[month].substring(0, 3);
         };
 
@@ -30,13 +30,13 @@ Ext.onReady(function() {
             Dic: 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1, 3).toLowerCase()];
         };
 
         Ext.Date.dayNames = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             if (day == 3) return "Mié";
             if (day == 6) return "Sáb";
             return Ext.Date.dayNames[day].substring(0, 3);
@@ -47,11 +47,11 @@ Ext.onReady(function() {
 
         // This will match am or a.m.
         Ext.Date.parseCodes.a = Ext.Date.parseCodes.A = {
-            g:1,
-            c:"if (/(a\\.?m\\.?)/i.test(results[{0}])) {\n"
-                + "if (!h || h == 12) { h = 0; }\n"
-                + "} else { if (!h || h < 12) { h = (h || 0) + 12; }}",
-            s:"(A\\.?M\\.?|P\\.?M\\.?|a\\.?m\\.?|p\\.?m\\.?)",
+            g: 1,
+            c: "if (/(a\\.?m\\.?)/i.test(results[{0}])) {\n"
+            + "if (!h || h == 12) { h = 0; }\n"
+            + "} else { if (!h || h < 12) { h = (h || 0) + 12; }}",
+            s: "(A\\.?M\\.?|P\\.?M\\.?|a\\.?m\\.?|p\\.?m\\.?)",
             calcAtEnd: true
         };
 
@@ -141,9 +141,9 @@ Ext.define("Ext.locale.es.form.field.Number", {
     nanText: "{0} no es un número válido"
 });
 
-Ext.define("Ext.locale.es.form.field.File", { 
-    override: "Ext.form.field.File", 
-    buttonText: "Examinar..." 
+Ext.define("Ext.locale.es.form.field.File", {
+    override: "Ext.form.field.File",
+    buttonText: "Examinar..."
 });
 
 Ext.define("Ext.locale.es.form.field.Date", {
@@ -160,7 +160,7 @@ Ext.define("Ext.locale.es.form.field.Date", {
 Ext.define("Ext.locale.es.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Cargando..."
     });
@@ -177,7 +177,7 @@ Ext.define("Ext.locale.es.form.field.VTypes", {
 Ext.define("Ext.locale.es.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: "Por favor proporcione la URL para el enlace:"
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -301,10 +301,10 @@ Ext.define("Ext.locale.es.window.MessageBox", {
         cancel: "Cancelar",
         yes: "Sí",
         no: "No"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.es.Component", {	
+Ext.define("Ext.locale.es.Component", {
     override: "Ext.Component"
 });

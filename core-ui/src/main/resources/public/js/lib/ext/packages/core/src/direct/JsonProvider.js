@@ -7,7 +7,7 @@
 
 Ext.define('Ext.direct.JsonProvider', {
     extend: 'Ext.direct.Provider',
-    alias:  'direct.jsonprovider',
+    alias: 'direct.jsonprovider',
 
     uses: [
         'Ext.direct.ExceptionEvent',
@@ -15,16 +15,16 @@ Ext.define('Ext.direct.JsonProvider', {
     ],
 
     /**
-    * Parse the JSON response
-    * @private
-    *
-    * @param {Object} response The XHR response object
-    *
-    * @return {Object} The data in the response.
-    */
-    parseResponse: function(response) {
+     * Parse the JSON response
+     * @private
+     *
+     * @param {Object} response The XHR response object
+     *
+     * @return {Object} The data in the response.
+     */
+    parseResponse: function (response) {
         var text = response && response.responseText;
-        
+
         if (text) {
             if (Ext.isObject(text) || Ext.isArray(text)) {
                 return text;
@@ -43,7 +43,7 @@ Ext.define('Ext.direct.JsonProvider', {
      *
      * @return {Ext.direct.Event[]} An array of Ext.direct.Event
      */
-    createEvents: function(response) {
+    createEvents: function (response) {
         var me = this,
             data = null,
             events = [],
@@ -82,15 +82,15 @@ Ext.define('Ext.direct.JsonProvider', {
      *
      * @return {Ext.direct.Event} The event
      */
-    createEvent: function(response) {
-        if (typeof response !== 'object'|| !('type' in response)) {
+    createEvent: function (response) {
+        if (typeof response !== 'object' || !('type' in response)) {
             return new Ext.direct.ExceptionEvent({
                 data: response,
                 code: Ext.direct.Manager.exceptions.DATA,
                 message: 'Invalid data: event type is not specified'
             });
         }
-    
+
         return Ext.create('direct.' + response.type, response);
     }
 });

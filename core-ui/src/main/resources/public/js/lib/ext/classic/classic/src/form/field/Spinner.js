@@ -119,7 +119,7 @@ Ext.define('Ext.form.field.Spinner', {
      * {@link #keyNavEnabled} is true. Must be implemented by subclasses.
      */
     onSpinDown: Ext.emptyFn,
-    
+
     ariaRole: 'spinbutton',
 
     /**
@@ -141,7 +141,7 @@ Ext.define('Ext.form.field.Spinner', {
      * @param {Ext.form.field.Spinner} this
      */
 
-    applyTriggers: function(triggers) {
+    applyTriggers: function (triggers) {
         var me = this,
             spinnerTrigger = triggers.spinner;
 
@@ -154,7 +154,7 @@ Ext.define('Ext.form.field.Spinner', {
     /**
      * @private
      */
-    onRender: function() {
+    onRender: function () {
         var me = this,
             spinnerTrigger = me.getTrigger('spinner');
 
@@ -184,7 +184,7 @@ Ext.define('Ext.form.field.Spinner', {
      * @private
      * Handles the spinner up button clicks.
      */
-    onSpinnerUpClick: function() {
+    onSpinnerUpClick: function () {
         this.spinUp();
     },
 
@@ -192,7 +192,7 @@ Ext.define('Ext.form.field.Spinner', {
      * @private
      * Handles the spinner down button clicks.
      */
-    onSpinnerDownClick: function() {
+    onSpinnerDownClick: function () {
         this.spinDown();
     },
 
@@ -201,7 +201,7 @@ Ext.define('Ext.form.field.Spinner', {
      * {@link #onSpinUp} method. Does nothing if the field is {@link #disabled} or if {@link #spinUpEnabled}
      * is false.
      */
-    spinUp: function() {
+    spinUp: function () {
         var me = this;
         if (me.spinUpEnabled && !me.disabled) {
             me.fireEvent('spin', me, 'up');
@@ -215,7 +215,7 @@ Ext.define('Ext.form.field.Spinner', {
      * {@link #onSpinDown} method. Does nothing if the field is {@link #disabled} or if {@link #spinDownEnabled}
      * is false.
      */
-    spinDown: function() {
+    spinDown: function () {
         var me = this;
         if (me.spinDownEnabled && !me.disabled) {
             me.fireEvent('spin', me, 'down');
@@ -228,7 +228,7 @@ Ext.define('Ext.form.field.Spinner', {
      * Sets whether the spinner up button is enabled.
      * @param {Boolean} enabled true to enable the button, false to disable it.
      */
-    setSpinUpEnabled: function(enabled) {
+    setSpinUpEnabled: function (enabled) {
         var me = this,
             wasEnabled = me.spinUpEnabled;
         me.spinUpEnabled = enabled;
@@ -241,7 +241,7 @@ Ext.define('Ext.form.field.Spinner', {
      * Sets whether the spinner down button is enabled.
      * @param {Boolean} enabled true to enable the button, false to disable it.
      */
-    setSpinDownEnabled: function(enabled) {
+    setSpinDownEnabled: function (enabled) {
         var me = this,
             wasEnabled = me.spinDownEnabled;
         me.spinDownEnabled = enabled;
@@ -254,7 +254,7 @@ Ext.define('Ext.form.field.Spinner', {
      * @private
      * Handles mousewheel events on the field
      */
-    onMouseWheel: function(e) {
+    onMouseWheel: function (e) {
         var me = this,
             delta;
         if (me.hasFocus) {
@@ -268,7 +268,7 @@ Ext.define('Ext.form.field.Spinner', {
         }
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         Ext.destroyMembers(this, 'spinnerKeyNav');
         this.callParent();
     }

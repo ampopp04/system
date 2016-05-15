@@ -5,7 +5,7 @@ describe('Ext.util.Scheduler', function () {
     var busy, idle;
     var sorts = 0;
 
-    function setup () {
+    function setup() {
         setup = Ext.emptyFn;
 
         Item = Ext.define(null, {
@@ -65,8 +65,8 @@ describe('Ext.util.Scheduler', function () {
         expect(Ext.util.Scheduler.instances.length).toBe(0);
     });
 
-    describe("notify", function() {
-        it("should suspend/resume on notify", function() {
+    describe("notify", function () {
+        it("should suspend/resume on notify", function () {
             var suspend = spyOn(Ext, 'suspendLayouts').andCallThrough(),
                 resume = spyOn(Ext, 'resumeLayouts').andCallThrough();
 

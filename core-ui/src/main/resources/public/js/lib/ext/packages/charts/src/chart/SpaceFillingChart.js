@@ -10,9 +10,7 @@ Ext.define('Ext.chart.SpaceFillingChart', {
     extend: 'Ext.chart.AbstractChart',
     xtype: 'spacefilling',
 
-    config: {
-
-    },
+    config: {},
 
     performLayout: function () {
         var me = this;

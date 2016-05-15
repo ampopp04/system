@@ -1,4 +1,4 @@
-describe("Ext.event.gesture.LongPress", function() {
+describe("Ext.event.gesture.LongPress", function () {
     var helper = Ext.testHelper,
         recognizer = Ext.event.gesture.LongPress.instance,
         originalMinDuration = recognizer.getMinDuration(),
@@ -18,17 +18,17 @@ describe("Ext.event.gesture.LongPress", function() {
         helper.touchEnd(targetEl, cfg);
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         targetEl = Ext.getBody().createChild({});
         recognizer.setMinDuration(minDuration);
         longpressHandler = jasmine.createSpy();
         tapholdHandler = jasmine.createSpy();
 
-        longpressHandler.andCallFake(function(event) {
+        longpressHandler.andCallFake(function (event) {
             longpressEvent = event;
         });
 
-        tapholdHandler.andCallFake(function(event) {
+        tapholdHandler.andCallFake(function (event) {
             tapholdEvent = event;
         });
 
@@ -36,18 +36,18 @@ describe("Ext.event.gesture.LongPress", function() {
         targetEl.on('taphold', tapholdHandler);
     });
 
-    afterEach(function() {
+    afterEach(function () {
         recognizer.setMinDuration(originalMinDuration);
         targetEl.destroy();
     });
 
-    it("should fire longpress and taphold when the hold duration is longer than minDuration", function() {
-        runs(function() {
-            start({ id: 1, x: 10, y: 10 });
+    it("should fire longpress and taphold when the hold duration is longer than minDuration", function () {
+        runs(function () {
+            start({id: 1, x: 10, y: 10});
         });
         waits(minDuration + 30);
-        runs(function() {
-            end({ id: 1, x: 10, y: 10 });
+        runs(function () {
+            end({id: 1, x: 10, y: 10});
             expect(longpressHandler).toHaveBeenCalled();
             expect(longpressEvent.type).toBe('longpress');
             expect(tapholdHandler).toHaveBeenCalled();
@@ -58,41 +58,41 @@ describe("Ext.event.gesture.LongPress", function() {
         });
     });
 
-    it("should not fire longpress and taphold when the hold duration is shorter than minDuration", function() {
-        runs(function() {
-            start({ id: 1, x: 10, y: 10 });
+    it("should not fire longpress and taphold when the hold duration is shorter than minDuration", function () {
+        runs(function () {
+            start({id: 1, x: 10, y: 10});
         });
         waits(minDuration - 30);
-        runs(function() {
-            end({ id: 1, x: 10, y: 10 });
+        runs(function () {
+            end({id: 1, x: 10, y: 10});
             expect(longpressHandler).not.toHaveBeenCalled();
             expect(tapholdHandler).not.toHaveBeenCalled();
         });
         waitsForAnimation();
     });
 
-    it("should not fire longpress and taphold if the amount of movement exceeds moveDistance", function() {
-        runs(function() {
-            start({ id: 1, x: 10, y: 10 });
-            move({ id: 1, x: 10, y: 10 + moveDistance });
+    it("should not fire longpress and taphold if the amount of movement exceeds moveDistance", function () {
+        runs(function () {
+            start({id: 1, x: 10, y: 10});
+            move({id: 1, x: 10, y: 10 + moveDistance});
         });
         waits(minDuration + 30);
-        runs(function() {
-            end({ id: 1, x: 10, y: 10 + moveDistance });
+        runs(function () {
+            end({id: 1, x: 10, y: 10 + moveDistance});
             expect(longpressHandler).not.toHaveBeenCalled();
             expect(tapholdHandler).not.toHaveBeenCalled();
         });
         waitsForAnimation();
     });
 
-    it("should fire longpress and taphold if the amount of movement is within moveDistance", function() {
-        runs(function() {
-            start({ id: 1, x: 10, y: 10 });
-            move({ id: 1, x: 10, y: 9 + moveDistance });
+    it("should fire longpress and taphold if the amount of movement is within moveDistance", function () {
+        runs(function () {
+            start({id: 1, x: 10, y: 10});
+            move({id: 1, x: 10, y: 9 + moveDistance});
         });
         waits(minDuration + 30);
-        runs(function() {
-            end({ id: 1, x: 10, y: 9 + moveDistance });
+        runs(function () {
+            end({id: 1, x: 10, y: 9 + moveDistance});
             expect(longpressHandler).toHaveBeenCalled();
             expect(tapholdHandler).toHaveBeenCalled();
         });
@@ -100,15 +100,15 @@ describe("Ext.event.gesture.LongPress", function() {
     });
 
     if (Ext.supports.Touch) {
-        it("should not fire longpress and taphold if a second touch is initiated", function() {
-            runs(function() {
-                start({ id: 1, x: 10, y: 10 });
-                start({ id: 2, x: 20, y: 20 });
+        it("should not fire longpress and taphold if a second touch is initiated", function () {
+            runs(function () {
+                start({id: 1, x: 10, y: 10});
+                start({id: 2, x: 20, y: 20});
             });
             waits(minDuration + 30);
-            runs(function() {
-                end({ id: 1, x: 10, y: 10 });
-                end({ id: 2, x: 20, y: 20 });
+            runs(function () {
+                end({id: 1, x: 10, y: 10});
+                end({id: 2, x: 20, y: 20});
                 expect(longpressHandler).not.toHaveBeenCalled();
                 expect(tapholdHandler).not.toHaveBeenCalled();
             });

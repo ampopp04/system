@@ -4,7 +4,7 @@
 Ext.define('Ext.data.validator.Exclusion', {
     extend: 'Ext.data.validator.List',
     alias: 'data.validator.exclusion',
-    
+
     type: 'exclusion',
     config: {
         /**
@@ -14,15 +14,15 @@ Ext.define('Ext.data.validator.Exclusion', {
          */
         message: 'Is a value that has been excluded'
     },
-    
+
     //<debug>
-    constructor: function() {
+    constructor: function () {
         this.callParent(arguments);
         if (!this.getList()) {
             Ext.raise('validator.Exclusion requires a list');
-        }    
+        }
     },
     //</debug>
-    
+
     inclusion: false
 });

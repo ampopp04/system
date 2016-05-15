@@ -11,7 +11,7 @@
  */
 Ext.define('Ext.grid.selection.Selection', {
 
-    constructor: function(view) {
+    constructor: function (view) {
         //<debug>
         if (!view || !(view.isTableView || view.isLockingView)) {
             Ext.raise('Selection must be created for a given TableView or LockingView');
@@ -71,9 +71,9 @@ Ext.define('Ext.grid.selection.Selection', {
      * @method eachColumn
      */
 
-     /**
-      * Called when selection is completed.
-      * @method onSelectionFinish
-      * @private
-      */
+    /**
+     * Called when selection is completed.
+     * @method onSelectionFinish
+     * @private
+     */
 });

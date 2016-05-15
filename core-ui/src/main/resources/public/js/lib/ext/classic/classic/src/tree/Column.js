@@ -24,23 +24,23 @@ Ext.define('Ext.tree.Column', {
 
     cellTpl: [
         '<tpl for="lines">',
-            '<div class="{parent.childCls} {parent.elbowCls}-img ',
-            '{parent.elbowCls}-<tpl if=".">line<tpl else>empty</tpl>" role="presentation"></div>',
+        '<div class="{parent.childCls} {parent.elbowCls}-img ',
+        '{parent.elbowCls}-<tpl if=".">line<tpl else>empty</tpl>" role="presentation"></div>',
         '</tpl>',
         '<div class="{childCls} {elbowCls}-img {elbowCls}',
-            '<tpl if="isLast">-end</tpl><tpl if="expandable">-plus {expanderCls}</tpl>" role="presentation"></div>',
+        '<tpl if="isLast">-end</tpl><tpl if="expandable">-plus {expanderCls}</tpl>" role="presentation"></div>',
         '<tpl if="checked !== null">',
-            '<div role="button" {ariaCellCheckboxAttr}',
-                ' class="{childCls} {checkboxCls}<tpl if="checked"> {checkboxCls}-checked</tpl>"></div>',
+        '<div role="button" {ariaCellCheckboxAttr}',
+        ' class="{childCls} {checkboxCls}<tpl if="checked"> {checkboxCls}-checked</tpl>"></div>',
         '</tpl>',
         '<tpl if="icon"><img src="{blankUrl}"<tpl else><div</tpl>',
-            ' role="presentation" class="{childCls} {baseIconCls} {customIconCls} ',
-            '{baseIconCls}-<tpl if="leaf">leaf<tpl else><tpl if="expanded">parent-expanded<tpl else>parent</tpl></tpl> {iconCls}" ',
-            '<tpl if="icon">style="background-image:url({icon})"/><tpl else>></div></tpl>',
+        ' role="presentation" class="{childCls} {baseIconCls} {customIconCls} ',
+        '{baseIconCls}-<tpl if="leaf">leaf<tpl else><tpl if="expanded">parent-expanded<tpl else>parent</tpl></tpl> {iconCls}" ',
+        '<tpl if="icon">style="background-image:url({icon})"/><tpl else>></div></tpl>',
         '<tpl if="href">',
-            '<a href="{href}" role="link" target="{hrefTarget}" class="{textCls} {childCls}">{value}</a>',
+        '<a href="{href}" role="link" target="{hrefTarget}" class="{textCls} {childCls}">{value}</a>',
         '<tpl else>',
-            '<span class="{textCls} {childCls}">{value}</span>',
+        '<span class="{textCls} {childCls}">{value}</span>',
         '</tpl>'
     ],
 
@@ -63,7 +63,7 @@ Ext.define('Ext.tree.Column', {
         cls: 1
     },
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
 
         me.rendererScope = me.scope;
@@ -78,11 +78,11 @@ Ext.define('Ext.tree.Column', {
         me.callParent();
 
         me.scope = me;
-        
+
         me.hasCustomRenderer = me.innerRenderer && me.innerRenderer.length > 1;
     },
 
-    treeRenderer: function(value, metaData, record, rowIdx, colIdx, store, view){
+    treeRenderer: function (value, metaData, record, rowIdx, colIdx, store, view) {
         var me = this,
             cls = record.get('cls'),
             rendererData;
@@ -94,11 +94,11 @@ Ext.define('Ext.tree.Column', {
         }
 
         rendererData = me.initTemplateRendererData(value, metaData, record, rowIdx, colIdx, store, view);
-        
+
         return me.getTpl('cellTpl').apply(rendererData);
     },
-    
-    initTemplateRendererData: function(value, metaData, record, rowIdx, colIdx, store, view) {
+
+    initTemplateRendererData: function (value, metaData, record, rowIdx, colIdx, store, view) {
         var me = this,
             innerRenderer = me.innerRenderer,
             data = record.data,
@@ -106,14 +106,14 @@ Ext.define('Ext.tree.Column', {
             rootVisible = view.rootVisible,
             lines = [],
             parentData;
-        
+
         while (parent && (rootVisible || parent.data.depth > 0)) {
             parentData = parent.data;
             lines[rootVisible ? parentData.depth : parentData.depth - 1] =
-                    parentData.isLast ? 0 : 1;
+                parentData.isLast ? 0 : 1;
             parent = parent.parentNode;
         }
-        
+
         return {
             record: record,
             baseIconCls: me.iconCls,
@@ -143,7 +143,7 @@ Ext.define('Ext.tree.Column', {
         };
     },
 
-    shouldUpdateCell: function(record, changedFieldNames) {
+    shouldUpdateCell: function (record, changedFieldNames) {
         // For the TreeColumn, if any of the known tree column UI affecting fields are updated
         // the cell should be updated in whatever way.
         // 1 if a custom renderer (not our default tree cell renderer), else 2.

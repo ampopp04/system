@@ -4,12 +4,12 @@ Ext.define('Ext.theme.neptune.layout.component.Dock', {
     /**
      * This table contains the border removal classes indexed by the sum of the edges to
      * remove. Each edge is assigned a value:
-     * 
+     *
      *  * `left` = 1
      *  * `bottom` = 2
      *  * `right` = 4
      *  * `top` = 8
-     * 
+     *
      * @private
      */
     noBorderClassTable: [
@@ -42,18 +42,18 @@ Ext.define('Ext.theme.neptune.layout.component.Dock', {
         left: 1
     },
 
-    handleItemBorders: function() {
-        var me     = this,
-            edges  = 0,
-            maskT  = 8,
-            maskR  = 4,
-            maskB  = 2,
-            maskL  = 1,
-            owner  = me.owner,
-            bodyBorder  = owner.bodyBorder,
+    handleItemBorders: function () {
+        var me = this,
+            edges = 0,
+            maskT = 8,
+            maskR = 4,
+            maskB = 2,
+            maskL = 1,
+            owner = me.owner,
+            bodyBorder = owner.bodyBorder,
             ownerBorder = owner.border,
-            collapsed   = me.collapsed,
-            edgeMasks   = me.edgeMasks,
+            collapsed = me.collapsed,
+            edgeMasks = me.edgeMasks,
             noBorderCls = me.noBorderClassTable,
             dockedItemsGen = owner.dockedItems.generation,
             b, borderCls, docked, edgesTouched, i, ln, item, dock, lastValue, mask,
@@ -66,7 +66,7 @@ Ext.define('Ext.theme.neptune.layout.component.Dock', {
         addCls = [];
         removeCls = [];
 
-        borderCls   = me.getBorderCollapseTable();
+        borderCls = me.getBorderCollapseTable();
         noBorderCls = me.getBorderClassTable ? me.getBorderClassTable() : noBorderCls;
 
         me.initializedBorders = dockedItemsGen;

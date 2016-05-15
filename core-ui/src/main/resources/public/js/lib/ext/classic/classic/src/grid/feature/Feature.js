@@ -128,20 +128,20 @@ Ext.define('Ext.grid.feature.Feature', {
      */
     grid: null,
 
-    constructor: function(config) {
+    constructor: function (config) {
         this.initialConfig = config;
         this.callParent(arguments);
     },
 
-    clone: function() {
+    clone: function () {
         return new this.self(this.initialConfig);
     },
 
     /**
-     * Protected method called during {@link Ext.view.Table View} construction.  The 
+     * Protected method called during {@link Ext.view.Table View} construction.  The
      * owning {@link Ext.grid.Panel Grid} is passed as a param.
-     * @param {Ext.grid.Panel} grid The View's owning Grid.  **Note** that in a 
-     * {@link Ext.grid.Panel#cfg-enableLocking locking Grid} the passed grid will be 
+     * @param {Ext.grid.Panel} grid The View's owning Grid.  **Note** that in a
+     * {@link Ext.grid.Panel#cfg-enableLocking locking Grid} the passed grid will be
      * either the normal grid or the locked grid, which is the view's direct owner.
      * @method
      * @protected
@@ -159,7 +159,7 @@ Ext.define('Ext.grid.feature.Feature', {
      * to be passed to fireEvent.
      * @template
      */
-    getFireEventArgs: function(eventName, view, featureTarget, e) {
+    getFireEventArgs: function (eventName, view, featureTarget, e) {
         return [eventName, view, featureTarget, e];
     },
 
@@ -168,14 +168,14 @@ Ext.define('Ext.grid.feature.Feature', {
     /**
      * Enables the feature.
      */
-    enable: function() {
+    enable: function () {
         this.disabled = false;
     },
 
     /**
      * Disables the feature.
      */
-    disable: function() {
+    disable: function () {
         this.disabled = true;
     }
 

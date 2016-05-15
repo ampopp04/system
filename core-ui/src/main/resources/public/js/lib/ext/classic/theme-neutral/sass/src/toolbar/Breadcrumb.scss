@@ -119,152 +119,152 @@
  * @member Ext.toolbar.Breadcrumb
  */
 @mixin extjs-breadcrumb-ui(
-    $ui: null,
-    $ui-button-ui: $breadcrumb-button-ui,
-    $ui-button-spacing: $breadcrumb-button-spacing,
-    $ui-arrow-width: $breadcrumb-arrow-width,
-    $ui-split-width: $breadcrumb-split-width,
-    $ui-include-menu-active-arrow: $breadcrumb-include-menu-active-arrow,
-    $ui-include-split-over-arrow: $breadcrumb-include-split-over-arrow,
-    $ui-folder-icon: $breadcrumb-folder-icon,
-    $ui-folder-open-icon: $breadcrumb-folder-open-icon,
-    $ui-leaf-icon: $breadcrumb-leaf-icon,
-    $ui-folder-glyph: $breadcrumb-folder-glyph,
-    $ui-folder-glyph-color: $breadcrumb-folder-glyph-color,
-    $ui-folder-open-glyph: $breadcrumb-folder-open-glyph,
-    $ui-folder-open-glyph-color: $breadcrumb-folder-open-glyph-color,
-    $ui-leaf-glyph: $breadcrumb-leaf-glyph,
-    $ui-leaf-glyph-color: $breadcrumb-leaf-glyph-color,
-    $ui-arrow-glyph: $breadcrumb-arrow-glyph,
-    $ui-arrow-glyph-color: $breadcrumb-arrow-glyph-color,
-    $ui-arrow-expanded-glyph: $breadcrumb-arrow-expanded-glyph,
-    $ui-arrow-expanded-glyph-color: $breadcrumb-arrow-expanded-glyph-color,
-    $ui-scroller-width: $breadcrumb-scroller-width,
-    $ui-scroller-height: $breadcrumb-scroller-height,
-    $ui-scroller-border-color: $breadcrumb-scroller-border-color,
-    $ui-scroller-border-width: $breadcrumb-scroller-border-width,
-    $ui-scroller-cursor: $breadcrumb-scroller-cursor,
-    $ui-scroller-cursor-disabled: $breadcrumb-scroller-cursor-disabled,
-    $ui-scroller-top-margin: $breadcrumb-scroller-top-margin,
-    $ui-scroller-right-margin: $breadcrumb-scroller-right-margin,
-    $ui-scroller-bottom-margin: $breadcrumb-scroller-bottom-margin,
-    $ui-scroller-left-margin: $breadcrumb-scroller-left-margin,
-    $ui-scroller-opacity: $breadcrumb-scroller-opacity,
-    $ui-scroller-opacity-over: $breadcrumb-scroller-opacity-over,
-    $ui-scroller-opacity-pressed: $breadcrumb-scroller-opacity-pressed,
-    $ui-scroller-opacity-disabled: $breadcrumb-scroller-opacity-disabled,
-    $ui-classic-scrollers: $breadcrumb-classic-scrollers
+  $ui: null,
+  $ui-button-ui: $breadcrumb-button-ui,
+  $ui-button-spacing: $breadcrumb-button-spacing,
+  $ui-arrow-width: $breadcrumb-arrow-width,
+  $ui-split-width: $breadcrumb-split-width,
+  $ui-include-menu-active-arrow: $breadcrumb-include-menu-active-arrow,
+  $ui-include-split-over-arrow: $breadcrumb-include-split-over-arrow,
+  $ui-folder-icon: $breadcrumb-folder-icon,
+  $ui-folder-open-icon: $breadcrumb-folder-open-icon,
+  $ui-leaf-icon: $breadcrumb-leaf-icon,
+  $ui-folder-glyph: $breadcrumb-folder-glyph,
+  $ui-folder-glyph-color: $breadcrumb-folder-glyph-color,
+  $ui-folder-open-glyph: $breadcrumb-folder-open-glyph,
+  $ui-folder-open-glyph-color: $breadcrumb-folder-open-glyph-color,
+  $ui-leaf-glyph: $breadcrumb-leaf-glyph,
+  $ui-leaf-glyph-color: $breadcrumb-leaf-glyph-color,
+  $ui-arrow-glyph: $breadcrumb-arrow-glyph,
+  $ui-arrow-glyph-color: $breadcrumb-arrow-glyph-color,
+  $ui-arrow-expanded-glyph: $breadcrumb-arrow-expanded-glyph,
+  $ui-arrow-expanded-glyph-color: $breadcrumb-arrow-expanded-glyph-color,
+  $ui-scroller-width: $breadcrumb-scroller-width,
+  $ui-scroller-height: $breadcrumb-scroller-height,
+  $ui-scroller-border-color: $breadcrumb-scroller-border-color,
+  $ui-scroller-border-width: $breadcrumb-scroller-border-width,
+  $ui-scroller-cursor: $breadcrumb-scroller-cursor,
+  $ui-scroller-cursor-disabled: $breadcrumb-scroller-cursor-disabled,
+  $ui-scroller-top-margin: $breadcrumb-scroller-top-margin,
+  $ui-scroller-right-margin: $breadcrumb-scroller-right-margin,
+  $ui-scroller-bottom-margin: $breadcrumb-scroller-bottom-margin,
+  $ui-scroller-left-margin: $breadcrumb-scroller-left-margin,
+  $ui-scroller-opacity: $breadcrumb-scroller-opacity,
+  $ui-scroller-opacity-over: $breadcrumb-scroller-opacity-over,
+  $ui-scroller-opacity-pressed: $breadcrumb-scroller-opacity-pressed,
+  $ui-scroller-opacity-disabled: $breadcrumb-scroller-opacity-disabled,
+  $ui-classic-scrollers: $breadcrumb-classic-scrollers
 ) {
-    .#{$prefix}breadcrumb-btn-#{$ui} {
-        margin: 0 0 0 $ui-button-spacing;
+  .#{$prefix}breadcrumb-btn-#{$ui} {
+    margin: 0 0 0 $ui-button-spacing;
+  }
+
+  .#{$prefix}breadcrumb-icon-folder-#{$ui} {
+    @if $enable-font-icons and ($ui-folder-glyph != null) {
+      @include font-icon($ui-folder-glyph);
+      color: $ui-folder-glyph-color;
+    } @else {
+      background-image: theme-background-image($ui-folder-icon);
     }
 
-    .#{$prefix}breadcrumb-icon-folder-#{$ui} {
-        @if $enable-font-icons and ($ui-folder-glyph != null) {
-            @include font-icon($ui-folder-glyph);
-            color: $ui-folder-glyph-color;
+    .#{$prefix}btn-menu-active & {
+      @if $enable-font-icons and ($ui-folder-open-glyph != null) {
+        @include font-icon($ui-folder-open-glyph);
+        color: $ui-folder-open-glyph-color;
+      } @else {
+        background-image: theme-background-image($ui-folder-open-icon);
+      }
+    }
+  }
+
+  .#{$prefix}breadcrumb-icon-leaf-#{$ui} {
+    @if $enable-font-icons and ($ui-leaf-glyph != null) {
+      @include font-icon($ui-leaf-glyph);
+      color: $ui-leaf-glyph-color;
+    } @else {
+      background-image: theme-background-image($ui-leaf-icon);
+    }
+  }
+
+  .#{$prefix}btn-wrap-#{$ui-button-ui}-small.#{$prefix}btn-arrow:after {
+    .#{$prefix}breadcrumb-btn > & {
+      width: $ui-arrow-width;
+      background-image: theme-background-image('breadcrumb/#{$ui}-arrow');
+    }
+
+    @if $include-rtl {
+      .#{$prefix}rtl.#{$prefix}breadcrumb-btn > & {
+        background-image: theme-background-image('breadcrumb/#{$ui}-arrow-rtl');
+      }
+    }
+
+    @if $ui-include-menu-active-arrow {
+      .#{$prefix}btn-menu-active.#{$prefix}breadcrumb-btn > & {
+        background-image: theme-background-image('breadcrumb/#{$ui}-arrow-open');
+      }
+
+      @if $include-rtl {
+        .#{$prefix}rtl.#{$prefix}btn-menu-active.#{$prefix}breadcrumb-btn > & {
+          background-image: theme-background-image('breadcrumb/#{$ui}-arrow-open-rtl');
+        }
+      }
+    }
+  }
+
+  .#{$prefix}btn-wrap-#{$ui-button-ui}-small.#{$prefix}btn-split:after {
+    .#{$prefix}breadcrumb-btn > & {
+      width: $ui-split-width;
+
+      @if $enable-font-icons and ($ui-arrow-glyph !=  null) {
+        @include font-icon($ui-arrow-glyph, $pseudo: false);
+        color: $ui-arrow-glyph-color;
+        // !important needed to override base button styles which are far more specific
+        background: none !important;
+      } @else {
+        background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow');
+      }
+    }
+
+    @if $include-rtl and ((not $enable-font-icons) or ($ui-arrow-glyph == null)) {
+      .#{$prefix}rtl.#{$prefix}breadcrumb-btn > & {
+        background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow-rtl');
+      }
+    }
+
+    @if $ui-include-split-over-arrow and ((not $enable-font-icons) or ($ui-arrow-glyph == null)) {
+      .#{$prefix}btn-over.#{$prefix}breadcrumb-btn > & {
+        background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow-over');
+      }
+
+      @if $include-rtl {
+        .#{$prefix}rtl.#{$prefix}btn-over.#{$prefix}breadcrumb-btn > & {
+          background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow-over-rtl');
+        }
+      }
+    }
+
+    @if $ui-include-menu-active-arrow {
+      .#{$prefix}btn-menu-active.#{$prefix}breadcrumb-btn > & {
+        @if $enable-font-icons and ($ui-arrow-expanded-glyph !=  null) {
+          @include font-icon($ui-arrow-expanded-glyph, $pseudo: false);
+          color: $ui-arrow-expanded-glyph-color;
+          // !important needed to override base button styles which are far more specific
+          background: none !important;
         } @else {
-            background-image: theme-background-image($ui-folder-icon);
+          background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow-open');
         }
+      }
 
-        .#{$prefix}btn-menu-active & {
-            @if $enable-font-icons and ($ui-folder-open-glyph != null) {
-                @include font-icon($ui-folder-open-glyph);
-                color: $ui-folder-open-glyph-color;
-            } @else {
-                background-image: theme-background-image($ui-folder-open-icon);
-            }
+      @if $include-rtl and ((not $enable-font-icons) or ($ui-arrow-glyph == null)) {
+        .#{$prefix}rtl.#{$prefix}btn-menu-active.#{$prefix}breadcrumb-btn > & {
+          background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow-open-rtl');
         }
+      }
     }
+  }
 
-    .#{$prefix}breadcrumb-icon-leaf-#{$ui} {
-        @if $enable-font-icons and ($ui-leaf-glyph != null) {
-            @include font-icon($ui-leaf-glyph);
-            color: $ui-leaf-glyph-color;
-        } @else {
-            background-image: theme-background-image($ui-leaf-icon);
-        }
-    }
-
-    .#{$prefix}btn-wrap-#{$ui-button-ui}-small.#{$prefix}btn-arrow:after {
-        .#{$prefix}breadcrumb-btn > & {
-            width: $ui-arrow-width;
-            background-image: theme-background-image('breadcrumb/#{$ui}-arrow');
-        }
-
-        @if $include-rtl {
-            .#{$prefix}rtl.#{$prefix}breadcrumb-btn > & {
-                background-image: theme-background-image('breadcrumb/#{$ui}-arrow-rtl');
-            }
-        }
-
-        @if $ui-include-menu-active-arrow {
-            .#{$prefix}btn-menu-active.#{$prefix}breadcrumb-btn > & {
-                background-image: theme-background-image('breadcrumb/#{$ui}-arrow-open');
-            }
-
-            @if $include-rtl {
-                .#{$prefix}rtl.#{$prefix}btn-menu-active.#{$prefix}breadcrumb-btn > & {
-                    background-image: theme-background-image('breadcrumb/#{$ui}-arrow-open-rtl');
-                }
-            }
-        }
-    }
-
-    .#{$prefix}btn-wrap-#{$ui-button-ui}-small.#{$prefix}btn-split:after {
-        .#{$prefix}breadcrumb-btn > & {
-            width: $ui-split-width;
-
-            @if $enable-font-icons and ($ui-arrow-glyph !=  null) {
-                @include font-icon($ui-arrow-glyph, $pseudo: false);
-                color: $ui-arrow-glyph-color;
-                // !important needed to override base button styles which are far more specific
-                background: none !important;
-            } @else {
-                background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow');
-            }
-        }
-
-        @if $include-rtl and ((not $enable-font-icons) or ($ui-arrow-glyph == null)) {
-            .#{$prefix}rtl.#{$prefix}breadcrumb-btn > & {
-                background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow-rtl');
-            }
-        }
-
-        @if $ui-include-split-over-arrow and ((not $enable-font-icons) or ($ui-arrow-glyph == null)) {
-            .#{$prefix}btn-over.#{$prefix}breadcrumb-btn > & {
-                background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow-over');
-            }
-
-            @if $include-rtl {
-                .#{$prefix}rtl.#{$prefix}btn-over.#{$prefix}breadcrumb-btn > & {
-                    background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow-over-rtl');
-                }
-            }
-        }
-
-        @if $ui-include-menu-active-arrow {
-            .#{$prefix}btn-menu-active.#{$prefix}breadcrumb-btn > & {
-                @if $enable-font-icons and ($ui-arrow-expanded-glyph !=  null) {
-                    @include font-icon($ui-arrow-expanded-glyph, $pseudo: false);
-                    color: $ui-arrow-expanded-glyph-color;
-                    // !important needed to override base button styles which are far more specific
-                    background: none !important;
-                } @else {
-                    background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow-open');
-                }
-            }
-
-            @if $include-rtl and ((not $enable-font-icons) or ($ui-arrow-glyph == null)) {
-                .#{$prefix}rtl.#{$prefix}btn-menu-active.#{$prefix}breadcrumb-btn > & {
-                    background-image: theme-background-image('breadcrumb/#{$ui}-split-arrow-open-rtl');
-                }
-            }
-        }
-    }
-
-    @if $include-ext-layout-container-boxoverflow-scroller {
-        @include extjs-box-scroller-ui(
+  @if $include-ext-layout-container-boxoverflow-scroller {
+    @include extjs-box-scroller-ui(
             $ui: $ui,
             $type: 'breadcrumb',
             $horizontal-width: $ui-scroller-width,
@@ -284,12 +284,12 @@
             $opacity-disabled: $ui-scroller-opacity-disabled,
             $classic: $ui-classic-scrollers,
             $include-vertical: false
-        );
-    }
+    );
+  }
 }
 
 @if $include-breadcrumb-default-ui {
-    @include extjs-breadcrumb-ui(
-        $ui: 'default'
-    );
+  @include extjs-breadcrumb-ui(
+          $ui: 'default'
+  );
 }

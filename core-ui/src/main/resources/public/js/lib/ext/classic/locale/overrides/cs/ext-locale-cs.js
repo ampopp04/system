@@ -3,7 +3,7 @@
  * Translated by Tomáš Korčák (72)
  * 2008/02/08 18:02, Ext-2.0.1
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec"];
@@ -23,7 +23,7 @@ Ext.onReady(function() {
             "Prosinec": "Pro"
         };
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return Ext.Date.shortMonthNames[Ext.Date.monthNames[month]];
         };
 
@@ -42,13 +42,13 @@ Ext.onReady(function() {
             "Prosinec": 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase()];
         };
 
         Ext.Date.dayNames = ["Neděle", "Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota"];
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day].substring(0, 3);
         };
     }
@@ -154,7 +154,7 @@ Ext.define("Ext.locale.cs.form.field.Date", {
 Ext.define("Ext.locale.cs.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Prosím čekejte..."
     });
@@ -171,7 +171,7 @@ Ext.define("Ext.locale.cs.form.field.VTypes", {
 Ext.define("Ext.locale.cs.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Zadejte URL adresu odkazu:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -283,10 +283,10 @@ Ext.define("Ext.locale.cs.window.MessageBox", {
         cancel: "Storno",
         yes: "Ano",
         no: "Ne"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.cs.Component", {	
+Ext.define("Ext.locale.cs.Component", {
     override: "Ext.Component"
 });

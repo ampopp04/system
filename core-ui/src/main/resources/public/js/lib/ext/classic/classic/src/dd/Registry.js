@@ -4,13 +4,13 @@
  */
 Ext.define('Ext.dd.Registry', {
     singleton: true,
-    constructor: function() {
-        this.elements = {}; 
-        this.handles = {}; 
+    constructor: function () {
+        this.elements = {};
+        this.handles = {};
         this.autoIdSeed = 0;
     },
-    
-    getId: function(el, autogen){
+
+    getId: function (el, autogen) {
         if (typeof el === "string") {
             return el;
         }
@@ -21,7 +21,7 @@ Ext.define('Ext.dd.Registry', {
         }
         return id;
     },
-    
+
     /**
      * Registers a drag drop element.
      *
@@ -33,7 +33,7 @@ Ext.define('Ext.dd.Registry', {
      * @param {HTMLElement[]} data.handles Array of DOM nodes that trigger dragging for the element being registered.
      * @param {Boolean} data.isHandle True if the element passed in triggers dragging itself, else false.
      */
-    register : function(el, data){
+    register: function (el, data) {
         data = data || {};
         if (typeof el === "string") {
             el = document.getElementById(el);
@@ -56,13 +56,13 @@ Ext.define('Ext.dd.Registry', {
      * Unregister a drag drop element
      * @param {String/HTMLElement} element The id or DOM node to unregister
      */
-    unregister : function(el){
+    unregister: function (el) {
         var id = this.getId(el, false),
             data = this.elements[id],
             hs, i, len;
-        if(data){
+        if (data) {
             delete this.elements[id];
-            if(data.handles){
+            if (data.handles) {
                 hs = data.handles;
                 for (i = 0, len = hs.length; i < len; i++) {
                     delete this.handles[this.getId(hs[i], false)];
@@ -76,8 +76,8 @@ Ext.define('Ext.dd.Registry', {
      * @param {String/HTMLElement} id The DOM node or id to look up
      * @return {Object} handle The custom handle data
      */
-    getHandle : function(id){
-        if(typeof id !== "string"){ // must be element?
+    getHandle: function (id) {
+        if (typeof id !== "string") { // must be element?
             id = id.id;
         }
         return this.handles[id];
@@ -88,7 +88,7 @@ Ext.define('Ext.dd.Registry', {
      * @param {Event} e The event
      * @return {Object} handle The custom handle data
      */
-    getHandleFromEvent : function(e){
+    getHandleFromEvent: function (e) {
         var t = e.getTarget();
         return t ? this.handles[t.id] : null;
     },
@@ -98,7 +98,7 @@ Ext.define('Ext.dd.Registry', {
      * @param {String/HTMLElement} id The DOM node or id to look up
      * @return {Object} data The custom data
      */
-    getTarget : function(id){
+    getTarget: function (id) {
         if (typeof id !== "string") { // must be element?
             id = id.id;
         }
@@ -110,7 +110,7 @@ Ext.define('Ext.dd.Registry', {
      * @param {Event} e The event
      * @return {Object} data The custom data
      */
-    getTargetFromEvent : function(e){
+    getTargetFromEvent: function (e) {
         var t = e.getTarget();
         return t ? this.elements[t.id] || this.handles[t.id] : null;
     }

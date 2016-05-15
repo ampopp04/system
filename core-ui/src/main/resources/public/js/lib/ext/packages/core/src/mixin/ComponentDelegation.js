@@ -13,10 +13,10 @@ Ext.define('Ext.mixin.ComponentDelegation', {
         /**
          * @private
          * Adds a listeners with the "delegate" event option.  Users should not invoke this
-         * method directly.  Use the "delegate" event option of 
+         * method directly.  Use the "delegate" event option of
          * {@link Ext.util.Observable#addListener addListener} instead.
          */
-        addDelegatedListener: function(eventName, fn, scope, options, order, caller, manager) {
+        addDelegatedListener: function (eventName, fn, scope, options, order, caller, manager) {
             var me = this,
                 delegatedEvents, event, priority;
 
@@ -39,7 +39,7 @@ Ext.define('Ext.mixin.ComponentDelegation', {
             //<debug>
             if (options.target) {
                 Ext.raise("Cannot add '" + eventName + "' listener to component: '"
-                + me.id + "' - 'delegate' and 'target' event options are incompatible.");
+                    + me.id + "' - 'delegate' and 'target' event options are incompatible.");
             }
             //</debug>
 
@@ -48,7 +48,7 @@ Ext.define('Ext.mixin.ComponentDelegation', {
             // for the given event name.
             delegatedEvents = me.$delegatedEvents || (me.$delegatedEvents = {});
             event = delegatedEvents[eventName] ||
-                    (delegatedEvents[eventName] = new Ext.util.Event(me, eventName));
+                (delegatedEvents[eventName] = new Ext.util.Event(me, eventName));
 
             if (event.addListener(fn, scope, options, caller, manager)) {
                 me.$hasDelegatedListeners._incr_(eventName);
@@ -59,10 +59,10 @@ Ext.define('Ext.mixin.ComponentDelegation', {
          * @private
          * Clears all listeners that were attached using the "delegate" event option.
          * Users should not invoke this method directly.  It is called automatically as
-         * part of normal {@link Ext.util.Observable#clearListeners clearListeners} 
+         * part of normal {@link Ext.util.Observable#clearListeners clearListeners}
          * processing.
          */
-        clearDelegatedListeners: function() {
+        clearDelegatedListeners: function () {
             var me = this,
                 delegatedEvents = me.$delegatedEvents,
                 eventName, event, listenerCount;
@@ -82,10 +82,10 @@ Ext.define('Ext.mixin.ComponentDelegation', {
          * @private
          * Fires a delegated event.  Users should not invoke this method directly.  It
          * is called automatically by the framework as needed (see the "delegate" event
-         * option of {@link Ext.util.Observable#addListener addListener} for more 
+         * option of {@link Ext.util.Observable#addListener addListener} for more
          * details.
          */
-        doFireDelegatedEvent: function(eventName, args) {
+        doFireDelegatedEvent: function (eventName, args) {
             var me = this,
                 ret = true,
                 owner, delegatedEvents, event;
@@ -101,7 +101,7 @@ Ext.define('Ext.mixin.ComponentDelegation', {
 
                 while (owner) {
                     delegatedEvents = owner.$delegatedEvents;
-                    if (delegatedEvents ) {
+                    if (delegatedEvents) {
                         event = delegatedEvents[eventName];
 
                         if (event) {
@@ -126,12 +126,12 @@ Ext.define('Ext.mixin.ComponentDelegation', {
          * Users should not invoke this method directly.  It is called automatically by
          * the framework as part of {@link #removeListener} processing.
          */
-        removeDelegatedListener: function(eventName, fn, scope) {
+        removeDelegatedListener: function (eventName, fn, scope) {
             var me = this,
                 delegatedEvents = me.$delegatedEvents,
                 event;
 
-            if (delegatedEvents ) {
+            if (delegatedEvents) {
                 event = delegatedEvents[eventName];
                 if (event && event.removeListener(fn, scope)) {
                     me.$hasDelegatedListeners._decr_(eventName);
@@ -144,7 +144,7 @@ Ext.define('Ext.mixin.ComponentDelegation', {
         }
     },
 
-    onClassMixedIn: function(T) {
+    onClassMixedIn: function (T) {
         // When a Component listener is attached with the "delegate" option, it means
         // All components anywhere in the hierarchy MUST now fire the event just in case
         // the Component with the delegate listener is an ancestor of the component that
@@ -153,11 +153,13 @@ Ext.define('Ext.mixin.ComponentDelegation', {
         // we chain the class-level hasListeners object of Ext.Component and Ext.Widget
         // to the single $hasDelegatedListeners object (see class-creation callback
         // of this class for more info)
-        function HasListeners() {}
+        function HasListeners() {
+        }
+
         T.prototype.HasListeners = T.HasListeners = HasListeners;
         HasListeners.prototype = T.hasListeners = new Ext.mixin.ComponentDelegation.HasDelegatedListeners();
     }
-}, function(ComponentDelegation) {
+}, function (ComponentDelegation) {
     // Here We set up a HasListeners instance ($hasDelegatedListeners) that will be incremented
     // and decremented any time a Component or Widget adds or removes a listener using the
     // "delegate" event option.  This HasListeners instance is stored on the prototype
@@ -176,10 +178,11 @@ Ext.define('Ext.mixin.ComponentDelegation', {
     // delegated listeners for the given event name for this purpose.  Since Ext.Widgets
     // and Ext.Components can be part of the same hierarchy they must share the same
     // $hasDelegatesListeners instance.
-    function HasDelegatedListeners() {}
+    function HasDelegatedListeners() {
+    }
 
     ComponentDelegation.HasDelegatedListeners = HasDelegatedListeners;
 
     HasDelegatedListeners.prototype = ComponentDelegation.prototype.$hasDelegatedListeners =
-            new Ext.mixin.Observable.HasListeners();
+        new Ext.mixin.Observable.HasListeners();
 });

@@ -50,14 +50,14 @@ Ext.define('Ext.data.ProxyStore', {
         /**
          * @cfg {Object[]/String[]} fields
          * @inheritdoc Ext.data.Model#cfg-fields
-         * 
-         * @localdoc **Note:** In general, this configuration option should only be used 
-         * for simple stores like a two-field store of 
-         * {@link Ext.form.field.ComboBox ComboBox}. For anything more complicated, such 
-         * as specifying a particular id property or associations, a 
-         * {@link Ext.data.Model Model} should be defined and specified for the 
+         *
+         * @localdoc **Note:** In general, this configuration option should only be used
+         * for simple stores like a two-field store of
+         * {@link Ext.form.field.ComboBox ComboBox}. For anything more complicated, such
+         * as specifying a particular id property or associations, a
+         * {@link Ext.data.Model Model} should be defined and specified for the
          * {@link #model} config.
-         * 
+         *
          * @since 2.3.0
          */
         fields: null,
@@ -76,10 +76,10 @@ Ext.define('Ext.data.ProxyStore', {
          * If data is not specified, and if autoLoad is true or an Object, this store's load method is automatically called
          * after creation. If the value of autoLoad is an Object, this Object will be passed to the store's load method.
          *
-         * It's important to note that {@link Ext.data.TreeStore Tree Stores} will  
-         * load regardless of autoLoad's value if expand is set to true on the 
+         * It's important to note that {@link Ext.data.TreeStore Tree Stores} will
+         * load regardless of autoLoad's value if expand is set to true on the
          * {@link Ext.data.TreeStore#root root node}.
-         * 
+         *
          * @since 2.3.0
          */
         autoLoad: undefined,
@@ -98,7 +98,7 @@ Ext.define('Ext.data.ProxyStore', {
          * storage proxies, 'operation' is better for remote proxies, where there is a comparatively high latency.
          */
         batchUpdateMode: 'operation',
-       
+
         /**
          * @cfg {Boolean} sortOnLoad
          * If true, any sorters attached to this Store will be run after loading data, before the datachanged event is fired.
@@ -125,11 +125,11 @@ Ext.define('Ext.data.ProxyStore', {
          * is used. It causes immediate issuing of an Ajax request when {@link #method-load} is called
          * rather than issuing the request at the end of the current event handler run.
          *
-         * What this means is that when using an Ajax proxy, calls to 
-         * {@link #method-load} do not fire the request to the remote resource 
-         * immediately, but schedule a request to be made. This is so that multiple 
-         * requests are not fired when mutating a store's remote filters and sorters (as 
-         * happens during state restoration). The request is made only once after all 
+         * What this means is that when using an Ajax proxy, calls to
+         * {@link #method-load} do not fire the request to the remote resource
+         * immediately, but schedule a request to be made. This is so that multiple
+         * requests are not fired when mutating a store's remote filters and sorters (as
+         * happens during state restoration). The request is made only once after all
          * relevant store state is fully set.
          *
          * @since 6.0.1
@@ -137,18 +137,18 @@ Ext.define('Ext.data.ProxyStore', {
         asynchronousLoad: undefined
     },
 
-    onClassExtended: function(cls, data, hooks) {
+    onClassExtended: function (cls, data, hooks) {
         var model = data.model,
             onBeforeClassCreated;
 
         if (typeof model === 'string') {
             onBeforeClassCreated = hooks.onBeforeCreated;
 
-            hooks.onBeforeCreated = function() {
+            hooks.onBeforeCreated = function () {
                 var me = this,
                     args = arguments;
 
-                Ext.require(model, function() {
+                Ext.require(model, function () {
                     onBeforeClassCreated.apply(me, args);
                 });
             };
@@ -176,7 +176,7 @@ Ext.define('Ext.data.ProxyStore', {
     autoSyncSuspended: 0,
 
     //documented above
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this;
 
         // <debug>
@@ -199,8 +199,8 @@ Ext.define('Ext.data.ProxyStore', {
          * @param {Ext.data.Store} this
          * @param {Ext.data.Model[]} records An array of records
          * @param {Boolean} successful True if the operation was successful.
-         * @param {Ext.data.operation.Read} operation The 
-         * {@link Ext.data.operation.Read Operation} object that was used in the data 
+         * @param {Ext.data.operation.Read} operation The
+         * {@link Ext.data.operation.Read Operation} object that was used in the data
          * load call
          * @since 1.1.0
          */
@@ -266,16 +266,16 @@ Ext.define('Ext.data.ProxyStore', {
         // </debug>
     },
 
-    applyAsynchronousLoad: function(asynchronousLoad) {
-    // Default in an asynchronousLoad setting.
-    // It defaults to false if the proxy is synchronous, and true if the proxy is asynchronous.
+    applyAsynchronousLoad: function (asynchronousLoad) {
+        // Default in an asynchronousLoad setting.
+        // It defaults to false if the proxy is synchronous, and true if the proxy is asynchronous.
         if (asynchronousLoad == null) {
             asynchronousLoad = !this.loadsSynchronously();
         }
         return asynchronousLoad;
     },
 
-    updateAutoLoad: function(autoLoad) {
+    updateAutoLoad: function (autoLoad) {
         // Ensure the data collection is set up
         this.getData();
         if (autoLoad) {
@@ -292,17 +292,17 @@ Ext.define('Ext.data.ProxyStore', {
      * @return {Number} The total number of Model instances available via the Proxy. 0 returned if
      * no value has been set via the reader.
      */
-    getTotalCount: function() {
+    getTotalCount: function () {
         return this.totalCount || 0;
     },
 
-    applyFields: function(fields) {
+    applyFields: function (fields) {
         if (fields) {
             this.createImplicitModel(fields);
         }
     },
 
-    applyModel: function(model) {
+    applyModel: function (model) {
         if (model) {
             model = Ext.data.schema.Schema.lookupEntity(model);
         }
@@ -314,7 +314,7 @@ Ext.define('Ext.data.ProxyStore', {
         return model;
     },
 
-    applyProxy: function(proxy) {
+    applyProxy: function (proxy) {
         var model = this.getModel();
 
         if (proxy !== null) {
@@ -339,7 +339,7 @@ Ext.define('Ext.data.ProxyStore', {
             } else if (model) {
                 proxy = model.getProxy();
             }
-        
+
             if (!proxy) {
                 proxy = Ext.createByAlias('proxy.memory');
                 proxy.autoCreated = true;
@@ -363,7 +363,7 @@ Ext.define('Ext.data.ProxyStore', {
         }
     },
 
-    updateProxy: function(proxy, oldProxy) {
+    updateProxy: function (proxy, oldProxy) {
         this.proxyListeners = Ext.destroy(this.proxyListeners);
     },
 
@@ -375,12 +375,12 @@ Ext.define('Ext.data.ProxyStore', {
     /**
      * @private
      */
-    onMetaChange: function(proxy, meta) {
+    onMetaChange: function (proxy, meta) {
         this.fireEvent('metachange', this, meta);
     },
 
     //saves any phantom records
-    create: function(data, options) {
+    create: function (data, options) {
         var me = this,
             Model = me.getModel(),
             instance = new Model(data),
@@ -397,14 +397,14 @@ Ext.define('Ext.data.ProxyStore', {
         return operation.execute();
     },
 
-    read: function() {
+    read: function () {
         return this.load.apply(this, arguments);
     },
 
-    update: function(options) {
+    update: function (options) {
         var me = this,
             operation;
-            
+
         options = Ext.apply({}, options);
         if (!options.records) {
             options.records = me.getUpdatedRecords();
@@ -421,7 +421,7 @@ Ext.define('Ext.data.ProxyStore', {
      * Callback for any write Operation over the Proxy. Updates the Store's MixedCollection to reflect
      * the updates provided by the Proxy
      */
-    onProxyWrite: function(operation) {
+    onProxyWrite: function (operation) {
         var me = this,
             success = operation.wasSuccessful(),
             records = operation.getRecords();
@@ -443,13 +443,13 @@ Ext.define('Ext.data.ProxyStore', {
             me.fireEvent('datachanged', me);
         }
     },
-    
+
     // may be implemented by store subclasses
     onCreateRecords: Ext.emptyFn,
-    
+
     // may be implemented by store subclasses
     onUpdateRecords: Ext.emptyFn,
-    
+
     /**
      * Removes any records when a write is returned from the server.
      * @private
@@ -457,7 +457,7 @@ Ext.define('Ext.data.ProxyStore', {
      * @param {Ext.data.operation.Operation} operation The operation that just completed
      * @param {Boolean} success True if the operation was successful
      */
-    onDestroyRecords: function(records, operation, success) {
+    onDestroyRecords: function (records, operation, success) {
         if (success) {
             this.cleanRemoved();
         }
@@ -465,7 +465,7 @@ Ext.define('Ext.data.ProxyStore', {
 
     // tells the attached proxy to destroy the given records
     // @since 3.4.0
-    erase: function(options) {
+    erase: function (options) {
         var me = this,
             operation;
 
@@ -485,7 +485,7 @@ Ext.define('Ext.data.ProxyStore', {
      * Attached as the 'operationcomplete' event listener to a proxy's Batch object. By default just calls through
      * to onProxyWrite.
      */
-    onBatchOperationComplete: function(batch, operation) {
+    onBatchOperationComplete: function (batch, operation) {
         return this.onProxyWrite(operation);
     },
 
@@ -494,7 +494,7 @@ Ext.define('Ext.data.ProxyStore', {
      * Attached as the 'complete' event listener to a proxy's Batch object. Iterates over the batch operations
      * and updates the Store's internal data MixedCollection.
      */
-    onBatchComplete: function(batch, operation) {
+    onBatchComplete: function (batch, operation) {
         var me = this,
             operations = batch.operations,
             length = operations.length,
@@ -517,7 +517,7 @@ Ext.define('Ext.data.ProxyStore', {
     /**
      * @private
      */
-    onBatchException: function(batch, operation) {
+    onBatchException: function (batch, operation) {
         // //decide what to do... could continue with the next operation
         // batch.start();
         //
@@ -529,7 +529,7 @@ Ext.define('Ext.data.ProxyStore', {
      * @private
      * Filter function for new records.
      */
-    filterNew: function(item) {
+    filterNew: function (item) {
         // only want phantom records that are valid
         return item.phantom === true && item.isValid();
     },
@@ -538,7 +538,7 @@ Ext.define('Ext.data.ProxyStore', {
      * Returns all `{@link Ext.data.Model#property-phantom phantom}` records in this store.
      * @return {Ext.data.Model[]} A possibly empty array of `phantom` records.
      */
-    getNewRecords: function() {
+    getNewRecords: function () {
         return [];
     },
 
@@ -546,7 +546,7 @@ Ext.define('Ext.data.ProxyStore', {
      * Returns all valid, non-phantom Model instances that have been updated in the Store but not yet synchronized with the Proxy.
      * @return {Ext.data.Model[]} The updated Model instances
      */
-    getUpdatedRecords: function() {
+    getUpdatedRecords: function () {
         return [];
     },
 
@@ -556,15 +556,15 @@ Ext.define('Ext.data.ProxyStore', {
      * removed records are not included (use {@link #getRemovedRecords} for that).
      * @return {Ext.data.Model[]} The added and updated Model instances
      */
-    getModifiedRecords : function(){
+    getModifiedRecords: function () {
         return [].concat(this.getNewRecords(), this.getUpdatedRecords());
     },
-    
+
     /**
      * @private
      * Filter function for updated records.
      */
-    filterUpdated: function(item) {
+    filterUpdated: function (item) {
         // only want dirty records, not phantoms that are valid
         return item.dirty === true && item.phantom !== true && item.isValid();
     },
@@ -574,7 +574,7 @@ Ext.define('Ext.data.ProxyStore', {
      * @return {Ext.data.Model[]} The removed Model instances. Note that this is a *copy* of the store's
      * array, so may be mutated.
      */
-    getRemovedRecords: function() {
+    getRemovedRecords: function () {
         var removed = this.getRawRemovedRecords();
         // If trackRemoved: false, removed will be null
         return removed ? Ext.Array.clone(removed) : removed;
@@ -584,44 +584,44 @@ Ext.define('Ext.data.ProxyStore', {
      * Synchronizes the store with its {@link #proxy}. This asks the proxy to batch together any new, updated
      * and deleted records in the store, updating the store's internal representation of the records
      * as each operation completes.
-     * 
-     * @param {Object} [options] Object containing one or more properties supported by the sync method (these get 
+     *
+     * @param {Object} [options] Object containing one or more properties supported by the sync method (these get
      * passed along to the underlying proxy's {@link Ext.data.Proxy#batch batch} method):
-     * 
-     * @param {Ext.data.Batch/Object} [options.batch] A {@link Ext.data.Batch} object (or batch config to apply 
+     *
+     * @param {Ext.data.Batch/Object} [options.batch] A {@link Ext.data.Batch} object (or batch config to apply
      * to the created batch). If unspecified a default batch will be auto-created as needed.
-     * 
+     *
      * @param {Function} [options.callback] The function to be called upon completion of the sync.
      * The callback is called regardless of success or failure and is passed the following parameters:
      * @param {Ext.data.Batch} options.callback.batch The {@link Ext.data.Batch batch} that was processed,
      * containing all operations in their current state after processing
      * @param {Object} options.callback.options The options argument that was originally passed into sync
-     * 
-     * @param {Function} [options.success] The function to be called upon successful completion of the sync. The 
+     *
+     * @param {Function} [options.success] The function to be called upon successful completion of the sync. The
      * success function is called only if no exceptions were reported in any operations. If one or more exceptions
-     * occurred then the failure function will be called instead. The success function is called 
+     * occurred then the failure function will be called instead. The success function is called
      * with the following parameters:
      * @param {Ext.data.Batch} options.success.batch The {@link Ext.data.Batch batch} that was processed,
      * containing all operations in their current state after processing
      * @param {Object} options.success.options The options argument that was originally passed into sync
-     * 
-     * @param {Function} [options.failure] The function to be called upon unsuccessful completion of the sync. The 
+     *
+     * @param {Function} [options.failure] The function to be called upon unsuccessful completion of the sync. The
      * failure function is called when one or more operations returns an exception during processing (even if some
-     * operations were also successful). In this case you can check the batch's {@link Ext.data.Batch#exceptions 
-     * exceptions} array to see exactly which operations had exceptions. The failure function is called with the 
+     * operations were also successful). In this case you can check the batch's {@link Ext.data.Batch#exceptions
+     * exceptions} array to see exactly which operations had exceptions. The failure function is called with the
      * following parameters:
      * @param {Ext.data.Batch} options.failure.batch The {@link Ext.data.Batch} that was processed, containing all
      * operations in their current state after processing
      * @param {Object} options.failure.options The options argument that was originally passed into sync
-     * 
+     *
      * @param {Object} [options.params] Additional params to send during the sync Operation(s).
      *
      * @param {Object} [options.scope] The scope in which to execute any callbacks (i.e. the `this` object inside
      * the callback, success and/or failure functions). Defaults to the store's proxy.
-     * 
+     *
      * @return {Ext.data.Store} this
      */
-    sync: function(options) {
+    sync: function (options) {
         var me = this,
             operations = {},
             toCreate = me.getNewRecords(),
@@ -665,14 +665,14 @@ Ext.define('Ext.data.ProxyStore', {
 
         return me;
     },
-    
+
     /**
      * @private
      * Returns an object which is passed in as the listeners argument to proxy.batch inside this.sync.
      * This is broken out into a separate function to allow for customisation of the listeners
      * @return {Object} The listeners object
      */
-    getBatchListeners: function() {
+    getBatchListeners: function () {
         var me = this,
             listeners = {
                 scope: me,
@@ -691,7 +691,7 @@ Ext.define('Ext.data.ProxyStore', {
      * Saves all pending changes via the configured {@link #proxy}. Use {@link #sync} instead.
      * @deprecated 4.0.0 Will be removed in the next major version
      */
-    save: function() {
+    save: function () {
         return this.sync.apply(this, arguments);
     },
 
@@ -728,11 +728,11 @@ Ext.define('Ext.data.ProxyStore', {
      * @param {Boolean} options.callback.success `true` when operation completed successfully.
      * @param {Boolean} [options.addRecords=false] Specify as `true` to *add* the incoming records rather than the
      * default which is to have the incoming records *replace* the existing stoire contents.
-     * 
+     *
      * @return {Ext.data.Store} this
      * @since 1.1.0
      */
-    load: function(options) {
+    load: function (options) {
         var me = this;
 
         // Legacy option. Specifying a function was allowed.
@@ -765,7 +765,7 @@ Ext.define('Ext.data.ProxyStore', {
     /**
      * Called when the event handler which called the {@link #method-load} method exits.
      */
-    flushLoad: function() {
+    flushLoad: function () {
         var me = this,
             options = me.pendingLoadOptions,
             operation;
@@ -781,14 +781,14 @@ Ext.define('Ext.data.ProxyStore', {
         if (me.getRemoteSort() && options.sorters) {
             me.fireEvent('beforesort', me, options.sorters);
         }
-        
+
         operation = Ext.apply({
             internalScope: me,
             internalCallback: me.onProxyLoad,
             scope: me
         }, options);
         me.lastOptions = operation;
-        
+
 
         operation = me.createOperation('read', operation);
 
@@ -851,12 +851,12 @@ Ext.define('Ext.data.ProxyStore', {
      * @param {Object} [options] A config object which contains options which may override the options passed to the previous load call. See the
      * {@link #method-load} method for valid configs.
      */
-    reload: function(options) {
+    reload: function (options) {
         var o = Ext.apply({}, options, this.lastOptions);
         return this.load(o);
     },
 
-    onEndUpdate: function() {
+    onEndUpdate: function () {
         var me = this;
 
         if (me.needsSync && me.autoSync && !me.autoSyncSuspended) {
@@ -870,7 +870,7 @@ Ext.define('Ext.data.ProxyStore', {
      * @param {Ext.data.Model} record The model instance that was edited
      * @since 3.4.0
      */
-    afterReject: function(record) {
+    afterReject: function (record) {
         var me = this;
         // Must pass the 5th param (modifiedFieldNames) as null, otherwise the
         // event firing machinery appends the listeners "options" object to the arg list
@@ -889,7 +889,7 @@ Ext.define('Ext.data.ProxyStore', {
      * @param {Ext.data.Model} record The model instance that was edited
      * @since 3.4.0
      */
-    afterCommit: function(record, modifiedFieldNames) {
+    afterCommit: function (record, modifiedFieldNames) {
         var me = this;
         if (!modifiedFieldNames) {
             modifiedFieldNames = null;
@@ -899,11 +899,11 @@ Ext.define('Ext.data.ProxyStore', {
             me.fireEvent('update', me, record, Ext.data.Model.COMMIT, modifiedFieldNames);
         }
     },
-    
-    afterErase: function(record) {
+
+    afterErase: function (record) {
         this.onErase(record);
     },
-    
+
     onErase: Ext.emptyFn,
 
     onUpdate: Ext.emptyFn,
@@ -911,7 +911,7 @@ Ext.define('Ext.data.ProxyStore', {
     /**
      * @private
      */
-    onDestroy: function() {
+    onDestroy: function () {
         var me = this,
             proxy = me.getProxy();
 
@@ -919,21 +919,21 @@ Ext.define('Ext.data.ProxyStore', {
         me.getData().destroy();
         me.data = null;
         me.setProxy(null);
-        
+
         if (proxy.autoCreated) {
             proxy.destroy();
         }
-        
+
         me.setModel(null);
     },
 
-    
+
     /**
      * Returns true if the store has a pending load task.
      * @return {Boolean} `true` if the store has a pending load task.
      * @private
      */
-    hasPendingLoad: function() {
+    hasPendingLoad: function () {
         return !!this.pendingLoadOptions || this.isLoading();
     },
 
@@ -941,7 +941,7 @@ Ext.define('Ext.data.ProxyStore', {
      * Returns true if the Store is currently performing a load operation
      * @return {Boolean} `true` if the Store is currently loading
      */
-    isLoading: function() {
+    isLoading: function () {
         return !!this.loading;
     },
 
@@ -949,14 +949,14 @@ Ext.define('Ext.data.ProxyStore', {
      * Returns `true` if the Store has been loaded.
      * @return {Boolean} `true` if the Store has been loaded.
      */
-    isLoaded: function() {
+    isLoaded: function () {
         return this.loadCount > 0;
     },
 
     /**
      * Suspends automatically syncing the Store with its Proxy.  Only applicable if {@link #autoSync} is `true`
      */
-    suspendAutoSync: function() {
+    suspendAutoSync: function () {
         ++this.autoSyncSuspended;
     },
 
@@ -964,9 +964,9 @@ Ext.define('Ext.data.ProxyStore', {
      * Resumes automatically syncing the Store with its Proxy.  Only applicable if {@link #autoSync} is `true`
      * @param {Boolean} syncNow Pass `true` to synchronize now. Only synchronizes with the Proxy if the suspension
      * count has gone to zero (We are not under a higher level of suspension)
-     * 
+     *
      */
-    resumeAutoSync: function(syncNow) {
+    resumeAutoSync: function (syncNow) {
         var me = this;
 
         //<debug>
@@ -974,7 +974,7 @@ Ext.define('Ext.data.ProxyStore', {
             Ext.log.warn('Mismatched call to resumeAutoSync - auto synchronization is currently not suspended.');
         }
         //</debug>
-        if (me.autoSyncSuspended && ! --me.autoSyncSuspended) {
+        if (me.autoSyncSuspended && !--me.autoSyncSuspended) {
             if (syncNow) {
                 me.sync();
             }
@@ -991,7 +991,7 @@ Ext.define('Ext.data.ProxyStore', {
     removeAll: Ext.emptyFn,
     // individual store subclasses should implement a "fast" remove
     // and fire a clear event afterwards
-    
+
     // to be implemented by subclasses
     clearData: Ext.emptyFn,
 
@@ -1005,20 +1005,20 @@ Ext.define('Ext.data.ProxyStore', {
          * of child nodes from their parent, *not* on removal of records from its collection. The collection
          * has records added on expand, and removed on collapse.
          */
-        getRawRemovedRecords: function() {
+        getRawRemovedRecords: function () {
             return this.removed;
         },
 
-        onExtraParamsChanged: function() {
-            
+        onExtraParamsChanged: function () {
+
         },
 
-        clearLoadTask: function() {
+        clearLoadTask: function () {
             Ext.asapCancel(this.loadTimer);
             this.pendingLoadOptions = this.loadTimer = null;
         },
 
-        cleanRemoved: function() {
+        cleanRemoved: function () {
             // Must use class-specific getRawRemovedRecords.
             // Regular Stores add to the "removed" property on remove.
             // TreeStores are having records removed all the time; node collapse removes.
@@ -1034,7 +1034,7 @@ Ext.define('Ext.data.ProxyStore', {
             }
         },
 
-        createOperation: function(type, options) {
+        createOperation: function (type, options) {
             var me = this,
                 proxy = me.getProxy(),
                 listeners;
@@ -1055,7 +1055,7 @@ Ext.define('Ext.data.ProxyStore', {
             return proxy.createOperation(type, options);
         },
 
-        createImplicitModel: function(fields) {
+        createImplicitModel: function (fields) {
             var me = this,
                 modelCfg = {
                     extend: me.implicitModel,
@@ -1080,13 +1080,13 @@ Ext.define('Ext.data.ProxyStore', {
             }
         },
 
-        loadsSynchronously: function() {
+        loadsSynchronously: function () {
             return this.getProxy().isSynchronous;
         },
 
         onBeforeLoad: Ext.privateFn,
 
-        removeFromRemoved: function(record) {
+        removeFromRemoved: function (record) {
             // Must use class-specific getRawRemovedRecords.
             // Regular Stores add to the "removed" property on remove.
             // TreeStores are having records removed all the time; node collapse removes.
@@ -1098,7 +1098,7 @@ Ext.define('Ext.data.ProxyStore', {
             }
         },
 
-        setLoadOptions: function(options) {
+        setLoadOptions: function (options) {
             var me = this,
                 filters, sorters;
 

@@ -19,14 +19,14 @@ Ext.define('Ext.data.matrix.Slice', {
         this.side = side;
 
         /**
-         * 
+         *
          */
         this.members = {};
     },
 
     attach: function (store) {
         var me = this;
-        
+
         //<debug>
         Ext.Assert.falsey(me.store, 'Store is already attached');
         //</debug>
@@ -37,7 +37,7 @@ Ext.define('Ext.data.matrix.Slice', {
         store.on('load', me.onStoreLoad, me, {single: true});
     },
 
-    commit: function() {
+    commit: function () {
         var members = this.members,
             id;
 
@@ -88,7 +88,7 @@ Ext.define('Ext.data.matrix.Slice', {
                     // Note - when we create a new matrix tuple we must catalog it on both
                     // sides of the matrix or risk losing it on only one side. To gather all
                     // of the tuples we need only visit one side.
-                    assoc = [ otherId, otherId, state ];
+                    assoc = [otherId, otherId, state];
                     assoc[assocIndex] = id;
 
                     members[otherId] = assoc;
@@ -96,7 +96,7 @@ Ext.define('Ext.data.matrix.Slice', {
                     if (!otherSlice) {
                         otherSlices[otherId] = otherSlice = new MatrixSlice(otherSide, otherId);
                     }
-                    otherSlice.members[id] =  assoc;
+                    otherSlice.members[id] = assoc;
                     call = 1;
                 } else if (state !== assoc[2] && state !== 0) {
                     // If they aren't equal and we're setting it to 0, favour the current state
@@ -143,7 +143,7 @@ Ext.define('Ext.data.matrix.Slice', {
         }
     },
 
-    destroy: function() {
+    destroy: function () {
         var me = this,
             store = me.store;
 

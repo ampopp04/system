@@ -5,21 +5,21 @@
  * This is useful for arranging a group of fields or other components within a single item in a form, so
  * that it lines up nicely with other fields. A common use is for grouping a set of related fields under
  * a single label in a form.
- * 
+ *
  * The container's configured {@link #cfg-items} will be layed out within the field body area according to the
  * configured {@link #layout} type. The default layout is `'autocontainer'`.
- * 
+ *
  * Like regular fields, FieldContainer can inherit its decoration configuration from the
  * {@link Ext.form.Panel#fieldDefaults fieldDefaults} of an enclosing FormPanel. In addition,
  * FieldContainer itself can pass {@link #fieldDefaults} to any {@link Ext.form.Labelable fields}
  * it may itself contain.
- * 
+ *
  * If you are grouping a set of {@link Ext.form.field.Checkbox Checkbox} or {@link Ext.form.field.Radio Radio}
  * fields in a single labeled container, consider using a {@link Ext.form.CheckboxGroup}
  * or {@link Ext.form.RadioGroup} instead as they are specialized for handling those types.
  *
  * # Example
- * 
+ *
  *     @example
  *     Ext.create('Ext.form.Panel', {
  *         title: 'FieldContainer Example',
@@ -51,7 +51,7 @@
  *         }],
  *         renderTo: Ext.getBody()
  *     });
- * 
+ *
  * # Usage of fieldDefaults
  *
  *     @example
@@ -106,7 +106,7 @@ Ext.define('Ext.form.FieldContainer', {
     componentCls: Ext.baseCSSPrefix + 'form-fieldcontainer',
 
     shrinkWrap: true,
-    
+
     autoEl: {
         tag: 'div',
         role: 'presentation'
@@ -147,33 +147,33 @@ Ext.define('Ext.form.FieldContainer', {
 
     fieldSubTpl: [
         '<div id="{id}-containerEl" data-ref="containerEl" class="{containerElCls}"',
-            '<tpl if="ariaAttributes">',
-                '<tpl foreach="ariaAttributes"> {$}="{.}"</tpl>',
-            '<tpl else>',
-                ' role="presentation"',
-            '</tpl>',
+        '<tpl if="ariaAttributes">',
+        '<tpl foreach="ariaAttributes"> {$}="{.}"</tpl>',
+        '<tpl else>',
+        ' role="presentation"',
+        '</tpl>',
         '>',
-            '{%this.renderContainer(out,values)%}',
+        '{%this.renderContainer(out,values)%}',
         '</div>'
     ],
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
 
         // Init mixins
         me.initLabelable();
         me.initFieldAncestor();
-        
+
         me.callParent();
         me.initMonitor();
     },
-    
+
     /**
      * @protected
      * Called when a {@link Ext.form.Labelable} instance is added to the container's subtree.
      * @param {Ext.form.Labelable} labelItem The instance that was added
      */
-    onAdd: function(labelItem) {
+    onAdd: function (labelItem) {
         var me = this;
 
         // Fix for https://sencha.jira.com/browse/EXTJSIV-6424 Which was *sneakily* fixed fixed in version 37
@@ -195,7 +195,7 @@ Ext.define('Ext.form.FieldContainer', {
      * Called when a {@link Ext.form.Labelable} instance is removed from the container's subtree.
      * @param {Ext.form.Labelable} labelItem The instance that was removed
      */
-    onRemove: function(labelItem, isDestroying) {
+    onRemove: function (labelItem, isDestroying) {
         var me = this;
         me.callParent(arguments);
         if (!isDestroying) {
@@ -203,10 +203,10 @@ Ext.define('Ext.form.FieldContainer', {
                 labelItem.hideLabel = labelItem.oldHideLabel;
             }
             me.updateLabel();
-        }   
+        }
     },
 
-    initRenderData: function() {
+    initRenderData: function () {
         var me = this,
             data = me.callParent();
 
@@ -223,24 +223,24 @@ Ext.define('Ext.form.FieldContainer', {
      * @template
      * @return {String} The label, or empty string if none.
      */
-    getFieldLabel: function() {
+    getFieldLabel: function () {
         var label = this.fieldLabel || '';
         if (!label && this.combineLabels) {
-            label = Ext.Array.map(this.query('[isFieldLabelable]'), function(field) {
+            label = Ext.Array.map(this.query('[isFieldLabelable]'), function (field) {
                 return field.getFieldLabel();
             }).join(this.labelConnector);
         }
         return label;
     },
 
-    getSubTplData: function() {
+    getSubTplData: function () {
         var ret = this.initRenderData();
 
         Ext.apply(ret, this.subTplData);
         return ret;
     },
 
-    getSubTplMarkup: function(fieldData) {
+    getSubTplMarkup: function (fieldData) {
         var me = this,
             tpl = me.getTpl('fieldSubTpl'),
             html;
@@ -257,10 +257,10 @@ Ext.define('Ext.form.FieldContainer', {
      * @private
      * Updates the content of the labelEl if it is rendered
      */
-    updateLabel: function() {
+    updateLabel: function () {
         var me = this,
             label = me.labelEl;
-            
+
         if (label) {
             me.setFieldLabel(me.getFieldLabel());
         }
@@ -272,11 +272,11 @@ Ext.define('Ext.form.FieldContainer', {
      * Fired when the error message of any field within the container changes, and updates the
      * combined error message to match.
      */
-    onFieldErrorChange: function() {
+    onFieldErrorChange: function () {
         if (this.combineErrors) {
             var me = this,
                 oldError = me.getActiveError(),
-                invalidFields = Ext.Array.filter(me.query('[isFormField]'), function(field) {
+                invalidFields = Ext.Array.filter(me.query('[isFormField]'), function (field) {
                     return field.hasActiveError();
                 }),
                 newErrors = me.getCombinedErrors(invalidFields);
@@ -301,10 +301,10 @@ Ext.define('Ext.form.FieldContainer', {
      * @param {Ext.form.field.Field[]} invalidFields An Array of the sub-fields which are currently invalid.
      * @return {String[]} The combined list of error messages
      */
-    getCombinedErrors: function(invalidFields) {
+    getCombinedErrors: function (invalidFields) {
         var errors = [],
             f,
-            fLen   = invalidFields.length,
+            fLen = invalidFields.length,
             field,
             activeErrors, a, aLen,
             error, label;
@@ -312,7 +312,7 @@ Ext.define('Ext.form.FieldContainer', {
         for (f = 0; f < fLen; f++) {
             field = invalidFields[f];
             activeErrors = field.getActiveErrors();
-            aLen         = activeErrors.length;
+            aLen = activeErrors.length;
 
             for (a = 0; a < aLen; a++) {
                 error = activeErrors[a];
@@ -326,17 +326,17 @@ Ext.define('Ext.form.FieldContainer', {
     },
 
     privates: {
-        applyTargetCls: function(targetCls) {
+        applyTargetCls: function (targetCls) {
             var containerElCls = this.containerElCls;
 
             this.containerElCls = containerElCls ? containerElCls + ' ' + targetCls : targetCls;
         },
 
-        getTargetEl: function() {
+        getTargetEl: function () {
             return this.containerEl;
         },
 
-        initRenderTpl: function() {
+        initRenderTpl: function () {
             var me = this;
             if (!me.hasOwnProperty('renderTpl')) {
                 me.renderTpl = me.getTpl('labelableRenderTpl');

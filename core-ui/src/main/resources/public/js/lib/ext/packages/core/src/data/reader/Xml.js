@@ -24,7 +24,7 @@
  * already familiar with them.
  *
  * We created the simplest type of XML Reader possible by simply telling our {@link Ext.data.Store Store}'s {@link
- * Ext.data.proxy.Proxy Proxy} that we want a XML Reader. The Store automatically passes the configured model to the
+    * Ext.data.proxy.Proxy Proxy} that we want a XML Reader. The Store automatically passes the configured model to the
  * Store, so it is as if we passed this instead:
  *
  *     reader: {
@@ -131,43 +131,43 @@ Ext.define('Ext.data.reader.Xml', {
         'Ext.dom.Query'
     ],
     alternateClassName: 'Ext.data.XmlReader',
-    alias : 'reader.xml',
+    alias: 'reader.xml',
 
     config: {
         /**
-        * @cfg {String} record (required)
-        * The DomQuery path to the repeated element which contains record information.
-        *
-        * By default, the elements which match the selector may be nested at any level
-        * below the {@link #rootProperty}
-        *
-        * If this Reader is being used by a {@link Ext.data.TreeStore TreeStore} to read tree-structured data,
-        * then only first generation child nodes of the root element must be selected, so the record selector must be
-        * specified with a more specific selector which will not select all descendants. For example:
-        *
-        *    record: '>node'
-        *
-        */
+         * @cfg {String} record (required)
+         * The DomQuery path to the repeated element which contains record information.
+         *
+         * By default, the elements which match the selector may be nested at any level
+         * below the {@link #rootProperty}
+         *
+         * If this Reader is being used by a {@link Ext.data.TreeStore TreeStore} to read tree-structured data,
+         * then only first generation child nodes of the root element must be selected, so the record selector must be
+         * specified with a more specific selector which will not select all descendants. For example:
+         *
+         *    record: '>node'
+         *
+         */
         record: '',
 
         /**
-        * @cfg {String} namespace
-        * A namespace prefix that will be prepended to the field name when reading a
-        * field from an XML node.  Take, for example, the following Model:
-        * 
-        *     Ext.define('Foo', {
+         * @cfg {String} namespace
+         * A namespace prefix that will be prepended to the field name when reading a
+         * field from an XML node.  Take, for example, the following Model:
+         *
+         *     Ext.define('Foo', {
         *         extend: 'Ext.data.Model',
         *         fields: ['bar', 'baz']
         *     });
-        *     
-        * The reader would need to be configured with a namespace of 'n' in order to read XML
-        * data in the following format:
-        * 
-        *     <foo>
-        *         <n:bar>bar</n:bar>
-        *         <n:baz>baz</n:baz>
-        *     </foo>
-        */
+         *
+         * The reader would need to be configured with a namespace of 'n' in order to read XML
+         * data in the following format:
+         *
+         *     <foo>
+         *         <n:bar>bar</n:bar>
+         *         <n:baz>baz</n:baz>
+         *     </foo>
+         */
         namespace: ''
     },
 
@@ -178,7 +178,7 @@ Ext.define('Ext.data.reader.Xml', {
      * @param {String} key
      * @return {Function}
      */
-    createAccessor: function(expr) {
+    createAccessor: function (expr) {
         if (Ext.isEmpty(expr)) {
             return Ext.emptyFn;
         }
@@ -187,12 +187,12 @@ Ext.define('Ext.data.reader.Xml', {
             return expr;
         }
 
-        return function(root) {
+        return function (root) {
             return this.getNodeValue(Ext.DomQuery.selectNode(expr, root));
         };
     },
 
-    getNodeValue: function(node) {
+    getNodeValue: function (node) {
         if (node) {
             // overcome a limitation of maximum textnode size
             // http://reference.sitepoint.com/javascript/Node/normalize
@@ -208,13 +208,13 @@ Ext.define('Ext.data.reader.Xml', {
         return undefined;
     },
 
-    getResponseData: function(response) {
+    getResponseData: function (response) {
         var xml = response.responseXML,
-            error = 'XML data not found in the response'; 
+            error = 'XML data not found in the response';
 
         if (!xml) {
             Ext.Logger.warn(error);
-            return this.createReadError(error);       
+            return this.createReadError(error);
         }
 
         return xml;
@@ -225,7 +225,7 @@ Ext.define('Ext.data.reader.Xml', {
      * @param {Object} data The raw data object
      * @return {Object} The documentElement property of the data object if present, or the same object if not.
      */
-    getData: function(data) {
+    getData: function (data) {
         return data.documentElement || data;
     },
 
@@ -235,9 +235,9 @@ Ext.define('Ext.data.reader.Xml', {
      * @param {Object} data The XML data object
      * @return {XMLElement} The root node element
      */
-    getRoot: function(data) {
+    getRoot: function (data) {
         var nodeName = data.nodeName,
-            root     = this.getRootProperty();
+            root = this.getRootProperty();
 
         if (!root || (nodeName && nodeName == root)) {
             return data;
@@ -256,7 +256,7 @@ Ext.define('Ext.data.reader.Xml', {
      * @param {Object} [readOptions] See {@link #read} for details.
      * @return {Ext.data.Model[]} The records
      */
-    extractData: function(root, readOptions) {
+    extractData: function (root, readOptions) {
         var recordName = this.getRecord();
 
         //<debug>
@@ -279,7 +279,7 @@ Ext.define('Ext.data.reader.Xml', {
      * @param {Object} [readOptions] See {@link #read} for details.
      * @return {Ext.data.ResultSet} The parsed result set
      */
-    readRecords: function(doc, readOptions, /* private */ internalReadOptions) {
+    readRecords: function (doc, readOptions, /* private */ internalReadOptions) {
         // it's possible that we get passed an array here by associations.
         // Make sure we strip that out (see Ext.data.reader.Reader#readAssociated)
         if (Ext.isArray(doc)) {
@@ -295,25 +295,25 @@ Ext.define('Ext.data.reader.Xml', {
      * its ordinal position in the fields collection as the index.
      * This is used by buildExtractors to create optimized on extractor function which converts raw data into model instances.
      */
-    createFieldAccessor: function(field) {
+    createFieldAccessor: function (field) {
         var me = this,
             namespace = me.getNamespace(),
             selector, result;
 
-        selector = field.mapping || ((namespace ? namespace + '|' : '') + field.name); 
+        selector = field.mapping || ((namespace ? namespace + '|' : '') + field.name);
 
         if (typeof selector === 'function') {
-            result = function(raw) {
+            result = function (raw) {
                 return field.mapping(raw, me);
             };
         } else {
-            result = function(raw) {
+            result = function (raw) {
                 return me.getNodeValue(Ext.DomQuery.selectNode(selector, raw));
             };
         }
         return result;
     },
-    
+
     deprecated: {
         '5.1.1': {
             properties: {

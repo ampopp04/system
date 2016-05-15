@@ -101,17 +101,17 @@ Ext.define('Ext.view.MultiSelectorSearch', {
 
         store = Ext.data.StoreManager.lookup(me.store);
 
-        for (i = items.length; i--; ) {
+        for (i = items.length; i--;) {
             if ((item = items[i]).xtype === 'grid') {
                 item.store = store;
                 item.isSearchGrid = true;
                 item.selModel = item.selModel || {
-                    type: 'checkboxmodel',
-                    pruneRemoved: false,
-                    listeners: {
-                        selectionchange: 'onSelectionChange'
-                    }
-                };
+                        type: 'checkboxmodel',
+                        pruneRemoved: false,
+                        listeners: {
+                            selectionchange: 'onSelectionChange'
+                        }
+                    };
 
                 Ext.merge(item, me.grid);
 
@@ -131,7 +131,7 @@ Ext.define('Ext.view.MultiSelectorSearch', {
 
         records = me.getOwnerStore().getRange();
         if (!owner.convertSelectionRecord.$nullFn) {
-            for (i = records.length; i--; ) {
+            for (i = records.length; i--;) {
                 records[i] = owner.convertSelectionRecord(records[i]);
             }
         }
@@ -141,7 +141,7 @@ Ext.define('Ext.view.MultiSelectorSearch', {
             // If it is NOT a preloaded store, then unless a Session is being used,
             // The newly loaded records will NOT match any in the ownerStore.
             // So we must match them by ID in order to select the same dataset.
-            store.on('load', function() {
+            store.on('load', function () {
                 var len = records.length,
                     i,
                     record,
@@ -162,7 +162,7 @@ Ext.define('Ext.view.MultiSelectorSearch', {
         }
     },
 
-    getOwnerStore: function() {
+    getOwnerStore: function () {
         return this.owner.getStore();
     },
 
@@ -227,7 +227,7 @@ Ext.define('Ext.view.MultiSelectorSearch', {
         return searchGrid.getSelectionModel().select(records);
     },
 
-    deselectRecords: function(records) {
+    deselectRecords: function (records) {
         var searchGrid = this.lookupReference('searchGrid');
         return searchGrid.getSelectionModel().deselect(records);
     },
@@ -281,7 +281,7 @@ Ext.define('Ext.view.MultiSelectorSearch', {
                 map = {},
                 add, i, id, record;
 
-            for (i = selection.length; i--; ) {
+            for (i = selection.length; i--;) {
                 record = selection[i];
                 id = record.id;
                 map[id] = record;
@@ -291,7 +291,7 @@ Ext.define('Ext.view.MultiSelectorSearch', {
                 }
             }
 
-            for (i = data.length; i--; ) {
+            for (i = data.length; i--;) {
                 record = data.getAt(i);
                 if (!map[record.id]) {
                     (remove || (remove = [])).push(record);

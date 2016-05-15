@@ -42,11 +42,11 @@ Ext.define('Ext.device.Push', {
         'Ext.device.push.Cordova'
     ],
 
-    constructor: function() {
+    constructor: function () {
         var browserEnv = Ext.browser.is;
 
         if (browserEnv.WebView) {
-           if (browserEnv.Cordova) {
+            if (browserEnv.Cordova) {
                 return Ext.create('Ext.device.push.Cordova');
             }
         }

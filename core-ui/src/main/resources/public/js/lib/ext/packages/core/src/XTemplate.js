@@ -98,10 +98,10 @@
  *         '</tpl></p>'
  *     );
  *     tpl.overwrite(panel.body, data);
- *     
+ *
  * The **foreach** operator is used to loop over an object's properties.  The following
  * example demonstrates looping over the main data object's properties:
- * 
+ *
  *     var tpl = new Ext.XTemplate(
  *         '<dl>',
  *             '<tpl foreach=".">',
@@ -301,19 +301,19 @@ Ext.define('Ext.XTemplate', {
      * @cfg {String/Array} definitions
      * Optional. A statement, or array of statements which set up `var`s which may then
      * be accessed within the scope of the generated function.
-     * 
+     *
      *     var data = {
      *         name: 'Don Griffin',
      *         isWizard: true,
      *         title: 'Senior Technomage',
      *         company: 'Sencha Inc.'
      *     };
-     *     
+     *
      *     var tpl = new Ext.XTemplate('{[values.isWizard ? wizard : notSoWizard]}' +
      *         ' {name}', {
      *         definitions: 'var wizard = "Wizard", notSoWizard = "Townsperson";'
      *     });
-     *     
+     *
      *     console.log(tpl.apply(data));
      *     // LOGS: Wizard Don Griffin
      */
@@ -336,11 +336,11 @@ Ext.define('Ext.XTemplate', {
      */
     strict: false,
 
-    apply: function(values, parent, xindex, xcount) {
+    apply: function (values, parent, xindex, xcount) {
         return this.applyOut(values, [], parent, xindex, xcount).join('');
     },
 
-    applyOut: function(values, out, parent, xindex, xcount) {
+    applyOut: function (values, out, parent, xindex, xcount) {
         var me = this,
             compiler;
 
@@ -378,7 +378,7 @@ Ext.define('Ext.XTemplate', {
      * Does nothing. XTemplates are compiled automatically, so this function simply returns this.
      * @return {Ext.XTemplate} this
      */
-    compile: function() {
+    compile: function () {
         return this;
     },
 

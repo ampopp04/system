@@ -314,945 +314,941 @@
  * @member Ext.button.Button
  */
 @mixin extjs-button-ui(
-    $ui,
+  $ui,
 
-    $border-radius: 0px,
+  $border-radius: 0px,
 
-    $border-width: 0px,
+  $border-width: 0px,
 
-    $border-color: null,
-    $border-color-over: null,
-    $border-color-focus: null,
-    $border-color-pressed: null,
-    $border-color-focus-over: null,
-    $border-color-focus-pressed: null,
-    $border-color-disabled: null,
+  $border-color: null,
+  $border-color-over: null,
+  $border-color-focus: null,
+  $border-color-pressed: null,
+  $border-color-focus-over: null,
+  $border-color-focus-pressed: null,
+  $border-color-disabled: null,
 
-    $padding: null,
-    $text-padding: null,
+  $padding: null,
+  $text-padding: null,
 
-    $background-color: null,
-    $background-color-over: null,
-    $background-color-focus: null,
-    $background-color-pressed: null,
-    $background-color-focus-over: null,
-    $background-color-focus-pressed: null,
-    $background-color-disabled: null,
+  $background-color: null,
+  $background-color-over: null,
+  $background-color-focus: null,
+  $background-color-pressed: null,
+  $background-color-focus-over: null,
+  $background-color-focus-pressed: null,
+  $background-color-disabled: null,
 
-    $background-gradient: null,
-    $background-gradient-over: null,
-    $background-gradient-focus: null,
-    $background-gradient-pressed: null,
-    $background-gradient-focus-over: null,
-    $background-gradient-focus-pressed: null,
-    $background-gradient-disabled: null,
+  $background-gradient: null,
+  $background-gradient-over: null,
+  $background-gradient-focus: null,
+  $background-gradient-pressed: null,
+  $background-gradient-focus-over: null,
+  $background-gradient-focus-pressed: null,
+  $background-gradient-disabled: null,
 
-    $color: null,
-    $color-over: null,
-    $color-focus: null,
-    $color-pressed: null,
-    $color-focus-over: null,
-    $color-focus-pressed: null,
-    $color-disabled: null,
+  $color: null,
+  $color-over: null,
+  $color-focus: null,
+  $color-pressed: null,
+  $color-focus-over: null,
+  $color-focus-pressed: null,
+  $color-disabled: null,
 
-    $inner-border-width: null,
-    $inner-border-width-over: null,
-    $inner-border-width-focus: null,
-    $inner-border-width-pressed: null,
-    $inner-border-width-focus-over: null,
-    $inner-border-width-focus-pressed: null,
-    $inner-border-width-disabled: null,
+  $inner-border-width: null,
+  $inner-border-width-over: null,
+  $inner-border-width-focus: null,
+  $inner-border-width-pressed: null,
+  $inner-border-width-focus-over: null,
+  $inner-border-width-focus-pressed: null,
+  $inner-border-width-disabled: null,
 
-    $inner-border-color: null,
-    $inner-border-color-over: null,
-    $inner-border-color-focus: null,
-    $inner-border-color-pressed: null,
-    $inner-border-color-focus-over: null,
-    $inner-border-color-focus-pressed: null,
-    $inner-border-color-disabled: null,
+  $inner-border-color: null,
+  $inner-border-color-over: null,
+  $inner-border-color-focus: null,
+  $inner-border-color-pressed: null,
+  $inner-border-color-focus-over: null,
+  $inner-border-color-focus-pressed: null,
+  $inner-border-color-disabled: null,
 
-    $body-outline-width-focus: null,
-    $body-outline-style-focus: null,
-    $body-outline-color-focus: null,
+  $body-outline-width-focus: null,
+  $body-outline-style-focus: null,
+  $body-outline-color-focus: null,
 
-    $font-size: null,
-    $font-size-over: null,
-    $font-size-focus: null,
-    $font-size-pressed: null,
-    $font-size-focus-over: null,
-    $font-size-focus-pressed: null,
-    $font-size-disabled: null,
+  $font-size: null,
+  $font-size-over: null,
+  $font-size-focus: null,
+  $font-size-pressed: null,
+  $font-size-focus-over: null,
+  $font-size-focus-pressed: null,
+  $font-size-disabled: null,
 
-    $font-weight: null,
-    $font-weight-over: null,
-    $font-weight-focus: null,
-    $font-weight-pressed: null,
-    $font-weight-focus-over: null,
-    $font-weight-focus-pressed: null,
-    $font-weight-disabled: null,
+  $font-weight: null,
+  $font-weight-over: null,
+  $font-weight-focus: null,
+  $font-weight-pressed: null,
+  $font-weight-focus-over: null,
+  $font-weight-focus-pressed: null,
+  $font-weight-disabled: null,
 
-    $font-family: null,
-    $font-family-over: null,
-    $font-family-focus: null,
-    $font-family-pressed: null,
-    $font-family-focus-over: null,
-    $font-family-focus-pressed: null,
-    $font-family-disabled: null,
+  $font-family: null,
+  $font-family-over: null,
+  $font-family-focus: null,
+  $font-family-pressed: null,
+  $font-family-focus-over: null,
+  $font-family-focus-pressed: null,
+  $font-family-disabled: null,
 
-    $icon-size: null,
-    $glyph-font-size: null,
-    $line-height: $icon-size,
-    $icon-spacing: $button-icon-spacing,
-    $glyph-color: $button-default-glyph-color,
-    $glyph-opacity: $button-default-glyph-opacity,
-    $arrow-width: null,
-    $arrow-height: null,
-    $arrow-glyph: null,
-    $arrow-glyph-color: null,
-    $split-width: null,
-    $split-height: null,
-    $split-line-width: null,
-    $split-line-color: null,
-    $include-ui-menu-arrows: $button-include-ui-menu-arrows,
-    $include-ui-split-arrows: $button-include-ui-split-arrows,
-    $include-split-noline-arrows: $button-include-split-noline-arrows,
-    $include-split-over-arrows: $button-include-split-over-arrows,
-    $opacity-disabled: $button-opacity-disabled,
-    $inner-opacity-disabled: $button-inner-opacity-disabled
+  $icon-size: null,
+  $glyph-font-size: null,
+  $line-height: $icon-size,
+  $icon-spacing: $button-icon-spacing,
+  $glyph-color: $button-default-glyph-color,
+  $glyph-opacity: $button-default-glyph-opacity,
+  $arrow-width: null,
+  $arrow-height: null,
+  $arrow-glyph: null,
+  $arrow-glyph-color: null,
+  $split-width: null,
+  $split-height: null,
+  $split-line-width: null,
+  $split-line-color: null,
+  $include-ui-menu-arrows: $button-include-ui-menu-arrows,
+  $include-ui-split-arrows: $button-include-ui-split-arrows,
+  $include-split-noline-arrows: $button-include-split-noline-arrows,
+  $include-split-over-arrows: $button-include-split-over-arrows,
+  $opacity-disabled: $button-opacity-disabled,
+  $inner-opacity-disabled: $button-inner-opacity-disabled
 ) {
-    $inner-border-max: max(
-        max(top($inner-border-width) right($inner-border-width) bottom($inner-border-width) left($inner-border-width))
-        max(top($inner-border-width-over) right($inner-border-width-over) bottom($inner-border-width-over) left($inner-border-width-over))
-        max(top($inner-border-width-focus) right($inner-border-width-focus) bottom($inner-border-width-focus) left($inner-border-width-focus))
-        max(top($inner-border-width-pressed) right($inner-border-width-pressed) bottom($inner-border-width-pressed) left($inner-border-width-pressed))
-        max(top($inner-border-width-disabled) right($inner-border-width-disabled) bottom($inner-border-width-disabled) left($inner-border-width-disabled))
-    );
+  $inner-border-max: max(
+                  max(top($inner-border-width) right($inner-border-width) bottom($inner-border-width) left($inner-border-width)) max(top($inner-border-width-over) right($inner-border-width-over) bottom($inner-border-width-over) left($inner-border-width-over)) max(top($inner-border-width-focus) right($inner-border-width-focus) bottom($inner-border-width-focus) left($inner-border-width-focus)) max(top($inner-border-width-pressed) right($inner-border-width-pressed) bottom($inner-border-width-pressed) left($inner-border-width-pressed)) max(top($inner-border-width-disabled) right($inner-border-width-disabled) bottom($inner-border-width-disabled) left($inner-border-width-disabled))
+  );
 
-    $frame-size: frame-size($border-width, $inner-border-max, $border-radius);
+  $frame-size: frame-size($border-width, $inner-border-max, $border-radius);
 
-    @include x-frame(
-        $cls: 'btn',
-        $ui: $ui,
-        $border-radius: $border-radius,
-        $border-width: $border-width,
-        $padding: $padding,
-        $background-color: $background-color,
-        $background-gradient: $background-gradient,
-        $table: true,
-        $inner-border-width: $inner-border-width
-    );
+  @include x-frame(
+          $cls: 'btn',
+          $ui: $ui,
+          $border-radius: $border-radius,
+          $border-width: $border-width,
+          $padding: $padding,
+          $background-color: $background-color,
+          $background-gradient: $background-gradient,
+          $table: true,
+          $inner-border-width: $inner-border-width
+  );
 
-    .#{$prefix}btn-#{$ui} {
-        border-color: $border-color;
-        @if not is-null($inner-border-width) and not is-null($inner-border-color) and $inner-border-width != 0 {
-            @include inner-border($inner-border-width, $inner-border-color);
-        }
+  .#{$prefix}btn-#{$ui} {
+    border-color: $border-color;
+    @if not is-null($inner-border-width) and not is-null($inner-border-color) and $inner-border-width != 0 {
+      @include inner-border($inner-border-width, $inner-border-color);
+    }
+  }
+
+  .#{$prefix}btn-button-#{$ui} {
+    min-height: max($icon-size, $line-height);
+
+    @if $include-ie {
+      // In ie9m this element is a table cell, so height works like min-height
+      .#{$prefix}ie9m & {
+        min-height: auto;
+        height: max($icon-size, $line-height);
+      }
+    }
+  }
+
+  .#{$prefix}btn-inner-#{$ui} {
+    font: $font-weight #{$font-size}/#{$line-height} $font-family;
+    color: $color;
+    @if $text-padding != 0 {
+      padding: 0 $text-padding;
     }
 
-    .#{$prefix}btn-button-#{$ui} {
-        min-height: max($icon-size, $line-height);
+    // Where table-based layouts are used (IE8/9) inner el requires max-width in order
+    // for ellipsis to work.  Safari also requires max width because of a bug in its
+    // -webkit-box layout that allows an element to expand beyond its flexed width if
+    // its content is larger than the flexed width.
+    // Rather than target the max rule to all the browsers that need it, we'll just add
+    // it everywhere, and then disable it where it causes problems (IE10p)
+    max-width: 100%;
 
-        @if $include-ie {
-            // In ie9m this element is a table cell, so height works like min-height
-            .#{$prefix}ie9m & {
-                min-height: auto;
-                height: max($icon-size, $line-height);
-            }
-        }
+    .#{$prefix}btn-icon-right > &,
+    .#{$prefix}btn-icon-left > & {
+      // since calc is only supported in IE9+ ellipsis will not work in IE8 when
+      // there is a left or right icon present
+      max-width: calc(100% - #{$icon-size});
     }
 
-    .#{$prefix}btn-inner-#{$ui} {
-        font: $font-weight #{$font-size}/#{$line-height} $font-family;
-        color: $color;
-        @if $text-padding != 0 {
-            padding: 0 $text-padding;
-        }
+    // Max-width interferes with the layout in IE11.  Fortunately we don't need the hack there
+    .#{$prefix}ie10p & {
+      max-width: none;
+    }
+  }
 
-        // Where table-based layouts are used (IE8/9) inner el requires max-width in order
-        // for ellipsis to work.  Safari also requires max width because of a bug in its
-        // -webkit-box layout that allows an element to expand beyond its flexed width if
-        // its content is larger than the flexed width.
-        // Rather than target the max rule to all the browsers that need it, we'll just add
-        // it everywhere, and then disable it where it causes problems (IE10p)
-        max-width: 100%;
+  .#{$prefix}btn-icon-el-#{$ui} {
+    font-size: $glyph-font-size;
+    height: $icon-size;
+    color: $glyph-color;
+    line-height: $icon-size;
 
-        .#{$prefix}btn-icon-right > &,
-        .#{$prefix}btn-icon-left > & {
-            // since calc is only supported in IE9+ ellipsis will not work in IE8 when
-            // there is a left or right icon present
-            max-width: calc(100% - #{$icon-size});
-        }
-
-        // Max-width interferes with the layout in IE11.  Fortunately we don't need the hack there
-        .#{$prefix}ie10p & {
-            max-width: none;
-        }
+    .#{$prefix}btn-icon-left > &,
+    .#{$prefix}btn-icon-right > & {
+      width: $icon-size;
     }
 
-    .#{$prefix}btn-icon-el-#{$ui} {
-        font-size: $glyph-font-size;
-        height: $icon-size;
-        color: $glyph-color;
-        line-height: $icon-size;
-
-        .#{$prefix}btn-icon-left > &,
-        .#{$prefix}btn-icon-right > & {
-            width: $icon-size;
-        }
-
-        .#{$prefix}btn-icon-top > &,
-        .#{$prefix}btn-icon-bottom > & {
-            min-width: $icon-size;
-        }
-
-        &.#{$prefix}btn-glyph {
-            @if $glyph-opacity != 1 {
-                // do not use the opacity mixin because we do not want IE's filter version of
-                // opacity to be included.  We emulate the opacity setting in IE8m by mixing
-                // the icon color into the background color. (see below)
-                opacity: $glyph-opacity;
-            }
-            // In IE8 and below when a glyph contains partially transparent pixels, we
-            // can't apply an opacity filter to the glyph element, because IE8m will render
-            // the partially transparent pixels of the glyph as black. To work around this,
-            // we emulate the approximate color that the glyph would have if it had opacity
-            // applied by mixing the glyph color with the button's background-color.
-            $mix-color: $background-color;
-            @if $mix-color == transparent {
-                $mix-color: #fff;
-            }
-            @if $include-ie {
-                .#{$prefix}ie8 & {
-                    color: mix($glyph-color, $mix-color, $glyph-opacity * 100);
-                }
-            }
-        }
-
-        // when the button contains both icon and text, add $icon-spacing to the icon
-        .#{$prefix}btn-text.#{$prefix}btn-icon-left > & {
-            margin-right: max($icon-spacing - $text-padding, 0);
-
-            @if $include-rtl {
-                &.#{$prefix}rtl {
-                    margin-right: 0;
-                    margin-left: max($icon-spacing - $text-padding, 0);
-                }
-            }
-        }
-
-        .#{$prefix}btn-text.#{$prefix}btn-icon-right > & {
-            margin-left: max($icon-spacing - $text-padding, 0);
-
-            @if $include-rtl {
-                &.#{$prefix}rtl {
-                    margin-left: 0;
-                    margin-right: max($icon-spacing - $text-padding, 0);
-                }
-            }
-        }
-
-        .#{$prefix}btn-text.#{$prefix}btn-icon-top > & {
-            margin-bottom: $icon-spacing;
-        }
-
-        .#{$prefix}btn-text.#{$prefix}btn-icon-bottom > & {
-            margin-top: $icon-spacing;
-        }
+    .#{$prefix}btn-icon-top > &,
+    .#{$prefix}btn-icon-bottom > & {
+      min-width: $icon-size;
     }
 
-    .#{$prefix}btn-arrow-right > {
-        .#{$prefix}btn-icon.#{$prefix}btn-no-text.#{$prefix}btn-button-#{$ui} {
-            padding-right: $text-padding;
+    &.#{$prefix}btn-glyph {
+      @if $glyph-opacity != 1 {
+        // do not use the opacity mixin because we do not want IE's filter version of
+        // opacity to be included.  We emulate the opacity setting in IE8m by mixing
+        // the icon color into the background color. (see below)
+        opacity: $glyph-opacity;
+      }
+      // In IE8 and below when a glyph contains partially transparent pixels, we
+      // can't apply an opacity filter to the glyph element, because IE8m will render
+      // the partially transparent pixels of the glyph as black. To work around this,
+      // we emulate the approximate color that the glyph would have if it had opacity
+      // applied by mixing the glyph color with the button's background-color.
+      $mix-color: $background-color;
+      @if $mix-color == transparent {
+        $mix-color: #fff;
+      }
+      @if $include-ie {
+        .#{$prefix}ie8 & {
+          color: mix($glyph-color, $mix-color, $glyph-opacity * 100);
         }
-        .#{$prefix}btn-text.#{$prefix}btn-icon-right > .#{$prefix}btn-icon-el-#{$ui} {
-            margin-right: $text-padding;
-        }
+      }
     }
 
-    .#{$prefix}btn-arrow-bottom,
-    .#{$prefix}btn-split-bottom {
-        > .#{$prefix}btn-button-#{$ui} {
-            padding-bottom: bottom($padding);
+    // when the button contains both icon and text, add $icon-spacing to the icon
+    .#{$prefix}btn-text.#{$prefix}btn-icon-left > & {
+      margin-right: max($icon-spacing - $text-padding, 0);
+
+      @if $include-rtl {
+        &.#{$prefix}rtl {
+          margin-right: 0;
+          margin-left: max($icon-spacing - $text-padding, 0);
         }
+      }
     }
 
-    .#{$prefix}btn-wrap-#{$ui} {
-        &.#{$prefix}btn-arrow-right:after {
-            width: $arrow-width;
-            @if $enable-font-icons and ($arrow-glyph != null) {
-                @include font-icon($glyph: $arrow-glyph, $pseudo: false);
-                color: $arrow-glyph-color;
-            } @else {
-                @if $include-ui-menu-arrows {
-                    background-image: theme-background-image('button/#{$ui}-arrow');
-                } @else {
-                    background-image: theme-background-image('button/arrow');
-                }
-                // The arrow can get smashed into oblivion by an outer containing element if
-                // the container is smaller than the button. padding prevents this.
-                padding-right: $arrow-width;
-            }
-        }
+    .#{$prefix}btn-text.#{$prefix}btn-icon-right > & {
+      margin-left: max($icon-spacing - $text-padding, 0);
 
-        @if $include-rtl and ((not $enable-font-icons) or ($arrow-glyph == null)) {
-            &.#{$prefix}rtl.#{$prefix}btn-arrow-right:after {
-                @if $include-ui-menu-arrows {
-                    background-image: theme-background-image('button/#{$ui}-arrow-rtl');
-                } @else {
-                    background-image: theme-background-image('button/arrow-rtl');
-                }
-            }
+      @if $include-rtl {
+        &.#{$prefix}rtl {
+          margin-left: 0;
+          margin-right: max($icon-spacing - $text-padding, 0);
         }
-
-        &.#{$prefix}btn-arrow-bottom:after {
-            height: $arrow-height;
-            @if $enable-font-icons and ($arrow-glyph != null) {
-                @include font-icon($glyph: $arrow-glyph, $pseudo: false, $line-height: $arrow-height);
-                color: $arrow-glyph-color;
-            } @else {
-                @if $include-ui-menu-arrows {
-                    background-image: theme-background-image('button/#{$ui}-arrow');
-                } @else {
-                    background-image: theme-background-image('button/arrow');
-                }
-            }
-        }
+      }
     }
 
-    $arrow-prefix: '';
-    @if $include-ui-split-arrows {
-        $arrow-prefix: $ui + '-';
-    }
-    $arrow-suffix: '';
-    @if $include-split-noline-arrows {
-        $arrow-suffix: '-noline';
+    .#{$prefix}btn-text.#{$prefix}btn-icon-top > & {
+      margin-bottom: $icon-spacing;
     }
 
-    .#{$prefix}btn-wrap-#{$ui} {
-        &.#{$prefix}btn-split-right {
-            @if $split-line-width > 0 {
-                > .#{$prefix}btn-button {
-                    padding-right: right($padding);
-                    @if $include-rtl {
-                        &.#{$prefix}rtl {
-                            padding-right: 0;
-                            padding-left: right($padding);
-                        }
-                    }
-                    &:after {
-                        border-right: $split-line-width solid $split-line-color;
-                    }
-                }
-            }
-            &:after {
-                width: $split-width;
-                @if $enable-font-icons and ($arrow-glyph != null) {
-                    @include font-icon($glyph: $arrow-glyph, $pseudo: false);
-                    color: $arrow-glyph-color;
-                    padding-left: right($padding); // center the arrow in the trigger area
-                } @else {
-                    background-image: theme-background-image('button/#{$arrow-prefix}s-arrow#{$arrow-suffix}');
-                    // The arrow can get smashed into oblivion by an outer containing element if
-                    // the container is smaller than the button. padding prevents this.
-                    padding-right: $split-width;
-                }
-            }
+    .#{$prefix}btn-text.#{$prefix}btn-icon-bottom > & {
+      margin-top: $icon-spacing;
+    }
+  }
+
+  .#{$prefix}btn-arrow-right > {
+    .#{$prefix}btn-icon.#{$prefix}btn-no-text.#{$prefix}btn-button-#{$ui} {
+      padding-right: $text-padding;
+    }
+    .#{$prefix}btn-text.#{$prefix}btn-icon-right > .#{$prefix}btn-icon-el-#{$ui} {
+      margin-right: $text-padding;
+    }
+  }
+
+  .#{$prefix}btn-arrow-bottom,
+  .#{$prefix}btn-split-bottom {
+    > .#{$prefix}btn-button-#{$ui} {
+      padding-bottom: bottom($padding);
+    }
+  }
+
+  .#{$prefix}btn-wrap-#{$ui} {
+    &.#{$prefix}btn-arrow-right:after {
+      width: $arrow-width;
+      @if $enable-font-icons and ($arrow-glyph != null) {
+        @include font-icon($glyph: $arrow-glyph, $pseudo: false);
+        color: $arrow-glyph-color;
+      } @else {
+        @if $include-ui-menu-arrows {
+          background-image: theme-background-image('button/#{$ui}-arrow');
+        } @else {
+          background-image: theme-background-image('button/arrow');
         }
-
-        @if $include-rtl {
-            &.#{$prefix}rtl.#{$prefix}btn-split-right:after {
-                @if $enable-font-icons and ($arrow-glyph != null) {
-                    padding-left: 0;
-                    padding-right: right($padding);
-                } @else {
-                    background-image: theme-background-image('button/#{$arrow-prefix}s-arrow#{$arrow-suffix}-rtl');
-                }
-            }
-        }
-
-        &.#{$prefix}btn-split-bottom {
-            @if $split-line-width > 0 {
-                > .#{$prefix}btn-button:after {
-                    border-bottom: $split-line-width solid $split-line-color;
-                }
-            }
-
-            @if $enable-font-icons and ($arrow-glyph != null) {
-                // negate the effect of bottom padding so that the split arrow icon
-                // appears roughly vertically centered by virtue of its line-height
-                margin-bottom: -(bottom($padding));
-            }
-
-            &:after {
-                height: $split-height;
-                @if $enable-font-icons and ($arrow-glyph != null) {
-                    @include font-icon($glyph: $arrow-glyph, $pseudo: false, $line-height: $split-height);
-                    color: $arrow-glyph-color;
-                } @else {
-                    background-image: theme-background-image('button/#{$arrow-prefix}s-arrow-b#{$arrow-suffix}');
-                }
-            }
-        }
+        // The arrow can get smashed into oblivion by an outer containing element if
+        // the container is smaller than the button. padding prevents this.
+        padding-right: $arrow-width;
+      }
     }
 
-    @if $include-split-over-arrows and ((not $enable-font-icons) or ($arrow-glyph == null)) {
-        .#{$prefix}btn-over > {
-            .#{$prefix}btn-wrap-#{$ui} {
-                &.#{$prefix}btn-split-right:after {
-                    background-image: theme-background-image('button/#{$arrow-prefix}s-arrow-o');
-                }
-
-                @if $include-rtl {
-                    &.#{$prefix}rtl.#{$prefix}btn-split-right:after {
-                        background-image: theme-background-image('button/#{$arrow-prefix}s-arrow-o-rtl');
-                    }
-                }
-
-                &.#{$prefix}btn-split-bottom:after {
-                    background-image: theme-background-image('button/#{$arrow-prefix}s-arrow-bo');
-                }
-            }
+    @if $include-rtl and ((not $enable-font-icons) or ($arrow-glyph == null)) {
+      &.#{$prefix}rtl.#{$prefix}btn-arrow-right:after {
+        @if $include-ui-menu-arrows {
+          background-image: theme-background-image('button/#{$ui}-arrow-rtl');
+        } @else {
+          background-image: theme-background-image('button/arrow-rtl');
         }
+      }
     }
 
-    .#{$prefix}btn-split-right > {
-        .#{$prefix}btn-icon.#{$prefix}btn-no-text.#{$prefix}btn-button-#{$ui} {
-            padding-right: $text-padding;
+    &.#{$prefix}btn-arrow-bottom:after {
+      height: $arrow-height;
+      @if $enable-font-icons and ($arrow-glyph != null) {
+        @include font-icon($glyph: $arrow-glyph, $pseudo: false, $line-height: $arrow-height);
+        color: $arrow-glyph-color;
+      } @else {
+        @if $include-ui-menu-arrows {
+          background-image: theme-background-image('button/#{$ui}-arrow');
+        } @else {
+          background-image: theme-background-image('button/arrow');
         }
-        .#{$prefix}btn-text.#{$prefix}btn-icon-right > .#{$prefix}btn-icon-el-#{$ui} {
-            margin-right: $text-padding;
-        }
+      }
     }
+  }
 
-    .#{$prefix}btn-focus.#{$prefix}btn-#{$ui} {
-        @if $border-color-focus != $border-color {
-            border-color: $border-color-focus;
-        }
-        @if $background-color-focus != null {
-            @include background-gradient($background-color-focus, $background-gradient-focus);
-        }
-        @if not is-null($inner-border-width-focus) and not is-null($inner-border-color-focus) {
-            @include inner-border($inner-border-width-focus, $inner-border-color-focus);
-        }
+  $arrow-prefix: '';
+  @if $include-ui-split-arrows {
+    $arrow-prefix: $ui + '-';
+  }
+  $arrow-suffix: '';
+  @if $include-split-noline-arrows {
+    $arrow-suffix: '-noline';
+  }
 
-        @if not is-null($body-outline-width-focus) and $body-outline-width-focus != 0 {
-            .#{$prefix}btn-wrap {
-                $outline-color: if(not is-null($body-outline-color-focus), $body-outline-color-focus, $color);
-                $outline-style: if(not is-null($body-outline-style-focus), $body-outline-style-focus, dotted);
-                outline: $body-outline-width-focus $outline-style $outline-color;
-            }
-        }
-
-        .#{$prefix}btn-inner {
-            @if $color-focus != $color {
-                color: $color-focus;
-            }
-            @if $font-weight-focus != $font-weight {
-                font-weight: $font-weight-focus;
-            }
-            @if $font-size-focus != $font-size {
-                font-size: $font-size-focus;
-            }
-            @if $font-family-focus != $font-family {
-                font-family: $font-family-focus;
-            }
-        }
-    }
-    
-    .#{$prefix}btn-#{$ui} .#{$prefix}btn-arrow-el {
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 100%;
-        width: $split-width + right($padding);
-        pointer-events: none;
-        
-        @if $include-rtl {
+  .#{$prefix}btn-wrap-#{$ui} {
+    &.#{$prefix}btn-split-right {
+      @if $split-line-width > 0 {
+        > .#{$prefix}btn-button {
+          padding-right: right($padding);
+          @if $include-rtl {
             &.#{$prefix}rtl {
-                right: inherit;
-                left: 0;
+              padding-right: 0;
+              padding-left: right($padding);
             }
+          }
+          &:after {
+            border-right: $split-line-width solid $split-line-color;
+          }
         }
-    }
-    
-    .#{$prefix}btn-#{$ui}.#{$prefix}arrow-focus .#{$prefix}btn-arrow-el {
-        /* TODO @Phil ;) */
-        @if not is-null($inner-border-width-focus) and not is-null($inner-border-color-focus) {
-            border: $inner-border-width-focus solid $inner-border-color-focus;
+      }
+      &:after {
+        width: $split-width;
+        @if $enable-font-icons and ($arrow-glyph != null) {
+          @include font-icon($glyph: $arrow-glyph, $pseudo: false);
+          color: $arrow-glyph-color;
+          padding-left: right($padding); // center the arrow in the trigger area
+        } @else {
+          background-image: theme-background-image('button/#{$arrow-prefix}s-arrow#{$arrow-suffix}');
+          // The arrow can get smashed into oblivion by an outer containing element if
+          // the container is smaller than the button. padding prevents this.
+          padding-right: $split-width;
         }
-    }
-    
-    .#{$prefix}btn-over.#{$prefix}btn-#{$ui} {
-        @if $border-color-over != $border-color {
-            border-color: $border-color-over;
-        }
-        @if $background-color-over != null {
-            @include background-gradient($background-color-over, $background-gradient-over);
-        }
-        @if not is-null($inner-border-width-over) and not is-null($inner-border-color-over) {
-            @include inner-border($inner-border-width-over, $inner-border-color-over);
-        }
-
-        .#{$prefix}btn-inner {
-            @if $color-over != $color {
-                color: $color-over;
-            }
-            @if $font-weight-over != $font-weight {
-                font-weight: $font-weight-over;
-            }
-            @if $font-size-over != $font-size {
-                font-size: $font-size-over;
-            }
-            @if $font-family-over != $font-family {
-                font-family: $font-family-over;
-            }
-        }
+      }
     }
 
-    .#{$prefix}btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui} {
-        @if $border-color-focus-over != $border-color-over {
-            border-color: $border-color-focus-over;
+    @if $include-rtl {
+      &.#{$prefix}rtl.#{$prefix}btn-split-right:after {
+        @if $enable-font-icons and ($arrow-glyph != null) {
+          padding-left: 0;
+          padding-right: right($padding);
+        } @else {
+          background-image: theme-background-image('button/#{$arrow-prefix}s-arrow#{$arrow-suffix}-rtl');
         }
-        @if $background-color-focus-over != $background-color-over or $background-gradient-focus-over != $background-gradient-over {
-            @include background-gradient($background-color-focus-over, $background-gradient-focus-over);
-        }
-        @if not is-null($inner-border-width-focus-over) and not is-null($inner-border-color-focus-over) {
-            @include inner-border($inner-border-width-focus-over, $inner-border-color-focus-over);
-        }
-
-        .#{$prefix}btn-inner {
-            @if $color-focus-over != $color-over {
-                color: $color-focus-over;
-            }
-            @if $font-weight-focus-over != $font-weight-over {
-                font-weight: $font-weight-focus-over;
-            }
-            @if $font-size-focus-over != $font-size-over {
-                font-size: $font-size-focus-over;
-            }
-            @if $font-family-focus-over != $font-family-over {
-                font-family: $font-family-focus-over;
-            }
-        }
+      }
     }
 
-    // add x-btn class to increase specificity over focus-over rule above
-    .#{$prefix}btn.#{$prefix}btn-menu-active.#{$prefix}btn-#{$ui},
-    .#{$prefix}btn.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui} {
-        @if $border-color-pressed != $border-color {
-            border-color: $border-color-pressed;
+    &.#{$prefix}btn-split-bottom {
+      @if $split-line-width > 0 {
+        > .#{$prefix}btn-button:after {
+          border-bottom: $split-line-width solid $split-line-color;
         }
-        @if $background-color-pressed != null {
-            @include background-gradient($background-color-pressed, $background-gradient-pressed);
+      }
+
+      @if $enable-font-icons and ($arrow-glyph != null) {
+        // negate the effect of bottom padding so that the split arrow icon
+        // appears roughly vertically centered by virtue of its line-height
+        margin-bottom: -(bottom($padding));
+      }
+
+      &:after {
+        height: $split-height;
+        @if $enable-font-icons and ($arrow-glyph != null) {
+          @include font-icon($glyph: $arrow-glyph, $pseudo: false, $line-height: $split-height);
+          color: $arrow-glyph-color;
+        } @else {
+          background-image: theme-background-image('button/#{$arrow-prefix}s-arrow-b#{$arrow-suffix}');
         }
-        @if not is-null($inner-border-width-pressed) and not is-null($inner-border-color-pressed) {
-            @include inner-border($inner-border-width-pressed, $inner-border-color-pressed);
+      }
+    }
+  }
+
+  @if $include-split-over-arrows and ((not $enable-font-icons) or ($arrow-glyph == null)) {
+    .#{$prefix}btn-over > {
+      .#{$prefix}btn-wrap-#{$ui} {
+        &.#{$prefix}btn-split-right:after {
+          background-image: theme-background-image('button/#{$arrow-prefix}s-arrow-o');
         }
 
-        .#{$prefix}btn-inner {
-            @if $color-pressed != $color {
-                color: $color-pressed;
-            }
-            @if $font-weight-pressed != $font-weight {
-                font-weight: $font-weight-pressed;
-            }
-            @if $font-size-pressed != $font-size {
-                font-size: $font-size-pressed;
-            }
-            @if $font-family-pressed != $font-family {
-                font-family: $font-family-pressed;
-            }
+        @if $include-rtl {
+          &.#{$prefix}rtl.#{$prefix}btn-split-right:after {
+            background-image: theme-background-image('button/#{$arrow-prefix}s-arrow-o-rtl');
+          }
         }
+
+        &.#{$prefix}btn-split-bottom:after {
+          background-image: theme-background-image('button/#{$arrow-prefix}s-arrow-bo');
+        }
+      }
+    }
+  }
+
+  .#{$prefix}btn-split-right > {
+    .#{$prefix}btn-icon.#{$prefix}btn-no-text.#{$prefix}btn-button-#{$ui} {
+      padding-right: $text-padding;
+    }
+    .#{$prefix}btn-text.#{$prefix}btn-icon-right > .#{$prefix}btn-icon-el-#{$ui} {
+      margin-right: $text-padding;
+    }
+  }
+
+  .#{$prefix}btn-focus.#{$prefix}btn-#{$ui} {
+    @if $border-color-focus != $border-color {
+      border-color: $border-color-focus;
+    }
+    @if $background-color-focus != null {
+      @include background-gradient($background-color-focus, $background-gradient-focus);
+    }
+    @if not is-null($inner-border-width-focus) and not is-null($inner-border-color-focus) {
+      @include inner-border($inner-border-width-focus, $inner-border-color-focus);
     }
 
-    .#{$prefix}btn-focus.#{$prefix}btn-menu-active.#{$prefix}btn-#{$ui},
-    .#{$prefix}btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui} {
-        @if $border-color-focus-pressed != $border-color-pressed {
-            border-color: $border-color-focus-pressed;
-        }
-        @if $background-color-focus-pressed != $background-color-pressed or $background-gradient-focus-pressed != $background-gradient-pressed {
-            @include background-gradient($background-color-focus-pressed, $background-gradient-focus-pressed);
-        }
-        @if not is-null($inner-border-width-focus-pressed) and not is-null($inner-border-color-focus-pressed) {
-            @include inner-border($inner-border-width-focus-pressed, $inner-border-color-focus-pressed);
-        }
+    @if not is-null($body-outline-width-focus) and $body-outline-width-focus != 0 {
+      .#{$prefix}btn-wrap {
+        $outline-color: if(not is-null($body-outline-color-focus), $body-outline-color-focus, $color);
+        $outline-style: if(not is-null($body-outline-style-focus), $body-outline-style-focus, dotted);
+        outline: $body-outline-width-focus $outline-style $outline-color;
+      }
+    }
 
-        .#{$prefix}btn-inner {
-            @if $color-focus-pressed != $color-pressed {
-                color: $color-focus-pressed;
-            }
-            @if $font-weight-focus-pressed != $font-weight-pressed {
-                font-weight: $font-weight-focus-pressed;
-            }
-            @if $font-size-focus-pressed != $font-size-pressed {
-                font-size: $font-size-focus-pressed;
-            }
-            @if $font-family-focus-pressed != $font-family-pressed {
-                font-family: $font-family-focus-pressed;
-            }
+    .#{$prefix}btn-inner {
+      @if $color-focus != $color {
+        color: $color-focus;
+      }
+      @if $font-weight-focus != $font-weight {
+        font-weight: $font-weight-focus;
+      }
+      @if $font-size-focus != $font-size {
+        font-size: $font-size-focus;
+      }
+      @if $font-family-focus != $font-family {
+        font-family: $font-family-focus;
+      }
+    }
+  }
+
+  .#{$prefix}btn-#{$ui} .#{$prefix}btn-arrow-el {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: $split-width + right($padding);
+    pointer-events: none;
+
+    @if $include-rtl {
+      &.#{$prefix}rtl {
+        right: inherit;
+        left: 0;
+      }
+    }
+  }
+
+  .#{$prefix}btn-#{$ui}.#{$prefix}arrow-focus .#{$prefix}btn-arrow-el {
+    /* TODO @Phil ;) */
+    @if not is-null($inner-border-width-focus) and not is-null($inner-border-color-focus) {
+      border: $inner-border-width-focus solid $inner-border-color-focus;
+    }
+  }
+
+  .#{$prefix}btn-over.#{$prefix}btn-#{$ui} {
+    @if $border-color-over != $border-color {
+      border-color: $border-color-over;
+    }
+    @if $background-color-over != null {
+      @include background-gradient($background-color-over, $background-gradient-over);
+    }
+    @if not is-null($inner-border-width-over) and not is-null($inner-border-color-over) {
+      @include inner-border($inner-border-width-over, $inner-border-color-over);
+    }
+
+    .#{$prefix}btn-inner {
+      @if $color-over != $color {
+        color: $color-over;
+      }
+      @if $font-weight-over != $font-weight {
+        font-weight: $font-weight-over;
+      }
+      @if $font-size-over != $font-size {
+        font-size: $font-size-over;
+      }
+      @if $font-family-over != $font-family {
+        font-family: $font-family-over;
+      }
+    }
+  }
+
+  .#{$prefix}btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui} {
+    @if $border-color-focus-over != $border-color-over {
+      border-color: $border-color-focus-over;
+    }
+    @if $background-color-focus-over != $background-color-over or $background-gradient-focus-over != $background-gradient-over {
+      @include background-gradient($background-color-focus-over, $background-gradient-focus-over);
+    }
+    @if not is-null($inner-border-width-focus-over) and not is-null($inner-border-color-focus-over) {
+      @include inner-border($inner-border-width-focus-over, $inner-border-color-focus-over);
+    }
+
+    .#{$prefix}btn-inner {
+      @if $color-focus-over != $color-over {
+        color: $color-focus-over;
+      }
+      @if $font-weight-focus-over != $font-weight-over {
+        font-weight: $font-weight-focus-over;
+      }
+      @if $font-size-focus-over != $font-size-over {
+        font-size: $font-size-focus-over;
+      }
+      @if $font-family-focus-over != $font-family-over {
+        font-family: $font-family-focus-over;
+      }
+    }
+  }
+
+  // add x-btn class to increase specificity over focus-over rule above
+  .#{$prefix}btn.#{$prefix}btn-menu-active.#{$prefix}btn-#{$ui},
+  .#{$prefix}btn.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui} {
+    @if $border-color-pressed != $border-color {
+      border-color: $border-color-pressed;
+    }
+    @if $background-color-pressed != null {
+      @include background-gradient($background-color-pressed, $background-gradient-pressed);
+    }
+    @if not is-null($inner-border-width-pressed) and not is-null($inner-border-color-pressed) {
+      @include inner-border($inner-border-width-pressed, $inner-border-color-pressed);
+    }
+
+    .#{$prefix}btn-inner {
+      @if $color-pressed != $color {
+        color: $color-pressed;
+      }
+      @if $font-weight-pressed != $font-weight {
+        font-weight: $font-weight-pressed;
+      }
+      @if $font-size-pressed != $font-size {
+        font-size: $font-size-pressed;
+      }
+      @if $font-family-pressed != $font-family {
+        font-family: $font-family-pressed;
+      }
+    }
+  }
+
+  .#{$prefix}btn-focus.#{$prefix}btn-menu-active.#{$prefix}btn-#{$ui},
+  .#{$prefix}btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui} {
+    @if $border-color-focus-pressed != $border-color-pressed {
+      border-color: $border-color-focus-pressed;
+    }
+    @if $background-color-focus-pressed != $background-color-pressed or $background-gradient-focus-pressed != $background-gradient-pressed {
+      @include background-gradient($background-color-focus-pressed, $background-gradient-focus-pressed);
+    }
+    @if not is-null($inner-border-width-focus-pressed) and not is-null($inner-border-color-focus-pressed) {
+      @include inner-border($inner-border-width-focus-pressed, $inner-border-color-focus-pressed);
+    }
+
+    .#{$prefix}btn-inner {
+      @if $color-focus-pressed != $color-pressed {
+        color: $color-focus-pressed;
+      }
+      @if $font-weight-focus-pressed != $font-weight-pressed {
+        font-weight: $font-weight-focus-pressed;
+      }
+      @if $font-size-focus-pressed != $font-size-pressed {
+        font-size: $font-size-focus-pressed;
+      }
+      @if $font-family-focus-pressed != $font-family-pressed {
+        font-family: $font-family-focus-pressed;
+      }
+    }
+  }
+
+  // add x-btn class to increase specificity over focus-pressed
+  .#{$prefix}btn.#{$prefix}btn-disabled.#{$prefix}btn-#{$ui} {
+    @if $border-color-disabled != $border-color {
+      border-color: $border-color-disabled;
+    }
+    @if not is-null($background-color-disabled) {
+      @include background-gradient($background-color-disabled, $background-gradient-disabled);
+    }
+    @if not is-null($inner-border-width-disabled) and not is-null($inner-border-color-disabled) {
+      @include inner-border($inner-border-width-disabled, $inner-border-color-disabled);
+    }
+
+    .#{$prefix}btn-inner {
+      @if $color-disabled != $color {
+        color: $color-disabled;
+      }
+      @if $font-weight-disabled != $font-weight {
+        font-weight: $font-weight-disabled;
+      }
+      @if $font-size-disabled != $font-size {
+        font-size: $font-size-disabled;
+      }
+      @if $font-family-disabled != $font-family {
+        font-family: $font-family-disabled;
+      }
+    }
+  }
+
+  @if $include-slicer-border-radius {
+    .#{$prefix}btn-focus {
+      $stretch: slicer-background-stretch('btn-focus.#{$prefix}btn-#{$ui}', 'bottom');
+      $frame: slicer-frame('btn-focus.#{$prefix}btn-#{$ui}', $frame-size);
+
+      .#{$prefix}btn-#{$ui}-tl,
+      .#{$prefix}btn-#{$ui}-bl,
+      .#{$prefix}btn-#{$ui}-tr,
+      .#{$prefix}btn-#{$ui}-br,
+      .#{$prefix}btn-#{$ui}-tc,
+      .#{$prefix}btn-#{$ui}-bc {
+        background-image: slicer-corner-sprite('btn-focus.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-corners');
+      }
+      .#{$prefix}btn-#{$ui}-ml,
+      .#{$prefix}btn-#{$ui}-mr {
+        background-image: slicer-sides-sprite('btn-focus.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-sides');
+      }
+      .#{$prefix}btn-#{$ui}-mc {
+        background-color: $background-color-focus;
+        @if $background-gradient-focus != null {
+          background-image: slicer-frame-background-image('btn-focus.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-fbg');
         }
+      }
+    }
+
+    .#{$prefix}btn-over {
+      $stretch: slicer-background-stretch('btn-over.#{$prefix}btn-#{$ui}', 'bottom');
+      $frame: slicer-frame('btn-over.#{$prefix}btn-#{$ui}', $frame-size);
+
+      .#{$prefix}btn-#{$ui}-tl,
+      .#{$prefix}btn-#{$ui}-bl,
+      .#{$prefix}btn-#{$ui}-tr,
+      .#{$prefix}btn-#{$ui}-br,
+      .#{$prefix}btn-#{$ui}-tc,
+      .#{$prefix}btn-#{$ui}-bc {
+        background-image: slicer-corner-sprite('btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-over-corners');
+      }
+      .#{$prefix}btn-#{$ui}-ml,
+      .#{$prefix}btn-#{$ui}-mr {
+        background-image: slicer-sides-sprite('btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-over-sides');
+      }
+      .#{$prefix}btn-#{$ui}-mc {
+        background-color: $background-color-over;
+        @if $background-gradient-over != null {
+          background-image: slicer-frame-background-image('btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-over-fbg');
+        }
+      }
+    }
+
+    .#{$prefix}btn-focus.#{$prefix}btn-over {
+      $stretch: slicer-background-stretch('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}', 'bottom');
+      $frame: slicer-frame('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}', $frame-size);
+
+      .#{$prefix}btn-#{$ui}-tl,
+      .#{$prefix}btn-#{$ui}-bl,
+      .#{$prefix}btn-#{$ui}-tr,
+      .#{$prefix}btn-#{$ui}-br,
+      .#{$prefix}btn-#{$ui}-tc,
+      .#{$prefix}btn-#{$ui}-bc {
+        background-image: slicer-corner-sprite('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-over-corners');
+      }
+      .#{$prefix}btn-#{$ui}-ml,
+      .#{$prefix}btn-#{$ui}-mr {
+        background-image: slicer-sides-sprite('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-over-sides');
+      }
+      .#{$prefix}btn-#{$ui}-mc {
+        background-color: $background-color-focus-over;
+        @if $background-gradient-focus-over != null {
+          background-image: slicer-frame-background-image('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-over-fbg');
+        }
+      }
+    }
+
+    // add x-btn class to increase specificity over focus-over rules above
+    .#{$prefix}btn.#{$prefix}btn-menu-active,
+    .#{$prefix}btn.#{$prefix}btn-pressed {
+      $stretch: slicer-background-stretch('btn-pressed.#{$prefix}btn-#{$ui}', 'bottom');
+      $frame: slicer-frame('btn-pressed.#{$prefix}btn-#{$ui}', $frame-size);
+
+      .#{$prefix}btn-#{$ui}-tl,
+      .#{$prefix}btn-#{$ui}-bl,
+      .#{$prefix}btn-#{$ui}-tr,
+      .#{$prefix}btn-#{$ui}-br,
+      .#{$prefix}btn-#{$ui}-tc,
+      .#{$prefix}btn-#{$ui}-bc {
+        background-image: slicer-corner-sprite('btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-pressed-corners');
+      }
+      .#{$prefix}btn-#{$ui}-ml,
+      .#{$prefix}btn-#{$ui}-mr {
+        background-image: slicer-sides-sprite('btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-pressed-sides');
+      }
+      .#{$prefix}btn-#{$ui}-mc {
+        background-color: $background-color-pressed;
+        @if $background-gradient-focus-pressed != null {
+          background-image: slicer-frame-background-image('btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-pressed-fbg');
+        }
+      }
+    }
+
+    .#{$prefix}btn-focus.#{$prefix}btn-menu-active,
+    .#{$prefix}btn-focus.#{$prefix}btn-pressed {
+      $stretch: slicer-background-stretch('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}', 'bottom');
+      $frame: slicer-frame('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}', $frame-size);
+
+      .#{$prefix}btn-#{$ui}-tl,
+      .#{$prefix}btn-#{$ui}-bl,
+      .#{$prefix}btn-#{$ui}-tr,
+      .#{$prefix}btn-#{$ui}-br,
+      .#{$prefix}btn-#{$ui}-tc,
+      .#{$prefix}btn-#{$ui}-bc {
+        background-image: slicer-corner-sprite('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-pressed-corners');
+      }
+      .#{$prefix}btn-#{$ui}-ml,
+      .#{$prefix}btn-#{$ui}-mr {
+        background-image: slicer-sides-sprite('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-pressed-sides');
+      }
+      .#{$prefix}btn-#{$ui}-mc {
+        background-color: $background-color-focus-pressed;
+        @if $background-gradient-focus-pressed != null {
+          background-image: slicer-frame-background-image('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-pressed-fbg');
+        }
+      }
     }
 
     // add x-btn class to increase specificity over focus-pressed
-    .#{$prefix}btn.#{$prefix}btn-disabled.#{$prefix}btn-#{$ui} {
-        @if $border-color-disabled != $border-color {
-            border-color: $border-color-disabled;
+    .#{$prefix}btn.#{$prefix}btn-disabled {
+      $stretch: slicer-background-stretch('btn-disabled.#{$prefix}btn-#{$ui}', 'bottom');
+      $frame: slicer-frame('btn-disabled.#{$prefix}btn-#{$ui}', $frame-size);
+
+      .#{$prefix}btn-#{$ui}-tl,
+      .#{$prefix}btn-#{$ui}-bl,
+      .#{$prefix}btn-#{$ui}-tr,
+      .#{$prefix}btn-#{$ui}-br,
+      .#{$prefix}btn-#{$ui}-tc,
+      .#{$prefix}btn-#{$ui}-bc {
+        background-image: slicer-corner-sprite('btn-disabled.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-disabled-corners');
+      }
+      .#{$prefix}btn-#{$ui}-ml,
+      .#{$prefix}btn-#{$ui}-mr {
+        background-image: slicer-sides-sprite('btn-disabled.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-disabled-sides');
+      }
+      .#{$prefix}btn-#{$ui}-mc {
+        background-color: $background-color-disabled;
+        @if $background-gradient-disabled != null {
+          background-image: slicer-frame-background-image('btn-disabled.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-disabled-fbg');
         }
-        @if not is-null($background-color-disabled) {
-            @include background-gradient($background-color-disabled, $background-gradient-disabled);
+      }
+    }
+  }
+
+  @if $include-slicer-border-radius {
+    .#{$prefix}nbr .#{$prefix}btn-#{$ui} {
+      background-image: none;
+    }
+  }
+
+  @if $opacity-disabled != 1 {
+    .#{$prefix}btn-disabled.#{$prefix}btn-#{$ui} {
+      @include opacity($opacity-disabled);
+    }
+  }
+
+  @if $inner-opacity-disabled != 1 {
+    .#{$prefix}btn-disabled.#{$prefix}btn-#{$ui} {
+      .#{$prefix}btn-inner,
+      .#{$prefix}btn-icon-el {
+        @include opacity($inner-opacity-disabled);
+      }
+    }
+  }
+
+  @if $include-ext-button-segmented and $include-slicer-border-radius {
+    // These rules must use !important to overcome the !important border/padding
+    // removal rules from x-frame()
+    .#{$prefix}nbr {
+      .#{$prefix}segmented-button-item-horizontal.#{$prefix}btn-#{$ui} {
+        &.#{$prefix}segmented-button-first {
+          border-right-width: right($border-width) !important;
+          .#{$prefix}btn-#{$ui}-mc {
+            padding-right: right($padding) !important;
+          }
         }
+        &.#{$prefix}segmented-button-middle {
+          border-right-width: right($border-width) !important;
+          .#{$prefix}btn-#{$ui}-mc {
+            padding-right: right($padding) !important;
+            padding-left: left($padding) !important;
+          }
+        }
+        &.#{$prefix}segmented-button-last {
+          .#{$prefix}btn-#{$ui}-mc {
+            padding-left: left($padding) !important;
+          }
+        }
+      }
+
+      .#{$prefix}segmented-button-item-vertical.#{$prefix}btn-#{$ui} {
+        &.#{$prefix}segmented-button-first {
+          border-bottom-width: bottom($border-width) !important;
+          .#{$prefix}btn-#{$ui}-mc {
+            padding-bottom: bottom($padding) !important;
+          }
+        }
+        &.#{$prefix}segmented-button-middle {
+          border-bottom-width: bottom($border-width) !important;
+          .#{$prefix}btn-#{$ui}-mc {
+            padding-top: top($padding) !important;
+            padding-bottom: bottom($padding) !important;
+          }
+        }
+        &.#{$prefix}segmented-button-last {
+          .#{$prefix}btn-#{$ui}-mc {
+            padding-top: top($padding) !important;
+          }
+        }
+      }
+
+      .#{$prefix}segmented-button-item.#{$prefix}btn-#{$ui}:after {
+        // Inner borders are contained in the framing elements of a button. Since
+        // we have suppressed the borders on the inner edges to remove the rounded
+        // corners, we need to simulate the inner-border using a pseudo el.
+        // Always set up the positioning of the pseudo element just in case
+        // it is needed by the following rules
+        content: ' ';
+        border-style: solid;
+        border-width: 0;
+        position: absolute;
+
+        @if not is-null($inner-border-width) and not is-null($inner-border-color) and $inner-border-width != 0 {
+          border-width: $inner-border-width;
+          border-color: $inner-border-color;
+        }
+      }
+
+      .#{$prefix}segmented-button-item-horizontal.#{$prefix}btn-#{$ui} {
+        &:after {
+          top: $border-width;
+          right: 0;
+          bottom: $border-width;
+          left: 0;
+        }
+        &.#{$prefix}segmented-button-first:after {
+          left: $border-width;
+        }
+        &.#{$prefix}segmented-button-last:after {
+          right: $border-width;
+        }
+      }
+
+      .#{$prefix}segmented-button-item-vertical.#{$prefix}btn-#{$ui} {
+        &:after {
+          top: 0;
+          right: $border-width;
+          bottom: 0;
+          left: $border-width;
+        }
+        &.#{$prefix}segmented-button-first:after {
+          top: $border-width;
+        }
+        &.#{$prefix}segmented-button-last:after {
+          bottom: $border-width;
+        }
+      }
+
+      .#{$prefix}segmented-button-item {
+        @if not is-null($inner-border-width-focus) and not is-null($inner-border-color-focus) {
+          &.#{$prefix}btn-focus.#{$prefix}btn-#{$ui}:after {
+            border-width: $inner-border-width-focus;
+            border-color: $inner-border-color-focus;
+          }
+        }
+
+        @if not is-null($inner-border-width-over) and not is-null($inner-border-color-over) {
+          &.#{$prefix}btn-over.#{$prefix}btn-#{$ui}:after {
+            border-width: $inner-border-width-over;
+            border-color: $inner-border-color-over;
+          }
+        }
+
+        @if not is-null($inner-border-width-focus-over) and not is-null($inner-border-color-focus-over) {
+          &.#{$prefix}btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}:after {
+            border-width: $inner-border-width-focus-over;
+            border-color: $inner-border-color-focus-over;
+          }
+        }
+
+        @if not is-null($inner-border-width-pressed) and not is-null($inner-border-color-pressed) {
+          &.#{$prefix}btn.#{$prefix}btn-menu-active.#{$prefix}btn-#{$ui}:after,
+          &.#{$prefix}btn.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}:after {
+            border-width: $inner-border-width-pressed;
+            border-color: $inner-border-color-pressed;
+          }
+        }
+
+        @if not is-null($inner-border-width-focus-pressed) and not is-null($inner-border-color-focus-pressed) {
+          &.#{$prefix}btn-focus.#{$prefix}btn-menu-active.#{$prefix}btn-#{$ui}:after,
+          &.#{$prefix}btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}:after {
+            border-width: $inner-border-width-focus-pressed;
+            border-color: $inner-border-color-focus-pressed;
+          }
+        }
+
         @if not is-null($inner-border-width-disabled) and not is-null($inner-border-color-disabled) {
-            @include inner-border($inner-border-width-disabled, $inner-border-color-disabled);
+          &.#{$prefix}btn.#{$prefix}btn-disabled.#{$prefix}btn-#{$ui}:after {
+            border-width: $inner-border-width-disabled;
+            border-color: $inner-border-color-disabled;
+          }
         }
-
-        .#{$prefix}btn-inner {
-            @if $color-disabled != $color {
-                color: $color-disabled;
-            }
-            @if $font-weight-disabled != $font-weight {
-                font-weight: $font-weight-disabled;
-            }
-            @if $font-size-disabled != $font-size {
-                font-size: $font-size-disabled;
-            }
-            @if $font-family-disabled != $font-family {
-                font-family: $font-family-disabled;
-            }
-        }
+      }
     }
+  }
 
-    @if $include-slicer-border-radius {
-        .#{$prefix}btn-focus {
-            $stretch: slicer-background-stretch('btn-focus.#{$prefix}btn-#{$ui}', 'bottom');
-            $frame: slicer-frame('btn-focus.#{$prefix}btn-#{$ui}', $frame-size);
+  @include x-slicer('btn-focus.#{$prefix}btn-#{$ui}');
+  @include x-slicer('btn-over.#{$prefix}btn-#{$ui}');
+  @include x-slicer('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}');
+  @include x-slicer('btn-pressed.#{$prefix}btn-#{$ui}');
+  @include x-slicer('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}');
+  @include x-slicer('btn-disabled.#{$prefix}btn-#{$ui}');
 
-            .#{$prefix}btn-#{$ui}-tl,
-            .#{$prefix}btn-#{$ui}-bl,
-            .#{$prefix}btn-#{$ui}-tr,
-            .#{$prefix}btn-#{$ui}-br,
-            .#{$prefix}btn-#{$ui}-tc,
-            .#{$prefix}btn-#{$ui}-bc {
-                background-image: slicer-corner-sprite('btn-focus.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-corners');
-            }
-            .#{$prefix}btn-#{$ui}-ml,
-            .#{$prefix}btn-#{$ui}-mr {
-                background-image: slicer-sides-sprite('btn-focus.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-sides');
-            }
-            .#{$prefix}btn-#{$ui}-mc {
-                background-color: $background-color-focus;
-                @if $background-gradient-focus != null {
-                    background-image: slicer-frame-background-image('btn-focus.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-fbg');
-                }
-            }
-        }
+  // Button field or subclass inside cell - calculate top/bottom padding to keep row height correct
+  @if $include-ext-grid-column-widget {
+    $ui-height: $icon-size + vertical($padding) + vertical($border-width);
+    .#{$prefix}button-#{$ui}-cell > .#{$prefix}grid-cell-inner {
+      padding-top: max(ceil(($grid-row-height - $ui-height) / 2), 0);
+      padding-bottom: max(floor(($grid-row-height - $ui-height) / 2), 0);
 
-        .#{$prefix}btn-over {
-            $stretch: slicer-background-stretch('btn-over.#{$prefix}btn-#{$ui}', 'bottom');
-            $frame: slicer-frame('btn-over.#{$prefix}btn-#{$ui}', $frame-size);
-
-            .#{$prefix}btn-#{$ui}-tl,
-            .#{$prefix}btn-#{$ui}-bl,
-            .#{$prefix}btn-#{$ui}-tr,
-            .#{$prefix}btn-#{$ui}-br,
-            .#{$prefix}btn-#{$ui}-tc,
-            .#{$prefix}btn-#{$ui}-bc {
-                background-image: slicer-corner-sprite('btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-over-corners');
-            }
-            .#{$prefix}btn-#{$ui}-ml,
-            .#{$prefix}btn-#{$ui}-mr {
-                background-image: slicer-sides-sprite('btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-over-sides');
-            }
-            .#{$prefix}btn-#{$ui}-mc {
-                background-color: $background-color-over;
-                @if $background-gradient-over != null {
-                    background-image: slicer-frame-background-image('btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-over-fbg');
-                }
-            }
-        }
-
-        .#{$prefix}btn-focus.#{$prefix}btn-over {
-            $stretch: slicer-background-stretch('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}', 'bottom');
-            $frame: slicer-frame('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}', $frame-size);
-
-            .#{$prefix}btn-#{$ui}-tl,
-            .#{$prefix}btn-#{$ui}-bl,
-            .#{$prefix}btn-#{$ui}-tr,
-            .#{$prefix}btn-#{$ui}-br,
-            .#{$prefix}btn-#{$ui}-tc,
-            .#{$prefix}btn-#{$ui}-bc {
-                background-image: slicer-corner-sprite('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-over-corners');
-            }
-            .#{$prefix}btn-#{$ui}-ml,
-            .#{$prefix}btn-#{$ui}-mr {
-                background-image: slicer-sides-sprite('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-over-sides');
-            }
-            .#{$prefix}btn-#{$ui}-mc {
-                background-color: $background-color-focus-over;
-                @if $background-gradient-focus-over != null {
-                    background-image: slicer-frame-background-image('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-over-fbg');
-                }
-            }
-        }
-
-        // add x-btn class to increase specificity over focus-over rules above
-        .#{$prefix}btn.#{$prefix}btn-menu-active,
-        .#{$prefix}btn.#{$prefix}btn-pressed {
-            $stretch: slicer-background-stretch('btn-pressed.#{$prefix}btn-#{$ui}', 'bottom');
-            $frame: slicer-frame('btn-pressed.#{$prefix}btn-#{$ui}', $frame-size);
-
-            .#{$prefix}btn-#{$ui}-tl,
-            .#{$prefix}btn-#{$ui}-bl,
-            .#{$prefix}btn-#{$ui}-tr,
-            .#{$prefix}btn-#{$ui}-br,
-            .#{$prefix}btn-#{$ui}-tc,
-            .#{$prefix}btn-#{$ui}-bc {
-                background-image: slicer-corner-sprite('btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-pressed-corners');
-            }
-            .#{$prefix}btn-#{$ui}-ml,
-            .#{$prefix}btn-#{$ui}-mr {
-                background-image: slicer-sides-sprite('btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-pressed-sides');
-            }
-            .#{$prefix}btn-#{$ui}-mc {
-                background-color: $background-color-pressed;
-                @if $background-gradient-focus-pressed != null {
-                    background-image: slicer-frame-background-image('btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-pressed-fbg');
-                }
-            }
-        }
-
-        .#{$prefix}btn-focus.#{$prefix}btn-menu-active,
-        .#{$prefix}btn-focus.#{$prefix}btn-pressed {
-            $stretch: slicer-background-stretch('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}', 'bottom');
-            $frame: slicer-frame('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}', $frame-size);
-
-            .#{$prefix}btn-#{$ui}-tl,
-            .#{$prefix}btn-#{$ui}-bl,
-            .#{$prefix}btn-#{$ui}-tr,
-            .#{$prefix}btn-#{$ui}-br,
-            .#{$prefix}btn-#{$ui}-tc,
-            .#{$prefix}btn-#{$ui}-bc {
-                background-image: slicer-corner-sprite('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-pressed-corners');
-            }
-            .#{$prefix}btn-#{$ui}-ml,
-            .#{$prefix}btn-#{$ui}-mr {
-                background-image: slicer-sides-sprite('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-pressed-sides');
-            }
-            .#{$prefix}btn-#{$ui}-mc {
-                background-color: $background-color-focus-pressed;
-                @if $background-gradient-focus-pressed != null {
-                    background-image: slicer-frame-background-image('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-focus-pressed-fbg');
-                }
-            }
-        }
-
-        // add x-btn class to increase specificity over focus-pressed
-        .#{$prefix}btn.#{$prefix}btn-disabled {
-            $stretch: slicer-background-stretch('btn-disabled.#{$prefix}btn-#{$ui}', 'bottom');
-            $frame: slicer-frame('btn-disabled.#{$prefix}btn-#{$ui}', $frame-size);
-
-            .#{$prefix}btn-#{$ui}-tl,
-            .#{$prefix}btn-#{$ui}-bl,
-            .#{$prefix}btn-#{$ui}-tr,
-            .#{$prefix}btn-#{$ui}-br,
-            .#{$prefix}btn-#{$ui}-tc,
-            .#{$prefix}btn-#{$ui}-bc {
-                background-image: slicer-corner-sprite('btn-disabled.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-disabled-corners');
-            }
-            .#{$prefix}btn-#{$ui}-ml,
-            .#{$prefix}btn-#{$ui}-mr {
-                background-image: slicer-sides-sprite('btn-disabled.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-disabled-sides');
-            }
-            .#{$prefix}btn-#{$ui}-mc {
-                background-color: $background-color-disabled;
-                @if $background-gradient-disabled != null {
-                    background-image: slicer-frame-background-image('btn-disabled.#{$prefix}btn-#{$ui}', 'btn/btn-#{$ui}-disabled-fbg');
-                }
-            }
-        }
+      // vertical-align: top needed when in grid cells to avoid margin stretching the cell-inner
+      > .#{$prefix}btn-#{$ui} {
+        vertical-align: top;
+      }
     }
-
-    @if $include-slicer-border-radius {
-        .#{$prefix}nbr .#{$prefix}btn-#{$ui} {
-            background-image: none;
-        }
-    }
-
-    @if $opacity-disabled != 1 {
-        .#{$prefix}btn-disabled.#{$prefix}btn-#{$ui} {
-            @include opacity($opacity-disabled);
-        }
-    }
-
-    @if $inner-opacity-disabled != 1 {
-        .#{$prefix}btn-disabled.#{$prefix}btn-#{$ui} {
-            .#{$prefix}btn-inner,
-            .#{$prefix}btn-icon-el {
-                @include opacity($inner-opacity-disabled);
-            }
-        }
-    }
-
-    @if $include-ext-button-segmented and $include-slicer-border-radius {
-        // These rules must use !important to overcome the !important border/padding
-        // removal rules from x-frame()
-        .#{$prefix}nbr {
-            .#{$prefix}segmented-button-item-horizontal.#{$prefix}btn-#{$ui} {
-                &.#{$prefix}segmented-button-first {
-                    border-right-width: right($border-width) !important;
-                    .#{$prefix}btn-#{$ui}-mc {
-                        padding-right: right($padding) !important;
-                    }
-                }
-                &.#{$prefix}segmented-button-middle {
-                    border-right-width: right($border-width) !important;
-                    .#{$prefix}btn-#{$ui}-mc {
-                        padding-right: right($padding) !important;
-                        padding-left: left($padding) !important;
-                    }
-                }
-                &.#{$prefix}segmented-button-last {
-                    .#{$prefix}btn-#{$ui}-mc {
-                        padding-left: left($padding) !important;
-                    }
-                }
-            }
-
-            .#{$prefix}segmented-button-item-vertical.#{$prefix}btn-#{$ui} {
-                &.#{$prefix}segmented-button-first {
-                    border-bottom-width: bottom($border-width) !important;
-                    .#{$prefix}btn-#{$ui}-mc {
-                        padding-bottom: bottom($padding) !important;
-                    }
-                }
-                &.#{$prefix}segmented-button-middle {
-                    border-bottom-width: bottom($border-width) !important;
-                    .#{$prefix}btn-#{$ui}-mc {
-                        padding-top: top($padding) !important;
-                        padding-bottom: bottom($padding) !important;
-                    }
-                }
-                &.#{$prefix}segmented-button-last {
-                    .#{$prefix}btn-#{$ui}-mc {
-                        padding-top: top($padding) !important;
-                    }
-                }
-            }
-
-            .#{$prefix}segmented-button-item.#{$prefix}btn-#{$ui}:after {
-                // Inner borders are contained in the framing elements of a button. Since
-                // we have suppressed the borders on the inner edges to remove the rounded
-                // corners, we need to simulate the inner-border using a pseudo el.
-                // Always set up the positioning of the pseudo element just in case
-                // it is needed by the following rules
-                content: ' ';
-                border-style: solid;
-                border-width: 0;
-                position: absolute;
-
-                @if not is-null($inner-border-width) and not is-null($inner-border-color) and $inner-border-width != 0 {
-                    border-width: $inner-border-width;
-                    border-color: $inner-border-color;
-                }
-            }
-
-            .#{$prefix}segmented-button-item-horizontal.#{$prefix}btn-#{$ui} {
-                &:after {
-                    top: $border-width;
-                    right: 0;
-                    bottom: $border-width;
-                    left: 0;
-                }
-                &.#{$prefix}segmented-button-first:after {
-                    left: $border-width;
-                }
-                &.#{$prefix}segmented-button-last:after {
-                    right: $border-width;
-                }
-            }
-
-            .#{$prefix}segmented-button-item-vertical.#{$prefix}btn-#{$ui} {
-                &:after {
-                    top: 0;
-                    right: $border-width;
-                    bottom: 0;
-                    left: $border-width;
-                }
-                &.#{$prefix}segmented-button-first:after {
-                    top: $border-width;
-                }
-                &.#{$prefix}segmented-button-last:after {
-                    bottom: $border-width;
-                }
-            }
-
-            .#{$prefix}segmented-button-item {
-                @if not is-null($inner-border-width-focus) and not is-null($inner-border-color-focus) {
-                    &.#{$prefix}btn-focus.#{$prefix}btn-#{$ui}:after {
-                        border-width: $inner-border-width-focus;
-                        border-color: $inner-border-color-focus;
-                    }
-                }
-
-                @if not is-null($inner-border-width-over) and not is-null($inner-border-color-over) {
-                    &.#{$prefix}btn-over.#{$prefix}btn-#{$ui}:after {
-                        border-width: $inner-border-width-over;
-                        border-color: $inner-border-color-over;
-                    }
-                }
-
-                @if not is-null($inner-border-width-focus-over) and not is-null($inner-border-color-focus-over) {
-                    &.#{$prefix}btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}:after {
-                        border-width: $inner-border-width-focus-over;
-                        border-color: $inner-border-color-focus-over;
-                    }
-                }
-
-                @if not is-null($inner-border-width-pressed) and not is-null($inner-border-color-pressed) {
-                    &.#{$prefix}btn.#{$prefix}btn-menu-active.#{$prefix}btn-#{$ui}:after,
-                    &.#{$prefix}btn.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}:after {
-                        border-width: $inner-border-width-pressed;
-                        border-color: $inner-border-color-pressed;
-                    }
-                }
-
-                @if not is-null($inner-border-width-focus-pressed) and not is-null($inner-border-color-focus-pressed) {
-                    &.#{$prefix}btn-focus.#{$prefix}btn-menu-active.#{$prefix}btn-#{$ui}:after,
-                    &.#{$prefix}btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}:after {
-                        border-width: $inner-border-width-focus-pressed;
-                        border-color: $inner-border-color-focus-pressed;
-                    }
-                }
-
-                @if not is-null($inner-border-width-disabled) and not is-null($inner-border-color-disabled) {
-                    &.#{$prefix}btn.#{$prefix}btn-disabled.#{$prefix}btn-#{$ui}:after {
-                        border-width: $inner-border-width-disabled;
-                        border-color: $inner-border-color-disabled;
-                    }
-                }
-            }
-        }
-    }
-
-    @include x-slicer('btn-focus.#{$prefix}btn-#{$ui}');
-    @include x-slicer('btn-over.#{$prefix}btn-#{$ui}');
-    @include x-slicer('btn-focus.#{$prefix}btn-over.#{$prefix}btn-#{$ui}');
-    @include x-slicer('btn-pressed.#{$prefix}btn-#{$ui}');
-    @include x-slicer('btn-focus.#{$prefix}btn-pressed.#{$prefix}btn-#{$ui}');
-    @include x-slicer('btn-disabled.#{$prefix}btn-#{$ui}');
-
-    // Button field or subclass inside cell - calculate top/bottom padding to keep row height correct
-    @if $include-ext-grid-column-widget {
-        $ui-height: $icon-size + vertical($padding) + vertical($border-width);
-        .#{$prefix}button-#{$ui}-cell > .#{$prefix}grid-cell-inner {
-            padding-top:    max(ceil(($grid-row-height - $ui-height) / 2), 0);
-            padding-bottom: max(floor(($grid-row-height - $ui-height) / 2), 0);
-
-            // vertical-align: top needed when in grid cells to avoid margin stretching the cell-inner
-            >.#{$prefix}btn-#{$ui} {
-                vertical-align: top;
-            }
-        }
-    }
+  }
 }
 
 @import 'Button_small';
@@ -1260,220 +1256,195 @@
 @import 'Button_large';
 
 @if $include-button-default-small-ui {
-    @include extjs-button-small-ui(
-        $ui: 'default',
-
-        $border-color: $button-default-border-color,
-        $border-color-over: $button-default-border-color-over,
-        $border-color-focus: $button-default-border-color-focus,
-        $border-color-pressed: $button-default-border-color-pressed,
-        $border-color-focus-over: $button-default-border-color-focus-over,
-        $border-color-focus-pressed: $button-default-border-color-focus-pressed,
-        $border-color-disabled: $button-default-border-color-disabled,
-
-        $background-color: $button-default-background-color,
-        $background-color-over: $button-default-background-color-over,
-        $background-color-focus: $button-default-background-color-focus,
-        $background-color-pressed: $button-default-background-color-pressed,
-        $background-color-focus-over: $button-default-background-color-focus-over,
-        $background-color-focus-pressed: $button-default-background-color-focus-pressed,
-        $background-color-disabled: $button-default-background-color-disabled,
-
-        $color: $button-default-color,
-        $color-over: $button-default-color-over,
-        $color-focus: $button-default-color-focus,
-        $color-pressed: $button-default-color-pressed,
-        $color-focus-over: $button-default-color-focus-over,
-        $color-focus-pressed: $button-default-color-focus-pressed,
-        $color-disabled: $button-default-color-disabled,
-
-        $inner-border-width: $button-default-inner-border-width,
-        $inner-border-width-over: $button-default-inner-border-width-over,
-        $inner-border-width-focus: $button-default-inner-border-width-focus,
-        $inner-border-width-pressed: $button-default-inner-border-width-pressed,
-        $inner-border-width-focus-over: $button-default-inner-border-width-focus-over,
-        $inner-border-width-focus-pressed: $button-default-inner-border-width-focus-pressed,
-        $inner-border-width-disabled: $button-default-inner-border-width-disabled,
-
-        $inner-border-color: $button-default-inner-border-color,
-        $inner-border-color-over: $button-default-inner-border-color-over,
-        $inner-border-color-focus: $button-default-inner-border-color-focus,
-        $inner-border-color-pressed: $button-default-inner-border-color-pressed,
-        $inner-border-color-focus-over: $button-default-inner-border-color-focus-over,
-        $inner-border-color-focus-pressed: $button-default-inner-border-color-focus-pressed,
-        $inner-border-color-disabled: $button-default-inner-border-color-disabled,
-
-        $font-size: $button-small-font-size,
-        $font-size-over: $button-small-font-size-over,
-        $font-size-focus: $button-small-font-size-focus,
-        $font-size-pressed: $button-small-font-size-pressed,
-        $font-size-focus-over: $button-small-font-size-focus-over,
-        $font-size-focus-pressed: $button-small-font-size-focus-pressed,
-        $font-size-disabled: $button-small-font-size-disabled,
-
-        $font-weight: $button-small-font-weight,
-        $font-weight-over: $button-small-font-weight-over,
-        $font-weight-focus: $button-small-font-weight-focus,
-        $font-weight-pressed: $button-small-font-weight-pressed,
-        $font-weight-focus-over: $button-small-font-weight-focus-over,
-        $font-weight-focus-pressed: $button-small-font-weight-focus-pressed,
-        $font-weight-disabled: $button-small-font-weight-disabled,
-
-        $font-family: $button-small-font-family,
-        $font-family-over: $button-small-font-family-over,
-        $font-family-focus: $button-small-font-family-focus,
-        $font-family-pressed: $button-small-font-family-pressed,
-        $font-family-focus-over: $button-small-font-family-focus-over,
-        $font-family-focus-pressed: $button-small-font-family-focus-pressed,
-        $font-family-disabled: $button-small-font-family-disabled
-    );
+  @include extjs-button-small-ui(
+          $ui: 'default',
+          $border-color: $button-default-border-color,
+          $border-color-over: $button-default-border-color-over,
+          $border-color-focus: $button-default-border-color-focus,
+          $border-color-pressed: $button-default-border-color-pressed,
+          $border-color-focus-over: $button-default-border-color-focus-over,
+          $border-color-focus-pressed: $button-default-border-color-focus-pressed,
+          $border-color-disabled: $button-default-border-color-disabled,
+          $background-color: $button-default-background-color,
+          $background-color-over: $button-default-background-color-over,
+          $background-color-focus: $button-default-background-color-focus,
+          $background-color-pressed: $button-default-background-color-pressed,
+          $background-color-focus-over: $button-default-background-color-focus-over,
+          $background-color-focus-pressed: $button-default-background-color-focus-pressed,
+          $background-color-disabled: $button-default-background-color-disabled,
+          $color: $button-default-color,
+          $color-over: $button-default-color-over,
+          $color-focus: $button-default-color-focus,
+          $color-pressed: $button-default-color-pressed,
+          $color-focus-over: $button-default-color-focus-over,
+          $color-focus-pressed: $button-default-color-focus-pressed,
+          $color-disabled: $button-default-color-disabled,
+          $inner-border-width: $button-default-inner-border-width,
+          $inner-border-width-over: $button-default-inner-border-width-over,
+          $inner-border-width-focus: $button-default-inner-border-width-focus,
+          $inner-border-width-pressed: $button-default-inner-border-width-pressed,
+          $inner-border-width-focus-over: $button-default-inner-border-width-focus-over,
+          $inner-border-width-focus-pressed: $button-default-inner-border-width-focus-pressed,
+          $inner-border-width-disabled: $button-default-inner-border-width-disabled,
+          $inner-border-color: $button-default-inner-border-color,
+          $inner-border-color-over: $button-default-inner-border-color-over,
+          $inner-border-color-focus: $button-default-inner-border-color-focus,
+          $inner-border-color-pressed: $button-default-inner-border-color-pressed,
+          $inner-border-color-focus-over: $button-default-inner-border-color-focus-over,
+          $inner-border-color-focus-pressed: $button-default-inner-border-color-focus-pressed,
+          $inner-border-color-disabled: $button-default-inner-border-color-disabled,
+          $font-size: $button-small-font-size,
+          $font-size-over: $button-small-font-size-over,
+          $font-size-focus: $button-small-font-size-focus,
+          $font-size-pressed: $button-small-font-size-pressed,
+          $font-size-focus-over: $button-small-font-size-focus-over,
+          $font-size-focus-pressed: $button-small-font-size-focus-pressed,
+          $font-size-disabled: $button-small-font-size-disabled,
+          $font-weight: $button-small-font-weight,
+          $font-weight-over: $button-small-font-weight-over,
+          $font-weight-focus: $button-small-font-weight-focus,
+          $font-weight-pressed: $button-small-font-weight-pressed,
+          $font-weight-focus-over: $button-small-font-weight-focus-over,
+          $font-weight-focus-pressed: $button-small-font-weight-focus-pressed,
+          $font-weight-disabled: $button-small-font-weight-disabled,
+          $font-family: $button-small-font-family,
+          $font-family-over: $button-small-font-family-over,
+          $font-family-focus: $button-small-font-family-focus,
+          $font-family-pressed: $button-small-font-family-pressed,
+          $font-family-focus-over: $button-small-font-family-focus-over,
+          $font-family-focus-pressed: $button-small-font-family-focus-pressed,
+          $font-family-disabled: $button-small-font-family-disabled
+  );
 }
 
 @if $include-button-default-medium-ui {
-    @include extjs-button-medium-ui(
-        $ui: 'default',
-
-        $border-color: $button-default-border-color,
-        $border-color-over: $button-default-border-color-over,
-        $border-color-focus: $button-default-border-color-focus,
-        $border-color-pressed: $button-default-border-color-pressed,
-        $border-color-focus-over: $button-default-border-color-focus-over,
-        $border-color-focus-pressed: $button-default-border-color-focus-pressed,
-        $border-color-disabled: $button-default-border-color-disabled,
-
-        $background-color: $button-default-background-color,
-        $background-color-over: $button-default-background-color-over,
-        $background-color-focus: $button-default-background-color-focus,
-        $background-color-pressed: $button-default-background-color-pressed,
-        $background-color-focus-over: $button-default-background-color-focus-over,
-        $background-color-focus-pressed: $button-default-background-color-focus-pressed,
-        $background-color-disabled: $button-default-background-color-disabled,
-
-        $color: $button-default-color,
-        $color-over: $button-default-color-over,
-        $color-focus: $button-default-color-focus,
-        $color-pressed: $button-default-color-pressed,
-        $color-focus-over: $button-default-color-focus-over,
-        $color-focus-pressed: $button-default-color-focus-pressed,
-        $color-disabled: $button-default-color-disabled,
-
-        $inner-border-width: $button-default-inner-border-width,
-        $inner-border-width-over: $button-default-inner-border-width-over,
-        $inner-border-width-focus: $button-default-inner-border-width-focus,
-        $inner-border-width-pressed: $button-default-inner-border-width-pressed,
-        $inner-border-width-focus-over: $button-default-inner-border-width-focus-over,
-        $inner-border-width-focus-pressed: $button-default-inner-border-width-focus-pressed,
-        $inner-border-width-disabled: $button-default-inner-border-width-disabled,
-
-        $inner-border-color: $button-default-inner-border-color,
-        $inner-border-color-over: $button-default-inner-border-color-over,
-        $inner-border-color-focus: $button-default-inner-border-color-focus,
-        $inner-border-color-pressed: $button-default-inner-border-color-pressed,
-        $inner-border-color-focus-over: $button-default-inner-border-color-focus-over,
-        $inner-border-color-focus-pressed: $button-default-inner-border-color-focus-pressed,
-        $inner-border-color-disabled: $button-default-inner-border-color-disabled,
-
-        $font-size: $button-medium-font-size,
-        $font-size-over: $button-medium-font-size-over,
-        $font-size-focus: $button-medium-font-size-focus,
-        $font-size-pressed: $button-medium-font-size-pressed,
-        $font-size-focus-over: $button-medium-font-size-focus-over,
-        $font-size-focus-pressed: $button-medium-font-size-focus-pressed,
-        $font-size-disabled: $button-medium-font-size-disabled,
-
-        $font-weight: $button-medium-font-weight,
-        $font-weight-over: $button-medium-font-weight-over,
-        $font-weight-focus: $button-medium-font-weight-focus,
-        $font-weight-pressed: $button-medium-font-weight-pressed,
-        $font-weight-focus-over: $button-medium-font-weight-focus-over,
-        $font-weight-focus-pressed: $button-medium-font-weight-focus-pressed,
-        $font-weight-disabled: $button-medium-font-weight-disabled,
-
-        $font-family: $button-medium-font-family,
-        $font-family-over: $button-medium-font-family-over,
-        $font-family-focus: $button-medium-font-family-focus,
-        $font-family-pressed: $button-medium-font-family-pressed,
-        $font-family-focus-over: $button-medium-font-family-focus-over,
-        $font-family-focus-pressed: $button-medium-font-family-focus-pressed,
-        $font-family-disabled: $button-medium-font-family-disabled
-    );
+  @include extjs-button-medium-ui(
+          $ui: 'default',
+          $border-color: $button-default-border-color,
+          $border-color-over: $button-default-border-color-over,
+          $border-color-focus: $button-default-border-color-focus,
+          $border-color-pressed: $button-default-border-color-pressed,
+          $border-color-focus-over: $button-default-border-color-focus-over,
+          $border-color-focus-pressed: $button-default-border-color-focus-pressed,
+          $border-color-disabled: $button-default-border-color-disabled,
+          $background-color: $button-default-background-color,
+          $background-color-over: $button-default-background-color-over,
+          $background-color-focus: $button-default-background-color-focus,
+          $background-color-pressed: $button-default-background-color-pressed,
+          $background-color-focus-over: $button-default-background-color-focus-over,
+          $background-color-focus-pressed: $button-default-background-color-focus-pressed,
+          $background-color-disabled: $button-default-background-color-disabled,
+          $color: $button-default-color,
+          $color-over: $button-default-color-over,
+          $color-focus: $button-default-color-focus,
+          $color-pressed: $button-default-color-pressed,
+          $color-focus-over: $button-default-color-focus-over,
+          $color-focus-pressed: $button-default-color-focus-pressed,
+          $color-disabled: $button-default-color-disabled,
+          $inner-border-width: $button-default-inner-border-width,
+          $inner-border-width-over: $button-default-inner-border-width-over,
+          $inner-border-width-focus: $button-default-inner-border-width-focus,
+          $inner-border-width-pressed: $button-default-inner-border-width-pressed,
+          $inner-border-width-focus-over: $button-default-inner-border-width-focus-over,
+          $inner-border-width-focus-pressed: $button-default-inner-border-width-focus-pressed,
+          $inner-border-width-disabled: $button-default-inner-border-width-disabled,
+          $inner-border-color: $button-default-inner-border-color,
+          $inner-border-color-over: $button-default-inner-border-color-over,
+          $inner-border-color-focus: $button-default-inner-border-color-focus,
+          $inner-border-color-pressed: $button-default-inner-border-color-pressed,
+          $inner-border-color-focus-over: $button-default-inner-border-color-focus-over,
+          $inner-border-color-focus-pressed: $button-default-inner-border-color-focus-pressed,
+          $inner-border-color-disabled: $button-default-inner-border-color-disabled,
+          $font-size: $button-medium-font-size,
+          $font-size-over: $button-medium-font-size-over,
+          $font-size-focus: $button-medium-font-size-focus,
+          $font-size-pressed: $button-medium-font-size-pressed,
+          $font-size-focus-over: $button-medium-font-size-focus-over,
+          $font-size-focus-pressed: $button-medium-font-size-focus-pressed,
+          $font-size-disabled: $button-medium-font-size-disabled,
+          $font-weight: $button-medium-font-weight,
+          $font-weight-over: $button-medium-font-weight-over,
+          $font-weight-focus: $button-medium-font-weight-focus,
+          $font-weight-pressed: $button-medium-font-weight-pressed,
+          $font-weight-focus-over: $button-medium-font-weight-focus-over,
+          $font-weight-focus-pressed: $button-medium-font-weight-focus-pressed,
+          $font-weight-disabled: $button-medium-font-weight-disabled,
+          $font-family: $button-medium-font-family,
+          $font-family-over: $button-medium-font-family-over,
+          $font-family-focus: $button-medium-font-family-focus,
+          $font-family-pressed: $button-medium-font-family-pressed,
+          $font-family-focus-over: $button-medium-font-family-focus-over,
+          $font-family-focus-pressed: $button-medium-font-family-focus-pressed,
+          $font-family-disabled: $button-medium-font-family-disabled
+  );
 }
 
 @if $include-button-default-large-ui {
-    @include extjs-button-large-ui(
-        $ui: 'default',
-
-        $border-color: $button-default-border-color,
-        $border-color-over: $button-default-border-color-over,
-        $border-color-focus: $button-default-border-color-focus,
-        $border-color-pressed: $button-default-border-color-pressed,
-        $border-color-focus-over: $button-default-border-color-focus-over,
-        $border-color-focus-pressed: $button-default-border-color-focus-pressed,
-        $border-color-disabled: $button-default-border-color-disabled,
-
-        $background-color: $button-default-background-color,
-        $background-color-over: $button-default-background-color-over,
-        $background-color-focus: $button-default-background-color-focus,
-        $background-color-pressed: $button-default-background-color-pressed,
-        $background-color-focus-over: $button-default-background-color-focus-over,
-        $background-color-focus-pressed: $button-default-background-color-focus-pressed,
-        $background-color-disabled: $button-default-background-color-disabled,
-
-        $color: $button-default-color,
-        $color-over: $button-default-color-over,
-        $color-focus: $button-default-color-focus,
-        $color-pressed: $button-default-color-pressed,
-        $color-focus-over: $button-default-color-focus-over,
-        $color-focus-pressed: $button-default-color-focus-pressed,
-        $color-disabled: $button-default-color-disabled,
-
-        $inner-border-width: $button-default-inner-border-width,
-        $inner-border-width-over: $button-default-inner-border-width-over,
-        $inner-border-width-focus: $button-default-inner-border-width-focus,
-        $inner-border-width-pressed: $button-default-inner-border-width-pressed,
-        $inner-border-width-focus-over: $button-default-inner-border-width-focus-over,
-        $inner-border-width-focus-pressed: $button-default-inner-border-width-focus-pressed,
-        $inner-border-width-disabled: $button-default-inner-border-width-disabled,
-
-        $inner-border-color: $button-default-inner-border-color,
-        $inner-border-color-over: $button-default-inner-border-color-over,
-        $inner-border-color-focus: $button-default-inner-border-color-focus,
-        $inner-border-color-pressed: $button-default-inner-border-color-pressed,
-        $inner-border-color-focus-over: $button-default-inner-border-color-focus-over,
-        $inner-border-color-focus-pressed: $button-default-inner-border-color-focus-pressed,
-        $inner-border-color-disabled: $button-default-inner-border-color-disabled,
-
-        $font-size: $button-large-font-size,
-        $font-size-over: $button-large-font-size-over,
-        $font-size-focus: $button-large-font-size-focus,
-        $font-size-pressed: $button-large-font-size-pressed,
-        $font-size-focus-over: $button-large-font-size-focus-over,
-        $font-size-focus-pressed: $button-large-font-size-focus-pressed,
-        $font-size-disabled: $button-large-font-size-disabled,
-
-        $font-weight: $button-large-font-weight,
-        $font-weight-over: $button-large-font-weight-over,
-        $font-weight-focus: $button-large-font-weight-focus,
-        $font-weight-pressed: $button-large-font-weight-pressed,
-        $font-weight-focus-over: $button-large-font-weight-focus-over,
-        $font-weight-focus-pressed: $button-large-font-weight-focus-pressed,
-        $font-weight-disabled: $button-large-font-weight-disabled,
-
-        $font-family: $button-large-font-family,
-        $font-family-over: $button-large-font-family-over,
-        $font-family-focus: $button-large-font-family-focus,
-        $font-family-pressed: $button-large-font-family-pressed,
-        $font-family-focus-over: $button-large-font-family-focus-over,
-        $font-family-focus-pressed: $button-large-font-family-focus-pressed,
-        $font-family-disabled: $button-large-font-family-disabled
-    );
+  @include extjs-button-large-ui(
+          $ui: 'default',
+          $border-color: $button-default-border-color,
+          $border-color-over: $button-default-border-color-over,
+          $border-color-focus: $button-default-border-color-focus,
+          $border-color-pressed: $button-default-border-color-pressed,
+          $border-color-focus-over: $button-default-border-color-focus-over,
+          $border-color-focus-pressed: $button-default-border-color-focus-pressed,
+          $border-color-disabled: $button-default-border-color-disabled,
+          $background-color: $button-default-background-color,
+          $background-color-over: $button-default-background-color-over,
+          $background-color-focus: $button-default-background-color-focus,
+          $background-color-pressed: $button-default-background-color-pressed,
+          $background-color-focus-over: $button-default-background-color-focus-over,
+          $background-color-focus-pressed: $button-default-background-color-focus-pressed,
+          $background-color-disabled: $button-default-background-color-disabled,
+          $color: $button-default-color,
+          $color-over: $button-default-color-over,
+          $color-focus: $button-default-color-focus,
+          $color-pressed: $button-default-color-pressed,
+          $color-focus-over: $button-default-color-focus-over,
+          $color-focus-pressed: $button-default-color-focus-pressed,
+          $color-disabled: $button-default-color-disabled,
+          $inner-border-width: $button-default-inner-border-width,
+          $inner-border-width-over: $button-default-inner-border-width-over,
+          $inner-border-width-focus: $button-default-inner-border-width-focus,
+          $inner-border-width-pressed: $button-default-inner-border-width-pressed,
+          $inner-border-width-focus-over: $button-default-inner-border-width-focus-over,
+          $inner-border-width-focus-pressed: $button-default-inner-border-width-focus-pressed,
+          $inner-border-width-disabled: $button-default-inner-border-width-disabled,
+          $inner-border-color: $button-default-inner-border-color,
+          $inner-border-color-over: $button-default-inner-border-color-over,
+          $inner-border-color-focus: $button-default-inner-border-color-focus,
+          $inner-border-color-pressed: $button-default-inner-border-color-pressed,
+          $inner-border-color-focus-over: $button-default-inner-border-color-focus-over,
+          $inner-border-color-focus-pressed: $button-default-inner-border-color-focus-pressed,
+          $inner-border-color-disabled: $button-default-inner-border-color-disabled,
+          $font-size: $button-large-font-size,
+          $font-size-over: $button-large-font-size-over,
+          $font-size-focus: $button-large-font-size-focus,
+          $font-size-pressed: $button-large-font-size-pressed,
+          $font-size-focus-over: $button-large-font-size-focus-over,
+          $font-size-focus-pressed: $button-large-font-size-focus-pressed,
+          $font-size-disabled: $button-large-font-size-disabled,
+          $font-weight: $button-large-font-weight,
+          $font-weight-over: $button-large-font-weight-over,
+          $font-weight-focus: $button-large-font-weight-focus,
+          $font-weight-pressed: $button-large-font-weight-pressed,
+          $font-weight-focus-over: $button-large-font-weight-focus-over,
+          $font-weight-focus-pressed: $button-large-font-weight-focus-pressed,
+          $font-weight-disabled: $button-large-font-weight-disabled,
+          $font-family: $button-large-font-family,
+          $font-family-over: $button-large-font-family-over,
+          $font-family-focus: $button-large-font-family-focus,
+          $font-family-pressed: $button-large-font-family-pressed,
+          $font-family-focus-over: $button-large-font-family-focus-over,
+          $font-family-focus-pressed: $button-large-font-family-focus-pressed,
+          $font-family-disabled: $button-large-font-family-disabled
+  );
 }
 
 @if $include-ext-toolbar-toolbar {
-    @if $include-button-default-toolbar-small-ui {
-        @include extjs-button-toolbar-small-ui(
+  @if $include-button-default-toolbar-small-ui {
+    @include extjs-button-toolbar-small-ui(
             $ui: 'default',
-
             $border-color: $button-toolbar-border-color,
             $border-color-over: $button-toolbar-border-color-over,
             $border-color-focus: $button-toolbar-border-color-focus,
@@ -1481,7 +1452,6 @@
             $border-color-focus-over: $button-toolbar-border-color-focus-over,
             $border-color-focus-pressed: $button-toolbar-border-color-focus-pressed,
             $border-color-disabled: $button-toolbar-border-color-disabled,
-
             $background-color: $button-toolbar-background-color,
             $background-color-over: $button-toolbar-background-color-over,
             $background-color-focus: $button-toolbar-background-color-focus,
@@ -1489,7 +1459,6 @@
             $background-color-focus-over: $button-toolbar-background-color-focus-over,
             $background-color-focus-pressed: $button-toolbar-background-color-focus-pressed,
             $background-color-disabled: $button-toolbar-background-color-disabled,
-
             $color: $button-toolbar-color,
             $color-over: $button-toolbar-color-over,
             $color-focus: $button-toolbar-color-focus,
@@ -1497,7 +1466,6 @@
             $color-focus-over: $button-toolbar-color-focus-over,
             $color-focus-pressed: $button-toolbar-color-focus-pressed,
             $color-disabled: $button-toolbar-color-disabled,
-
             $inner-border-width: $button-toolbar-inner-border-width,
             $inner-border-width-over: $button-toolbar-inner-border-width-over,
             $inner-border-width-focus: $button-toolbar-inner-border-width-focus,
@@ -1505,7 +1473,6 @@
             $inner-border-width-focus-over: $button-toolbar-inner-border-width-focus-over,
             $inner-border-width-focus-pressed: $button-toolbar-inner-border-width-focus-pressed,
             $inner-border-width-disabled: $button-toolbar-inner-border-width-disabled,
-
             $inner-border-color: $button-toolbar-inner-border-color,
             $inner-border-color-over: $button-toolbar-inner-border-color-over,
             $inner-border-color-focus: $button-toolbar-inner-border-color-focus,
@@ -1513,7 +1480,6 @@
             $inner-border-color-focus-over: $button-toolbar-inner-border-color-focus-over,
             $inner-border-color-focus-pressed: $button-toolbar-inner-border-color-focus-pressed,
             $inner-border-color-disabled: $button-toolbar-inner-border-color-disabled,
-
             $font-size: $button-small-font-size,
             $font-size-over: $button-small-font-size-over,
             $font-size-focus: $button-small-font-size-focus,
@@ -1521,7 +1487,6 @@
             $font-size-focus-over: $button-small-font-size-focus-over,
             $font-size-focus-pressed: $button-small-font-size-focus-pressed,
             $font-size-disabled: $button-small-font-size-disabled,
-
             $font-weight: $button-small-font-weight,
             $font-weight-over: $button-small-font-weight-over,
             $font-weight-focus: $button-small-font-weight-focus,
@@ -1529,7 +1494,6 @@
             $font-weight-focus-over: $button-small-font-weight-focus-over,
             $font-weight-focus-pressed: $button-small-font-weight-focus-pressed,
             $font-weight-disabled: $button-small-font-weight-disabled,
-
             $font-family: $button-small-font-family,
             $font-family-over: $button-small-font-family-over,
             $font-family-focus: $button-small-font-family-focus,
@@ -1537,13 +1501,12 @@
             $font-family-focus-over: $button-small-font-family-focus-over,
             $font-family-focus-pressed: $button-small-font-family-focus-pressed,
             $font-family-disabled: $button-small-font-family-disabled
-        );
-    }
+    );
+  }
 
-    @if $include-button-default-toolbar-medium-ui {
-        @include extjs-button-toolbar-medium-ui(
+  @if $include-button-default-toolbar-medium-ui {
+    @include extjs-button-toolbar-medium-ui(
             $ui: 'default',
-
             $border-color: $button-toolbar-border-color,
             $border-color-over: $button-toolbar-border-color-over,
             $border-color-focus: $button-toolbar-border-color-focus,
@@ -1551,7 +1514,6 @@
             $border-color-focus-over: $button-toolbar-border-color-focus-over,
             $border-color-focus-pressed: $button-toolbar-border-color-focus-pressed,
             $border-color-disabled: $button-toolbar-border-color-disabled,
-
             $background-color: $button-toolbar-background-color,
             $background-color-over: $button-toolbar-background-color-over,
             $background-color-focus: $button-toolbar-background-color-focus,
@@ -1559,7 +1521,6 @@
             $background-color-focus-over: $button-toolbar-background-color-focus-over,
             $background-color-focus-pressed: $button-toolbar-background-color-focus-pressed,
             $background-color-disabled: $button-toolbar-background-color-disabled,
-
             $color: $button-toolbar-color,
             $color-over: $button-toolbar-color-over,
             $color-focus: $button-toolbar-color-focus,
@@ -1567,7 +1528,6 @@
             $color-focus-over: $button-toolbar-color-focus-over,
             $color-focus-pressed: $button-toolbar-color-focus-pressed,
             $color-disabled: $button-toolbar-color-disabled,
-
             $inner-border-width: $button-toolbar-inner-border-width,
             $inner-border-width-over: $button-toolbar-inner-border-width-over,
             $inner-border-width-focus: $button-toolbar-inner-border-width-focus,
@@ -1575,7 +1535,6 @@
             $inner-border-width-focus-over: $button-toolbar-inner-border-width-focus-over,
             $inner-border-width-focus-pressed: $button-toolbar-inner-border-width-focus-pressed,
             $inner-border-width-disabled: $button-toolbar-inner-border-width-disabled,
-
             $inner-border-color: $button-toolbar-inner-border-color,
             $inner-border-color-over: $button-toolbar-inner-border-color-over,
             $inner-border-color-focus: $button-toolbar-inner-border-color-focus,
@@ -1583,7 +1542,6 @@
             $inner-border-color-focus-over: $button-toolbar-inner-border-color-focus-over,
             $inner-border-color-focus-pressed: $button-toolbar-inner-border-color-focus-pressed,
             $inner-border-color-disabled: $button-toolbar-inner-border-color-disabled,
-
             $font-size: $button-medium-font-size,
             $font-size-over: $button-medium-font-size-over,
             $font-size-focus: $button-medium-font-size-focus,
@@ -1591,7 +1549,6 @@
             $font-size-focus-over: $button-medium-font-size-focus-over,
             $font-size-focus-pressed: $button-medium-font-size-focus-pressed,
             $font-size-disabled: $button-medium-font-size-disabled,
-
             $font-weight: $button-medium-font-weight,
             $font-weight-over: $button-medium-font-weight-over,
             $font-weight-focus: $button-medium-font-weight-focus,
@@ -1599,7 +1556,6 @@
             $font-weight-focus-over: $button-medium-font-weight-focus-over,
             $font-weight-focus-pressed: $button-medium-font-weight-focus-pressed,
             $font-weight-disabled: $button-medium-font-weight-disabled,
-
             $font-family: $button-medium-font-family,
             $font-family-over: $button-medium-font-family-over,
             $font-family-focus: $button-medium-font-family-focus,
@@ -1607,13 +1563,12 @@
             $font-family-focus-over: $button-medium-font-family-focus-over,
             $font-family-focus-pressed: $button-medium-font-family-focus-pressed,
             $font-family-disabled: $button-medium-font-family-disabled
-        );
-    }
+    );
+  }
 
-    @if $include-button-default-toolbar-large-ui {
-        @include extjs-button-toolbar-large-ui(
+  @if $include-button-default-toolbar-large-ui {
+    @include extjs-button-toolbar-large-ui(
             $ui: 'default',
-
             $border-color: $button-toolbar-border-color,
             $border-color-over: $button-toolbar-border-color-over,
             $border-color-focus: $button-toolbar-border-color-focus,
@@ -1621,7 +1576,6 @@
             $border-color-focus-over: $button-toolbar-border-color-focus-over,
             $border-color-focus-pressed: $button-toolbar-border-color-focus-pressed,
             $border-color-disabled: $button-toolbar-border-color-disabled,
-
             $background-color: $button-toolbar-background-color,
             $background-color-over: $button-toolbar-background-color-over,
             $background-color-focus: $button-toolbar-background-color-focus,
@@ -1629,7 +1583,6 @@
             $background-color-focus-over: $button-toolbar-background-color-focus-over,
             $background-color-focus-pressed: $button-toolbar-background-color-focus-pressed,
             $background-color-disabled: $button-toolbar-background-color-disabled,
-
             $color: $button-toolbar-color,
             $color-over: $button-toolbar-color-over,
             $color-focus: $button-toolbar-color-focus,
@@ -1637,7 +1590,6 @@
             $color-focus-over: $button-toolbar-color-focus-over,
             $color-focus-pressed: $button-toolbar-color-focus-pressed,
             $color-disabled: $button-toolbar-color-disabled,
-
             $inner-border-width: $button-toolbar-inner-border-width,
             $inner-border-width-over: $button-toolbar-inner-border-width-over,
             $inner-border-width-focus: $button-toolbar-inner-border-width-focus,
@@ -1645,7 +1597,6 @@
             $inner-border-width-focus-over: $button-toolbar-inner-border-width-focus-over,
             $inner-border-width-focus-pressed: $button-toolbar-inner-border-width-focus-pressed,
             $inner-border-width-disabled: $button-toolbar-inner-border-width-disabled,
-
             $inner-border-color: $button-toolbar-inner-border-color,
             $inner-border-color-over: $button-toolbar-inner-border-color-over,
             $inner-border-color-focus: $button-toolbar-inner-border-color-focus,
@@ -1653,7 +1604,6 @@
             $inner-border-color-focus-over: $button-toolbar-inner-border-color-focus-over,
             $inner-border-color-focus-pressed: $button-toolbar-inner-border-color-focus-pressed,
             $inner-border-color-disabled: $button-toolbar-inner-border-color-disabled,
-
             $font-size: $button-large-font-size,
             $font-size-over: $button-large-font-size-over,
             $font-size-focus: $button-large-font-size-focus,
@@ -1661,7 +1611,6 @@
             $font-size-focus-over: $button-large-font-size-focus-over,
             $font-size-focus-pressed: $button-large-font-size-focus-pressed,
             $font-size-disabled: $button-large-font-size-disabled,
-
             $font-weight: $button-large-font-weight,
             $font-weight-over: $button-large-font-weight-over,
             $font-weight-focus: $button-large-font-weight-focus,
@@ -1669,7 +1618,6 @@
             $font-weight-focus-over: $button-large-font-weight-focus-over,
             $font-weight-focus-pressed: $button-large-font-weight-focus-pressed,
             $font-weight-disabled: $button-large-font-weight-disabled,
-
             $font-family: $button-large-font-family,
             $font-family-over: $button-large-font-family-over,
             $font-family-focus: $button-large-font-family-focus,
@@ -1677,6 +1625,6 @@
             $font-family-focus-over: $button-large-font-family-focus-over,
             $font-family-focus-pressed: $button-large-font-family-focus-pressed,
             $font-family-disabled: $button-large-font-family-disabled
-        );
-    }
+    );
+  }
 }

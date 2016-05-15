@@ -13,7 +13,7 @@ Ext.define('Ext.device.FileSystem', {
         'Ext.device.filesystem.Simulator'
     ],
 
-    constructor: function() {
+    constructor: function () {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView) {
             if (browserEnv.Cordova) {

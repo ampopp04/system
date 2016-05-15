@@ -1,5 +1,5 @@
 /**
- * Barebones iframe implementation. 
+ * Barebones iframe implementation.
  */
 Ext.define('Ext.ux.IFrame', {
     extend: 'Ext.Component',
@@ -21,25 +21,25 @@ Ext.define('Ext.ux.IFrame', {
         this.frameName = this.frameName || this.id + '-frame';
     },
 
-    initEvents : function() {
+    initEvents: function () {
         var me = this;
         me.callParent();
         me.iframeEl.on('load', me.onLoad, me);
     },
 
-    initRenderData: function() {
+    initRenderData: function () {
         return Ext.apply(this.callParent(), {
             src: this.src,
             frameName: this.frameName
         });
     },
 
-    getBody: function() {
+    getBody: function () {
         var doc = this.getDoc();
         return doc.body || doc.documentElement;
     },
 
-    getDoc: function() {
+    getDoc: function () {
         try {
             return this.getWin().document;
         } catch (ex) {
@@ -47,7 +47,7 @@ Ext.define('Ext.ux.IFrame', {
         }
     },
 
-    getWin: function() {
+    getWin: function () {
         var me = this,
             name = me.frameName,
             win = Ext.isIE
@@ -56,7 +56,7 @@ Ext.define('Ext.ux.IFrame', {
         return win;
     },
 
-    getFrame: function() {
+    getFrame: function () {
         var me = this;
         return me.iframeEl.dom;
     },
@@ -65,8 +65,8 @@ Ext.define('Ext.ux.IFrame', {
         this.cleanupListeners(true);
         this.callParent();
     },
-    
-    cleanupListeners: function(destroying){
+
+    cleanupListeners: function (destroying) {
         var doc, prop;
 
         if (this.rendered) {
@@ -82,11 +82,12 @@ Ext.define('Ext.ux.IFrame', {
                         }
                     }
                 }
-            } catch(e) { }
+            } catch (e) {
+            }
         }
     },
 
-    onLoad: function() {
+    onLoad: function () {
         var me = this,
             doc = me.getDoc(),
             fn = me.onRelayedEvent;
@@ -108,7 +109,7 @@ Ext.define('Ext.ux.IFrame', {
                         scope: me
                     }
                 );
-            } catch(e) {
+            } catch (e) {
                 // cannot do this xss
             }
 
@@ -132,13 +133,13 @@ Ext.define('Ext.ux.IFrame', {
 
         var iframeEl = this.iframeEl,
 
-            // Get the left-based iframe position
+        // Get the left-based iframe position
             iframeXY = iframeEl.getTrueXY(),
             originalEventXY = event.getXY(),
 
-            // Get the left-based XY position.
-            // This is because the consumer of the injected event will
-            // perform its own RTL normalization.
+        // Get the left-based XY position.
+        // This is because the consumer of the injected event will
+        // perform its own RTL normalization.
             eventXY = event.getTrueXY();
 
         // the event from the inner document has XY relative to that document's origin,

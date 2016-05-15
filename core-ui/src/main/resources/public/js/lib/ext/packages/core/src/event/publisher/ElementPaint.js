@@ -14,14 +14,14 @@ Ext.define('Ext.event.publisher.ElementPaint', {
 
     handledEvents: ['painted'],
 
-    constructor: function() {
+    constructor: function () {
         this.monitors = {};
         this.subscribers = {};
 
         this.callParent(arguments);
     },
 
-    subscribe: function(element) {
+    subscribe: function (element) {
         var me = this,
             id = element.id,
             subscribers = me.subscribers;
@@ -40,7 +40,7 @@ Ext.define('Ext.event.publisher.ElementPaint', {
         }
     },
 
-    unsubscribe: function(element) {
+    unsubscribe: function (element) {
         var id = element.id,
             subscribers = this.subscribers,
             monitors = this.monitors;
@@ -52,9 +52,9 @@ Ext.define('Ext.event.publisher.ElementPaint', {
         }
     },
 
-    onElementPainted: function(element) {
+    onElementPainted: function (element) {
         Ext.TaskQueue.requestRead('fire', this, [element, 'painted', [element]]);
     }
-}, function(ElementPaint) {
+}, function (ElementPaint) {
     ElementPaint.instance = new ElementPaint();
 });

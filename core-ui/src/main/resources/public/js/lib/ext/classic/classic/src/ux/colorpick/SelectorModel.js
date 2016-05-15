@@ -2,8 +2,8 @@
  * View Model that holds the "selectedColor" of the color picker container.
  */
 Ext.define('Ext.ux.colorpick.SelectorModel', {
-    extend : 'Ext.app.ViewModel',
-    alias  : 'viewmodel.colorpick-selectormodel',
+    extend: 'Ext.app.ViewModel',
+    alias: 'viewmodel.colorpick-selectormodel',
 
     requires: [
         'Ext.ux.colorpick.ColorUtils'
@@ -11,22 +11,22 @@ Ext.define('Ext.ux.colorpick.SelectorModel', {
 
     data: {
         selectedColor: {
-            r : 255,  // red
-            g : 255,  // green
-            b : 255,  // blue
-            h : 0,    // hue,
-            s : 1,    // saturation
-            v : 1,    // value
-            a : 1     // alpha (opacity)
+            r: 255,  // red
+            g: 255,  // green
+            b: 255,  // blue
+            h: 0,    // hue,
+            s: 1,    // saturation
+            v: 1,    // value
+            a: 1     // alpha (opacity)
         },
         previousColor: {
-            r : 0,    // red
-            g : 0,    // green
-            b : 0,    // blue
-            h : 0,    // hue,
-            s : 1,    // saturation
-            v : 1,    // value
-            a : 1     // alpha (opacity)
+            r: 0,    // red
+            g: 0,    // green
+            b: 0,    // blue
+            h: 0,    // hue,
+            s: 1,    // saturation
+            v: 1,    // value
+            a: 1     // alpha (opacity)
         }
     },
 
@@ -51,78 +51,78 @@ Ext.define('Ext.ux.colorpick.SelectorModel', {
 
         // "R" in "RGB"
         red: {
-            get: function(get) {
+            get: function (get) {
                 return get('selectedColor.r');
             },
 
-            set: function(r) {
-                this.changeRGB({ r: r });
+            set: function (r) {
+                this.changeRGB({r: r});
             }
         },
 
         // "G" in "RGB"
         green: {
-            get: function(get) {
+            get: function (get) {
                 return get('selectedColor.g');
             },
 
-            set: function(g) {
-                this.changeRGB({ g: g });
+            set: function (g) {
+                this.changeRGB({g: g});
             }
         },
 
         // "B" in "RGB"
         blue: {
-            get: function(get) {
+            get: function (get) {
                 return get('selectedColor.b');
             },
 
-            set: function(b) {
-                this.changeRGB({ b: b });
+            set: function (b) {
+                this.changeRGB({b: b});
             }
         },
 
         // "H" in HSV
         hue: {
-            get: function(get) {
+            get: function (get) {
                 return get('selectedColor.h') * 360;
             },
 
-            set: function(hue) {
-                this.changeHSV({ h: hue / 360 });
+            set: function (hue) {
+                this.changeHSV({h: hue / 360});
             }
         },
 
         // "S" in HSV
         saturation: {
-            get : function(get) {
+            get: function (get) {
                 return get('selectedColor.s') * 100;
             },
 
-            set: function(saturation) {
-                this.changeHSV({ s: saturation / 100 });
+            set: function (saturation) {
+                this.changeHSV({s: saturation / 100});
             }
         },
 
         // "V" in HSV
         value: {
-            get: function(get) {
+            get: function (get) {
                 var v = get('selectedColor.v');
                 return v * 100;
             },
 
-            set: function(value) {
-                this.changeHSV({ v: value / 100 });
+            set: function (value) {
+                this.changeHSV({v: value / 100});
             }
         },
 
         alpha: {
-            get: function(data) {
+            get: function (data) {
                 var a = data('selectedColor.a');
                 return a * 100;
             },
 
-            set: function(alpha) {
+            set: function (alpha) {
                 this.set('selectedColor', Ext.applyIf({
                     a: alpha / 100
                 }, this.data.selectedColor));

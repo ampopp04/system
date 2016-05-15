@@ -17,7 +17,7 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
     autoFlex: true,
 
     type: 'checkboxgroup',
-    
+
     createsInnerCt: true,
 
     childEls: [
@@ -26,18 +26,18 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
 
     renderTpl: [
         '<table id="{ownerId}-innerCt" data-ref="innerCt" class="' + Ext.baseCSSPrefix + 'table-plain" cellpadding="0"',
-            'role="presentation" style="{tableStyle}"><tr role="presentation">',
-            '<tpl for="columns">',
-                '<td class="{parent.colCls}" valign="top" style="{style}" role="presentation">',
-                    '{% this.renderColumn(out,parent,xindex-1) %}',
-                '</td>',
-            '</tpl>',
+        'role="presentation" style="{tableStyle}"><tr role="presentation">',
+        '<tpl for="columns">',
+        '<td class="{parent.colCls}" valign="top" style="{style}" role="presentation">',
+        '{% this.renderColumn(out,parent,xindex-1) %}',
+        '</td>',
+        '</tpl>',
         '</tr></table>'
     ],
 
-    lastOwnerItemsGeneration : null,
+    lastOwnerItemsGeneration: null,
 
-    beginLayout: function(ownerContext) {
+    beginLayout: function (ownerContext) {
         var me = this,
             columns,
             numCols,
@@ -95,11 +95,11 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
             if (!flexedCols) {
                 innerCtStyle.tableLayout = 'fixed';
                 innerCtStyle.width = '';
-            // some flexed cols -- need to fix some
+                // some flexed cols -- need to fix some
             } else if (flexedCols < numCols) {
                 innerCtStyle.tableLayout = 'fixed';
                 innerCtStyle.width = '100%';
-            // let the table decide
+                // let the table decide
             } else {
                 innerCtStyle.tableLayout = 'auto';
                 // if autoFlex, fill available space, else compact down
@@ -132,7 +132,7 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
      * Just wait for the child items to all lay themselves out in the width we are configured
      * to make available to them. Then we can measure our height.
      */
-    calculate: function(ownerContext) {
+    calculate: function (ownerContext) {
         var me = this,
             targetContext, widthShrinkWrap, heightShrinkWrap, shrinkWrap, table, targetPadding;
 
@@ -205,7 +205,7 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
             increment = columnCount;
         }
 
-        for ( ; itemIndex < itemCount; itemIndex += increment) {
+        for (; itemIndex < itemCount; itemIndex += increment) {
             item = items[itemIndex];
             me.configureItem(item);
             tree = item.getRenderTree();
@@ -217,7 +217,7 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
      * Returns the number of columns in the checkbox group.
      * @private
      */
-    getColumnCount: function() {
+    getColumnCount: function () {
         var me = this,
             owner = me.owner,
             ownerColumns = owner.columns;
@@ -249,7 +249,7 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
 
         // calculate total flex
         if (me.columnsArray) {
-            for (i=0; i < columns; i++) {
+            for (i = 0; i < columns; i++) {
                 width = me.owner.columns[i];
                 if (width < 1) {
                     totalFlex += width;
@@ -282,8 +282,8 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
         // If the columns config was an array of column widths, allow table to auto width
         data.tableStyle =
             !flexedCols ? 'table-layout:fixed;' :
-            (flexedCols < columns) ? 'table-layout:fixed;width:100%' :
-            (autoFlex) ? 'table-layout:auto;width:100%' : 'table-layout:auto;';
+                (flexedCols < columns) ? 'table-layout:fixed;width:100%' :
+                    (autoFlex) ? 'table-layout:auto;width:100%' : 'table-layout:auto;';
 
         return data;
     },
@@ -323,7 +323,7 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
      * also determines if the items are in the proper place in the dom.
      * @protected
      */
-    renderItems : function(items) {
+    renderItems: function (items) {
         var me = this,
             itemCount = items.length,
             i,
@@ -363,11 +363,11 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
         }
     },
 
-    isItemAtPosition : function(item, rowIndex, columnIndex) {
+    isItemAtPosition: function (item, rowIndex, columnIndex) {
         return item.el.dom === this.getNodeAt(rowIndex, columnIndex);
     },
 
-    getRenderColumnIndex : function(itemIndex, rowCount, columnCount) {
+    getRenderColumnIndex: function (itemIndex, rowCount, columnCount) {
         if (this.vertical) {
             return Math.floor(itemIndex / rowCount);
         } else {
@@ -375,7 +375,7 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
         }
     },
 
-    getRenderRowIndex : function(itemIndex, rowCount, columnCount) {
+    getRenderRowIndex: function (itemIndex, rowCount, columnCount) {
         var me = this;
         if (me.vertical) {
             return itemIndex % rowCount;
@@ -384,11 +384,11 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
         }
     },
 
-    getNodeAt : function(rowIndex, columnIndex) {
+    getNodeAt: function (rowIndex, columnIndex) {
         return this.columnNodes[columnIndex].childNodes[rowIndex];
     },
 
-    addMissingColumns : function(itemsCount) {
+    addMissingColumns: function (itemsCount) {
         var me = this,
             existingColumnsCount = me.columnNodes.length,
             missingColumnsCount,
@@ -410,7 +410,7 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
         }
     },
 
-    removeExceedingColumns : function(itemsCount) {
+    removeExceedingColumns: function (itemsCount) {
         var me = this,
             existingColumnsCount = me.columnNodes.length,
             exceedingColumnsCount,
@@ -432,7 +432,7 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
      * @param {number} columnIndex column index
      * @private
      */
-    renderItem : function(item, rowIndex, columnIndex) {
+    renderItem: function (item, rowIndex, columnIndex) {
         var me = this;
 
         me.configureItem(item);
@@ -447,7 +447,7 @@ Ext.define('Ext.layout.container.CheckboxGroup', {
      * @param {number} columnIndex column index
      * @private
      */
-    moveItem : function(item, rowIndex, columnIndex) {
+    moveItem: function (item, rowIndex, columnIndex) {
         var me = this,
             column = me.columnNodes[columnIndex],
             targetNode = column.childNodes[rowIndex];

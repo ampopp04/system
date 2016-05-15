@@ -95,7 +95,7 @@ Ext.define('Ext.util.Bag', {
         return ret;
     },
 
-    contains: function(item) {
+    contains: function (item) {
         var ret = false,
             map = this.map,
             key;
@@ -110,7 +110,7 @@ Ext.define('Ext.util.Bag', {
         return ret;
     },
 
-    containsKey: function(key) {
+    containsKey: function (key) {
         return key in this.map;
     },
 
@@ -119,7 +119,7 @@ Ext.define('Ext.util.Bag', {
         this.callParent();
     },
 
-    getAt: function(index) {
+    getAt: function (index) {
         var out = null;
         if (index < this.length) {
             out = this.items[index];
@@ -127,7 +127,7 @@ Ext.define('Ext.util.Bag', {
         return out;
     },
 
-    getByKey: function(key) {
+    getByKey: function (key) {
         var map = this.map,
             ret = null;
 
@@ -137,7 +137,7 @@ Ext.define('Ext.util.Bag', {
         return ret;
     },
 
-    getCount: function() {
+    getCount: function () {
         return this.length;
     },
 
@@ -172,7 +172,7 @@ Ext.define('Ext.util.Bag', {
         return old;
     },
 
-    removeByKey: function(key) {
+    removeByKey: function (key) {
         var item = this.getByKey(key);
         if (item) {
             this.remove(item);

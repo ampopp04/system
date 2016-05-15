@@ -1,15 +1,15 @@
-describe("Ext.button.Cycle", function() {
+describe("Ext.button.Cycle", function () {
     var button;
 
-    function clickIt (event) {
+    function clickIt(event) {
         jasmine.fireMouseEvent(button.el.dom, event || 'click');
     }
 
-    function makeButton (config) {
+    function makeButton(config) {
         // ARIA errors and warnings are expected
         spyOn(Ext.log, 'error');
         spyOn(Ext.log, 'warn');
-        
+
         button = new Ext.button.Cycle(Ext.apply({
             text: 'Button',
             menu: {
@@ -30,24 +30,24 @@ describe("Ext.button.Cycle", function() {
         }, config));
     }
 
-    afterEach(function() {
+    afterEach(function () {
         Ext.destroy(button);
         button = null;
     });
 
-    describe("event/handler", function() {
+    describe("event/handler", function () {
         var eventSpy, handlerSpy;
-        beforeEach(function() {
+        beforeEach(function () {
             eventSpy = jasmine.createSpy();
             handlerSpy = jasmine.createSpy();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             eventSpy = handlerSpy = null;
         });
 
-        describe("during construction", function() {
-            it("should not fire the event/handler with no activeItem", function() {
+        describe("during construction", function () {
+            it("should not fire the event/handler with no activeItem", function () {
                 makeButton({
                     listeners: {
                         change: eventSpy
@@ -58,7 +58,7 @@ describe("Ext.button.Cycle", function() {
                 expect(handlerSpy).not.toHaveBeenCalled();
             });
 
-            it("should not fire the event/handler with an activeItem", function() {
+            it("should not fire the event/handler with an activeItem", function () {
                 makeButton({
                     activeItem: 1,
                     listeners: {
@@ -71,8 +71,8 @@ describe("Ext.button.Cycle", function() {
             });
         });
 
-        describe("arguments", function() {
-            it("should pass the button and the active item", function() {
+        describe("arguments", function () {
+            it("should pass the button and the active item", function () {
                 makeButton({
                     listeners: {
                         change: eventSpy
@@ -90,8 +90,8 @@ describe("Ext.button.Cycle", function() {
             });
         });
 
-        describe("suppressEvents", function() {
-            it("should not fire if suppressEvents is passed", function() {
+        describe("suppressEvents", function () {
+            it("should not fire if suppressEvents is passed", function () {
                 makeButton({
                     listeners: {
                         change: eventSpy
@@ -104,8 +104,8 @@ describe("Ext.button.Cycle", function() {
             });
         });
 
-        describe("scope", function() {
-            it("should default the scope to the button", function() {
+        describe("scope", function () {
+            it("should default the scope to the button", function () {
                 makeButton({
                     changeHandler: handlerSpy
                 });
@@ -113,7 +113,7 @@ describe("Ext.button.Cycle", function() {
                 expect(handlerSpy.mostRecentCall.object).toBe(button);
             });
 
-            it("should use a passed scope", function() {
+            it("should use a passed scope", function () {
                 var scope = {};
                 makeButton({
                     changeHandler: handlerSpy,
@@ -124,7 +124,7 @@ describe("Ext.button.Cycle", function() {
             });
         });
 
-        it("should be able to resolve to a view controller", function() {
+        it("should be able to resolve to a view controller", function () {
             var ctrl = new Ext.app.ViewController();
             ctrl.doSomething = jasmine.createSpy();
             makeButton({
@@ -140,9 +140,9 @@ describe("Ext.button.Cycle", function() {
         });
     });
 
-    describe("showText", function() {
-        describe("with showText: false", function() {
-            it("should show the button text", function() {
+    describe("showText", function () {
+        describe("with showText: false", function () {
+            it("should show the button text", function () {
                 makeButton({
                     showText: false
                 });
@@ -153,7 +153,7 @@ describe("Ext.button.Cycle", function() {
                 expect(button.getText()).toBe('Button');
             });
 
-            it("should not prepend the prependText", function() {
+            it("should not prepend the prependText", function () {
                 makeButton({
                     showText: false,
                     prependText: '!'
@@ -162,8 +162,8 @@ describe("Ext.button.Cycle", function() {
             });
         });
 
-        describe("with showText: true", function() {
-            it("should show the active item text", function() {
+        describe("with showText: true", function () {
+            it("should show the active item text", function () {
                 makeButton({
                     showText: true
                 });
@@ -174,7 +174,7 @@ describe("Ext.button.Cycle", function() {
                 expect(button.getText()).toBe('Baz');
             });
 
-            it("should prepend the prependText", function() {
+            it("should prepend the prependText", function () {
                 makeButton({
                     showText: true,
                     prependText: '!'
@@ -188,19 +188,19 @@ describe("Ext.button.Cycle", function() {
         });
     });
 
-    describe("forceIcon", function() {
-        it("should show the active item iconCls by default", function() {
+    describe("forceIcon", function () {
+        it("should show the active item iconCls by default", function () {
             makeButton();
             expect(button.iconCls).toBe('iconFoo');
         });
 
-        it("should update the icon when the active item changes", function() {
+        it("should update the icon when the active item changes", function () {
             makeButton();
             button.setActiveItem(1);
             expect(button.iconCls).toBe('iconBar');
         });
 
-        it("should use the forceIcon if specified", function() {
+        it("should use the forceIcon if specified", function () {
             makeButton({
                 forceIcon: 'iconForce'
             });
@@ -210,19 +210,19 @@ describe("Ext.button.Cycle", function() {
         });
     });
 
-    describe("forceGlyph", function() {
-        it("should show the active item glyph by default", function() {
+    describe("forceGlyph", function () {
+        it("should show the active item glyph by default", function () {
             makeButton();
             expect(button.glyph).toBe('glyphFoo');
         });
 
-        it("should update the glyph when the active item changes", function() {
+        it("should update the glyph when the active item changes", function () {
             makeButton();
             button.setActiveItem(1);
             expect(button.glyph).toBe('glyphBar');
         });
 
-        it("should use the forceIcon if specified", function() {
+        it("should use the forceIcon if specified", function () {
             makeButton({
                 forceGlyph: 'glyphForce'
             });

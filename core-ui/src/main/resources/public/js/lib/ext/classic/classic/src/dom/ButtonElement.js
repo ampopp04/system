@@ -20,7 +20,7 @@
 Ext.define('Ext.dom.ButtonElement', {
     extend: 'Ext.dom.Element',
 
-    setSize: function(width, height, animate) {
+    setSize: function (width, height, animate) {
         var me = this,
             component = me.component;
 
@@ -39,7 +39,7 @@ Ext.define('Ext.dom.ButtonElement', {
         return me;
     },
 
-    setStyle: function(prop, value) {
+    setStyle: function (prop, value) {
         var me = this,
             component = me.component,
             width, height;
@@ -64,11 +64,11 @@ Ext.define('Ext.dom.ButtonElement', {
                 );
             }
         }
-        
+
         return me;
     },
 
-    setHeight: function(height, animate) {
+    setHeight: function (height, animate) {
         this.callParent([height, animate]);
 
         this.component.btnEl.setStyle(
@@ -79,7 +79,7 @@ Ext.define('Ext.dom.ButtonElement', {
         return this;
     },
 
-    setWidth: function(width, animate) {
+    setWidth: function (width, animate) {
         this.callParent([width, animate]);
 
         this.component.btnWrap.setStyle(

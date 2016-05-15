@@ -55,7 +55,7 @@ Ext.define('Ext.flash.Component', {
      * @cfg {String} [flashVersion="9.0.115"]
      * Indicates the version the flash content was published for.
      */
-    flashVersion : '9.0.115',
+    flashVersion: '9.0.115',
 
     /**
      * @cfg {String} [backgroundColor="#ffffff"]
@@ -136,7 +136,7 @@ Ext.define('Ext.flash.Component', {
      * @param {Ext.flash.Component} this
      */
 
-    initComponent: function() {
+    initComponent: function () {
         // <debug>
         if (!('swfobject' in window)) {
             Ext.raise('The SWFObject library is not loaded. Ext.flash.Component requires SWFObject version 2.2 or later: http://code.google.com/p/swfobject/');
@@ -148,18 +148,18 @@ Ext.define('Ext.flash.Component', {
 
         this.callParent();
     },
-    
-    beforeRender: function(){
+
+    beforeRender: function () {
         this.callParent();
-        
+
         Ext.applyIf(this.renderData, {
             swfId: this.getSwfId()
         });
     },
 
-    afterRender: function() {
+    afterRender: function () {
         var me = this,
-            flashParams = Ext.apply({}, me.flashParams), 
+            flashParams = Ext.apply({}, me.flashParams),
             flashVars = Ext.apply({}, me.flashVars);
 
         me.callParent();
@@ -193,7 +193,7 @@ Ext.define('Ext.flash.Component', {
      * The callback method for handling an embedding success or failure by SWFObject
      * @param {Object} e The event object passed by SWFObject - see http://code.google.com/p/swfobject/wiki/api
      */
-    swfCallback: function(e) {
+    swfCallback: function (e) {
         var me = this;
         if (e.success) {
             me.swf = Ext.get(e.ref);
@@ -208,11 +208,11 @@ Ext.define('Ext.flash.Component', {
     /**
      * Retrieves the id of the SWF object/embed element.
      */
-    getSwfId: function() {
+    getSwfId: function () {
         return this.swfId || (this.swfId = "extswf" + this.getAutoId());
     },
 
-    onSuccess: function() {
+    onSuccess: function () {
         // swfobject forces visiblity:visible on the swf element, which prevents it 
         // from getting hidden when an ancestor is given visibility:hidden.
         this.swf.setStyle('visibility', 'inherit');
@@ -220,7 +220,7 @@ Ext.define('Ext.flash.Component', {
 
     onFailure: Ext.emptyFn,
 
-    beforeDestroy: function() {
+    beforeDestroy: function () {
         var me = this,
             swf = me.swf;
         if (swf) {

@@ -1,5 +1,5 @@
-describe("Ext.GlobalEvents", function() {
-    describe('idle event', function() {
+describe("Ext.GlobalEvents", function () {
+    describe('idle event', function () {
         var delay = Ext.isIE ? 50 : 10,
             idleFired, done;
 
@@ -7,29 +7,29 @@ describe("Ext.GlobalEvents", function() {
             idleFired = true;
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             idleFired = false;
             done = false;
             Ext.on('idle', onIdle);
         });
 
-        afterEach(function() {
+        afterEach(function () {
             Ext.un('idle', onIdle);
         });
 
-        it("should fire after DOM event handler are invoked, but before control is returned to the browser", function() {
+        it("should fire after DOM event handler are invoked, but before control is returned to the browser", function () {
             var element = Ext.getBody().createChild(),
                 handledCount = 0;
 
             function expectFalse() {
                 expect(idleFired).toBe(false);
-                handledCount ++;
+                handledCount++;
             }
 
             // attach a couple mousedown listeners, the idle event should fire after both
             // handlers have fired
             element.on('mousedown', expectFalse);
-            element.on('mousedown', function() {
+            element.on('mousedown', function () {
                 expectFalse();
             });
 
@@ -41,7 +41,7 @@ describe("Ext.GlobalEvents", function() {
             element.destroy();
         });
 
-        it("should fire after a JsonPProxy processes a return packet", function() {
+        it("should fire after a JsonPProxy processes a return packet", function () {
             var store = Ext.create('Ext.data.Store', {
                 proxy: {
                     type: 'jsonp',
@@ -53,87 +53,87 @@ describe("Ext.GlobalEvents", function() {
                 },
                 fields: ['title'],
                 listeners: {
-                    load: function() {
+                    load: function () {
                         done = true;
                     }
                 }
             });
             store.loadPage(1);
-            waitsFor(function() {
+            waitsFor(function () {
                 return done === true;
             });
-            runs(function() {
+            runs(function () {
                 waits(delay);
-                runs(function() {
+                runs(function () {
                     expect(idleFired).toBe(true);
                     store.destroy();
                 });
             });
         });
 
-        it("should fire after a JsonP request is processed", function() {
+        it("should fire after a JsonP request is processed", function () {
             Ext.data.JsonP.request({
                 url: 'http://www.sencha.com/forum/remote_topics/index.php?page=1&start=0&limit=100',
-                callback: function() {
+                callback: function () {
                     done = true;
                 }
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return done === true;
             });
-            runs(function() {
+            runs(function () {
                 waits(delay);
-                runs(function() {
-                    expect(idleFired).toBe(true);
-                });
-            });
-        });
-        
-        it("should fire after an Ajax request is processed", function() {
-            Ext.Ajax.request({
-                url: 'resources/foo.json',
-                callback: function() {
-                    done = true;
-                }
-            });
-            waitsFor(function() {
-                return done === true;
-            });
-            runs(function() {
-                waits(delay);
-                runs(function() {
+                runs(function () {
                     expect(idleFired).toBe(true);
                 });
             });
         });
 
-        it("should fire after a scheduled Task is run", function() {
-            Ext.TaskManager.newTask({
-                run: function(){
+        it("should fire after an Ajax request is processed", function () {
+            Ext.Ajax.request({
+                url: 'resources/foo.json',
+                callback: function () {
                     done = true;
-                }, 
-                repeat: 1, 
-                interval: 1
-            }).start();
-            waitsFor(function() {
+                }
+            });
+            waitsFor(function () {
                 return done === true;
             });
-            runs(function() {
+            runs(function () {
                 waits(delay);
-                runs(function() {
+                runs(function () {
+                    expect(idleFired).toBe(true);
+                });
+            });
+        });
+
+        it("should fire after a scheduled Task is run", function () {
+            Ext.TaskManager.newTask({
+                run: function () {
+                    done = true;
+                },
+                repeat: 1,
+                interval: 1
+            }).start();
+            waitsFor(function () {
+                return done === true;
+            });
+            runs(function () {
+                waits(delay);
+                runs(function () {
                     expect(idleFired).toBe(true);
                 });
             });
         });
     });
-    
-    describe('scroll event', function() {
+
+    describe('scroll event', function () {
         var stretcher,
             scrollingPanel,
             scrolledElements = [],
             runIt = Ext.supports.touchScroll ? xit : it;
 
-        afterEach(function() {
+        afterEach(function () {
             stretcher.destroy();
             scrollingPanel.destroy();
         });
@@ -142,11 +142,11 @@ describe("Ext.GlobalEvents", function() {
             scrolledElements.push(scroller.getElement());
         }
 
-        runIt('should fire the global scroll event whenever anything scrolls', function() {
+        runIt('should fire the global scroll event whenever anything scrolls', function () {
             stretcher = Ext.getBody().createChild({
                 style: 'height:10000px'
             });
-            
+
             // Use Ext.Panel class - it will work in Classic and Modern
             scrollingPanel = new Ext.Panel({
                 renderTo: document.body,
@@ -155,7 +155,7 @@ describe("Ext.GlobalEvents", function() {
                 y: 0,
                 width: 300,
                 height: 300,
-                
+
                 // Modern defaults to 'card', so explicitly use 'auto'
                 layout: 'auto',
                 scrollable: true,
@@ -172,19 +172,19 @@ describe("Ext.GlobalEvents", function() {
             Ext.scroll.DomScroller.document.scrollBy(null, 100);
 
             // Wait for scroll events to fire (may be async)
-            waitsFor(function() {
+            waitsFor(function () {
                 return scrolledElements.length === 1 &&
-                       scrolledElements[0] === Ext.scroll.DomScroller.document.getElement();
+                    scrolledElements[0] === Ext.scroll.DomScroller.document.getElement();
             });
-            
-            runs(function() {
+
+            runs(function () {
                 scrollingPanel.getScrollable().scrollBy(null, 100);
             });
-            
+
             // Wait for scroll events to fire (may be async)
-            waitsFor(function() {
+            waitsFor(function () {
                 return scrolledElements.length === 2 &&
-                       scrolledElements[1] === scrollingPanel.getScrollable().getElement();
+                    scrolledElements[1] === scrollingPanel.getScrollable().getElement();
             });
         });
     });

@@ -1,16 +1,16 @@
-describe('Ext.form.Labelable', function() {
+describe('Ext.form.Labelable', function () {
     var separator = ':',
         component;
 
     function define(props) {
         Ext.define('spec.Labelable', Ext.apply({
             extend: 'Ext.Component',
-            mixins: [ 'Ext.form.Labelable' ],
-            initComponent: function() {
+            mixins: ['Ext.form.Labelable'],
+            initComponent: function () {
                 this.callParent();
                 this.initLabelable();
             },
-            initRenderData: function() {
+            initRenderData: function () {
                 return Ext.applyIf(this.callParent(), this.getLabelableRenderData());
             },
             privates: {
@@ -28,93 +28,93 @@ describe('Ext.form.Labelable', function() {
         }, cfg));
     }
 
-    afterEach(function() {
+    afterEach(function () {
         component.destroy();
         Ext.undefine('spec.Labelable');
     });
 
-    describe("rendering", function() {
-        beforeEach(function() {
+    describe("rendering", function () {
+        beforeEach(function () {
             define({
                 ui: 'derp',
                 labelClsExtra: 'spec-label-extra',
                 fieldBodyCls: 'spec-body-cls',
                 extraFieldBodyCls: 'spec-body-extra',
-                getSubTplMarkup: function() {
+                getSubTplMarkup: function () {
                     return '<div style="height:50px;width:150px;background-color:green;"></div>'
                 }
             });
         });
 
-        describe("child els", function() {
+        describe("child els", function () {
             var proto;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 proto = spec.Labelable.prototype;
             });
 
-            it("should have a labelEl Element as it's first child", function() {
+            it("should have a labelEl Element as it's first child", function () {
                 create();
                 expect(component.el.first()).toBe(component.labelEl);
             });
 
-            it("should set labelCls on the labelEl", function() {
+            it("should set labelCls on the labelEl", function () {
                 create();
                 expect(component.labelEl).toHaveCls(proto.labelCls);
             });
 
-            it("should set labeCls with UI on the labelEl", function() {
+            it("should set labeCls with UI on the labelEl", function () {
                 create();
                 expect(component.labelEl).toHaveCls(proto.labelCls + '-derp');
             });
 
-            it("should set labelClsExtra on the labelEl", function() {
+            it("should set labelClsExtra on the labelEl", function () {
                 create();
                 expect(component.labelEl).toHaveCls('spec-label-extra');
             });
 
-            it("should add the unselectable cls to the labelEl", function() {
+            it("should add the unselectable cls to the labelEl", function () {
                 create();
                 expect(component.labelEl).toHaveCls('x-unselectable');
             });
 
-            it("should have a bodyEl after the labelEl", function() {
+            it("should have a bodyEl after the labelEl", function () {
                 create();
                 expect(component.labelEl.next()).toBe(component.bodyEl);
             });
 
-            it("should set baseBodyCls on the bodyEl", function() {
+            it("should set baseBodyCls on the bodyEl", function () {
                 create();
                 expect(component.bodyEl).toHaveCls(proto.baseBodyCls);
             });
 
-            it("should set baseBodyCls with UI on the bodyEl", function() {
+            it("should set baseBodyCls with UI on the bodyEl", function () {
                 create();
                 expect(component.bodyEl).toHaveCls(proto.baseBodyCls + '-derp');
             });
 
-            it("should set fieldBodyCls on the bodyEl", function() {
+            it("should set fieldBodyCls on the bodyEl", function () {
                 create();
                 expect(component.bodyEl).toHaveCls(proto.fieldBodyCls);
             });
 
-            it("should set fieldBodyCls with UI on the bodyEl", function() {
+            it("should set fieldBodyCls with UI on the bodyEl", function () {
                 create();
                 expect(component.bodyEl).toHaveCls(proto.fieldBodyCls + '-derp');
             });
 
-            it("should set extraFieldBodyCls on the bodyEl", function() {
+            it("should set extraFieldBodyCls on the bodyEl", function () {
                 create();
                 expect(component.bodyEl).toHaveCls(proto.extraFieldBodyCls);
             });
 
-            it("should not render an errorEl by default", function() {
+            it("should not render an errorEl by default", function () {
                 create();
                 expect(component.errorWrapEl).toBeNull();
                 expect(component.errorEl).toBeNull();
             });
 
-            it("should render an errorEl if msgTarget is 'side'", function() {
+            it("should render an errorEl if msgTarget is 'side'", function () {
                 create({
                     msgTarget: 'side'
                 });
@@ -122,34 +122,34 @@ describe('Ext.form.Labelable', function() {
                 expect(component.errorWrapEl.first()).toBe(component.errorEl);
             });
 
-            it("should render an errorEl if msgTarget is 'under'", function() {
+            it("should render an errorEl if msgTarget is 'under'", function () {
                 create({
                     msgTarget: 'under'
                 });
                 expect(component.bodyEl.next()).toBe(component.errorWrapEl);
                 expect(component.errorWrapEl.first()).toBe(component.errorEl);
             });
-            
-            it("should render ariaErrorEl by default", function() {
+
+            it("should render ariaErrorEl by default", function () {
                 create();
-                
+
                 expect(component.ariaErrorEl.dom).toBeDefined();
             });
-            
-            it("should assign x-hidden-clip to ariaErrorEl", function() {
+
+            it("should assign x-hidden-clip to ariaErrorEl", function () {
                 create();
-                
+
                 expect(component.ariaErrorEl.hasCls('x-hidden-clip')).toBe(true);
             });
         });
 
-        describe("fieldLabel and labelSeparator", function() {
-            it("should render a hidden label if no fieldLabel was configured", function() {
+        describe("fieldLabel and labelSeparator", function () {
+            it("should render a hidden label if no fieldLabel was configured", function () {
                 create();
                 expect(component.labelEl.isVisible()).toBe(false);
             });
 
-            it("should render a hidden label if hideLabel:true was configured", function() {
+            it("should render a hidden label if hideLabel:true was configured", function () {
                 create({
                     fieldLabel: 'Label',
                     hideLabel: true
@@ -157,14 +157,14 @@ describe('Ext.form.Labelable', function() {
                 expect(component.labelEl.isVisible()).toBe(false);
             });
 
-            it("should render a visible label if fieldLabel was configured", function() {
+            it("should render a visible label if fieldLabel was configured", function () {
                 create({
                     fieldLabel: 'Label'
                 });
                 expect(component.labelEl.isVisible()).toBe(true);
             });
 
-            it("should render the fieldLabel into the labelEl", function() {
+            it("should render the fieldLabel into the labelEl", function () {
                 create({
                     fieldLabel: 'Label'
                 });
@@ -172,7 +172,7 @@ describe('Ext.form.Labelable', function() {
                 expect(component.labelEl.dom.firstChild.innerHTML).toBe('Label:');
             });
 
-            it("should render the labelSeparator after the label", function() {
+            it("should render the labelSeparator after the label", function () {
                 create({
                     fieldLabel: 'Label',
                     labelSeparator: '-'
@@ -181,7 +181,7 @@ describe('Ext.form.Labelable', function() {
                 expect(component.labelEl.dom.firstChild.innerHTML).toBe('Label-');
             });
 
-            it("should not render the separator if labelSeparator is empty", function() {
+            it("should not render the separator if labelSeparator is empty", function () {
                 create({
                     fieldLabel: 'Label',
                     labelSeparator: ''
@@ -190,8 +190,8 @@ describe('Ext.form.Labelable', function() {
                 expect(component.labelEl.dom.firstChild.innerHTML).toBe('Label');
             });
 
-            describe("labelStyle", function() {
-                it("should add the labelStyle to the labelEl", function() {
+            describe("labelStyle", function () {
+                it("should add the labelStyle to the labelEl", function () {
                     create({
                         fieldLabel: 'Foo',
                         labelStyle: 'border-top: 50px solid red;'
@@ -202,29 +202,29 @@ describe('Ext.form.Labelable', function() {
         });
     });
 
-    describe("methods", function() {
-        describe("setFieldLabel", function() {
-            beforeEach(function() {
+    describe("methods", function () {
+        describe("setFieldLabel", function () {
+            beforeEach(function () {
                 define({
-                    getSubTplMarkup: function() {
+                    getSubTplMarkup: function () {
                         return '<div style="background-color:green;width:200px;height:50px;"></div>';
                     }
                 });
             });
 
-            it("should set the label element's innerHTML", function() {
+            it("should set the label element's innerHTML", function () {
                 create();
                 component.setFieldLabel('foo');
                 expect(component.labelEl.dom.firstChild.innerHTML).toBe('foo' + separator);
             });
 
-            it("should show the label element", function() {
+            it("should show the label element", function () {
                 create();
                 component.setFieldLabel('foo');
                 expect(component.labelEl.isVisible()).toBe(true);
             });
 
-            it("should hide the label element when setting an empty label", function() {
+            it("should hide the label element when setting an empty label", function () {
                 create({
                     fieldLabel: 'foo'
                 });
@@ -232,8 +232,8 @@ describe('Ext.form.Labelable', function() {
                 expect(component.labelEl.isVisible()).toBe(false);
             });
 
-            describe("with under error", function() {
-                it("should add the 'x-form-error-wrap-under-side-label' cls to the errorWrapEl when the label is on the side", function() {
+            describe("with under error", function () {
+                it("should add the 'x-form-error-wrap-under-side-label' cls to the errorWrapEl when the label is on the side", function () {
                     create({
                         msgTarget: 'under'
                     });
@@ -241,7 +241,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.errorWrapEl).toHaveCls('x-form-error-wrap-under-side-label');
                 });
 
-                it("should not add the 'x-form-error-wrap-under-side-label' cls to the errorWrapEl when the label is on the top", function() {
+                it("should not add the 'x-form-error-wrap-under-side-label' cls to the errorWrapEl when the label is on the top", function () {
                     create({
                         msgTarget: 'under',
                         labelAlign: 'top'
@@ -250,7 +250,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.errorWrapEl).not.toHaveCls('x-form-error-wrap-under-side-label');
                 });
 
-                it("should remove the 'x-form-error-wrap-under-side-label' cls from the errorWrapEl when empty label is set", function() {
+                it("should remove the 'x-form-error-wrap-under-side-label' cls from the errorWrapEl when empty label is set", function () {
                     create({
                         msgTarget: 'under',
                         fieldLabel: 'foo'
@@ -261,17 +261,17 @@ describe('Ext.form.Labelable', function() {
             });
         });
 
-        describe("setHideLabel", function() {
-            beforeEach(function() {
+        describe("setHideLabel", function () {
+            beforeEach(function () {
                 define({
-                    getSubTplMarkup: function() {
+                    getSubTplMarkup: function () {
                         return '<div></div>';
                     }
                 });
             });
 
-            describe("before render", function() {
-                it("should hide the label when rendered", function() {
+            describe("before render", function () {
+                it("should hide the label when rendered", function () {
                     create({
                         fieldLabel: 'Foo',
                         hideLabel: false,
@@ -282,7 +282,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.labelEl.isVisible()).toBe(false);
                 });
 
-                it("should show the label when rendered", function() {
+                it("should show the label when rendered", function () {
                     create({
                         fieldLabel: 'Foo',
                         hideLabel: true,
@@ -294,8 +294,8 @@ describe('Ext.form.Labelable', function() {
                 });
             });
 
-            describe("after render", function() {
-                it("should hide the label", function() {
+            describe("after render", function () {
+                it("should hide the label", function () {
                     create({
                         fieldLabel: 'Foo',
                         hideLabel: false
@@ -304,7 +304,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.labelEl.isVisible()).toBe(false);
                 });
 
-                it("should show the label", function() {
+                it("should show the label", function () {
                     create({
                         fieldLabel: 'Foo',
                         hideLabel: true
@@ -313,7 +313,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.labelEl.isVisible()).toBe(true);
                 });
 
-                it("should run a layout", function() {
+                it("should run a layout", function () {
                     create({
                         fieldLabel: 'Foo',
                         hideLabel: true
@@ -328,17 +328,17 @@ describe('Ext.form.Labelable', function() {
             });
         });
 
-        describe("setHideEmptyLabel", function() {
-            beforeEach(function() {
+        describe("setHideEmptyLabel", function () {
+            beforeEach(function () {
                 define({
-                    getSubTplMarkup: function() {
+                    getSubTplMarkup: function () {
                         return '<div></div>';
                     }
                 });
             });
 
-            describe("before render", function() {
-                it("should hide if the label is empty when rendered", function() {
+            describe("before render", function () {
+                it("should hide if the label is empty when rendered", function () {
                     create({
                         fieldLabel: '',
                         hideEmptyLabel: false,
@@ -349,7 +349,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.labelEl.isVisible()).toBe(false);
                 });
 
-                it("should show if the label is empty when rendered", function() {
+                it("should show if the label is empty when rendered", function () {
                     create({
                         fieldLabel: '',
                         hideEmptyLabel: true,
@@ -360,7 +360,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.labelEl.isVisible()).toBe(true);
                 });
 
-                it("should not be visible if hideLabel: true is configured", function() {
+                it("should not be visible if hideLabel: true is configured", function () {
                     create({
                         fieldLabel: '',
                         hideEmptyLabel: true,
@@ -372,7 +372,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.labelEl.isVisible()).toBe(false);
                 });
 
-                it("should not hide if the label is not empty", function() {
+                it("should not hide if the label is not empty", function () {
                     create({
                         fieldLabel: 'Foo',
                         hideEmptyLabel: false,
@@ -384,8 +384,8 @@ describe('Ext.form.Labelable', function() {
                 });
             });
 
-            describe("after render", function() {
-                it("should hide if the label is empty", function() {
+            describe("after render", function () {
+                it("should hide if the label is empty", function () {
                     create({
                         fieldLabel: '',
                         hideEmptyLabel: false
@@ -394,7 +394,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.labelEl.isVisible()).toBe(false);
                 });
 
-                it("should show if the label is empty", function() {
+                it("should show if the label is empty", function () {
                     create({
                         fieldLabel: '',
                         hideEmptyLabel: true
@@ -403,7 +403,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.labelEl.isVisible()).toBe(true);
                 });
 
-                it("should not be visible if hideLabel: true is configured", function() {
+                it("should not be visible if hideLabel: true is configured", function () {
                     create({
                         fieldLabel: '',
                         hideEmptyLabel: true,
@@ -413,7 +413,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.labelEl.isVisible()).toBe(false);
                 });
 
-                it("should not hide if the label is not empty", function() {
+                it("should not hide if the label is not empty", function () {
                     create({
                         fieldLabel: 'Foo',
                         hideEmptyLabel: false
@@ -422,7 +422,7 @@ describe('Ext.form.Labelable', function() {
                     expect(component.labelEl.isVisible()).toBe(true);
                 });
 
-                it("should run a layout", function() {
+                it("should run a layout", function () {
                     create({
                         fieldLabel: '',
                         hideEmptyLabel: true
@@ -436,53 +436,53 @@ describe('Ext.form.Labelable', function() {
                 });
             });
         });
-        
-        describe("setActiveError/unsetActiveError", function() {
+
+        describe("setActiveError/unsetActiveError", function () {
             var ariaErrorEl;
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 define({
-                    getSubTplMarkup: function() {
+                    getSubTplMarkup: function () {
                         return '<div></div>';
                     }
                 });
-                
+
                 create();
-                
+
                 ariaErrorEl = component.ariaErrorEl;
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 ariaErrorEl = null;
             });
-            
-            describe("setActiveErrors", function() {
-                beforeEach(function() {
+
+            describe("setActiveErrors", function () {
+                beforeEach(function () {
                     component.setActiveErrors(['foo', 'bar']);
                 });
-                
-                it("should set ariaErrorEl text", function() {
+
+                it("should set ariaErrorEl text", function () {
                     expect(ariaErrorEl.dom.innerHTML).toBe('foo. bar');
                 });
-                
-                it("should point actionEl aria-describedby to ariaErrorEl", function() {
+
+                it("should point actionEl aria-describedby to ariaErrorEl", function () {
                     var actionEl = component.getActionEl();
-                    
+
                     expect(actionEl.dom.getAttribute('aria-describedby')).toBe(ariaErrorEl.id);
                 });
-                
-                describe("unsetActiveError", function() {
-                    beforeEach(function() {
+
+                describe("unsetActiveError", function () {
+                    beforeEach(function () {
                         component.unsetActiveError();
                     });
-                    
-                    it("should clear ariaErrorEl text", function() {
+
+                    it("should clear ariaErrorEl text", function () {
                         expect(ariaErrorEl.dom.innerHTML).toBe('');
                     });
-                    
-                    it("should remove aria-describedby attribute from actionEl", function() {
+
+                    it("should remove aria-describedby attribute from actionEl", function () {
                         var actionEl = component.getActionEl();
-                        
+
                         expect(actionEl.dom.hasAttribute('aria-describedby')).toBe(false);
                     });
                 });
@@ -490,7 +490,7 @@ describe('Ext.form.Labelable', function() {
         });
     });
 
-    describe('layout', function() {
+    describe('layout', function () {
         var dimensions = {
             1: 'width',
             2: 'height',
@@ -499,7 +499,7 @@ describe('Ext.form.Labelable', function() {
 
         function makeLayoutSuite(shrinkWrap, autoFitErrors) {
             describe((shrinkWrap ? ("shrink wrap " + dimensions[shrinkWrap]) : "fixed width and height") +
-                    " autoFitErrors: " + autoFitErrors, function() {
+                " autoFitErrors: " + autoFitErrors, function () {
                 var shrinkWidth = (shrinkWrap & 1),
                     shrinkHeight = (shrinkWrap & 2),
                     errorWidth = 18, // the width of the error when side aligned
@@ -513,11 +513,11 @@ describe('Ext.form.Labelable', function() {
                     bodyWidth = 150, // the width of the bodyEl
                     bodyHeight = 50, // the height of the bodyEl
                     labelHeight = 23, // the height of the label when top aligned
-                    hideLabel, topLabel,  width, height;
+                    hideLabel, topLabel, width, height;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     define({
-                        getSubTplMarkup: function() {
+                        getSubTplMarkup: function () {
                             return '<div style="background-color:green;' +
                                 'width:' + (shrinkWidth ? (bodyWidth + 'px;') : 'auto;') +
                                 'height:' + (shrinkHeight ? (bodyHeight + 'px;') : '100%;') +
@@ -558,7 +558,7 @@ describe('Ext.form.Labelable', function() {
                         // use a fixed size element vs. text for the field label for
                         // consistency of measurement cross-browser
                         fieldLabel: '<span style="display:inline-block;width:' + labelInnerWidth +
-                            'px;background-color:red;">&nbsp;</span>',
+                        'px;background-color:red;">&nbsp;</span>',
                         labelSeparator: ''
                     }, cfg));
                 }
@@ -572,10 +572,10 @@ describe('Ext.form.Labelable', function() {
                 // and right alignment, with the exception of the text align of the
                 // label's inner element.
                 function makeSideLabelSuite(labelAlign) {
-                    describe(labelAlign + " label", function() {
+                    describe(labelAlign + " label", function () {
                         var leftLabel = (labelAlign === 'left');
 
-                        it("should layout", function() {
+                        it("should layout", function () {
                             create({
                                 labelAlign: labelAlign
                             });
@@ -606,7 +606,7 @@ describe('Ext.form.Labelable', function() {
                             expect(component.errorWrapEl).toBeNull();
                         });
 
-                        it("should layout with side error", function() {
+                        it("should layout with side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 msgTarget: 'side'
@@ -651,7 +651,7 @@ describe('Ext.form.Labelable', function() {
                             });
                         });
 
-                        it("should layout with hidden side error", function() {
+                        it("should layout with hidden side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 msgTarget: 'side'
@@ -695,7 +695,7 @@ describe('Ext.form.Labelable', function() {
                         });
 
                         // TODO: EXTJSIV-12634
-                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with under error", function() {
+                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with under error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 msgTarget: 'under'
@@ -740,7 +740,7 @@ describe('Ext.form.Labelable', function() {
                             });
                         });
 
-                        it("should layout with hidden label", function() {
+                        it("should layout with hidden label", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true
@@ -764,7 +764,7 @@ describe('Ext.form.Labelable', function() {
                             expect(component.errorWrapEl).toBeNull();
                         });
 
-                        it("should layout with hidden label and side error", function() {
+                        it("should layout with hidden label and side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true,
@@ -802,7 +802,7 @@ describe('Ext.form.Labelable', function() {
                             });
                         });
 
-                        it("should layout with hidden label and hidden side error", function() {
+                        it("should layout with hidden label and hidden side error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true,
@@ -839,7 +839,7 @@ describe('Ext.form.Labelable', function() {
                         });
 
                         // TODO: EXTJSIV-12634
-                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with hidden label and under error", function() {
+                        (Ext.isIE10m && !shrinkHeight ? xit : it)("should layout with hidden label and under error", function () {
                             create({
                                 labelAlign: labelAlign,
                                 hideLabel: true,
@@ -883,8 +883,8 @@ describe('Ext.form.Labelable', function() {
                 makeSideLabelSuite('right'); // labelAlign: 'right'
 
                 // TODO: EXTJSIV-12634
-                (Ext.isIE10m && !shrinkHeight ? xdescribe : describe)("top label", function() {
-                    it("should layout", function() {
+                (Ext.isIE10m && !shrinkHeight ? xdescribe : describe)("top label", function () {
+                    it("should layout", function () {
                         create({
                             labelAlign: 'top'
                         });
@@ -916,7 +916,7 @@ describe('Ext.form.Labelable', function() {
                         expect(component.errorWrapEl).toBeNull();
                     });
 
-                    it("should layout with side error", function() {
+                    it("should layout with side error", function () {
                         create({
                             labelAlign: 'top',
                             msgTarget: 'side'
@@ -962,7 +962,7 @@ describe('Ext.form.Labelable', function() {
                         });
                     });
 
-                    it("should layout with hidden side error", function() {
+                    it("should layout with hidden side error", function () {
                         create({
                             labelAlign: 'top',
                             msgTarget: 'side'
@@ -1008,7 +1008,7 @@ describe('Ext.form.Labelable', function() {
                         });
                     });
 
-                    it("should layout with under error", function() {
+                    it("should layout with under error", function () {
                         create({
                             labelAlign: 'top',
                             msgTarget: 'under'
@@ -1054,7 +1054,7 @@ describe('Ext.form.Labelable', function() {
                         });
                     });
 
-                    it("should layout with hidden label", function() {
+                    it("should layout with hidden label", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true
@@ -1078,7 +1078,7 @@ describe('Ext.form.Labelable', function() {
                         expect(component.errorWrapEl).toBeNull();
                     });
 
-                    it("should layout with hidden label and side error", function() {
+                    it("should layout with hidden label and side error", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true,
@@ -1116,7 +1116,7 @@ describe('Ext.form.Labelable', function() {
                         });
                     });
 
-                    it("should layout with hidden label and hidden side error", function() {
+                    it("should layout with hidden label and hidden side error", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true,
@@ -1152,7 +1152,7 @@ describe('Ext.form.Labelable', function() {
                         });
                     });
 
-                    it("should layout with hidden label and under error", function() {
+                    it("should layout with hidden label and under error", function () {
                         create({
                             labelAlign: 'top',
                             hideLabel: true,

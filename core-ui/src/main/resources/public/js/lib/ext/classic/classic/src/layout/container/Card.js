@@ -22,11 +22,11 @@
  *     });
  *
  *     p.getLayout().setActiveItem(1);
- * 
+ *
  * The {@link Ext.Component#beforedeactivate beforedeactivate} and {@link Ext.Component#beforeactivate beforeactivate}
  * events can be used to prevent a card from activating or deactivating by returning `false`.
- * 
- *     @example   
+ *
+ *     @example
  *     var active = 0;
  *     var main = Ext.create('Ext.panel.Panel', {
  *         renderTo: Ext.getBody(),
@@ -142,7 +142,7 @@ Ext.define('Ext.layout.container.Card', {
      * a lot of heavy controls being rendered into panels that are not displayed by default, setting this to
      * true might improve performance.
      */
-    deferredRender : false,
+    deferredRender: false,
 
     getRenderTree: function () {
         var me = this,
@@ -152,17 +152,17 @@ Ext.define('Ext.layout.container.Card', {
 
             // If they veto the activate, we have no active item
             if (activeItem.hasListeners.beforeactivate && activeItem.fireEvent('beforeactivate', activeItem) === false) {
- 
+
                 // We must null our activeItem reference, AND the one in our owning Container.
                 // Because upon layout invalidation, renderChildren will use this.getActiveItem which
                 // uses this.activeItem || this.owner.activeItem
                 activeItem = me.activeItem = me.owner.activeItem = null;
             }
-            
+
             // Item is to be the active one. Fire event after it is first layed out
             else if (activeItem.hasListeners.activate) {
                 activeItem.on({
-                    boxready: function() {
+                    boxready: function () {
                         activeItem.fireEvent('activate', activeItem);
                     },
                     single: true
@@ -191,7 +191,7 @@ Ext.define('Ext.layout.container.Card', {
         }
     },
 
-    isValidParent : function(item, target, position) {
+    isValidParent: function (item, target, position) {
         // Note: Card layout does not care about order within the target because only one is ever visible.
         // We only care whether the item is a direct child of the target.
         var itemEl = item.el ? item.el.dom : Ext.getDom(item);
@@ -202,12 +202,12 @@ Ext.define('Ext.layout.container.Card', {
      * Return the active (visible) component in the layout.
      * @return {Ext.Component}
      */
-    getActiveItem: function() {
+    getActiveItem: function () {
         var me = this,
-            // It's necessary to check that me.activeItem is not undefined as it could be 0 (falsey). We're more interested in
-            // checking the layout's activeItem property, since that is the source of truth for an activeItem.  If it's
-            // determined to be empty, check the owner. Note that a default item is returned if activeItem is `undefined` but
-            // not `null`. Also, note that `null` is legitimate value and completely different from `undefined`.
+        // It's necessary to check that me.activeItem is not undefined as it could be 0 (falsey). We're more interested in
+        // checking the layout's activeItem property, since that is the source of truth for an activeItem.  If it's
+        // determined to be empty, check the owner. Note that a default item is returned if activeItem is `undefined` but
+        // not `null`. Also, note that `null` is legitimate value and completely different from `undefined`.
             item = me.activeItem === undefined ? (me.owner && me.owner.activeItem) : me.activeItem,
             result = me.parseActiveItem(item);
 
@@ -246,7 +246,7 @@ Ext.define('Ext.layout.container.Card', {
      * Called before both dynamic render, and bulk render.
      * Ensure that the active item starts visible, and inactive ones start invisible.
      */
-    configureItem: function(item) {
+    configureItem: function (item) {
         item.setHiddenState(item !== this.getActiveItem());
         this.callParent(arguments);
     },
@@ -256,7 +256,7 @@ Ext.define('Ext.layout.container.Card', {
         this.setItemHideMode(item);
     },
 
-    onRemove: function(component) {
+    onRemove: function (component) {
         var me = this;
 
         me.callParent([component]);
@@ -272,7 +272,7 @@ Ext.define('Ext.layout.container.Card', {
     /**
      * @private
      */
-    getAnimation: function(newCard, owner) {
+    getAnimation: function (newCard, owner) {
         var newAnim = (newCard || {}).cardSwitchAnimation;
         if (newAnim === false) {
             return false;
@@ -284,11 +284,11 @@ Ext.define('Ext.layout.container.Card', {
      * Return the active (visible) component in the layout to the next card
      * @return {Ext.Component} The next component or false.
      */
-    getNext: function() {
+    getNext: function () {
         var wrap = arguments[0],
             items = this.getLayoutItems(),
             index = Ext.Array.indexOf(items, this.activeItem);
-            
+
         return items[index + 1] || (wrap ? items[0] : false);
     },
 
@@ -296,8 +296,8 @@ Ext.define('Ext.layout.container.Card', {
      * Sets the active (visible) component in the layout to the next card
      * @return {Ext.Component} the activated component or false when nothing activated.
      */
-    next: function() {
-        var anim = arguments[0], 
+    next: function () {
+        var anim = arguments[0],
             wrap = arguments[1];
         return this.setActiveItem(this.getNext(wrap), anim);
     },
@@ -306,11 +306,11 @@ Ext.define('Ext.layout.container.Card', {
      * Return the active (visible) component in the layout to the previous card
      * @return {Ext.Component} The previous component or false.
      */
-    getPrev: function() {
+    getPrev: function () {
         var wrap = arguments[0],
             items = this.getLayoutItems(),
             index = Ext.Array.indexOf(items, this.activeItem);
-            
+
         return items[index - 1] || (wrap ? items[items.length - 1] : false);
     },
 
@@ -318,8 +318,8 @@ Ext.define('Ext.layout.container.Card', {
      * Sets the active (visible) component in the layout to the previous card
      * @return {Ext.Component} the activated component or false when nothing activated.
      */
-    prev: function() {
-        var anim = arguments[0], 
+    prev: function () {
+        var anim = arguments[0],
             wrap = arguments[1];
         return this.setActiveItem(this.getPrev(wrap), anim);
     },
@@ -344,7 +344,7 @@ Ext.define('Ext.layout.container.Card', {
      * @return {Ext.Component} the activated component or false when nothing activated.
      * False is returned also when trying to activate an already active card.
      */
-    setActiveItem: function(newCard) {
+    setActiveItem: function (newCard) {
         var me = this,
             owner = me.owner,
             oldCard = me.activeItem,

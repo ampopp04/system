@@ -6,7 +6,7 @@
  * update by andy_ghg
  * 2009-10-22 15:00:57
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
     var parseCodes;
 
     if (Ext.Date) {
@@ -20,8 +20,8 @@ Ext.onReady(function() {
         parseCodes = {
             g: 1,
             c: "if (/(上午)/i.test(results[{0}])) {\n"
-                + "if (!h || h == 12) { h = 0; }\n"
-                + "} else { if (!h || h < 12) { h = (h || 0) + 12; }}",
+            + "if (!h || h == 12) { h = 0; }\n"
+            + "} else { if (!h || h < 12) { h = (h || 0) + 12; }}",
             s: "(上午|下午)",
             calcAtEnd: true
         };
@@ -143,7 +143,7 @@ Ext.define("Ext.locale.zh_CN.form.field.Date", {
 Ext.define("Ext.locale.zh_CN.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "加载中..."
     });
@@ -161,7 +161,7 @@ Ext.define("Ext.locale.zh_CN.form.field.VTypes", {
 Ext.define("Ext.locale.zh_CN.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: '添加超级链接:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -265,10 +265,10 @@ Ext.define("Ext.locale.zh_CN.window.MessageBox", {
         cancel: "取消",
         yes: "是",
         no: "否"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.zh_CN.Component", {	
+Ext.define("Ext.locale.zh_CN.Component", {
     override: "Ext.Component"
 });

@@ -152,7 +152,7 @@ Ext.define('Ext.util.CollectionKey', {
      *
      * Called by {@link Ext.util.Collection#clear} when the collection is cleared.
      */
-    clear: function() {
+    clear: function () {
         this.map = null;
     },
 
@@ -202,7 +202,7 @@ Ext.define('Ext.util.CollectionKey', {
             items = item;
             index = length; // greater than any actual indexOf
 
-            for (n = items.length; n-- > 0; ) {
+            for (n = items.length; n-- > 0;) {
                 i = collection.indexOf(items[n]);
                 if (i < index && i > startAt) {
                     index = i;
@@ -250,14 +250,14 @@ Ext.define('Ext.util.CollectionKey', {
                 //<debug>
                 if (me.getUnique() && bucket !== item) {
                     Ext.raise('Incorrect oldKey "' + oldKey +
-                                    '" for item with newKey "' + me.getKey(item) + '"');
+                        '" for item with newKey "' + me.getKey(item) + '"');
                 }
                 //</debug>
 
                 delete map[oldKey];
             }
 
-            me.add([ item ]);
+            me.add([item]);
         }
     },
 
@@ -315,7 +315,7 @@ Ext.define('Ext.util.CollectionKey', {
                 map[key] = item;
             } else {
                 if (!((bucket = map[key]) instanceof Array)) {
-                    map[key] = bucket = [ bucket ];
+                    map[key] = bucket = [bucket];
                 }
 
                 bucket.push(item);
@@ -360,7 +360,7 @@ Ext.define('Ext.util.CollectionKey', {
         collection.addObserver(this);
     },
 
-    clone: function() {
+    clone: function () {
         return new Ext.util.CollectionKey(this.getCurrentConfig());
     }
 });

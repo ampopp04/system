@@ -47,12 +47,12 @@ Ext.define('Ext.util.MixedCollection', {
      * were passed without an explicit key parameter to a MixedCollection method.  Passing this parameter is
      * equivalent to overriding the {@link #method-getKey} method.
      */
-    constructor: function() {
+    constructor: function () {
         this.initConfig();
         this.callParent(arguments);
     },
 
-    doSort: function(sorterFn) {
+    doSort: function (sorterFn) {
         this.sortBy(sorterFn);
     },
 
@@ -66,33 +66,33 @@ Ext.define('Ext.util.MixedCollection', {
      * @param {Function} fn (optional) Comparison function that defines the sort order.
      * Defaults to sorting by numeric value.
      */
-    _sort : function(property, dir, fn) {
+    _sort: function (property, dir, fn) {
         var me = this,
             i, len,
-            dsc   = String(dir).toUpperCase() == 'DESC' ? -1 : 1,
+            dsc = String(dir).toUpperCase() == 'DESC' ? -1 : 1,
 
-            //this is a temporary array used to apply the sorting function
-            c     = [],
-            keys  = me.keys,
+        //this is a temporary array used to apply the sorting function
+            c = [],
+            keys = me.keys,
             items = me.items,
             o;
 
         //default to a simple sorter function if one is not provided
-        fn = fn || function(a, b) {
-            return a - b;
-        };
+        fn = fn || function (a, b) {
+                return a - b;
+            };
 
         //copy all the items into a temporary array, which we will sort
         for (i = 0, len = items.length; i < len; i++) {
             c[c.length] = {
-                key  : keys[i],
+                key: keys[i],
                 value: items[i],
                 index: i
             };
         }
 
         //sort the temporary array
-        Ext.Array.sort(c, function(a, b) {
+        Ext.Array.sort(c, function (a, b) {
             return fn(a[property], b[property]) * dsc ||
                 // In case of equality, ensure stable sort by comparing collection index
                 (a.index < b.index ? -1 : 1);
@@ -103,7 +103,7 @@ Ext.define('Ext.util.MixedCollection', {
         for (i = 0, len = c.length; i < len; i++) {
             o = c[i];
             items[i] = o.value;
-            keys[i]  = o.key;
+            keys[i] = o.key;
             me.indexMap[o.key] = i;
         }
         me.generation++;
@@ -115,11 +115,11 @@ Ext.define('Ext.util.MixedCollection', {
      * Sorts the collection by a single sorter function
      * @param {Function} sorterFn The function to sort by
      */
-    sortBy: function(sorterFn) {
-        var me     = this,
-            items  = me.items,
+    sortBy: function (sorterFn) {
+        var me = this,
+            items = me.items,
             item,
-            keys   = me.keys,
+            keys = me.keys,
             key,
             length = items.length,
             i;
@@ -129,7 +129,7 @@ Ext.define('Ext.util.MixedCollection', {
             items[i].$extCollectionIndex = i;
         }
 
-        Ext.Array.sort(items, function(a, b) {
+        Ext.Array.sort(items, function (a, b) {
             return sorterFn(a, b) ||
                 // In case of equality, ensure stable sort by comparing collection index
                 (a.$extCollectionIndex < b.$extCollectionIndex ? -1 : 1);
@@ -160,11 +160,11 @@ Ext.define('Ext.util.MixedCollection', {
      *
      * @return {Number} The insertion point to add the new item into this MixedCollection at using {@link #insert}
      */
-    findInsertionIndex: function(newItem, sorterFn) {
-        var me    = this,
+    findInsertionIndex: function (newItem, sorterFn) {
+        var me = this,
             items = me.items,
             start = 0,
-            end   = items.length - 1,
+            end = items.length - 1,
             middle,
             comparison;
 
@@ -197,10 +197,10 @@ Ext.define('Ext.util.MixedCollection', {
      * @param {Function} fn (optional) Comparison function that defines the sort order.
      * Defaults to sorting by case insensitive string.
      */
-    sortByKey : function(dir, fn){
-        this._sort('key', dir, fn || function(a, b){
-            var v1 = String(a).toUpperCase(), v2 = String(b).toUpperCase();
-            return v1 > v2 ? 1 : (v1 < v2 ? -1 : 0);
-        });
+    sortByKey: function (dir, fn) {
+        this._sort('key', dir, fn || function (a, b) {
+                var v1 = String(a).toUpperCase(), v2 = String(b).toUpperCase();
+                return v1 > v2 ? 1 : (v1 < v2 ? -1 : 0);
+            });
     }
 });

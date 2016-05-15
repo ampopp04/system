@@ -53,7 +53,7 @@
  *     cb.on('select', yourFunction, yourScope);
  *
  * # Multiple Selection
- * The {@link #multiSelect} config is deprecated.  For multiple selection use 
+ * The {@link #multiSelect} config is deprecated.  For multiple selection use
  * {@link Ext.form.field.Tag} or {@link Ext.view.MultiSelector}.
  *
  * # Filtered Stores
@@ -101,7 +101,7 @@
  *
  */
 Ext.define('Ext.form.field.ComboBox', {
-    extend:'Ext.form.field.Picker',
+    extend: 'Ext.form.field.Picker',
     requires: [
         'Ext.util.DelayedTask',
         'Ext.view.BoundList',
@@ -150,7 +150,7 @@ Ext.define('Ext.form.field.ComboBox', {
          * @cfg {String} delimiter
          * The character(s) used to separate the {@link #displayField display values} of multiple selected items when
          * `{@link #multiSelect} = true`.
-         * @deprecated 5.1.0 For multiple selection use {@link Ext.form.field.Tag} or 
+         * @deprecated 5.1.0 For multiple selection use {@link Ext.form.field.Tag} or
          * {@link Ext.view.MultiSelector}
          */
         delimiter: ', ',
@@ -188,16 +188,16 @@ Ext.define('Ext.form.field.ComboBox', {
      * Has no effect if {@link #multiSelect} is `false`
      *
      * Configure as `false` to automatically collapse the pick list after a selection is made.
-     * @deprecated 5.1.0 For multiple selection use {@link Ext.form.field.Tag} or 
+     * @deprecated 5.1.0 For multiple selection use {@link Ext.form.field.Tag} or
      * {@link Ext.view.MultiSelector}
      */
-    
+
     /**
      * @cfg {Boolean} [collapseOnSelect=false]
      * Has no effect if {@link #multiSelect} is `false`
      *
      * Configure as true to automatically collapse the pick list after a selection is made.
-     * @deprecated 5.1.0 For multiple selection use {@link Ext.form.field.Tag} or 
+     * @deprecated 5.1.0 For multiple selection use {@link Ext.form.field.Tag} or
      * {@link Ext.view.MultiSelector}
      */
     collapseOnSelect: false,
@@ -213,7 +213,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * CSS class used to find the {@link #hiddenDataEl}
      */
     hiddenDataCls: Ext.baseCSSPrefix + 'hidden-display ' + Ext.baseCSSPrefix + 'form-data-hidden',
-    
+
     ariaRole: 'combobox',
 
     childEls: {
@@ -229,7 +229,7 @@ Ext.define('Ext.form.field.ComboBox', {
      */
     filtered: false,
 
-    afterRender: function(){
+    afterRender: function () {
         var me = this;
         me.callParent(arguments);
         me.setHiddenValue(me.value);
@@ -237,28 +237,28 @@ Ext.define('Ext.form.field.ComboBox', {
 
     /**
      * @cfg {Ext.data.Store/String/Array/Object} store (required)
-     * The data source to which the combo / tagfield is bound. Acceptable values for this 
+     * The data source to which the combo / tagfield is bound. Acceptable values for this
      * property are:
      *
      *   - **any {@link Ext.data.Store Store} class / subclass**
      *   - **an {@link Ext.data.Store#storeId ID of a store}**
-     *   - **an Array** : Arrays will be converted to a {@link Ext.data.Store} internally, 
-     *     automatically generating {@link Ext.data.Field#name field names} to work with all 
+     *   - **an Array** : Arrays will be converted to a {@link Ext.data.Store} internally,
+     *     automatically generating {@link Ext.data.Field#name field names} to work with all
      *     data components.
      *
      *     - **1-dimensional array** : (e.g., `['Foo','Bar']`)
      *
-     *       A 1-dimensional array will automatically be expanded (each array item will be 
+     *       A 1-dimensional array will automatically be expanded (each array item will be
      *       used for both the combo {@link #valueField} and {@link #displayField})
      *
      *     - **2-dimensional array** : (e.g., `[['f','Foo'],['b','Bar']]`)
      *
-     *       For a multi-dimensional array, the value in index 0 of each item will be assumed 
-     *       to be the combo {@link #valueField}, while the value at index 1 is assumed to be 
+     *       For a multi-dimensional array, the value in index 0 of each item will be assumed
+     *       to be the combo {@link #valueField}, while the value at index 1 is assumed to be
      *       the combo {@link #displayField}.
-     *   - **a {@link Ext.data.Store Store} config object**.  When passing a config you can 
-     *     specify the store type by alias.  Passing a config object with a store type will 
-     *     dynamically create a new store of that type when the combo / tagfield is 
+     *   - **a {@link Ext.data.Store Store} config object**.  When passing a config you can
+     *     specify the store type by alias.  Passing a config object with a store type will
+     *     dynamically create a new store of that type when the combo / tagfield is
      *     instantiated.
      *
      *     Ext.define('MyApp.store.States', {
@@ -266,7 +266,7 @@ Ext.define('Ext.form.field.ComboBox', {
      *         alias: 'store.states',
      *         fields: ['name']
      *     });
-     *     
+     *
      *     Ext.create({
      *         xtype: 'combobox',
      *         renderTo: document.body,
@@ -345,7 +345,7 @@ Ext.define('Ext.form.field.ComboBox', {
      *     In `queryMode: 'remote'`, the ComboBox loads its Store dynamically based upon user interaction.
      *
      *     This is typically used for "autocomplete" type inputs, and after the user finishes typing, the Store is {@link
-     *     Ext.data.Store#method-load load}ed.
+        *     Ext.data.Store#method-load load}ed.
      *
      *     A parameter containing the typed string is sent in the load request. The default parameter name for the input
      *     string is `query`, but this can be configured using the {@link #queryParam} config.
@@ -385,7 +385,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * is the same as the previous query.
      */
     queryCaching: true,
-    
+
     /**
      * @cfg {Boolean} autoLoadOnValue
      * This option controls whether to *initially* load the store when a value is set so that
@@ -478,13 +478,13 @@ Ext.define('Ext.form.field.ComboBox', {
     /**
      * @cfg {Boolean} clearFilterOnBlur
      * *When {@link #queryMode} is `'local'` only*
-     * 
+     *
      * As text is entered, the underlying store is filtered to match the value. When this option is `true`,
-     * any filtering applied by this field will be cleared when focus is removed & reinstated on focus. 
+     * any filtering applied by this field will be cleared when focus is removed & reinstated on focus.
      * If `false`, the filters will be left in place.
      */
     clearFilterOnBlur: true,
-    
+
     /**
      * @cfg {Boolean} enableRegEx
      * *When {@link #queryMode} is `'local'` only*
@@ -536,10 +536,10 @@ Ext.define('Ext.form.field.ComboBox', {
      * target select's options will be used to build the options in the ComboBox dropdown; a configured {@link #store}
      * will take precedence over this.
      */
-    
+
     /**
      * @cfg {Boolean} transformInPlace
-     * `true` to automatically render this combo box in place of the select element that is being 
+     * `true` to automatically render this combo box in place of the select element that is being
      * {@link #transform transformed}. If `false`, this combo will be rendered using the normal rendering,
      * either as part of a layout, or using {@link #renderTo} or {@link #method-render}.
      */
@@ -620,8 +620,8 @@ Ext.define('Ext.form.field.ComboBox', {
      * @event select
      * Fires when at least one list item is selected.
      * @param {Ext.form.field.ComboBox} combo This combo box
-     * @param {Ext.data.Model/Ext.data.Model[]} record With {@link #multiSelect} 
-     * `false`, the value will be a single record. With {@link #multiSelect} `true`, the 
+     * @param {Ext.data.Model/Ext.data.Model[]} record With {@link #multiSelect}
+     * `false`, the value will be a single record. With {@link #multiSelect} `true`, the
      * value will be an array of records.
      */
 
@@ -641,7 +641,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * @param {Number} index The index of the deselected record
      */
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this,
             isDefined = Ext.isDefined,
             store = me.store,
@@ -671,7 +671,7 @@ Ext.define('Ext.form.field.ComboBox', {
             transformSelect = Ext.getDom(transform);
             if (transformSelect) {
                 if (!me.store) {
-                    store = Ext.Array.map(Ext.Array.from(transformSelect.options), function(option){
+                    store = Ext.Array.map(Ext.Array.from(transformSelect.options), function (option) {
                         return [option.value, option.text];
                     });
                 }
@@ -707,23 +707,23 @@ Ext.define('Ext.form.field.ComboBox', {
             Ext.removeNode(transformSelect);
         }
     },
-    
-    getSubTplData: function(fieldData) {
+
+    getSubTplData: function (fieldData) {
         var data, inputElAttr;
-        
+
         data = this.callParent([fieldData]);
-        
+
         inputElAttr = data.inputElAriaAttributes;
-        
+
         if (inputElAttr) {
             // TODO Change that to reflect the real behavior
             inputElAttr['aria-autocomplete'] = 'list';
         }
-        
+
         return data;
     },
 
-    getSubTplMarkup: function(fieldData) {
+    getSubTplMarkup: function (fieldData) {
         var me = this,
             hiddenDataElMarkup = '',
             markup = me.callParent(arguments);
@@ -734,15 +734,15 @@ Ext.define('Ext.form.field.ComboBox', {
 
         return hiddenDataElMarkup + markup;
     },
-    
-    applyDisplayTpl: function(displayTpl) {
+
+    applyDisplayTpl: function (displayTpl) {
         var me = this;
 
         if (!displayTpl) {
             displayTpl = new Ext.XTemplate(
                 '<tpl for=".">' +
-                    '{[typeof values === "string" ? values : values["' + me.getDisplayField() + '"]]}' +
-                    '<tpl if="xindex < xcount">' + me.getDelimiter() + '</tpl>' +
+                '{[typeof values === "string" ? values : values["' + me.getDisplayField() + '"]]}' +
+                '<tpl if="xindex < xcount">' + me.getDelimiter() + '</tpl>' +
                 '</tpl>'
             );
             displayTpl.auto = true;
@@ -773,8 +773,8 @@ Ext.define('Ext.form.field.ComboBox', {
 
         return collection;
     },
-    
-    applyValueNotFoundText: function(v) {
+
+    applyValueNotFoundText: function (v) {
         var me = this,
             valueNotFoundRecord = me.valueNotFoundRecord || (me.valueNotFoundRecord = new Ext.data.Model());
 
@@ -838,23 +838,23 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    completeEdit: function(e) {
+    completeEdit: function (e) {
         var me = this,
             filter = me.queryFilter;
 
         this.callParent([e]);
         me.doQueryTask.cancel();
         me.assertValue();
-        
+
         if (filter && me.queryMode === 'local' && me.clearFilterOnBlur) {
             me.getStore().getFilters().remove(filter);
         }
     },
-    
-    onFocus: function(e) {
+
+    onFocus: function (e) {
         var me = this;
-        
-        me.callParent([e]);    
+
+        me.callParent([e]);
         if (me.triggerAction !== 'all' && me.queryFilter && me.queryMode === 'local' && me.clearFilterOnBlur) {
             delete me.lastQuery;
             me.doRawQuery();
@@ -864,7 +864,7 @@ Ext.define('Ext.form.field.ComboBox', {
     /**
      * @private
      */
-    assertValue: function() {
+    assertValue: function () {
         var me = this,
             value = me.getRawValue(),
             displayValue = me.getDisplayValue(),
@@ -891,7 +891,7 @@ Ext.define('Ext.form.field.ComboBox', {
                 } else if (lastRecords && (!me.allowBlank || me.rawValue)) {
                     me.setValue(lastRecords);
                 } else {
-                    if(lastRecords) {
+                    if (lastRecords) {
                         delete me.lastSelectedRecords;
                     }
                     // We need to reset any value that could have been set in the dom before or during a store load
@@ -905,7 +905,7 @@ Ext.define('Ext.form.field.ComboBox', {
         me.collapse();
     },
 
-    onTypeAhead: function() {
+    onTypeAhead: function () {
         var me = this,
             displayField = me.displayField,
             record = me.store.findRecord(displayField, me.getRawValue()),
@@ -930,9 +930,9 @@ Ext.define('Ext.form.field.ComboBox', {
     // than the original
     resetToDefault: Ext.emptyFn,
 
-    beforeReset: function() {
+    beforeReset: function () {
         var filter = this.queryFilter;
-        
+
         this.callParent();
 
         if (filter) {
@@ -940,7 +940,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    onUnbindStore: function() {
+    onUnbindStore: function () {
         var me = this,
             picker = me.picker,
             filter = me.queryFilter;
@@ -958,7 +958,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    onBindStore: function(store, initial) {
+    onBindStore: function (store, initial) {
         var me = this,
             picker = me.picker,
             extraKeySpec,
@@ -1075,10 +1075,10 @@ Ext.define('Ext.form.field.ComboBox', {
      * @param {Boolean} [preventFilter] `true` to prevent any active filter from being activated
      * on the newly bound store. This is only valid when used with {@link #queryMode} `'local'`.
      */
-    bindStore: function(store, preventFilter, /* private */ initial) {
+    bindStore: function (store, preventFilter, /* private */ initial) {
         var me = this,
             filter = me.queryFilter;
-            
+
         me.mixins.storeholder.bindStore.call(me, store, initial);
         store = me.getStore();
         if (store && filter && !preventFilter) {
@@ -1089,7 +1089,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    getStoreListeners: function(store) {
+    getStoreListeners: function (store) {
 
         // Don't bother with listeners on the dummy store that is provided for an unconfigured ComboBox
         // prior to a real store arriving from a ViewModel. Nothing is ever going to be fired.
@@ -1113,13 +1113,13 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    onDataChanged: function() {
+    onDataChanged: function () {
         if (this.grow && this.growToLongestValue) {
             this.autoSize();
         }
     },
 
-    checkValueOnChange: function() {
+    checkValueOnChange: function () {
         var me = this;
 
         // Will be triggered by removal of filters upon destroy
@@ -1142,20 +1142,20 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    onStoreUpdate: function(store, record) {
+    onStoreUpdate: function (store, record) {
         // Ensure the rawValue is rendered correctly whenever a store record is mutated
         this.updateValue();
     },
 
-    onException: function() {
+    onException: function () {
         this.collapse();
     },
 
-    onLoad: function(store, records, success) {
+    onLoad: function (store, records, success) {
         var me = this,
-            // This flag is saying that we need to call setValue to match the value property with the
-            // just loaded record set and update the valueCollection (and thereby any bound ViewModel)
-            // with that matched record.
+        // This flag is saying that we need to call setValue to match the value property with the
+        // just loaded record set and update the valueCollection (and thereby any bound ViewModel)
+        // with that matched record.
             needsValueUpdating = !me.valueCollection.byValue.get(me.value);
 
         // If not returning from a query, and the value was set from a raw data value, unrelated to a record
@@ -1169,11 +1169,11 @@ Ext.define('Ext.form.field.ComboBox', {
         me.checkValueOnChange();
     },
 
-    setValueOnData: function() {
+    setValueOnData: function () {
         var me = this;
 
         me.setValue(me.value);
- 
+
         // Highlight the selected record
         if (me.isExpanded && me.getStore().getCount()) {
             me.doAutoSelect();
@@ -1184,7 +1184,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * @private
      * Execute the query with the raw contents within the textfield.
      */
-    doRawQuery: function() {
+    doRawQuery: function () {
         var me = this,
             rawValue = me.inputEl.dom.value;
 
@@ -1209,13 +1209,13 @@ Ext.define('Ext.form.field.ComboBox', {
      * @return {Boolean} true if the query was permitted to run, false if it was cancelled by a {@link #beforequery}
      * handler.
      */
-    doQuery: function(queryString, forceAll, rawQuery) {
+    doQuery: function (queryString, forceAll, rawQuery) {
         var me = this,
             store = me.getStore(),
-            // if we have a queryString but no local filters, we should do a localQuery
+        // if we have a queryString but no local filters, we should do a localQuery
             refreshFilters = store.filters && !store.filters.length && !!queryString,
 
-            // Decide if, and how we are going to query the store
+        // Decide if, and how we are going to query the store
             queryPlan = me.beforeQuery({
                 query: queryString || '',
                 rawQuery: rawQuery,
@@ -1271,7 +1271,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * the input field value should **not** be overwritten.
      *
      */
-    beforeQuery: function(queryPlan) {
+    beforeQuery: function (queryPlan) {
         var me = this;
 
         // Allow beforequery event to veto by returning false
@@ -1290,7 +1290,7 @@ Ext.define('Ext.form.field.ComboBox', {
         return queryPlan;
     },
 
-    doLocalQuery: function(queryPlan) {
+    doLocalQuery: function (queryPlan) {
         var me = this,
             queryString = queryPlan.query,
             store = me.getStore(),
@@ -1331,9 +1331,9 @@ Ext.define('Ext.form.field.ComboBox', {
         me.afterQuery(queryPlan);
     },
 
-    doRemoteQuery: function(queryPlan) {
+    doRemoteQuery: function (queryPlan) {
         var me = this,
-            loadCallback = function() {
+            loadCallback = function () {
                 if (!me.destroyed) {
                     me.afterQuery(queryPlan);
                 }
@@ -1371,7 +1371,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * @param {Boolean} queryPlan.rawQuery If `true` indicates that the raw input field value is being used, and upon store load,
      * the input field value should **not** be overwritten.
      */
-    afterQuery: function(queryPlan) {
+    afterQuery: function (queryPlan) {
         var me = this;
 
         if (me.store.getCount()) {
@@ -1392,13 +1392,13 @@ Ext.define('Ext.form.field.ComboBox', {
         me.startCheckChangeTask();
     },
 
-    loadPage: function(pageNum, options) {
+    loadPage: function (pageNum, options) {
         this.store.loadPage(pageNum, Ext.apply({
             params: this.getParams(this.lastQuery)
         }, options));
     },
 
-    onPageChange: function(toolbar, newPage){
+    onPageChange: function (toolbar, newPage) {
         /*
          * Return false here so we can call load ourselves and inject the query param.
          * We don't want to do this for every store load since the developer may load
@@ -1411,7 +1411,7 @@ Ext.define('Ext.form.field.ComboBox', {
     /**
      * @private
      */
-    getParams: function(queryString) {
+    getParams: function (queryString) {
         var params = {},
             param = this.queryParam;
 
@@ -1425,7 +1425,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * @private
      * If the autoSelect config is true, and the picker is open, highlights the first item.
      */
-    doAutoSelect: function() {
+    doAutoSelect: function () {
         var me = this,
             picker = me.picker,
             selectionModel,
@@ -1441,7 +1441,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    doTypeAhead: function() {
+    doTypeAhead: function () {
         var me = this,
             Event = Ext.event.Event;
         if (!me.typeAheadTask) {
@@ -1452,7 +1452,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    onTriggerClick: function() {
+    onTriggerClick: function () {
         var me = this;
 
         if (!me.readOnly && !me.disabled) {
@@ -1470,7 +1470,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    onFieldMutation: function(e) {
+    onFieldMutation: function (e) {
         var me = this,
             key = e.getKey(),
             isDelete = key === e.BACKSPACE || key === e.DELETE,
@@ -1526,7 +1526,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         var me = this;
 
         me.doQueryTask.cancel();
@@ -1542,7 +1542,7 @@ Ext.define('Ext.form.field.ComboBox', {
 
     // The picker (the dropdown) must have its zIndex managed by the same ZIndexManager which is
     // providing the zIndex of our Container.
-    onAdded: function() {
+    onAdded: function () {
         var me = this;
         me.callParent(arguments);
         if (me.picker) {
@@ -1551,7 +1551,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    createPicker: function() {
+    createPicker: function () {
         var me = this,
             picker,
             pickerCfg = Ext.apply({
@@ -1593,13 +1593,13 @@ Ext.define('Ext.form.field.ComboBox', {
         return picker;
     },
 
-    getPickerStore: function() {
+    getPickerStore: function () {
         return this.store;
     },
 
-    onBeforePickerShow: function(picker) {
-    // Just before we show the picker, set its maxHeight so it fits
-    // either above or below, it will flip to the side where it fits
+    onBeforePickerShow: function (picker) {
+        // Just before we show the picker, set its maxHeight so it fits
+        // either above or below, it will flip to the side where it fits
         var me = this,
             heightAbove = me.getPosition()[1] - Ext.getBody().getScroll().top,
             heightBelow = Ext.Element.getViewportHeight() - heightAbove - me.getHeight();
@@ -1608,22 +1608,22 @@ Ext.define('Ext.form.field.ComboBox', {
         picker.maxHeight = Math.max(heightAbove, heightBelow) - 5; // have some leeway so we aren't flush against the window edge
     },
 
-    onBeforeSelect: function(list, record, recordIndex) {
+    onBeforeSelect: function (list, record, recordIndex) {
         return this.fireEvent('beforeselect', this, record, recordIndex);
     },
 
-    onBeforeDeselect: function(list, record, recordIndex) {
+    onBeforeDeselect: function (list, record, recordIndex) {
         return this.fireEvent('beforedeselect', this, record, recordIndex);
     },
-    
-    onFocusChange: function(selModel, prevRecord, newRecord) {
+
+    onFocusChange: function (selModel, prevRecord, newRecord) {
         var picker = this.picker,
             el;
-        
+
         if (newRecord) {
             // Ext.get is to ensure the node has an id
             el = Ext.get(picker.getNodeByRecord(newRecord));
-            
+
             if (el) {
                 this.ariaEl.dom.setAttribute('aria-activedescendant', el.id);
             }
@@ -1634,14 +1634,14 @@ Ext.define('Ext.form.field.ComboBox', {
      * Returns the combobox's selection.
      * @return {Ext.data.Model} The selected record
      */
-    getSelection: function() {
+    getSelection: function () {
         var selModel = this.getPicker().getSelectionModel(),
             selection = selModel.getSelection();
 
         return selection.length ? selModel.getLastSelected() : null;
     },
 
-    updateSelection: function(selection) {
+    updateSelection: function (selection) {
         var me = this,
             sm;
 
@@ -1658,7 +1658,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    updateBindSelection: function(selModel, selection) {
+    updateBindSelection: function (selModel, selection) {
         var me = this,
             selected = null;
 
@@ -1677,7 +1677,7 @@ Ext.define('Ext.form.field.ComboBox', {
 
     onValueCollectionBeginUpdate: Ext.emptyFn,
 
-    onValueCollectionEndUpdate: function() {
+    onValueCollectionEndUpdate: function () {
         var me = this,
             store = me.store,
             selectedRecords = me.valueCollection.getRange(),
@@ -1717,7 +1717,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    isSelectionUpdating: function() {
+    isSelectionUpdating: function () {
         var selModel = this.pickerSelectionModel;
         return selModel.deselectingDuringSelect || selModel.refreshing;
     },
@@ -1726,7 +1726,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * @private
      * Enables the key navs for the BoundList when it is expanded.
      */
-    onExpand: function() {
+    onExpand: function () {
         var keyNav = this.getPicker().getNavigationModel();
         if (keyNav) {
             keyNav.enable();
@@ -1738,7 +1738,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * @private
      * Disables the key navs for the BoundList when it is collapsed.
      */
-    onCollapse: function() {
+    onCollapse: function () {
         var keyNav = this.getPicker().getNavigationModel();
         if (keyNav) {
             keyNav.disable();
@@ -1752,7 +1752,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * Selects an item by a {@link Ext.data.Model Model}, or by a key value.
      * @param {Object} r
      */
-    select: function(r, /* private */ assert) {
+    select: function (r, /* private */ assert) {
         var me = this,
             picker = me.picker,
             fireSelect;
@@ -1774,13 +1774,13 @@ Ext.define('Ext.form.field.ComboBox', {
      * @param {Object} value The value to match the field against.
      * @return {Ext.data.Model} The matched record or false.
      */
-    findRecord: function(field, value) {
+    findRecord: function (field, value) {
         var ds = this.store,
             idx = ds.findExact(field, value);
         return idx !== -1 ? ds.getAt(idx) : false;
     },
-    
-    getSelectedRecord: function() {
+
+    getSelectedRecord: function () {
         return this.findRecordByValue(this.value) || null;
     },
 
@@ -1789,7 +1789,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * @param {Object} value The value to match the field against.
      * @return {Ext.data.Model} The matched record or `false`.
      */
-    findRecordByValue: function(value) {
+    findRecordByValue: function (value) {
         var result = this.store.byValue.get(value),
             ret = false;
 
@@ -1805,7 +1805,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * @param {Object} value The value to match the field against.
      * @return {Ext.data.Model} The matched record or `false`.
      */
-    findRecordByDisplay: function(value) {
+    findRecordByDisplay: function (value) {
         var result = this.store.byText.get(value),
             ret = false;
 
@@ -1820,7 +1820,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * Adds a value or values to the current value of the field
      * @param {Mixed} value The value or values to add to the current value, see {@link #setValue}
      */
-    addValue: function(value) {
+    addValue: function (value) {
         if (value != null) {
             return this.doSetValue(value, true);
         }
@@ -1835,7 +1835,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * or an Array of Strings or Models.
      * @return {Ext.form.field.Field} this
      */
-    setValue: function(value) {
+    setValue: function (value) {
         var me = this;
 
         // Value needs matching and record(s) need selecting.
@@ -1853,7 +1853,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
     },
 
-    setRawValue: function(rawValue) {
+    setRawValue: function (rawValue) {
         this.callParent([rawValue]);
         this.lastMutatedValue = rawValue;
     },
@@ -1862,7 +1862,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * @private
      * Sets or adds a value/values
      */
-    doSetValue: function(value /* private for use by addValue */, add) {
+    doSetValue: function (value /* private for use by addValue */, add) {
         var me = this,
             store = me.getStore(),
             Model = store.getModel(),
@@ -1956,7 +1956,7 @@ Ext.define('Ext.form.field.ComboBox', {
                 // If we are allowing insertion of values not represented in the Store, then push the value and
                 // create a new record to push as a display value for use by the displayTpl
                 if (!forceSelection) {
-                    
+
                     // We are allowing added values to create their own records.
                     // Only if the value is not empty.
                     if (!record && value[i]) {
@@ -2017,7 +2017,7 @@ Ext.define('Ext.form.field.ComboBox', {
         }
 
         me.applyEmptyText();
-        
+
         return me;
     },
 
@@ -2026,7 +2026,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * Internal setting of value when records are added to the valueCollection
      * setValue itself adds to the valueCollection.
      */
-    updateValue: function() {
+    updateValue: function () {
         var me = this,
             selectedRecords = me.valueCollection.getRange(),
             len = selectedRecords.length,
@@ -2071,7 +2071,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * Set the value of {@link #hiddenDataEl}
      * Dynamically adds and removes input[type=hidden] elements
      */
-    setHiddenValue: function(values){
+    setHiddenValue: function (values) {
         var me = this,
             name = me.hiddenName,
             i,
@@ -2098,11 +2098,11 @@ Ext.define('Ext.form.field.ComboBox', {
         }
         while (childrenCount > valueCount) {
             dom.removeChild(childNodes[0]);
-            -- childrenCount;
+            --childrenCount;
         }
         while (childrenCount < valueCount) {
             dom.appendChild(input.cloneNode(true));
-            ++ childrenCount;
+            ++childrenCount;
         }
         for (i = 0; i < valueCount; i++) {
             childNodes[i].value = values[i];
@@ -2113,7 +2113,7 @@ Ext.define('Ext.form.field.ComboBox', {
      * @private
      * Generates the string value to be displayed in the text field for the currently stored value
      */
-    getDisplayValue: function(tplData) {
+    getDisplayValue: function (tplData) {
         tplData = tplData || this.displayTplData;
         return this.getDisplayTpl().apply(tplData);
     },
@@ -2126,11 +2126,11 @@ Ext.define('Ext.form.field.ComboBox', {
      *
      * @protected
      */
-    getRecordDisplayData: function(record) {
+    getRecordDisplayData: function (record) {
         return record.data;
     },
 
-    getValue: function() {
+    getValue: function () {
         // If the user has not changed the raw field value since a value was selected from the list,
         // then return the structured value from the selection. If the raw field value is different
         // than what would be displayed due to selection, return that raw value.
@@ -2170,7 +2170,7 @@ Ext.define('Ext.form.field.ComboBox', {
         return me.value;
     },
 
-    getSubmitValue: function() {
+    getSubmitValue: function () {
         var value = this.getValue();
         // If the value is null/undefined, we still return an empty string. If we
         // don't, the field will never get posted to the server since nulls are ignored.
@@ -2180,7 +2180,7 @@ Ext.define('Ext.form.field.ComboBox', {
         return value;
     },
 
-    isEqual: function(v1, v2) {
+    isEqual: function (v1, v2) {
         var fromArray = Ext.Array.from,
             i, len;
 
@@ -2192,7 +2192,7 @@ Ext.define('Ext.form.field.ComboBox', {
             return false;
         }
 
-        for(i = 0; i < len; i++) {
+        for (i = 0; i < len; i++) {
             if (v2[i] !== v1[i]) {
                 return false;
             }
@@ -2204,7 +2204,7 @@ Ext.define('Ext.form.field.ComboBox', {
     /**
      * Clears any value currently set in the ComboBox.
      */
-    clearValue: function() {
+    clearValue: function () {
         this.setValue(null);
     }
 });

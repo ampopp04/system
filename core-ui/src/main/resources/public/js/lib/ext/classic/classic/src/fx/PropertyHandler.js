@@ -13,7 +13,7 @@ Ext.define('Ext.fx.PropertyHandler', {
             unitRE: /^(-?\d*\.?\d*){1}(em|ex|px|in|cm|mm|pt|pc|%)*$/,
             scrollRE: /^scroll/i,
 
-            computeDelta: function(from, end, damper, initial, attr) {
+            computeDelta: function (from, end, damper, initial, attr) {
                 damper = (typeof damper == 'number') ? damper : 1;
                 var unitRE = this.unitRE,
                     match = unitRE.exec(from),
@@ -41,7 +41,7 @@ Ext.define('Ext.fx.PropertyHandler', {
                 };
             },
 
-            get: function(from, end, damper, initialFrom, attr) {
+            get: function (from, end, damper, initialFrom, attr) {
                 var ln = from.length,
                     out = [],
                     i, initial, res, j, len;
@@ -65,12 +65,12 @@ Ext.define('Ext.fx.PropertyHandler', {
                 return out;
             },
 
-            set: function(values, easing) {
+            set: function (values, easing) {
                 var ln = values.length,
                     out = [],
                     i, val, res, len, j;
                 for (i = 0; i < ln; i++) {
-                    val  = values[i][1];
+                    val = values[i][1];
                     if (Ext.isArray(val)) {
                         res = [];
                         j = 0;
@@ -87,14 +87,14 @@ Ext.define('Ext.fx.PropertyHandler', {
             }
         },
         stringHandler: {
-            computeDelta: function(from, end, damper, initial, attr) {
+            computeDelta: function (from, end, damper, initial, attr) {
                 return {
                     from: from,
                     delta: end
                 };
             },
 
-            get: function(from, end, damper, initialFrom, attr) {
+            get: function (from, end, damper, initialFrom, attr) {
                 var ln = from.length,
                     out = [],
                     i, initial;
@@ -106,13 +106,13 @@ Ext.define('Ext.fx.PropertyHandler', {
                 return out;
             },
 
-            set: function(values, easing) {
+            set: function (values, easing) {
                 var ln = values.length,
                     out = [],
                     i, val;
 
                 for (i = 0; i < ln; i++) {
-                    val  = values[i][1];
+                    val = values[i][1];
                     out.push([values[i][0], val.delta]);
                 }
 
@@ -125,9 +125,9 @@ Ext.define('Ext.fx.PropertyHandler', {
             hexRE: /^#?([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$/i,
             hex3RE: /^#?([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})$/i,
 
-            parseColor : function(color, damper) {
+            parseColor: function (color, damper) {
                 damper = (typeof damper == 'number') ? damper : 1;
-                var out    = false,
+                var out = false,
                     reList = [this.hexRE, this.rgbRE, this.hex3RE],
                     length = reList.length,
                     match, base, re, i;
@@ -155,7 +155,7 @@ Ext.define('Ext.fx.PropertyHandler', {
                 return out || color;
             },
 
-            computeDelta: function(from, end, damper, initial) {
+            computeDelta: function (from, end, damper, initial) {
                 from = this.parseColor(from);
                 end = this.parseColor(end, damper);
 
@@ -170,7 +170,7 @@ Ext.define('Ext.fx.PropertyHandler', {
                 }
 
                 return {
-                    from:  from,
+                    from: from,
                     delta: {
                         red: Math.round((end.red - start.red) * damper),
                         green: Math.round((end.green - start.green) * damper),
@@ -179,7 +179,7 @@ Ext.define('Ext.fx.PropertyHandler', {
                 };
             },
 
-            get: function(start, end, damper, initialFrom) {
+            get: function (start, end, damper, initialFrom) {
                 var ln = start.length,
                     out = [],
                     i, initial;
@@ -192,7 +192,7 @@ Ext.define('Ext.fx.PropertyHandler', {
                 return out;
             },
 
-            set: function(values, easing) {
+            set: function (values, easing) {
                 var ln = values.length,
                     out = [],
                     i, val, parsedString, from, delta;
@@ -203,17 +203,17 @@ Ext.define('Ext.fx.PropertyHandler', {
                         delta = val.delta;
                         //multiple checks to reformat the color if it can't recognized by computeDelta.
                         val = (typeof val === 'object' && 'red' in val) ?
-                                'rgb(' + val.red + ', ' + val.green + ', ' + val.blue + ')' : val;
-                        val = (typeof val === 'object' && val.length)? val[0] : val;
+                        'rgb(' + val.red + ', ' + val.green + ', ' + val.blue + ')' : val;
+                        val = (typeof val === 'object' && val.length) ? val[0] : val;
                         if (typeof val === 'undefined') {
                             return [];
                         }
-                        parsedString = typeof val === 'string'? val :
-                            'rgb(' + [
-                                  (from.red + Math.round(delta.red * easing)) % 256,
-                                  (from.green + Math.round(delta.green * easing)) % 256,
-                                  (from.blue + Math.round(delta.blue * easing)) % 256
-                              ].join(',') + ')';
+                        parsedString = typeof val === 'string' ? val :
+                        'rgb(' + [
+                            (from.red + Math.round(delta.red * easing)) % 256,
+                            (from.green + Math.round(delta.green * easing)) % 256,
+                            (from.blue + Math.round(delta.blue * easing)) % 256
+                        ].join(',') + ')';
                         out.push([
                             values[i][0],
                             parsedString
@@ -224,33 +224,33 @@ Ext.define('Ext.fx.PropertyHandler', {
             }
         },
         object: {
-            interpolate: function(prop, damper) {
+            interpolate: function (prop, damper) {
                 damper = (typeof damper === 'number') ? damper : 1;
                 var out = {},
                     p;
-                for(p in prop) {
+                for (p in prop) {
                     out[p] = parseFloat(prop[p]) * damper;
                 }
                 return out;
             },
 
-            computeDelta: function(from, end, damper, initial) {
+            computeDelta: function (from, end, damper, initial) {
                 from = this.interpolate(from);
                 end = this.interpolate(end, damper);
                 var start = initial ? initial : from,
                     delta = {},
                     p;
 
-                for(p in end) {
+                for (p in end) {
                     delta[p] = end[p] - start[p];
                 }
                 return {
-                    from:  from,
+                    from: from,
                     delta: delta
                 };
             },
 
-            get: function(start, end, damper, initialFrom) {
+            get: function (start, end, damper, initialFrom) {
                 var ln = start.length,
                     out = [],
                     i, initial;
@@ -263,13 +263,13 @@ Ext.define('Ext.fx.PropertyHandler', {
                 return out;
             },
 
-            set: function(values, easing) {
+            set: function (values, easing) {
                 var ln = values.length,
                     out = [],
                     outObject = {},
                     i, from, delta, val, p;
                 for (i = 0; i < ln; i++) {
-                    val  = values[i][1];
+                    val = values[i][1];
                     from = val.from;
                     delta = val.delta;
                     for (p in from) {
@@ -285,7 +285,7 @@ Ext.define('Ext.fx.PropertyHandler', {
         },
 
         path: {
-            computeDelta: function(from, end, damper, initial) {
+            computeDelta: function (from, end, damper, initial) {
                 damper = (typeof damper === 'number') ? damper : 1;
                 var start;
                 from = +from || 0;
@@ -297,14 +297,14 @@ Ext.define('Ext.fx.PropertyHandler', {
                 };
             },
 
-            forcePath: function(path) {
+            forcePath: function (path) {
                 if (!Ext.isArray(path) && !Ext.isArray(path[0])) {
                     path = Ext.fx.DrawPath.parsePathString(path);
                 }
                 return path;
             },
 
-            get: function(start, end, damper, initialFrom) {
+            get: function (start, end, damper, initialFrom) {
                 var endPath = this.forcePath(end),
                     out = [],
                     startLn = start.length,
@@ -332,7 +332,7 @@ Ext.define('Ext.fx.PropertyHandler', {
                 return out;
             },
 
-            set: function(values, easing) {
+            set: function (values, easing) {
                 var ln = values.length,
                     out = [],
                     i, j, k, newPath, calcPath, deltaPath, deltaPathLn, pointsLn;
@@ -355,9 +355,9 @@ Ext.define('Ext.fx.PropertyHandler', {
         }
         /* End Definitions */
     }
-}, function() {
+}, function () {
     //set color properties to color interpolator
-    var props  = [
+    var props = [
             'outlineColor',
             'backgroundColor',
             'borderColor',
@@ -369,20 +369,20 @@ Ext.define('Ext.fx.PropertyHandler', {
             'stroke'
         ],
         length = props.length,
-        i      = 0,
+        i = 0,
         prop;
 
-    for (; i<length; i++) {
+    for (; i < length; i++) {
         prop = props[i];
         this[prop] = this.color;
     }
-    
-    //set string properties to string
-    props  = ['cursor'];
-    length = props.length;
-    i      = 0;
 
-    for (; i<length; i++) {
+    //set string properties to string
+    props = ['cursor'];
+    length = props.length;
+    i = 0;
+
+    for (; i < length; i++) {
         prop = props[i];
         this[prop] = this.stringHandler;
     }

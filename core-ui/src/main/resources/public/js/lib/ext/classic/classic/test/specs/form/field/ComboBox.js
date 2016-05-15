@@ -1,20 +1,20 @@
-describe("Ext.form.field.ComboBox", function() {
+describe("Ext.form.field.ComboBox", function () {
     var component, store, CBTestModel,
         itNotIE = Ext.isIE ? xit : it,
         synchronousLoad = true,
         storeLoad = Ext.data.Store.prototype.load,
         storeFlushLoad = Ext.data.Store.prototype.flushLoad,
         loadStore;
-    
+
     function expectAria(attr, value) {
         jasmine.expectAriaAttr(component, attr, value);
     }
 
     function spyOnEvent(object, eventName, fn) {
         var obj = {
-            fn: fn || Ext.emptyFn
-        },
-        spy = spyOn(obj, "fn");
+                fn: fn || Ext.emptyFn
+            },
+            spy = spyOn(obj, "fn");
         object.addListener(eventName, obj.fn);
         return spy;
     }
@@ -26,10 +26,10 @@ describe("Ext.form.field.ComboBox", function() {
         component.inputEl.dom.value = value;
         component.onFieldMutation({
             type: 'change',
-            getKey: function() {
+            getKey: function () {
                 return isBackspace ? Ext.event.Event.DELETE : 0;
             },
-            isSpecialKey: function() {
+            isSpecialKey: function () {
                 return !!isBackspace;
             },
             // Need these two properties so that this object quacks
@@ -58,9 +58,9 @@ describe("Ext.form.field.ComboBox", function() {
         component = new Ext.form.field.ComboBox(config);
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.Store.prototype.load = function() {
+        loadStore = Ext.data.Store.prototype.load = function () {
             storeLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -95,7 +95,7 @@ describe("Ext.form.field.ComboBox", function() {
 
     });
 
-    afterEach(function() {
+    afterEach(function () {
         // Undo the overrides.
         Ext.data.ProxyStore.prototype.load = storeLoad;
 
@@ -111,7 +111,7 @@ describe("Ext.form.field.ComboBox", function() {
     function clickListItem(value, theStore) {
         var found;
         theStore = theStore || store;
-        theStore.each(function(rec) {
+        theStore.each(function (rec) {
             if (rec.get('val') === value) {
                 found = rec;
                 return false;
@@ -122,14 +122,14 @@ describe("Ext.form.field.ComboBox", function() {
         jasmine.fireMouseEvent(component.getPicker().getNode(found), 'click');
     }
 
-    describe("checkChangeBuffer", function() {
+    describe("checkChangeBuffer", function () {
         function runType(value, isBackspace) {
-            runs(function() {
+            runs(function () {
                 doTyping(value, isBackspace);
             });
         }
 
-        it("should respect the checkChangeBuffer when typing a value", function() {
+        it("should respect the checkChangeBuffer when typing a value", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 checkChangeBuffer: 500,
@@ -145,23 +145,23 @@ describe("Ext.form.field.ComboBox", function() {
             waits(100);
             runType('text');
             waits(100);
-            runs(function() {
+            runs(function () {
                 expect(spy).not.toHaveBeenCalled();
             });
             waits(300);
-            runs(function() {
+            runs(function () {
                 expect(spy).not.toHaveBeenCalled();
             });
             // Give some leeway with the timer
             waits(300);
-            runs(function() {
+            runs(function () {
                 expect(spy.callCount).toBe(1);
                 expect(spy.mostRecentCall.args[1]).toBe('text');
                 expect(spy.mostRecentCall.args[2]).toBeNull();
             });
         });
 
-        it("should respect checkChangeBuffer when deleting values", function() {
+        it("should respect checkChangeBuffer when deleting values", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 checkChangeBuffer: 500,
@@ -180,16 +180,16 @@ describe("Ext.form.field.ComboBox", function() {
             waits(100);
             runType('', true);
             waits(100);
-            runs(function() {
+            runs(function () {
                 expect(spy).not.toHaveBeenCalled();
             });
             waits(300);
-            runs(function() {
+            runs(function () {
                 expect(spy).not.toHaveBeenCalled();
             });
             // Give some leeway with the timer
             waits(300);
-            runs(function() {
+            runs(function () {
                 expect(spy.callCount).toBe(1);
                 expect(spy.mostRecentCall.args[1]).toBeNull();
                 expect(spy.mostRecentCall.args[2]).toBe('text');
@@ -197,7 +197,7 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    it("should encode the input value in the template", function(){
+    it("should encode the input value in the template", function () {
         makeComponent({
             renderTo: Ext.getBody(),
             value: 'test "  <br/> test'
@@ -205,9 +205,9 @@ describe("Ext.form.field.ComboBox", function() {
         expect(component.inputEl.dom.value).toBe('test "  <br/> test');
     });
 
-    describe("store shortcuts", function() {
-        describe('with 1-dimensional array', function() {
-            it("should set the valueField/displayField on an auto created store", function(){
+    describe("store shortcuts", function () {
+        describe('with 1-dimensional array', function () {
+            it("should set the valueField/displayField on an auto created store", function () {
                 component = new Ext.form.field.ComboBox({
                     store: ['Item 1', 'Item 2', 'Item 3']
                 });
@@ -215,7 +215,7 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.displayField).toBe('field1');
             });
 
-            it("should set the value & raw value correctly", function() {
+            it("should set the value & raw value correctly", function () {
                 component = new Ext.form.field.ComboBox({
                     store: ['Item 1', 'Item 2', 'Item 3']
                 });
@@ -224,7 +224,7 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.getRawValue()).toBe('Item 1');
             });
 
-            it("should not overwrite a configured displayTpl", function() {
+            it("should not overwrite a configured displayTpl", function () {
                 component = new Ext.form.field.ComboBox({
                     store: ['Item 1', 'Item 2', 'Item 3'],
                     displayTpl: '<tpl for=".">Value is {field1}</tpl>'
@@ -234,8 +234,8 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe('with 2-dimensional array', function() {
-            it("should set the valueField/displayField on an auto created store", function(){
+        describe('with 2-dimensional array', function () {
+            it("should set the valueField/displayField on an auto created store", function () {
                 component = new Ext.form.field.ComboBox({
                     store: [[1, 'Item 1'], [2, 'Item 2'], [3, 'Item 3']]
                 });
@@ -243,7 +243,7 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.displayField).toBe('field2');
             });
 
-            it("should set the value & raw value correctly", function() {
+            it("should set the value & raw value correctly", function () {
                 component = new Ext.form.field.ComboBox({
                     store: [[1, 'Item 1'], [2, 'Item 2'], [3, 'Item 3']]
                 });
@@ -252,7 +252,7 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.getRawValue()).toBe('Item 2');
             });
 
-            it("should not overwrite a configured displayTpl", function() {
+            it("should not overwrite a configured displayTpl", function () {
                 component = new Ext.form.field.ComboBox({
                     store: [[1, 'Item 1'], [2, 'Item 2'], [3, 'Item 3']],
                     displayTpl: '<tpl for=".">Value is {field2}</tpl>'
@@ -263,8 +263,8 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("hiddenName", function() {
-        it("should create a hidden element that gets synced with the value", function() {
+    describe("hiddenName", function () {
+        it("should create a hidden element that gets synced with the value", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 value: 'value 1',
@@ -280,104 +280,104 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("defaults", function() {
-        describe("normal", function() {
-            beforeEach(function() {
+    describe("defaults", function () {
+        describe("normal", function () {
+            beforeEach(function () {
                 makeComponent();
             });
 
-            it("should have triggerCls = 'x-form-arrow-trigger'", function() {
+            it("should have triggerCls = 'x-form-arrow-trigger'", function () {
                 expect(component.triggerCls).toEqual('x-form-arrow-trigger');
             });
-            it("should have multiSelect = false", function() {
+            it("should have multiSelect = false", function () {
                 expect(component.multiSelect).toBe(false);
             });
-            it("should have delimiter = ', '", function() {
+            it("should have delimiter = ', '", function () {
                 expect(component.delimiter).toEqual(', ');
             });
-            it("should have displayField = 'text'", function() {
+            it("should have displayField = 'text'", function () {
                 expect(component.displayField).toEqual('text');
             });
-            it("should have valueField = displayField", function() {
+            it("should have valueField = displayField", function () {
                 expect(component.valueField).toEqual('text');
             });
-            it("should have triggerAction = 'all'", function() {
+            it("should have triggerAction = 'all'", function () {
                 expect(component.triggerAction).toEqual('all');
             });
-            it("should have allQuery = ''", function() {
+            it("should have allQuery = ''", function () {
                 expect(component.allQuery).toEqual('');
             });
-            it("should have queryParam = 'query'", function() {
+            it("should have queryParam = 'query'", function () {
                 expect(component.queryParam).toEqual('query');
             });
-            it("should have queryMode = 'remote'", function() {
+            it("should have queryMode = 'remote'", function () {
                 expect(component.queryMode).toEqual('remote');
             });
-            it("should have queryDelay = 500", function() {
+            it("should have queryDelay = 500", function () {
                 expect(component.queryDelay).toEqual(500);
             });
-            it("should have minChars = 4", function() {
+            it("should have minChars = 4", function () {
                 expect(component.minChars).toEqual(4);
             });
-            it("should have autoSelect = true", function() {
+            it("should have autoSelect = true", function () {
                 expect(component.autoSelect).toBe(true);
             });
-            it("should have typeAhead = false", function() {
+            it("should have typeAhead = false", function () {
                 expect(component.typeAhead).toBe(false);
             });
-            it("should have typeAheadDelay = 250", function() {
+            it("should have typeAheadDelay = 250", function () {
                 expect(component.typeAheadDelay).toEqual(250);
             });
-            it("should have forceSelection = false", function() {
+            it("should have forceSelection = false", function () {
                 expect(component.forceSelection).toBe(false);
             });
-            it("should have listConfig = undefined", function() {
+            it("should have listConfig = undefined", function () {
                 expect(component.listConfig).not.toBeDefined();
             });
-            
-            describe("rendered", function() {
-                beforeEach(function() {
+
+            describe("rendered", function () {
+                beforeEach(function () {
                     component.render(Ext.getBody());
                 });
-                
-                it("should have combobox role", function() {
+
+                it("should have combobox role", function () {
                     expectAria('role', 'combobox');
                 });
-                
-                it("should have aria-autocomplete", function() {
+
+                it("should have aria-autocomplete", function () {
                     expectAria('aria-autocomplete', 'list');
                 });
             });
         });
 
-        describe("with queryMode = 'local'", function() {
-            beforeEach(function() {
+        describe("with queryMode = 'local'", function () {
+            beforeEach(function () {
                 makeComponent({
                     queryMode: 'local'
                 });
             });
-            it("should have queryDelay = 10", function() {
+            it("should have queryDelay = 10", function () {
                 expect(component.queryDelay).toEqual(10);
             });
-            it("should have minChars = 0", function() {
+            it("should have minChars = 0", function () {
                 expect(component.minChars).toEqual(0);
             });
         });
     });
 
-    describe("emptyText", function() {
+    describe("emptyText", function () {
         if (!Ext.supports.Placeholder) {
-            it("should be able to set a value equal to emptyText", function(){
+            it("should be able to set a value equal to emptyText", function () {
                 makeComponent({
-                    valueField : 'val',
-                    displayField : 'text',
-                    emptyText : 'text 1',
-                    renderTo : document.body
+                    valueField: 'val',
+                    displayField: 'text',
+                    emptyText: 'text 1',
+                    renderTo: document.body
                 });
                 component.setValue('value 1');
                 component.focus();
                 jasmine.waitForFocus(component);
-                runs(function() {
+                runs(function () {
                     expect(component.inputEl.dom.value).toBe('text 1');
                     expect(component.getRawValue()).toBe('text 1');
                 });
@@ -385,39 +385,39 @@ describe("Ext.form.field.ComboBox", function() {
         }
     });
 
-    describe("value initialization", function() {
-        describe("without a value", function() {
-            it("should have value = null by default", function() {
+    describe("value initialization", function () {
+        describe("without a value", function () {
+            it("should have value = null by default", function () {
                 makeComponent();
                 expect(component.value).toBeNull();
             });
 
-            it("should return null when calling getValue()", function() {
+            it("should return null when calling getValue()", function () {
                 makeComponent();
                 expect(component.value).toBeNull();
             });
         });
     });
 
-    describe("getSubmitValue", function(){
-        it("should get the underlying field value", function(){
+    describe("getSubmitValue", function () {
+        it("should get the underlying field value", function () {
             makeComponent({
                 queryMode: 'local',
                 value: 'val 2'
             });
             expect(component.getSubmitValue()).toBe('val 2');
         });
-        
-        it("should return an empty string if the value is null", function(){
-                makeComponent({
+
+        it("should return an empty string if the value is null", function () {
+            makeComponent({
                 queryMode: 'local'
             });
             expect(component.getSubmitValue()).toBe('');
         });
     });
 
-    describe("getModelData", function(){
-        it("should get the underlying field value", function(){
+    describe("getModelData", function () {
+        it("should get the underlying field value", function () {
             makeComponent({
                 queryMode: 'local',
                 name: 'comboName',
@@ -428,12 +428,12 @@ describe("Ext.form.field.ComboBox", function() {
     });
 
 
-    describe("onExpand", function() {
-        var getInnerTpl = function() {
+    describe("onExpand", function () {
+        var getInnerTpl = function () {
             return 'foo';
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 displayField: 'val',
@@ -450,64 +450,64 @@ describe("Ext.form.field.ComboBox", function() {
             component.expand();
         });
 
-        it("should create a Ext.view.BoundList as the picker", function() {
+        it("should create a Ext.view.BoundList as the picker", function () {
             expect(component.picker).toBeDefined();
             expect(component.picker instanceof Ext.view.BoundList).toBe(true);
         });
-        it("should pass the configured store to the BoundList", function() {
+        it("should pass the configured store to the BoundList", function () {
             expect(component.picker.store).toBe(component.store);
         });
-        it("should pass the configured displayField to the BoundList", function() {
+        it("should pass the configured displayField to the BoundList", function () {
             expect(component.picker.displayField).toEqual(component.displayField);
         });
-        it("should pass the configured listConfig.width to the BoundList", function() {
+        it("should pass the configured listConfig.width to the BoundList", function () {
             expect(component.picker.width).toEqual(234);
         });
-        it("should pass the configured listConfig.maxHeight to the BoundList", function() {
+        it("should pass the configured listConfig.maxHeight to the BoundList", function () {
             expect(component.picker.maxHeight).toEqual(345);
         });
-        it("should pass the configured listConfig.loadingText to the BoundList", function() {
+        it("should pass the configured listConfig.loadingText to the BoundList", function () {
             expect(component.picker.loadingText).toEqual('gazingazang');
         });
-        it("should pass the configured listConfig.emptyText to the BoundList", function() {
+        it("should pass the configured listConfig.emptyText to the BoundList", function () {
             expect(component.picker.emptyText).toEqual('buffoopaloo');
         });
-        it("should pass a configured listConfig.getInnerTpl method to the BoundList config", function() {
+        it("should pass a configured listConfig.getInnerTpl method to the BoundList config", function () {
             expect(component.picker.getInnerTpl).toBe(getInnerTpl);
         });
-        it("should set the BoundList's selection to match the current value", function() {
+        it("should set the BoundList's selection to match the current value", function () {
             expect(component.picker.selModel.getSelection().length).toEqual(1);
             expect(component.picker.selModel.getSelection()[0].get('val')).toEqual(component.value);
         });
-        it("should initialize a BoundListKeyNav on the BoundList", function() {
+        it("should initialize a BoundListKeyNav on the BoundList", function () {
             expect(component.keyNav).toBeDefined();
             expect(component.keyNav instanceof Ext.util.KeyNav).toBe(true);
             expect(component.getPicker().getNavigationModel() instanceof Ext.view.BoundListKeyNav).toBe(true);
         });
-        it("should enable the BoundListKeyNav", function() {
-            waitsFor(function() {
+        it("should enable the BoundListKeyNav", function () {
+            waitsFor(function () {
                 return component.getPicker().getNavigationModel().disabled === false;
             });
         });
-        
-        it("should set aria-owns", function() {
+
+        it("should set aria-owns", function () {
             expectAria('aria-owns', component.picker.listEl.id);
         });
     });
 
 
-    describe("onCollapse", function() {
-        it("should disable the BoundListKeyNav", function() {
-            runs(function() {
+    describe("onCollapse", function () {
+        it("should disable the BoundListKeyNav", function () {
+            runs(function () {
                 makeComponent({
                     renderTo: Ext.getBody()
                 });
                 component.expand();
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return component.getPicker().getNavigationModel().disabled === false;
             });
-            runs(function() {
+            runs(function () {
                 component.collapse();
                 expect(component.getPicker().getNavigationModel().disabled).toBe(true);
             });
@@ -515,16 +515,16 @@ describe("Ext.form.field.ComboBox", function() {
     });
 
 
-    describe("setting value", function() {
-        describe("value config", function() {
-            it("should accept a single string", function() {
+    describe("setting value", function () {
+        describe("value config", function () {
+            it("should accept a single string", function () {
                 makeComponent({
                     value: 'value 2',
                     valueField: 'val'
                 });
                 expect(component.value).toEqual('value 2');
             });
-            it("should accept an array of string values", function() {
+            it("should accept an array of string values", function () {
                 makeComponent({
                     multiSelect: true,
                     value: ['value 3', 'not in store'],
@@ -532,14 +532,14 @@ describe("Ext.form.field.ComboBox", function() {
                 });
                 expect(component.value).toEqual(['value 3', 'not in store']);
             });
-            it("should accept a single Ext.data.Model", function() {
+            it("should accept a single Ext.data.Model", function () {
                 makeComponent({
                     value: store.getAt(0),
                     valueField: 'val'
                 });
                 expect(component.value).toEqual('value 1');
             });
-            it("should accept an array of Ext.data.Model objects", function() {
+            it("should accept an array of Ext.data.Model objects", function () {
                 makeComponent({
                     multiSelect: true,
                     value: [store.getAt(0), store.getAt(2)],
@@ -547,7 +547,7 @@ describe("Ext.form.field.ComboBox", function() {
                 });
                 expect(component.value).toEqual(['value 1', 'value 3']);
             });
-            it("should display the values separated by the configured delimiter", function() {
+            it("should display the values separated by the configured delimiter", function () {
                 makeComponent({
                     multiSelect: true,
                     value: ['value 1', 'value 2'],
@@ -559,22 +559,22 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("setValue method", function() {
-            it("should return the combo", function() {
+        describe("setValue method", function () {
+            it("should return the combo", function () {
                 makeComponent({
                     valueField: 'val'
                 });
                 expect(component.setValue('value 2')).toBe(component);
             });
 
-            it("should accept a single string", function() {
+            it("should accept a single string", function () {
                 makeComponent({
                     valueField: 'val'
                 });
                 component.setValue('value 2');
                 expect(component.value).toEqual('value 2');
             });
-            it("should accept an array of string values", function() {
+            it("should accept an array of string values", function () {
                 makeComponent({
                     multiSelect: true,
                     valueField: 'val'
@@ -582,14 +582,14 @@ describe("Ext.form.field.ComboBox", function() {
                 component.setValue(['value 3', 'not in store']);
                 expect(component.value).toEqual(['value 3', 'not in store']);
             });
-            it("should accept a single Ext.data.Model", function() {
+            it("should accept a single Ext.data.Model", function () {
                 makeComponent({
                     valueField: 'val'
                 });
                 component.setValue(store.getAt(0));
                 expect(component.value).toEqual('value 1');
             });
-            it("should accept an array of Ext.data.Model objects", function() {
+            it("should accept an array of Ext.data.Model objects", function () {
                 makeComponent({
                     multiSelect: true,
                     valueField: 'val'
@@ -597,7 +597,7 @@ describe("Ext.form.field.ComboBox", function() {
                 component.setValue([store.getAt(0), store.getAt(2)]);
                 expect(component.value).toEqual(['value 1', 'value 3']);
             });
-            it("should only display the first value if not multiSelect", function() {
+            it("should only display the first value if not multiSelect", function () {
                 makeComponent({
                     valueField: 'val',
                     renderTo: Ext.getBody(),
@@ -606,7 +606,7 @@ describe("Ext.form.field.ComboBox", function() {
                 component.setValue(['value 1', 'value 2']);
                 expect(component.inputEl.dom.value).toEqual('text 1');
             });
-            it("should display the values separated by the configured delimiter if multiSelect", function() {
+            it("should display the values separated by the configured delimiter if multiSelect", function () {
                 makeComponent({
                     valueField: 'val',
                     multiSelect: true,
@@ -616,7 +616,7 @@ describe("Ext.form.field.ComboBox", function() {
                 component.setValue(['value 1', 'value 2']);
                 expect(component.inputEl.dom.value).toEqual('text 1|text 2');
             });
-            it("should display the valueNotFoundText for values not in the store if multiSelect", function() {
+            it("should display the valueNotFoundText for values not in the store if multiSelect", function () {
                 makeComponent({
                     valueField: 'val',
                     forceSelection: true,
@@ -627,7 +627,7 @@ describe("Ext.form.field.ComboBox", function() {
                 component.setValue(['value 1', 'value not in store']);
                 expect(component.inputEl.dom.value).toEqual('text 1, oops!');
             });
-            it("should not display the valueNotFoundText for values not in the store if not multiSelect", function() {
+            it("should not display the valueNotFoundText for values not in the store if not multiSelect", function () {
                 makeComponent({
                     valueField: 'val',
                     forceSelection: true,
@@ -637,21 +637,21 @@ describe("Ext.form.field.ComboBox", function() {
                 component.setValue(['value 1', 'value not in store']);
                 expect(component.inputEl.dom.value).toEqual('text 1');
             });
-            it("should update the expanded dropdown's selection - single select", function() {
+            it("should update the expanded dropdown's selection - single select", function () {
                 makeComponent({
                     valueField: 'val',
                     renderTo: Ext.getBody()
                 });
                 component.expand();
-            
+
                 waits(1);
-                runs(function() {
+                runs(function () {
                     component.setValue('value 2');
-                    expect(component.picker.getSelectionModel().getSelection()).toEqual([store.getAt(1)]); 
+                    expect(component.picker.getSelectionModel().getSelection()).toEqual([store.getAt(1)]);
                 });
-                
+
             });
-            it("should update the expanded dropdown's selection - multi select", function() {
+            it("should update the expanded dropdown's selection - multi select", function () {
                 makeComponent({
                     valueField: 'val',
                     renderTo: Ext.getBody(),
@@ -659,15 +659,15 @@ describe("Ext.form.field.ComboBox", function() {
                 });
                 component.expand();
                 waits(1);
-                runs(function() {
+                runs(function () {
                     component.setValue(['value 1', 'value 3']);
                     expect(component.picker.getSelectionModel().getSelection()).toEqual([store.getAt(0), store.getAt(2)]);
                 });
 
             });
 
-            describe('change event', function() {
-                it("should not fire the change event when the value stays the same - single value", function() {
+            describe('change event', function () {
+                it("should not fire the change event when the value stays the same - single value", function () {
                     var spy = jasmine.createSpy();
                     makeComponent({
                         valueField: 'val',
@@ -680,7 +680,7 @@ describe("Ext.form.field.ComboBox", function() {
                     component.setValue('value1');
                     expect(spy).not.toHaveBeenCalled();
                 });
-                it("should fire the change event when the value changes - single value", function() {
+                it("should fire the change event when the value changes - single value", function () {
                     var spy = jasmine.createSpy();
                     makeComponent({
                         valueField: 'val',
@@ -696,7 +696,7 @@ describe("Ext.form.field.ComboBox", function() {
                     expect(spy.mostRecentCall.args[1]).toEqual('value2');
                     expect(spy.mostRecentCall.args[2]).toEqual('value1');
                 });
-                it("should not fire the change event when the value stays the same - multiple values", function() {
+                it("should not fire the change event when the value stays the same - multiple values", function () {
                     var spy = jasmine.createSpy();
                     makeComponent({
                         multiSelect: true,
@@ -710,7 +710,7 @@ describe("Ext.form.field.ComboBox", function() {
                     component.setValue(['value1', 'value2']);
                     expect(spy).not.toHaveBeenCalled();
                 });
-                it("should fire the change event when the value changes - multiple values", function() {
+                it("should fire the change event when the value changes - multiple values", function () {
                     var spy = jasmine.createSpy();
                     makeComponent({
                         multiSelect: true,
@@ -732,34 +732,34 @@ describe("Ext.form.field.ComboBox", function() {
     });
 
 
-    describe('getting value', function() {
-        beforeEach(function() {
+    describe('getting value', function () {
+        beforeEach(function () {
             makeComponent({
                 valueField: 'val',
                 renderTo: Ext.getBody()
             });
         });
 
-        it("should return the raw text field value if no selection has been made", function() {
+        it("should return the raw text field value if no selection has been made", function () {
             component.inputEl.dom.value = 'not-in-store';
             expect(component.getValue()).toEqual('not-in-store');
         });
 
-        it("should return the valueField for an item selected from the list", function() {
+        it("should return the valueField for an item selected from the list", function () {
             component.inputEl.dom.value = 'not-in-store';
             component.expand();
             waits(1);
-            runs(function() {
+            runs(function () {
                 component.picker.getSelectionModel().select([store.findRecord('text', 'text 2')]);
                 expect(component.getValue()).toEqual('value 2');
             });
         });
 
-        it("should return the raw text field value if it is changed after selection", function() {
+        it("should return the raw text field value if it is changed after selection", function () {
             component.inputEl.dom.value = 'not-in-store';
             component.expand();
             waits(1);
-            runs(function() {
+            runs(function () {
                 component.picker.getSelectionModel().select([store.findRecord('text', 'text 2')]);
                 component.inputEl.dom.value = 'text 2a';
                 expect(component.getValue()).toEqual('text 2a');
@@ -767,32 +767,32 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("finding records", function() {
-        beforeEach(function() {
+    describe("finding records", function () {
+        beforeEach(function () {
             makeComponent({
                 valueField: 'val',
                 displayField: 'text'
             });
         });
 
-        describe("findRecordByValue", function() {
-            it("should return the matching record", function() {
+        describe("findRecordByValue", function () {
+            it("should return the matching record", function () {
                 expect(component.findRecordByValue('value 2')).toBe(store.getAt(1));
             });
 
-            it("should return the first matching record", function() {
+            it("should return the first matching record", function () {
                 var rec = store.insert(0, {
                     val: 'value 2'
                 })[0];
                 expect(component.findRecordByValue('value 2')).toBe(rec);
             });
 
-            it("should return false if no record is found", function() {
+            it("should return false if no record is found", function () {
                 expect(component.findRecordByValue('bar')).toBe(false);
             });
 
-            describe("store updates", function() {
-                it("should react to adds", function() {
+            describe("store updates", function () {
+                it("should react to adds", function () {
                     expect(component.findRecordByValue('bar')).toBe(false);
                     var rec = store.add({
                         val: 'bar'
@@ -800,13 +800,13 @@ describe("Ext.form.field.ComboBox", function() {
                     expect(component.findRecordByValue('bar')).toBe(rec);
                 });
 
-                it("should react to removes", function() {
+                it("should react to removes", function () {
                     expect(component.findRecordByValue('value 1')).toBe(store.getAt(0));
                     store.removeAt(0);
                     expect(component.findRecordByValue('value 1')).toBe(false);
                 });
 
-                it("should react to updates", function() {
+                it("should react to updates", function () {
                     expect(component.findRecordByValue('value 1')).toBe(store.getAt(0));
                     store.getAt(0).set('val', 'bar');
                     expect(component.findRecordByValue('value 1')).toBe(false);
@@ -814,24 +814,24 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("findRecordByDisplay", function() {
-            it("should return the matching record", function() {
+        describe("findRecordByDisplay", function () {
+            it("should return the matching record", function () {
                 expect(component.findRecordByDisplay('text 2')).toBe(store.getAt(1));
             });
 
-            it("should return the first matching record", function() {
+            it("should return the first matching record", function () {
                 var rec = store.insert(0, {
                     text: 'text 2'
                 })[0];
                 expect(component.findRecordByDisplay('text 2')).toBe(rec);
             });
 
-            it("should return false if no record is found", function() {
+            it("should return false if no record is found", function () {
                 expect(component.findRecordByDisplay('bar')).toBe(false);
             });
 
-            describe("store updates", function() {
-                it("should react to adds", function() {
+            describe("store updates", function () {
+                it("should react to adds", function () {
                     expect(component.findRecordByDisplay('bar')).toBe(false);
                     var rec = store.add({
                         text: 'bar'
@@ -839,13 +839,13 @@ describe("Ext.form.field.ComboBox", function() {
                     expect(component.findRecordByDisplay('bar')).toBe(rec);
                 });
 
-                it("should react to removes", function() {
+                it("should react to removes", function () {
                     expect(component.findRecordByDisplay('text 1')).toBe(store.getAt(0));
                     store.removeAt(0);
                     expect(component.findRecordByDisplay('text 1')).toBe(false);
                 });
 
-                it("should react to updates", function() {
+                it("should react to updates", function () {
                     expect(component.findRecordByDisplay('text 1')).toBe(store.getAt(0));
                     store.getAt(0).set('text', 'bar');
                     expect(component.findRecordByDisplay('text 1')).toBe(false);
@@ -854,8 +854,8 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("modifications via the text input", function() {
-        it("should be able to requery when typing a value, choosing from a list then retyping the same value", function() {
+    describe("modifications via the text input", function () {
+        it("should be able to requery when typing a value, choosing from a list then retyping the same value", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 valueField: 'val',
@@ -872,8 +872,8 @@ describe("Ext.form.field.ComboBox", function() {
             expect(filters.first().getValue()).toBe('text 12');
         });
 
-        describe("with queryMode: local", function() {
-            it("should filter the store via the raw value", function() {
+        describe("with queryMode: local", function () {
+            it("should filter the store via the raw value", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     valueField: 'val',
@@ -889,7 +889,7 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.getValue()).toBe('text 3');
             });
 
-            it("should clear the value & any filters when all text is removed", function() {
+            it("should clear the value & any filters when all text is removed", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     valueField: 'val',
@@ -904,8 +904,8 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("clearing the value", function() {
-            it("should set the value to null", function() {
+        describe("clearing the value", function () {
+            it("should set the value to null", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     valueField: 'val',
@@ -917,7 +917,7 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.getValue()).toBeNull();
             });
 
-            it("should be able to select after clearing the value", function() {
+            it("should be able to select after clearing the value", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     valueField: 'val',
@@ -931,7 +931,7 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.getRawValue()).toBe('text 2');
             });
 
-            it("should be able to select after clearing a cached value", function() {
+            it("should be able to select after clearing a cached value", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     valueField: 'val',
@@ -1194,22 +1194,22 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("doQuery method", function() {
-        it("should set the lastQuery property", function() {
+    describe("doQuery method", function () {
+        it("should set the lastQuery property", function () {
             makeComponent();
             component.doQuery('foobar');
             expect(component.lastQuery).toEqual('foobar');
         });
 
-        it("should not clear remote store's filter", function() {
+        it("should not clear remote store's filter", function () {
             makeComponent();
             spyOn(component.store, 'clearFilter');
             component.doQuery('foobar');
             expect(component.store.clearFilter).not.toHaveBeenCalled();
         });
 
-        describe("local queryMode", function() {
-            it("should auto select if the last query is the same", function() {
+        describe("local queryMode", function () {
+            it("should auto select if the last query is the same", function () {
                 makeComponent({
                     renderTo: document.body,
                     queryMode: 'local',
@@ -1223,14 +1223,14 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.doAutoSelect).toHaveBeenCalled();
             });
 
-            it("should filter the store based on the displayField", function() {
+            it("should filter the store based on the displayField", function () {
                 makeComponent({
                     queryMode: 'local',
                     displayField: 'val'
                 });
                 var spy = jasmine.createSpy(),
                     store = component.getStore();
-                    
+
                 store.on('filterchange', spy);
                 component.doQuery('value 2');
 
@@ -1238,8 +1238,8 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(store.getCount()).toBe(1);
                 expect(store.getAt(0).get('val')).toBe('value 2');
             });
-            
-            it("should not filter the store if forceAll = true", function() {
+
+            it("should not filter the store if forceAll = true", function () {
                 makeComponent({
                     queryMode: 'local',
                     displayField: 'val'
@@ -1247,18 +1247,18 @@ describe("Ext.form.field.ComboBox", function() {
                 component.doQuery('value 2', true);
                 expect(component.getStore().getCount()).toEqual(1);
             });
-            
-            it("should add to existing filters", function(){
+
+            it("should add to existing filters", function () {
                 makeComponent({
                     queryMode: 'local',
                     displayField: 'val'
-                });    
+                });
                 store.filter('val', 'value');
                 component.doQuery('value 3');
                 expect(store.getCount()).toBe(5);
             });
-            
-            it("should remove only the filters added by the combo", function(){
+
+            it("should remove only the filters added by the combo", function () {
                 makeComponent({
                     queryMode: 'local',
                     displayField: 'val'
@@ -1268,8 +1268,8 @@ describe("Ext.form.field.ComboBox", function() {
                 component.doQuery('');
                 expect(store.getCount()).toBe(7);
             });
-            
-            it("should clear any active filters on destroy", function(){
+
+            it("should clear any active filters on destroy", function () {
                 makeComponent({
                     queryMode: 'local',
                     displayField: 'val'
@@ -1282,8 +1282,8 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("remote queryMode", function() {
-            it("should call the store's load method", function() {
+        describe("remote queryMode", function () {
+            it("should call the store's load method", function () {
                 makeComponent({
                     queryMode: 'remote',
                     displayField: 'val'
@@ -1293,7 +1293,7 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.store.load.callCount).toEqual(1);
                 expect(component.store.load.calls[0].args[0].params.query).toEqual('foobar');
             });
-            it("should pass the query string using the 'queryParam' as the parameter name", function() {
+            it("should pass the query string using the 'queryParam' as the parameter name", function () {
                 makeComponent({
                     queryMode: 'remote',
                     displayField: 'val',
@@ -1306,8 +1306,8 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("beforequery event", function() {
-            it("should fire the 'beforequery' event", function() {
+        describe("beforequery event", function () {
+            it("should fire the 'beforequery' event", function () {
                 makeComponent();
                 var spy = jasmine.createSpy();
                 component.on('beforequery', spy);
@@ -1320,31 +1320,31 @@ describe("Ext.form.field.ComboBox", function() {
                 });
                 expect(component.lastQuery).toBeDefined();
             });
-            it("should not query if a 'beforequery' handler returns false", function() {
+            it("should not query if a 'beforequery' handler returns false", function () {
                 makeComponent();
-                component.on('beforequery', function() {
+                component.on('beforequery', function () {
                     return false;
                 });
                 expect(component.lastQuery).not.toBeDefined();
             });
-            it("should not query if a 'beforequery' handler sets the query event object's cancel property to true", function() {
+            it("should not query if a 'beforequery' handler sets the query event object's cancel property to true", function () {
                 makeComponent();
-                component.on('beforequery', function(qe) {
+                component.on('beforequery', function (qe) {
                     qe.cancel = true;
                 });
                 expect(component.lastQuery).not.toBeDefined();
             });
         });
 
-        describe("minChars config", function() {
-            it("should not query if the number of entered chars is less than the minChars config", function() {
+        describe("minChars config", function () {
+            it("should not query if the number of entered chars is less than the minChars config", function () {
                 makeComponent({
                     minChars: 100
                 });
                 component.doQuery('foobar');
                 expect(component.lastQuery).not.toBeDefined();
             });
-            it("should ignore the minChars if forceAll = true", function() {
+            it("should ignore the minChars if forceAll = true", function () {
                 makeComponent({
                     minChars: 100
                 });
@@ -1353,7 +1353,7 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        it("should expand the dropdown", function() {
+        it("should expand the dropdown", function () {
             makeComponent();
             spyOn(component, 'expand');
             component.doQuery('foobar');
@@ -1400,8 +1400,8 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("doRawQuery method", function() {
-        it("should call the doQuery method with the contents of the field", function() {
+    describe("doRawQuery method", function () {
+        it("should call the doQuery method with the contents of the field", function () {
             makeComponent({
                 renderTo: Ext.getBody()
             });
@@ -1413,8 +1413,8 @@ describe("Ext.form.field.ComboBox", function() {
     });
 
 
-    describe('trigger click', function() {
-        it("should perform an 'all' query with the allQuery config if triggerAction='all'", function() {
+    describe('trigger click', function () {
+        it("should perform an 'all' query with the allQuery config if triggerAction='all'", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 triggerAction: 'all',
@@ -1425,7 +1425,7 @@ describe("Ext.form.field.ComboBox", function() {
             expect(component.doQuery).toHaveBeenCalledWith('the-all-query', true);
         });
 
-        it("should perform a query with the current field value if triggerAction='query'", function() {
+        it("should perform a query with the current field value if triggerAction='query'", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 triggerAction: 'query',
@@ -1503,8 +1503,8 @@ describe("Ext.form.field.ComboBox", function() {
     });
 
 
-    describe("keyboard input", function() {
-        beforeEach(function() {
+    describe("keyboard input", function () {
+        beforeEach(function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 queryMode: 'local',
@@ -1513,53 +1513,53 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        it("should initiate a query after the queryDelay", function() {
-            runs(function() {
+        it("should initiate a query after the queryDelay", function () {
+            runs(function () {
                 spyOn(component, 'doQuery');
                 component.inputEl.dom.value = 'foob';
                 jasmine.fireKeyEvent(component.inputEl.dom, 'keyup', 66);
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return component.doQuery.callCount > 0;
             }, 'query not executed');
-            runs(function() {
+            runs(function () {
                 expect(component.doQuery.mostRecentCall.args).toEqual(['foob', false, true]);
             });
         });
-        it("should not respond to special keys", function() {
-            runs(function() {
+        it("should not respond to special keys", function () {
+            runs(function () {
                 spyOn(component, 'doQuery');
                 component.inputEl.dom.value = 'foob';
                 jasmine.fireKeyEvent(component.inputEl.dom, 'keyup', Ext.event.Event.DOWN);
             });
             waits(10);
-            runs(function() {
+            runs(function () {
                 expect(component.doQuery).not.toHaveBeenCalled();
             });
         });
-        it("should respond to backspace", function() {
-            runs(function() {
+        it("should respond to backspace", function () {
+            runs(function () {
                 spyOn(component, 'doQuery');
                 component.inputEl.dom.value = 'foob';
                 jasmine.fireKeyEvent(component.inputEl.dom, 'keyup', Ext.event.Event.BACKSPACE);
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return component.doQuery.callCount > 0;
             }, 'query not executed');
         });
-        it("should respond to delete", function() {
-            runs(function() {
+        it("should respond to delete", function () {
+            runs(function () {
                 spyOn(component, 'doQuery');
                 component.inputEl.dom.value = 'foob';
                 jasmine.fireKeyEvent(component.inputEl.dom, 'keyup', Ext.event.Event.DELETE);
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return component.doQuery.callCount > 0;
             }, 'query not executed');
         });
 
         // Explicitl blurring doesn't work on IE, so use itNotIE
-        itNotIE('should select the value upon tab', function() {
+        itNotIE('should select the value upon tab', function () {
             // FIXME the component.inputEl.dom.focus(); calls should not be necessary
             // Expand the picker
             component.inputEl.dom.focus();
@@ -1577,10 +1577,10 @@ describe("Ext.form.field.ComboBox", function() {
             jasmine.fireKeyEvent(component.inputEl, 'keydown', Ext.event.Event.TAB);
 
             // We must wait until after the browser's TAB handling has blurred the field, and therefore hidden the picker
-            waitsFor(function() {
+            waitsFor(function () {
                 return component.picker.isVisible() === false;
             });
-            runs(function() {
+            runs(function () {
 
                 // First record should be selected
                 expect(selModel.getSelection()[0] === store.getAt(0)).toBe(true);
@@ -1589,109 +1589,109 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.getRawValue()).toBe(selModel.getSelection()[0].get(component.displayField));
             });
         });
-        
-        describe("keyboard interaction", function() {
+
+        describe("keyboard interaction", function () {
             var expandSpy, collapseSpy;
-            
+
             function pressKey(key, options) {
                 jasmine.asyncPressKey(component.inputEl, key, options);
             }
-            
+
             function expectItem(wantText) {
-                runs(function() {
+                runs(function () {
                     var navModel = component.picker.getNavigationModel(),
                         rec = navModel.getRecord(),
                         haveText = rec && rec.get('text');
-                
+
                     expect(haveText).toBe(wantText);
                 });
             }
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 expandSpy = jasmine.createSpy('expand');
                 collapseSpy = jasmine.createSpy('collapse');
-                
+
                 component.on({
                     expand: expandSpy,
                     collapse: collapseSpy
                 });
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 expandSpy = collapseSpy = null;
             });
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 pressKey('down');
-                
+
                 waitForSpy(expandSpy, 'expand', 1000);
             });
-            
-            describe("expand/collapse", function() {
-                it("should expand on down arrow", function() {
+
+            describe("expand/collapse", function () {
+                it("should expand on down arrow", function () {
                     expect(component.isExpanded).toBe(true);
                 });
-                
-                it("should collapse on Esc", function() {
+
+                it("should collapse on Esc", function () {
                     pressKey('esc');
-                    
+
                     waitForSpy(collapseSpy, 'collapse', 1000);
-                    
-                    runs(function() {
+
+                    runs(function () {
                         expect(component.isExpanded).toBe(false);
                     });
                 });
             });
-            
-            describe("arrow keys", function() {
-                describe("down arrow", function() {
-                    describe("initial", function() {
-                        it("should select first item", function() {
+
+            describe("arrow keys", function () {
+                describe("down arrow", function () {
+                    describe("initial", function () {
+                        it("should select first item", function () {
                             expectItem('text 1');
                         });
-                        
-                        it("should set aria-activedescendant to first item", function() {
+
+                        it("should set aria-activedescendant to first item", function () {
                             var item = component.picker.getNode(0);
-                        
+
                             // aria-activedescendant is set on the inputEl!
                             expectAria('aria-activedescendant', item.id);
                         });
                     });
-                    
-                    describe("subsequent", function() {
-                        beforeEach(function() {
+
+                    describe("subsequent", function () {
+                        beforeEach(function () {
                             pressKey('down');
-                            
+
                             jasmine.waitAWhile();
                         });
-                        
-                        it("should select 2nd item", function() {
+
+                        it("should select 2nd item", function () {
                             expectItem('text 2');
                         });
-                        
-                        it("should set aria-activedescendant to 2nd item", function() {
+
+                        it("should set aria-activedescendant to 2nd item", function () {
                             var item = component.picker.getNode(1);
-                            
+
                             expectAria('aria-activedescendant', item.id);
                         });
                     });
                 });
-                
-                describe("up arrow", function() {
-                    beforeEach(function() {
+
+                describe("up arrow", function () {
+                    beforeEach(function () {
                         pressKey('down');
                         pressKey('down');
                         pressKey('down');
                         pressKey('up');
                     });
-                    
-                    it("should select 3rd item", function() {
+
+                    it("should select 3rd item", function () {
                         expectItem('text 3');
                     });
-                    
-                    it("should set aria-activedescendant to 3rd item", function() {
+
+                    it("should set aria-activedescendant to 3rd item", function () {
                         var item = component.picker.getNode(2);
-                        
+
                         expectAria('aria-activedescendant', item.id);
                     });
                 });
@@ -1699,8 +1699,8 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("keyboard input with multiSelect", function() {
-        beforeEach(function() {
+    describe("keyboard input with multiSelect", function () {
+        beforeEach(function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 queryMode: 'local',
@@ -1709,7 +1709,7 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        it('should select the value upon tab with multiSelect', function() {
+        it('should select the value upon tab with multiSelect', function () {
             var sm,
                 selected,
                 rawVal = '';
@@ -1748,10 +1748,10 @@ describe("Ext.form.field.ComboBox", function() {
             jasmine.fireKeyEvent(component.inputEl, 'keydown', Ext.event.Event.TAB);
 
             // Wait for the browser's TAB handling to complete and the picker to hide
-            waitsFor(function() {
+            waitsFor(function () {
                 return component.picker.isVisible() === false;
             });
-            runs(function() {
+            runs(function () {
                 selected = sm.getSelection();
 
                 // 4th record should now be selected
@@ -1771,8 +1771,8 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("forceSelection", function(){
-        it('should not clear the raw value', function() {
+    describe("forceSelection", function () {
+        it('should not clear the raw value', function () {
             store.load();
             makeComponent({
                 displayField: 'text',
@@ -1788,16 +1788,16 @@ describe("Ext.form.field.ComboBox", function() {
             component.doRawQuery();
 
             // EXTJS-15501 - It was the typeahead processing that broke it.
-            waitsFor(function() {
+            waitsFor(function () {
                 return typeaheadSpy.callCount > 0;
             });
-            runs(function() {
+            runs(function () {
                 expect(component.inputEl.dom.value).toBe('text 1');
             });
         });
 
-        describe("setting value to a value not in the Store with forceSelection: false", function() {
-            it("should set passed value", function() {
+        describe("setting value to a value not in the Store with forceSelection: false", function () {
+            it("should set passed value", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     forceSelection: false
@@ -1806,7 +1806,7 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.getValue()).toBe('NOT IN STORE');
             });
 
-            it("should not collapse the list if there are items in the store", function() {
+            it("should not collapse the list if there are items in the store", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     forceSelection: false,
@@ -1818,9 +1818,9 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("not multi", function() {
-            describe("with no value", function() {
-                beforeEach(function() {
+        describe("not multi", function () {
+            describe("with no value", function () {
+                beforeEach(function () {
                     makeComponent({
                         displayField: 'text',
                         valueField: 'val',
@@ -1830,45 +1830,45 @@ describe("Ext.form.field.ComboBox", function() {
                     });
                 });
 
-                it("should set the underlying value on blur", function() {
+                it("should set the underlying value on blur", function () {
                     jasmine.focusAndWait(component);
-                    runs(function() {
+                    runs(function () {
                         doTyping('text 2');
                     });
                     jasmine.blurAndWait(component);
-                    runs(function() {
+                    runs(function () {
                         expect(component.getRawValue()).toBe('text 2');
                         expect(component.getValue()).toBe('value 2');
                     });
                 });
 
-                it("should find the first matching text value", function() {
+                it("should find the first matching text value", function () {
                     jasmine.focusAndWait(component);
-                    runs(function() {
+                    runs(function () {
                         doTyping('Foo');
                     });
                     jasmine.blurAndWait(component);
-                    runs(function() {
+                    runs(function () {
                         expect(component.getRawValue()).toBe('Foo');
                         expect(component.getValue()).toBe('foo1');
                     });
                 });
 
-                it("should empty the value if nothing matches", function() {
+                it("should empty the value if nothing matches", function () {
                     jasmine.focusAndWait(component);
-                    runs(function() {
+                    runs(function () {
                         doTyping('bar');
                     });
                     jasmine.blurAndWait(component);
-                    runs(function() {
+                    runs(function () {
                         expect(component.getRawValue()).toBe('');
                         expect(component.getValue()).toBeNull();
                     });
                 });
             });
 
-            describe("with a current value", function() {
-                describe("via configuration", function() {
+            describe("with a current value", function () {
+                describe("via configuration", function () {
                     function makeWithValue(value) {
                         makeComponent({
                             displayField: 'text',
@@ -1880,89 +1880,89 @@ describe("Ext.form.field.ComboBox", function() {
                         });
                     }
 
-                    it("should set the underlying value on blur", function() {
+                    it("should set the underlying value on blur", function () {
                         makeWithValue('value 31');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('text 2');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('text 2');
                             expect(component.getValue()).toBe('value 2');
                         });
                     });
 
-                    it("should find the first matching text value", function() {
+                    it("should find the first matching text value", function () {
                         makeWithValue('value 31');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('Foo');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('Foo');
                             expect(component.getValue()).toBe('foo1');
                         });
                     });
 
-                    it("should restore the previous value if nothing matches", function() {
+                    it("should restore the previous value if nothing matches", function () {
                         makeWithValue('value 31');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('bar');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('text 31');
                             expect(component.getValue()).toBe('value 31');
                         });
                     });
 
-                    it("should not overwrite a known value with a matching display value", function() {
+                    it("should not overwrite a known value with a matching display value", function () {
                         makeWithValue('foo2');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('Foo');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('Foo');
                             expect(component.getValue()).toBe('foo2');
                         });
                     });
 
-                    it("should restore the value if it has been cleared", function() {
+                    it("should restore the value if it has been cleared", function () {
                         makeWithValue('foo2');
                         component.allowBlank = false;
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('', true);
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('Foo');
                             expect(component.getValue()).toBe('foo2');
                         });
                     });
-                    
-                    it("should not restore the value if it has been cleared and allowBlank true", function() {
+
+                    it("should not restore the value if it has been cleared and allowBlank true", function () {
                         makeWithValue('foo2');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('', true);
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('');
                             expect(component.getValue()).toBe(null);
                         });
                     });
-                    
+
                 });
 
-                describe("value via selecting from the list", function() {
-                    beforeEach(function() {
+                describe("value via selecting from the list", function () {
+                    beforeEach(function () {
                         makeComponent({
                             displayField: 'text',
                             valueField: 'val',
@@ -1972,88 +1972,88 @@ describe("Ext.form.field.ComboBox", function() {
                         });
                     });
 
-                    it("should set the underlying value on blur", function() {
+                    it("should set the underlying value on blur", function () {
                         clickListItem('value 31');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('text 2');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('text 2');
                             expect(component.getValue()).toBe('value 2');
                         });
                     });
 
-                    it("should find the first matching text value", function() {
+                    it("should find the first matching text value", function () {
                         clickListItem('value 31');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('Foo');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('Foo');
                             expect(component.getValue()).toBe('foo1');
                         });
                     });
 
-                    it("should restore the previous value if nothing matches", function() {
+                    it("should restore the previous value if nothing matches", function () {
                         clickListItem('value 31');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('bar');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('text 31');
                             expect(component.getValue()).toBe('value 31');
                         });
                     });
 
-                    it("should not overwrite a known value with a matching display value", function() {
+                    it("should not overwrite a known value with a matching display value", function () {
                         clickListItem('foo2');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('Foo');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('Foo');
                             expect(component.getValue()).toBe('foo2');
                         });
                     });
 
-                    it("should restore the value if it has been cleared", function() {
+                    it("should restore the value if it has been cleared", function () {
                         clickListItem('foo2');
                         component.allowBlank = false;
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('', true);
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('Foo');
                             expect(component.getValue()).toBe('foo2');
                         });
                     });
 
-                    it("should not restore the value if it has been cleared and allowBlank is true", function() {
+                    it("should not restore the value if it has been cleared and allowBlank is true", function () {
                         clickListItem('foo2');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('', true);
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('');
                             expect(component.getValue()).toBe(null);
                         });
                     });
                 });
 
-                describe("value via setValue", function() {
-                    beforeEach(function() {
+                describe("value via setValue", function () {
+                    beforeEach(function () {
                         makeComponent({
                             displayField: 'text',
                             valueField: 'val',
@@ -2063,88 +2063,88 @@ describe("Ext.form.field.ComboBox", function() {
                         });
                     });
 
-                    it("should set the underlying value on blur", function() {
+                    it("should set the underlying value on blur", function () {
                         component.setValue('value 31');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('text 2');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('text 2');
                             expect(component.getValue()).toBe('value 2');
                         });
                     });
 
-                    it("should find the first matching text value", function() {
+                    it("should find the first matching text value", function () {
                         component.setValue('value 31');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('Foo');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('Foo');
                             expect(component.getValue()).toBe('foo1');
                         });
                     });
 
-                    it("should restore the previous value if nothing matches", function() {
+                    it("should restore the previous value if nothing matches", function () {
                         component.setValue('value 31');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('bar');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('text 31');
                             expect(component.getValue()).toBe('value 31');
                         });
                     });
 
-                    it("should not overwrite a known value with a matching display value", function() {
+                    it("should not overwrite a known value with a matching display value", function () {
                         component.setValue(store.last());
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('Foo');
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('Foo');
                             expect(component.getValue()).toBe('foo2');
                         });
                     });
 
-                    it("should restore the value if it has been cleared", function() {
+                    it("should restore the value if it has been cleared", function () {
                         component.setValue('value 31');
                         component.allowBlank = false;
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('', true);
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('text 31');
                             expect(component.getValue()).toBe('value 31');
                         });
                     });
 
-                    it("should not restore the value if it has been cleared and allowBlank is true", function() {
+                    it("should not restore the value if it has been cleared and allowBlank is true", function () {
                         component.setValue('value 31');
                         jasmine.focusAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             doTyping('', true);
                         });
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getRawValue()).toBe('');
                             expect(component.getValue()).toBe(null);
                         });
                     });
                 });
 
-                describe("clearing the value", function() {
-                    beforeEach(function() {
+                describe("clearing the value", function () {
+                    beforeEach(function () {
                         makeComponent({
                             displayField: 'text',
                             valueField: 'val',
@@ -2154,40 +2154,40 @@ describe("Ext.form.field.ComboBox", function() {
                         });
                     });
 
-                    it("should not set the value after calling clearValue", function() {
+                    it("should not set the value after calling clearValue", function () {
                         component.setValue('value 1');
                         component.clearValue();
                         jasmine.focusAndWait(component);
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getValue()).toBeNull();
                         });
                     });
 
-                    it("should not set the value after calling setValue(null)", function() {
+                    it("should not set the value after calling setValue(null)", function () {
                         component.setValue('value 1');
                         component.setValue(null);
                         jasmine.focusAndWait(component);
                         jasmine.blurAndWait(component);
-                        runs(function() {
+                        runs(function () {
                             expect(component.getValue()).toBeNull();
                         });
                     });
                 });
             });
 
-            describe("with remote loading", function() {
-                beforeEach(function() {
+            describe("with remote loading", function () {
+                beforeEach(function () {
                     MockAjaxManager.addMethods();
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     MockAjaxManager.removeMethods();
                 });
 
                 // This test seems to randomly fail on FF in the test runner.
                 // The component doesn't get focused and fails out
-                (Ext.isGecko ? xit : it)("should clear an unmatched value when the store loads", function() {
+                (Ext.isGecko ? xit : it)("should clear an unmatched value when the store loads", function () {
                     store.destroy();
                     store = new Ext.data.Store({
                         model: CBTestModel,
@@ -2205,10 +2205,10 @@ describe("Ext.form.field.ComboBox", function() {
                         renderTo: Ext.getBody()
                     });
                     component.focus();
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return component.hasFocus;
                     }, "Never focused");
-                    runs(function() {
+                    runs(function () {
                         // Simulate user typing
                         component.setRawValue('foobar');
                         component.doRawQuery();
@@ -2216,10 +2216,10 @@ describe("Ext.form.field.ComboBox", function() {
                         component.collapse();
                         component.blur();
                     });
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return !component.hasFocus;
                     }, "Never blurred");
-                    runs(function() {
+                    runs(function () {
                         Ext.Ajax.mockComplete({
                             status: 200,
                             responseText: '[]'
@@ -2230,17 +2230,17 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("with remote loading", function() {
-            beforeEach(function() {
+        describe("with remote loading", function () {
+            beforeEach(function () {
                 MockAjaxManager.addMethods();
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 MockAjaxManager.removeMethods();
             });
 
             // Blurring doesn't work in IE, so use itNotIE
-            itNotIE("should clear an unmatched value when the store loads, second version!", function() {
+            itNotIE("should clear an unmatched value when the store loads, second version!", function () {
                 store.destroy();
                 store = new Ext.data.Store({
                     model: CBTestModel,
@@ -2258,20 +2258,20 @@ describe("Ext.form.field.ComboBox", function() {
                     renderTo: Ext.getBody()
                 });
                 component.focus();
-                waitsFor(function() {
+                waitsFor(function () {
                     return component.hasFocus;
                 }, 'Waiting for field focus');
-                runs(function() {
+                runs(function () {
                     // Simulate user typing
                     component.setRawValue('foobar');
                     component.doRawQuery();
                     component.collapse();
                     component.blur();
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return !component.hasFocus;
                 }, 'Waiting for field blur');
-                runs(function() {
+                runs(function () {
                     Ext.Ajax.mockComplete({
                         status: 200,
                         responseText: '[]'
@@ -2282,10 +2282,10 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe('Always refilter if dropdown is visible, regardless of minChars threshold', function() {
+    describe('Always refilter if dropdown is visible, regardless of minChars threshold', function () {
         var combo;
 
-        beforeEach(function() {
+        beforeEach(function () {
             combo = Ext.create('Ext.form.field.ComboBox', {
                 renderTo: Ext.getBody(),
                 store: ['first-1', 'first-2', 'first-3', 'first-4', 'first-5', 'does not match query'],
@@ -2293,7 +2293,7 @@ describe("Ext.form.field.ComboBox", function() {
                 allowBlank: false,
                 forceSelection: true,
                 minChars: 7,
-                beforeQuery: function() {
+                beforeQuery: function () {
                     var result = Ext.form.field.ComboBox.prototype.beforeQuery.apply(this, arguments);
                     if (this.picker && this.picker.isVisible) {
                         result.cancel = false;
@@ -2302,27 +2302,27 @@ describe("Ext.form.field.ComboBox", function() {
                 }
             });
         });
-        afterEach(function() {
+        afterEach(function () {
             combo.destroy();
         });
 
-        it('should refilter when querystring length < minChars if dropdown is visible', function() {
+        it('should refilter when querystring length < minChars if dropdown is visible', function () {
             combo.doQuery('first-1');
-            
+
             // Should filter out all except the 'first-1' value
             expect(combo.store.getCount()).toEqual(1);
 
             combo.doQuery('first');
-            
+
             // Should show all the values which match 'first' - that is 5 values
             expect(combo.store.getCount()).toEqual(5);
         });
     });
 
-    describe('Using the "anyMatch" filter config', function() {
+    describe('Using the "anyMatch" filter config', function () {
         var combo;
 
-        beforeEach(function() {
+        beforeEach(function () {
             combo = Ext.create('Ext.form.field.ComboBox', {
                 renderTo: Ext.getBody(),
                 store: ['first-1', 'first-2', 'first-3', 'first-4', 'first-5', 'does not match query'],
@@ -2333,22 +2333,22 @@ describe("Ext.form.field.ComboBox", function() {
                 anyMatch: true
             });
         });
-        afterEach(function() {
+        afterEach(function () {
             combo.destroy();
         });
 
-        it('should show all values which contain the query string', function() {
+        it('should show all values which contain the query string', function () {
             combo.doQuery('rs');
-                        
+
             // Should show all the values which contain "rs" - that is 5 values
             expect(combo.store.getCount()).toEqual(5);
         });
     });
 
-    describe('Using the "caseSensitive" filter config', function() {
+    describe('Using the "caseSensitive" filter config', function () {
         var combo;
 
-        beforeEach(function() {
+        beforeEach(function () {
             combo = Ext.create('Ext.form.field.ComboBox', {
                 renderTo: Ext.getBody(),
                 store: ['first-1', 'first-2', 'first-3', 'first-4', 'first-5', 'does not match query'],
@@ -2359,19 +2359,19 @@ describe("Ext.form.field.ComboBox", function() {
                 caseSensitive: true
             });
         });
-        afterEach(function() {
+        afterEach(function () {
             combo.destroy();
         });
 
-        it('should fail to match because caseSensitive is set', function() {
+        it('should fail to match because caseSensitive is set', function () {
             combo.doQuery('FIRST');
-                        
+
             // Should do case sensitive filtering
             expect(combo.store.getCount()).toEqual(0);
         });
     });
 
-    describe("clearValue", function() {
+    describe("clearValue", function () {
         function makeClearCombo(value) {
             var cfg = {
                 displayField: 'text',
@@ -2384,8 +2384,8 @@ describe("Ext.form.field.ComboBox", function() {
             makeComponent(cfg);
         }
 
-        describe("with no value", function() {
-            it("should have an empty value", function() {
+        describe("with no value", function () {
+            it("should have an empty value", function () {
                 makeClearCombo();
                 component.clearValue();
                 expect(component.getRawValue()).toBe('');
@@ -2393,9 +2393,9 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("with a current value", function() {
-            describe("via configuration", function() {
-                it("should have an empty value", function() {
+        describe("with a current value", function () {
+            describe("via configuration", function () {
+                it("should have an empty value", function () {
                     makeClearCombo('value 31');
                     component.clearValue();
                     expect(component.getRawValue()).toBe('');
@@ -2403,8 +2403,8 @@ describe("Ext.form.field.ComboBox", function() {
                 });
             });
 
-            describe("value via selecting from the list", function() {
-                it("should have an empty value", function() {
+            describe("value via selecting from the list", function () {
+                it("should have an empty value", function () {
                     makeClearCombo();
                     clickListItem('value 31');
                     component.clearValue();
@@ -2413,8 +2413,8 @@ describe("Ext.form.field.ComboBox", function() {
                 });
             });
 
-            describe("value via setValue", function() {
-                it("should have an empty value", function() {
+            describe("value via setValue", function () {
+                it("should have an empty value", function () {
                     makeClearCombo();
                     component.setValue('value 31');
                     component.clearValue();
@@ -2425,9 +2425,9 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("reset", function() {
-        describe("with no configured value", function() {
-            beforeEach(function() {
+    describe("reset", function () {
+        describe("with no configured value", function () {
+            beforeEach(function () {
                 makeComponent({
                     displayField: 'text',
                     valueField: 'val',
@@ -2435,20 +2435,20 @@ describe("Ext.form.field.ComboBox", function() {
                 });
             });
 
-            it("should restore the original value", function() {
+            it("should restore the original value", function () {
                 component.reset();
                 expect(component.getRawValue()).toBe('');
                 expect(component.getValue()).toBeNull();
             });
 
-            it("should restore the original value after selecting a list item", function() {
+            it("should restore the original value after selecting a list item", function () {
                 clickListItem('value 1');
                 component.reset();
                 expect(component.getRawValue()).toBe('');
                 expect(component.getValue()).toBeNull();
             });
 
-            it("should restore the original value after setting the value with setValue", function() {
+            it("should restore the original value after setting the value with setValue", function () {
                 component.setValue('value 1');
                 component.reset();
                 expect(component.getRawValue()).toBe('');
@@ -2456,8 +2456,8 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("with a configured value", function() {
-            beforeEach(function() {
+        describe("with a configured value", function () {
+            beforeEach(function () {
                 makeComponent({
                     displayField: 'text',
                     valueField: 'val',
@@ -2466,20 +2466,20 @@ describe("Ext.form.field.ComboBox", function() {
                 });
             });
 
-            it("should restore the original value", function() {
+            it("should restore the original value", function () {
                 component.reset();
                 expect(component.getRawValue()).toBe('text 31');
                 expect(component.getValue()).toBe('value 31');
             });
 
-            it("should restore the original value after selecting a list item", function() {
+            it("should restore the original value after selecting a list item", function () {
                 clickListItem('value 1');
                 component.reset();
                 expect(component.getRawValue()).toBe('text 31');
                 expect(component.getValue()).toBe('value 31');
             });
 
-            it("should restore the original value after setting the value with setValue", function() {
+            it("should restore the original value after setting the value with setValue", function () {
                 component.setValue('value 1');
                 component.reset();
                 expect(component.getRawValue()).toBe('text 31');
@@ -2487,36 +2487,36 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
     });
-    
-    describe("transform", function() {
+
+    describe("transform", function () {
         var names = 'ABC'.split(''),
             sel;
-            
+
         function makeSelect(autoAppend, name, value) {
             sel = document.createElement('select');
-            
+
             var i = 1;
-            
+
             for (i = 1; i <= names.length; ++i) {
                 sel.options[i - 1] = new Option(names[i - 1], i);
             }
-            
+
             sel.id = 'mySelect';
             if (name) {
                 sel.name = name;
             }
-            
+
             if (value) {
                 sel.value = value;
             }
-            
+
             if (autoAppend) {
                 Ext.getBody().appendChild(sel);
             }
         }
-        
-        describe("transform option", function() {
-            it("should accept a string id and remove the select", function() {
+
+        describe("transform option", function () {
+            it("should accept a string id and remove the select", function () {
                 makeSelect(true);
                 component = new Ext.form.field.ComboBox({
                     transform: 'mySelect'
@@ -2524,8 +2524,8 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(Ext.getDom('mySelect') == null).toBe(true);
                 expect(component.rendered).toBe(true);
             });
-        
-            it("should accept a DOM element and remove the select", function() {
+
+            it("should accept a DOM element and remove the select", function () {
                 makeSelect(true);
                 component = new Ext.form.field.ComboBox({
                     transform: sel
@@ -2533,8 +2533,8 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(Ext.getDom('mySelect') == null).toBe(true);
                 expect(component.rendered).toBe(true);
             });
-        
-            it("should accept an Ext.dom.Element and remove the select", function() {
+
+            it("should accept an Ext.dom.Element and remove the select", function () {
                 makeSelect(true);
                 component = new Ext.form.field.ComboBox({
                     transform: Ext.get(sel)
@@ -2543,46 +2543,46 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(component.rendered).toBe(true);
             });
         });
-        
-        describe("name", function() {
-            it("should use the combo name over a name on the select", function() {
+
+        describe("name", function () {
+            it("should use the combo name over a name on the select", function () {
                 makeSelect(true, 'selName');
                 component = new Ext.form.field.ComboBox({
                     transform: sel,
                     name: 'comboName'
-                });    
+                });
                 expect(component.getName()).toBe('comboName');
             });
-            
-            it("should use the select name if no name is specified on the combo", function() {
+
+            it("should use the select name if no name is specified on the combo", function () {
                 makeSelect(true, 'selName');
                 component = new Ext.form.field.ComboBox({
                     transform: sel
-                });    
+                });
                 expect(component.getName()).toBe('selName');
-            });  
+            });
         });
-        
-        describe("value", function() {
-            it("should use the combo value over the value on the select", function() {
+
+        describe("value", function () {
+            it("should use the combo value over the value on the select", function () {
                 makeSelect(true, undefined, '2');
                 component = new Ext.form.field.ComboBox({
                     transform: sel,
                     value: '3'
-                });    
+                });
                 expect(component.getValue()).toBe('3');
             });
-            
-            it("should use the select value if no value is specified on the combo", function() {
+
+            it("should use the select value if no value is specified on the combo", function () {
                 makeSelect(true, undefined, '2');
                 component = new Ext.form.field.ComboBox({
                     transform: sel
-                });    
+                });
                 expect(component.getValue()).toBe('2');
-            });  
+            });
         });
-        
-        it("should use the options in the select field", function() {
+
+        it("should use the options in the select field", function () {
             makeSelect(true);
             component = new Ext.form.field.ComboBox({
                 transform: 'mySelect'
@@ -2593,33 +2593,33 @@ describe("Ext.form.field.ComboBox", function() {
             expect(store.getAt(1).get('field1')).toBe('2');
             expect(store.getAt(1).get('field2')).toBe('B');
             expect(store.getAt(2).get('field1')).toBe('3');
-            expect(store.getAt(2).get('field2')).toBe('C');  
+            expect(store.getAt(2).get('field2')).toBe('C');
         });
-        
-        describe("rendering", function() {
-            it("should render in place", function() {
+
+        describe("rendering", function () {
+            it("should render in place", function () {
                 var root = Ext.getBody().appendChild({
                     tag: 'div',
                     id: 'myRoot'
-                });    
+                });
                 makeSelect(false);
                 root.appendChild(sel);
-                
+
                 component = new Ext.form.field.ComboBox({
                     transform: 'mySelect'
                 });
                 expect(component.el.dom.parentNode.id).toBe('myRoot');
                 component.destroy();
                 root.remove();
-            });  
-            
-            it("should render using renderTo with transformInPlace: false", function() {
+            });
+
+            it("should render using renderTo with transformInPlace: false", function () {
                 makeSelect(true);
                 var root = Ext.getBody().appendChild({
                     tag: 'div',
                     id: 'myRoot'
                 });
-                
+
                 component = new Ext.form.field.ComboBox({
                     transform: 'mySelect',
                     transformInPlace: false,
@@ -2629,10 +2629,10 @@ describe("Ext.form.field.ComboBox", function() {
                 component.destroy();
                 root.remove();
             });
-            
-            it("should render as part of a layout with transformInPlace: false", function() {
+
+            it("should render as part of a layout with transformInPlace: false", function () {
                 makeSelect(true);
-                
+
                 var form = new Ext.form.Panel({
                     renderTo: Ext.getBody(),
                     items: {
@@ -2642,18 +2642,18 @@ describe("Ext.form.field.ComboBox", function() {
                         transformInPlace: false
                     }
                 }), component = form.down('#combo');
-                
+
 
                 expect(component.ownerCt).toBe(form);
                 form.destroy();
             });
         });
     });
-    
+
     // Focus issues in the test runner
-    (Ext.isWebkit ? describe : xdescribe)("clearFilterOnBlur", function() {
-        
-        it("should clear a filter applied on blur with clearFilterOnBlur: true", function() {
+    (Ext.isWebkit ? describe : xdescribe)("clearFilterOnBlur", function () {
+
+        it("should clear a filter applied on blur with clearFilterOnBlur: true", function () {
             makeComponent({
                 queryMode: 'local',
                 renderTo: Ext.getBody()
@@ -2662,13 +2662,13 @@ describe("Ext.form.field.ComboBox", function() {
             // Simulate user typing 'text 3'
             component.setRawValue('text 3');
             component.expand();
-            component.doRawQuery();         
+            component.doRawQuery();
             expect(store.getCount()).toBe(5);
             component.blur();
             expect(store.getCount()).toBe(count);
         });
-        
-        it("should clear a only the combo filter applied on blur with clearFilterOnBlur: true", function() {
+
+        it("should clear a only the combo filter applied on blur with clearFilterOnBlur: true", function () {
             makeComponent({
                 queryMode: 'local',
                 renderTo: Ext.getBody()
@@ -2681,13 +2681,13 @@ describe("Ext.form.field.ComboBox", function() {
             // Simulate user typing 'text 3'
             component.setRawValue('text 3');
             component.expand();
-            component.doRawQuery();         
+            component.doRawQuery();
             expect(store.getCount()).toBe(5);
             component.blur();
             expect(store.getCount()).toBe(count);
         });
-        
-        it("should requery the store on focus with clearFilterOnBlur: true", function() {
+
+        it("should requery the store on focus with clearFilterOnBlur: true", function () {
             makeComponent({
                 queryMode: 'local',
                 renderTo: Ext.getBody()
@@ -2696,15 +2696,15 @@ describe("Ext.form.field.ComboBox", function() {
             // Simulate user typing 'text 3'
             component.setRawValue('text 3');
             component.expand();
-            component.doRawQuery();         
+            component.doRawQuery();
             expect(store.getCount()).toBe(5);
             component.blur();
             expect(store.getCount()).toBe(count);
             component.focus();
             expect(store.getCount()).toBe(5);
         });
-        
-        it("should not modify the filter with clearFilterOnBlur: false", function() {
+
+        it("should not modify the filter with clearFilterOnBlur: false", function () {
             makeComponent({
                 queryMode: 'local',
                 renderTo: Ext.getBody(),
@@ -2713,33 +2713,33 @@ describe("Ext.form.field.ComboBox", function() {
             // Simulate user typing 'text 3'
             component.setRawValue('text 3');
             component.expand();
-            component.doRawQuery();         
+            component.doRawQuery();
             expect(store.getCount()).toBe(5);
             component.blur();
             expect(store.getCount()).toBe(5);
         });
-       
+
     });
 
-    describe('displayTpl', function() {
-        describe('should create default', function() {
-            beforeEach(function() {
+    describe('displayTpl', function () {
+        describe('should create default', function () {
+            beforeEach(function () {
                 makeComponent();
             });
 
-            it('displayTpl should be an XTemplate', function() {
+            it('displayTpl should be an XTemplate', function () {
                 expect(component.displayTpl.isTemplate).toBe(true);
             });
 
-            it('displayTpl html match', function() {
+            it('displayTpl html match', function () {
                 expect(component.displayTpl.html).toBe('<tpl for=".">{[typeof values === "string" ? values : values["text"]]}<tpl if="xindex < xcount">, </tpl></tpl>');
             });
         });
 
         describe('should create from string', function () {
-            beforeEach(function() {
+            beforeEach(function () {
                 makeComponent({
-                   displayTpl : '<tpl for=".">{[typeof values === "string" ? values : values["foo"]]}</tpl>'
+                    displayTpl: '<tpl for=".">{[typeof values === "string" ? values : values["foo"]]}</tpl>'
                 });
             });
 
@@ -2753,11 +2753,11 @@ describe("Ext.form.field.ComboBox", function() {
         });
 
         describe('should create from array of strings', function () {
-            beforeEach(function() {
+            beforeEach(function () {
                 makeComponent({
-                    displayTpl : [
+                    displayTpl: [
                         '<tpl for=".">',
-                            '{[typeof values === "string" ? values : values["foo"]]}',
+                        '{[typeof values === "string" ? values : values["foo"]]}',
                         '</tpl>'
                     ]
                 });
@@ -2773,14 +2773,14 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("events", function() {
+    describe("events", function () {
         var spy;
 
-        beforeEach(function() {
+        beforeEach(function () {
             spy = jasmine.createSpy();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             spy = null;
         });
 
@@ -2792,7 +2792,7 @@ describe("Ext.form.field.ComboBox", function() {
             }, cfg));
         }
 
-        describe("change", function() {
+        describe("change", function () {
             function expectArgs(newVal, oldVal) {
                 var args = spy.mostRecentCall.args;
                 expect(args[0]).toBe(component);
@@ -2800,8 +2800,8 @@ describe("Ext.form.field.ComboBox", function() {
                 expect(args[2]).toBe(oldVal);
             }
 
-            describe("via setValue", function() {
-                it("should not fire when configured with a value", function() {
+            describe("via setValue", function () {
+                it("should not fire when configured with a value", function () {
                     makeEventCombo({
                         value: 'value 2',
                         listeners: {
@@ -2811,7 +2811,7 @@ describe("Ext.form.field.ComboBox", function() {
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should fire once when setting an initial value", function() {
+                it("should fire once when setting an initial value", function () {
                     makeEventCombo();
                     component.on('change', spy);
                     component.setValue('value 1');
@@ -2819,27 +2819,27 @@ describe("Ext.form.field.ComboBox", function() {
                     expectArgs('value 1', null);
                 });
 
-                it("should fire once when modifying an existing value", function() {
+                it("should fire once when modifying an existing value", function () {
                     makeEventCombo();
                     component.setValue('value 2');
                     component.on('change', spy);
                     component.setValue('value 1');
                     expect(spy.callCount).toBe(1);
                     expectArgs('value 1', 'value 2');
-                }); 
+                });
 
-                it("should fire once when nulling the value", function() {
+                it("should fire once when nulling the value", function () {
                     makeEventCombo();
                     component.setValue('value 2');
                     component.on('change', spy);
                     component.setValue(null);
                     expect(spy.callCount).toBe(1);
                     expectArgs(null, 'value 2');
-                }); 
+                });
             });
 
-            describe("via user interaction", function() {
-                it("should fire once when selecting an initial value", function() {
+            describe("via user interaction", function () {
+                it("should fire once when selecting an initial value", function () {
                     makeEventCombo();
                     component.on('change', spy);
                     clickListItem('value 1');
@@ -2847,20 +2847,20 @@ describe("Ext.form.field.ComboBox", function() {
                     expectArgs('value 1', null);
                 });
 
-                it("should fire once when modifying an existing value", function() {
+                it("should fire once when modifying an existing value", function () {
                     makeEventCombo();
                     component.setValue('value 2');
                     component.on('change', spy);
                     clickListItem('value 1');
                     expect(spy.callCount).toBe(1);
                     expectArgs('value 1', 'value 2');
-                }); 
+                });
             });
         });
 
-        describe("select", function() {
-            describe("via setValue", function() {
-                it("should not fire when configured with a value", function() {
+        describe("select", function () {
+            describe("via setValue", function () {
+                it("should not fire when configured with a value", function () {
                     makeEventCombo({
                         value: 'value 2',
                         listeners: {
@@ -2870,24 +2870,24 @@ describe("Ext.form.field.ComboBox", function() {
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should not fire when setting an initial value", function() {
+                it("should not fire when setting an initial value", function () {
                     makeEventCombo();
                     component.on('select', spy);
                     component.setValue('value 1');
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should not fire when modifying an existing value", function() {
+                it("should not fire when modifying an existing value", function () {
                     makeEventCombo();
                     component.setValue('value 2');
                     component.on('select', spy);
                     component.setValue('value 1');
                     expect(spy).not.toHaveBeenCalled();
-                }); 
+                });
             });
 
-            describe("via user interaction", function() {
-                it("should fire once when setting an initial value", function() {
+            describe("via user interaction", function () {
+                it("should fire once when setting an initial value", function () {
                     makeEventCombo();
                     component.on('select', spy);
                     clickListItem('value 1');
@@ -2896,21 +2896,22 @@ describe("Ext.form.field.ComboBox", function() {
                     expect(spy.mostRecentCall.args[1]).toBe(store.getAt(0));
                 });
 
-                it("should fire once when modifying an existing value", function() {
+                it("should fire once when modifying an existing value", function () {
                     makeEventCombo();
                     component.setValue('value 2');
                     component.on('select', spy);
                     clickListItem('value 1');
                     expect(spy.mostRecentCall.args[0]).toBe(component);
                     expect(spy.mostRecentCall.args[1]).toBe(store.getAt(0));
-                }); 
+                });
             });
 
-            describe("records param", function() {
+            describe("records param", function () {
                 function get(index) {
                     return store.getAt(index);
                 }
-                it("should be a single record with multiSelect: false", function() {
+
+                it("should be a single record with multiSelect: false", function () {
                     makeEventCombo({
                         multiSelect: false
                     });
@@ -2923,7 +2924,7 @@ describe("Ext.form.field.ComboBox", function() {
                     expect(spy.calls[2].args[1]).toBe(get(2));
                 });
 
-                it("should be an array of records with multiSelect: true", function() {
+                it("should be an array of records with multiSelect: true", function () {
                     makeEventCombo({
                         multiSelect: true
                     });
@@ -2961,15 +2962,15 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("binding", function() {
+    describe("binding", function () {
         var viewModel, spy;
 
-        beforeEach(function() {
+        beforeEach(function () {
             spy = jasmine.createSpy();
             viewModel = new Ext.app.ViewModel();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             spy = viewModel = null;
         });
 
@@ -2982,7 +2983,7 @@ describe("Ext.form.field.ComboBox", function() {
             }, cfg));
         }
 
-        describe("view model selection", function() {
+        describe("view model selection", function () {
             function getByVal(val) {
                 var index = store.findExact('val', val);
                 return store.getAt(index);
@@ -2995,9 +2996,9 @@ describe("Ext.form.field.ComboBox", function() {
                 component.collapse();
             }
 
-            describe("reference", function() {
-                describe("no initial value", function() {
-                    beforeEach(function() {
+            describe("reference", function () {
+                describe("no initial value", function () {
+                    beforeEach(function () {
                         viewModel.bind('{userList.selection}', spy);
                         makeViewModelCombo({
                             reference: 'userList'
@@ -3005,13 +3006,13 @@ describe("Ext.form.field.ComboBox", function() {
                         viewModel.notify();
                     });
 
-                    it("should publish null by default", function() {
+                    it("should publish null by default", function () {
                         var args = spy.mostRecentCall.args;
                         expect(args[0]).toBeNull();
                         expect(args[1]).toBeUndefined();
                     });
 
-                    it("should publish the value when selected", function() {
+                    it("should publish the value when selected", function () {
                         var rec = getByVal('value 1');
                         selectNotify(rec);
                         var args = spy.mostRecentCall.args;
@@ -3020,7 +3021,7 @@ describe("Ext.form.field.ComboBox", function() {
                         expect(component.getValue()).toBe('value 1');
                     });
 
-                    it("should publish when the selection is changed", function() {
+                    it("should publish when the selection is changed", function () {
                         var rec1 = getByVal('value 1'),
                             rec2 = getByVal('value 2');
 
@@ -3033,7 +3034,7 @@ describe("Ext.form.field.ComboBox", function() {
                         expect(component.getValue()).toBe('value 2');
                     });
 
-                    it("should publish the record when setting the value", function() {
+                    it("should publish the record when setting the value", function () {
                         component.setValue('value 1');
                         viewModel.notify();
                         var args = spy.mostRecentCall.args;
@@ -3041,7 +3042,7 @@ describe("Ext.form.field.ComboBox", function() {
                         expect(args[1]).toBeNull();
                     });
 
-                    it("should publish the record when the value is changed", function() {
+                    it("should publish the record when the value is changed", function () {
                         component.setValue('value 1');
                         viewModel.notify();
                         spy.reset();
@@ -3052,7 +3053,7 @@ describe("Ext.form.field.ComboBox", function() {
                         expect(args[1]).toBe(getByVal('value 1'));
                     });
 
-                    it("should publish the record when the value is cleared", function() {
+                    it("should publish the record when the value is cleared", function () {
                         component.setValue('value 1');
                         viewModel.notify();
                         spy.reset();
@@ -3064,8 +3065,8 @@ describe("Ext.form.field.ComboBox", function() {
                     });
                 });
 
-                describe("with initial value", function() {
-                    beforeEach(function() {
+                describe("with initial value", function () {
+                    beforeEach(function () {
                         viewModel.bind('{userList.selection}', spy);
                         makeViewModelCombo({
                             reference: 'userList',
@@ -3074,7 +3075,7 @@ describe("Ext.form.field.ComboBox", function() {
                         viewModel.notify();
                     });
 
-                    it("should publish the record", function() {
+                    it("should publish the record", function () {
                         var args = spy.mostRecentCall.args;
                         expect(args[0]).toBe(getByVal('value 2'));
                         expect(args[1]).toBeUndefined();
@@ -3082,9 +3083,9 @@ describe("Ext.form.field.ComboBox", function() {
                 });
             });
 
-            describe("two way binding", function() {
-                describe("no initial value", function() {
-                    beforeEach(function() {
+            describe("two way binding", function () {
+                describe("no initial value", function () {
+                    beforeEach(function () {
                         viewModel.bind('{foo}', spy);
                         makeViewModelCombo({
                             bind: {
@@ -3094,8 +3095,8 @@ describe("Ext.form.field.ComboBox", function() {
                         viewModel.notify();
                     });
 
-                    describe("changing the selection", function() {
-                        it("should trigger the binding when adding a selection", function() {
+                    describe("changing the selection", function () {
+                        it("should trigger the binding when adding a selection", function () {
                             var rec = getByVal('value 1');
                             selectNotify(rec);
                             var args = spy.mostRecentCall.args;
@@ -3103,7 +3104,7 @@ describe("Ext.form.field.ComboBox", function() {
                             expect(args[1]).toBeUndefined();
                         });
 
-                        it("should trigger the binding when changing the selection", function() {
+                        it("should trigger the binding when changing the selection", function () {
                             var rec1 = getByVal('value 1'),
                                 rec2 = getByVal('value 2');
 
@@ -3115,7 +3116,7 @@ describe("Ext.form.field.ComboBox", function() {
                             expect(args[1]).toBe(rec1);
                         });
 
-                        it("should trigger the binding when setting the value", function() {
+                        it("should trigger the binding when setting the value", function () {
                             component.setValue('value 1');
                             viewModel.notify();
                             var args = spy.mostRecentCall.args;
@@ -3123,7 +3124,7 @@ describe("Ext.form.field.ComboBox", function() {
                             expect(args[1]).toBeUndefined();
                         });
 
-                        it("should trigger the binding when the value is changed", function() {
+                        it("should trigger the binding when the value is changed", function () {
                             component.setValue('value 1');
                             viewModel.notify();
                             spy.reset();
@@ -3134,7 +3135,7 @@ describe("Ext.form.field.ComboBox", function() {
                             expect(args[1]).toBe(getByVal('value 1'));
                         });
 
-                        it("should trigger the binding when the value is cleared", function() {
+                        it("should trigger the binding when the value is cleared", function () {
                             component.setValue('value 1');
                             viewModel.notify();
                             spy.reset();
@@ -3146,15 +3147,15 @@ describe("Ext.form.field.ComboBox", function() {
                         });
                     });
 
-                    describe("changing the view model value", function() {
-                        it("should set the value when setting the record", function() {
+                    describe("changing the view model value", function () {
+                        it("should set the value when setting the record", function () {
                             var rec = getByVal('value 1');
                             viewModel.set('foo', rec);
                             viewModel.notify();
                             expect(component.getValue()).toBe('value 1');
                         });
 
-                        it("should set the value when updating the record", function() {
+                        it("should set the value when updating the record", function () {
                             viewModel.set('foo', getByVal('value 1'));
                             viewModel.notify();
                             viewModel.set('foo', getByVal('value 2'));
@@ -3162,7 +3163,7 @@ describe("Ext.form.field.ComboBox", function() {
                             expect(component.getValue()).toBe('value 2');
                         });
 
-                        it("should deselect when clearing the value", function() {
+                        it("should deselect when clearing the value", function () {
                             viewModel.set('foo', getByVal('value 1'));
                             viewModel.notify();
                             viewModel.set('foo', null);
@@ -3173,8 +3174,8 @@ describe("Ext.form.field.ComboBox", function() {
                 });
 
                 // Not sure if we want to support this, leave this out for now
-                xdescribe("with initial value", function() {
-                    it("should trigger the binding with an initial value in the combo", function() {
+                xdescribe("with initial value", function () {
+                    it("should trigger the binding with an initial value in the combo", function () {
                         viewModel.bind('{foo}', spy);
                         makeViewModelCombo({
                             value: 'value 2',
@@ -3189,8 +3190,8 @@ describe("Ext.form.field.ComboBox", function() {
                     });
                 });
 
-                describe("reloading the store", function() {
-                    beforeEach(function() {
+                describe("reloading the store", function () {
+                    beforeEach(function () {
                         MockAjaxManager.addMethods();
                         viewModel.bind('{foo}', spy);
                         makeViewModelCombo({
@@ -3210,12 +3211,12 @@ describe("Ext.form.field.ComboBox", function() {
                         store.load();
                     });
 
-                    afterEach(function() {
+                    afterEach(function () {
                         MockAjaxManager.removeMethods();
                     });
 
-                    describe("when the selected record is in the result set", function() {
-                        it("should trigger the selection binding", function() {
+                    describe("when the selected record is in the result set", function () {
+                        it("should trigger the selection binding", function () {
                             Ext.Ajax.mockComplete({
                                 status: 200,
                                 responseText: Ext.encode([
@@ -3230,8 +3231,8 @@ describe("Ext.form.field.ComboBox", function() {
                         });
                     });
 
-                    describe("when the selected record is not in the result set", function() {
-                        it("should trigger the selection binding", function() {
+                    describe("when the selected record is not in the result set", function () {
+                        it("should trigger the selection binding", function () {
                             Ext.Ajax.mockComplete({
                                 status: 200,
                                 responseText: '[]'
@@ -3246,11 +3247,11 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
     });
-    
-    describe("bindStore", function() {
+
+    describe("bindStore", function () {
         var newData, newStore;
 
-        beforeEach(function() {
+        beforeEach(function () {
             newData = [
                 {text: 'text 1', val: 1},
                 {text: 'text 2', val: 2},
@@ -3260,60 +3261,60 @@ describe("Ext.form.field.ComboBox", function() {
             ];
         });
 
-        afterEach(function() {
+        afterEach(function () {
             newStore = Ext.destroy(newStore);
         });
-        
-        it("should apply a filter when binding a new store", function() {
+
+        it("should apply a filter when binding a new store", function () {
             makeComponent({
                 queryMode: 'local',
                 renderTo: Ext.getBody()
             });
             component.doQuery('text 3');
-            
+
             newStore = new Ext.data.Store({
                 model: CBTestModel,
                 data: newData
             });
-            
+
             component.bindStore(newStore);
             expect(newStore.getCount()).toBe(1);
         });
-        
-        it("should be able to filter the store after binding a new one", function() {
+
+        it("should be able to filter the store after binding a new one", function () {
             makeComponent({
                 queryMode: 'local',
                 renderTo: Ext.getBody()
             });
             component.doQuery('text 3');
-            
+
             newStore = new Ext.data.Store({
                 model: CBTestModel,
                 data: newData
             });
-            
+
             component.bindStore(newStore);
             component.doQuery('text 2');
             expect(newStore.getCount()).toBe(1);
         });
-        
-        it("should not apply active filters if the param is passed", function() {
+
+        it("should not apply active filters if the param is passed", function () {
             makeComponent({
                 queryMode: 'local',
                 renderTo: Ext.getBody()
             });
             component.doQuery('text 3');
-            
+
             newStore = new Ext.data.Store({
                 model: CBTestModel,
                 data: newData
             });
-            
+
             component.bindStore(newStore, true);
             expect(newStore.getCount()).toBe(5);
         });
 
-        it("should be able to select after binding a new store", function() {
+        it("should be able to select after binding a new store", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 queryMode: 'local',
@@ -3331,7 +3332,7 @@ describe("Ext.form.field.ComboBox", function() {
             expect(component.getValue()).toBe('2');
         });
 
-        it("should be able to select after binding a store when one wasn't configured", function() {
+        it("should be able to select after binding a store when one wasn't configured", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 queryMode: 'local',
@@ -3349,10 +3350,10 @@ describe("Ext.form.field.ComboBox", function() {
             expect(component.getValue()).toBe('2');
         });
     });
-    
-    describe("setting value with different store states", function() {
-        describe("with a store not bound", function() {
-            it("should not display the raw value and resolve when the store is bound", function() {
+
+    describe("setting value with different store states", function () {
+        describe("with a store not bound", function () {
+            it("should not display the raw value and resolve when the store is bound", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     queryMode: 'local',
@@ -3368,8 +3369,8 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("with a store not bound", function() {
-            it("should not display the raw value and resolve when the store is bound", function() {
+        describe("with a store not bound", function () {
+            it("should not display the raw value and resolve when the store is bound", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     queryMode: 'local',
@@ -3385,8 +3386,8 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("with a store populated via adding records", function() {
-            it("should resolve the display value", function() {
+        describe("with a store populated via adding records", function () {
+            it("should resolve the display value", function () {
                 store.destroy();
                 store = new Ext.data.Store({
                     model: CBTestModel
@@ -3410,10 +3411,10 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("setting a value with a remote store", function() {
+        describe("setting a value with a remote store", function () {
             var fakeData, remoteStore,
                 ComboModel;
-            
+
             function createStore(cfg) {
                 remoteStore = new Ext.data.Store(Ext.apply({
                     model: ComboModel,
@@ -3423,21 +3424,21 @@ describe("Ext.form.field.ComboBox", function() {
                     }
                 }, cfg));
             }
-            
+
             function completeWithData(data) {
                 Ext.Ajax.mockComplete({
                     status: 200,
                     responseText: Ext.JSON.encode(data || fakeData)
                 });
             }
-            
-            beforeEach(function() {
+
+            beforeEach(function () {
                 MockAjaxManager.addMethods();
                 ComboModel = Ext.define(null, {
                     extend: 'Ext.data.Model',
                     fields: ['id', 'name']
                 });
-                
+
                 fakeData = [{
                     id: 1,
                     name: 'Foo'
@@ -3449,14 +3450,14 @@ describe("Ext.form.field.ComboBox", function() {
                     name: 'Baz'
                 }];
             });
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 Ext.destroy(remoteStore);
                 MockAjaxManager.removeMethods();
                 ComboModel = null;
             });
-            
-            describe("while the store is loading", function() {
+
+            describe("while the store is loading", function () {
                 function makeLoadCombo(valueIsName, cfg) {
                     makeComponent(Ext.apply({
                         displayField: 'name',
@@ -3466,19 +3467,19 @@ describe("Ext.form.field.ComboBox", function() {
                     }, cfg));
                 }
 
-                beforeEach(function() {
+                beforeEach(function () {
                     createStore();
                 });
-                
-                it("should not trigger a second load", function() {
+
+                it("should not trigger a second load", function () {
                     makeLoadCombo();
                     remoteStore.load();
                     spyOn(remoteStore, 'load');
                     component.setValue(1);
                     expect(remoteStore.load).not.toHaveBeenCalled();
                 });
-                
-                it("should not trigger a second load with autoLoadOnValue", function() {
+
+                it("should not trigger a second load with autoLoadOnValue", function () {
                     makeLoadCombo({
                         autoLoadOnValue: true
                     });
@@ -3487,16 +3488,16 @@ describe("Ext.form.field.ComboBox", function() {
                     component.setValue(1);
                     expect(remoteStore.load).not.toHaveBeenCalled();
                 });
-                
-                describe("display value", function() {
-                    it("should not put the id as the display value while loading", function() {
+
+                describe("display value", function () {
+                    it("should not put the id as the display value while loading", function () {
                         makeLoadCombo();
                         remoteStore.load();
                         component.setValue(1);
                         expect(component.getRawValue()).toBe('');
                     });
 
-                    it("should use the model raw value as the display value while loading if a model is passed", function() {
+                    it("should use the model raw value as the display value while loading if a model is passed", function () {
                         makeLoadCombo();
                         remoteStore.load();
                         component.setValue(new ComboModel({
@@ -3506,8 +3507,8 @@ describe("Ext.form.field.ComboBox", function() {
                         expect(component.getRawValue()).toBe('Foo');
                         expect(component.getValue()).toBe(1);
                     });
-                
-                    it("should update the display value when the store loads", function() {
+
+                    it("should update the display value when the store loads", function () {
                         makeLoadCombo();
                         remoteStore.load();
                         component.setValue(1);
@@ -3515,7 +3516,7 @@ describe("Ext.form.field.ComboBox", function() {
                         expect(component.getRawValue()).toBe('Foo');
                     });
 
-                    it("should leave the value when displayField === valueField", function() {
+                    it("should leave the value when displayField === valueField", function () {
                         makeLoadCombo(true);
                         remoteStore.load();
                         component.setValue('foo');
@@ -3523,17 +3524,17 @@ describe("Ext.form.field.ComboBox", function() {
                     });
                 });
             });
-            
-            describe("while having a pending auto load", function() {
+
+            describe("while having a pending auto load", function () {
                 var flushLoadSpy;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     synchronousLoad = false;
                     var extAsap = Ext.asap;
-                    
+
                     flushLoadSpy = spyOn(Ext.data.Store.prototype, 'flushLoad').andCallThrough();
 
-                    Ext.asap = function(fn, scope) {
+                    Ext.asap = function (fn, scope) {
                         return Ext.defer(fn, 100, scope);
                     };
                     createStore({
@@ -3547,45 +3548,45 @@ describe("Ext.form.field.ComboBox", function() {
                     });
                     Ext.asap = extAsap;
                 });
-                afterEach(function() {
+                afterEach(function () {
                     synchronousLoad = true;
                     Ext.data.Store.prototype.flushLoad = storeFlushLoad;
                 });
-                
-                it("should not trigger a load", function() {
+
+                it("should not trigger a load", function () {
                     spyOn(remoteStore, 'load');
                     component.setValue(1);
                     expect(remoteStore.load).not.toHaveBeenCalled();
                 });
-                
-                it("should not trigger a load with autoLoadOnValue", function() {
+
+                it("should not trigger a load with autoLoadOnValue", function () {
                     component.autoLoadOnValue = true;
                     spyOn(remoteStore, 'load');
                     component.setValue(1);
                     expect(remoteStore.load).not.toHaveBeenCalled();
                 });
-                
-                it("should not put the id as the raw value while loading", function() {
+
+                it("should not put the id as the raw value while loading", function () {
                     spyOn(remoteStore, 'load');
                     component.setValue(1);
                     expect(component.getRawValue()).toBe('');
                 });
-                
-                it("should update the display value when the store loads", function() {
+
+                it("should update the display value when the store loads", function () {
                     component.setValue(1);
                     // Wait for autoLoad
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return flushLoadSpy.callCount > 0;
                     });
-                    runs(function() {
+                    runs(function () {
                         completeWithData();
                         expect(component.getRawValue()).toBe('Foo');
                     });
                 });
             });
-            
-            describe("not loading & without autoLoad", function() {
-                beforeEach(function() {
+
+            describe("not loading & without autoLoad", function () {
+                beforeEach(function () {
                     createStore();
                     makeComponent({
                         autoLoadOnValue: true,
@@ -3596,43 +3597,43 @@ describe("Ext.form.field.ComboBox", function() {
                     });
                 });
 
-                it("should not trigger a load with autoLoadOnValue: false", function() {
+                it("should not trigger a load with autoLoadOnValue: false", function () {
                     component.autoLoadOnValue = false;
                     spyOn(remoteStore, 'load');
                     component.setValue(1);
                     expect(remoteStore.load).not.toHaveBeenCalled();
                 });
-                
-                it("should not trigger a load if the value is undefined", function() {
+
+                it("should not trigger a load if the value is undefined", function () {
                     spyOn(remoteStore, 'load');
                     component.setValue(undefined);
                     expect(remoteStore.load).not.toHaveBeenCalled();
                 });
-                
-                it("should not trigger a load if the value is null", function() {
+
+                it("should not trigger a load if the value is null", function () {
                     spyOn(remoteStore, 'load');
                     component.setValue(null);
                     expect(remoteStore.load).not.toHaveBeenCalled();
                 });
 
-                it("should trigger a load", function() {
+                it("should trigger a load", function () {
                     spyOn(remoteStore, 'load');
                     component.setValue(1);
                     expect(remoteStore.load).toHaveBeenCalled();
                 });
 
-                it("should not put the id as the raw value while loading", function() {
+                it("should not put the id as the raw value while loading", function () {
                     component.setValue(1);
                     expect(component.getRawValue()).toBe('');
                 });
 
-                it("should update the display value when the store loads", function() {
+                it("should update the display value when the store loads", function () {
                     component.setValue(1);
                     completeWithData();
                     expect(component.getRawValue()).toBe('Foo');
                 });
 
-                it("should not update the display value when the store loads if the value is already set", function() {
+                it("should not update the display value when the store loads if the value is already set", function () {
                     component.setValue(new ComboModel({
                         id: 4,
                         name: 'Not in payload'
@@ -3647,7 +3648,7 @@ describe("Ext.form.field.ComboBox", function() {
                     expect(component.getRawValue()).toBe('Not in payload');
                 });
 
-                it("should not update the display value when the store loads if the value is already set, and selected value should be the newly matched record", function() {
+                it("should not update the display value when the store loads if the value is already set, and selected value should be the newly matched record", function () {
                     var initialRec = new ComboModel({
                         id: 3,
                         name: 'Baz'
@@ -3668,9 +3669,9 @@ describe("Ext.form.field.ComboBox", function() {
                     expect(component.getSelectedRecord() === initialRec).toBe(false);
                 });
             });
-            
-            describe("while not having a store bound", function() {
-                beforeEach(function() {
+
+            describe("while not having a store bound", function () {
+                beforeEach(function () {
                     createStore();
                     makeComponent({
                         displayField: 'name',
@@ -3678,38 +3679,38 @@ describe("Ext.form.field.ComboBox", function() {
                         renderTo: Ext.getBody()
                     }, true);
                 });
-                
-                it("should not put the id as the raw value when nothing is bound", function() {
+
+                it("should not put the id as the raw value when nothing is bound", function () {
                     component.setValue(1);
                     expect(component.getRawValue()).toBe('');
                 });
-                
-                it("should update the display value when a loaded store is bound", function() {
+
+                it("should update the display value when a loaded store is bound", function () {
                     remoteStore.load();
                     completeWithData();
                     component.setValue(1);
                     component.bindStore(remoteStore);
                     expect(component.getRawValue()).toBe('Foo');
                 });
-                
-                it("should update the display value when a loading store is bound", function() {
+
+                it("should update the display value when a loading store is bound", function () {
                     remoteStore.load();
                     component.setValue(1);
                     component.bindStore(remoteStore);
                     completeWithData();
                     expect(component.getRawValue()).toBe('Foo');
                 });
-                
-                describe("with unloaded store", function() {
-                    it("should not trigger a load with autoLoadOnValue: false", function() {
+
+                describe("with unloaded store", function () {
+                    it("should not trigger a load with autoLoadOnValue: false", function () {
                         component.autoLoadOnValue = false;
                         component.setValue(1);
                         spyOn(remoteStore, 'load');
                         component.bindStore(remoteStore);
                         expect(remoteStore.load).not.toHaveBeenCalled();
                     });
-                    
-                    it("should not trigger a load with autoLoadOnValue: true", function() {
+
+                    it("should not trigger a load with autoLoadOnValue: true", function () {
                         component.autoLoadOnValue = true;
                         component.setValue(1);
                         spyOn(remoteStore, 'load');
@@ -3719,10 +3720,10 @@ describe("Ext.form.field.ComboBox", function() {
                 });
             });
 
-            describe("chained stores", function() {
+            describe("chained stores", function () {
                 var chained;
 
-                it("should not update the display value if the source is loading", function() {
+                it("should not update the display value if the source is loading", function () {
                     createStore();
                     chained = new Ext.data.ChainedStore({
                         source: remoteStore
@@ -3740,7 +3741,7 @@ describe("Ext.form.field.ComboBox", function() {
                     chained.destroy();
                 });
 
-                it("should not update the display value if the source has a pending autoLoad", function() {
+                it("should not update the display value if the source has a pending autoLoad", function () {
                     createStore({
                         autoLoad: true
                     });
@@ -3758,7 +3759,7 @@ describe("Ext.form.field.ComboBox", function() {
                     chained.destroy();
                 });
 
-                it("should update the display value when the source store loads", function() {
+                it("should update the display value when the source store loads", function () {
                     createStore();
                     chained = new Ext.data.ChainedStore({
                         source: remoteStore
@@ -3779,10 +3780,10 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("store modifications", function() {
-        describe("remove", function() {
-            describe("with forceSelection: true", function() {
-                it("should not change the value if the removed record is not selected", function() {
+    describe("store modifications", function () {
+        describe("remove", function () {
+            describe("with forceSelection: true", function () {
+                it("should not change the value if the removed record is not selected", function () {
                     makeComponent({
                         renderTo: Ext.getBody(),
                         forceSelection: true,
@@ -3794,7 +3795,7 @@ describe("Ext.form.field.ComboBox", function() {
                     expect(component.getValue()).toBe('value 3');
                 });
 
-                it("should clear the value when removing the selected record", function() {
+                it("should clear the value when removing the selected record", function () {
                     makeComponent({
                         renderTo: Ext.getBody(),
                         forceSelection: true,
@@ -3808,8 +3809,8 @@ describe("Ext.form.field.ComboBox", function() {
                 });
             });
 
-            describe("with forceSelection: false", function() {
-                it("should not clear the value when removing the selected record", function() {
+            describe("with forceSelection: false", function () {
+                it("should not clear the value when removing the selected record", function () {
                     makeComponent({
                         renderTo: Ext.getBody(),
                         forceSelection: false,
@@ -3823,8 +3824,8 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("update", function() {
-            it("should update the raw value when the selected record text is changed", function() {
+        describe("update", function () {
+            it("should update the raw value when the selected record text is changed", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     forceSelection: true,
@@ -3838,8 +3839,8 @@ describe("Ext.form.field.ComboBox", function() {
             });
         });
 
-        describe("filtering", function() {
-            it("should clear the selected value when the record is filtered out", function() {
+        describe("filtering", function () {
+            it("should clear the selected value when the record is filtered out", function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     forceSelection: true,
@@ -3847,7 +3848,7 @@ describe("Ext.form.field.ComboBox", function() {
                     valueField: 'val',
                     value: 'value 3'
                 });
-                store.getFilters().add(function(rec) {
+                store.getFilters().add(function (rec) {
                     return rec.get('val') !== 'value 3';
                 });
                 expect(component.getRawValue()).toBe('');
@@ -3856,8 +3857,8 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("chained stores", function() {
-        it("should allow a non-record value to be used with forceSelection: false", function() {
+    describe("chained stores", function () {
+        it("should allow a non-record value to be used with forceSelection: false", function () {
             var chained = new Ext.data.ChainedStore({
                 source: store
             });
@@ -3883,8 +3884,8 @@ describe("Ext.form.field.ComboBox", function() {
                         panel = new Ext.grid.Panel({
                             id: 'foo',
                             columns: [
-                                { dataIndex: 'company', text: 'Company' },
-                                { dataIndex: 'price', text: 'Price' }
+                                {dataIndex: 'company', text: 'Company'},
+                                {dataIndex: 'price', text: 'Price'}
                             ],
                             store: new Ext.data.ArrayStore({
                                 storeId: 'baz',
@@ -3960,7 +3961,7 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe('EXTJS-15045', function() {
+    describe('EXTJS-15045', function () {
         function completeWithData(data) {
             Ext.Ajax.mockComplete({
                 status: 200,
@@ -3968,15 +3969,15 @@ describe("Ext.form.field.ComboBox", function() {
             });
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             MockAjaxManager.addMethods();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             MockAjaxManager.removeMethods();
         });
 
-        it('should allow mouse selection', function() {
+        it('should allow mouse selection', function () {
             store = new Ext.data.Store({
                 proxy: {
                     type: 'ajax',
@@ -3990,7 +3991,7 @@ describe("Ext.form.field.ComboBox", function() {
                 valueField: 'val',
                 queryDelay: 1
             });
-            
+
             jasmine.focusAndWait(component);
 
             doTyping('t', false);
@@ -4021,13 +4022,13 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe("getRecordDisplayData", function() {
-        it("should call getRecordDisplayData to display the data", function() {
+    describe("getRecordDisplayData", function () {
+        it("should call getRecordDisplayData to display the data", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 displayField: 'text',
                 valueField: 'val',
-                getRecordDisplayData: function(record) {
+                getRecordDisplayData: function (record) {
                     var data = Ext.apply({}, record.data);
                     data.text += 'foo';
                     return data;
@@ -4084,48 +4085,48 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe('checkValueOnChange triggered before store is loaded', function() {
+    describe('checkValueOnChange triggered before store is loaded', function () {
         // EXTJS-16468
-        it('should NOT clear the combobox value if setValueOnChange is triggered before the store is loaded', function() {
+        it('should NOT clear the combobox value if setValueOnChange is triggered before the store is loaded', function () {
             var Color = Ext.define(null, {
-                extend: 'Ext.data.Model',
-                fields: ['name']
-            }),
-            panel = new Ext.panel.Panel({
-                title: 'Combo test',
-                renderTo: document.body,
-                frame: true,
-                height: 400,
-                width: 600,
-                items: [{
-                    xtype: 'combobox',
-                    fieldLabel: 'Chosen color',
-                    queryMode: 'local',
-                    forceSelection: true,
-                    store: {
-                        autoLoad: false,
-                        model: Color,
-                        proxy: {
-                            type: 'memory',
-                            data: [{
-                                id: '0xff0000',
-                                name: 'Red'
-                            }, {
-                                id: '0x00ff00',
-                                name: 'Green'
-                            }, {
-                                id: '0x0000ff',
-                                name: 'Blue'
-                            }]
-                        }
-                    },
-                    displayField: 'name',
-                    valueField: 'name',
-                    value: 'Red'
-                }]
-            }),
-            comboBox = panel.child('combobox'),
-            store = comboBox.getStore();
+                    extend: 'Ext.data.Model',
+                    fields: ['name']
+                }),
+                panel = new Ext.panel.Panel({
+                    title: 'Combo test',
+                    renderTo: document.body,
+                    frame: true,
+                    height: 400,
+                    width: 600,
+                    items: [{
+                        xtype: 'combobox',
+                        fieldLabel: 'Chosen color',
+                        queryMode: 'local',
+                        forceSelection: true,
+                        store: {
+                            autoLoad: false,
+                            model: Color,
+                            proxy: {
+                                type: 'memory',
+                                data: [{
+                                    id: '0xff0000',
+                                    name: 'Red'
+                                }, {
+                                    id: '0x00ff00',
+                                    name: 'Green'
+                                }, {
+                                    id: '0x0000ff',
+                                    name: 'Blue'
+                                }]
+                            }
+                        },
+                        displayField: 'name',
+                        valueField: 'name',
+                        value: 'Red'
+                    }]
+                }),
+                comboBox = panel.child('combobox'),
+                store = comboBox.getStore();
 
             // The configured value should still be there
             expect(comboBox.getValue()).toBe('Red');
@@ -4148,13 +4149,13 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe('complex binding', function() {
+    describe('complex binding', function () {
         var Color = Ext.define(null, {
             extend: 'Ext.data.Model',
             fields: ['name']
         }), colorData, panel;
 
-        beforeEach(function() {
+        beforeEach(function () {
             colorData = [{
                 id: '0xff0000',
                 name: 'Red'
@@ -4167,12 +4168,12 @@ describe("Ext.form.field.ComboBox", function() {
             }];
         });
 
-        afterEach(function() {
+        afterEach(function () {
             panel.destroy();
             panel = colorData = null;
         });
 
-        it('should publish a selection when store provided by a bind is NOT autoloaded, value is configured and displayField === valueField', function() {
+        it('should publish a selection when store provided by a bind is NOT autoloaded, value is configured and displayField === valueField', function () {
             panel = new Ext.panel.Panel({
                 renderTo: document.body,
                 height: 400,
@@ -4221,13 +4222,13 @@ describe("Ext.form.field.ComboBox", function() {
 
             // Wait for the binding to update the store,
             // and for binding to tick and update the component which depends on the selection
-            waitsFor(function() {
+            waitsFor(function () {
                 // Success depends on the raw value being correct AND the bound selection being correct
                 return targetComp.el.dom.innerHTML === 'Red' && viewModel.get('color') === store.byText.get('Red');
             });
         });
 
-        it('should publish a selection when store provided by a bind is autoloaded, value is configured and displayField === valueField', function() {
+        it('should publish a selection when store provided by a bind is autoloaded, value is configured and displayField === valueField', function () {
             panel = new Ext.panel.Panel({
                 renderTo: document.body,
                 height: 400,
@@ -4276,12 +4277,12 @@ describe("Ext.form.field.ComboBox", function() {
 
             // Wait for the binding to update the store,
             // and for binding to tick and update the component which depends on the selection
-            waitsFor(function() {
+            waitsFor(function () {
                 // Success depends on the raw value being correct AND the bound selection being correct
                 return targetComp.el.dom.innerHTML === 'Red' && viewModel.get('color') === store.byText.get('Red');
             });
         });
-        it('should publish a selection when store provided by a bind is NOT autoloaded, value is set post construction and displayField === valueField', function() {
+        it('should publish a selection when store provided by a bind is NOT autoloaded, value is set post construction and displayField === valueField', function () {
             panel = new Ext.panel.Panel({
                 renderTo: document.body,
                 height: 400,
@@ -4332,13 +4333,13 @@ describe("Ext.form.field.ComboBox", function() {
 
             // Wait for the binding to update the store,
             // and for binding to tick and update the component which depends on the selection
-            waitsFor(function() {
+            waitsFor(function () {
                 // Success depends on the raw value being correct AND the bound selection being correct
                 return targetComp.el.dom.innerHTML === 'Red' && viewModel.get('color') === store.byText.get('Red');
             });
         });
 
-        it('should publish a selection when store provided by a bind is autoloaded, value is set post construction and displayField === valueField', function() {
+        it('should publish a selection when store provided by a bind is autoloaded, value is set post construction and displayField === valueField', function () {
             panel = new Ext.panel.Panel({
                 renderTo: document.body,
                 height: 400,
@@ -4389,15 +4390,15 @@ describe("Ext.form.field.ComboBox", function() {
 
             // Wait for the binding to update the store,
             // and for binding to tick and update the component which depends on the selection
-            waitsFor(function() {
+            waitsFor(function () {
                 // Success depends on the raw value being correct AND the bound selection being correct
                 return targetComp.el.dom.innerHTML === 'Red' && viewModel.get('color') === store.byText.get('Red');
             });
         });
 
-    // displayField !== valueField
+        // displayField !== valueField
 
-        it('should publish a selection when store provided by a bind is NOT autoloaded, value is configured and displayField !== valueField', function() {
+        it('should publish a selection when store provided by a bind is NOT autoloaded, value is configured and displayField !== valueField', function () {
             panel = new Ext.panel.Panel({
                 renderTo: document.body,
                 height: 400,
@@ -4446,13 +4447,13 @@ describe("Ext.form.field.ComboBox", function() {
 
             // Wait for the binding to update the store,
             // and for binding to tick and update the component which depends on the selection
-            waitsFor(function() {
+            waitsFor(function () {
                 // Success depends on the raw value being correct AND the bound selection being correct
                 return targetComp.el.dom.innerHTML === 'Red' && viewModel.get('color') === store.byText.get('Red');
             });
         });
 
-        it('should publish a selection when store provided by a bind is autoloaded, value is configured and displayField !== valueField', function() {
+        it('should publish a selection when store provided by a bind is autoloaded, value is configured and displayField !== valueField', function () {
             panel = new Ext.panel.Panel({
                 renderTo: document.body,
                 height: 400,
@@ -4501,13 +4502,13 @@ describe("Ext.form.field.ComboBox", function() {
 
             // Wait for the binding to update the store,
             // and for binding to tick and update the component which depends on the selection
-            waitsFor(function() {
+            waitsFor(function () {
                 // Success depends on the raw value being correct AND the bound selection being correct
                 return targetComp.el.dom.innerHTML === 'Red' && viewModel.get('color') === store.byText.get('Red');
             });
         });
 
-        it('should publish a selection when store provided by a bind is NOT autoloaded, value is set post construction and displayField !== valueField', function() {
+        it('should publish a selection when store provided by a bind is NOT autoloaded, value is set post construction and displayField !== valueField', function () {
             panel = new Ext.panel.Panel({
                 renderTo: document.body,
                 height: 400,
@@ -4558,13 +4559,13 @@ describe("Ext.form.field.ComboBox", function() {
 
             // Wait for the binding to update the store,
             // and for binding to tick and update the component which depends on the selection
-            waitsFor(function() {
+            waitsFor(function () {
                 // Success depends on the raw value being correct AND the bound selection being correct
                 return targetComp.el.dom.innerHTML === 'Red' && viewModel.get('color') === store.byText.get('Red');
             });
         });
 
-        it('should publish a selection when store provided by a bind is autoloaded, value is set post construction and displayField !== valueField', function() {
+        it('should publish a selection when store provided by a bind is autoloaded, value is set post construction and displayField !== valueField', function () {
             panel = new Ext.panel.Panel({
                 renderTo: document.body,
                 height: 400,
@@ -4615,29 +4616,29 @@ describe("Ext.form.field.ComboBox", function() {
 
             // Wait for the binding to update the store,
             // and for binding to tick and update the component which depends on the selection
-            waitsFor(function() {
+            waitsFor(function () {
                 // Success depends on the raw value being correct AND the bound selection being correct
                 return targetComp.el.dom.innerHTML === 'Red' && viewModel.get('color') === store.byText.get('Red');
             });
         });
     });
 
-    describe("destroy", function() {
-        it("should not throw an exception when destroying on select", function() {
+    describe("destroy", function () {
+        it("should not throw an exception when destroying on select", function () {
             makeComponent({
                 renderTo: Ext.getBody()
             });
-            component.on('select', function() {
+            component.on('select', function () {
                 component.destroy();
             });
-            expect(function() {
+            expect(function () {
                 clickListItem('value 2');
             }).not.toThrow();
         });
     });
 
-    describe('editable', function() {
-        it('should expand on inputEl click when NOT editable', function() {
+    describe('editable', function () {
+        it('should expand on inputEl click when NOT editable', function () {
             makeComponent({
                 renderTo: document.body,
                 editable: false
@@ -4652,7 +4653,7 @@ describe("Ext.form.field.ComboBox", function() {
             // Now it is editable, should NOT expand on inputEl Click
             jasmine.fireMouseEvent(component.inputEl, 'click');
             expect(component.isExpanded).toBe(false);
-            
+
             component.setEditable(false);
             // Not edtable again, SHOULD expand
             jasmine.fireMouseEvent(component.inputEl, 'click');
@@ -4660,8 +4661,8 @@ describe("Ext.form.field.ComboBox", function() {
         });
     });
 
-    describe('collapse on scroll', function() {
-        it('should collapse when the field scrolls out of view', function() {
+    describe('collapse on scroll', function () {
+        it('should collapse when the field scrolls out of view', function () {
             component = new Ext.panel.Panel({
                 renderTo: document.body,
                 title: 'Framed panel with normal child',
@@ -4724,7 +4725,7 @@ describe("Ext.form.field.ComboBox", function() {
                         lazyRender: true,
                         listClass: 'x-combo-list-small',
                         listeners: {
-                            'select': function() {
+                            'select': function () {
                                 alert(5);
                             }
                         }
@@ -4741,8 +4742,8 @@ describe("Ext.form.field.ComboBox", function() {
             // We can't wait for anything. We are expecting nothing to happen.
             // The field should NOT have collapsed since it is still in view.
             waits(50);
-            
-            runs(function() {
+
+            runs(function () {
                 // Scrolled, but still in view, the picker will have followed it
                 // and still be visible.
                 expect(combo1.getPicker().isVisible()).toBe(true);
@@ -4752,7 +4753,7 @@ describe("Ext.form.field.ComboBox", function() {
             });
 
             // Now that the combo has scrolled out of view, the picker should be hidden
-            waitsFor(function() {
+            waitsFor(function () {
                 // When the scroll event fires, the picker should hide
                 return combo1.getPicker().isVisible() === false;
             });

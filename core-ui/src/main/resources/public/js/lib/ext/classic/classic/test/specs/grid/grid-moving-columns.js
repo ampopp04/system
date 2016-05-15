@@ -31,11 +31,11 @@ describe('grid-moving-columns', function () {
     // Pass a reference to the cmp not an index!
     function dragColumn(from, to, onRight) {
         var fromBox = from.el.getBox(),
-            fromMx = fromBox.x + fromBox.width/2,
-            fromMy = fromBox.y + fromBox.height/2,
+            fromMx = fromBox.x + fromBox.width / 2,
+            fromMy = fromBox.y + fromBox.height / 2,
             toBox = to.el.getBox(),
             toMx = toBox.x,
-            toMy = toBox.y + toBox.height/2,
+            toMy = toBox.y + toBox.height / 2,
             offset = onRight ? toBox.width - 6 : 5,
             moveOffset = toMx + offset,
             dragThresh = onRight ? Ext.dd.DragDropManager.clickPixelThresh + 1 : -Ext.dd.DragDropManager.clickPixelThresh - 1;
@@ -133,7 +133,7 @@ describe('grid-moving-columns', function () {
         visibleColumns = headerCt.gridVisibleColumns || headerCt.visibleColumnManager.getColumns();
 
         // TODO: add comment here!
-        if ((typeof groupHeader !== 'number') && 
+        if ((typeof groupHeader !== 'number') &&
             (!groupHeader || (groupHeader.items && groupHeader.items.length))) {
             groupHeader = deepGroupHeader;
         }
@@ -141,9 +141,9 @@ describe('grid-moving-columns', function () {
 
     function spyOnEvent(object, eventName, fn) {
         var obj = {
-            fn: fn || Ext.emptyFn
-        },
-        spy = spyOn(obj, 'fn');
+                fn: fn || Ext.emptyFn
+            },
+            spy = spyOn(obj, 'fn');
 
         object.addListener(eventName, obj.fn);
         return spy;
@@ -1140,33 +1140,33 @@ describe('grid-moving-columns', function () {
 
         describe('one nested group', function () {
             var columns = [{
-                    dataIndex: 'field1',
-                    header: 'Field1'
+                dataIndex: 'field1',
+                header: 'Field1'
+            }, {
+                dataIndex: 'field2',
+                header: 'Field2'
+            }, {
+                header: 'Group1',
+                columns: [{
+                    dataIndex: 'field3',
+                    header: 'Field3'
                 }, {
-                    dataIndex: 'field2',
-                    header: 'Field2'
+                    dataIndex: 'field4',
+                    header: 'Field4'
                 }, {
-                    header: 'Group1',
-                    columns: [{
-                        dataIndex: 'field3',
-                        header: 'Field3'
-                    }, {
-                        dataIndex: 'field4',
-                        header: 'Field4'
-                    }, {
-                        dataIndex: 'field5',
-                        header: 'Field5'
-                    }, {
-                        dataIndex: 'field6',
-                        header: 'Field6'
-                    }]
+                    dataIndex: 'field5',
+                    header: 'Field5'
                 }, {
-                    dataIndex: 'field7',
-                    header: 'Field7'
-                }, {
-                    dataIndex: 'field8',
-                    header: 'Field8'
-                }];
+                    dataIndex: 'field6',
+                    header: 'Field6'
+                }]
+            }, {
+                dataIndex: 'field7',
+                header: 'Field7'
+            }, {
+                dataIndex: 'field8',
+                header: 'Field8'
+            }];
 
             describe('dragging all subheaders out of the group', function () {
                 describe('when the targetHeader is the groupHeader', function () {

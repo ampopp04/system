@@ -30,7 +30,7 @@ Ext.define('Ext.event.publisher.Publisher', {
         publishersByEvent: {}
     },
 
-    constructor: function() {
+    constructor: function () {
         var me = this,
             type = me.type;
 
@@ -62,12 +62,12 @@ Ext.define('Ext.event.publisher.Publisher', {
      * @param {String[]} [events] optional events to register instead of handledEvents.
      * @protected
      */
-    registerEvents: function(events) {
-       var me = this,
-           publishersByEvent = Ext.event.publisher.Publisher.publishersByEvent,
-           handledEvents = events || me.handledEvents,
-           ln = handledEvents.length,
-           eventName, i;
+    registerEvents: function (events) {
+        var me = this,
+            publishersByEvent = Ext.event.publisher.Publisher.publishersByEvent,
+            handledEvents = events || me.handledEvents,
+            ln = handledEvents.length,
+            eventName, i;
 
         for (i = 0; i < ln; i++) {
             eventName = handledEvents[i];
@@ -77,16 +77,16 @@ Ext.define('Ext.event.publisher.Publisher', {
     },
 
     //<debug>
-    subscribe: function() {
+    subscribe: function () {
         Ext.raise("Ext.event.publisher.Publisher subclass '" + this.$className + '" has no subscribe method.');
     },
 
-    unsubscribe: function() {
+    unsubscribe: function () {
         Ext.raise("Ext.event.publisher.Publisher subclass '" + this.$className + '" has no unsubscribe method.');
     },
     //</debug>
-    
-    fire: function(element, eventName, args) {
+
+    fire: function (element, eventName, args) {
         var event;
 
         if (element.hasListeners[eventName]) {

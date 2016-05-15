@@ -1,7 +1,7 @@
-describe("Ext.util.Floating", function() {
+describe("Ext.util.Floating", function () {
     var component;
 
-    function makeComponent(cfg){
+    function makeComponent(cfg) {
         component = new Ext.Component(Ext.apply({
             floating: true
         }, cfg));
@@ -9,22 +9,22 @@ describe("Ext.util.Floating", function() {
 
     function spyOnEvent(object, eventName, fn) {
         var obj = {
-            fn: fn || Ext.emptyFn
-        },
-        spy = spyOn(obj, 'fn');
+                fn: fn || Ext.emptyFn
+            },
+            spy = spyOn(obj, 'fn');
 
         object.addListener(eventName, obj.fn);
         return spy;
     }
 
-    afterEach(function() {
+    afterEach(function () {
         if (component) {
             component.destroy();
             component = null;
         }
     });
 
-    it('should fire the deactivate event once on hide', function() {
+    it('should fire the deactivate event once on hide', function () {
         makeComponent();
         var activateSpy = spyOnEvent(component, 'activate'),
             deactivateSpy = spyOnEvent(component, 'deactivate');
@@ -42,7 +42,7 @@ describe("Ext.util.Floating", function() {
         expect(deactivateSpy.callCount).toBe(1);
     });
 
-    it("should call the floating constructor on first show", function() {
+    it("should call the floating constructor on first show", function () {
         makeComponent();
 
         spyOn(component.mixins.floating, 'constructor').andCallThrough();
@@ -52,14 +52,14 @@ describe("Ext.util.Floating", function() {
         expect(component.mixins.floating.constructor).toHaveBeenCalled();
     });
 
-    it("should have the x-layer CSS class on its element", function() {
+    it("should have the x-layer CSS class on its element", function () {
         makeComponent();
         component.show();
 
         expect(component.el).toHaveCls('x-layer');
     });
 
-    it("should have the x-fixed-layer CSS class if fixed is true", function() {
+    it("should have the x-fixed-layer CSS class if fixed is true", function () {
         makeComponent({
             fixed: true
         });
@@ -68,7 +68,7 @@ describe("Ext.util.Floating", function() {
         expect(component.el).toHaveCls('x-fixed-layer');
     });
 
-    it("should wait until first show to render the component", function() {
+    it("should wait until first show to render the component", function () {
         makeComponent();
         expect(component.rendered).toBe(false);
         expect(component.el).toBeUndefined();
@@ -79,7 +79,7 @@ describe("Ext.util.Floating", function() {
         expect(component.el instanceof Ext.dom.Element).toBe(true);
     });
 
-    it("should render the component to the renderTo element", function() {
+    it("should render the component to the renderTo element", function () {
         var el = Ext.getBody().createChild();
         makeComponent({
             renderTo: el
@@ -91,7 +91,7 @@ describe("Ext.util.Floating", function() {
         el.destroy();
     });
 
-    it("should render the component as hidden to the renderTo el if hidden is true", function() {
+    it("should render the component as hidden to the renderTo el if hidden is true", function () {
         var el = Ext.getBody().createChild();
         makeComponent({
             renderTo: el,
@@ -119,15 +119,15 @@ describe("Ext.util.Floating", function() {
         expect(component.el.isVisible()).toBe(false);
     });
 
-    describe("shim", function() {
-        it("should not have a shim by default", function() {
+    describe("shim", function () {
+        it("should not have a shim by default", function () {
             makeComponent();
             component.show();
 
             expect(component.el.shim).toBeUndefined();
         });
 
-        it("should create a shim if shim is true", function() {
+        it("should create a shim if shim is true", function () {
             makeComponent({
                 shim: true
             });
@@ -136,7 +136,7 @@ describe("Ext.util.Floating", function() {
             expect(component.el.shim instanceof Ext.dom.Shim).toBe(true);
         });
 
-        it("should create a shim if Ext.useShims is true", function() {
+        it("should create a shim if Ext.useShims is true", function () {
             Ext.useShims = true;
             makeComponent({
                 shim: true
@@ -148,7 +148,7 @@ describe("Ext.util.Floating", function() {
             Ext.useShims = false;
         });
 
-        it("should set position:fixed on the shim if fixed is true", function() {
+        it("should set position:fixed on the shim if fixed is true", function () {
             makeComponent({
                 fixed: true,
                 shim: true
@@ -159,15 +159,15 @@ describe("Ext.util.Floating", function() {
         });
     });
 
-    describe("shadow", function() {
-        it("should have a shadow by default", function() {
+    describe("shadow", function () {
+        it("should have a shadow by default", function () {
             makeComponent();
             component.show();
 
             expect(component.el.shadow instanceof Ext.dom.Shadow).toBe(true);
         });
 
-        it("should not have a shadow if shadow is false", function() {
+        it("should not have a shadow if shadow is false", function () {
             makeComponent({
                 shadow: false
             });
@@ -176,7 +176,7 @@ describe("Ext.util.Floating", function() {
             expect(component.el.shadow).toBeUndefined();
         });
 
-        it("should pass shadowOffset along to the shadow", function() {
+        it("should pass shadowOffset along to the shadow", function () {
             makeComponent({
                 shadowOffset: 15
             });
@@ -185,14 +185,14 @@ describe("Ext.util.Floating", function() {
             expect(component.el.shadow.offset).toBe(15);
         });
 
-        it("should use 'sides' as the default mode", function() {
+        it("should use 'sides' as the default mode", function () {
             makeComponent();
             component.show();
 
             expect(component.el.shadow.mode).toBe('sides');
         });
 
-        it("should pass a string shadow config along as the 'mode' config of the shadow", function() {
+        it("should pass a string shadow config along as the 'mode' config of the shadow", function () {
             makeComponent({
                 shadow: 'drop'
             });
@@ -201,7 +201,7 @@ describe("Ext.util.Floating", function() {
             expect(component.el.shadow.mode).toBe('drop');
         });
 
-        it("should set position:fixed on the shadow if fixed is true", function() {
+        it("should set position:fixed on the shadow if fixed is true", function () {
             makeComponent({
                 fixed: true
             });
@@ -210,7 +210,7 @@ describe("Ext.util.Floating", function() {
             expect(component.el.shadow.el.getStyle('position')).toBe('fixed');
         });
 
-        it("should hide the shadow during animations", function() {
+        it("should hide the shadow during animations", function () {
             var animationDone = false,
                 shadow, shadowEl;
 
@@ -230,34 +230,34 @@ describe("Ext.util.Floating", function() {
             component.el.setXY([350, 400], {
                 duration: 200,
                 listeners: {
-                    afteranimate: function() {
+                    afteranimate: function () {
                         animationDone = true;
                     }
                 }
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return !shadow.el && !shadowEl.isVisible();
             }, "Shadow was never hidden", 150);
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return animationDone;
             }, "Animation never completed", 300);
 
-            runs(function() {
+            runs(function () {
                 expect(shadow.el.isVisible()).toBe(true);
-                
+
                 // IE8 does shadows the hard way
                 expect(shadow.el.getX()).toBe(Ext.isIE8 ? 345 : 350);
                 expect(shadow.el.getY()).toBe(Ext.isIE8 ? 397 : 404);
-                
+
                 // FFWindows gets this off by one
                 expect(shadow.el.getWidth()).toBe(Ext.isIE8 ? 209 : 200);
                 expect(shadow.el.getHeight()).toBe(Ext.isIE8 ? 107 : 96);
             });
         });
 
-        it("should not hide the shadow during animations if animateShadow is true", function() {
+        it("should not hide the shadow during animations if animateShadow is true", function () {
             var animationDone = false,
                 shadow;
 
@@ -279,32 +279,32 @@ describe("Ext.util.Floating", function() {
             component.el.setXY([350, 400], {
                 duration: 50,
                 listeners: {
-                    afteranimate: function() {
+                    afteranimate: function () {
                         animationDone = true;
                     }
                 }
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return animationDone;
             }, "Animation never completed", 300);
 
-            runs(function() {
+            runs(function () {
                 expect(shadow.hide).not.toHaveBeenCalled();
                 expect(shadow.el.isVisible()).toBe(true);
-                
+
                 // IE8 does shadows the hard way
                 expect(shadow.el.getX()).toBe(Ext.isIE8 ? 345 : 350);
                 expect(shadow.el.getY()).toBe(Ext.isIE8 ? 397 : 404);
-                expect(shadow.el.getWidth()).toBe(Ext.isIE8 ? 209: 200);
+                expect(shadow.el.getWidth()).toBe(Ext.isIE8 ? 209 : 200);
                 expect(shadow.el.getHeight()).toBe(Ext.isIE8 ? 107 : 96);
             });
         });
     });
 
-    describe("setActive", function() {
-        describe("focus", function() {
-            it("should not focus the floater if a descandant component contains focus", function() {
+    describe("setActive", function () {
+        describe("focus", function () {
+            it("should not focus the floater if a descandant component contains focus", function () {
                 component = new Ext.window.Window({
                     autoShow: true,
                     floating: true,
@@ -315,16 +315,16 @@ describe("Ext.util.Floating", function() {
                 });
                 var text = component.down('#text');
                 jasmine.focusAndWait(text);
-                runs(function() {
+                runs(function () {
                     component.setActive(true, true);
                 });
                 jasmine.waitAWhile();
-                runs(function() {
+                runs(function () {
                     expect(Ext.ComponentManager.getActiveComponent()).toBe(text);
                 });
             });
 
-            it("should not focus the floater if a descandant component contains focus and it is not in the same DOM hierarchy", function() {
+            it("should not focus the floater if a descandant component contains focus and it is not in the same DOM hierarchy", function () {
                 component = new Ext.window.Window({
                     autoShow: true,
                     floating: true
@@ -332,17 +332,17 @@ describe("Ext.util.Floating", function() {
 
                 var text = new Ext.form.field.Text({
                     renderTo: Ext.getBody(),
-                    getRefOwner: function() {
+                    getRefOwner: function () {
                         return component;
                     }
                 });
 
                 jasmine.focusAndWait(text);
-                runs(function() {
+                runs(function () {
                     component.setActive(true, true);
                 });
                 jasmine.waitAWhile();
-                runs(function() {
+                runs(function () {
                     expect(Ext.ComponentManager.getActiveComponent()).toBe(text);
                     text.destroy();
                 });
@@ -350,7 +350,7 @@ describe("Ext.util.Floating", function() {
         });
     });
 
-    describe("scroll alignment when rendered to body", function() {
+    describe("scroll alignment when rendered to body", function () {
         var spy, c, floater, count;
 
         function makeTestComponent(alignToComponent) {
@@ -411,17 +411,17 @@ describe("Ext.util.Floating", function() {
             });
         };
 
-        afterEach(function() {
+        afterEach(function () {
             Ext.un('scroll', spy);
             count = c = floater = spy = Ext.destroy(floater, c);
         });
 
-        describe('aligning to element', function() {
-            beforeEach(function() {
+        describe('aligning to element', function () {
+            beforeEach(function () {
                 makeTestComponent(false);
             });
 
-            it("should keep the floater aligned on scroll", function() {
+            it("should keep the floater aligned on scroll", function () {
                 var alignToSpy = spyOn(floater, 'alignTo').andCallThrough();
 
                 floater.alignTo(c.getEl().down('.align'), 'tl-bl');
@@ -436,35 +436,35 @@ describe("Ext.util.Floating", function() {
                 c.getScrollable().getElement().dom.scrollTop = 50;
 
 
-                waitsFor(function() {
+                waitsFor(function () {
                     return spy.callCount === 1;
                 });
 
-                runs(function() {
+                runs(function () {
                     // Should realign on scroll event
                     expect(alignToSpy.callCount).toBe(2);
                     expect(floater.getEl().getTop()).toBe(150);
                     c.getScrollable().getElement().dom.scrollTop = 100;
                 });
 
-                waitsFor(function() {
+                waitsFor(function () {
                     return spy.callCount === 2;
                 });
 
-                runs(function() {
+                runs(function () {
                     // Should realign on scroll event
                     expect(alignToSpy.callCount).toBe(3);
                     expect(floater.getEl().getTop()).toBe(100);
                 });
             });
 
-            it("should unbind the scroll listener on destroy", function() {
+            it("should unbind the scroll listener on destroy", function () {
                 floater.alignTo(c.getEl().down('.align'), 'tl-bl');
                 floater.destroy();
                 expect(Ext.GlobalEvents.hasListeners.scroll).toBe(count);
             });
 
-            it("should not move the element if the alignTo element is destroyed", function() {
+            it("should not move the element if the alignTo element is destroyed", function () {
                 floater.alignTo(c.getEl().down('.align'), 'tl-bl');
 
                 expect(floater.getEl().getTop()).toBe(200);
@@ -473,26 +473,26 @@ describe("Ext.util.Floating", function() {
 
                 Ext.on('scroll', spy);
 
-                runs(function() {
+                runs(function () {
                     c.getScrollable().getElement().dom.scrollTop = 100;
                 });
 
-                waitsFor(function() {
+                waitsFor(function () {
                     return spy.callCount === 1;
                 });
 
-                runs(function() {
+                runs(function () {
                     expect(floater.getEl().getTop()).toBe(200);
                 });
             });
         });
 
-        describe('aligning to component', function() {
-            beforeEach(function() {
+        describe('aligning to component', function () {
+            beforeEach(function () {
                 makeTestComponent(true);
             });
 
-            it("should keep the floater aligned on scroll", function() {
+            it("should keep the floater aligned on scroll", function () {
                 var alignToSpy = spyOn(floater, 'alignTo').andCallThrough();
 
                 floater.alignTo(c.down('#align'), 'tl-bl');
@@ -507,35 +507,35 @@ describe("Ext.util.Floating", function() {
                 c.getScrollable().getElement().dom.scrollTop = 50;
 
 
-                waitsFor(function() {
+                waitsFor(function () {
                     return spy.callCount === 1;
                 });
 
-                runs(function() {
+                runs(function () {
                     // Should realign on scroll event
                     expect(alignToSpy.callCount).toBe(2);
                     expect(floater.getEl().getTop()).toBe(150);
                     c.getScrollable().getElement().dom.scrollTop = 100;
                 });
 
-                waitsFor(function() {
+                waitsFor(function () {
                     return spy.callCount === 2;
                 });
 
-                runs(function() {
+                runs(function () {
                     // Should realign on scroll event
                     expect(alignToSpy.callCount).toBe(3);
                     expect(floater.getEl().getTop()).toBe(100);
                 });
             });
 
-            it("should unbind the scroll listener on destroy", function() {
+            it("should unbind the scroll listener on destroy", function () {
                 floater.alignTo(c.down('#align'), 'tl-bl');
                 floater.destroy();
                 expect(Ext.GlobalEvents.hasListeners.scroll).toBe(count);
             });
 
-            it("should not move the element if the alignTo element is destroyed", function() {
+            it("should not move the element if the alignTo element is destroyed", function () {
                 floater.alignTo(c.down('#align'), 'tl-bl');
 
                 expect(floater.getEl().getTop()).toBe(200);
@@ -544,22 +544,22 @@ describe("Ext.util.Floating", function() {
 
                 Ext.on('scroll', spy);
 
-                runs(function() {
+                runs(function () {
                     c.getScrollable().getElement().dom.scrollTop = 100;
                 });
 
-                waitsFor(function() {
+                waitsFor(function () {
                     return spy.callCount === 1;
                 });
 
-                runs(function() {
+                runs(function () {
                     expect(floater.getEl().getTop()).toBe(200);
                 });
             });
         });
     });
 
-    describe("scroll alignment when rendered into the scrolling element", function() {
+    describe("scroll alignment when rendered into the scrolling element", function () {
         var spy, c, floater, count;
 
         function makeTestComponent(alignToComponent) {
@@ -622,17 +622,17 @@ describe("Ext.util.Floating", function() {
             });
         }
 
-        afterEach(function() {
+        afterEach(function () {
             Ext.un('scroll', spy);
             count = c = floater = spy = Ext.destroy(floater, c);
         });
 
-        describe('aligning to Element', function() {
-            beforeEach(function() {
+        describe('aligning to Element', function () {
+            beforeEach(function () {
                 makeTestComponent(false);
             });
 
-            it("should keep the floater aligned on scroll", function() {
+            it("should keep the floater aligned on scroll", function () {
                 var alignToSpy = spyOn(floater, 'alignTo').andCallThrough();
 
                 floater.alignTo(c.getEl().down('.align'), 'tl-bl');
@@ -653,7 +653,7 @@ describe("Ext.util.Floating", function() {
                 // it must not realign - it will scroll along naturally.
                 waits(100);
 
-                runs(function() {
+                runs(function () {
                     // Should NOT realign because it is scrolling with content
                     expect(alignToSpy.callCount).toBe(1);
 
@@ -666,7 +666,7 @@ describe("Ext.util.Floating", function() {
                 // it must not realign - it will scroll along naturally.
                 waits(100);
 
-                runs(function() {
+                runs(function () {
                     // Should NOT realign because it is scrolling with content
                     expect(alignToSpy.callCount).toBe(1);
 
@@ -674,12 +674,12 @@ describe("Ext.util.Floating", function() {
                 });
             });
         });
-        describe('aligning to Component', function() {
-            beforeEach(function() {
+        describe('aligning to Component', function () {
+            beforeEach(function () {
                 makeTestComponent(true);
             });
 
-            it("should keep the floater aligned on scroll", function() {
+            it("should keep the floater aligned on scroll", function () {
                 var alignToSpy = spyOn(floater, 'alignTo').andCallThrough();
 
                 floater.alignTo(c.down('#align'), 'tl-bl');
@@ -700,7 +700,7 @@ describe("Ext.util.Floating", function() {
                 // it must not realign - it will scroll along naturally.
                 waits(100);
 
-                runs(function() {
+                runs(function () {
                     // Should NOT realign because it is scrolling with content
                     expect(alignToSpy.callCount).toBe(1);
 
@@ -713,7 +713,7 @@ describe("Ext.util.Floating", function() {
                 // it must not realign - it will scroll along naturally.
                 waits(100);
 
-                runs(function() {
+                runs(function () {
                     // Should NOT realign because it is scrolling with content
                     expect(alignToSpy.callCount).toBe(1);
 

@@ -89,7 +89,7 @@ Ext.define('Ext.chart.interactions.ItemInfo', {
             me.fireEvent('show', me, item, panel);
             Ext.Viewport.add(panel);
             panel.show('pop');
-            item.series.setAttributesForItem(item, { highlighted: true });
+            item.series.setAttributesForItem(item, {highlighted: true});
             me.sync();
         }
         return false;
@@ -99,7 +99,7 @@ Ext.define('Ext.chart.interactions.ItemInfo', {
         var me = this,
             item = me.item;
         if (item) {
-            item.series.setAttributesForItem(item, { highlighted: false });
+            item.series.setAttributesForItem(item, {highlighted: false});
             delete me.item;
             me.sync();
         }

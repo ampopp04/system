@@ -30,7 +30,7 @@ Ext.define('Ext.dd.ScrollManager', {
         right: 1
     },
 
-    constructor: function() {
+    constructor: function () {
         var ddm = Ext.dd.DragDropManager;
         ddm.fireEvents = Ext.Function.createSequence(ddm.fireEvents, this.onFire, this);
         ddm.stopDrag = Ext.Function.createSequence(ddm.stopDrag, this.onStop, this);
@@ -41,29 +41,29 @@ Ext.define('Ext.dd.ScrollManager', {
         this.proc = {};
     },
 
-    onStop: function(e){
+    onStop: function (e) {
         var sm = Ext.dd.ScrollManager;
         sm.dragEl = null;
         sm.clearProc();
     },
 
-    triggerRefresh: function() {
+    triggerRefresh: function () {
         if (this.ddmInstance.dragCurrent) {
             this.ddmInstance.refreshCache(this.ddmInstance.dragCurrent.groups);
         }
     },
 
-    doScroll: function() {
+    doScroll: function () {
         var me = this;
 
         if (me.ddmInstance.dragCurrent) {
-            var proc   = me.proc,
+            var proc = me.proc,
                 procEl = proc.el,
                 scrollComponent = proc.component,
                 ddScrollConfig = proc.el.ddScrollConfig,
-                distance = ddScrollConfig && ddScrollConfig.increment    ? ddScrollConfig.increment : me.increment,
-                animate  = ddScrollConfig && 'animate' in ddScrollConfig ? ddScrollConfig.animate   : me.animate,
-                afterScroll = function() {
+                distance = ddScrollConfig && ddScrollConfig.increment ? ddScrollConfig.increment : me.increment,
+                animate = ddScrollConfig && 'animate' in ddScrollConfig ? ddScrollConfig.animate : me.animate,
+                afterScroll = function () {
                     me.triggerRefresh();
                 };
 
@@ -96,14 +96,14 @@ Ext.define('Ext.dd.ScrollManager', {
             else {
                 procEl.scroll(proc.dir, distance, animate);
             }
-            
+
             if (!animate) {
                 afterScroll();
             }
         }
     },
 
-    clearProc: function() {
+    clearProc: function () {
         var proc = this.proc;
         if (proc.id) {
             clearInterval(proc.id);
@@ -113,7 +113,7 @@ Ext.define('Ext.dd.ScrollManager', {
         proc.dir = "";
     },
 
-    startProc: function(el, dir) {
+    startProc: function (el, dir) {
         var me = this,
             proc = me.proc,
             group, freq;
@@ -123,15 +123,15 @@ Ext.define('Ext.dd.ScrollManager', {
         proc.dir = dir;
 
         group = el.ddScrollConfig ? el.ddScrollConfig.ddGroup : undefined;
-        freq  = (el.ddScrollConfig && el.ddScrollConfig.frequency) ? el.ddScrollConfig.frequency
-                    : me.frequency;
+        freq = (el.ddScrollConfig && el.ddScrollConfig.frequency) ? el.ddScrollConfig.frequency
+            : me.frequency;
 
         if (group === undefined || me.ddmInstance.dragCurrent.ddGroup === group) {
             proc.id = Ext.interval(me.doScroll, freq);
         }
     },
 
-    onFire: function(e, isDrop) {
+    onFire: function (e, isDrop) {
         var me = this,
             pt,
             proc,
@@ -160,7 +160,7 @@ Ext.define('Ext.dd.ScrollManager', {
             configSource = el.ddScrollConfig || me;
             if (elementRegion && elementRegion.contains(pt) && el.isScrollable()) {
                 if (elementRegion.bottom - pt.y <= configSource.vthresh) {
-                    if(proc.el !== el){
+                    if (proc.el !== el) {
                         me.startProc(el, "down");
                     }
                     return;
@@ -190,10 +190,10 @@ Ext.define('Ext.dd.ScrollManager', {
      * @param {String/HTMLElement/Ext.dom.Element/String[]/HTMLElement[]/Ext.dom.Element[]} el
      * The id of or the element to be scrolled or an array of either
      */
-    register : function(el){
+    register: function (el) {
         if (Ext.isArray(el)) {
-            for(var i = 0, len = el.length; i < len; i++) {
-                    this.register(el[i]);
+            for (var i = 0, len = el.length; i < len; i++) {
+                this.register(el[i]);
             }
         } else {
             el = Ext.get(el);
@@ -206,12 +206,12 @@ Ext.define('Ext.dd.ScrollManager', {
      * @param {String/HTMLElement/Ext.dom.Element/String[]/HTMLElement[]/Ext.dom.Element[]} el
      * The id of or the element to be removed or an array of either
      */
-    unregister : function(el){
-        if(Ext.isArray(el)){
+    unregister: function (el) {
+        if (Ext.isArray(el)) {
             for (var i = 0, len = el.length; i < len; i++) {
                 this.unregister(el[i]);
             }
-        }else{
+        } else {
             el = Ext.get(el);
             delete this.els[el.id];
         }
@@ -220,22 +220,22 @@ Ext.define('Ext.dd.ScrollManager', {
     /**
      * The number of pixels from the top or bottom edge of a container the pointer needs to be to trigger scrolling
      */
-    vthresh : 25 * (window.devicePixelRatio || 1),
+    vthresh: 25 * (window.devicePixelRatio || 1),
 
     /**
      * The number of pixels from the right or left edge of a container the pointer needs to be to trigger scrolling
      */
-    hthresh : 25 * (window.devicePixelRatio || 1),
+    hthresh: 25 * (window.devicePixelRatio || 1),
 
     /**
      * The number of pixels to scroll in each scroll increment
      */
-    increment : 100,
+    increment: 100,
 
     /**
      * The frequency of scrolls in milliseconds
      */
-    frequency : 500,
+    frequency: 500,
 
     /**
      * True to animate the scroll
@@ -257,7 +257,7 @@ Ext.define('Ext.dd.ScrollManager', {
     /**
      * Manually trigger a cache refresh.
      */
-    refreshCache : function(){
+    refreshCache: function () {
         var els = this.els,
             id;
         for (id in els) {

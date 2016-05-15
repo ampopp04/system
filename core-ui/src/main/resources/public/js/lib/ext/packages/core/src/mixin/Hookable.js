@@ -8,7 +8,7 @@ Ext.define('Ext.mixin.Hookable', {
         id: 'hookable'
     },
 
-    bindHook: function(instance, boundMethod, bindingMethod, preventDefault, extraArgs) {
+    bindHook: function (instance, boundMethod, bindingMethod, preventDefault, extraArgs) {
         if (!bindingMethod) {
             bindingMethod = boundMethod;
         }
@@ -23,7 +23,7 @@ Ext.define('Ext.mixin.Hookable', {
             }
         }
 
-        instance[boundMethod] = fn = function() {
+        instance[boundMethod] = fn = function () {
             var binding = fn.$binding,
                 scope = binding.bindingScope,
                 args = Array.prototype.slice.call(arguments);
@@ -48,7 +48,7 @@ Ext.define('Ext.mixin.Hookable', {
         return this;
     },
 
-    unbindHook: function(instance, boundMethod, bindingMethod) {
+    unbindHook: function (instance, boundMethod, bindingMethod) {
         if (!bindingMethod) {
             bindingMethod = boundMethod;
         }

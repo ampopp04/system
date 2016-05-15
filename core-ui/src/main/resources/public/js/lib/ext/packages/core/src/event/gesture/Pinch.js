@@ -47,7 +47,7 @@ Ext.define('Ext.event.gesture.Pinch', {
 
     lastTouches: null,
 
-    onTouchMove: function(e) {
+    onTouchMove: function (e) {
         if (!this.isTracking) {
             return;
         }
@@ -85,24 +85,24 @@ Ext.define('Ext.event.gesture.Pinch', {
         }
     },
 
-    fireEnd: function(e) {
+    fireEnd: function (e) {
         this.fire('pinchend', e);
     },
 
-    fireCancel: function(e) {
+    fireCancel: function (e) {
         this.fire('pinchcancel', e);
     },
 
-    fail: function() {
+    fail: function () {
         return this.callParent(arguments);
     },
 
-    reset: function() {
+    reset: function () {
         this.lastTouches = null;
         this.startDistance = 0;
         this.callParent();
     }
-}, function(Pinch) {
+}, function (Pinch) {
     var gestures = Ext.manifest.gestures;
     Pinch.instance = new Pinch(gestures && gestures.pinch);
 });

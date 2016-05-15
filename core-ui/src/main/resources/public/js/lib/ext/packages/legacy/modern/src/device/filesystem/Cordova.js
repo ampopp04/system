@@ -7,7 +7,7 @@
 Ext.define('Ext.device.filesystem.Cordova', {
     alternateClassName: 'Ext.device.filesystem.PhoneGap',
     extend: 'Ext.device.filesystem.HTML5',
-    constructor: function() {
+    constructor: function () {
         Ext.override(Ext.device.filesystem.Entry,
             {
                 /**
@@ -35,24 +35,24 @@ Ext.define('Ext.device.filesystem.Cordova', {
                  * @param {FileError} config.failure.error
                  *
                  */
-                writeMetadata: function(config) {
+                writeMetadata: function (config) {
                     var me = this;
 
                     this.getEntry(
                         {
                             options: config.options,
-                            success: function(entry) {
+                            success: function (entry) {
                                 entry.setMetadata(
-                                    function() {
+                                    function () {
                                         config.success.call(config.scope || me);
                                     },
-                                    function(error) {
+                                    function (error) {
                                         config.failure.call(config.scope || me, error);
                                     },
                                     config.metadata
                                 );
                             },
-                            failure: function(error) {
+                            failure: function (error) {
                                 config.failure.call(config.scope || me, error)
                             }
                         }
@@ -60,7 +60,7 @@ Ext.define('Ext.device.filesystem.Cordova', {
                 },
 
                 /**
-                 * 
+                 *
                  * @param {Object} config
                  *
                  * @param {Object} config.options
@@ -81,23 +81,23 @@ Ext.define('Ext.device.filesystem.Cordova', {
                  * @param {FileError} config.failure.error
                  *
                  */
-                readMetadata: function(config) {
+                readMetadata: function (config) {
                     var me = this;
 
                     this.getEntry(
                         {
                             options: config.options,
-                            success: function(entry) {
+                            success: function (entry) {
                                 entry.getMetadata(
-                                    function(metadata) {
+                                    function (metadata) {
                                         config.success.call(config.scope || me, metadata);
                                     },
-                                    function(error) {
+                                    function (error) {
                                         config.failure.call(config.scope || me, error);
                                     }
                                 );
                             },
-                            failure: function(error) {
+                            failure: function (error) {
                                 config.failure.call(config.scope || me, error)
                             }
                         }
@@ -107,14 +107,14 @@ Ext.define('Ext.device.filesystem.Cordova', {
         );
 
         Ext.override(Ext.device.filesystem.FileEntry, {
-            writeData: function(writer, data) {
+            writeData: function (writer, data) {
                 writer.write(data.toString());
             },
             /**
              * Send a file to a server
              *
              * @param {Object} config
-             * 
+             *
              * @param {String} config.url
              * URL of server to receive the file
              *
@@ -152,7 +152,7 @@ Ext.define('Ext.device.filesystem.Cordova', {
              *
              * @return {FileTransfer}
              */
-            upload: function(config) {
+            upload: function (config) {
                 var options = new FileUploadOptions();
                 options.fileKey = config.fileKey || "file";
                 options.fileName = this.path.substr(this.path.lastIndexOf('/') + 1);
@@ -179,7 +179,7 @@ Ext.define('Ext.device.filesystem.Cordova', {
              *
              * @param {Object} config.options
              * Header parameters (Auth, etc)
-             * 
+             *
              *     {
              *         headers: {
              *             "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
@@ -199,7 +199,7 @@ Ext.define('Ext.device.filesystem.Cordova', {
              *
              * @return {FileTransfer}
              */
-            download: function(config) {
+            download: function (config) {
                 var fileTransfer = new FileTransfer();
                 fileTransfer.download(
                     encodeURI(config.source),

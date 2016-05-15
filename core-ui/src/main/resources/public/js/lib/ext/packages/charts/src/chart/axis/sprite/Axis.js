@@ -267,7 +267,9 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
 
     stepSize: 0,
 
-    getBBox: function () { return null; },
+    getBBox: function () {
+        return null;
+    },
 
     defaultRenderer: function (v) {
         // 'this' pointer in this case is a layoutContext
@@ -352,9 +354,10 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
             // Don't render ticks in axes intersection points.
             function isTickVisible(position) {
                 return !floatingValues.length || some(floatingValues, function (value) {
-                    return abs(value - position) > threshold;
-                });
+                        return abs(value - position) > threshold;
+                    });
             }
+
             if (snaps.min < snaps.from && isTickVisible(snaps.min)) {
                 fn.call(this, snaps.min, snaps.min, -1, snaps);
             }
@@ -388,46 +391,50 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
         if (majorTicks) {
             switch (docked) {
                 case 'right':
-                    function getRightTickFn(size) {
-                        return function (position, labelText, i) {
-                            position = surface.roundPixel(position * yy + dy) + halfLineWidth;
-                            ctx.moveTo(0, position);
-                            ctx.lineTo(size, position);
-                        };
-                    }
+                function getRightTickFn(size) {
+                    return function (position, labelText, i) {
+                        position = surface.roundPixel(position * yy + dy) + halfLineWidth;
+                        ctx.moveTo(0, position);
+                        ctx.lineTo(size, position);
+                    };
+                }
+
                     me.iterate(majorTicks, getRightTickFn(majorTickSize));
                     minorTicks && me.iterate(minorTicks, getRightTickFn(minorTickSize));
                     break;
                 case 'left':
-                    function getLeftTickFn(size) {
-                        return function (position, labelText, i) {
-                            position = surface.roundPixel(position * yy + dy) + halfLineWidth;
-                            ctx.moveTo(clipRect[2] - size, position);
-                            ctx.lineTo(clipRect[2], position);
-                        };
-                    }
+                function getLeftTickFn(size) {
+                    return function (position, labelText, i) {
+                        position = surface.roundPixel(position * yy + dy) + halfLineWidth;
+                        ctx.moveTo(clipRect[2] - size, position);
+                        ctx.lineTo(clipRect[2], position);
+                    };
+                }
+
                     me.iterate(majorTicks, getLeftTickFn(majorTickSize));
                     minorTicks && me.iterate(minorTicks, getLeftTickFn(minorTickSize));
                     break;
                 case 'bottom':
-                    function getBottomTickFn(size) {
-                        return function (position, labelText, i) {
-                            position = surface.roundPixel(position * xx + dx) - halfLineWidth;
-                            ctx.moveTo(position, 0);
-                            ctx.lineTo(position, size);
-                        };
-                    }
+                function getBottomTickFn(size) {
+                    return function (position, labelText, i) {
+                        position = surface.roundPixel(position * xx + dx) - halfLineWidth;
+                        ctx.moveTo(position, 0);
+                        ctx.lineTo(position, size);
+                    };
+                }
+
                     me.iterate(majorTicks, getBottomTickFn(majorTickSize));
                     minorTicks && me.iterate(minorTicks, getBottomTickFn(minorTickSize));
                     break;
                 case 'top':
-                    function getTopTickFn(size) {
-                        return function (position, labelText, i) {
-                            position = surface.roundPixel(position * xx + dx) - halfLineWidth;
-                            ctx.moveTo(position, clipRect[3]);
-                            ctx.lineTo(position, clipRect[3] - size);
-                        };
-                    }
+                function getTopTickFn(size) {
+                    return function (position, labelText, i) {
+                        position = surface.roundPixel(position * xx + dx) - halfLineWidth;
+                        ctx.moveTo(position, clipRect[3]);
+                        ctx.lineTo(position, clipRect[3] - size);
+                    };
+                }
+
                     me.iterate(majorTicks, getTopTickFn(majorTickSize));
                     minorTicks && me.iterate(minorTicks, getTopTickFn(minorTickSize));
                     break;
@@ -530,7 +537,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                     }, true);
                     break;
                 case 'top':
-                    titlePadding = titleBBox ? titleBBox.y + titleBBox.height: 0;
+                    titlePadding = titleBBox ? titleBBox.y + titleBBox.height : 0;
                     label.setAttributes({
                         translationY: surface.roundPixel(titlePadding + (clipRect[3] - titlePadding - tickPadding) / 2) - halfLineWidth
                     }, true);
@@ -1056,6 +1063,6 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
 });
 
 /*
-    Moved TODO comments to bottom
-    TODO(touch-2.2): Split different types of axis into different sprite classes.
-*/
+ Moved TODO comments to bottom
+ TODO(touch-2.2): Split different types of axis into different sprite classes.
+ */

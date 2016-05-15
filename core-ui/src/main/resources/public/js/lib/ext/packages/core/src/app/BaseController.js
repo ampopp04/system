@@ -2,14 +2,14 @@
  * @protected
  * @class Ext.app.BaseController
  * Base class for Controllers.
- * 
+ *
  */
 Ext.define('Ext.app.BaseController', {
     requires: [
         'Ext.app.EventBus',
         'Ext.app.domain.Global'
     ],
-    
+
     uses: [
         'Ext.app.domain.Controller'
     ],
@@ -18,26 +18,26 @@ Ext.define('Ext.app.BaseController', {
 
     isController: true,
 
-    config : {
+    config: {
         /**
          * @cfg {String} id The id of this controller. You can use this id when dispatching.
-         * 
-         * For an example of dispatching, see the examples under the 
+         *
+         * For an example of dispatching, see the examples under the
          * {@link Ext.app.Controller#cfg-listen listen} config.
          *
          * If an id is not explicitly set, it will default to the controller's full classname.
-         * 
+         *
          * @accessor
          */
         id: null,
-       
+
         /**
          * @cfg {Object} control
          * @accessor
          *
          * Adds listeners to components selected via {@link Ext.ComponentQuery}. Accepts an
-         * object containing component paths mapped to a hash of listener functions.  
-         * The function value may also be a string matching the name of a method on the 
+         * object containing component paths mapped to a hash of listener functions.
+         * The function value may also be a string matching the name of a method on the
          * controller.
          *
          * In the following example the `updateUser` function is mapped to to the `click`
@@ -73,10 +73,10 @@ Ext.define('Ext.app.BaseController', {
          * Adds listeners to different event sources (also called "event domains"). The
          * primary event domain is that of components, but there are also other event domains:
          * {@link Ext.app.domain.Global Global} domain that intercepts events fired from
-         * {@link Ext.GlobalEvents} Observable instance, 
-         * {@link Ext.app.domain.Controller Controller} domain can be used to listen to events 
-         * fired by other Controllers, {@link Ext.app.domain.Store Store} domain gives access to 
-         * Store events, and {@link Ext.app.domain.Direct Direct} domain can be used with 
+         * {@link Ext.GlobalEvents} Observable instance,
+         * {@link Ext.app.domain.Controller Controller} domain can be used to listen to events
+         * fired by other Controllers, {@link Ext.app.domain.Store Store} domain gives access to
+         * Store events, and {@link Ext.app.domain.Direct Direct} domain can be used with
          * Ext Direct Providers to listen to their events.
          *
          * To listen to "bar" events fired by a controller with id="foo":
@@ -285,8 +285,8 @@ Ext.define('Ext.app.BaseController', {
          *         }
          *     }
          */
-        routes : null,
-        before : null
+        routes: null,
+        before: null
     },
 
     /**
@@ -294,7 +294,7 @@ Ext.define('Ext.app.BaseController', {
      *
      * @param {Object} [config] Configuration object.
      */
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this;
 
         // In versions prior to 5.1, this constructor used to call the Ext.util.Observable
@@ -316,7 +316,7 @@ Ext.define('Ext.app.BaseController', {
         me.ensureId();
     },
 
-    applyListen: function(listen) {
+    applyListen: function (listen) {
         if (Ext.isObject(listen)) {
             listen = Ext.clone(listen);
         }
@@ -324,7 +324,7 @@ Ext.define('Ext.app.BaseController', {
         return listen;
     },
 
-    applyControl: function(control) {
+    applyControl: function (control) {
         if (Ext.isObject(control)) {
             control = Ext.clone(control);
         }
@@ -336,7 +336,7 @@ Ext.define('Ext.app.BaseController', {
      * @param {Object} control The object to pass to the {@link #method-control} method
      * @private
      */
-    updateControl: function(control) {
+    updateControl: function (control) {
         this.ensureId();
         if (control) {
             this.control(control);
@@ -347,7 +347,7 @@ Ext.define('Ext.app.BaseController', {
      * @param {Object} listen The object to pass to the {@link #method-listen} method
      * @private
      */
-    updateListen: function(listen) {
+    updateListen: function (listen) {
         this.ensureId();
         if (listen) {
             this.listen(listen);
@@ -358,7 +358,7 @@ Ext.define('Ext.app.BaseController', {
      * @param {Object} routes The routes to connect to the {@link Ext.app.route.Router}
      * @private
      */
-    updateRoutes : function(routes) {
+    updateRoutes: function (routes) {
         if (routes) {
             var me = this,
                 befores = me.getBefore() || {},
@@ -370,7 +370,7 @@ Ext.define('Ext.app.BaseController', {
 
                 if (Ext.isString(config)) {
                     config = {
-                        action : config
+                        action: config
                     };
                 }
 
@@ -392,7 +392,7 @@ Ext.define('Ext.app.BaseController', {
         }
     },
 
-    isActive: function() {
+    isActive: function () {
         return true;
     },
 
@@ -429,7 +429,7 @@ Ext.define('Ext.app.BaseController', {
      * listeners, otherwise an object of selectors -> listeners is assumed
      * @param {Object} [listeners] Config for listeners.
      */
-    control: function(selectors, listeners, controller) {
+    control: function (selectors, listeners, controller) {
         var me = this,
             ctrl = controller,
             obj;
@@ -455,7 +455,7 @@ Ext.define('Ext.app.BaseController', {
      * {@link Ext.app.domain.Store Store} domain gives access to Store events, and
      * {@link Ext.app.domain.Direct Direct} domain can be used with Ext Direct Providers
      * to listen to their events.
-     * 
+     *
      * To listen to "bar" events fired by a controller with id="foo":
      *
      *      Ext.define('AM.controller.Users', {
@@ -470,7 +470,7 @@ Ext.define('Ext.app.BaseController', {
      *          },
      *          ...
      *      });
-     * 
+     *
      * To listen to "bar" events fired by any controller, and "baz" events
      * fired by Store with storeId="baz":
      *
@@ -504,7 +504,7 @@ Ext.define('Ext.app.BaseController', {
      *              });
      *          }
      *      });
-     * 
+     *
      * As this relates to components, the following example:
      *
      *      Ext.define('AM.controller.Users', {
@@ -519,7 +519,7 @@ Ext.define('Ext.app.BaseController', {
      *          },
      *          ...
      *      });
-     * 
+     *
      * Is equivalent to:
      *
      *      Ext.define('AM.controller.Users', {
@@ -571,8 +571,8 @@ Ext.define('Ext.app.BaseController', {
     listen: function (to, controller) {
         this.eventbus.listen(to, controller || this);
     },
-    
-    destroy: function() {
+
+    destroy: function () {
         var me = this,
             bus = me.eventbus;
 
@@ -588,17 +588,17 @@ Ext.define('Ext.app.BaseController', {
     /**
      * Update the hash. By default, it will not execute the routes if the current token and the
      * token passed are the same.
-     * 
+     *
      * @param {String/Ext.data.Model} token The token to redirect to.  Can be either a String
      * or a {@link Ext.data.Model Model} instance - if a Model instance is passed it will
      * internally be converted into a String token by calling the Model's
      * {@link Ext.data.Model#toUrl toUrl} function.
      *
      * @param {Boolean} force Force the update of the hash regardless of the current token.
-     * 
+     *
      * @return {Boolean} Will return `true` if the token was updated.
      */
-    redirectTo: function(token, force) {
+    redirectTo: function (token, force) {
         if (token.isModel) {
             token = token.toUrl();
         }

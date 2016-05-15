@@ -152,7 +152,7 @@ Ext.define('Ext.menu.Item', {
      * The type of tooltip to use. Either 'qtip' for QuickTips or 'title' for title attribute.
      */
     tooltipType: 'qtip',
-    
+
     focusable: true,
     ariaRole: 'menuitem',
     ariaEl: 'itemEl',
@@ -171,43 +171,42 @@ Ext.define('Ext.menu.Item', {
     childEls: [
         'itemEl', 'iconEl', 'textEl', 'arrowEl'
     ],
-    
-    renderTpl:
-        '<tpl if="plain">' +
-            '{text}' +
-        '<tpl else>' +
-            '<a id="{id}-itemEl" data-ref="itemEl"' +
-                ' class="{linkCls}<tpl if="hasHref"> {linkHrefCls}</tpl>{childElCls}"' +
-                ' href="{href}" ' +
-                '<tpl if="hrefTarget"> target="{hrefTarget}"</tpl>' +
-                ' hidefocus="true"' +
-                // For most browsers the text is already unselectable but Opera needs an explicit unselectable="on".
-                ' unselectable="on"' +
-                '<tpl if="tabIndex != null">' +
-                    ' tabindex="{tabIndex}"' +
-                '</tpl>' +
-                '<tpl foreach="ariaAttributes"> {$}="{.}"</tpl>' +
-            '>' +
-                '<span id="{id}-textEl" data-ref="textEl" class="{textCls} {textCls}-{ui} {indentCls}{childElCls}" unselectable="on">{text}</span>' +
-                '<tpl if="hasIcon">' +
-                    '<div role="presentation" id="{id}-iconEl" data-ref="iconEl" class="{baseIconCls}-{ui} {baseIconCls}' +
-                        '{[values.rightIcon ? "-right" : ""]} {iconCls}' +
-                        '{childElCls} {glyphCls}" style="<tpl if="icon">background-image:url({icon});</tpl>' +
-                        '<tpl if="glyph && glyphFontFamily">font-family:{glyphFontFamily};</tpl>">' +
-                        '<tpl if="glyph">&#{glyph};</tpl>' +
-                    '</div>' +
-                '</tpl>' +
-                '<tpl if="showCheckbox">' +
-                    '<div role="presentation" id="{id}-checkEl" data-ref="checkEl" class="{baseIconCls}-{ui} {baseIconCls}' +
-                        '{[(values.hasIcon && !values.rightIcon) ? "-right" : ""]} ' +
-                        '{groupCls} {checkboxCls}{childElCls}">' +
-                    '</div>' +
-                '</tpl>' +
-                '<tpl if="hasMenu">' +
-                    '<div role="presentation" id="{id}-arrowEl" data-ref="arrowEl" class="{arrowCls} {arrowCls}-{ui}{childElCls}"></div>' +
-                '</tpl>' +
-            '</a>' +
-        '</tpl>',
+
+    renderTpl: '<tpl if="plain">' +
+    '{text}' +
+    '<tpl else>' +
+    '<a id="{id}-itemEl" data-ref="itemEl"' +
+    ' class="{linkCls}<tpl if="hasHref"> {linkHrefCls}</tpl>{childElCls}"' +
+    ' href="{href}" ' +
+    '<tpl if="hrefTarget"> target="{hrefTarget}"</tpl>' +
+    ' hidefocus="true"' +
+    // For most browsers the text is already unselectable but Opera needs an explicit unselectable="on".
+    ' unselectable="on"' +
+    '<tpl if="tabIndex != null">' +
+    ' tabindex="{tabIndex}"' +
+    '</tpl>' +
+    '<tpl foreach="ariaAttributes"> {$}="{.}"</tpl>' +
+    '>' +
+    '<span id="{id}-textEl" data-ref="textEl" class="{textCls} {textCls}-{ui} {indentCls}{childElCls}" unselectable="on">{text}</span>' +
+    '<tpl if="hasIcon">' +
+    '<div role="presentation" id="{id}-iconEl" data-ref="iconEl" class="{baseIconCls}-{ui} {baseIconCls}' +
+    '{[values.rightIcon ? "-right" : ""]} {iconCls}' +
+    '{childElCls} {glyphCls}" style="<tpl if="icon">background-image:url({icon});</tpl>' +
+    '<tpl if="glyph && glyphFontFamily">font-family:{glyphFontFamily};</tpl>">' +
+    '<tpl if="glyph">&#{glyph};</tpl>' +
+    '</div>' +
+    '</tpl>' +
+    '<tpl if="showCheckbox">' +
+    '<div role="presentation" id="{id}-checkEl" data-ref="checkEl" class="{baseIconCls}-{ui} {baseIconCls}' +
+    '{[(values.hasIcon && !values.rightIcon) ? "-right" : ""]} ' +
+    '{groupCls} {checkboxCls}{childElCls}">' +
+    '</div>' +
+    '</tpl>' +
+    '<tpl if="hasMenu">' +
+    '<div role="presentation" id="{id}-arrowEl" data-ref="arrowEl" class="{arrowCls} {arrowCls}-{ui}{childElCls}"></div>' +
+    '</tpl>' +
+    '</a>' +
+    '</tpl>',
 
     maskOnDisable: false,
 
@@ -261,7 +260,7 @@ Ext.define('Ext.menu.Item', {
      * @param {String} newIcon
      */
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this,
             cls = me.cls ? [me.cls] : [],
             menu;
@@ -276,7 +275,7 @@ Ext.define('Ext.menu.Item', {
         }
 
         if (cls.length) {
-            me.cls  = cls.join(' ');
+            me.cls = cls.join(' ');
         }
 
         if (me.menu) {
@@ -288,20 +287,19 @@ Ext.define('Ext.menu.Item', {
         me.callParent(arguments);
     },
 
-    canFocus: function() {
+    canFocus: function () {
         var me = this;
-        
+
         // This is an override of the implementation in Focusable.
         // We do not refuse focus if the Item is disabled.
         // http://www.w3.org/TR/2013/WD-wai-aria-practices-20130307/#menu
         // "Disabled menu items receive focus but have no action when Enter or Left Arrow/Right Arrow is pressed."
         // Test that deprecated canActivate config has not been set to false.
-        return me.focusable && me.rendered && me.canActivate !== false &&
-               !me.destroying && !me.destroyed &&
-               me.isVisible(true);
+        return me.focusable && me.rendered && me.canActivate !== false && !me.destroying && !me.destroyed &&
+            me.isVisible(true);
     },
 
-    onFocus: function(e) {
+    onFocus: function (e) {
         var me = this;
 
         me.callParent([e]);
@@ -318,7 +316,7 @@ Ext.define('Ext.menu.Item', {
         }
     },
 
-    onFocusLeave: function(e) {
+    onFocusLeave: function (e) {
         var me = this;
 
         me.callParent([e]);
@@ -335,7 +333,7 @@ Ext.define('Ext.menu.Item', {
         }
     },
 
-    doHideMenu: function() {
+    doHideMenu: function () {
         var menu = this.menu;
 
         this.cancelDeferExpand();
@@ -350,7 +348,7 @@ Ext.define('Ext.menu.Item', {
      * Walks up the refOwner axis hiding each Menu instance it find until it hits
      * a non-floating ancestor.
      */
-    deferHideParentMenus: function() {
+    deferHideParentMenus: function () {
         for (var menu = this.getRefOwner(); menu && ((menu.isMenu && menu.floating) || menu.isMenuItem); menu = menu.getRefOwner()) {
             if (menu.isMenu) {
                 menu.hide();
@@ -358,7 +356,7 @@ Ext.define('Ext.menu.Item', {
         }
     },
 
-    expandMenu: function(event, delay) {
+    expandMenu: function (event, delay) {
         var me = this;
 
         if (me.activated && me.menu) {
@@ -380,7 +378,7 @@ Ext.define('Ext.menu.Item', {
         }
     },
 
-    doExpandMenu: function(clickEvent) {
+    doExpandMenu: function (clickEvent) {
         var me = this,
             menu = me.menu;
 
@@ -396,7 +394,7 @@ Ext.define('Ext.menu.Item', {
         }
     },
 
-    getRefItems: function(deep) {
+    getRefItems: function (deep) {
         var menu = this.menu,
             items;
 
@@ -411,7 +409,7 @@ Ext.define('Ext.menu.Item', {
         return this.value;
     },
 
-    hideMenu: function(delay) {
+    hideMenu: function (delay) {
         var me = this;
 
         if (me.menu) {
@@ -442,7 +440,7 @@ Ext.define('Ext.menu.Item', {
             // trigger the touch call-out menu to show.  If this is the case, the tap 
             // event object's browser event type will be 'touchcancel', and we do not 
             // want to hide the menu.
-            
+
             // items with submenus are activated by touchstart on mobile browsers, so
             // we cannot hide the menu on "tap"
             if (!clickHideDelay) {
@@ -490,7 +488,7 @@ Ext.define('Ext.menu.Item', {
         return clickResult;
     },
 
-    onRemoved: function() {
+    onRemoved: function () {
         var me = this;
 
         // Removing the active item, must deactivate it.
@@ -504,7 +502,7 @@ Ext.define('Ext.menu.Item', {
     /**
      * @private
      */
-    beforeDestroy: function() {
+    beforeDestroy: function () {
         var me = this;
         if (me.rendered) {
             me.clearTip();
@@ -512,7 +510,7 @@ Ext.define('Ext.menu.Item', {
         me.callParent();
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         var me = this;
 
         me.cancelDeferExpand();
@@ -523,7 +521,7 @@ Ext.define('Ext.menu.Item', {
         me.callParent(arguments);
     },
 
-    beforeRender: function() {
+    beforeRender: function () {
         var me = this,
             glyph = me.glyph,
             glyphFontFamily = Ext._glyphFontFamily,
@@ -539,7 +537,7 @@ Ext.define('Ext.menu.Item', {
         if (me.plain) {
             me.ariaEl = 'el';
         }
-        
+
         me.callParent();
 
         if (hasIcon) {
@@ -597,7 +595,7 @@ Ext.define('Ext.menu.Item', {
         });
     },
 
-    onRender: function() {
+    onRender: function () {
         var me = this;
 
         me.callParent(arguments);
@@ -611,7 +609,7 @@ Ext.define('Ext.menu.Item', {
      * Get the attached sub-menu for this item.
      * @return {Ext.menu.Menu} The sub-menu. `null` if it doesn't exist.
      */
-    getMenu: function() {
+    getMenu: function () {
         return this.menu || null;
     },
 
@@ -623,7 +621,7 @@ Ext.define('Ext.menu.Item', {
      * prevent destruction. If not specified, the {@link #destroyMenu} configuration
      * will be used.
      */
-    setMenu: function(menu, destroyMenu) {
+    setMenu: function (menu, destroyMenu) {
         var me = this,
             oldMenu = me.menu,
             arrowEl = me.arrowEl,
@@ -636,19 +634,19 @@ Ext.define('Ext.menu.Item', {
             if (destroyMenu === true || (destroyMenu !== false && me.destroyMenu)) {
                 Ext.destroy(oldMenu);
             }
-            
+
             if (ariaDom) {
                 ariaDom.removeAttribute('aria-haspopup');
                 ariaDom.removeAttribute('aria-owns');
             }
             else {
                 ariaAttr = (me.ariaRenderAttributes || (me.ariaRenderAttributes = {}));
-                
+
                 delete ariaAttr['aria-haspopup'];
                 delete ariaAttr['aria-owns'];
             }
         }
-        
+
         if (menu) {
             instanced = menu.isMenu;
             menu = me.menu = Ext.menu.Manager.get(menu, {
@@ -659,14 +657,14 @@ Ext.define('Ext.menu.Item', {
             // an existing menu, which means the config above won't get applied
             // during creation.
             menu.setOwnerCmp(me, instanced);
-            
+
             if (ariaDom) {
                 ariaDom.setAttribute('aria-haspopup', true);
                 ariaDom.setAttribute('aria-owns', menu.id);
             }
             else {
                 ariaAttr = (me.ariaRenderAttributes || (me.ariaRenderAttributes = {}));
-                
+
                 ariaAttr['aria-haspopup'] = true;
                 ariaAttr['aria-owns'] = menu.id;
             }
@@ -685,7 +683,7 @@ Ext.define('Ext.menu.Item', {
      * @param {Function} fn The handler function
      * @param {Object} [scope] The scope of the handler function
      */
-    setHandler: function(fn, scope) {
+    setHandler: function (fn, scope) {
         this.handler = fn || null;
         this.scope = scope;
     },
@@ -694,7 +692,7 @@ Ext.define('Ext.menu.Item', {
      * Sets the {@link #icon} on this item.
      * @param {String} icon The new icon
      */
-    setIcon: function(icon){
+    setIcon: function (icon) {
         var iconEl = this.iconEl,
             oldIcon = this.icon;
         if (iconEl) {
@@ -708,7 +706,7 @@ Ext.define('Ext.menu.Item', {
      * Sets the {@link #iconCls} of this item
      * @param {String} iconCls The CSS class to set to {@link #iconCls}
      */
-    setIconCls: function(iconCls) {
+    setIconCls: function (iconCls) {
         var me = this,
             iconEl = me.iconEl,
             oldCls = me.iconCls;
@@ -731,7 +729,7 @@ Ext.define('Ext.menu.Item', {
      * Sets the {@link #text} of this item
      * @param {String} text The {@link #text}
      */
-    setText: function(text) {
+    setText: function (text) {
         var me = this,
             el = me.textEl || me.el,
             oldText = me.text;
@@ -745,14 +743,14 @@ Ext.define('Ext.menu.Item', {
         me.fireEvent('textchange', me, oldText, text);
     },
 
-    getTipAttr: function(){
+    getTipAttr: function () {
         return this.tooltipType === 'qtip' ? 'data-qtip' : 'title';
     },
 
     /**
      * @private
      */
-    clearTip: function() {
+    clearTip: function () {
         if (Ext.quickTipsActive && Ext.isObject(this.tooltip)) {
             Ext.tip.QuickTipManager.unregister(this.itemEl);
         }
@@ -768,7 +766,7 @@ Ext.define('Ext.menu.Item', {
      *
      * @return {Ext.menu.Item} this
      */
-    setTooltip: function(tooltip, initial) {
+    setTooltip: function (tooltip, initial) {
         var me = this;
 
         if (me.rendered) {
@@ -778,9 +776,9 @@ Ext.define('Ext.menu.Item', {
 
             if (Ext.quickTipsActive && Ext.isObject(tooltip)) {
                 Ext.tip.QuickTipManager.register(Ext.apply({
-                    target: me.itemEl.id
-                },
-                tooltip));
+                        target: me.itemEl.id
+                    },
+                    tooltip));
                 me.tooltip = tooltip;
             } else {
                 me.itemEl.dom.setAttribute(me.getTipAttr(), tooltip);
@@ -793,15 +791,15 @@ Ext.define('Ext.menu.Item', {
     },
 
     privates: {
-        cancelDeferExpand: function() {
+        cancelDeferExpand: function () {
             window.clearTimeout(this.expandMenuTimer);
         },
 
-        cancelDeferHide: function(){
+        cancelDeferHide: function () {
             window.clearTimeout(this.hideMenuTimer);
         },
 
-        getFocusEl: function() {
+        getFocusEl: function () {
             return this.plain ? this.el : this.itemEl;
         }
     }

@@ -2,7 +2,7 @@
  * @private
  */
 Ext.define('Ext.device.browser.Simulator', {
-    open: function(config) {
+    open: function (config) {
         window.open(config.url, '_blank');
     },
 

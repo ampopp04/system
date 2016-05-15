@@ -11,19 +11,19 @@
  * @singleton
  */
 Ext.define('Ext.util.Base64', {
-    singleton:true,
+    singleton: true,
 
     /**
      * @private
      */
-    _str : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+    _str: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
 
     /**
      * Encodes given string in to base64 formatted string
      * @param input
      * @return {string}
      */
-    encode : function (input) {
+    encode: function (input) {
         var me = this;
         var output = '', chr1, chr2, chr3, enc1, enc2, enc3, enc4,
             i = 0;
@@ -62,7 +62,7 @@ Ext.define('Ext.util.Base64', {
      * @param input
      * @return {string}
      */
-    decode : function (input) {
+    decode: function (input) {
         var me = this;
         var output = '',
             chr1, chr2, chr3,
@@ -104,8 +104,8 @@ Ext.define('Ext.util.Base64', {
      * @private
      * UTF-8 encoding
      */
-    _utf8_encode : function (string) {
-        string = string.replace(/\r\n/g,"\n");
+    _utf8_encode: function (string) {
+        string = string.replace(/\r\n/g, "\n");
         var utftext = '',
             n = 0,
             len = string.length;
@@ -117,7 +117,7 @@ Ext.define('Ext.util.Base64', {
             if (c < 128) {
                 utftext += String.fromCharCode(c);
             }
-            else if((c > 127) && (c < 2048)) {
+            else if ((c > 127) && (c < 2048)) {
                 utftext += String.fromCharCode((c >> 6) | 192);
                 utftext += String.fromCharCode((c & 63) | 128);
             }
@@ -136,7 +136,7 @@ Ext.define('Ext.util.Base64', {
      * @private
      * UTF-8 decoding
      */
-    _utf8_decode : function (utftext) {
+    _utf8_decode: function (utftext) {
         var string = '',
             i = 0,
             c = 0,
@@ -151,14 +151,14 @@ Ext.define('Ext.util.Base64', {
                 string += String.fromCharCode(c);
                 i++;
             }
-            else if((c > 191) && (c < 224)) {
-                c2 = utftext.charCodeAt(i+1);
+            else if ((c > 191) && (c < 224)) {
+                c2 = utftext.charCodeAt(i + 1);
                 string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
                 i += 2;
             }
             else {
-                c2 = utftext.charCodeAt(i+1);
-                c3 = utftext.charCodeAt(i+2);
+                c2 = utftext.charCodeAt(i + 1);
+                c3 = utftext.charCodeAt(i + 2);
                 string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
                 i += 3;
             }

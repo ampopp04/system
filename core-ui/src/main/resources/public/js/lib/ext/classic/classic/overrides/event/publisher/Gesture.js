@@ -1,10 +1,10 @@
 //<feature legacyBrowser>
 Ext.define('Ext.overrides.event.publisher.Gesture', {
     override: 'Ext.event.publisher.Gesture'
-}, function() {
+}, function () {
     if (Ext.isIE9m) {
         this.override({
-            updateTouches: function(e, isEnd) {
+            updateTouches: function (e, isEnd) {
                 var browserEvent = e.browserEvent,
                     xy = e.getXY();
 
@@ -15,7 +15,7 @@ Ext.define('Ext.overrides.event.publisher.Gesture', {
                 this.callParent([e, isEnd]);
             },
 
-            doDelegatedEvent: function(e) {
+            doDelegatedEvent: function (e) {
                 // Workaround IE's "Member not found" errors when accessing an event
                 // object asynchronously.  Needed for all gesture handlers because
                 // they use requestAnimationFrame (see enableIEAsync for more details)

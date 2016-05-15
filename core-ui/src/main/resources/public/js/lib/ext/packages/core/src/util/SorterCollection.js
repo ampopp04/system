@@ -26,7 +26,7 @@ Ext.define('Ext.util.SorterCollection', {
      * @readonly
      */
     sortFn: null,
-    
+
     config: {
         /**
          * @cfg {Function} applySorterOptionsFn
@@ -34,7 +34,7 @@ Ext.define('Ext.util.SorterCollection', {
          * @private
          */
         sorterOptionsFn: null,
-        
+
         /**
          * @cfg {Object} applySorterOptionsScope
          * The scope to execute the {@link #applySorterOptionsFn}
@@ -97,7 +97,7 @@ Ext.define('Ext.util.SorterCollection', {
             if (mode && !me._sortModes[mode]) {
                 Ext.raise(
                     'Sort mode should be "multi", "append", "prepend" or "replace", not "' +
-                                mode + '"');
+                    mode + '"');
             }
             //</debug>
             mode = me._sortModes[mode || 'replace'];
@@ -135,9 +135,9 @@ Ext.define('Ext.util.SorterCollection', {
         }
     },
 
-    clear: function() {
-    // The owning Collection needs to have its onSortersEndUpdate called on sorter clear so that
-    // it clears its sorted flag.
+    clear: function () {
+        // The owning Collection needs to have its onSortersEndUpdate called on sorter clear so that
+        // it clears its sorted flag.
         this.beginUpdate();
         this.callParent();
         this.endUpdate(this.items);
@@ -150,18 +150,18 @@ Ext.define('Ext.util.SorterCollection', {
     getSortFn: function () {
         return this.sortFn;
     },
-    
+
     /**
      * Get the first matching sorter with a matching property.
      * @param {String} prop The property name
      * @return {Ext.util.Sorter} The sorter. `null` if not found.
      * @private
      */
-    getByProperty: function(prop) {
+    getByProperty: function (prop) {
         var items = this.items,
             len = items.length,
             i, item;
-        
+
         for (i = 0; i < len; ++i) {
             item = items[i];
             if (item.getProperty() === prop) {
@@ -175,10 +175,10 @@ Ext.define('Ext.util.SorterCollection', {
     // Private
 
     _sortModes: {
-        append:  { append:  1 },
-        multi:   { multi:   1 },
-        prepend: { prepend: 1 },
-        replace: { replace: 1 }
+        append: {append: 1},
+        multi: {multi: 1},
+        prepend: {prepend: 1},
+        replace: {replace: 1}
     },
 
     decodeSorter: function (sorter, xclass) {
@@ -240,8 +240,8 @@ Ext.define('Ext.util.SorterCollection', {
 
         return sorter;
     },
-    
-    setSorterConfigure: function(fn, scope) {
+
+    setSorterConfigure: function (fn, scope) {
         this.setSorterOptionsFn(fn);
         this.setSorterOptionsScope(scope);
     },
@@ -275,7 +275,7 @@ Ext.define('Ext.util.SorterCollection', {
                         }
                     }
                     else if (type === 'function') {
-                        for (n = currentSorters.length; n-- > 0; ) {
+                        for (n = currentSorters.length; n-- > 0;) {
                             item = currentSorters[n];
                             if (item.getSorterFn() === sorter) {
                                 remove.push(item);

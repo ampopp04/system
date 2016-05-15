@@ -4,7 +4,7 @@
  */
 Ext.define('Ext.ux.ajax.DataSimlet', function () {
 
-    function makeSortFn (def, cmp) {
+    function makeSortFn(def, cmp) {
         var order = def.direction,
             sign = (order && order.toUpperCase() === 'DESC') ? -1 : 1;
 
@@ -21,8 +21,8 @@ Ext.define('Ext.ux.ajax.DataSimlet', function () {
         };
     }
 
-    function makeSortFns (defs, cmp) {
-        for (var sortFn = cmp, i = defs && defs.length; i; ) {
+    function makeSortFns(defs, cmp) {
+        for (var sortFn = cmp, i = defs && defs.length; i;) {
             sortFn = makeSortFn(defs[--i], sortFn);
         }
         return sortFn;
@@ -56,9 +56,9 @@ Ext.define('Ext.ux.ajax.DataSimlet', function () {
             }
         },
 
-        deleteRecord : function(pos) {
-            if(this.data && typeof this.data !== 'function') {
-                Ext.Array.removeAt(this.data,pos); 
+        deleteRecord: function (pos) {
+            if (this.data && typeof this.data !== 'function') {
+                Ext.Array.removeAt(this.data, pos);
             }
         },
 
@@ -120,7 +120,7 @@ Ext.define('Ext.ux.ajax.DataSimlet', function () {
 
             fields = params.sort;
             if (params.dir) {
-                fields = [{ direction: params.dir, property: fields }];
+                fields = [{direction: params.dir, property: fields}];
             } else {
                 fields = Ext.decode(params.sort);
             }
@@ -148,7 +148,7 @@ Ext.define('Ext.ux.ajax.DataSimlet', function () {
 
             return data;
         },
-        
+
         processFilters: Ext.identityFn,
 
         getPage: function (ctx, data) {
@@ -182,7 +182,7 @@ Ext.define('Ext.ux.ajax.DataSimlet', function () {
                 todo[fieldValue] = true;
             });
 
-            function flush () {
+            function flush() {
                 if (accum) {
                     summary.push(me.getGroupSummary(groupField, accum, ctx));
                     accum = null;

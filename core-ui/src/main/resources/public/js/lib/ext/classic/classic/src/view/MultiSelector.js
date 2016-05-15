@@ -108,7 +108,7 @@ Ext.define('Ext.view.MultiSelector', {
         if (!me.columns) {
             me.hideHeaders = !fieldTitle;
             me.columns = [
-                { text: fieldTitle, dataIndex: me.fieldName, flex: 1 },
+                {text: fieldTitle, dataIndex: me.fieldName, flex: 1},
                 me.makeRemoveRowColumn()
             ];
         }
@@ -157,11 +157,11 @@ Ext.define('Ext.view.MultiSelector', {
     },
 
     renderRemoveRow: function () {
-        return '<span data-qtip="'+ this.removeRowTip + '" role="button">' +
+        return '<span data-qtip="' + this.removeRowTip + '" role="button">' +
             this.removeRowText + '</span>';
     },
 
-    beforeDestroy: function() {
+    beforeDestroy: function () {
         Ext.un({
             mousedown: 'onDismissSearch',
             scope: this

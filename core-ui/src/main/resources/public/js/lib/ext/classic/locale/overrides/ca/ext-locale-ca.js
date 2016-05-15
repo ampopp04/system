@@ -5,12 +5,12 @@
  * Synchronized with 2.2 version of ext-lang-en.js (provided by Condor 8 aug 2008)
  *     by halkon_polako 14-aug-2008
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Gener", "Febrer", "Mar&#231;", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre"];
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return Ext.Date.monthNames[month].substring(0, 3);
         };
 
@@ -29,13 +29,13 @@ Ext.onReady(function() {
             Dec: 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1, 3).toLowerCase()];
         };
 
         Ext.Date.dayNames = ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte"];
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day].substring(0, 3);
         };
 
@@ -125,9 +125,9 @@ Ext.define("Ext.locale.ca.form.field.Number", {
     nanText: "{0} no &#233;s un nombre v&#224;lid"
 });
 
-Ext.define("Ext.locale.ca.form.field.File", { 
-    override: "Ext.form.field.File", 
-    buttonText: "Examinar..." 
+Ext.define("Ext.locale.ca.form.field.File", {
+    override: "Ext.form.field.File",
+    buttonText: "Examinar..."
 });
 
 Ext.define("Ext.locale.ca.form.field.Date", {
@@ -144,7 +144,7 @@ Ext.define("Ext.locale.ca.form.field.Date", {
 Ext.define("Ext.locale.ca.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Carregant..."
     });
@@ -161,7 +161,7 @@ Ext.define("Ext.locale.ca.form.field.VTypes", {
 Ext.define("Ext.locale.ca.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Si us plau, tecleixi la URL per l\'enlla&#231;:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -285,10 +285,10 @@ Ext.define("Ext.locale.ca.window.MessageBox", {
         cancel: "Cancel&#183;lar",
         yes: "S&#237;",
         no: "No"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.ca.Component", {	
+Ext.define("Ext.locale.ca.Component", {
     override: "Ext.Component"
 });

@@ -51,7 +51,7 @@ Ext.define('Ext.grid.column.Template', {
      * @hide
      */
 
-    initComponent: function(){
+    initComponent: function () {
         var me = this;
         me.tpl = (!Ext.isPrimitive(me.tpl) && me.tpl.compile) ? me.tpl : new Ext.XTemplate(me.tpl);
         // Set this here since the template may access any record values,
@@ -60,12 +60,12 @@ Ext.define('Ext.grid.column.Template', {
         me.callParent(arguments);
     },
 
-    defaultRenderer: function(value, meta, record) {
+    defaultRenderer: function (value, meta, record) {
         var data = Ext.apply({}, record.data, record.getAssociatedData());
         return this.tpl.apply(data);
     },
 
-    updater: function(cell, value) {
+    updater: function (cell, value) {
         Ext.fly(cell).down(this.getView().innerSelector, true).innerHTML = Ext.grid.column.CheckColumn.prototype.defaultRenderer.call(this, value);
     }
 });

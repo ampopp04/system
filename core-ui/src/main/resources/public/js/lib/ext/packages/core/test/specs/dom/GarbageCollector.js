@@ -1,16 +1,16 @@
-describe("Ext.dom.GarbageCollector", function() {
+describe("Ext.dom.GarbageCollector", function () {
     var skipGarbageCollection;
 
-    beforeEach(function() {
+    beforeEach(function () {
         skipGarbageCollection = Ext.dom.Element.prototype.skipGarbageCollection;
         Ext.dom.Element.prototype.skipGarbageCollection = false;
     });
 
-    afterEach(function() {
+    afterEach(function () {
         Ext.dom.Element.prototype.skipGarbageCollection = skipGarbageCollection;
     });
 
-    it("should collect an orphan element", function() {
+    it("should collect an orphan element", function () {
         var el = Ext.get(document.createElement('div')),
             id = el.id;
 
@@ -22,14 +22,14 @@ describe("Ext.dom.GarbageCollector", function() {
 
         expect(el.clearListeners).toHaveBeenCalled();
         expect(id in Ext.cache).toBe(false);
-        
+
         // Element is already destroyed warning is expected
         spyOn(Ext.Logger, 'warn');
-        
+
         el.destroy();
     });
 
-    it("should not collect an element that is in the body", function() {
+    it("should not collect an element that is in the body", function () {
         var el = Ext.get(document.createElement('div')),
             id = el.id;
 
@@ -45,7 +45,7 @@ describe("Ext.dom.GarbageCollector", function() {
         el.destroy();
     });
 
-    (Ext.getDetachedBody ? it : xit)("should not collect an element that is in the detached body", function() {
+    (Ext.getDetachedBody ? it : xit)("should not collect an element that is in the detached body", function () {
         var el = Ext.get(document.createElement('div')),
             id = el.id;
 
@@ -61,12 +61,12 @@ describe("Ext.dom.GarbageCollector", function() {
         el.destroy();
     });
 
-    it("should return the ids of collected elements", function() {
+    it("should return the ids of collected elements", function () {
         var ids, el2;
 
-        Ext.Element.create({ id: 'one' });
-        el2 = Ext.getBody().createChild({ id: 'two' });
-        Ext.Element.create({ tag: 'a', id: 'three' });
+        Ext.Element.create({id: 'one'});
+        el2 = Ext.getBody().createChild({id: 'two'});
+        Ext.Element.create({tag: 'a', id: 'three'});
 
         ids = Ext.dom.GarbageCollector.collect();
 

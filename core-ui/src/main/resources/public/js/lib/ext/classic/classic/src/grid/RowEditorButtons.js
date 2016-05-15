@@ -10,7 +10,7 @@ Ext.define('Ext.grid.RowEditorButtons', {
     shrinkWrap: true,
     position: 'bottom',
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this,
             rowEditor = config.rowEditor,
             cssPrefix = Ext.baseCSSPrefix,
@@ -55,7 +55,7 @@ Ext.define('Ext.grid.RowEditorButtons', {
     },
 
     // SHIFT+TAB off the update button loops back into the last field.
-    onUpdateKeyDown: function(e) {
+    onUpdateKeyDown: function (e) {
         if (e.shiftKey && e.getKey() === e.TAB) {
             e.stopEvent();
             // Must delay the focus, otherwise the imminent keyup will TAB off that field
@@ -64,7 +64,7 @@ Ext.define('Ext.grid.RowEditorButtons', {
     },
 
     // TAB off the cancel button loops back into the first field.
-    onCancelKeyDown: function(e) {
+    onCancelKeyDown: function (e) {
         if (!e.shiftKey && e.getKey() === e.TAB) {
             e.stopEvent();
             // Must delay the focus, otherwise the imminent keyup will TAB off that field
@@ -72,7 +72,7 @@ Ext.define('Ext.grid.RowEditorButtons', {
         }
     },
 
-    setButtonPosition: function(position) {
+    setButtonPosition: function (position) {
         var me = this,
             rowEditor = this.rowEditor,
             rowEditorHeight = rowEditor.getHeight(),
@@ -100,11 +100,11 @@ Ext.define('Ext.grid.RowEditorButtons', {
     },
 
     privates: {
-        getFramingInfoCls: function(){
+        getFramingInfoCls: function () {
             return this.baseCls + '-' + this.ui + '-' + this.position;
         },
 
-        getFrameInfo: function() {
+        getFrameInfo: function () {
             var frameInfo = this.callParent();
 
             // Trick Renderable into rendering the top framing elements, even though they

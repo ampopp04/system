@@ -13,7 +13,7 @@
  *               {id: 5, show: 'Star Wars: Christmas Special'}
  *           ]
  *        });
- *       
+ *
  *       Ext.create('Ext.grid.Panel', {
  *           renderTo: Ext.getBody(),
  *           title: 'Sci-Fi Television',
@@ -32,7 +32,7 @@
  *               flex: 1                  
  *           }]
  *       });
- * 
+ *
  */
 Ext.define('Ext.grid.filters.filter.Number', {
     extend: 'Ext.grid.filters.filter.TriFilter',
@@ -168,7 +168,7 @@ Ext.define('Ext.grid.filters.filter.Number', {
         this.setValue(value);
     },
 
-    stopFn: function(e) {
+    stopFn: function (e) {
         e.stopPropagation();
     }
 });

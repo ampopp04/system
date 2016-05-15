@@ -6,7 +6,7 @@ Ext.define('Ext.panel.Title', {
     xtype: 'title',
 
     isTitle: true,
-    
+
     // layout system optimization.  Allows autocomponent layout to measure height without
     // having to first know the width.
     noWrap: true,
@@ -61,7 +61,7 @@ Ext.define('Ext.panel.Title', {
          * @accessor
          */
         iconCls: null,
-        
+
         /**
          * @cfg rotation
          * @inheritdoc Ext.panel.Header#cfg-titleRotation
@@ -75,7 +75,7 @@ Ext.define('Ext.panel.Title', {
         // Required for Opera
         unselectable: 'on'
     },
-    
+
     // In most cases the panel header title is purely presentational
     // and does not have any structural significance wrt Assistive Technologies.
     // The only exception is when the panel participates in Accordion layout;
@@ -83,7 +83,7 @@ Ext.define('Ext.panel.Title', {
     // should not have any role to expose the text as the tab's accessible name.
     // Header component is aware of this participation and will reset textElRole.
     textElRole: 'presentation',
-    
+
     // By default, panel title is not focusable; this only happens in Accordion layout.
     // This config option is overridable, and it will prime tabIndex to be used
     // without hardcoding it.
@@ -95,29 +95,27 @@ Ext.define('Ext.panel.Title', {
         'iconWrapEl'
     ],
 
-    renderTpl:
-        '<tpl if="iconMarkup && iconBeforeTitle">{iconMarkup}</tpl>' +
-        // unselectable="on" is required for Opera, other browsers
-        // inherit unselectability from the header
-        '<div id="{id}-textEl" data-ref="textEl"' +
-            ' class="{textCls} {textCls}-{ui} {itemCls}{childElCls}" unselectable="on"' +
-            '<tpl if="textElRole"> role="{textElRole}"</tpl>' +
-        '>' +
-            '{text}' +
-        '</div>' +
-        '<tpl if="iconMarkup && !iconBeforeTitle">{iconMarkup}</tpl>',
+    renderTpl: '<tpl if="iconMarkup && iconBeforeTitle">{iconMarkup}</tpl>' +
+    // unselectable="on" is required for Opera, other browsers
+    // inherit unselectability from the header
+    '<div id="{id}-textEl" data-ref="textEl"' +
+    ' class="{textCls} {textCls}-{ui} {itemCls}{childElCls}" unselectable="on"' +
+    '<tpl if="textElRole"> role="{textElRole}"</tpl>' +
+    '>' +
+    '{text}' +
+    '</div>' +
+    '<tpl if="iconMarkup && !iconBeforeTitle">{iconMarkup}</tpl>',
 
-    iconTpl:
-        '<div id="{id}-iconWrapEl" data-ref="iconWrapEl" role="presentation" ' +
-                'class="{iconWrapCls} {iconWrapCls}-{ui} {iconAlignCls} {itemCls}{childElCls}"' +
-                '<tpl if="iconWrapStyle"> style="{iconWrapStyle}"</tpl>>' +
-            '<div id="{id}-iconEl" data-ref="iconEl" role="presentation" unselectable="on" ' +
-                        'class="{baseIconCls} {baseIconCls}-{ui} {iconCls} {glyphCls}" style="' +
-                '<tpl if="iconUrl">background-image:url({iconUrl});</tpl>' +
-                '<tpl if="glyph && glyphFontFamily">font-family:{glyphFontFamily};</tpl>">' +
-                '<tpl if="glyph">&#{glyph};</tpl>' +
-            '</div>' +
-        '</div>',
+    iconTpl: '<div id="{id}-iconWrapEl" data-ref="iconWrapEl" role="presentation" ' +
+    'class="{iconWrapCls} {iconWrapCls}-{ui} {iconAlignCls} {itemCls}{childElCls}"' +
+    '<tpl if="iconWrapStyle"> style="{iconWrapStyle}"</tpl>>' +
+    '<div id="{id}-iconEl" data-ref="iconEl" role="presentation" unselectable="on" ' +
+    'class="{baseIconCls} {baseIconCls}-{ui} {iconCls} {glyphCls}" style="' +
+    '<tpl if="iconUrl">background-image:url({iconUrl});</tpl>' +
+    '<tpl if="glyph && glyphFontFamily">font-family:{glyphFontFamily};</tpl>">' +
+    '<tpl if="glyph">&#{glyph};</tpl>' +
+    '</div>' +
+    '</div>',
 
     _textAlignClasses: {
         left: Ext.baseCSSPrefix + 'title-align-left',
@@ -151,7 +149,7 @@ Ext.define('Ext.panel.Title', {
     _itemCls: Ext.baseCSSPrefix + 'title-item',
     _textCls: Ext.baseCSSPrefix + 'title-text',
 
-    afterComponentLayout: function() {
+    afterComponentLayout: function () {
         var me = this,
             rotation = me.getRotation(),
             lastBox, lastX, el;
@@ -183,13 +181,13 @@ Ext.define('Ext.panel.Title', {
         this.callParent();
     },
 
-    onRender: function() {
+    onRender: function () {
         var me = this,
             rotation = me.getRotation(),
             el = me.el;
-        
+
         me.callParent();
-        
+
         if (rotation) {
             el.setVertical(me._rotationAngles[rotation]);
         }
@@ -202,27 +200,27 @@ Ext.define('Ext.panel.Title', {
         }
     },
 
-    applyText: function(text) {
+    applyText: function (text) {
         if (!text) {
             text = '&#160;';
         }
         return text;
     },
-    
-    beforeRender: function() {
+
+    beforeRender: function () {
         var me = this;
-        
+
         me.callParent();
-        
+
         me.addCls(me._rotationClasses[me.getRotation()]);
         me.addCls(me._textAlignClasses[me.getTextAlign()]);
     },
 
-    getIconMarkup: function() {
+    getIconMarkup: function () {
         return this.getTpl('iconTpl').apply(this.getIconRenderData());
     },
 
-    getIconRenderData: function() {
+    getIconRenderData: function () {
         var me = this,
             icon = me.getIcon(),
             iconCls = me.getIconCls(),
@@ -253,7 +251,7 @@ Ext.define('Ext.panel.Title', {
         };
     },
 
-    initRenderData: function() {
+    initRenderData: function () {
         var me = this,
             iconAlign, renderData;
 
@@ -273,11 +271,11 @@ Ext.define('Ext.panel.Title', {
             renderData.iconMarkup = me.getIconMarkup();
             renderData.iconBeforeTitle = (iconAlign === 'top' || iconAlign === 'left');
         }
-        
+
         return renderData;
     },
-    
-    onAdded: function(container, pos, instanced) {
+
+    onAdded: function (container, pos, instanced) {
         var me = this,
             suffix = me._titleSuffix,
             baseCls = container.baseCls;
@@ -286,11 +284,11 @@ Ext.define('Ext.panel.Title', {
             baseCls + suffix,
             baseCls + suffix + '-' + container.ui
         ]);
-        
+
         me.callParent([container, pos, instanced]);
     },
 
-    updateGlyph: function(glyph, oldGlyph) {
+    updateGlyph: function (glyph, oldGlyph) {
         glyph = glyph || 0;
         var me = this,
             glyphCls = me._glyphCls,
@@ -301,7 +299,7 @@ Ext.define('Ext.panel.Title', {
         if (me.rendered) {
             me._syncIconVisibility();
             iconEl = me.iconEl;
-            
+
             if (typeof glyph === 'string') {
                 glyphParts = glyph.split('@');
                 glyph = glyphParts[0];
@@ -325,7 +323,7 @@ Ext.define('Ext.panel.Title', {
         }
     },
 
-    updateIcon: function(icon, oldIcon) {
+    updateIcon: function (icon, oldIcon) {
         icon = icon || '';
         var me = this,
             iconEl;
@@ -333,15 +331,15 @@ Ext.define('Ext.panel.Title', {
         if (me.rendered && icon !== oldIcon) {
             me._syncIconVisibility();
             iconEl = me.iconEl;
-            
-            iconEl.setStyle('background-image', icon ? 'url(' + icon + ')': '');
+
+            iconEl.setStyle('background-image', icon ? 'url(' + icon + ')' : '');
             if (me._didIconStateChange(oldIcon, icon)) {
                 me.updateLayout();
             }
         }
     },
 
-    updateIconAlign: function(align, oldAlign) {
+    updateIconAlign: function (align, oldAlign) {
         var me = this,
             iconWrapEl = me.iconWrapEl,
             el, iconAlignClasses;
@@ -362,12 +360,12 @@ Ext.define('Ext.panel.Title', {
             } else {
                 el.appendChild(iconWrapEl);
             }
-            
+
             me.updateLayout();
         }
     },
 
-    updateIconCls: function(cls, oldCls) {
+    updateIconCls: function (cls, oldCls) {
         cls = cls || '';
         var me = this,
             iconEl;
@@ -375,7 +373,7 @@ Ext.define('Ext.panel.Title', {
         if (me.rendered && oldCls !== cls) {
             me._syncIconVisibility();
             iconEl = me.iconEl;
-            
+
             if (oldCls) {
                 iconEl.removeCls(oldCls);
             }
@@ -386,14 +384,14 @@ Ext.define('Ext.panel.Title', {
         }
     },
 
-    updateRotation: function(rotation, oldRotation) {
+    updateRotation: function (rotation, oldRotation) {
         var me = this,
             el, rotationClasses;
-       
+
         if (me.rendered) {
             el = me.el;
             rotationClasses = me._rotationClasses;
-            
+
             me.removeCls(rotationClasses[oldRotation]);
             me.addCls(rotationClasses[rotation]);
 
@@ -401,7 +399,7 @@ Ext.define('Ext.panel.Title', {
             if (rotation) {
                 el.setVertical(me._rotationAngles[rotation]);
             }
-    
+
             // reset styles set by adjustTitlePosition (handles both rtl/ltr), and sizing
             // set by last layout run (this prevents parallel size from becoming perpendicular
             // size after rotation)
@@ -412,24 +410,24 @@ Ext.define('Ext.panel.Title', {
                 height: '',
                 width: ''
             });
-    
+
             me.lastBox = null;
 
             me.updateLayout();
         }
     },
 
-    updateText: function(text) {
+    updateText: function (text) {
         if (this.rendered) {
             this.textEl.setHtml(text);
             this.updateLayout();
         }
     },
 
-    updateTextAlign: function(align, oldAlign) {
+    updateTextAlign: function (align, oldAlign) {
         var me = this,
             textAlignClasses = me._textAlignClasses;
-        
+
         if (me.rendered) {
             if (oldAlign) {
                 me.removeCls(textAlignClasses[oldAlign]);
@@ -442,37 +440,37 @@ Ext.define('Ext.panel.Title', {
 
     privates: {
         // rtl hook
-        _getVerticalAdjustDirection: function() {
+        _getVerticalAdjustDirection: function () {
             return 'left';
         },
 
-        _didIconStateChange: function(old, current) {
+        _didIconStateChange: function (old, current) {
             var currentEmpty = Ext.isEmpty(current);
             return Ext.isEmpty(old) ? !currentEmpty : currentEmpty;
         },
 
-        _hasIcon: function() {
+        _hasIcon: function () {
             return !!(this.getIcon() || this.getIconCls() || this.getGlyph());
         },
 
-        _syncIconVisibility: function() {
+        _syncIconVisibility: function () {
             var me = this,
                 el = me.el,
                 hasIcon = me._hasIcon(),
                 iconWrapEl = me.iconWrapEl,
                 isBefore, iconAlign;
-            
+
             if (hasIcon && !iconWrapEl) {
                 // if an icon was configured, but we have not yet rendered an icon
                 // element, we need to render it now.
                 iconAlign = me.iconAlign;
                 isBefore = (iconAlign === 'left' || iconAlign === 'top');
-                
+
                 el.dom.insertAdjacentHTML(
                     isBefore ? 'afterbegin' : 'beforeend',
                     me.getIconMarkup()
                 );
-            
+
                 iconWrapEl = me.iconWrapEl = el[isBefore ? 'first' : 'last']();
                 me.iconEl = iconWrapEl.first();
             }

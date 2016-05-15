@@ -66,7 +66,7 @@
  * methods. The object decoded from this JSON is available in the {@link Ext.form.action.Action#result result} property.
  */
 Ext.define('Ext.form.action.Load', {
-    extend:'Ext.form.action.Action',
+    extend: 'Ext.form.action.Action',
     requires: ['Ext.data.Connection'],
     alternateClassName: 'Ext.form.Action.Load',
     alias: 'formaction.load',
@@ -76,7 +76,7 @@ Ext.define('Ext.form.action.Load', {
     /**
      * @private
      */
-    run: function() {
+    run: function () {
         Ext.Ajax.request(Ext.apply(
             this.createCallback(),
             {
@@ -91,21 +91,21 @@ Ext.define('Ext.form.action.Load', {
     /**
      * @private
      */
-    onSuccess: function(response){
+    onSuccess: function (response) {
         var result = this.processResponse(response),
             form = this.form,
             formActive = form && !form.destroying && !form.destroyed;
-        
+
         if (result === true || !result.success || !result.data) {
             this.failureType = Ext.form.action.Action.LOAD_FAILURE;
-            
+
             if (formActive) {
                 form.afterAction(this, false);
             }
-            
+
             return;
         }
-        
+
         if (formActive) {
             form.clearInvalid();
             form.setValues(result.data);
@@ -116,15 +116,15 @@ Ext.define('Ext.form.action.Load', {
     /**
      * @private
      */
-    handleResponse: function(response) {
+    handleResponse: function (response) {
         var reader = this.form.reader,
             rs, data;
         if (reader) {
             rs = reader.read(response);
             data = rs.records && rs.records[0] ? rs.records[0].data : null;
             return {
-                success : rs.success,
-                data : data
+                success: rs.success,
+                data: data
             };
         }
         return Ext.decode(response.responseText);

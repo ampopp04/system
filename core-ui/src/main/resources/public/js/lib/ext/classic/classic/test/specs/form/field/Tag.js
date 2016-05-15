@@ -1,4 +1,4 @@
-describe("Ext.form.field.Tag", function() {
+describe("Ext.form.field.Tag", function () {
     var tagField, store, changeSpy,
         describeNotIE9_10 = Ext.isIE9 || Ext.isIE10 ? xdescribe : describe;
 
@@ -14,10 +14,10 @@ describe("Ext.form.field.Tag", function() {
         tagField.inputEl.dom.value = value;
         tagField.onFieldMutation({
             type: 'change',
-            getKey: function() {
+            getKey: function () {
                 return isBackspace ? Ext.event.Event.DELETE : 0;
             },
-            isSpecialKey: function() {
+            isSpecialKey: function () {
                 return !!isBackspace;
             },
             // Need these two properties so that this object quacks
@@ -90,7 +90,7 @@ describe("Ext.form.field.Tag", function() {
         var tags = tagField.getEl().query(tagField.tagItemSelector);
         expect(tagField.getValue()).toEqual(values);
         expect(tags.length).toBe(values.length);
-        Ext.Array.forEach(values, function(value, i) {
+        Ext.Array.forEach(values, function (value, i) {
             expect(getRecordByTag(tags[i]).get(tagField.valueField)).toBe(value);
         });
     }
@@ -133,22 +133,22 @@ describe("Ext.form.field.Tag", function() {
         jasmine.fireMouseEvent(node, 'click');
     }
 
-    afterEach(function() {
+    afterEach(function () {
         tagField = store = Ext.destroy(tagField, store);
     });
 
-    describe("the store", function() {
-        it("should be able to be created without a store", function() {
+    describe("the store", function () {
+        it("should be able to be created without a store", function () {
             makeField(null, null);
         });
 
-        it("should accept a store instance", function() {
+        it("should accept a store instance", function () {
             var s = makeStore();
             makeField(null, s);
             expect(tagField.getStore()).toBe(s);
         });
 
-        it("should accept a store config", function() {
+        it("should accept a store config", function () {
             makeField({
                 store: {
                     model: Model,
@@ -160,7 +160,7 @@ describe("Ext.form.field.Tag", function() {
             store = tagField.getStore();
         });
 
-        it("should accept a store id", function() {
+        it("should accept a store id", function () {
             store = makeStore(1, 'foo');
             makeField({
                 store: 'foo'
@@ -169,35 +169,35 @@ describe("Ext.form.field.Tag", function() {
         });
     });
 
-    describe("setting values", function() {
-        describe("configuring with a value", function() {
-            it("should return an empty array if no value is configured", function() {
+    describe("setting values", function () {
+        describe("configuring with a value", function () {
+            it("should return an empty array if no value is configured", function () {
                 makeField();
                 expectValue([]);
             });
 
-            it("should return an empty array if value is configured as null", function() {
+            it("should return an empty array if value is configured as null", function () {
                 makeField({
                     value: null
                 });
                 expectValue([]);
             });
 
-            it("should accept a single value", function() {
+            it("should accept a single value", function () {
                 makeField({
                     value: 3
                 });
                 expectValue([3]);
             });
 
-            it("should accept an array of values", function() {
+            it("should accept an array of values", function () {
                 makeField({
                     value: [2, 5, 11]
                 });
                 expectValue([2, 5, 11]);
             });
 
-            it("should accept a single record", function() {
+            it("should accept a single record", function () {
                 var s = makeStore();
                 makeField({
                     value: s.getAt(9)
@@ -205,7 +205,7 @@ describe("Ext.form.field.Tag", function() {
                 expectValue([10]);
             });
 
-            it("should accept an array of records", function() {
+            it("should accept an array of records", function () {
                 var s = makeStore();
                 makeField({
                     value: [s.getAt(4), s.getAt(8), s.getAt(13)]
@@ -213,7 +213,7 @@ describe("Ext.form.field.Tag", function() {
                 expectValue([5, 9, 14]);
             });
 
-            it("should retain the order", function() {
+            it("should retain the order", function () {
                 makeField({
                     value: [10, 6, 8, 7, 4, 5]
                 });
@@ -221,8 +221,8 @@ describe("Ext.form.field.Tag", function() {
             });
         });
 
-        describe("viewmodel", function() {
-            it("should be able to set the value via the viewmodel", function() {
+        describe("viewmodel", function () {
+            it("should be able to set the value via the viewmodel", function () {
                 var vm = new Ext.app.ViewModel({
                     data: {
                         value: [1, 2]
@@ -237,15 +237,15 @@ describe("Ext.form.field.Tag", function() {
             });
         });
 
-        describe("setValue", function() {
-            it("should be empty when setting to null", function() {
+        describe("setValue", function () {
+            it("should be empty when setting to null", function () {
                 makeFieldWithSpy();
                 tagField.setValue(null);
                 expectValue([]);
                 expect(changeSpy).not.toHaveBeenCalled();
             });
 
-            it("should clear a value when setting null", function() {
+            it("should clear a value when setting null", function () {
                 makeFieldWithSpy({
                     value: 3
                 });
@@ -254,21 +254,21 @@ describe("Ext.form.field.Tag", function() {
                 expectChange([], [3]);
             });
 
-            it("should accept a single value", function() {
+            it("should accept a single value", function () {
                 makeFieldWithSpy();
                 tagField.setValue(3);
                 expectValue([3]);
                 expectChange([3]);
             });
 
-            it("should accept an array of values", function() {
+            it("should accept an array of values", function () {
                 makeFieldWithSpy();
                 tagField.setValue([2, 5, 11]);
                 expectValue([2, 5, 11]);
                 expectChange([2, 5, 11]);
             });
 
-            it("should accept a single record", function() {
+            it("should accept a single record", function () {
                 var s = makeStore();
                 makeFieldWithSpy(null, s);
                 tagField.setValue(s.getAt(9));
@@ -276,7 +276,7 @@ describe("Ext.form.field.Tag", function() {
                 expectChange([10]);
             });
 
-            it("should accept an array of records", function() {
+            it("should accept an array of records", function () {
                 var s = makeStore();
                 makeFieldWithSpy(null, s);
                 tagField.setValue([s.getAt(4), s.getAt(8), s.getAt(13)]);
@@ -284,14 +284,14 @@ describe("Ext.form.field.Tag", function() {
                 expectChange([5, 9, 14]);
             });
 
-            it("should retain the order", function() {
+            it("should retain the order", function () {
                 makeFieldWithSpy();
                 tagField.setValue([10, 6, 8, 7, 4, 5]);
                 expectValue([10, 6, 8, 7, 4, 5]);
                 expectChange([10, 6, 8, 7, 4, 5]);
             });
 
-            it("should write over existing values", function() {
+            it("should write over existing values", function () {
                 makeFieldWithSpy({
                     value: [1, 3, 5, 7]
                 });
@@ -301,36 +301,36 @@ describe("Ext.form.field.Tag", function() {
             });
         });
 
-        describe("addValue", function() {
-            it("should be able to add a value", function() {
+        describe("addValue", function () {
+            it("should be able to add a value", function () {
                 makeFieldWithSpy();
                 tagField.addValue(1);
                 expectValue([1]);
                 expectChange([1]);
             });
 
-            it("should be able to add an array of values", function() {
+            it("should be able to add an array of values", function () {
                 makeFieldWithSpy();
                 tagField.addValue([3, 6, 7]);
                 expectValue([3, 6, 7]);
                 expectChange([3, 6, 7]);
             });
 
-            it("should accept a single record", function() {
+            it("should accept a single record", function () {
                 makeFieldWithSpy();
                 tagField.addValue(store.getAt(15));
                 expectValue([16]);
                 expectChange([16]);
             });
 
-            it("should accept an array of records", function() {
+            it("should accept an array of records", function () {
                 makeFieldWithSpy();
                 tagField.addValue([store.getAt(1), store.getAt(5)]);
                 expectValue([2, 6]);
                 expectChange([2, 6]);
             });
 
-            it("should append to the existing values", function() {
+            it("should append to the existing values", function () {
                 makeFieldWithSpy({
                     value: [7, 4, 12]
                 });
@@ -339,7 +339,7 @@ describe("Ext.form.field.Tag", function() {
                 expectChange([7, 4, 12, 3], [7, 4, 12]);
             });
 
-            it("should leave existing values in place", function() {
+            it("should leave existing values in place", function () {
                 makeFieldWithSpy({
                     value: [7, 4, 12]
                 });
@@ -348,7 +348,7 @@ describe("Ext.form.field.Tag", function() {
                 expect(changeSpy).not.toHaveBeenCalled();
             });
 
-            it("should only append non-existent values", function() {
+            it("should only append non-existent values", function () {
                 makeFieldWithSpy({
                     value: [7, 4, 12]
                 });
@@ -358,8 +358,8 @@ describe("Ext.form.field.Tag", function() {
             });
         });
 
-        describe("removeValue", function() {
-            it("should be able to remove a value", function() {
+        describe("removeValue", function () {
+            it("should be able to remove a value", function () {
                 makeFieldWithSpy({
                     value: [1]
                 });
@@ -368,7 +368,7 @@ describe("Ext.form.field.Tag", function() {
                 expectChange([], [1]);
             });
 
-            it("should be able to remove an array of values", function() {
+            it("should be able to remove an array of values", function () {
                 makeFieldWithSpy({
                     value: [3, 6, 7]
                 });
@@ -377,7 +377,7 @@ describe("Ext.form.field.Tag", function() {
                 expectChange([], [3, 6, 7]);
             });
 
-            it("should accept a single record", function() {
+            it("should accept a single record", function () {
                 makeFieldWithSpy({
                     value: [16]
                 });
@@ -386,7 +386,7 @@ describe("Ext.form.field.Tag", function() {
                 expectChange([], [16]);
             });
 
-            it("should accept an array of records", function() {
+            it("should accept an array of records", function () {
                 makeFieldWithSpy({
                     value: [2, 6]
                 });
@@ -395,7 +395,7 @@ describe("Ext.form.field.Tag", function() {
                 expectChange([], [2, 6]);
             });
 
-            it("should ignore not selected values", function() {
+            it("should ignore not selected values", function () {
                 makeFieldWithSpy({
                     value: [18, 3, 14]
                 });
@@ -405,20 +405,20 @@ describe("Ext.form.field.Tag", function() {
             });
         });
 
-        describe("list selection", function() {
+        describe("list selection", function () {
             var sm;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 makeField();
                 sm = tagField.pickerSelectionModel;
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 sm = null;
             });
 
-            describe("changing value with the list collapsed", function() {
-                it("should have the value selected and not fire a change event on expand", function() {
+            describe("changing value with the list collapsed", function () {
+                it("should have the value selected and not fire a change event on expand", function () {
                     tagField.setValue([1, 3, 5]);
                     setupChangeSpy();
                     tagField.expand();
@@ -429,8 +429,8 @@ describe("Ext.form.field.Tag", function() {
                 });
             });
 
-            describe("changing the value with the list expanded", function() {
-                it("should select records when setting a value", function() {
+            describe("changing the value with the list expanded", function () {
+                it("should select records when setting a value", function () {
                     tagField.expand();
                     tagField.setValue([1, 10, 13]);
                     expect(sm.isSelected(store.getAt(0))).toBe(true);
@@ -438,7 +438,7 @@ describe("Ext.form.field.Tag", function() {
                     expect(sm.isSelected(store.getAt(12))).toBe(true);
                 });
 
-                it("should deselect records when unsetting a value", function() {
+                it("should deselect records when unsetting a value", function () {
                     tagField.setValue([1, 10, 13]);
                     tagField.expand();
                     tagField.setValue([10]);
@@ -448,8 +448,8 @@ describe("Ext.form.field.Tag", function() {
                 });
             });
 
-            describe("clicking list items", function() {
-                it("should add a value when clicking an unselected item and fire change for each item", function() {
+            describe("clicking list items", function () {
+                it("should add a value when clicking an unselected item and fire change for each item", function () {
                     setupChangeSpy();
                     tagField.expand();
                     expect(changeSpy).not.toHaveBeenCalled();
@@ -461,7 +461,7 @@ describe("Ext.form.field.Tag", function() {
                     expectChange([3, 5, 12], [3, 5], 3);
                 });
 
-                it("should remove a value when clicking a selected item and fire change for each item", function() {
+                it("should remove a value when clicking a selected item and fire change for each item", function () {
                     tagField.setValue([1, 2, 3, 4, 5]);
                     setupChangeSpy();
                     tagField.expand();
@@ -477,7 +477,7 @@ describe("Ext.form.field.Tag", function() {
         });
     });
 
-    describe("tags", function() {
+    describe("tags", function () {
         function expectSelected(id) {
             expect(getTag(id)).toHaveCls(tagField.tagSelectedCls);
         }
@@ -486,15 +486,15 @@ describe("Ext.form.field.Tag", function() {
             expect(getTag(id)).not.toHaveCls(tagField.tagSelectedCls);
         }
 
-        describe("rendering", function() {
-            describe("tag label", function() {
+        describe("rendering", function () {
+            describe("tag label", function () {
                 function expectContent(id, content) {
                     var tag = getTag(id),
                         selector = '.' + tagField.tagItemTextCls;
                     expect(Ext.fly(tag).down(selector, true)).hasHTML(content);
                 }
 
-                it("should use the the displayField by default", function() {
+                it("should use the the displayField by default", function () {
                     makeField({
                         value: [1, 4, 6]
                     });
@@ -503,7 +503,7 @@ describe("Ext.form.field.Tag", function() {
                     expectContent(6, 'Item6');
                 });
 
-                it("should htmlEncode by default", function() {
+                it("should htmlEncode by default", function () {
                     store = new Ext.data.Store({
                         model: Model,
                         data: [{
@@ -518,7 +518,7 @@ describe("Ext.form.field.Tag", function() {
                     expectContent(1, 'Foo&lt;div&gt;&lt;/div&gt;Bar');
                 });
 
-                it("should accept a custom tpl", function() {
+                it("should accept a custom tpl", function () {
                     makeField({
                         value: [1],
                         labelTpl: 'Prefix{display}{value}'
@@ -526,7 +526,7 @@ describe("Ext.form.field.Tag", function() {
                     expectContent(1, 'PrefixItem11');
                 });
 
-                it("should encode a custom tpl", function() {
+                it("should encode a custom tpl", function () {
                     store = new Ext.data.Store({
                         model: Model,
                         data: [{
@@ -543,13 +543,13 @@ describe("Ext.form.field.Tag", function() {
                 });
             });
 
-            describe("tag tip", function() {
+            describe("tag tip", function () {
                 function expectTip(id, content) {
                     var tip = getTag(id).getAttribute('data-qtip') || '';
                     expect(tip).toBe(content);
                 }
 
-                it("should default to nothing", function() {
+                it("should default to nothing", function () {
                     makeField({
                         value: [1, 4, 6]
                     });
@@ -558,7 +558,7 @@ describe("Ext.form.field.Tag", function() {
                     expectTip(6, '');
                 });
 
-                it("should accept a tpl", function() {
+                it("should accept a tpl", function () {
                     makeField({
                         value: [1],
                         tipTpl: 'Prefix{display}{value}'
@@ -566,7 +566,7 @@ describe("Ext.form.field.Tag", function() {
                     expectTip(1, 'PrefixItem11');
                 });
 
-                it("should encode a tpl", function() {
+                it("should encode a tpl", function () {
                     store = new Ext.data.Store({
                         model: Model,
                         data: [{
@@ -585,24 +585,24 @@ describe("Ext.form.field.Tag", function() {
             });
         });
 
-        describe("key handling", function() {
+        describe("key handling", function () {
             var E = Ext.event.Event;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 makeFieldWithSpy({
                     value: [6, 4, 10, 13, 2]
                 });
             });
 
             // These tests fail unreliable in IE9 and IE10
-            describeNotIE9_10("from the input", function() {
-                it("should remove a tag when backspace is pressed and the field value is empty", function() {
+            describeNotIE9_10("from the input", function () {
+                it("should remove a tag when backspace is pressed and the field value is empty", function () {
                     fireInputKey(E.BACKSPACE);
                     expectValue([6, 4, 10, 13]);
                     expectChange([6, 4, 10, 13], [6, 4, 10, 13, 2]);
                 });
 
-                it("should not remove the tag when backspace is pressed and there is text in the field", function() {
+                it("should not remove the tag when backspace is pressed and there is text in the field", function () {
                     var dom = tagField.inputEl.dom;
                     dom.value = 'asdf';
                     // Forces the cursor to the end
@@ -612,13 +612,13 @@ describe("Ext.form.field.Tag", function() {
                     expect(changeSpy).not.toHaveBeenCalled();
                 });
 
-                it("should remove a tag when delete is pressed and the field value is empty", function() {
+                it("should remove a tag when delete is pressed and the field value is empty", function () {
                     fireInputKey(E.DELETE);
                     expectValue([6, 4, 10, 13]);
                     expectChange([6, 4, 10, 13], [6, 4, 10, 13, 2]);
                 });
 
-                it("should not remove the tag when delete is pressed and there is text in the field", function() {
+                it("should not remove the tag when delete is pressed and there is text in the field", function () {
                     var dom = tagField.inputEl.dom;
                     dom.value = 'asdf';
                     // Forces the cursor to the end
@@ -628,19 +628,19 @@ describe("Ext.form.field.Tag", function() {
                     expect(changeSpy).not.toHaveBeenCalled();
                 });
 
-                it("should select the right most tag when pressing left and the field value is empty", function() {
+                it("should select the right most tag when pressing left and the field value is empty", function () {
                     fireInputKey(E.LEFT);
                     expectSelected(2);
                 });
             });
 
-            describe("navigation of tags", function() {
-                beforeEach(function() {
+            describe("navigation of tags", function () {
+                beforeEach(function () {
                     // Select the first tag
                     fireInputKey(E.LEFT);
                 });
 
-                it("should move to the left when using the left key", function() {
+                it("should move to the left when using the left key", function () {
                     fireInputKey(E.LEFT);
                     expectNotSelected(2);
                     expectSelected(13);
@@ -650,14 +650,14 @@ describe("Ext.form.field.Tag", function() {
                     expectSelected(10);
                 });
 
-                it("should not wrap left", function() {
+                it("should not wrap left", function () {
                     for (var i = 0; i <= 20; ++i) {
                         fireInputKey(E.LEFT);
                     }
                     expectSelected(6);
                 });
 
-                it("should keep selections when using the shift key", function() {
+                it("should keep selections when using the shift key", function () {
                     expectSelected(2);
                     expectNotSelected(13);
                     expectNotSelected(10);
@@ -689,7 +689,7 @@ describe("Ext.form.field.Tag", function() {
                     expectSelected(6);
                 });
 
-                it("should move to the right when using the right key", function() {
+                it("should move to the right when using the right key", function () {
                     fireInputKey(E.LEFT);
                     fireInputKey(E.LEFT);
                     fireInputKey(E.LEFT);
@@ -705,7 +705,7 @@ describe("Ext.form.field.Tag", function() {
                     expectSelected(10);
                 });
 
-                it("shouldnot keep selections when going off the right edge", function() {
+                it("shouldnot keep selections when going off the right edge", function () {
                     fireInputKey(E.LEFT);
                     expectSelected(13);
                     fireInputKey(E.RIGHT);
@@ -716,7 +716,7 @@ describe("Ext.form.field.Tag", function() {
                     expectNotSelected(6);
                 });
 
-                it("should keep selections when using the shift key", function() {
+                it("should keep selections when using the shift key", function () {
                     fireInputKey(E.LEFT);
                     fireInputKey(E.LEFT);
                     fireInputKey(E.LEFT);
@@ -754,7 +754,7 @@ describe("Ext.form.field.Tag", function() {
                     expectSelected(6);
                 });
 
-                it("should select all when pressing ctrl+A", function() {
+                it("should select all when pressing ctrl+A", function () {
                     fireInputKey(E.A, false, true);
                     expectSelected(6);
                     expectSelected(4);
@@ -764,13 +764,13 @@ describe("Ext.form.field.Tag", function() {
                 });
             });
 
-            describe("modifying tags", function() {
-                beforeEach(function() {
+            describe("modifying tags", function () {
+                beforeEach(function () {
                     // Select the first tag
                     fireInputKey(E.LEFT);
                 });
 
-                it("should remove the selected item when pressing backspace", function() {
+                it("should remove the selected item when pressing backspace", function () {
                     fireInputKey(E.LEFT);
                     fireInputKey(E.LEFT);
                     fireInputKey(E.BACKSPACE);
@@ -778,7 +778,7 @@ describe("Ext.form.field.Tag", function() {
                     expectChange([6, 4, 13, 2], [6, 4, 10, 13, 2]);
                 });
 
-                it("should remove the selected item when pressing delete", function() {
+                it("should remove the selected item when pressing delete", function () {
                     fireInputKey(E.LEFT);
                     fireInputKey(E.LEFT);
                     fireInputKey(E.DELETE);
@@ -786,7 +786,7 @@ describe("Ext.form.field.Tag", function() {
                     expectChange([6, 4, 13, 2], [6, 4, 10, 13, 2]);
                 });
 
-                it("should select the previous item after deleting", function() {
+                it("should select the previous item after deleting", function () {
                     fireInputKey(E.DELETE);
                     expectValue([6, 4, 10, 13]);
                     expectChange([6, 4, 10, 13], [6, 4, 10, 13, 2]);
@@ -797,7 +797,7 @@ describe("Ext.form.field.Tag", function() {
                     expectSelected(10);
                 });
 
-                it("should select the last item when deleting the first", function() {
+                it("should select the last item when deleting the first", function () {
                     fireInputKey(E.LEFT);
                     fireInputKey(E.LEFT);
                     fireInputKey(E.LEFT);
@@ -808,7 +808,7 @@ describe("Ext.form.field.Tag", function() {
                     expectSelected(2);
                 });
 
-                it("should remove all selected items", function() {
+                it("should remove all selected items", function () {
                     fireInputKey(E.LEFT, true);
                     fireInputKey(E.LEFT, true);
                     fireInputKey(E.DELETE);
@@ -816,7 +816,7 @@ describe("Ext.form.field.Tag", function() {
                     expectChange([6, 4], [6, 4, 10, 13, 2]);
                 });
 
-                it("should be able to remove all items", function() {
+                it("should be able to remove all items", function () {
                     fireInputKey(E.A, false, true);
                     fireInputKey(E.DELETE);
                     expectValue([]);
@@ -825,14 +825,14 @@ describe("Ext.form.field.Tag", function() {
             });
         });
 
-        describe("mouse interaction", function() {
-            beforeEach(function() {
+        describe("mouse interaction", function () {
+            beforeEach(function () {
                 makeFieldWithSpy({
                     value: [6, 4, 10, 13, 2]
                 });
             });
 
-            it("should select a tag when clicking", function() {
+            it("should select a tag when clicking", function () {
                 clickTag(4);
                 fireInputKey(Ext.event.Event.DELETE);
                 expectValue([6, 10, 13, 2]);
@@ -903,8 +903,8 @@ describe("Ext.form.field.Tag", function() {
         });
     });
 
-    describe("pinList", function() {
-        it("should keep the list open when selecting from the list with pinList: true", function() {
+    describe("pinList", function () {
+        it("should keep the list open when selecting from the list with pinList: true", function () {
             makeField({
                 pinList: true
             });
@@ -913,7 +913,7 @@ describe("Ext.form.field.Tag", function() {
             expect(tagField.isExpanded).toBe(true);
         });
 
-        it("should collapse the list when selecting from the list with pinList: false", function() {
+        it("should collapse the list when selecting from the list with pinList: false", function () {
             makeField({
                 pinList: false
             });
@@ -923,9 +923,9 @@ describe("Ext.form.field.Tag", function() {
         });
     });
 
-    describe("triggerOnClick", function() {
-        describe("with triggerOnClick: true", function() {
-            it("should not expand when clicking on an item", function() {
+    describe("triggerOnClick", function () {
+        describe("with triggerOnClick: true", function () {
+            it("should not expand when clicking on an item", function () {
                 makeField({
                     triggerOnClick: true,
                     value: [1]
@@ -934,7 +934,7 @@ describe("Ext.form.field.Tag", function() {
                 expect(tagField.isExpanded).toBe(false);
             });
 
-            it("should expand when clicking on an empty area", function() {
+            it("should expand when clicking on an empty area", function () {
                 makeField({
                     triggerOnClick: true,
                     value: [1]
@@ -944,8 +944,8 @@ describe("Ext.form.field.Tag", function() {
             });
         });
 
-        describe("with triggerOnClick: false", function() {
-            it("should not expand when clicking on an item", function() {
+        describe("with triggerOnClick: false", function () {
+            it("should not expand when clicking on an item", function () {
                 makeField({
                     triggerOnClick: false,
                     value: [1]
@@ -954,7 +954,7 @@ describe("Ext.form.field.Tag", function() {
                 expect(tagField.isExpanded).toBe(false);
             });
 
-            it("should not expand when clicking on an empty area", function() {
+            it("should not expand when clicking on an empty area", function () {
                 makeField({
                     triggerOnClick: false,
                     value: [1]
@@ -965,9 +965,9 @@ describe("Ext.form.field.Tag", function() {
         });
     });
 
-    describe("stacked", function() {
-        describe("with stacked: true", function() {
-            it("should put each item on a new line", function() {
+    describe("stacked", function () {
+        describe("with stacked: true", function () {
+            it("should put each item on a new line", function () {
                 makeField({
                     value: 1,
                     stacked: true
@@ -989,7 +989,7 @@ describe("Ext.form.field.Tag", function() {
                 expect(tagField.getHeight()).toBeGreaterThan(height);
             });
 
-            it("should decrease the height when removing items", function() {
+            it("should decrease the height when removing items", function () {
                 makeField({
                     value: [1, 2, 3, 4, 5],
                     stacked: true
@@ -1013,9 +1013,9 @@ describe("Ext.form.field.Tag", function() {
             });
         });
 
-        describe("with stacked: false", function() {
-            it("should put multiple items per rows", function() {
-                 makeField({
+        describe("with stacked: false", function () {
+            it("should put multiple items per rows", function () {
+                makeField({
                     value: 1,
                     stacked: false
                 });
@@ -1024,7 +1024,7 @@ describe("Ext.form.field.Tag", function() {
                 expect(tagField.getHeight()).toBe(height);
             });
 
-            it("should wrap when required", function() {
+            it("should wrap when required", function () {
                 makeField({
                     value: 1,
                     stacked: false,
@@ -1045,8 +1045,8 @@ describe("Ext.form.field.Tag", function() {
         });
     });
 
-    describe("filterPickList", function() {
-        it("should filter the list when configured with values", function() {
+    describe("filterPickList", function () {
+        it("should filter the list when configured with values", function () {
             makeField({
                 filterPickList: true,
                 value: [1, 4, 7]
@@ -1058,14 +1058,14 @@ describe("Ext.form.field.Tag", function() {
                 rec6 = valueStore.getAt(2);
 
             expect(store.getCount()).toBe(17);
-            
+
             // The three picked values should not be found in the filtered store
             expect(store.indexOf(rec0)).toBe(-1);
             expect(store.indexOf(rec3)).toBe(-1);
             expect(store.indexOf(rec6)).toBe(-1);
         });
 
-        it("should filter the list when setting the value", function() {
+        it("should filter the list when setting the value", function () {
             makeField({
                 filterPickList: true
             });
@@ -1080,7 +1080,7 @@ describe("Ext.form.field.Tag", function() {
             expect(store.indexOf(rec16)).toBe(-1);
         });
 
-        it("should filter the list when adding a value", function() {
+        it("should filter the list when adding a value", function () {
             makeField({
                 filterPickList: true,
                 value: [1, 4, 7]
@@ -1093,7 +1093,7 @@ describe("Ext.form.field.Tag", function() {
                 rec1 = store.getAt(0);
 
             expect(store.getCount()).toBe(17);
-            
+
             // The tree picked values should not be found in the filtered store
             expect(store.indexOf(rec0)).toBe(-1);
             expect(store.indexOf(rec3)).toBe(-1);
@@ -1106,7 +1106,7 @@ describe("Ext.form.field.Tag", function() {
             expect(store.indexOf(rec1)).toBe(-1);
         });
 
-        it("should filter the list when removing a value", function() {
+        it("should filter the list when removing a value", function () {
             makeField({
                 filterPickList: true,
                 value: [1, 4, 7]
@@ -1123,7 +1123,7 @@ describe("Ext.form.field.Tag", function() {
             expect(store.indexOf(rec0)).toBe(0);
         });
 
-        it('should preserve the scroll position of the bould list when selecting a value', function() {
+        it('should preserve the scroll position of the bould list when selecting a value', function () {
             var picker;
 
             makeField({
@@ -1145,8 +1145,8 @@ describe("Ext.form.field.Tag", function() {
     });
 
     // These tests fails unreliably on IE9 and 10 on a VM
-    describeNotIE9_10('creating new values', function() {
-        it('should add a new record when ENTER is pressed if createNewOnEnter', function() {
+    describeNotIE9_10('creating new values', function () {
+        it('should add a new record when ENTER is pressed if createNewOnEnter', function () {
             makeField({
                 createNewOnEnter: true,
                 value: [1, 4, 7]
@@ -1160,21 +1160,21 @@ describe("Ext.form.field.Tag", function() {
             expect(v[3]).toBe('200');
         });
 
-        it('should add a new record on blur if createNewOnBlur', function() {
+        it('should add a new record on blur if createNewOnBlur', function () {
             makeField({
                 createNewOnBlur: true,
                 value: [1, 4, 7]
             });
             tagField.focus();
             jasmine.waitForFocus(tagField);
-            runs(function() {
+            runs(function () {
                 tagField.inputEl.dom.value = '200';
 
                 // Programmatic blur fails on IEs. Focus then remove an input field
                 Ext.getBody().createChild({tag: 'input', type: 'text'}).focus().remove();
             });
             jasmine.waitAWhile();
-            runs(function() {
+            runs(function () {
                 var v = tagField.getValue();
                 // The new value should have been added to the value list.
                 expect(v.length).toBe(4);
@@ -1183,14 +1183,14 @@ describe("Ext.form.field.Tag", function() {
         });
     });
 
-    describe("allowBlank: false", function() {
+    describe("allowBlank: false", function () {
         beforeEach(function () {
             makeField({
                 allowBlank: false
             });
         });
 
-        it("should be invalid when blank, and valid when a value is selected", function() {
+        it("should be invalid when blank, and valid when a value is selected", function () {
             expect(tagField.isValid()).toBe(false);
             tagField.setValue(1);
             expect(tagField.isValid()).toBe(true);
@@ -1202,8 +1202,8 @@ describe("Ext.form.field.Tag", function() {
         });
     });
 
-    describe('Erasing back to zero length input', function() {
-        it('should not clear the value on erase back to zero length with no query', function() {
+    describe('Erasing back to zero length input', function () {
+        it('should not clear the value on erase back to zero length with no query', function () {
             var value;
 
             makeField({
@@ -1220,7 +1220,7 @@ describe("Ext.form.field.Tag", function() {
             expect(value[1]).toBe(4);
             expect(value[2]).toBe(7);
         });
-        it('should not clear the value on erase back to zero length after a query', function() {
+        it('should not clear the value on erase back to zero length after a query', function () {
             var value;
 
             makeField({
@@ -1229,11 +1229,11 @@ describe("Ext.form.field.Tag", function() {
             doTyping('I');
 
             // We must wait until the query has happened
-            waitsFor(function() {
+            waitsFor(function () {
                 return tagField.picker && tagField.picker.isVisible();
             });
 
-            runs(function() {
+            runs(function () {
                 // This is an erase back to zero length
                 doTyping('', true);
 
@@ -1246,8 +1246,8 @@ describe("Ext.form.field.Tag", function() {
         });
     });
 
-    describe("sizing", function() {
-        it("should publish the height correctly when the set width in the container will cause wrapping while collapsed", function() {
+    describe("sizing", function () {
+        it("should publish the height correctly when the set width in the container will cause wrapping while collapsed", function () {
             makeField({
                 renderTo: null,
                 flex: 1
@@ -1269,8 +1269,8 @@ describe("Ext.form.field.Tag", function() {
         });
     });
 
-    describe("picker position", function() {
-        it("should realign the picker when adding a value causing the field to grow in height", function() {
+    describe("picker position", function () {
+        it("should realign the picker when adding a value causing the field to grow in height", function () {
             makeField({
                 width: 100
             });
@@ -1289,7 +1289,7 @@ describe("Ext.form.field.Tag", function() {
             expect(afterTop).toBeGreaterThan(beforeTop);
         });
 
-        it("should realign the picker when removing a value causing the field to shrink in height", function() {
+        it("should realign the picker when removing a value causing the field to shrink in height", function () {
             makeField({
                 width: 100,
                 value: [1, 2]
@@ -1310,8 +1310,8 @@ describe("Ext.form.field.Tag", function() {
         });
     });
 
-    describe("destruction", function() {
-        it("should not throw an exception when destroying with an autoCreated store and filterPickList: true", function() {
+    describe("destruction", function () {
+        it("should not throw an exception when destroying with an autoCreated store and filterPickList: true", function () {
             makeField({
                 filterPickList: true,
                 store: [
@@ -1320,7 +1320,7 @@ describe("Ext.form.field.Tag", function() {
                 ]
             }, null);
             clickListItem(tagField.getStore().getAt(0));
-            expect(function() {
+            expect(function () {
                 tagField.destroy();
             }).not.toThrow();
         });

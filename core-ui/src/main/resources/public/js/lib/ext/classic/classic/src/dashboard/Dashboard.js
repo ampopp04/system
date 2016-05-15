@@ -58,15 +58,15 @@ Ext.define('Ext.dashboard.Dashboard', {
      *       0.40,
      *       0.25
      *    ]
-     *    
-     * As you can see, this array contains the default widths for the 3 columns in the dashboard's 
+     *
+     * As you can see, this array contains the default widths for the 3 columns in the dashboard's
      * initial view. The column widths should total to an integer value, typically 1 as shown
      * above. When column widths exceed 1, they will be wrapped effectively creating "rows". This
      * means that if your column widths add up to more than 1, you would still want the first few
      * to total 1 to ensure that the first row fills the dashboard space. This applies whenever
      * the column widths extend past an integer value.
-     * 
-     * **Note:** columnWidths will not be utilized if there is stateful information that 
+     *
+     * **Note:** columnWidths will not be utilized if there is stateful information that
      * dictates different user saved column widths.
      */
 
@@ -81,7 +81,7 @@ Ext.define('Ext.dashboard.Dashboard', {
      * + `columnIndex` - The column position in which the {@link Ext.dashboard.Part part} should reside.
      * + `height` - The desired height of the {@link Ext.dashboard.Part part} to be generated.
      *
-     * The remaining properties are specific to your part's config object. For example:      
+     * The remaining properties are specific to your part's config object. For example:
      *
      *       defaultContent: [{
      *           type: 'rss',
@@ -105,8 +105,8 @@ Ext.define('Ext.dashboard.Dashboard', {
      *
      * Default column widths are defined by {@link #cfg-columnWidths} and not in these
      * part config objects.
-     * 
-     * **Note:** defaultContent will not be utilized if there is stateful information that 
+     *
+     * **Note:** defaultContent will not be utilized if there is stateful information that
      * dictates different user saved positioning and componentry.
      */
 
@@ -185,7 +185,7 @@ Ext.define('Ext.dashboard.Dashboard', {
 
     addView: function (instance, columnIndex, beforeAfter) {
         var me = this,
-            // We are only concerned with columns (ignore splitters).
+        // We are only concerned with columns (ignore splitters).
             items = me.query('dashboard-column'),
             count = items.length,
             index = columnIndex || 0,
@@ -239,12 +239,12 @@ Ext.define('Ext.dashboard.Dashboard', {
     createColumn: function (config) {
         var cycle = this.cycleLayout;
         return Ext.apply({
-            items : [],
-            bubbleEvents : ['add', 'remove', 'childmove', 'resize'],
+            items: [],
+            bubbleEvents: ['add', 'remove', 'childmove', 'resize'],
             listeners: {
                 remove: this.onRemoveItem,
-                expand  : cycle,
-                collapse : cycle,
+                expand: cycle,
+                collapse: cycle,
                 scope: this
             }
         }, config);
@@ -265,7 +265,7 @@ Ext.define('Ext.dashboard.Dashboard', {
         return view;
     },
 
-    initEvents : function(){
+    initEvents: function () {
         this.callParent();
         this.dd = new Ext.dashboard.DropZone(this, this.dropConfig);
     },
@@ -274,11 +274,11 @@ Ext.define('Ext.dashboard.Dashboard', {
      * Readjust column/splitter heights for collapsing child panels
      * @private
      */
-    cycleLayout : function() {
-         this.updateLayout();
+    cycleLayout: function () {
+        this.updateLayout();
     },
 
-    beforeDestroy : function() {
+    beforeDestroy: function () {
         if (this.dd) {
             Ext.destroy(this.dd);
         }
@@ -311,7 +311,7 @@ Ext.define('Ext.dashboard.Dashboard', {
         }
     },
 
-    getState : function() {
+    getState: function () {
         var me = this,
             columnWidths = [],
             items = me.items.items,

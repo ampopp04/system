@@ -4,7 +4,7 @@
 Ext.define('Ext.ux.dd.CellFieldDropZone', {
     extend: 'Ext.dd.DropZone',
 
-    constructor: function(cfg){
+    constructor: function (cfg) {
         cfg = cfg || {};
         if (cfg.onCellDrop) {
             this.onCellDrop = cfg.onCellDrop;
@@ -16,13 +16,13 @@ Ext.define('Ext.ux.dd.CellFieldDropZone', {
 
 //  Call the DropZone constructor using the View's scrolling element
 //  only after the grid has been rendered.
-    init: function(grid) {
+    init: function (grid) {
         var me = this;
 
         if (grid.rendered) {
             me.grid = grid;
             grid.getView().on({
-                render: function(v) {
+                render: function (v) {
                     me.view = v;
                     Ext.ux.dd.CellFieldDropZone.superclass.constructor.call(me, me.view.el);
                 },
@@ -36,7 +36,7 @@ Ext.define('Ext.ux.dd.CellFieldDropZone', {
 //  Scroll the main configured Element when we drag close to the edge
     containerScroll: true,
 
-    getTargetFromEvent: function(e) {
+    getTargetFromEvent: function (e) {
         var me = this,
             v = me.view;
 
@@ -63,7 +63,7 @@ Ext.define('Ext.ux.dd.CellFieldDropZone', {
     },
 
 //  On Node enter, see if it is valid for us to drop the field on that type of column.
-    onNodeEnter: function(target, dd, e, dragData) {
+    onNodeEnter: function (target, dd, e, dragData) {
         delete this.dropOK;
         if (!target) {
             return;
@@ -99,17 +99,17 @@ Ext.define('Ext.ux.dd.CellFieldDropZone', {
 
 //  Return the class name to add to the drag proxy. This provides a visual indication
 //  of drop allowed or not allowed.
-    onNodeOver: function(target, dd, e, dragData) {
+    onNodeOver: function (target, dd, e, dragData) {
         return this.dropOK ? this.dropAllowed : this.dropNotAllowed;
     },
 
 //  highlight the target node.
-    onNodeOut: function(target, dd, e, dragData) {
+    onNodeOut: function (target, dd, e, dragData) {
         Ext.fly(target.node).removeCls('x-drop-target-active');
     },
 
 //  Process the drop event if we have previously ascertained that a drop is OK.
-    onNodeDrop: function(target, dd, e, dragData) {
+    onNodeDrop: function (target, dd, e, dragData) {
         if (this.dropOK) {
             var value = dragData.field.getValue();
             target.record.set(target.fieldName, value);
@@ -117,6 +117,6 @@ Ext.define('Ext.ux.dd.CellFieldDropZone', {
             return true;
         }
     },
-    
+
     onCellDrop: Ext.emptyFn
 });

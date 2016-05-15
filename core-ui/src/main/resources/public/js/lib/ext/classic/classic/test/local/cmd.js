@@ -1,7 +1,7 @@
 if (top.location.search.indexOf("cmd-test=true") > 0) {
     var Cmd = {
 
-        sendMessage: function(message, callback) {
+        sendMessage: function (message, callback) {
             if (typeof message != 'object') {
                 message = {
                     type: message
@@ -18,44 +18,44 @@ if (top.location.search.indexOf("cmd-test=true") > 0) {
         },
 
         native: {
-            getWindowHandle: function(callback) {
+            getWindowHandle: function (callback) {
                 Cmd.sendMessage({
                     type: 'getWindowHandle'
                 }, callback);
             },
 
-            getWindowHandles: function(callback) {
+            getWindowHandles: function (callback) {
                 Cmd.sendMessage({
                     type: 'getWindowHandles'
                 }, callback);
             },
-            
-            switchTo: function(options, callback) {
+
+            switchTo: function (options, callback) {
                 options.type = 'switchTo';
                 Cmd.sendMessage(options, callback);
             },
 
-            close: function(callback) {
+            close: function (callback) {
                 Cmd.sendMessage({
                     type: 'close'
                 }, callback);
             },
 
-            screenshot: function(name, callback) {
+            screenshot: function (name, callback) {
                 Cmd.sendMessage({
                     type: 'screenshot',
                     name: name
                 }, callback);
             },
 
-            click: function(domElement, callback) {
+            click: function (domElement, callback) {
                 Cmd.sendMessage({
                     type: 'click',
                     elementId: domElement.id
                 }, callback);
             },
 
-            sendKeys: function(domElement, keys, callback) {
+            sendKeys: function (domElement, keys, callback) {
                 Cmd.sendMessage({
                     type: 'sendKeys',
                     elementId: domElement.id,
@@ -68,43 +68,43 @@ if (top.location.search.indexOf("cmd-test=true") > 0) {
         // Internal API used by test runners to report results and progress
 
         status: {
-            runStarted: function(callback) {
+            runStarted: function (callback) {
                 Cmd.sendMessage('testRunnerStarted', callback);
             },
 
-            runFinished: function(callback) {
+            runFinished: function (callback) {
                 Cmd.sendMessage('testRunnerFinished', callback);
             },
 
-            suiteStarted: function(name, callback) {
+            suiteStarted: function (name, callback) {
                 Cmd.sendMessage({
                     type: 'testSuiteStarted',
                     name: name
                 }, callback);
             },
 
-            suiteFinished: function(name, callback) {
+            suiteFinished: function (name, callback) {
                 Cmd.sendMessage({
                     type: 'testSuiteFinished',
                     name: name
                 }, callback);
             },
 
-            testStarted: function(name, callback) {
+            testStarted: function (name, callback) {
                 Cmd.sendMessage({
                     type: 'testStarted',
                     name: name
                 }, callback);
             },
 
-            testFinished: function(name, callback) {
+            testFinished: function (name, callback) {
                 Cmd.sendMessage({
                     type: 'testFinished',
                     name: name
                 }, callback);
             },
 
-            testFailed: function(name, error, details, callback) {
+            testFailed: function (name, error, details, callback) {
                 Cmd.sendMessage({
                     type: 'testFailed',
                     name: name,
@@ -113,7 +113,7 @@ if (top.location.search.indexOf("cmd-test=true") > 0) {
                 }, callback);
             },
 
-            getCurrentChunk: function(array) {
+            getCurrentChunk: function (array) {
                 var cmdTestSplit = Cmd._getParam('cmd-test-split'),
                     cmdTestChunk, cmdTestChunks;
 
@@ -134,22 +134,22 @@ if (top.location.search.indexOf("cmd-test=true") > 0) {
         _seq: 0,
         _callbacks: {},
 
-        _callback: function(seq, result) {
+        _callback: function (seq, result) {
             var fn = Cmd._callbacks[seq];
             delete Cmd._callbacks[seq];
             fn(result);
         },
 
-        _purgeMessages: function(count) {
+        _purgeMessages: function (count) {
             Cmd._messages = Cmd._messages.slice(count, Cmd._messages.length);
         },
 
-        _notifyWebDriver: function() {
+        _notifyWebDriver: function () {
             if (Cmd._pendingNotifier) {
                 return;
             }
 
-            var notifier = function() {
+            var notifier = function () {
                 var messages,
                     webDriverCallback = Cmd._webDriverCallback;
                 if (webDriverCallback) {
@@ -165,8 +165,8 @@ if (top.location.search.indexOf("cmd-test=true") > 0) {
             notifier();
         },
 
-        _split: function(a, n) {
-            var len = a.length,out = [], i = 0;
+        _split: function (a, n) {
+            var len = a.length, out = [], i = 0;
             while (i < len) {
                 var size = Math.ceil((len - i) / n--);
                 out.push(a.slice(i, i += size));
@@ -174,8 +174,8 @@ if (top.location.search.indexOf("cmd-test=true") > 0) {
             return out;
         },
 
-        _getParam: function(name) {
-            if (name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(top.location.search)) {
+        _getParam: function (name) {
+            if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(top.location.search)) {
                 return decodeURIComponent(name[1]);
             }
         }

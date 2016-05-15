@@ -14,7 +14,7 @@ Ext.define('Ext.panel.Bar', {
         right: 1
     },
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this,
             vertical = me.vertical;
 
@@ -33,17 +33,17 @@ Ext.define('Ext.panel.Bar', {
         this.callParent();
     },
 
-    onAdded: function(container, pos, instanced) {
+    onAdded: function (container, pos, instanced) {
         this.initOrientation();
         this.callParent([container, pos, instanced]);
     },
 
-    onRemoved: function(destroying) {
+    onRemoved: function (destroying) {
         this.removeClsWithUI(this.uiCls);
         this.callParent([destroying]);
     },
 
-    beforeRender: function() {
+    beforeRender: function () {
         var me = this;
 
         if (me.forceOrientation || !me.ownerCt) {
@@ -53,7 +53,7 @@ Ext.define('Ext.panel.Bar', {
         me.callParent();
     },
 
-    setDock: function(dock) {
+    setDock: function (dock) {
         var me = this,
             layout, vertical;
 
@@ -65,7 +65,7 @@ Ext.define('Ext.panel.Bar', {
             me.callParent([dock]);
 
             me.initOrientation();
-            
+
             vertical = me.vertical;
             layout = me.layout;
             layout.setVertical(vertical);
@@ -76,18 +76,18 @@ Ext.define('Ext.panel.Bar', {
     },
 
     privates: {
-        clearOrientation: function() {
+        clearOrientation: function () {
             this.removeClsWithUI([
                 this.vertical ? 'vertical' : 'horizontal',
                 this.getDockName()
             ]);
         },
 
-        getDockName: function() {
+        getDockName: function () {
             return this.dock;
         },
 
-        initOrientation: function() {
+        initOrientation: function () {
             var me = this,
                 dock = me.dock,
                 vertical = (me.vertical = (dock ? dock in me._verticalSides : me.vertical));

@@ -178,11 +178,11 @@ Ext.define('Ext.fx.Animator', {
      */
 
     /**
-      * @event keyframe
-      * Fires at each keyframe.
-      * @param {Ext.fx.Animator} this
-      * @param {Number} keyframe step number
-      */
+     * @event keyframe
+     * Fires at each keyframe.
+     * @param {Ext.fx.Animator} this
+     * @param {Number} keyframe step number
+     */
 
     /**
      * @event afteranimate
@@ -191,15 +191,15 @@ Ext.define('Ext.fx.Animator', {
      * @param {Date} startTime
      */
 
-     /**
-      * @cfg {Object} keyframes
-      * Animation keyframes follow the CSS3 Animation configuration pattern. 'from' is always considered '0%' and 'to'
-      * is considered '100%'.<b>Every keyframe declaration must have a keyframe rule for 0% and 100%, possibly defined using
-      * "from" or "to"</b>.  A keyframe declaration without these keyframe selectors is invalid and will not be available for
-      * animation.  The keyframe declaration for a keyframe rule consists of properties and values. Properties that are unable to
-      * be animated are ignored in these rules, with the exception of 'easing' which can be changed at each keyframe. For example:
- <pre><code>
-keyframes : {
+    /**
+     * @cfg {Object} keyframes
+     * Animation keyframes follow the CSS3 Animation configuration pattern. 'from' is always considered '0%' and 'to'
+     * is considered '100%'.<b>Every keyframe declaration must have a keyframe rule for 0% and 100%, possibly defined using
+     * "from" or "to"</b>.  A keyframe declaration without these keyframe selectors is invalid and will not be available for
+     * animation.  The keyframe declaration for a keyframe rule consists of properties and values. Properties that are unable to
+     * be animated are ignored in these rules, with the exception of 'easing' which can be changed at each keyframe. For example:
+     <pre><code>
+     keyframes : {
     '0%': {
         left: 100
     },
@@ -213,9 +213,9 @@ keyframes : {
         left: 100
     }
 }
- </code></pre>
-      */
-    constructor: function(config) {
+     </code></pre>
+     */
+    constructor: function (config) {
         var me = this;
         config = Ext.apply(me, config || {});
         me.config = config;
@@ -242,7 +242,7 @@ keyframes : {
      * Takes the given keyframe configuration object and converts it into an ordered array with the passed attributes per keyframe
      * or applying the 'to' configuration to all keyframes.  Also calculates the proper animation duration per keyframe.
      */
-    createTimeline: function(keyframes) {
+    createTimeline: function (keyframes) {
         var me = this,
             attrs = [],
             to = me.to || {},
@@ -287,7 +287,7 @@ keyframes : {
      * @param {String/Object} target
      * @private
      */
-    applyAnimator: function(target) {
+    applyAnimator: function (target) {
         var me = this,
             anims = [],
             timeline = me.timeline,
@@ -317,14 +317,14 @@ keyframes : {
             for (i = 0; i < ln - 1; i++) {
                 anim = anims[i];
                 anim.nextAnim = anims[i + 1];
-                anim.on('afteranimate', function() {
+                anim.on('afteranimate', function () {
                     this.nextAnim.paused = false;
                 });
-                anim.on('afteranimate', function() {
+                anim.on('afteranimate', function () {
                     this.fireEvent('keyframe', this, ++this.keyframeStep);
                 }, me);
             }
-            anims[ln - 1].on('afteranimate', function() {
+            anims[ln - 1].on('afteranimate', function () {
                 this.lastFrame();
             }, me);
         }
@@ -334,7 +334,7 @@ keyframes : {
      * @private
      * Fires beforeanimate and sets the running flag.
      */
-    start: function(startTime) {
+    start: function (startTime) {
         var me = this,
             delay = me.delay,
             delayStart = me.delayStart,
@@ -367,7 +367,7 @@ keyframes : {
      * Perform lastFrame cleanup and handle iterations
      * @return a hash of the new attributes.
      */
-    lastFrame: function() {
+    lastFrame: function () {
         var me = this,
             iter = me.iterations,
             iterCount = me.currentIteration;
@@ -391,16 +391,16 @@ keyframes : {
      * animation reaches its final frame, but can also be called manually to pre-emptively
      * stop and destroy the running animation.
      */
-    end: function() {
+    end: function () {
         var me = this;
         me.fireEvent('afteranimate', me, me.startTime, new Date() - me.startTime);
     },
-    
-    isReady: function() {
+
+    isReady: function () {
         return this.paused === false && this.running === false && this.iterations > 0;
     },
-    
-    isRunning: function() {
+
+    isRunning: function () {
         // Explicitly return false, we don't want to be run continuously by the manager
         return false;
     }

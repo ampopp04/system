@@ -1,23 +1,23 @@
-describe("Ext.form.FieldContainer", function() {
+describe("Ext.form.FieldContainer", function () {
 
     var component, makeComponent;
 
-    beforeEach(function() {
-        makeComponent = function(config) {
+    beforeEach(function () {
+        makeComponent = function (config) {
             config = config || {};
             component = new Ext.form.FieldContainer(config);
         };
     });
 
-    afterEach(function() {
+    afterEach(function () {
         if (component) {
             component.destroy();
         }
         component = makeComponent = null;
     });
 
-    describe("FieldAncestor", function(){
-        it("should fire an event whenever validitychange fires on a child item", function(){
+    describe("FieldAncestor", function () {
+        it("should fire an event whenever validitychange fires on a child item", function () {
             var called;
             makeComponent({
                 items: [{
@@ -25,14 +25,14 @@ describe("Ext.form.FieldContainer", function() {
                     allowBlank: false
                 }]
             });
-            component.on('fieldvaliditychange', function(){
+            component.on('fieldvaliditychange', function () {
                 called = true;
             });
             component.items.first().setValue('Foo');
             expect(called).toBe(true);
-        });  
-        
-        it("should fire an event whenever errorchange fires on a child item", function(){
+        });
+
+        it("should fire an event whenever errorchange fires on a child item", function () {
             var called;
             makeComponent({
                 items: [{
@@ -40,16 +40,16 @@ describe("Ext.form.FieldContainer", function() {
                     allowBlank: false
                 }]
             });
-            component.on('fielderrorchange', function(){
+            component.on('fielderrorchange', function () {
                 called = true;
             });
             component.items.first().markInvalid('Foo');
             expect(called).toBe(true);
-        });  
+        });
     });
 
-    describe("label", function() {
-        it("should not hide child labels when the field container label is not visible", function() {
+    describe("label", function () {
+        it("should not hide child labels when the field container label is not visible", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 items: [{
@@ -61,8 +61,8 @@ describe("Ext.form.FieldContainer", function() {
         });
     });
 
-    describe("using box layout", function() {
-        it("should add its layout's targetCls to its containerEl", function() {
+    describe("using box layout", function () {
+        it("should add its layout's targetCls to its containerEl", function () {
             makeComponent({
                 renderTo: Ext.getBody(),
                 layout: 'hbox',
@@ -75,8 +75,8 @@ describe("Ext.form.FieldContainer", function() {
         });
     });
 
-    describe('combineLabels', function() {
-        it("should combine the labels of its sub-fields", function() {
+    describe('combineLabels', function () {
+        it("should combine the labels of its sub-fields", function () {
             makeComponent({
                 defaultType: 'textfield',
                 combineLabels: true,
@@ -85,7 +85,7 @@ describe("Ext.form.FieldContainer", function() {
             expect(component.getFieldLabel()).toEqual('One, Two');
         });
 
-        it("should use the labelConnector to combine the labels", function() {
+        it("should use the labelConnector to combine the labels", function () {
             makeComponent({
                 defaultType: 'textfield',
                 combineLabels: true,
@@ -95,7 +95,7 @@ describe("Ext.form.FieldContainer", function() {
             expect(component.getFieldLabel()).toEqual('One - Two');
         });
 
-        it("should update the combined label when a field is added to the tree", function() {
+        it("should update the combined label when a field is added to the tree", function () {
             makeComponent({
                 defaultType: 'textfield',
                 combineLabels: true,
@@ -105,7 +105,7 @@ describe("Ext.form.FieldContainer", function() {
             expect(component.getFieldLabel()).toEqual('One, Two, Three');
         });
 
-        it("should update the combined label when a field is removed from the tree", function() {
+        it("should update the combined label when a field is removed from the tree", function () {
             makeComponent({
                 defaultType: 'textfield',
                 combineLabels: true,
@@ -115,7 +115,7 @@ describe("Ext.form.FieldContainer", function() {
             expect(component.getFieldLabel()).toEqual('One, Three');
         });
 
-        it("should use the fieldLabel config rather than combining", function() {
+        it("should use the fieldLabel config rather than combining", function () {
             makeComponent({
                 defaultType: 'textfield',
                 combineLabels: true,
@@ -125,7 +125,7 @@ describe("Ext.form.FieldContainer", function() {
             expect(component.getFieldLabel()).toEqual('Main Label');
         });
 
-        it("should not combine labels if combineLabels is false", function() {
+        it("should not combine labels if combineLabels is false", function () {
             makeComponent({
                 defaultType: 'textfield',
                 combineLabels: false,
@@ -136,9 +136,9 @@ describe("Ext.form.FieldContainer", function() {
     });
 
 
-    xdescribe("combineErrors", function() {
-        it("should display no error when there are no sub-field errors", function() {
-            runs(function() {
+    xdescribe("combineErrors", function () {
+        it("should display no error when there are no sub-field errors", function () {
+            runs(function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     combineErrors: true,
@@ -147,13 +147,13 @@ describe("Ext.form.FieldContainer", function() {
                 });
             });
             waits(20);
-            runs(function() {
+            runs(function () {
                 expect(component.errorEl.dom).hasHTML('');
             });
         });
 
-        it("should display a combined error when there are sub-field errors", function() {
-            runs(function() {
+        it("should display a combined error when there are sub-field errors", function () {
+            runs(function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     combineErrors: true,
@@ -163,16 +163,16 @@ describe("Ext.form.FieldContainer", function() {
                 component.items.getAt(0).validate();
                 component.items.getAt(1).validate();
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return component.getActiveError().length > 0;
             }, 'population of errorEl');
-            runs(function() {
+            runs(function () {
                 expect(component.getActiveError()).toEqual('<ul><li>One: This field is required</li><li class="last">Two: This field is required</li></ul>');
             });
         });
 
-        it("should remove the combined error when sub-field errors are removed", function() {
-            runs(function() {
+        it("should remove the combined error when sub-field errors are removed", function () {
+            runs(function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     combineErrors: true,
@@ -182,20 +182,20 @@ describe("Ext.form.FieldContainer", function() {
                 component.items.getAt(0).validate();
                 component.items.getAt(1).validate();
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return component.getActiveError().length > 0;
             }, 'population of errorEl');
-            runs(function() {
+            runs(function () {
                 component.items.getAt(0).setValue('a');
                 component.items.getAt(1).setValue('b');
             });
-            waitsFor(function() {
+            waitsFor(function () {
                 return component.getActiveError().length === 0;
             }, 'clearing of errorEl');
         });
 
-        it("should not combine errors when combineErrors is false", function() {
-            runs(function() {
+        it("should not combine errors when combineErrors is false", function () {
+            runs(function () {
                 makeComponent({
                     renderTo: Ext.getBody(),
                     combineErrors: true,
@@ -206,7 +206,7 @@ describe("Ext.form.FieldContainer", function() {
                 component.items.getAt(1).validate();
             });
             waits(20);
-            runs(function() {
+            runs(function () {
                 expect(component.errorEl.dom).hasHTML('');
             });
         });

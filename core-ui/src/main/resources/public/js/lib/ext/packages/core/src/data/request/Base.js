@@ -25,34 +25,34 @@ Ext.define('Ext.data.request.Base', {
 
     timer: null,
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this;
-        
+
         // ownerConfig contains default values for config options
         // applicable to every Request spawned by that owner;
         // however the values can be overridden in the options
         // object passed to owner's request() method.
         Ext.apply(me, config.options || {}, config.ownerConfig);
-        
+
         me.id = ++Ext.data.Connection.requestId;
         me.owner = config.owner;
         me.options = config.options;
         me.requestOptions = config.requestOptions;
     },
-    
+
     /**
      * Start the request.
      */
-    start: function() {
+    start: function () {
         var me = this,
             timeout = me.getTimeout();
-        
+
         if (timeout && me.async) {
             me.timer = Ext.defer(me.onTimeout, timeout, me);
         }
     },
-    
-    abort: function() {
+
+    abort: function () {
         var me = this;
 
         me.clearTimer();
@@ -64,21 +64,21 @@ Ext.define('Ext.data.request.Base', {
         me.abort = Ext.emptyFn;
     },
 
-    createDeferred: function() {
+    createDeferred: function () {
         return (this.deferred = new Ext.Deferred());  // deliberate assignment
     },
 
-    getDeferred: function() {
+    getDeferred: function () {
         return this.deferred || this.createDeferred();
     },
 
-    getPromise: function() {
+    getPromise: function () {
         return this.getDeferred().promise;
     },
 
-    then: function() {
+    then: function () {
         var promise = this.getPromise();
-        
+
         return promise.then.apply(promise, arguments);
     },
 
@@ -89,7 +89,7 @@ Ext.define('Ext.data.request.Base', {
      * @return {Boolean} `true` if this request is in progress, `false` if complete.
      */
 
-    onComplete: function() {
+    onComplete: function () {
         var me = this,
             deferred = me.deferred,
             result = me.result;
@@ -106,7 +106,7 @@ Ext.define('Ext.data.request.Base', {
         }
     },
 
-    onTimeout: function() {
+    onTimeout: function () {
         var me = this;
 
         me.timedout = true;
@@ -114,12 +114,12 @@ Ext.define('Ext.data.request.Base', {
 
         me.abort(true);
     },
-    
-    getTimeout: function() {
+
+    getTimeout: function () {
         return this.timeout;
     },
 
-    clearTimer: function() {
+    clearTimer: function () {
         var timer = this.timer;
 
         if (timer) {
@@ -128,26 +128,26 @@ Ext.define('Ext.data.request.Base', {
         }
     },
 
-    destroy: function() {
+    destroy: function () {
         var me = this;
-        
+
         me.abort();
-        
+
         me.owner = me.options = me.requestOptions = me.result = null;
-        
+
         me.callParent();
     },
-    
+
     privates: {
         /**
          * Creates the exception object
          * @param {Object} request
          * @private
          */
-        createException: function() {
+        createException: function () {
             var me = this,
                 result;
-            
+
             result = {
                 request: me,
                 requestId: me.id,
@@ -156,24 +156,24 @@ Ext.define('Ext.data.request.Base', {
                 getResponseHeader: me._getHeader,
                 getAllResponseHeaders: me._getHeaders
             };
-            
+
             if (me.aborted) {
                 result.aborted = true;
             }
-            
+
             if (me.timedout) {
                 result.timedout = true;
             }
-            
+
             return result;
         },
 
-        _getHeader: function(name) {
+        _getHeader: function (name) {
             var headers = this.headers;
             return headers && headers[name.toLowerCase()];
         },
 
-        _getHeaders: function() {
+        _getHeaders: function () {
             return this.headers;
         }
     }

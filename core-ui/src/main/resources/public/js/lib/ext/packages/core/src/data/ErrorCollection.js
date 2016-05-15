@@ -7,10 +7,10 @@
  *
  *      // Validate some existing model instance - in this case it returned 2 failures
  *      // messages
- *      
+ *
  *      var errors = myModel.validate();
  *      errors.isValid(); //false
- *      
+ *
  *      errors.length; //2
  *      errors.getByField('name');  // [{field: 'name',  message: 'must be present'}]
  *      errors.getByField('title'); // [{field: 'title', message: 'is too short'}]
@@ -79,15 +79,15 @@ Ext.define('Ext.data.ErrorCollection', {
             }
 
             me.removeAtKey(key);
-            obj = [ current, obj ];
+            obj = [current, obj];
             obj.field = key;
 
             // Because the value we want in the collection is an array, we need to wrap it
             // another layer of array or the base add method will add each element.
-            obj = [ obj ];
+            obj = [obj];
         }
 
-        return me.callParent([ obj ]);
+        return me.callParent([obj]);
     },
 
     getKey: function (item) {
@@ -98,7 +98,7 @@ Ext.define('Ext.data.ErrorCollection', {
      * Returns true if there are no errors in the collection
      * @return {Boolean}
      */
-    isValid: function() {
+    isValid: function () {
         return this.length === 0;
     },
 
@@ -107,7 +107,7 @@ Ext.define('Ext.data.ErrorCollection', {
      * @param {String} fieldName The field to get errors for
      * @return {Object[]} All errors for the given field
      */
-    getByField: function(fieldName) {
+    getByField: function (fieldName) {
         var values = this.get(fieldName);
 
         if (values && !Ext.isArray(values)) {

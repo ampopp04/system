@@ -33,11 +33,7 @@ $row-expander-cell-spacing-after: dynamic(6px);
 $row-expander-cursor: dynamic(pointer);
 
 // private
-$row-expander-cell-padding:
-    max(ceil(($grid-row-height - $row-expander-height) / 2), 0)
-    $row-expander-cell-spacing-after
-    max(floor(($grid-row-height - $row-expander-height) / 2), 0)
-    $row-expander-cell-spacing-before;
+$row-expander-cell-padding: max(ceil(($grid-row-height - $row-expander-height) / 2), 0) $row-expander-cell-spacing-after max(floor(($grid-row-height - $row-expander-height) / 2), 0) $row-expander-cell-spacing-before;
 
 /**
  * @var {color}

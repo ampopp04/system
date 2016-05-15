@@ -12,8 +12,8 @@ Ext.define('Ext.grid.property.Store', {
     remoteSort: true,
 
     requires: [
-        'Ext.grid.property.Reader', 
-        'Ext.data.proxy.Memory', 
+        'Ext.grid.property.Reader',
+        'Ext.data.proxy.Memory',
         'Ext.grid.property.Property'
     ],
 
@@ -22,9 +22,9 @@ Ext.define('Ext.grid.property.Store', {
      * @param {Ext.grid.Panel} grid The grid this store will be bound to
      * @param {Object} source The source data config object
      */
-    constructor : function(grid, source){
+    constructor: function (grid, source) {
         var me = this;
-        
+
         me.grid = grid;
         me.source = source;
         me.callParent([{
@@ -35,7 +35,7 @@ Ext.define('Ext.grid.property.Store', {
     },
 
     // Return a singleton, customized Proxy object which configures itself with a custom Reader
-    getProxy: function() {
+    getProxy: function () {
         var proxy = this.proxy;
         if (!proxy) {
             proxy = this.proxy = new Ext.data.proxy.Memory({
@@ -47,7 +47,7 @@ Ext.define('Ext.grid.property.Store', {
     },
 
     // Return a singleton, customized Reader object which reads Ext.grid.property.Property records from an object.
-    getReader: function() {
+    getReader: function () {
         var reader = this.reader;
         if (!reader) {
             reader = this.reader = new Ext.grid.property.Reader({
@@ -59,7 +59,7 @@ Ext.define('Ext.grid.property.Store', {
 
     // @protected
     // Should only be called by the grid.  Use grid.setSource instead.
-    setSource : function(dataObject) {
+    setSource: function (dataObject) {
         var me = this;
 
         me.source = dataObject;
@@ -75,7 +75,7 @@ Ext.define('Ext.grid.property.Store', {
     /**
      * @private
      */
-    getProperty : function(row) {
+    getProperty: function (row) {
         var rec = Ext.isNumber(row) ? this.getAt(row) : this.getById(row),
             ret = null;
 
@@ -88,10 +88,10 @@ Ext.define('Ext.grid.property.Store', {
     /**
      * @private
      */
-    setValue : function(prop, value, create){
+    setValue: function (prop, value, create) {
         var me = this,
             rec = me.getRec(prop);
-            
+
         if (rec) {
             rec.set('value', value);
             me.source[prop] = value;
@@ -106,7 +106,7 @@ Ext.define('Ext.grid.property.Store', {
     /**
      * @private
      */
-    remove : function(prop) {
+    remove: function (prop) {
         var rec = this.getRec(prop);
         if (rec) {
             this.callParent([rec]);
@@ -117,7 +117,7 @@ Ext.define('Ext.grid.property.Store', {
     /**
      * @private
      */
-    getRec : function(prop) {
+    getRec: function (prop) {
         return this.getById(prop);
     },
 
@@ -125,11 +125,11 @@ Ext.define('Ext.grid.property.Store', {
      * @protected
      * Should only be called by the grid.  Use grid.getSource instead.
      */
-    getSource : function() {
+    getSource: function () {
         return this.source;
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         Ext.destroy(this.reader, this.proxy);
         this.callParent();
     }

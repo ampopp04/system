@@ -56,21 +56,21 @@ Ext.define('Ext.data.proxy.Memory', {
 
     config: {
         /**
-        * @cfg {Boolean} [enablePaging]
-        * Configure as `true` to enable this MemoryProxy to honour a read operation's `start` and `limit` options.
-        *
-        * When `true`, read operations will be able to read *pages* of records from the data object.
-        */
-       enablePaging: false,
+         * @cfg {Boolean} [enablePaging]
+         * Configure as `true` to enable this MemoryProxy to honour a read operation's `start` and `limit` options.
+         *
+         * When `true`, read operations will be able to read *pages* of records from the data object.
+         */
+        enablePaging: false,
 
         /**
-        * @cfg {Object} data
-        * Optional data to pass to configured Reader.
-        */
+         * @cfg {Object} data
+         * Optional data to pass to configured Reader.
+         */
         data: {
             $value: null,
             // Don't deeply clone the data object, just shallow copy the array
-            merge: function(newValue, currentValue, target, mixinClass) {
+            merge: function (newValue, currentValue, target, mixinClass) {
                 if (Ext.isArray(newValue)) {
                     return Ext.Array.clone(newValue);
                 } else {
@@ -79,7 +79,7 @@ Ext.define('Ext.data.proxy.Memory', {
             }
         }
     },
-    
+
     /**
      * @private
      * Fake processing function to commit the records, set the current operation
@@ -87,50 +87,50 @@ Ext.define('Ext.data.proxy.Memory', {
      * by the create, update and destroy methods to perform the bare minimum
      * processing required for the proxy to register a result from the action.
      */
-    finishOperation: function(operation) {
+    finishOperation: function (operation) {
         var i = 0,
             recs = operation.getRecords(),
             len = recs.length;
-            
+
         for (i; i < len; i++) {
             recs[i].commit();
         }
         operation.setSuccessful(true);
     },
-    
+
     /**
      * Currently this is a hard-coded method that simply commits any records and sets the operation to successful,
      * then calls the callback function, if provided. It is essentially mocking a server call in memory, but since
-     * there is no real back end in this case there's not much else to do. This method can be easily overridden to 
+     * there is no real back end in this case there's not much else to do. This method can be easily overridden to
      * implement more complex logic if needed.
      * @param {Ext.data.operation.Operation} operation The Operation to perform
      * @method
      */
-    create: function(operation) {
+    create: function (operation) {
         this.finishOperation(operation);
     },
-    
+
     /**
      * Currently this is a hard-coded method that simply commits any records and sets the operation to successful,
      * then calls the callback function, if provided. It is essentially mocking a server call in memory, but since
-     * there is no real back end in this case there's not much else to do. This method can be easily overridden to 
+     * there is no real back end in this case there's not much else to do. This method can be easily overridden to
      * implement more complex logic if needed.
      * @param {Ext.data.operation.Operation} operation The Operation to perform
      * @method
      */
-    update: function(operation) {
+    update: function (operation) {
         this.finishOperation(operation);
     },
-    
+
     /**
      * Currently this is a hard-coded method that simply commits any records and sets the operation to successful,
      * then calls the callback function, if provided. It is essentially mocking a server call in memory, but since
-     * there is no real back end in this case there's not much else to do. This method can be easily overridden to 
+     * there is no real back end in this case there's not much else to do. This method can be easily overridden to
      * implement more complex logic if needed.
      * @param {Ext.data.operation.Operation} operation The Operation to perform
      * @method
      */
-    erase: function(operation) {
+    erase: function (operation) {
         this.finishOperation(operation);
     },
 
@@ -138,7 +138,7 @@ Ext.define('Ext.data.proxy.Memory', {
      * Reads data from the configured {@link #data} object. Uses the Proxy's {@link #reader}, if present.
      * @param {Ext.data.operation.Operation} operation The read Operation
      */
-    read: function(operation) {
+    read: function (operation) {
         var me = this,
             resultSet = me.getReader().read(me.getData()),
             records = resultSet.getRecords(),

@@ -67,7 +67,7 @@ Ext.define('Ext.util.Floating', {
 
     /**
      * @property {Ext.ZIndexManager} zIndexManager
-     * Only present for {@link Ext.Component#cfg-floating floating} Components after 
+     * Only present for {@link Ext.Component#cfg-floating floating} Components after
      * they have been rendered.
      *
      * A reference to the ZIndexManager which is managing this Component's z-index.
@@ -92,14 +92,14 @@ Ext.define('Ext.util.Floating', {
 
     /**
      * @property {Ext.Container} zIndexParent
-     * Only present for {@link Ext.Component#cfg-floating} Components which were 
-     * inserted as child items of Containers, and which have a floating Container in 
+     * Only present for {@link Ext.Component#cfg-floating} Components which were
+     * inserted as child items of Containers, and which have a floating Container in
      * their containment ancestry.
      *
-     * For {@link Ext.Component#cfg-floating} Components which are child items of a 
-     * Container, the zIndexParent will be a floating ancestor Container which is 
-     * responsible for the base z-index value of all its floating descendants. It 
-     * provides a {@link Ext.ZIndexManager ZIndexManager} which provides z-indexing 
+     * For {@link Ext.Component#cfg-floating} Components which are child items of a
+     * Container, the zIndexParent will be a floating ancestor Container which is
+     * responsible for the base z-index value of all its floating descendants. It
+     * provides a {@link Ext.ZIndexManager ZIndexManager} which provides z-indexing
      * services for all its descendant floating Components.
      *
      * Floating Components that are programmatically {@link Ext.Component#method-render rendered} will not have a `zIndexParent`
@@ -231,7 +231,7 @@ Ext.define('Ext.util.Floating', {
         }
     },
 
-    initHierarchyEvents: function() {
+    initHierarchyEvents: function () {
         var me = this,
             syncHidden = this.syncHidden;
 
@@ -248,7 +248,7 @@ Ext.define('Ext.util.Floating', {
         }
     },
 
-    registerWithOwnerCt: function() {
+    registerWithOwnerCt: function () {
         var me = this,
             ownerCt = me.ownerCt,
             zip = me.zIndexParent;
@@ -283,9 +283,9 @@ Ext.define('Ext.util.Floating', {
     onMouseDown: function (e) {
         var me = this,
             focusTask = me.focusTask,
-            
-            // Do not autofocus the Component (which delegates onto the getFocusEl() descendant)
-            // for touch events.
+
+        // Do not autofocus the Component (which delegates onto the getFocusEl() descendant)
+        // for touch events.
             preventFocus = e.pointerType === 'touch',
             target, dom, skipFronting;
 
@@ -297,7 +297,7 @@ Ext.define('Ext.util.Floating', {
 
             target = e.target;
             dom = me.el.dom;
-            
+
             // loop the target's ancestors to see if we clicked on a focusable element
             // or a descendant of a focusable element,  If so we don't want to focus
             // this floating component. If we end up with no target, it probably means
@@ -309,11 +309,11 @@ Ext.define('Ext.util.Floating', {
                 }
                 target = target.parentNode;
             }
-            
+
             // We can skip toFront() if we're already active and the click was
             // within our element but not on something focusable.
             skipFronting = Ext.WindowManager.getActive() === me &&
-                           (target === dom || preventFocus);
+                (target === dom || preventFocus);
 
             // If what was mousedowned upon is going to claim focus anyway, pass
             // preventFocus as true.
@@ -323,11 +323,11 @@ Ext.define('Ext.util.Floating', {
         }
     },
 
-    onBeforeFloatLayout: function(){
+    onBeforeFloatLayout: function () {
         this.el.preventSync = true;
     },
 
-    onAfterFloatLayout: function(){
+    onAfterFloatLayout: function () {
         var el = this.el;
 
         if (el.shadow || el.shim) {
@@ -344,7 +344,7 @@ Ext.define('Ext.util.Floating', {
      * synchronizes the hidden state of this component with the state of its hierarchy
      * @private
      */
-    syncHidden: function() {
+    syncHidden: function () {
         var me = this,
             hidden = me.hidden || !me.rendered,
             hierarchicallyHidden = me.hierarchicallyHidden = me.isHierarchicallyHidden(),
@@ -373,7 +373,7 @@ Ext.define('Ext.util.Floating', {
      * If this is a Container, then it will have rebased any managed floating Components,
      * and so the next available z-index will be approximately 10000 above that.
      */
-    setZIndex: function(index) {
+    setZIndex: function (index) {
         var me = this;
 
         me.el.setZIndex(index);
@@ -400,11 +400,11 @@ Ext.define('Ext.util.Floating', {
      * into which this Component is to be constrained. Defaults to the element into which this floating Component
      * was rendered.
      */
-    doConstrain: function(constrainTo) {
+    doConstrain: function (constrainTo) {
         var me = this,
-            // Calculate the constrained position.
-            // calculateConstrainedPosition will provide a default constraint
-            // region if there is no explicit constrainTo, *and* there is no floatParent owner Component.
+        // Calculate the constrained position.
+        // calculateConstrainedPosition will provide a default constraint
+        // region if there is no explicit constrainTo, *and* there is no floatParent owner Component.
             xy = me.calculateConstrainedPosition(constrainTo, null, true);
 
         // false is returned if no movement is needed
@@ -413,7 +413,7 @@ Ext.define('Ext.util.Floating', {
         }
     },
 
-    updateActiveCounter: function(activeCounter) {
+    updateActiveCounter: function (activeCounter) {
         var zim = this.zIndexParent;
 
         // If we have a zIndexParent, it has to rebase its own zIndices
@@ -428,7 +428,7 @@ Ext.define('Ext.util.Floating', {
         }
     },
 
-    updateAlwaysOnTop: function(alwaysOnTop) {
+    updateAlwaysOnTop: function (alwaysOnTop) {
         var z = this.zIndexManager;
 
         // Rebase the local zIndices
@@ -446,7 +446,7 @@ Ext.define('Ext.util.Floating', {
      * @param {Boolean} [preventFocus=false] Specify `true` to prevent the Component from being focused.
      * @return {Ext.Component} this
      */
-    toFront: function(preventFocus) {
+    toFront: function (preventFocus) {
         var me = this;
 
         // ZIndexManager#onCollectionSort will call setActive if this component ends up on the top.
@@ -472,9 +472,9 @@ Ext.define('Ext.util.Floating', {
      * @param {Boolean} [active=false] True to activate the Component, false to deactivate it.
      * @param {Boolean} [doFocus] When activating, set to true to focus the component;
      * when deactivating, set to false to avoid returning focus to previous element.
-     * 
+     *
      */
-    setActive: function(active, doFocus) {
+    setActive: function (active, doFocus) {
         var me = this,
             activeCmp;
 
@@ -491,7 +491,7 @@ Ext.define('Ext.util.Floating', {
                 if (!activeCmp || !activeCmp.up(me)) {
                     me.focus();
                 }
-            }            
+            }
             me.fireEvent('activate', me);
         }
         // Deactivate carries no operations. It may be that this component has just moved down and another
@@ -506,7 +506,7 @@ Ext.define('Ext.util.Floating', {
      * Sends this Component to the back of (lower z-index than) any other visible windows
      * @return {Ext.Component} this
      */
-    toBack: function() {
+    toBack: function () {
         this.zIndexManager.sendToBack(this);
         return this;
     },
@@ -515,7 +515,7 @@ Ext.define('Ext.util.Floating', {
      * Center this Component in its container.
      * @return {Ext.Component} this
      */
-    center: function() {
+    center: function () {
         var me = this,
             xy;
 
@@ -527,10 +527,10 @@ Ext.define('Ext.util.Floating', {
         }
         return me;
     },
-    
-    onFloatShow: function() {
+
+    onFloatShow: function () {
         if (this.needsCenter) {
-            this.center();    
+            this.center();
         }
         delete this.needsCenter;
 
@@ -542,7 +542,7 @@ Ext.define('Ext.util.Floating', {
     /**
      * @private
      */
-    fitContainer: function(animate) {
+    fitContainer: function (animate) {
         var me = this,
             parent = me.floatParent,
             container = parent ? parent.getTargetEl() : me.container,
@@ -559,11 +559,11 @@ Ext.define('Ext.util.Floating', {
     },
 
     privates: {
-        onFloatDestroy: function() {
+        onFloatDestroy: function () {
             this.clearAlignEl();
         },
 
-        clearAlignEl: function() {
+        clearAlignEl: function () {
             var me = this;
 
             if (me._lastAlignTarget) {

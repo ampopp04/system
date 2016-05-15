@@ -8,7 +8,7 @@
 Ext.define('Ext.data.operation.Update', {
     extend: 'Ext.data.operation.Operation',
     alias: 'data.operation.update',
-    
+
     action: 'update',
 
     isUpdateOperation: true,
@@ -18,8 +18,8 @@ Ext.define('Ext.data.operation.Update', {
     config: {
         recordCreator: Ext.identityFn
     },
-    
-    doExecute: function() {
+
+    doExecute: function () {
         return this.getProxy().update(this);
     }
 });

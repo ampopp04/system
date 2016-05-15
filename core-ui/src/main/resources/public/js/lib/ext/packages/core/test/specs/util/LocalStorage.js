@@ -1,26 +1,26 @@
-describe("Ext.util.LocalStorage", function() {
+describe("Ext.util.LocalStorage", function () {
     var store;
 
-    function createStore () {
-        return new Ext.util.LocalStorage({ id: 'one', flushDelay: 0 });
+    function createStore() {
+        return new Ext.util.LocalStorage({id: 'one', flushDelay: 0});
     }
 
     beforeEach(function () {
         store = createStore();
     });
-    afterEach(function() {
+    afterEach(function () {
         store.clear();
         store.destroy();
         store = null;
     });
 
-    describe("initialization", function() {
-        it("should start empty", function() {
+    describe("initialization", function () {
+        it("should start empty", function () {
             var keys = store.getKeys();
             expect(keys.length).toBe(0);
         });
 
-        it("should start with last state", function() {
+        it("should start with last state", function () {
             store.setItem('foo', 'bar');
             store.destroy();
 
@@ -33,23 +33,23 @@ describe("Ext.util.LocalStorage", function() {
         });
     });
 
-    describe("isolation", function() {
+    describe("isolation", function () {
         var store2;
 
-        function createStore2 () {
-            return new Ext.util.LocalStorage({ id: 'two', flushDelay: 0 });
+        function createStore2() {
+            return new Ext.util.LocalStorage({id: 'two', flushDelay: 0});
         }
 
         beforeEach(function () {
             store2 = createStore2();
         });
-        afterEach(function() {
+        afterEach(function () {
             store2.clear();
             store2.destroy();
             store2 = null;
         });
 
-        it("should isolate getKeys", function() {
+        it("should isolate getKeys", function () {
             store.setItem('foo', 'bar');
             store2.setItem('foo', '42');
 
@@ -71,7 +71,7 @@ describe("Ext.util.LocalStorage", function() {
             expect(value2).toBe('42');
         });
 
-        it("should isolate keys", function() {
+        it("should isolate keys", function () {
             store.setItem('foo', 'bar');
             store.setItem('bar', 'foobar');
 
@@ -80,13 +80,13 @@ describe("Ext.util.LocalStorage", function() {
             store2.setItem('zip', 'abc');
             store2.setItem('zap', 'xyz');
 
-            var keys = [ store.key(0), store.key(1) ];
+            var keys = [store.key(0), store.key(1)];
             keys.sort();
             expect(keys[1]).toBe('foo');
             expect(keys[0]).toBe('bar');
             expect(store.key(2)).toBe(null);
 
-            var keys2 = [ store2.key(0), store2.key(1), store2.key(2) ];
+            var keys2 = [store2.key(0), store2.key(1), store2.key(2)];
             keys2.sort();
             expect(keys2[0]).toBe('foo');
             expect(keys2[1]).toBe('zap');
@@ -106,7 +106,7 @@ describe("Ext.util.LocalStorage", function() {
             expect(value2_2).toBe('xyz');
         });
 
-        it("should isolate clear", function() {
+        it("should isolate clear", function () {
             store.setItem('foo', 'bar');
             store2.setItem('foo', '42');
 
@@ -121,7 +121,7 @@ describe("Ext.util.LocalStorage", function() {
             expect(value2).toBe('42');
         });
 
-        it("should isolate removeItem", function() {
+        it("should isolate removeItem", function () {
             store.setItem('foo', 'bar');
             store2.setItem('foo', '42');
 
@@ -138,7 +138,7 @@ describe("Ext.util.LocalStorage", function() {
     });
 
     describe("cache", function () {
-        it ("should not share instances with the different id", function () {
+        it("should not share instances with the different id", function () {
             var store1 = Ext.util.LocalStorage.get('foo');
             var store2 = Ext.util.LocalStorage.get('bar');
 
@@ -147,7 +147,7 @@ describe("Ext.util.LocalStorage", function() {
             store2.release();
         });
 
-        it ("should share instances with the same id", function () {
+        it("should share instances with the same id", function () {
             var store1 = Ext.util.LocalStorage.get('foo');
             var store2 = Ext.util.LocalStorage.get('foo');
 
@@ -156,7 +156,7 @@ describe("Ext.util.LocalStorage", function() {
             store2.release();
         });
 
-        it ("should destroy the instance on final release", function () {
+        it("should destroy the instance on final release", function () {
             var store = Ext.util.LocalStorage.get('foo');
 
             expect(store._users).toBe(1);
@@ -178,23 +178,23 @@ describe("Ext.util.LocalStorage", function() {
      * Legacy IE support delays writes by default for performance. We've disabled that
      * above for sanity, but we need to test it as well. So here we go.
      */
-    describe("delayed operation", function() {
+    describe("delayed operation", function () {
         var store2;
 
-        function createStore2 () {
-            return new Ext.util.LocalStorage({ id: 'three', flushDelay: 1 });
+        function createStore2() {
+            return new Ext.util.LocalStorage({id: 'three', flushDelay: 1});
         }
 
         beforeEach(function () {
             store2 = createStore2();
         });
-        afterEach(function() {
+        afterEach(function () {
             store2.clear();
             store2.destroy();
             store2 = null;
         });
 
-        it("should delay writes", function() {
+        it("should delay writes", function () {
             if (store2.el) { // if (legacy IE)
                 runs(function () {
                     store2.setItem('foo', '42');
@@ -215,7 +215,7 @@ describe("Ext.util.LocalStorage", function() {
             }
         });
 
-        it("should flush writes when requested", function() {
+        it("should flush writes when requested", function () {
             if (store2.el) { // if (legacy IE)
                 store2.setItem('foo', '42');
 

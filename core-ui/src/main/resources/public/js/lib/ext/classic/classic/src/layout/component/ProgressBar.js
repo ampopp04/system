@@ -25,16 +25,16 @@ Ext.define('Ext.layout.component.ProgressBar', {
             if (textEls.isComposite) {
                 ownerContext.textEls = [];
                 textEls = textEls.elements;
-                for (i = textEls.length; i--; ) {
+                for (i = textEls.length; i--;) {
                     ownerContext.textEls[i] = ownerContext.getEl(Ext.get(textEls[i]));
                 }
             } else {
-                ownerContext.textEls = [ ownerContext.getEl('textEl') ];
+                ownerContext.textEls = [ownerContext.getEl('textEl')];
             }
         }
     },
 
-    calculate: function(ownerContext) {
+    calculate: function (ownerContext) {
         var me = this,
             i, textEls, width;
 
@@ -44,7 +44,7 @@ Ext.define('Ext.layout.component.ProgressBar', {
             width -= ownerContext.getBorderInfo().width;
             textEls = ownerContext.textEls;
 
-            for (i = textEls.length; i--; ) {
+            for (i = textEls.length; i--;) {
                 textEls[i].setWidth(width);
             }
         } else {

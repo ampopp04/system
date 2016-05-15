@@ -65,8 +65,8 @@
                     <for list="${example.path}" delimiter="," param="dir">
                         <sequential>
                             <x-canonical-path property="example.dir" overwrite="true"
-                                    path="@{dir}"
-                                    basedir="${package.dir}"/>
+                                              path="@{dir}"
+                                              basedir="${package.dir}"/>
 
                             <x-echo>Processing examples in "@{dir}" (${example.dir})</x-echo>
 
@@ -135,10 +135,10 @@
                 <available file="@{dir}/build.xml"/>
                 <then>
                     <local name="sub.name"/>
-                    <basename file="@{dir}" 
-                             property="sub.name"/>
-                    <ant dir="@{dir}" 
-                         inheritall="false" 
+                    <basename file="@{dir}"
+                              property="sub.name"/>
+                    <ant dir="@{dir}"
+                         inheritall="false"
                          inheritrefs="true"
                          target="@{target}">
                         <property name="compiler.ref.id" value="compiler-${sub.name}"/>
@@ -239,7 +239,7 @@
             </x-sencha-command>
         </x-process-examples>
     </target>
-    
+
     <target name="-before-upgrade-examples"/>
     <target name="-after-upgrade-examples"/>
     <target name="-upgrade-examples">
@@ -253,7 +253,7 @@
             <delete dir="@{example-dir}/.sencha_backup"/>
         </x-process-examples>
     </target>
-        
+
     <target name="-before-clean-examples"/>
     <target name="-after-clean-examples"/>
     <target name="-clean-examples">
@@ -267,7 +267,7 @@
     <target name="list-examples" depends="init"
             description="List all example apps for this package">
         <x-process-examples>
-            <x-echo>   @{example-dir}</x-echo>
+            <x-echo>@{example-dir}</x-echo>
         </x-process-examples>
     </target>
 

@@ -1,4 +1,4 @@
-describe('Ext.grid.Panel', function(){
+describe('Ext.grid.Panel', function () {
     var itShowsScrollbars = Ext.getScrollbarSize().width ? it : xit,
         synchronousLoad = true,
         proxyStoreLoad = Ext.data.ProxyStore.prototype.load,
@@ -46,23 +46,23 @@ describe('Ext.grid.Panel', function(){
 
     function getNames() {
         var result = [];
-        store.each(function(rec) {
+        store.each(function (rec) {
             result.push(rec.get('name'));
         });
         return result.join(',');
     }
 
-    var createGrid = function(storeCfg, gridCfg) {
+    var createGrid = function (storeCfg, gridCfg) {
         if (!(gridCfg && gridCfg.viewModel && gridCfg.viewModel.stores)) {
             if (!(storeCfg instanceof Ext.data.Store)) {
                 store = new Ext.data.Store(Ext.apply({
-                storeId: 'simpsonsStore',
+                    storeId: 'simpsonsStore',
                     fields: ['name', 'email', 'phone'],
                     data: [
-                        { name: 'Lisa', email: 'lisa@simpsons.com', phone: '555-111-1224' },
-                        { name: 'Bart', email: 'bart@simpsons.com', phone: '555-222-1234' },
-                        { name: 'Homer', email: 'homer@simpsons.com', phone: '555-222-1244' },
-                        { name: 'Marge', email: 'marge@simpsons.com', phone: '555-222-1254' }
+                        {name: 'Lisa', email: 'lisa@simpsons.com', phone: '555-111-1224'},
+                        {name: 'Bart', email: 'bart@simpsons.com', phone: '555-222-1234'},
+                        {name: 'Homer', email: 'homer@simpsons.com', phone: '555-222-1244'},
+                        {name: 'Marge', email: 'marge@simpsons.com', phone: '555-222-1254'}
                     ]
                 }, storeCfg));
             } else {
@@ -76,9 +76,9 @@ describe('Ext.grid.Panel', function(){
             title: 'Simpsons',
             store: store,
             columns: [
-                { header: 'Name',  dataIndex: 'name', width: 100 },
-                { header: 'Email', dataIndex: 'email', flex: 1 },
-                { header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true }
+                {header: 'Name', dataIndex: 'name', width: 100},
+                {header: 'Email', dataIndex: 'email', flex: 1},
+                {header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true}
             ],
 
             // We need programmatic mouseover events to be handled inline so we can test effects.
@@ -103,9 +103,9 @@ describe('Ext.grid.Panel', function(){
         overItemCls = proto.overItemCls,
         grid, colRef, store, view, selModel, navModel, failedLayouts;
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -116,24 +116,24 @@ describe('Ext.grid.Panel', function(){
         failedLayouts = Ext.failedLayouts || 0;
     });
 
-    afterEach(function() {
+    afterEach(function () {
         // Undo the overrides.
         Ext.data.ProxyStore.prototype.load = proxyStoreLoad;
 
         grid = view = selModel = Ext.destroy(grid);
     });
 
-    function expectNoFailedLayouts () {
+    function expectNoFailedLayouts() {
         var failures = (Ext.failedLayouts || 0) - failedLayouts;
         expect(failures).toBe(0);
     }
-    
-    describe('scrollable: false', function() {
+
+    describe('scrollable: false', function () {
         var field;
-        afterEach(function() {
+        afterEach(function () {
             field.destroy();
         });
-        it('should be able to focus for a second time without throwing an error', function() {
+        it('should be able to focus for a second time without throwing an error', function () {
             createGrid(null, {
                 viewConfig: {
                     scrollable: false
@@ -145,19 +145,19 @@ describe('Ext.grid.Panel', function(){
             grid.view.focus();
             field.focus();
             grid.view.focus();
-            waitsFor(function() {
+            waitsFor(function () {
                 return view.cellFocused;
             }, 'non-scrollable TableView to focus for a second time');
         });
     });
 
     // https://sencha.jira.com/browse/EXTJS-17837
-    describe('Loading the store during render', function() {
-        it('should not throw an error', function() {
+    describe('Loading the store during render', function () {
+        it('should not throw an error', function () {
             var TestGrid = Ext.define(null, {
                 extend: 'Ext.grid.Panel',
-                
-                afterRender: function() {
+
+                afterRender: function () {
                     this.callParent(arguments);
                     this.getStore().loadPage(1);
                 }
@@ -171,25 +171,25 @@ describe('Ext.grid.Panel', function(){
         });
     });
 
-    describe('Allowing for scrollbar in HeaderContainer', function() {
-        itShowsScrollbars("should add scrollBarWidth to HeaderContainer's innerCt width", function() {
+    describe('Allowing for scrollbar in HeaderContainer', function () {
+        itShowsScrollbars("should add scrollBarWidth to HeaderContainer's innerCt width", function () {
             createGrid(null, {
                 height: 100,
                 columns: [
-                    { header: 'Name',  dataIndex: 'name', width: 200 },
-                    { header: 'Email', dataIndex: 'email', width: 200 },
-                    { header: 'Phone', dataIndex: 'phone', width: 200 }
+                    {header: 'Name', dataIndex: 'name', width: 200},
+                    {header: 'Email', dataIndex: 'email', width: 200},
+                    {header: 'Phone', dataIndex: 'phone', width: 200}
                 ]
             });
 
             // The HeaderContainer's innerCt needs to be extended to cover the view's vertical scrollbar.
             expect(grid.headerCt.layout.innerCt.dom.offsetWidth).toBe(600 + Ext.getScrollbarSize().width);
-            
+
             view.setScrollX(100);
-            waitsFor(function() {
+            waitsFor(function () {
                 return grid.headerCt.getScrollX() === 100;
             });
-            runs(function() {
+            runs(function () {
                 grid.columns[1].sort();
 
                 // The HeaderContainer layout layout caused by sort should not reset the scrollX to zero.
@@ -230,13 +230,13 @@ describe('Ext.grid.Panel', function(){
 
     describe('hideHeaders', function () {
         var data = [
-            [ 1, 'Hello' ],
-            [ 2, 'World' ]
+            [1, 'Hello'],
+            [2, 'World']
         ];
 
         it('should render columns correctly', function () {
             grid = new Ext.grid.Panel({
-                columns: [{flex: 1, dataIndex: 'field1' }, { width: 100, dataIndex: 'field2' }],
+                columns: [{flex: 1, dataIndex: 'field1'}, {width: 100, dataIndex: 'field2'}],
                 border: false,
                 width: 500,
                 height: 300,
@@ -252,7 +252,7 @@ describe('Ext.grid.Panel', function(){
             expect(grid.getDockedItems()[0].getHeight()).toBe(0);
         });
 
-        it("should accept a headerCt config object", function() {
+        it("should accept a headerCt config object", function () {
             grid = new Ext.grid.Panel({
                 columns: new Ext.grid.header.Container({
                     items: [{
@@ -278,11 +278,11 @@ describe('Ext.grid.Panel', function(){
             expect(grid.getDockedItems()[0].getHeight()).toBe(0);
         });
 
-        it("should not have a horizontal scrollbar when there is a flex column (EXTJSIV-7153)", function() {
+        it("should not have a horizontal scrollbar when there is a flex column (EXTJSIV-7153)", function () {
             var ready = 0;
 
             grid = new Ext.grid.Panel({
-                columns: [{flex: 1, dataIndex: 'field1' }],
+                columns: [{flex: 1, dataIndex: 'field1'}],
                 width: 100,
                 height: 100,
                 store: data,
@@ -299,7 +299,7 @@ describe('Ext.grid.Panel', function(){
                 return ready;
             });
 
-            runs(function() {
+            runs(function () {
                 // No border: false config here. width is going to be within the border box.
                 expect(grid.view.el.dom.scrollWidth).toBe(100 - grid.body.getBorderWidth('lr'));
             });
@@ -309,11 +309,11 @@ describe('Ext.grid.Panel', function(){
     describe('grid layout', function () {
         store = Ext.create('Ext.data.ArrayStore', {
             fields: [
-                { name: 'company'},
-                { name: 'price',      type: 'float' },
-                { name: 'change',     type: 'float' },
-                { name: 'pctChange',  type: 'float' },
-                { name: 'lastChange', type: 'date', dateFormat: 'n/j h:ia' }
+                {name: 'company'},
+                {name: 'price', type: 'float'},
+                {name: 'change', type: 'float'},
+                {name: 'pctChange', type: 'float'},
+                {name: 'lastChange', type: 'date', dateFormat: 'n/j h:ia'}
             ],
             data: []
         });
@@ -323,31 +323,31 @@ describe('Ext.grid.Panel', function(){
                 store: store,
                 columnLines: true,
                 columns: [{
-                    text     : 'Company<br>Name', // Two line header! Test header height synchronization!
-                    locked   : locked,
-                    width    : 200,
-                    sortable : false,
+                    text: 'Company<br>Name', // Two line header! Test header height synchronization!
+                    locked: locked,
+                    width: 200,
+                    sortable: false,
                     dataIndex: 'company'
-                },{
-                    text     : 'Price',
-                    width    : 125,
-                    sortable : true,
+                }, {
+                    text: 'Price',
+                    width: 125,
+                    sortable: true,
                     formatter: 'usMoney',
                     dataIndex: 'price'
-                },{
-                    text     : 'Change',
-                    width    : 125,
-                    sortable : true,
+                }, {
+                    text: 'Change',
+                    width: 125,
+                    sortable: true,
                     dataIndex: 'change'
-                },{
-                    text     : '% Change',
-                    width    : 125,
-                    sortable : true,
+                }, {
+                    text: '% Change',
+                    width: 125,
+                    sortable: true,
                     dataIndex: 'pctChange'
-                },{
-                    text     : 'Last Updated',
-                    width    : 135,
-                    sortable : true,
+                }, {
+                    text: 'Last Updated',
+                    width: 135,
+                    sortable: true,
                     formatter: 'date("m/d/Y")',
                     dataIndex: 'lastChange'
                 }],
@@ -358,7 +358,7 @@ describe('Ext.grid.Panel', function(){
             }, cfg));
         }
 
-        it("should calculate the locked grid's width to encapsulate the total locked column width plus right+left borders", function() {
+        it("should calculate the locked grid's width to encapsulate the total locked column width plus right+left borders", function () {
             grid = makeGrid(true, {
                 lockedGridConfig: {
                     style: {
@@ -383,46 +383,46 @@ describe('Ext.grid.Panel', function(){
         });
 
         // Unit test for EXTJS-5293
-        it('should not show hidden flex columns', function() {
+        it('should not show hidden flex columns', function () {
             createGrid();
 
             var columns = grid.headerCt.getGridColumns();
             columns[2].show();
 
             expect(grid).toHaveLayout({
-                el:   { xywh: "0 0 400 200" },
-                body: { xywh: "0 50 400 150" },
+                el: {xywh: "0 0 400 200"},
+                body: {xywh: "0 50 400 150"},
                 items: {
                     gridview: {
-                        el: { xywh: "1 51 398 148" } // account for 1px border
+                        el: {xywh: "1 51 398 148"} // account for 1px border
                     }
                 },
                 dockedItems: {
                     header: {
-                        el:    { xywh: "0 0 400 27" },
+                        el: {xywh: "0 0 400 27"},
                         items: {
                             "component": {
-                                el:     { xywh: "6 6 388 16" }
+                                el: {xywh: "6 6 388 16"}
                             }
                         }
                     },
                     headercontainer: {
-                        el: { xywh: "0 27 400 [23,24]" },
+                        el: {xywh: "0 27 400 [23,24]"},
                         items: {
                             0: {
-                                el:      { xywh: "1 1 100 22" },
-                                textEl:  { xywh: "7 [4,5] [27-30] [13-15]" },
-                                titleEl: { xywh: "1 1 99 22" }
+                                el: {xywh: "1 1 100 22"},
+                                textEl: {xywh: "7 [4,5] [27-30] [13-15]"},
+                                titleEl: {xywh: "1 1 99 22"}
                             },
                             1: {
-                                el:      { xywh: "101 1 149 22" },
-                                textEl:  { xywh: "107 [4,5] [24-28] [13-15]" },
-                                titleEl: { xywh: "101 1 148 22" }
+                                el: {xywh: "101 1 149 22"},
+                                textEl: {xywh: "107 [4,5] [24-28] [13-15]"},
+                                titleEl: {xywh: "101 1 148 22"}
                             },
                             2: {
-                                el:      { xywh: "250 1 149 22" },
-                                textEl:  { xywh: "256 [4-5] [30-32] [13-15]" },
-                                titleEl: { xywh: "250 1 148 22" }
+                                el: {xywh: "250 1 149 22"},
+                                textEl: {xywh: "256 [4-5] [30-32] [13-15]"},
+                                titleEl: {xywh: "250 1 148 22"}
                             }
                         }
                     }
@@ -447,10 +447,10 @@ describe('Ext.grid.Panel', function(){
                 groupField: 'sex',
                 fields: ['name', 'sex', 'email', 'phone'],
                 data: [
-                    { 'name': 'Homer', 'sex': 'Male', 'email': 'homer@simpsons.com', 'phone': '555-222-1244' },
-                    { 'name': 'Bart', 'sex': 'Male', 'email': 'bart@simpsons.com', 'phone': '555-222-1234' },
-                    { 'name': 'Marge', 'sex': 'Female', 'email': 'marge@simpsons.com', 'phone': '555-222-1254' },
-                    { 'name': 'Lisa', 'sex': 'Female', 'email': 'lisa@simpsons.com', 'phone': '555-111-1224' }
+                    {'name': 'Homer', 'sex': 'Male', 'email': 'homer@simpsons.com', 'phone': '555-222-1244'},
+                    {'name': 'Bart', 'sex': 'Male', 'email': 'bart@simpsons.com', 'phone': '555-222-1234'},
+                    {'name': 'Marge', 'sex': 'Female', 'email': 'marge@simpsons.com', 'phone': '555-222-1254'},
+                    {'name': 'Lisa', 'sex': 'Female', 'email': 'lisa@simpsons.com', 'phone': '555-111-1224'}
                 ]
             }, {
                 width: 600,
@@ -459,9 +459,9 @@ describe('Ext.grid.Panel', function(){
                     ftype: 'grouping'
                 }],
                 columns: [
-                    { header: 'Name',  dataIndex: 'name', width: 200, locked: true },
-                    { header: 'Email', dataIndex: 'email', flex: 1 },
-                    { header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true }
+                    {header: 'Name', dataIndex: 'name', width: 200, locked: true},
+                    {header: 'Email', dataIndex: 'email', flex: 1},
+                    {header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true}
                 ],
                 selModel: {
                     selType: 'cellmodel'
@@ -480,13 +480,13 @@ describe('Ext.grid.Panel', function(){
             expect(grid.getSelectionModel().getSelection()[0]).toBe(rec);
         });
 
-        describe('Custom column sorter', function() {
+        describe('Custom column sorter', function () {
             var nameCol;
 
             afterEach(function () {
                 Ext.state.Manager.set(grid.getStateId(), null);
             });
-            
+
             function createCustomSortGrid() {
                 createGrid(null, {
                     stateful: true,
@@ -498,7 +498,7 @@ describe('Ext.grid.Panel', function(){
                         locked: true,
 
                         // Use a custom sorter which sorts in REVERSE order to test
-                        sorter: function(rec1, rec2) {
+                        sorter: function (rec1, rec2) {
                             var rec1Name = rec1.get('name'),
                                 rec2Name = rec2.get('name');
 
@@ -511,16 +511,16 @@ describe('Ext.grid.Panel', function(){
                             return 0;
                         }
                     },
-                    {
-                        header: 'Email', dataIndex: 'email', flex: 1
-                    }, {
-                        header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true
-                    }]
+                        {
+                            header: 'Email', dataIndex: 'email', flex: 1
+                        }, {
+                            header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true
+                        }]
                 });
                 nameCol = colRef[0];
             }
 
-            it("should sort by a column's custom sorter", function() {
+            it("should sort by a column's custom sorter", function () {
                 createCustomSortGrid();
 
                 // Initial, no sort, order is as specified in data object in createGrid function
@@ -562,7 +562,7 @@ describe('Ext.grid.Panel', function(){
             var gsbw = Ext.getScrollbarSize;
 
             // If there is no scrollbar, then the locked side is set to scroll: 'vertical'
-            Ext.getScrollbarSize = function() {
+            Ext.getScrollbarSize = function () {
                 return {
                     height: 0,
                     width: 0
@@ -570,12 +570,12 @@ describe('Ext.grid.Panel', function(){
             };
             createGrid({
                 groupField: 'sex',
-                fields:['name', 'sex', 'email', 'phone'],
+                fields: ['name', 'sex', 'email', 'phone'],
                 data: [
-                    { 'name': 'Homer', 'sex': 'Male', 'email': 'homer@simpsons.com', 'phone': '555-222-1244' },
-                    { 'name': 'Bart', 'sex': 'Male', 'email': 'bart@simpsons.com', 'phone': '555-222-1234' },
-                    { 'name': 'Marge', 'sex': 'Female', 'email': 'marge@simpsons.com', 'phone': '555-222-1254' },
-                    { 'name': 'Lisa', 'sex': 'Female', 'email': 'lisa@simpsons.com', 'phone': '555-111-1224' }
+                    {'name': 'Homer', 'sex': 'Male', 'email': 'homer@simpsons.com', 'phone': '555-222-1244'},
+                    {'name': 'Bart', 'sex': 'Male', 'email': 'bart@simpsons.com', 'phone': '555-222-1234'},
+                    {'name': 'Marge', 'sex': 'Female', 'email': 'marge@simpsons.com', 'phone': '555-222-1254'},
+                    {'name': 'Lisa', 'sex': 'Female', 'email': 'lisa@simpsons.com', 'phone': '555-111-1224'}
                 ]
             }, {
                 width: 600,
@@ -584,9 +584,9 @@ describe('Ext.grid.Panel', function(){
                     ftype: 'grouping'
                 }],
                 columns: [
-                    { header: 'Name',  dataIndex: 'name', width: 200, locked: true },
-                    { header: 'Email', dataIndex: 'email', flex: 1 },
-                    { header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true }
+                    {header: 'Name', dataIndex: 'name', width: 200, locked: true},
+                    {header: 'Email', dataIndex: 'email', flex: 1},
+                    {header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true}
                 ],
                 selModel: {
                     selType: 'cellmodel'
@@ -602,13 +602,13 @@ describe('Ext.grid.Panel', function(){
             // The upshot should be that scrolling is auto in both dimensions
             expect(lockedScroller.getX()).toBe(true);
             expect(lockedScroller.getY()).toBe(true);
-       });
+        });
     });
 
-    describe("reconfigure", function() {
+    describe("reconfigure", function () {
         var tds;
 
-        it("Should reconfigure the grid with no error", function() {
+        it("Should reconfigure the grid with no error", function () {
             grid = new Ext.grid.Panel({
                 height: 300,
                 width: 600,
@@ -634,7 +634,7 @@ describe('Ext.grid.Panel', function(){
             expect(Ext.String.trim(tds[2].textContent || tds[2].innerText)).toEqual("May");
         });
 
-        it("Should reconfigure the grid with no error when there's a buffered renderer", function() {
+        it("Should reconfigure the grid with no error when there's a buffered renderer", function () {
             grid = new Ext.grid.Panel({
                 height: 300,
                 width: 600,
@@ -660,7 +660,7 @@ describe('Ext.grid.Panel', function(){
             expect(Ext.String.trim(tds[2].textContent || tds[2].innerText)).toEqual("May");
         });
 
-        it("Should reconfigure the grid with no error when no columns are passed", function() {
+        it("Should reconfigure the grid with no error when no columns are passed", function () {
             grid = new Ext.grid.Panel({
                 height: 300,
                 width: 600,
@@ -864,18 +864,18 @@ describe('Ext.grid.Panel', function(){
                         property: 'type',
                         direction: 'ASC'
                     }],
-                    [{
-                        property: 'country',
-                        direction: 'DESC'
-                    }]],
-                    // working
-                    //            ,gridColumns = [[
-                    //                {header:'Item', dataIndex:'text', flex:1},{header:'Type', dataIndex:'type'}
-                    //            ],[
-                    //                {header:'City', dataIndex:'city', flex:1},{header:'Country', dataIndex:'country'}
-                    //            ]]
+                        [{
+                            property: 'country',
+                            direction: 'DESC'
+                        }]],
+                // working
+                //            ,gridColumns = [[
+                //                {header:'Item', dataIndex:'text', flex:1},{header:'Type', dataIndex:'type'}
+                //            ],[
+                //                {header:'City', dataIndex:'city', flex:1},{header:'Country', dataIndex:'country'}
+                //            ]]
 
-                    // misaligned columns and header
+                // misaligned columns and header
                     gridColumns = [[{
                         header: 'Item',
                         dataIndex: 'text'
@@ -942,64 +942,64 @@ describe('Ext.grid.Panel', function(){
     });
 
     // Remove simjax when re-enabling these specs
-    xdescribe('Buffered rendering', function() {
+    xdescribe('Buffered rendering', function () {
         var grid,
             view,
             grouping,
             smallData = [
-                { 'name': 'Homer', "email":"homer@simpsons.com",  "phone":"555-222-1244", "role":"Parent" },
-                { 'name': 'Marge', "email":"marge@simpsons.com", "phone":"555-222-1254", "role":"Parent" },
-                { 'name': 'Lisa',  "email":"lisa@simpsons.com",  "phone":"555-111-1224", "role":"Child" },
-                { 'name': 'Bart',  "email":"bart@simpsons.com",  "phone":"555-222-1234", "role":"Child" }
+                {'name': 'Homer', "email": "homer@simpsons.com", "phone": "555-222-1244", "role": "Parent"},
+                {'name': 'Marge', "email": "marge@simpsons.com", "phone": "555-222-1254", "role": "Parent"},
+                {'name': 'Lisa', "email": "lisa@simpsons.com", "phone": "555-111-1224", "role": "Child"},
+                {'name': 'Bart', "email": "bart@simpsons.com", "phone": "555-222-1234", "role": "Child"}
             ],
             largeData = [
-                { 'name': 'Homer1', "email":"homer@simpsons.com",  "phone":"555-222-1244", "role":"Parent" },
-                { 'name': 'Homer2', "email":"homer@simpsons.com",  "phone":"555-222-1244", "role":"Parent" },
-                { 'name': 'Homer3', "email":"homer@simpsons.com",  "phone":"555-222-1244", "role":"Parent" },
-                { 'name': 'Homer4', "email":"homer@simpsons.com",  "phone":"555-222-1244", "role":"Parent" },
-                { 'name': 'Homer5', "email":"homer@simpsons.com",  "phone":"555-222-1244", "role":"Parent" },
-                { 'name': 'Homer6', "email":"homer@simpsons.com",  "phone":"555-222-1244", "role":"Parent" },
-                { 'name': 'Homer7', "email":"homer@simpsons.com",  "phone":"555-222-1244", "role":"Parent" },
-                { 'name': 'Homer8', "email":"homer@simpsons.com",  "phone":"555-222-1244", "role":"Parent" },
-                { 'name': 'Homer9', "email":"homer@simpsons.com",  "phone":"555-222-1244", "role":"Parent" },
-                { 'name': 'Homer10', "email":"homer@simpsons.com",  "phone":"555-222-1244", "role":"Parent" },
-                { 'name': 'Marge1', "email":"marge@simpsons.com", "phone":"555-222-1254", "role":"Parent" },
-                { 'name': 'Marge2', "email":"marge@simpsons.com", "phone":"555-222-1254", "role":"Parent" },
-                { 'name': 'Marge3', "email":"marge@simpsons.com", "phone":"555-222-1254", "role":"Parent" },
-                { 'name': 'Marge4', "email":"marge@simpsons.com", "phone":"555-222-1254", "role":"Parent" },
-                { 'name': 'Marge5', "email":"marge@simpsons.com", "phone":"555-222-1254", "role":"Parent" },
-                { 'name': 'Marge6', "email":"marge@simpsons.com", "phone":"555-222-1254", "role":"Parent" },
-                { 'name': 'Marge7', "email":"marge@simpsons.com", "phone":"555-222-1254", "role":"Parent" },
-                { 'name': 'Marge8', "email":"marge@simpsons.com", "phone":"555-222-1254", "role":"Parent" },
-                { 'name': 'Marge9', "email":"marge@simpsons.com", "phone":"555-222-1254", "role":"Parent" },
-                { 'name': 'Marge10', "email":"marge@simpsons.com", "phone":"555-222-1254", "role":"Parent" },
-                { 'name': 'Lisa1',  "email":"lisa@simpsons.com",  "phone":"555-111-1224", "role":"Child" },
-                { 'name': 'Lisa2',  "email":"lisa@simpsons.com",  "phone":"555-111-1224", "role":"Child" },
-                { 'name': 'Lisa3',  "email":"lisa@simpsons.com",  "phone":"555-111-1224", "role":"Child" },
-                { 'name': 'Lisa4',  "email":"lisa@simpsons.com",  "phone":"555-111-1224", "role":"Child" },
-                { 'name': 'Lisa5',  "email":"lisa@simpsons.com",  "phone":"555-111-1224", "role":"Child" },
-                { 'name': 'Lisa6',  "email":"lisa@simpsons.com",  "phone":"555-111-1224", "role":"Child" },
-                { 'name': 'Lisa7',  "email":"lisa@simpsons.com",  "phone":"555-111-1224", "role":"Child" },
-                { 'name': 'Lisa8',  "email":"lisa@simpsons.com",  "phone":"555-111-1224", "role":"Child" },
-                { 'name': 'Lisa9',  "email":"lisa@simpsons.com",  "phone":"555-111-1224", "role":"Child" },
-                { 'name': 'Lisa10',  "email":"lisa@simpsons.com",  "phone":"555-111-1224", "role":"Child" },
-                { 'name': 'Bart1',  "email":"bart@simpsons.com",  "phone":"555-222-1234", "role":"Child" },
-                { 'name': 'Bart2',  "email":"bart@simpsons.com",  "phone":"555-222-1234", "role":"Child" },
-                { 'name': 'Bart3',  "email":"bart@simpsons.com",  "phone":"555-222-1234", "role":"Child" },
-                { 'name': 'Bart4',  "email":"bart@simpsons.com",  "phone":"555-222-1234", "role":"Child" },
-                { 'name': 'Bart5',  "email":"bart@simpsons.com",  "phone":"555-222-1234", "role":"Child" },
-                { 'name': 'Bart6',  "email":"bart@simpsons.com",  "phone":"555-222-1234", "role":"Child" },
-                { 'name': 'Bart7',  "email":"bart@simpsons.com",  "phone":"555-222-1234", "role":"Child" },
-                { 'name': 'Bart8',  "email":"bart@simpsons.com",  "phone":"555-222-1234", "role":"Child" },
-                { 'name': 'Bart9',  "email":"bart@simpsons.com",  "phone":"555-222-1234", "role":"Child" },
-                { 'name': 'Bart10',  "email":"bart@simpsons.com",  "phone":"555-222-1234", "role":"Child" }
+                {'name': 'Homer1', "email": "homer@simpsons.com", "phone": "555-222-1244", "role": "Parent"},
+                {'name': 'Homer2', "email": "homer@simpsons.com", "phone": "555-222-1244", "role": "Parent"},
+                {'name': 'Homer3', "email": "homer@simpsons.com", "phone": "555-222-1244", "role": "Parent"},
+                {'name': 'Homer4', "email": "homer@simpsons.com", "phone": "555-222-1244", "role": "Parent"},
+                {'name': 'Homer5', "email": "homer@simpsons.com", "phone": "555-222-1244", "role": "Parent"},
+                {'name': 'Homer6', "email": "homer@simpsons.com", "phone": "555-222-1244", "role": "Parent"},
+                {'name': 'Homer7', "email": "homer@simpsons.com", "phone": "555-222-1244", "role": "Parent"},
+                {'name': 'Homer8', "email": "homer@simpsons.com", "phone": "555-222-1244", "role": "Parent"},
+                {'name': 'Homer9', "email": "homer@simpsons.com", "phone": "555-222-1244", "role": "Parent"},
+                {'name': 'Homer10', "email": "homer@simpsons.com", "phone": "555-222-1244", "role": "Parent"},
+                {'name': 'Marge1', "email": "marge@simpsons.com", "phone": "555-222-1254", "role": "Parent"},
+                {'name': 'Marge2', "email": "marge@simpsons.com", "phone": "555-222-1254", "role": "Parent"},
+                {'name': 'Marge3', "email": "marge@simpsons.com", "phone": "555-222-1254", "role": "Parent"},
+                {'name': 'Marge4', "email": "marge@simpsons.com", "phone": "555-222-1254", "role": "Parent"},
+                {'name': 'Marge5', "email": "marge@simpsons.com", "phone": "555-222-1254", "role": "Parent"},
+                {'name': 'Marge6', "email": "marge@simpsons.com", "phone": "555-222-1254", "role": "Parent"},
+                {'name': 'Marge7', "email": "marge@simpsons.com", "phone": "555-222-1254", "role": "Parent"},
+                {'name': 'Marge8', "email": "marge@simpsons.com", "phone": "555-222-1254", "role": "Parent"},
+                {'name': 'Marge9', "email": "marge@simpsons.com", "phone": "555-222-1254", "role": "Parent"},
+                {'name': 'Marge10', "email": "marge@simpsons.com", "phone": "555-222-1254", "role": "Parent"},
+                {'name': 'Lisa1', "email": "lisa@simpsons.com", "phone": "555-111-1224", "role": "Child"},
+                {'name': 'Lisa2', "email": "lisa@simpsons.com", "phone": "555-111-1224", "role": "Child"},
+                {'name': 'Lisa3', "email": "lisa@simpsons.com", "phone": "555-111-1224", "role": "Child"},
+                {'name': 'Lisa4', "email": "lisa@simpsons.com", "phone": "555-111-1224", "role": "Child"},
+                {'name': 'Lisa5', "email": "lisa@simpsons.com", "phone": "555-111-1224", "role": "Child"},
+                {'name': 'Lisa6', "email": "lisa@simpsons.com", "phone": "555-111-1224", "role": "Child"},
+                {'name': 'Lisa7', "email": "lisa@simpsons.com", "phone": "555-111-1224", "role": "Child"},
+                {'name': 'Lisa8', "email": "lisa@simpsons.com", "phone": "555-111-1224", "role": "Child"},
+                {'name': 'Lisa9', "email": "lisa@simpsons.com", "phone": "555-111-1224", "role": "Child"},
+                {'name': 'Lisa10', "email": "lisa@simpsons.com", "phone": "555-111-1224", "role": "Child"},
+                {'name': 'Bart1', "email": "bart@simpsons.com", "phone": "555-222-1234", "role": "Child"},
+                {'name': 'Bart2', "email": "bart@simpsons.com", "phone": "555-222-1234", "role": "Child"},
+                {'name': 'Bart3', "email": "bart@simpsons.com", "phone": "555-222-1234", "role": "Child"},
+                {'name': 'Bart4', "email": "bart@simpsons.com", "phone": "555-222-1234", "role": "Child"},
+                {'name': 'Bart5', "email": "bart@simpsons.com", "phone": "555-222-1234", "role": "Child"},
+                {'name': 'Bart6', "email": "bart@simpsons.com", "phone": "555-222-1234", "role": "Child"},
+                {'name': 'Bart7', "email": "bart@simpsons.com", "phone": "555-222-1234", "role": "Child"},
+                {'name': 'Bart8', "email": "bart@simpsons.com", "phone": "555-222-1234", "role": "Child"},
+                {'name': 'Bart9', "email": "bart@simpsons.com", "phone": "555-222-1234", "role": "Child"},
+                {'name': 'Bart10', "email": "bart@simpsons.com", "phone": "555-222-1234", "role": "Child"}
             ],
             columns = [
-                { header: 'Name',  dataIndex: 'name' },
-                { header: 'Email', dataIndex: 'email', flex: 1 },
-                { header: 'Phone', dataIndex: 'phone' }
+                {header: 'Name', dataIndex: 'name'},
+                {header: 'Email', dataIndex: 'email', flex: 1},
+                {header: 'Phone', dataIndex: 'phone'}
             ],
-            makeSmallGrid = function(cfg) {
+            makeSmallGrid = function (cfg) {
                 return new Ext.grid.Panel(Ext.apply({
                     renderTo: Ext.getBody(),
                     columns: columns,
@@ -1010,7 +1010,7 @@ describe('Ext.grid.Panel', function(){
                     }
                 }, cfg));
             },
-            makeLargeGrid = function(cfg) {
+            makeLargeGrid = function (cfg) {
                 return new Ext.grid.Panel(Ext.apply({
                     renderTo: Ext.getBody(),
                     columns: columns,
@@ -1021,30 +1021,30 @@ describe('Ext.grid.Panel', function(){
                     }
                 }, cfg));
             };
-            
-        afterEach(function() {
+
+        afterEach(function () {
             grid.destroy();
         });
 
-        describe('grouping with buffered rendering', function() {
-            it('should collapse correctly when all data fits inside view height', function() {
+        describe('grouping with buffered rendering', function () {
+            it('should collapse correctly when all data fits inside view height', function () {
                 grid = makeSmallGrid({
                     height: 400,
                     width: 600,
-                    features: { 
+                    features: {
                         ftype: 'grouping',
-                        startCollapsed : false
+                        startCollapsed: false
                     }
                 });
                 view = grid.view;
                 grouping = view.findFeature('grouping');
 
                 // Wait for initial render
-                waitsFor(function() {
+                waitsFor(function () {
                     return view.all.getCount() !== 0;
                 });
 
-                runs(function() {
+                runs(function () {
                     expect(view.dataSource.getCount()).toEqual(4);
                     expect(view.all.getCount()).toEqual(4);
 
@@ -1056,29 +1056,29 @@ describe('Ext.grid.Panel', function(){
                 });
             });
 
-            it('should collapse correctly when all data does not fit inside view height', function() {
+            it('should collapse correctly when all data does not fit inside view height', function () {
                 grid = makeLargeGrid({
                     height: 400,
                     width: 600,
                     border: false,
-                    features: { 
+                    features: {
                         ftype: 'grouping',
-                        startCollapsed : false
+                        startCollapsed: false
                     },
                     trailingBufferZone: 0,
                     leadingBufferZone: 1
                 });
                 view = grid.view;
                 grouping = view.findFeature('grouping');
-                
+
                 // Wait for initial render
-                waitsFor(function() {
+                waitsFor(function () {
                     return view.all.getCount() !== 0;
                 });
 
-                runs(function() {
+                runs(function () {
                     var row4 = view.getNode(3);
-                    
+
                     grid.setHeight(row4.offsetTop + row4.offsetHeight + grid.headerCt.getHeight());
 
                     // All records will be represented by a row.
@@ -1093,26 +1093,26 @@ describe('Ext.grid.Panel', function(){
                     expect(view.all.getCount()).toEqual(view.bufferedRenderer.viewSize);
                 });
             });
-            
-            it('should reduce the scrollHeight when collapsing groups and increase when expanding', function() {
+
+            it('should reduce the scrollHeight when collapsing groups and increase when expanding', function () {
                 grid = makeLargeGrid({
                     height: 400,
                     width: 600,
                     border: false,
-                    features: { 
+                    features: {
                         ftype: 'grouping',
-                        startCollapsed : false
+                        startCollapsed: false
                     }
                 });
                 view = grid.view;
                 grouping = view.findFeature('grouping');
-                
+
                 // Wait for initial render
-                waitsFor(function() {
+                waitsFor(function () {
                     return view.all.getCount() !== 0;
                 });
 
-                runs(function() {
+                runs(function () {
                     var scrollRange = view.el.dom.scrollHeight,
                         newScrollRange;
 
@@ -1131,35 +1131,35 @@ describe('Ext.grid.Panel', function(){
                     scrollRange = newScrollRange;
                     grouping.expand('Parent');
                     expect(newScrollRange = view.el.dom.scrollHeight).toBeGreaterThan(scrollRange);
-                    
+
                 });
             });
         });
 
-        it('should reload after remote filter', function() {
+        it('should reload after remote filter', function () {
             function makeRows(n, total) {
                 var data = [],
                     i = 1;
-                    
+
                 for (i = 1; i <= n; ++i) {
                     data.push({
                         id: i,
                         title: 'Title' + i
                     });
-                } 
-                
+                }
+
                 return {
                     data: data,
                     totalCount: total
                 };
             }
-        
+
             MockAjaxManager.addMethods();
             Ext.define('ForumThread', {
                 extend: 'Ext.data.Model',
                 fields: ['id', 'title']
             });
-        
+
             // create the Data Store
             var store = new Ext.data.Store({
                 model: 'ForumThread',
@@ -1175,7 +1175,7 @@ describe('Ext.grid.Panel', function(){
                 },
                 remoteFilter: true
             });
-        
+
             grid = new Ext.grid.Panel({
                 width: 700,
                 height: 500,
@@ -1187,9 +1187,9 @@ describe('Ext.grid.Panel', function(){
                 }],
                 renderTo: Ext.getBody()
             });
-            
+
             store.load();
-            
+
             Ext.Ajax.mockComplete({
                 status: 200,
                 responseText: Ext.encode(makeRows(350, 5000))
@@ -1202,28 +1202,28 @@ describe('Ext.grid.Panel', function(){
                 status: 200,
                 responseText: Ext.encode(makeRows(20, 20))
             });
-            
+
             expect(grid.getView().getNodes().length).toBe(20);
-            
+
             MockAjaxManager.removeMethods();
             Ext.undefine('ForumThread');
         });
 
-        it("should update the view when removing a chunk of records in the middle", function(){
-           var data = [],
+        it("should update the view when removing a chunk of records in the middle", function () {
+            var data = [],
                 i = 0;
-        
+
             for (; i < 200; ++i) {
                 data.push({
                     name: 'Name' + i
                 });
             }
-    
+
             var store = new Ext.data.Store({
                 fields: ['name'],
                 data: data
             });
-    
+
             grid = new Ext.grid.Panel({
                 renderTo: Ext.getBody(),
                 width: 400,
@@ -1235,12 +1235,12 @@ describe('Ext.grid.Panel', function(){
                     flex: 1
                 }]
             });
-    
+
             store.remove(store.getRange(1, 198));
             expect(grid.getView().all.getCount()).toBe(2);
         });
 
-        it('should render the last row selected', function() {
+        it('should render the last row selected', function () {
             // Create a data block which can be read and broken into pages by an appropriately configured MemoryProxy
             function makeRows(n) {
                 var data = [],
@@ -1306,7 +1306,7 @@ describe('Ext.grid.Panel', function(){
             // Scroll last record into view. It should be rendered in selected rendition.
             grid.view.el.setScrollTop(4000);
             waits(10);
-            runs(function() {
+            runs(function () {
                 var lastRow = Ext.get(grid.view.getNode(lastRecord));
 
                 // The row corresponding to the last record should have the selected class.
@@ -1353,7 +1353,7 @@ describe('Ext.grid.Panel', function(){
                 view = grid.view;
             }
 
-            beforeEach(function() {
+            beforeEach(function () {
                 Ext.define('Foo', {
                     extend: 'Ext.data.Model',
                     fields: ['id', 'title']
@@ -1367,7 +1367,7 @@ describe('Ext.grid.Panel', function(){
                 wasCalled = false;
             });
 
-            
+
             it('should reload the current view and buffers', function () {
                 var start, end;
 
@@ -1432,14 +1432,14 @@ describe('Ext.grid.Panel', function(){
         });
     });
 
-    xdescribe("View's element cache", function() {
+    xdescribe("View's element cache", function () {
         /*
          * creates rows for "Lisa", "Bart", "Homer" and "Marge"
          */
         beforeEach(createGrid);
 
-        describe('Removing single row', function() {
-            it('should move subsequent rows up', function() {
+        describe('Removing single row', function () {
+            it('should move subsequent rows up', function () {
                 grid.view.all.removeElement(0, true);
 
                 // First cell - name field - should now be "Bart"
@@ -1448,8 +1448,8 @@ describe('Ext.grid.Panel', function(){
             });
         });
 
-        describe('Removing range', function() {
-            it('should move subsequent rows up', function() {
+        describe('Removing range', function () {
+            it('should move subsequent rows up', function () {
                 grid.view.all.removeRange(0, 1, true);
 
                 // First cell - name field - should now be "Homer"
@@ -1457,9 +1457,9 @@ describe('Ext.grid.Panel', function(){
                 expect(grid.view.all.getCount()).toBe(2);
             });
         });
-        
-        describe('removing larger range than is rendered (buffered rendering does this)', function() {
-            it('should only attempt to remove valid element indices', function() {
+
+        describe('removing larger range than is rendered (buffered rendering does this)', function () {
+            it('should only attempt to remove valid element indices', function () {
                 var rows = grid.view.all;
 
                 // Attempt to remove element past end
@@ -1604,8 +1604,8 @@ describe('Ext.grid.Panel', function(){
                 });
             });
         });
-        
-        it("should size based on the emptyText when shrink wrapping height", function(){
+
+        it("should size based on the emptyText when shrink wrapping height", function () {
             grid = new Ext.grid.Panel({
                 columns: [
                     {dataIndex: 'field1'},
@@ -1626,25 +1626,25 @@ describe('Ext.grid.Panel', function(){
             expect(grid.getHeight()).toBe(100);
         });
     });
-    
-    describe("changing record id", function(){
-        it("should update the view when changing from phantom to not phantom", function(){
+
+    describe("changing record id", function () {
+        it("should update the view when changing from phantom to not phantom", function () {
             createGrid();
             var rec = store.first(),
                 oldCount = store.getCount();
-                
+
             rec.setId(1);
             store.remove(rec);
             expect(grid.getView().getNodes().length).toBe(oldCount - 1);
         });
-        
-        it("should update the view when changing a non phantom id", function(){
+
+        it("should update the view when changing a non phantom id", function () {
             createGrid({
                 data: [
-                    { id: 1, 'name': 'Lisa',  "email":"lisa@simpsons.com",  "phone":"555-111-1224"  },
-                    { 'name': 'Bart',  "email":"bart@simpsons.com",  "phone":"555-222-1234"  },
-                    { 'name': 'Homer', "email":"homer@simpsons.com", "phone":"555-222-1244"  },
-                    { 'name': 'Marge', "email":"marge@simpsons.com", "phone":"555-222-1254"  }
+                    {id: 1, 'name': 'Lisa', "email": "lisa@simpsons.com", "phone": "555-111-1224"},
+                    {'name': 'Bart', "email": "bart@simpsons.com", "phone": "555-222-1234"},
+                    {'name': 'Homer', "email": "homer@simpsons.com", "phone": "555-222-1244"},
+                    {'name': 'Marge', "email": "marge@simpsons.com", "phone": "555-222-1254"}
                 ]
             });
 
@@ -1667,10 +1667,10 @@ describe('Ext.grid.Panel', function(){
 
         beforeEach(function () {
             rawData = [
-                { name: 'Homer', sex: 'Male', email: 'homer@simpsons.com', phone: '555-222-1244', isSprog: false },
-                { name: 'Bart', sex: 'Male', email: 'bart@simpsons.com', phone: '555-222-1234', isSprog: true },
-                { name: 'Marge', sex: 'Female', email: 'marge@simpsons.com', phone: '555-222-1254', isSprog: false },
-                { name: 'Lisa', sex: 'Female', email: 'lisa@simpsons.com', phone: '555-111-1224', isSprog: true }
+                {name: 'Homer', sex: 'Male', email: 'homer@simpsons.com', phone: '555-222-1244', isSprog: false},
+                {name: 'Bart', sex: 'Male', email: 'bart@simpsons.com', phone: '555-222-1234', isSprog: true},
+                {name: 'Marge', sex: 'Female', email: 'marge@simpsons.com', phone: '555-222-1254', isSprog: false},
+                {name: 'Lisa', sex: 'Female', email: 'lisa@simpsons.com', phone: '555-111-1224', isSprog: true}
             ];
 
             data = {
@@ -1719,10 +1719,10 @@ describe('Ext.grid.Panel', function(){
                     width: 600,
                     height: 400,
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 200 },
-                        { header: 'Email', dataIndex: 'email', flex: 1 },
-                        { header: 'Sprog?', dataIndex: 'isSprog', flex: 1},
-                        { header: 'Phone', dataIndex: 'phone', flex: 1 }
+                        {header: 'Name', dataIndex: 'name', width: 200},
+                        {header: 'Email', dataIndex: 'email', flex: 1},
+                        {header: 'Sprog?', dataIndex: 'isSprog', flex: 1},
+                        {header: 'Phone', dataIndex: 'phone', flex: 1}
                     ],
                     selModel: {
                         selType: 'cellmodel'
@@ -1763,10 +1763,10 @@ describe('Ext.grid.Panel', function(){
                 expect(store.flushLoad.callCount).toBe(1);
             }
 
-            beforeEach(function() {
+            beforeEach(function () {
                 synchronousLoad = false;
             });
-            afterEach(function() {
+            afterEach(function () {
                 synchronousLoad = true;
             });
 
@@ -1821,674 +1821,674 @@ describe('Ext.grid.Panel', function(){
 
         // Remove simjax when re-enabling
         /*
-        xit('should save and restore state', function() {
-            var sp = Ext.create('Ext.state.CookieProvider'),
-                statesaved = false,
-                staterestored = false,
-                headerCt,
-                stateId = Ext.id(null, 'unitTestSimpsonsGrid-');
-
-            // setup the state provider, all state information will be saved to a cookie
-            Ext.state.Manager.setProvider(sp);
-
-            createGrid({
-                statefulFilters: true,
-                groupField: 'sex',
-                fields:['name', 'sex', 'email', 'phone', {name: 'isSprog', type: 'boolean'}],
-                data: data
-            }, {
-                stateful: true,
-                stateId: stateId,
-                width: 600,
-                height: 400,
-                delay: 0,
-                features: [{
-                    ftype: 'grouping'
-                }],
-                columns: [
-                    { header: 'Name',  dataIndex: 'name', width: 200, locked: true },
-                    { header: 'Email', dataIndex: 'email', flex: 1 },
-                    { header: 'Sprog?', dataIndex: 'isSprog', flex: 1},
-                    { header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true }
-                ],
-                selModel: {
-                    selType: 'cellmodel'
-                },
-
-                listeners: {
-                    statesave: function() {
-                        statesaved = true;
-                    }
-                }
-            });
-
-            headerCt = grid.normalGrid.headerCt;
-
-            grid.store.filter('isSprog', true);
-
-            // Swap the email and sprog columns
-            headerCt.move(1, 0);
-
-            // Wait for the stateTask to tick...
-            waitsFor(function() {
-                return statesaved === true && grid.stateTask.taskRunCount === 1;
-            });
-
-            runs(function() {
-                statesaved = false;
-
-                // Check that the first 2 columns in the normal grid have been swapped from configured order
-                expect(headerCt.items.items[0].text).toEqual("Sprog?");
-                expect(headerCt.items.items[1].text).toEqual("Email");
-
-                // Check that filtering has only left in the sprogs
-                expect(grid.store.getCount()).toEqual(2);
-
-                // Check that the grouping sort has put Lisa first, "Female" before "Male"
-                expect(grid.store.getAt(0).get('name')).toEqual('Lisa');
-                expect(grid.store.getAt(1).get('name')).toEqual('Bart');
-
-                // Reverse the default grouping direction to pug Bart first
-                // This should be saved in state
-                grid.store.group('sex', 'DESC');
-
-                // Wait for the stateTask to tick...
-                // taskRunCount is reset each time because the task runs one time only
-            });
-
-            waitsFor(function() {
-                return statesaved === true && grid.stateTask.taskRunCount === 1;
-            });
-
-            runs(function() {
-                // Check that the change of grouping sort has put Bart first, "Male" before "Female"
-                expect(grid.store.getAt(0).get('name')).toEqual('Bart');
-                expect(grid.store.getAt(1).get('name')).toEqual('Lisa');
-
-                grid.destroy();
-
-                // Recreate the grid
-                createGrid({
-                    statefulFilters: true,
-                    groupField: 'sex',
-                    fields:['name', 'sex', 'email', 'phone', {name: 'isSprog', type: 'boolean'}],
-                    data: {'items': [
-                        { 'name': 'Homer', 'sex': 'Male',   "email": "homer@simpsons.com", "phone":"555-222-1244", "isSprog": false },
-                        { 'name': 'Bart',  'sex': 'Male',   "email": "bart@simpsons.com",  "phone":"555-222-1234", "isSprog": true },
-                        { 'name': 'Marge', 'sex': 'Female', "email": "marge@simpsons.com", "phone":"555-222-1254", "isSprog": false },
-                        { 'name': 'Lisa',  'sex': 'Female', "email": "lisa@simpsons.com",  "phone":"555-111-1224", "isSprog": true }
-                    ]}
-                }, {
-                    deferRowRender: false,
-                    stateful: true,
-                    stateId: 'unitTestSimpsonsGrid',
-                    width: 600,
-                    height: 400,
-                    features: [{
-                        ftype: 'grouping'
-                    }],
-                    columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 200, locked: true },
-                        { header: 'Email', dataIndex: 'email', flex: 1 },
-                        { header: 'Sprog?', dataIndex: 'isSprog', flex: 1},
-                        { header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true }
-                    ],
-                    selModel: {
-                        selType: 'cellmodel'
-                    },
-                    listeners: {
-                        staterestore: function() {
-                            staterestored = true;
-                        }
-                    }
-                });
-            });
-
-            waitsFor(function() {
-                return staterestored === true && grid.stateTask.taskRunCount === 1;
-            });
-
-            runs(function() {
-                headerCt = grid.normalGrid.headerCt;
-
-                // Check that the first 2 columns in the normal grid have been swapped from configured order
-                expect(headerCt.items.items[0].text).toEqual("Sprog?");
-                expect(headerCt.items.items[1].text).toEqual("Email");
-
-                // Check that filtering has only left in the sprogs
-                expect(grid.store.getCount()).toEqual(2);
-
-                // Check that the grouping sort has put Bart first, "Male" before "Female"
-                // The change of grouping should have saved the grouping state.
-                expect(grid.store.getAt(0).get('name')).toEqual('Bart');
-                expect(grid.store.getAt(1).get('name')).toEqual('Lisa');
-                sp.clear('unitTestSimpsonsGrid');
-            });
-        });
-
-        xdescribe('loading/reloading', function () {
-            // Note the intent of these specs is to demonstrate that a store should only have
-            // its .load method called once regardless of any grid or store configs such as
-            // remote sorting and grid filters.  See EXTJS-10029.
-            var wasCalled = false;
-
-            Ext.ux.ajax.SimManager.init({
-                delay: 10,
-                defaultSimlet: null
-            }).register({
-                '/grid/Panel/statefulness': {
-                    data: (function () {
-                        var i = 0,
-                            recs = [];
-
-                        for (; i < 50; i++) {
-                            recs.push({
-                                name: 'Name' + i
-                            });
-                        }
-
-                        return recs;
-                    }()),
-                    stype: 'json'
-                }
-            });
-
-            beforeEach(function () {
-                Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
-                // Set a fake cookie so there is a state to lookup and apply.
-                Ext.state.Manager.set('unitTestSimpsonsGrid', 'BT was here');
-            });
-
-            afterEach(function () {
-                Ext.state.Manager.clear('unitTestSimpsonsGrid');
-                wasCalled = false;
-            });
-
-            describe('plain stateful grid', function () {
-                it('should only load the store once using an autoLoad store', function () {
-                    spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
-
-                    createGrid({
-                        fields: ['name'],
-                        autoLoad: true,
-                        data: null,
-                        proxy: {
-                            type: 'ajax',
-                            url: '/grid/Panel/statefulness'
-                        },
-                        listeners: {
-                            load: function (store, records, successful) {
-                                wasCalled = true;
-                            }
-                        }
-                        //statefulFilters: true,
-                        //fields:['name', 'sex', 'email', 'phone', {name: 'isSprog', type: 'boolean'}],
-                        //data: data,
-                    }, {
-                        id: 'foo0',
-                        stateful: true,
-                        stateId: 'unitTestSimpsonsGrid',
-                        columns: [
-                            { header: 'Name', dataIndex: 'name', width: 100 }
-                        ]
-                    });
-
-                    waitsFor(function () {
-                        return wasCalled;
-                    });
-
-                    runs(function () {
-                        expect(Ext.data.Store.prototype.load.callCount).toBe(1);
-                    });
-                });
-
-                it('should only load the store once when manually loading the store', function () {
-                    createGrid({
-                        fields: ['name'],
-                        data: null,
-                        proxy: {
-                            type: 'ajax',
-                            url: '/grid/Panel/statefulness'
-                        },
-                        listeners: {
-                            load: function (store, records, successful) {
-                                wasCalled = true;
-                            }
-                        }
-                    }, {
-                        id: 'foo0.5',
-                        stateful: true,
-                        stateId: 'unitTestSimpsonsGrid',
-                        columns: [
-                            { header: 'Name', dataIndex: 'name', width: 100 }
-                        ]
-                    });
-
-                    spyOn(grid.store, 'load').andCallThrough();
-
-                    grid.store.load();
-
-                    waitsFor(function () {
-                        return wasCalled;
-                    });
-
-                    runs(function () {
-                        expect(grid.store.load.callCount).toBe(1);
-                    });
-                });
-            });
-
-            describe('with remote sorting enabled', function () {
-                it('should only load the store once when sorting remotely and using an autoLoad store', function () {
-                    spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
-
-                    createGrid({
-                        fields: ['name'],
-                        remoteSort: true,
-                        sorters: [{
-                            property: 'name'
-                        }],
-                        autoLoad: true,
-                        data: null,
-                        proxy: {
-                            type: 'ajax',
-                            url: '/grid/Panel/statefulness'
-                        },
-                        listeners: {
-                            load: function (store, records, successful) {
-                                wasCalled = true;
-                            }
-                        }
-                    }, {
-                        id: 'foo1',
-                        stateful: true,
-                        stateId: 'unitTestSimpsonsGrid',
-                        columns: [
-                            { header: 'Name', dataIndex: 'name', width: 100 }
-                        ]
-                    });
-
-                    waitsFor(function () {
-                        return wasCalled;
-                    });
-
-                    runs(function () {
-                        expect(Ext.data.Store.prototype.load.callCount).toBe(1);
-                    });
-                });
-
-                it('should only load the store once when sorting remotely and manually loading the store', function () {
-                    createGrid({
-                        fields: ['name'],
-                        remoteSort: true,
-                        sorters: [{
-                            property: 'name'
-                        }],
-                        data: null,
-                        proxy: {
-                            type: 'ajax',
-                            url: '/grid/Panel/statefulness'
-                        },
-                        listeners: {
-                            load: function (store, records, successful) {
-                                wasCalled = true;
-                            }
-                        }
-                    }, {
-                        id: 'foo1.5',
-                        stateful: true,
-                        stateId: 'unitTestSimpsonsGrid',
-                        columns: [
-                            { header: 'Name', dataIndex: 'name', width: 100 }
-                        ]
-                    });
-
-                    spyOn(grid.store, 'load').andCallThrough();
-
-                    grid.store.load();
-
-                    waitsFor(function () {
-                        return wasCalled;
-                    });
-
-                    runs(function () {
-                        expect(grid.store.load.callCount).toBe(1);
-                    });
-                });
-            });
-
-            describe('with remote sorting enabled and grid filters', function () {
-                it('should only load the store once when sorting remotely and using an autoLoad store', function () {
-                    spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
-
-                    createGrid({
-                        fields: ['name'],
-                        remoteSort: true,
-                        sorters: [{
-                            property: 'name'
-                        }],
-                        autoLoad: true,
-                        data: null,
-                        proxy: {
-                            type: 'ajax',
-                            url: '/grid/Panel/statefulness'
-                        },
-                        listeners: {
-                            load: function (store, records, successful) {
-                                wasCalled = true;
-                            }
-                        }
-                    }, {
-                        id: 'foo2',
-                        stateful: true,
-                        stateId: 'unitTestSimpsonsGrid',
-                        columns: [
-                            { header: 'Name', dataIndex: 'name', width: 100, filter: { type: 'string' } }
-                        ],
-                        features: [{
-                            ftype: 'filters',
-                            encode: false
-                        }]
-                    });
-
-                    waitsFor(function () {
-                        return wasCalled;
-                    });
-
-                    runs(function () {
-                        expect(Ext.data.Store.prototype.load.callCount).toBe(1);
-                    });
-                });
-
-                it('should only load the store once when sorting remotely and manually loading the store', function () {
-                    createGrid({
-                        fields: ['name'],
-                        remoteSort: true,
-                        sorters: [{
-                            property: 'name'
-                        }],
-                        data: null,
-                        proxy: {
-                            type: 'ajax',
-                            url: '/grid/Panel/statefulness'
-                        },
-                        listeners: {
-                            load: function (store, records, successful) {
-                                wasCalled = true;
-                            }
-                        }
-                    }, {
-                        id: 'foo2.5',
-                        stateful: true,
-                        stateId: 'unitTestSimpsonsGrid',
-                        columns: [
-                            { header: 'Name', dataIndex: 'name', width: 100, filter: { type: 'string' } }
-                        ],
-                        features: [{
-                            ftype: 'filters',
-                            encode: false
-                        }]
-                    });
-
-                    spyOn(grid.store, 'load').andCallThrough();
-
-                    grid.store.load();
-
-                    waitsFor(function () {
-                        return wasCalled;
-                    });
-
-                    runs(function () {
-                        expect(grid.store.load.callCount).toBe(1);
-                    });
-                });
-            });
-        });
-
-        xdescribe('should not make more than one network request', function () {
-            it('stateful, remoteSorting, grid filters', function () {
-                var storeCfg = {
-                    remoteSort: true,
-                    sorters: [{
-                        property: 'name',
-                        direction: 'DESC'
-                    }],
-                    autoLoad: true,
-                    data: null,
-                    proxy: {
-                        type: 'ajax',
-                        url: '/grid/Panel/statefulness',
-                        reader: {
-                            type: 'json',
-                            rootProperty: 'items'
-                        }
-                    }
-                };
-
-                Ext.state.Provider();
-                createGrid(storeCfg, {
-                    stateful: true,
-                    stateId: 'statefulness',
-                    width: 600,
-                    height: 400,
-                    delay: 0,
-                    features: [{
-                        ftype: 'filters',
-                        local: true,
-                        filters: [{
-                            dataIndex: 'name',
-                            value: 'ben'
-                        }]
-                    }]
-                });
-
-                grid.saveState();
-
-                Ext.destroy(grid);
-
-                spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
-
-                createGrid(storeCfg, {
-                    stateful: true,
-                    stateId: 'statefulness',
-                    width: 600,
-                    height: 400,
-                    delay: 0,
-                    features: [{
-                        ftype: 'filters',
-                        local: true,
-                        filters: [{
-                            dataIndex: 'name',
-                            value: 'ben'
-                        }]
-                    }]
-                });
-
-                waits(10);
-
-                runs(function () {
-                    expect(store.load.callCount).toBe(1);
-                });
-            });
-
-            it('stateful, remoteSorting', function () {
-                var storeCfg = {
-                    remoteSort: true,
-                    sorters: [{
-                        property: 'name',
-                        direction: 'DESC'
-                    }],
-                    autoLoad: true,
-                    data: null,
-                    proxy: {
-                        type: 'ajax',
-                        url: '/grid/Panel/statefulness',
-                        reader: {
-                            type: 'json',
-                            rootProperty: 'items'
-                        }
-                    }
-                };
-
-                Ext.state.Provider();
-
-                createGrid(storeCfg, {
-                    stateful: true,
-                    stateId: 'statefulness',
-                    width: 600,
-                    height: 400,
-                    delay: 0
-                });
-
-                grid.saveState();
-
-                Ext.destroy(grid);
-
-                spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
-
-                createGrid(storeCfg, {
-                    stateful: true,
-                    stateId: 'statefulness',
-                    width: 600,
-                    height: 400,
-                    delay: 0
-                });
-
-                waits(10);
-
-                runs(function () {
-                    expect(store.load.callCount).toBe(1);
-                });
-            });
-        });
-
-        xdescribe('should not make a network request when autoLoad is false', function () {
-            // Note that the storeCfg is the same as above except that autoLoad is explicitly set to false.
-            // This demonstrates how developers can control stores even when the grid is stateful.
-            it('stateful, remoteSorting, grid filters', function () {
-                var storeCfg = {
-                    remoteSort: true,
-                    sorters: [{
-                        property: 'name',
-                        direction: 'DESC'
-                    }],
-                    autoLoad: false,
-                    data: null,
-                    proxy: {
-                        type: 'ajax',
-                        url: '/grid/Panel/statefulness',
-                        reader: {
-                            type: 'json',
-                            rootProperty: 'items'
-                        }
-                    }
-                };
-
-                Ext.state.Provider();
-                createGrid(storeCfg, {
-                    stateful: true,
-                    stateId: 'statefulness',
-                    width: 600,
-                    height: 400,
-                    delay: 0,
-                    features: [{
-                        ftype: 'filters',
-                        local: true,
-                        filters: [{
-                            dataIndex: 'name',
-                            value: 'ben'
-                        }]
-                    }]
-                });
-
-                grid.saveState();
-
-                Ext.destroy(grid);
-
-                spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
-
-                createGrid(storeCfg, {
-                    stateful: true,
-                    stateId: 'statefulness',
-                    width: 600,
-                    height: 400,
-                    delay: 0,
-                    features: [{
-                        ftype: 'filters',
-                        local: true,
-                        filters: [{
-                            dataIndex: 'name',
-                            value: 'ben'
-                        }]
-                    }]
-                });
-
-                waits(10);
-
-                runs(function () {
-                    expect(store.load.callCount).toBe(0);
-                });
-            });
-
-            it('stateful, remoteSorting', function () {
-                var storeCfg = {
-                    remoteSort: true,
-                    sorters: [{
-                        property: 'name',
-                        direction: 'DESC'
-                    }],
-                    autoLoad: false,
-                    data: null,
-                    proxy: {
-                        type: 'ajax',
-                        url: '/grid/Panel/statefulness',
-                        reader: {
-                            type: 'json',
-                            rootProperty: 'items'
-                        }
-                    }
-                };
-
-                Ext.state.Provider();
-
-                createGrid(storeCfg, {
-                    stateful: true,
-                    stateId: 'statefulness',
-                    width: 600,
-                    height: 400,
-                    delay: 0
-                });
-
-                grid.saveState();
-
-                Ext.destroy(grid);
-
-                spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
-
-                createGrid(storeCfg, {
-                    stateful: true,
-                    stateId: 'statefulness',
-                    width: 600,
-                    height: 400,
-                    delay: 0
-                });
-
-                waits(10);
-
-                runs(function () {
-                    expect(store.load.callCount).toBe(0);
-                });
-            });
-        });
-        */
+         xit('should save and restore state', function() {
+         var sp = Ext.create('Ext.state.CookieProvider'),
+         statesaved = false,
+         staterestored = false,
+         headerCt,
+         stateId = Ext.id(null, 'unitTestSimpsonsGrid-');
+
+         // setup the state provider, all state information will be saved to a cookie
+         Ext.state.Manager.setProvider(sp);
+
+         createGrid({
+         statefulFilters: true,
+         groupField: 'sex',
+         fields:['name', 'sex', 'email', 'phone', {name: 'isSprog', type: 'boolean'}],
+         data: data
+         }, {
+         stateful: true,
+         stateId: stateId,
+         width: 600,
+         height: 400,
+         delay: 0,
+         features: [{
+         ftype: 'grouping'
+         }],
+         columns: [
+         { header: 'Name',  dataIndex: 'name', width: 200, locked: true },
+         { header: 'Email', dataIndex: 'email', flex: 1 },
+         { header: 'Sprog?', dataIndex: 'isSprog', flex: 1},
+         { header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true }
+         ],
+         selModel: {
+         selType: 'cellmodel'
+         },
+
+         listeners: {
+         statesave: function() {
+         statesaved = true;
+         }
+         }
+         });
+
+         headerCt = grid.normalGrid.headerCt;
+
+         grid.store.filter('isSprog', true);
+
+         // Swap the email and sprog columns
+         headerCt.move(1, 0);
+
+         // Wait for the stateTask to tick...
+         waitsFor(function() {
+         return statesaved === true && grid.stateTask.taskRunCount === 1;
+         });
+
+         runs(function() {
+         statesaved = false;
+
+         // Check that the first 2 columns in the normal grid have been swapped from configured order
+         expect(headerCt.items.items[0].text).toEqual("Sprog?");
+         expect(headerCt.items.items[1].text).toEqual("Email");
+
+         // Check that filtering has only left in the sprogs
+         expect(grid.store.getCount()).toEqual(2);
+
+         // Check that the grouping sort has put Lisa first, "Female" before "Male"
+         expect(grid.store.getAt(0).get('name')).toEqual('Lisa');
+         expect(grid.store.getAt(1).get('name')).toEqual('Bart');
+
+         // Reverse the default grouping direction to pug Bart first
+         // This should be saved in state
+         grid.store.group('sex', 'DESC');
+
+         // Wait for the stateTask to tick...
+         // taskRunCount is reset each time because the task runs one time only
+         });
+
+         waitsFor(function() {
+         return statesaved === true && grid.stateTask.taskRunCount === 1;
+         });
+
+         runs(function() {
+         // Check that the change of grouping sort has put Bart first, "Male" before "Female"
+         expect(grid.store.getAt(0).get('name')).toEqual('Bart');
+         expect(grid.store.getAt(1).get('name')).toEqual('Lisa');
+
+         grid.destroy();
+
+         // Recreate the grid
+         createGrid({
+         statefulFilters: true,
+         groupField: 'sex',
+         fields:['name', 'sex', 'email', 'phone', {name: 'isSprog', type: 'boolean'}],
+         data: {'items': [
+         { 'name': 'Homer', 'sex': 'Male',   "email": "homer@simpsons.com", "phone":"555-222-1244", "isSprog": false },
+         { 'name': 'Bart',  'sex': 'Male',   "email": "bart@simpsons.com",  "phone":"555-222-1234", "isSprog": true },
+         { 'name': 'Marge', 'sex': 'Female', "email": "marge@simpsons.com", "phone":"555-222-1254", "isSprog": false },
+         { 'name': 'Lisa',  'sex': 'Female', "email": "lisa@simpsons.com",  "phone":"555-111-1224", "isSprog": true }
+         ]}
+         }, {
+         deferRowRender: false,
+         stateful: true,
+         stateId: 'unitTestSimpsonsGrid',
+         width: 600,
+         height: 400,
+         features: [{
+         ftype: 'grouping'
+         }],
+         columns: [
+         { header: 'Name',  dataIndex: 'name', width: 200, locked: true },
+         { header: 'Email', dataIndex: 'email', flex: 1 },
+         { header: 'Sprog?', dataIndex: 'isSprog', flex: 1},
+         { header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true }
+         ],
+         selModel: {
+         selType: 'cellmodel'
+         },
+         listeners: {
+         staterestore: function() {
+         staterestored = true;
+         }
+         }
+         });
+         });
+
+         waitsFor(function() {
+         return staterestored === true && grid.stateTask.taskRunCount === 1;
+         });
+
+         runs(function() {
+         headerCt = grid.normalGrid.headerCt;
+
+         // Check that the first 2 columns in the normal grid have been swapped from configured order
+         expect(headerCt.items.items[0].text).toEqual("Sprog?");
+         expect(headerCt.items.items[1].text).toEqual("Email");
+
+         // Check that filtering has only left in the sprogs
+         expect(grid.store.getCount()).toEqual(2);
+
+         // Check that the grouping sort has put Bart first, "Male" before "Female"
+         // The change of grouping should have saved the grouping state.
+         expect(grid.store.getAt(0).get('name')).toEqual('Bart');
+         expect(grid.store.getAt(1).get('name')).toEqual('Lisa');
+         sp.clear('unitTestSimpsonsGrid');
+         });
+         });
+
+         xdescribe('loading/reloading', function () {
+         // Note the intent of these specs is to demonstrate that a store should only have
+         // its .load method called once regardless of any grid or store configs such as
+         // remote sorting and grid filters.  See EXTJS-10029.
+         var wasCalled = false;
+
+         Ext.ux.ajax.SimManager.init({
+         delay: 10,
+         defaultSimlet: null
+         }).register({
+         '/grid/Panel/statefulness': {
+         data: (function () {
+         var i = 0,
+         recs = [];
+
+         for (; i < 50; i++) {
+         recs.push({
+         name: 'Name' + i
+         });
+         }
+
+         return recs;
+         }()),
+         stype: 'json'
+         }
+         });
+
+         beforeEach(function () {
+         Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+         // Set a fake cookie so there is a state to lookup and apply.
+         Ext.state.Manager.set('unitTestSimpsonsGrid', 'BT was here');
+         });
+
+         afterEach(function () {
+         Ext.state.Manager.clear('unitTestSimpsonsGrid');
+         wasCalled = false;
+         });
+
+         describe('plain stateful grid', function () {
+         it('should only load the store once using an autoLoad store', function () {
+         spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
+
+         createGrid({
+         fields: ['name'],
+         autoLoad: true,
+         data: null,
+         proxy: {
+         type: 'ajax',
+         url: '/grid/Panel/statefulness'
+         },
+         listeners: {
+         load: function (store, records, successful) {
+         wasCalled = true;
+         }
+         }
+         //statefulFilters: true,
+         //fields:['name', 'sex', 'email', 'phone', {name: 'isSprog', type: 'boolean'}],
+         //data: data,
+         }, {
+         id: 'foo0',
+         stateful: true,
+         stateId: 'unitTestSimpsonsGrid',
+         columns: [
+         { header: 'Name', dataIndex: 'name', width: 100 }
+         ]
+         });
+
+         waitsFor(function () {
+         return wasCalled;
+         });
+
+         runs(function () {
+         expect(Ext.data.Store.prototype.load.callCount).toBe(1);
+         });
+         });
+
+         it('should only load the store once when manually loading the store', function () {
+         createGrid({
+         fields: ['name'],
+         data: null,
+         proxy: {
+         type: 'ajax',
+         url: '/grid/Panel/statefulness'
+         },
+         listeners: {
+         load: function (store, records, successful) {
+         wasCalled = true;
+         }
+         }
+         }, {
+         id: 'foo0.5',
+         stateful: true,
+         stateId: 'unitTestSimpsonsGrid',
+         columns: [
+         { header: 'Name', dataIndex: 'name', width: 100 }
+         ]
+         });
+
+         spyOn(grid.store, 'load').andCallThrough();
+
+         grid.store.load();
+
+         waitsFor(function () {
+         return wasCalled;
+         });
+
+         runs(function () {
+         expect(grid.store.load.callCount).toBe(1);
+         });
+         });
+         });
+
+         describe('with remote sorting enabled', function () {
+         it('should only load the store once when sorting remotely and using an autoLoad store', function () {
+         spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
+
+         createGrid({
+         fields: ['name'],
+         remoteSort: true,
+         sorters: [{
+         property: 'name'
+         }],
+         autoLoad: true,
+         data: null,
+         proxy: {
+         type: 'ajax',
+         url: '/grid/Panel/statefulness'
+         },
+         listeners: {
+         load: function (store, records, successful) {
+         wasCalled = true;
+         }
+         }
+         }, {
+         id: 'foo1',
+         stateful: true,
+         stateId: 'unitTestSimpsonsGrid',
+         columns: [
+         { header: 'Name', dataIndex: 'name', width: 100 }
+         ]
+         });
+
+         waitsFor(function () {
+         return wasCalled;
+         });
+
+         runs(function () {
+         expect(Ext.data.Store.prototype.load.callCount).toBe(1);
+         });
+         });
+
+         it('should only load the store once when sorting remotely and manually loading the store', function () {
+         createGrid({
+         fields: ['name'],
+         remoteSort: true,
+         sorters: [{
+         property: 'name'
+         }],
+         data: null,
+         proxy: {
+         type: 'ajax',
+         url: '/grid/Panel/statefulness'
+         },
+         listeners: {
+         load: function (store, records, successful) {
+         wasCalled = true;
+         }
+         }
+         }, {
+         id: 'foo1.5',
+         stateful: true,
+         stateId: 'unitTestSimpsonsGrid',
+         columns: [
+         { header: 'Name', dataIndex: 'name', width: 100 }
+         ]
+         });
+
+         spyOn(grid.store, 'load').andCallThrough();
+
+         grid.store.load();
+
+         waitsFor(function () {
+         return wasCalled;
+         });
+
+         runs(function () {
+         expect(grid.store.load.callCount).toBe(1);
+         });
+         });
+         });
+
+         describe('with remote sorting enabled and grid filters', function () {
+         it('should only load the store once when sorting remotely and using an autoLoad store', function () {
+         spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
+
+         createGrid({
+         fields: ['name'],
+         remoteSort: true,
+         sorters: [{
+         property: 'name'
+         }],
+         autoLoad: true,
+         data: null,
+         proxy: {
+         type: 'ajax',
+         url: '/grid/Panel/statefulness'
+         },
+         listeners: {
+         load: function (store, records, successful) {
+         wasCalled = true;
+         }
+         }
+         }, {
+         id: 'foo2',
+         stateful: true,
+         stateId: 'unitTestSimpsonsGrid',
+         columns: [
+         { header: 'Name', dataIndex: 'name', width: 100, filter: { type: 'string' } }
+         ],
+         features: [{
+         ftype: 'filters',
+         encode: false
+         }]
+         });
+
+         waitsFor(function () {
+         return wasCalled;
+         });
+
+         runs(function () {
+         expect(Ext.data.Store.prototype.load.callCount).toBe(1);
+         });
+         });
+
+         it('should only load the store once when sorting remotely and manually loading the store', function () {
+         createGrid({
+         fields: ['name'],
+         remoteSort: true,
+         sorters: [{
+         property: 'name'
+         }],
+         data: null,
+         proxy: {
+         type: 'ajax',
+         url: '/grid/Panel/statefulness'
+         },
+         listeners: {
+         load: function (store, records, successful) {
+         wasCalled = true;
+         }
+         }
+         }, {
+         id: 'foo2.5',
+         stateful: true,
+         stateId: 'unitTestSimpsonsGrid',
+         columns: [
+         { header: 'Name', dataIndex: 'name', width: 100, filter: { type: 'string' } }
+         ],
+         features: [{
+         ftype: 'filters',
+         encode: false
+         }]
+         });
+
+         spyOn(grid.store, 'load').andCallThrough();
+
+         grid.store.load();
+
+         waitsFor(function () {
+         return wasCalled;
+         });
+
+         runs(function () {
+         expect(grid.store.load.callCount).toBe(1);
+         });
+         });
+         });
+         });
+
+         xdescribe('should not make more than one network request', function () {
+         it('stateful, remoteSorting, grid filters', function () {
+         var storeCfg = {
+         remoteSort: true,
+         sorters: [{
+         property: 'name',
+         direction: 'DESC'
+         }],
+         autoLoad: true,
+         data: null,
+         proxy: {
+         type: 'ajax',
+         url: '/grid/Panel/statefulness',
+         reader: {
+         type: 'json',
+         rootProperty: 'items'
+         }
+         }
+         };
+
+         Ext.state.Provider();
+         createGrid(storeCfg, {
+         stateful: true,
+         stateId: 'statefulness',
+         width: 600,
+         height: 400,
+         delay: 0,
+         features: [{
+         ftype: 'filters',
+         local: true,
+         filters: [{
+         dataIndex: 'name',
+         value: 'ben'
+         }]
+         }]
+         });
+
+         grid.saveState();
+
+         Ext.destroy(grid);
+
+         spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
+
+         createGrid(storeCfg, {
+         stateful: true,
+         stateId: 'statefulness',
+         width: 600,
+         height: 400,
+         delay: 0,
+         features: [{
+         ftype: 'filters',
+         local: true,
+         filters: [{
+         dataIndex: 'name',
+         value: 'ben'
+         }]
+         }]
+         });
+
+         waits(10);
+
+         runs(function () {
+         expect(store.load.callCount).toBe(1);
+         });
+         });
+
+         it('stateful, remoteSorting', function () {
+         var storeCfg = {
+         remoteSort: true,
+         sorters: [{
+         property: 'name',
+         direction: 'DESC'
+         }],
+         autoLoad: true,
+         data: null,
+         proxy: {
+         type: 'ajax',
+         url: '/grid/Panel/statefulness',
+         reader: {
+         type: 'json',
+         rootProperty: 'items'
+         }
+         }
+         };
+
+         Ext.state.Provider();
+
+         createGrid(storeCfg, {
+         stateful: true,
+         stateId: 'statefulness',
+         width: 600,
+         height: 400,
+         delay: 0
+         });
+
+         grid.saveState();
+
+         Ext.destroy(grid);
+
+         spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
+
+         createGrid(storeCfg, {
+         stateful: true,
+         stateId: 'statefulness',
+         width: 600,
+         height: 400,
+         delay: 0
+         });
+
+         waits(10);
+
+         runs(function () {
+         expect(store.load.callCount).toBe(1);
+         });
+         });
+         });
+
+         xdescribe('should not make a network request when autoLoad is false', function () {
+         // Note that the storeCfg is the same as above except that autoLoad is explicitly set to false.
+         // This demonstrates how developers can control stores even when the grid is stateful.
+         it('stateful, remoteSorting, grid filters', function () {
+         var storeCfg = {
+         remoteSort: true,
+         sorters: [{
+         property: 'name',
+         direction: 'DESC'
+         }],
+         autoLoad: false,
+         data: null,
+         proxy: {
+         type: 'ajax',
+         url: '/grid/Panel/statefulness',
+         reader: {
+         type: 'json',
+         rootProperty: 'items'
+         }
+         }
+         };
+
+         Ext.state.Provider();
+         createGrid(storeCfg, {
+         stateful: true,
+         stateId: 'statefulness',
+         width: 600,
+         height: 400,
+         delay: 0,
+         features: [{
+         ftype: 'filters',
+         local: true,
+         filters: [{
+         dataIndex: 'name',
+         value: 'ben'
+         }]
+         }]
+         });
+
+         grid.saveState();
+
+         Ext.destroy(grid);
+
+         spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
+
+         createGrid(storeCfg, {
+         stateful: true,
+         stateId: 'statefulness',
+         width: 600,
+         height: 400,
+         delay: 0,
+         features: [{
+         ftype: 'filters',
+         local: true,
+         filters: [{
+         dataIndex: 'name',
+         value: 'ben'
+         }]
+         }]
+         });
+
+         waits(10);
+
+         runs(function () {
+         expect(store.load.callCount).toBe(0);
+         });
+         });
+
+         it('stateful, remoteSorting', function () {
+         var storeCfg = {
+         remoteSort: true,
+         sorters: [{
+         property: 'name',
+         direction: 'DESC'
+         }],
+         autoLoad: false,
+         data: null,
+         proxy: {
+         type: 'ajax',
+         url: '/grid/Panel/statefulness',
+         reader: {
+         type: 'json',
+         rootProperty: 'items'
+         }
+         }
+         };
+
+         Ext.state.Provider();
+
+         createGrid(storeCfg, {
+         stateful: true,
+         stateId: 'statefulness',
+         width: 600,
+         height: 400,
+         delay: 0
+         });
+
+         grid.saveState();
+
+         Ext.destroy(grid);
+
+         spyOn(Ext.data.Store.prototype, 'load').andCallThrough();
+
+         createGrid(storeCfg, {
+         stateful: true,
+         stateId: 'statefulness',
+         width: 600,
+         height: 400,
+         delay: 0
+         });
+
+         waits(10);
+
+         runs(function () {
+         expect(store.load.callCount).toBe(0);
+         });
+         });
+         });
+         */
     });
 
-    describe('updating', function() {
+    describe('updating', function () {
         var store, grid, view, layoutCounter, refreshCounter;
 
-        beforeEach(function() {
+        beforeEach(function () {
             store = Ext.create('Ext.data.Store', {
-                fields:['name', 'email', 'phone'],
+                fields: ['name', 'email', 'phone'],
                 proxy: {
                     type: 'ajax',
                     url: 'faleUrl'
@@ -2500,11 +2500,11 @@ describe('Ext.grid.Panel', function(){
                 title: 'Simpsons',
                 store: store,
                 columns: [
-                    { header: 'Name',  dataIndex: 'name', width: 100 },
+                    {header: 'Name', dataIndex: 'name', width: 100},
                     // Specify variableRowHeight so we can test batching of the layouts caused
                     // by two returned updated records triggering refreshSize calls.
-                    { header: 'Email', dataIndex: 'email', flex: 1, variableRowHeight: true },
-                    { header: 'Phone', dataIndex: 'phone', flex: 1}
+                    {header: 'Email', dataIndex: 'email', flex: 1, variableRowHeight: true},
+                    {header: 'Phone', dataIndex: 'phone', flex: 1}
                 ],
                 height: 200,
                 width: 400,
@@ -2514,22 +2514,22 @@ describe('Ext.grid.Panel', function(){
             MockAjaxManager.addMethods();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             store.destroy();
             grid.destroy();
             MockAjaxManager.removeMethods();
         });
 
-        it("should only update the modified field's cell", function() {
+        it("should only update the modified field's cell", function () {
             store.load();
 
             Ext.Ajax.mockComplete({
                 status: 200,
                 responseText: Ext.encode([
-                    { name: 'Lisa',  email: 'lisa@simpsons.com',  phone: '555-111-1224'  },
-                    { name: 'Bart',  email: 'bart@simpsons.com',  phone: '555-222-1234'  },
-                    { name: 'Homer', email: 'homer@simpsons.com', phone: '555-222-1244'  },
-                    { name: 'Marge', email: 'marge@simpsons.com', phone: '555-222-1254'  }
+                    {name: 'Lisa', email: 'lisa@simpsons.com', phone: '555-111-1224'},
+                    {name: 'Bart', email: 'bart@simpsons.com', phone: '555-222-1234'},
+                    {name: 'Homer', email: 'homer@simpsons.com', phone: '555-222-1244'},
+                    {name: 'Marge', email: 'marge@simpsons.com', phone: '555-222-1254'}
                 ])
             });
 
@@ -2540,12 +2540,12 @@ describe('Ext.grid.Panel', function(){
 
             store.getAt(0).set('phone', "555-111-1111");
             store.getAt(1).set('phone', "555-222-2222");
-            
+
             // After that set of  the phone number ONLY the last cell, [2] must have been replaced
             expect(firstRow.childNodes[0].innerHTML === nameCell).toBe(true);
             expect(firstRow.childNodes[1].innerHTML === emailCell).toBe(true);
             expect(firstRow.childNodes[2].innerHTML === phoneCell).toBe(false);
-            
+
             // cell[2] must contain the new phone number value
             expect(firstRow.childNodes[2].firstChild.firstChild.nodeValue).toBe('555-111-1111');
 
@@ -2556,7 +2556,7 @@ describe('Ext.grid.Panel', function(){
             // There should only be one more layout caused by the sync.
             // The two record updates in returned data should be bracketed by a suspend.
             layoutCounter = grid.layoutCounter;
-            
+
             // sync should NOT fire refresh.
             refreshCounter = view.refreshCounter;
 
@@ -2565,11 +2565,11 @@ describe('Ext.grid.Panel', function(){
             Ext.Ajax.mockComplete({
                 status: 200,
                 responseText: Ext.encode([
-                    { name: 'Lisa',  email: 'lisa@simpsons.google.com',  phone: '555-111-1111'  },
-                    { name: 'Bart',  email: 'bart@simpsons.google.com',  phone: '555-222-2222'  }
+                    {name: 'Lisa', email: 'lisa@simpsons.google.com', phone: '555-111-1111'},
+                    {name: 'Bart', email: 'bart@simpsons.google.com', phone: '555-222-2222'}
                 ])
             });
-                
+
             // Only one more layout should have been performed.
             // The two record updates in returned data should be bracketed by a suspend.
             // sync should NOT fire refresh.
@@ -2583,7 +2583,7 @@ describe('Ext.grid.Panel', function(){
             expect(firstRow.childNodes[0].innerHTML === nameCell).toBe(true);
             expect(firstRow.childNodes[1].innerHTML === emailCell).toBe(false);
             expect(firstRow.childNodes[2].innerHTML === phoneCell).toBe(true);
-            
+
             // cell[1] must contain the new phone email value
             expect(firstRow.childNodes[1].firstChild.firstChild.nodeValue).toBe('lisa@simpsons.google.com');
         });
@@ -2592,7 +2592,7 @@ describe('Ext.grid.Panel', function(){
     xdescribe('forceFit', function () {
         var grid, store, viewBody, beforeWidth, afterWidth;
 
-        afterEach(function(){
+        afterEach(function () {
             store.destroy();
             Ext.destroy(grid);
             grid = store = viewBody = beforeWidth = afterWidth = null;
@@ -2600,13 +2600,17 @@ describe('Ext.grid.Panel', function(){
 
         it('should not allow extremely wide columns to resize the view', function () {
             store = Ext.create('Ext.data.Store', {
-                storeId:'simpsonsStore',
-                fields:['name', 'email', 'phone'],
+                storeId: 'simpsonsStore',
+                fields: ['name', 'email', 'phone'],
                 data: [
-                    { 'name': 'Lisa asdf asdf asfd asdf asdf asfd asfd asfd asdf asfd asdf asdf asdf asdf asdf asdf asdf asdf',  "email":"lisa@simpsons.com",  "phone":"555-111-1224"  },
-                    { 'name': 'Bart',  "email":"bart@simpsons.com",  "phone":"555-222-1234"  },
-                    { 'name': 'Homer', "email":"homer@simpsons.com", "phone":"555-222-1244"  },
-                    { 'name': 'Marge', "email":"marge@simpsons.com", "phone":"555-222-1254"  }
+                    {
+                        'name': 'Lisa asdf asdf asfd asdf asdf asfd asfd asfd asdf asfd asdf asdf asdf asdf asdf asdf asdf asdf',
+                        "email": "lisa@simpsons.com",
+                        "phone": "555-111-1224"
+                    },
+                    {'name': 'Bart', "email": "bart@simpsons.com", "phone": "555-222-1234"},
+                    {'name': 'Homer', "email": "homer@simpsons.com", "phone": "555-222-1244"},
+                    {'name': 'Marge', "email": "marge@simpsons.com", "phone": "555-222-1254"}
                 ]
             });
 
@@ -2615,9 +2619,9 @@ describe('Ext.grid.Panel', function(){
                 store: store,
                 forceFit: true,
                 columns: [
-                    { header: 'Name',  dataIndex: 'name', width: 100 },
-                    { header: 'Email', dataIndex: 'email', width: 50 },
-                    { header: 'Phone', dataIndex: 'phone', width: 50}
+                    {header: 'Name', dataIndex: 'name', width: 100},
+                    {header: 'Email', dataIndex: 'email', width: 50},
+                    {header: 'Phone', dataIndex: 'phone', width: 50}
                 ],
                 height: 200,
                 width: 200,
@@ -2638,22 +2642,22 @@ describe('Ext.grid.Panel', function(){
 
             store = Ext.create('Ext.data.ArrayStore', {
                 fields: [
-                   {name: 'company'},
-                   {name: 'price',      type: 'float', convert: null,     defaultValue: undefined},
-                   {name: 'change',     type: 'float', convert: null,     defaultValue: undefined},
-                   {name: 'pctChange',  type: 'float', convert: null,     defaultValue: undefined},
-                   {name: 'lastChange', type: 'date',  dateFormat: 'n/j h:ia', defaultValue: undefined}
+                    {name: 'company'},
+                    {name: 'price', type: 'float', convert: null, defaultValue: undefined},
+                    {name: 'change', type: 'float', convert: null, defaultValue: undefined},
+                    {name: 'pctChange', type: 'float', convert: null, defaultValue: undefined},
+                    {name: 'lastChange', type: 'date', dateFormat: 'n/j h:ia', defaultValue: undefined}
                 ],
                 data: [
-                    ['3m Co',                               71.72, 0.02,  0.03,  '9/1 12:00am'],
-                    ['Alcoa Inc',                           29.01, 0.42,  1.47,  '9/1 12:00am'],
-                    ['Altria Group Inc',                    83.81, 0.28,  0.34,  '9/1 12:00am'],
-                    ['American Express Company',            52.55, 0.01,  0.02,  '9/1 12:00am'],
-                    ['American International Group, Inc.',  64.13, 0.31,  0.49,  '9/1 12:00am'],
-                    ['AT&T Inc.',                           31.61, -0.48, -1.54, '9/1 12:00am'],
-                    ['Boeing Co.',                          75.43, 0.53,  0.71,  '9/1 12:00am'],
-                    ['Caterpillar Inc.',                    67.27, 0.92,  1.39,  '9/1 12:00am'],
-                    ['Citigroup, Inc.',                     49.37, 0.02,  0.04,  '9/1 12:00am']
+                    ['3m Co', 71.72, 0.02, 0.03, '9/1 12:00am'],
+                    ['Alcoa Inc', 29.01, 0.42, 1.47, '9/1 12:00am'],
+                    ['Altria Group Inc', 83.81, 0.28, 0.34, '9/1 12:00am'],
+                    ['American Express Company', 52.55, 0.01, 0.02, '9/1 12:00am'],
+                    ['American International Group, Inc.', 64.13, 0.31, 0.49, '9/1 12:00am'],
+                    ['AT&T Inc.', 31.61, -0.48, -1.54, '9/1 12:00am'],
+                    ['Boeing Co.', 75.43, 0.53, 0.71, '9/1 12:00am'],
+                    ['Caterpillar Inc.', 67.27, 0.92, 1.39, '9/1 12:00am'],
+                    ['Citigroup, Inc.', 49.37, 0.02, 0.04, '9/1 12:00am']
                 ]
             });
 
@@ -2661,24 +2665,24 @@ describe('Ext.grid.Panel', function(){
                 store: store,
                 forceFit: true,
                 columns: [{
-                    text     : 'Company',
+                    text: 'Company',
                     width: 200,
                     dataIndex: 'company'
                 }, {
-                    text     : 'Price',
-                    width    : 75,
+                    text: 'Price',
+                    width: 75,
                     dataIndex: 'price'
                 }, {
-                    text     : 'Change',
-                    width    : 75,
+                    text: 'Change',
+                    width: 75,
                     dataIndex: 'change'
                 }, {
-                    text     : '% Change',
-                    width    : 75,
+                    text: '% Change',
+                    width: 75,
                     dataIndex: 'pctChange'
                 }, {
-                    text     : 'Last Updated',
-                    width    : 85,
+                    text: 'Last Updated',
+                    width: 85,
                     dataIndex: 'lastChange'
                 }, {
                     menuDisabled: true,
@@ -2686,14 +2690,14 @@ describe('Ext.grid.Panel', function(){
                     xtype: 'actioncolumn',
                     width: 50,
                     items: [{
-                        icon   : '../shared/icons/fam/delete.gif',  // Use a URL in the icon config
+                        icon: '../shared/icons/fam/delete.gif',  // Use a URL in the icon config
                         tooltip: 'Sell stock',
-                        handler: function(grid, rowIndex, colIndex) {
+                        handler: function (grid, rowIndex, colIndex) {
                             var rec = store.getAt(rowIndex);
                             alert("Sell " + rec.get('company'));
                         }
                     }, {
-                        handler: function(grid, rowIndex, colIndex) {
+                        handler: function (grid, rowIndex, colIndex) {
                             var rec = store.getAt(rowIndex);
                             alert((rec.get('change') < 0 ? "Hold " : "Buy ") + rec.get('company'));
                         }
@@ -2749,9 +2753,9 @@ describe('Ext.grid.Panel', function(){
             createGrid({}, {
                 columns: new Ext.grid.header.Container({
                     items: [
-                        { header: 'Name',  dataIndex: 'name', width: 100 },
-                        { header: 'Email', dataIndex: 'email', flex: 1 },
-                        { header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true }
+                        {header: 'Name', dataIndex: 'name', width: 100},
+                        {header: 'Email', dataIndex: 'email', flex: 1},
+                        {header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true}
                     ]
                 })
             });
@@ -2760,8 +2764,8 @@ describe('Ext.grid.Panel', function(){
         });
     });
 
-    describe('focusing', function() {
-        it("should restore focus when the view is refreshed with no buffered rendering", function() {
+    describe('focusing', function () {
+        it("should restore focus when the view is refreshed with no buffered rendering", function () {
             var cellBeforeRefresh,
                 cellAfterRefresh;
 
@@ -2771,14 +2775,14 @@ describe('Ext.grid.Panel', function(){
             navModel.setPosition(1, 1);
 
             // Navigation conditions must be met.
-            cellBeforeRefresh = view.getCellByPosition({row: 1, column:1});
+            cellBeforeRefresh = view.getCellByPosition({row: 1, column: 1});
             expect(view.el.query('.' + view.focusedItemCls).length).toBe(1);
             expect(cellBeforeRefresh.hasCls(view.focusedItemCls)).toBe(true);
 
             store.fireEvent('refresh', store);
 
             // The DOM has changed, but focus conditions must be restored
-            cellAfterRefresh = view.getCellByPosition({row: 1, column:1});
+            cellAfterRefresh = view.getCellByPosition({row: 1, column: 1});
             expect(cellAfterRefresh.dom !== cellBeforeRefresh.dom).toBe(true);
 
             // Navigation conditions must be restored after the refresh.
@@ -2786,7 +2790,7 @@ describe('Ext.grid.Panel', function(){
             expect(cellAfterRefresh.hasCls(view.focusedItemCls)).toBe(true);
         });
 
-        it("should restore focus when the view is refreshed with buffered rendering", function() {
+        it("should restore focus when the view is refreshed with buffered rendering", function () {
             var cellBeforeRefresh,
                 cellAfterRefresh;
 
@@ -2794,14 +2798,14 @@ describe('Ext.grid.Panel', function(){
             navModel.setPosition(1, 1);
 
             // Navigation conditions must be met.
-            cellBeforeRefresh = view.getCellByPosition({row: 1, column:1});
+            cellBeforeRefresh = view.getCellByPosition({row: 1, column: 1});
             expect(view.el.query('.' + view.focusedItemCls).length).toBe(1);
             expect(cellBeforeRefresh.hasCls(view.focusedItemCls)).toBe(true);
 
             store.fireEvent('refresh', store);
 
             // The DOM has changed, but focus conditions must be restored
-            cellAfterRefresh = view.getCellByPosition({row: 1, column:1});
+            cellAfterRefresh = view.getCellByPosition({row: 1, column: 1});
             expect(cellAfterRefresh.dom !== cellBeforeRefresh.dom).toBe(true);
 
             // Navigation conditions must be restored after the refresh.
@@ -2811,10 +2815,10 @@ describe('Ext.grid.Panel', function(){
 
     });
 
-    describe('buffered store, locking and sorting', function() {
+    describe('buffered store, locking and sorting', function () {
         var ForumThread;
 
-        beforeEach(function() {
+        beforeEach(function () {
             MockAjaxManager.addMethods();
             ForumThread = Ext.define(null, {
                 extend: 'Ext.data.Model',
@@ -2822,23 +2826,23 @@ describe('Ext.grid.Panel', function(){
             });
         });
 
-        afterEach(function() {
+        afterEach(function () {
             MockAjaxManager.removeMethods();
         });
 
         // https://sencha.jira.com/browse/EXTJS-18848
-        it('should successfully sort a locked grid with a buffered store', function() {
+        it('should successfully sort a locked grid with a buffered store', function () {
             function makeRows(n, total) {
                 var data = [],
                     i = 1;
-                    
+
                 for (i = 1; i <= n; ++i) {
                     data.push({
                         id: i,
                         title: 'Title' + i
                     });
-                } 
-                
+                }
+
                 return {
                     data: data,
                     totalCount: total
@@ -2860,7 +2864,7 @@ describe('Ext.grid.Panel', function(){
                 },
                 remoteFilter: true
             });
-        
+
             grid = new Ext.grid.Panel({
                 width: 700,
                 height: 500,
@@ -2875,7 +2879,7 @@ describe('Ext.grid.Panel', function(){
                     flex: 1
                 }],
                 renderTo: Ext.getBody()
-            });            
+            });
             store.load();
 
             Ext.Ajax.mockComplete({
@@ -2894,10 +2898,10 @@ describe('Ext.grid.Panel', function(){
         });
     });
 
-    describe('buffered store, dataset shrinks on reload', function() {
+    describe('buffered store, dataset shrinks on reload', function () {
         var ForumThread;
 
-        beforeEach(function() {
+        beforeEach(function () {
             MockAjaxManager.addMethods();
             ForumThread = Ext.define(null, {
                 extend: 'Ext.data.Model',
@@ -2905,22 +2909,22 @@ describe('Ext.grid.Panel', function(){
             });
         });
 
-        afterEach(function() {
+        afterEach(function () {
             MockAjaxManager.removeMethods();
         });
 
-        it('should successfully reload the smaller dataset, and render what it can', function() {
+        it('should successfully reload the smaller dataset, and render what it can', function () {
             function makeRows(n, total) {
                 var data = [],
                     i = 1;
-                    
+
                 for (i = 1; i <= n; ++i) {
                     data.push({
                         id: i,
                         title: 'Title' + i
                     });
-                } 
-                
+                }
+
                 return {
                     data: data,
                     totalCount: total
@@ -2942,7 +2946,7 @@ describe('Ext.grid.Panel', function(){
                 },
                 remoteFilter: true
             });
-        
+
             grid = new Ext.grid.Panel({
                 width: 700,
                 height: 500,
@@ -2955,7 +2959,7 @@ describe('Ext.grid.Panel', function(){
                 renderTo: Ext.getBody()
             });
             var view = grid.getView();
-            
+
             store.load();
 
             Ext.Ajax.mockComplete({
@@ -2964,14 +2968,14 @@ describe('Ext.grid.Panel', function(){
             });
 
             // Scroll until we've moved out of the initial rendered block
-            waitsFor(function() {
+            waitsFor(function () {
                 if (view.all.startIndex > 0) {
                     return true;
                 }
                 view.scrollTo(0, view.getScrollY() + 100);
             });
-            
-            runs(function() {
+
+            runs(function () {
 
                 store.reload();
 
@@ -2987,10 +2991,10 @@ describe('Ext.grid.Panel', function(){
         });
     });
 
-    xdescribe("selected/focused/hover css classes", function() {
+    xdescribe("selected/focused/hover css classes", function () {
         beforeEach(createGrid);
 
-        it("should add and remove the selected and before selected classes when the selection changes", function() {
+        it("should add and remove the selected and before selected classes when the selection changes", function () {
             selModel.select(1);
             expect(view.getNode(1)).toHaveCls(selectedItemCls);
             selModel.select(3);
@@ -2998,7 +3002,7 @@ describe('Ext.grid.Panel', function(){
             expect(view.getNode(3)).toHaveCls(selectedItemCls);
         });
 
-        it("should add and remove the focused and before focused classes when the focus changes", function() {
+        it("should add and remove the focused and before focused classes when the focus changes", function () {
             selModel.setLastFocused(store.getAt(1));
             expect(view.getNode(1)).toHaveCls(focusedItemCls);
             selModel.setLastFocused(store.getAt(3));
@@ -3007,7 +3011,7 @@ describe('Ext.grid.Panel', function(){
 
         });
 
-        it("should add and remove the over and before over classes when the hover state changes", function() {
+        it("should add and remove the over and before over classes when the hover state changes", function () {
             view.setHighlightedItem(view.getNode(1));
             expect(view.getNode(1)).toHaveCls(overItemCls);
             view.setHighlightedItem(view.getNode(3));
@@ -3015,77 +3019,77 @@ describe('Ext.grid.Panel', function(){
             expect(view.getNode(3)).toHaveCls(overItemCls);
         });
 
-        it("should add and remove the before selected class to the table element when the first row is selected and unselected", function() {
+        it("should add and remove the before selected class to the table element when the first row is selected and unselected", function () {
             selModel.select(0);
             expect(view.getNode(0)).toHaveCls(selectedItemCls);
             selModel.select(2);
         });
 
-        it("should add and remove the before focused class to the table element when the first row is focused and unfocused", function() {
+        it("should add and remove the before focused class to the table element when the first row is focused and unfocused", function () {
             selModel.setLastFocused(store.getAt(0));
             expect(view.getNode(0)).toHaveCls(focusedItemCls);
             selModel.setLastFocused(store.getAt(1));
         });
 
-        it("should add and remove the before over class to the table element when the first row is focused and unfocused", function() {
+        it("should add and remove the before over class to the table element when the first row is focused and unfocused", function () {
             view.setHighlightedItem(view.getNode(0));
             expect(view.getNode(0)).toHaveCls(overItemCls);
             view.setHighlightedItem(view.getNode(1));
         });
 
-        it("should restore selected classes when the view is refreshed", function() {
+        it("should restore selected classes when the view is refreshed", function () {
             selModel.select(1);
             view.refresh();
             expect(view.getNode(1)).toHaveCls(selectedItemCls);
         });
 
-        it("should restore selected classes when the view is refreshed (first row)", function() {
+        it("should restore selected classes when the view is refreshed (first row)", function () {
             selModel.select(0);
             view.refresh();
             expect(view.getNode(0)).toHaveCls(selectedItemCls);
         });
 
-        it("should restore focused classes when the view is refreshed", function() {
+        it("should restore focused classes when the view is refreshed", function () {
             selModel.setLastFocused(store.getAt(1));
             view.refresh();
             expect(view.getNode(1)).toHaveCls(focusedItemCls);
         });
 
-        it("should restore focused classes when the view is refreshed (first row)", function() {
+        it("should restore focused classes when the view is refreshed (first row)", function () {
             selModel.setLastFocused(store.getAt(0));
             view.refresh();
             expect(view.getNode(0)).toHaveCls(focusedItemCls);
         });
 
-        it("should update the before selected class when a row is added before the selected row", function() {
+        it("should update the before selected class when a row is added before the selected row", function () {
             selModel.select(1);
-            store.insert(1, { name: 'Phil', email: 'phil.guerrant@sencha.com', phone: '1-800-SENCHA' });
+            store.insert(1, {name: 'Phil', email: 'phil.guerrant@sencha.com', phone: '1-800-SENCHA'});
             expect(view.getNode(2)).toHaveCls(selectedItemCls);
         });
 
-        it("should update the before selected class when a row is removed before the selected row", function() {
+        it("should update the before selected class when a row is removed before the selected row", function () {
             selModel.select(2);
             store.removeAt(1);
             expect(view.getNode(1)).toHaveCls(selectedItemCls);
         });
 
-        it("should update the before focused class when a row is added before the focused row", function() {
+        it("should update the before focused class when a row is added before the focused row", function () {
             selModel.setLastFocused(store.getAt(1));
-            store.insert(1, { name: 'Phil', email: 'phil.guerrant@sencha.com', phone: '1-800-SENCHA' });
+            store.insert(1, {name: 'Phil', email: 'phil.guerrant@sencha.com', phone: '1-800-SENCHA'});
             expect(view.getNode(2)).toHaveCls(focusedItemCls);
         });
 
-        it("should update the before focused class when a row is removed before the focused row", function() {
+        it("should update the before focused class when a row is removed before the focused row", function () {
             selModel.select(2);
             store.removeAt(1);
             expect(view.getNode(1)).toHaveCls(focusedItemCls);
         });
     });
 
-    xdescribe("selected/focused/hover css classes - through events", function() {
+    xdescribe("selected/focused/hover css classes - through events", function () {
         beforeEach(createGrid);
 
-        it("should add and remove the selected and before selected classes when the selection changes", function() {
+        it("should add and remove the selected and before selected classes when the selection changes", function () {
             triggerCellMouseEvent('click', 1, 0);
             expect(view.getNode(1)).toHaveCls(selectedItemCls);
             triggerCellMouseEvent('click', 3, 0);
@@ -3093,7 +3097,7 @@ describe('Ext.grid.Panel', function(){
             expect(view.getNode(3)).toHaveCls(selectedItemCls);
         });
 
-        it("should add and remove the selected and before selected classes when the selection changes when using the contextmenu event", function() {
+        it("should add and remove the selected and before selected classes when the selection changes when using the contextmenu event", function () {
             triggerCellMouseEvent('contextmenu', 1, 0);
             expect(view.getNode(1)).toHaveCls(selectedItemCls);
             triggerCellMouseEvent('contextmenu', 3, 0);
@@ -3101,7 +3105,7 @@ describe('Ext.grid.Panel', function(){
             expect(view.getNode(3)).toHaveCls(selectedItemCls);
         });
 
-        it("should add and remove the focused and before focused classes when the focus changes", function() {
+        it("should add and remove the focused and before focused classes when the focus changes", function () {
             // Move upwards from row 2 to row 1
             triggerCellKeyEvent(2, 0, 'keydown', Ext.event.Event.UP);
 
@@ -3115,7 +3119,7 @@ describe('Ext.grid.Panel', function(){
             expect(view.getNode(3)).toHaveCls(focusedItemCls);
         });
 
-        it("should add and remove the over and before over classes when the hover state changes", function() {
+        it("should add and remove the over and before over classes when the hover state changes", function () {
             triggerCellMouseEvent('mouseover', 1, 0);
             expect(view.getNode(1)).toHaveCls(overItemCls);
 
@@ -3126,13 +3130,13 @@ describe('Ext.grid.Panel', function(){
 
         });
 
-        it("should add and remove the before selected class to the table element when the first row is selected and unselected", function() {
+        it("should add and remove the before selected class to the table element when the first row is selected and unselected", function () {
             triggerCellMouseEvent('click', 0, 0);
             expect(view.getNode(0)).toHaveCls(selectedItemCls);
             triggerCellMouseEvent('click', 2, 0);
         });
 
-        it("should add and remove the before focused class to the table element when the first row is focused and unfocused", function() {
+        it("should add and remove the before focused class to the table element when the first row is focused and unfocused", function () {
 
             // Move upwards from row 1 to row 0
             triggerCellKeyEvent(1, 0, 'keydown', Ext.event.Event.UP);
@@ -3143,7 +3147,7 @@ describe('Ext.grid.Panel', function(){
             selModel.setLastFocused(store.getAt(1));
         });
 
-        it("should add and remove the before over class to the table element when the first row is mouseovered and mouseouted", function() {
+        it("should add and remove the before over class to the table element when the first row is mouseovered and mouseouted", function () {
             triggerCellMouseEvent('mouseover', 0, 0);
             expect(view.getNode(0)).toHaveCls(overItemCls);
 
@@ -3154,15 +3158,15 @@ describe('Ext.grid.Panel', function(){
         });
     });
 
-    xdescribe("selected/focused/hover css classes - through events. With buffered store", function() {
-        beforeEach(function() {
+    xdescribe("selected/focused/hover css classes - through events. With buffered store", function () {
+        beforeEach(function () {
             createGrid({
                 buffered: true,
                 pageSize: 4
             });
         });
 
-        it("should add and remove the selected and before selected classes when the selection changes", function() {
+        it("should add and remove the selected and before selected classes when the selection changes", function () {
             triggerCellMouseEvent('click', 1, 0);
             expect(view.getNode(1)).toHaveCls(selectedItemCls);
             triggerCellMouseEvent('click', 3, 0);
@@ -3170,7 +3174,7 @@ describe('Ext.grid.Panel', function(){
             expect(view.getNode(3)).toHaveCls(selectedItemCls);
         });
 
-        it("should add and remove the focused and before focused classes when the focus changes", function() {
+        it("should add and remove the focused and before focused classes when the focus changes", function () {
             // Move upwards from row 2 to row 1
             triggerCellKeyEvent(2, 0, 'keydown', Ext.event.Event.UP);
 
@@ -3184,7 +3188,7 @@ describe('Ext.grid.Panel', function(){
             expect(view.getNode(3)).toHaveCls(focusedItemCls);
         });
 
-        it("should add and remove the over and before over classes when the hover state changes", function() {
+        it("should add and remove the over and before over classes when the hover state changes", function () {
             triggerCellMouseEvent('mouseover', 1, 0);
             expect(view.getNode(1)).toHaveCls(overItemCls);
 
@@ -3195,14 +3199,14 @@ describe('Ext.grid.Panel', function(){
 
         });
 
-        it("should add and remove the before selected class to the table element when the first row is selected and unselected", function() {
+        it("should add and remove the before selected class to the table element when the first row is selected and unselected", function () {
             var tableEl = view.el.down('table.x-grid-table');
             triggerCellMouseEvent('click', 0, 0);
             expect(view.getNode(0)).toHaveCls(selectedItemCls);
             triggerCellMouseEvent('click', 2, 0);
         });
 
-        it("should add and remove the before focused class to the table element when the first row is focused and unfocused", function() {
+        it("should add and remove the before focused class to the table element when the first row is focused and unfocused", function () {
             var tableEl = view.el.down('table.x-grid-table');
 
             // Move upwards from row 1 to row 0
@@ -3214,7 +3218,7 @@ describe('Ext.grid.Panel', function(){
             selModel.setLastFocused(store.getAt(1));
         });
 
-        it("should add and remove the before over class to the table element when the first row is mouseovered and mouseouted", function() {
+        it("should add and remove the before over class to the table element when the first row is mouseovered and mouseouted", function () {
             var tableEl = view.el.down('table.x-grid-table');
             triggerCellMouseEvent('mouseover', 0, 0);
             expect(view.getNode(0)).toHaveCls(overItemCls);
@@ -3226,8 +3230,8 @@ describe('Ext.grid.Panel', function(){
         });
     });
 
-    xdescribe("selected row css classes with multi-select", function() {
-        beforeEach(function() {
+    xdescribe("selected row css classes with multi-select", function () {
+        beforeEach(function () {
             createGrid(null, {
                 selModel: {
                     selType: 'rowmodel',
@@ -3236,24 +3240,24 @@ describe('Ext.grid.Panel', function(){
             });
         });
 
-        it("should update the selected classes when rows before the selections are removed", function() {
+        it("should update the selected classes when rows before the selections are removed", function () {
             var tableEl = view.el.down('table.x-grid-table');
 
             selModel.select([store.getAt(1), store.getAt(3)]);
-            store.remove([0,2]);
+            store.remove([0, 2]);
             expect(view.getNode(0)).toHaveCls(selectedItemCls);
             expect(view.getNode(1)).toHaveCls(selectedItemCls);
         });
 
-        it("should update the selected classes when selected rows are removed", function() {
+        it("should update the selected classes when selected rows are removed", function () {
             selModel.select([store.getAt(1), store.getAt(3)]);
-            store.remove([1,3]);
+            store.remove([1, 3]);
             expect(view.getNode(0)).not.toHaveCls(selectedItemCls);
             expect(view.getNode(1)).not.toHaveCls(selectedItemCls);
         });
     });
 
-    describe("selected/focused/hover css classes with grouping", function() {
+    describe("selected/focused/hover css classes with grouping", function () {
         var groupingFeature;
 
         function makeGrid(cfg) {
@@ -3264,15 +3268,17 @@ describe('Ext.grid.Panel', function(){
                 title: 'Employees',
                 margin: '0 10 0 0',
                 store: Ext.create('Ext.data.Store', {
-                    fields:['name', 'seniority'],
+                    fields: ['name', 'seniority'],
                     groupField: 'seniority',
-                    data: {'employees':[
-                        { "name": "Michael Scott",  "seniority": "7" },
-                        { "name": "Dwight Schrute", "seniority": "7" },
-                        { "name": "Jim Halpert",    "seniority": "3" },
-                        { "name": "Kevin Malone",   "seniority": "3" },
-                        { "name": "Angela Martin",  "seniority": "3" }
-                    ]},
+                    data: {
+                        'employees': [
+                            {"name": "Michael Scott", "seniority": "7"},
+                            {"name": "Dwight Schrute", "seniority": "7"},
+                            {"name": "Jim Halpert", "seniority": "3"},
+                            {"name": "Kevin Malone", "seniority": "3"},
+                            {"name": "Angela Martin", "seniority": "3"}
+                        ]
+                    },
                     proxy: {
                         type: 'memory',
                         reader: {
@@ -3282,10 +3288,10 @@ describe('Ext.grid.Panel', function(){
                     }
                 }),
                 columns: [
-                    { text: 'Name',     dataIndex: 'name' },
-                    { text: 'Seniority', dataIndex: 'seniority' }
+                    {text: 'Name', dataIndex: 'name'},
+                    {text: 'Seniority', dataIndex: 'seniority'}
                 ],
-                features: [{ ftype: 'grouping' }],
+                features: [{ftype: 'grouping'}],
                 selModel: {
                     selType: 'rowmodel',
                     mode: 'MULTI'
@@ -3300,46 +3306,46 @@ describe('Ext.grid.Panel', function(){
             groupingFeature = view.findFeature('grouping');
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             makeGrid();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             grid.destroy();
             grid = null;
         });
 
-        it("should preserve the selected classes when the view is refreshed", function() {
+        it("should preserve the selected classes when the view is refreshed", function () {
             selModel.select([store.getAt(0), store.getAt(1), store.getAt(3)]);
             view.refresh();
-            
+
             expect(view.getNode(0)).toHaveCls(selectedItemCls);
             expect(view.getNode(1)).toHaveCls(selectedItemCls);
             expect(view.getNode(3)).toHaveCls(selectedItemCls);
         });
 
-        it("should preserve the selected classes when grouping is disabled", function() {
+        it("should preserve the selected classes when grouping is disabled", function () {
             selModel.select([store.getAt(0), store.getAt(1), store.getAt(3)]);
 
             groupingFeature.disable();
-            
+
             expect(view.getNode(0)).toHaveCls(selectedItemCls);
             expect(view.getNode(1)).toHaveCls(selectedItemCls);
             expect(view.getNode(3)).toHaveCls(selectedItemCls);
         });
 
-        it("should preserve the selected classes when grouping is enabled", function() {
+        it("should preserve the selected classes when grouping is enabled", function () {
             selModel.select([store.getAt(0), store.getAt(1), store.getAt(3)]);
 
             groupingFeature.disable();
             groupingFeature.enable();
-            
+
             expect(view.getNode(0)).toHaveCls(selectedItemCls);
             expect(view.getNode(1)).toHaveCls(selectedItemCls);
             expect(view.getNode(3)).toHaveCls(selectedItemCls);
         });
 
-        it("should remove the selected classes when selected rows are removed (first in group)", function() {
+        it("should remove the selected classes when selected rows are removed (first in group)", function () {
             selModel.select([store.getAt(0), store.getAt(3)]);
             store.remove([0, 3]);
 
@@ -3347,7 +3353,7 @@ describe('Ext.grid.Panel', function(){
             expect(view.getNode(2)).not.toHaveCls(selectedItemCls);
         });
 
-        it("should remove the selected classes when selected rows are removed (not first in group)", function() {
+        it("should remove the selected classes when selected rows are removed (not first in group)", function () {
             selModel.select([store.getAt(1), store.getAt(4)]);
             store.remove([1, 4]);
 
@@ -3355,10 +3361,10 @@ describe('Ext.grid.Panel', function(){
             expect(view.getNode(2)).not.toHaveCls(selectedItemCls);
         });
 
-        it("should update the selected classes when rows before selected rows are removed", function() {
+        it("should update the selected classes when rows before selected rows are removed", function () {
             selModel.select([store.getAt(1), store.getAt(3)]);
             store.remove([0, 2]);
-            
+
             expect(view.getNode(0)).toHaveCls(selectedItemCls);
             expect(view.getNode(1)).toHaveCls(selectedItemCls);
         });
@@ -3366,19 +3372,19 @@ describe('Ext.grid.Panel', function(){
         // TODO: add tests for focus/hover classes for grouped grid.
     });
 
-    xdescribe('RowExpander plugin', function() {
+    xdescribe('RowExpander plugin', function () {
         function createRowExpanderGrid(cfg) {
             createGrid(null, Ext.apply({
                 plugins: [{
                     ptype: 'rowexpander',
-                    rowBodyTpl : new Ext.XTemplate(
+                    rowBodyTpl: new Ext.XTemplate(
                         'Expanded data for {name} Simpson'
                     )
                 }]
             }, cfg));
         }
 
-        it('should start collapsed, then expand to reveal expander row', function() {
+        it('should start collapsed, then expand to reveal expander row', function () {
             createRowExpanderGrid();
 
             var firstRow = grid.view.all.item(0),
@@ -3405,12 +3411,12 @@ describe('Ext.grid.Panel', function(){
             expect(expanderData.firstChild.data).toBe("Expanded data for Lisa Simpson");
         });
 
-        it('should insert checkbox at column 1 when using a CheckboxSelectionModel', function() {
+        it('should insert checkbox at column 1 when using a CheckboxSelectionModel', function () {
             createGrid(null, {
                 selModel: new Ext.selection.CheckboxModel(),
                 plugins: [{
                     ptype: 'rowexpander',
-                    rowBodyTpl : new Ext.XTemplate(
+                    rowBodyTpl: new Ext.XTemplate(
                         'Expanded data for {name} Simpson'
                     )
                 }]
@@ -3423,7 +3429,7 @@ describe('Ext.grid.Panel', function(){
             expect(grid.getVisibleColumnManager().getColumns()[1].el).toHaveCls(Ext.baseCSSPrefix + 'column-header-checkbox');
         });
 
-        it("should add/remove highlighted CSS classes to rows", function() {
+        it("should add/remove highlighted CSS classes to rows", function () {
             var rows;
 
             createRowExpanderGrid({
@@ -3444,33 +3450,33 @@ describe('Ext.grid.Panel', function(){
         });
     });
 
-    xit('should work with a grid subclass which adds the plugin at initComponent time', function() {
+    xit('should work with a grid subclass which adds the plugin at initComponent time', function () {
         var testStore = Ext.create('Ext.data.Store', {
             fields: ['name', 'email', 'phone'],
             data: [
-                { 'name': 'Lisa',  "email":"lisa@simpsons.com",  "phone":"555-111-1224"  },
-                { 'name': 'Bart',  "email":"bart@simpsons.com",  "phone":"555-222-1234"  },
-                { 'name': 'Homer', "email":"homer@simpsons.com", "phone":"555-222-1244"  },
-                { 'name': 'Marge', "email":"marge@simpsons.com", "phone":"555-222-1254"  }
+                {'name': 'Lisa', "email": "lisa@simpsons.com", "phone": "555-111-1224"},
+                {'name': 'Bart', "email": "bart@simpsons.com", "phone": "555-222-1234"},
+                {'name': 'Homer', "email": "homer@simpsons.com", "phone": "555-222-1244"},
+                {'name': 'Marge', "email": "marge@simpsons.com", "phone": "555-222-1254"}
             ]
         });
 
         Ext.define('TestRowExpanderGrid', {
-            extend : 'Ext.grid.Panel',
+            extend: 'Ext.grid.Panel',
             title: 'Simpsons',
             height: 200,
             width: 400,
-            initComponent: function() {
+            initComponent: function () {
                 this.store = testStore;
                 this.columns = [
-                    { header: 'Name',  dataIndex: 'name', width: 100 },
-                    { header: 'Email', dataIndex: 'email', flex: 1 },
-                    { header: 'Phone', dataIndex: 'phone', flex: 1 }
+                    {header: 'Name', dataIndex: 'name', width: 100},
+                    {header: 'Email', dataIndex: 'email', flex: 1},
+                    {header: 'Phone', dataIndex: 'phone', flex: 1}
                 ];
                 this.enableLocking = true;
                 this.plugins = {
                     ptype: 'rowexpander',
-                    rowBodyTpl : new Ext.XTemplate(
+                    rowBodyTpl: new Ext.XTemplate(
                         'Expanded data for {name} Simpson'
                     )
                 };
@@ -3481,7 +3487,7 @@ describe('Ext.grid.Panel', function(){
             renderTo: Ext.getBody()
         });
         waits(1);
-        runs(function() {
+        runs(function () {
             var allColumns = grid.getVisibleColumnManager().getColumns(),
                 lockedColumns = grid.lockedGrid.getVisibleColumnManager().getColumns();
 
@@ -3503,8 +3509,8 @@ describe('Ext.grid.Panel', function(){
     });
 
     // https://sencha.jira.com/browse/EXTJSIV-11863
-    xdescribe('enableLocking:true with no locked columns and buffered store', function() {
-        it('should hide the locked grid when there are no locked columns, and not refresh it', function() {
+    xdescribe('enableLocking:true with no locked columns and buffered store', function () {
+        it('should hide the locked grid when there are no locked columns, and not refresh it', function () {
             createGrid({
                 buffered: true,
                 pageSize: 4
@@ -3539,18 +3545,17 @@ describe('Ext.grid.Panel', function(){
                     children: [{
                         text: 'A',
                         leaf: true
-                        }, {
+                    }, {
                         text: 'B',
                         leaf: true
-                        }, {
+                    }, {
                         text: 'C',
                         leaf: true
                     }]
                 }
             });
 
-            createGrid({}, {
-            });
+            createGrid({}, {});
 
             // The set attributes should only be rendered to the treeview.
             tree.getRootNode().childNodes[1].set({
@@ -3659,77 +3664,77 @@ describe('Ext.grid.Panel', function(){
         });
     });
 
-    describe('grid destruction of contained grid', function() {
-        it('should not throw an error', function() {
+    describe('grid destruction of contained grid', function () {
+        it('should not throw an error', function () {
             var p = new Ext.panel.Panel({
-                width: 500,
-                height: 260,
-                renderTo: document.body,
-                layout: 'fit',
-                items: [{
-                    xtype: 'grid',
-                    columns: [{
-                        locked: true,
-                        text: 'col1',
-                        dataIndex: 'col1',
-                        width: 150,
-                        variableRowHeight: true
-                    }, {
-                        text: 'col2',
-                        dataIndex: 'col2',
-                        width: 300
-                    }, {
-                        text: 'col3',
-                        dataIndex: 'col3',
-                        width: 300
-                    }],
-                    store: {
-                        proxy: {
-                            type: 'memory'
-                        },
-                        fields: ['id', 'group', 'col1', 'col2', 'col3'],
-                        data: [{
-                            id: 1,
-                            group: 'group1',
-                            col1: 'fdsfds',
-                            col2: 'zeeazepze',
-                            col3: 'pokopkpok'
+                    width: 500,
+                    height: 260,
+                    renderTo: document.body,
+                    layout: 'fit',
+                    items: [{
+                        xtype: 'grid',
+                        columns: [{
+                            locked: true,
+                            text: 'col1',
+                            dataIndex: 'col1',
+                            width: 150,
+                            variableRowHeight: true
                         }, {
-                            id: 2,
-                            group: 'group1',
-                            col1: 'fdsfds',
-                            col2: 'zeeazepze',
-                            col3: 'pokopkpok'
+                            text: 'col2',
+                            dataIndex: 'col2',
+                            width: 300
                         }, {
-                            id: 3,
-                            group: 'group2',
-                            col1: 'fdsfds',
-                            col2: 'zeeazepze',
-                            col3: 'pokopkpok'
-                        }, {
-                            id: 4,
-                            group: 'group2',
-                            col1: 'fdsfds',
-                            col2: 'zeeazepze',
-                            col3: 'pokopkpok'
-                        }, {
-                            id: 5,
-                            group: 'group2',
-                            col1: 'fdsfds',
-                            col2: 'zeeazepze',
-                            col3: 'pokopkpok'
+                            text: 'col3',
+                            dataIndex: 'col3',
+                            width: 300
                         }],
-                        grouper: {
-                            property: 'group',
-                            direction: 'ASC'
-                        }
-                    },
-                    enableLocking: true,
-                    syncRowHeight: true
-                }]
-            }),
-            grid = p.down('grid'),
-            store = grid.getStore();
+                        store: {
+                            proxy: {
+                                type: 'memory'
+                            },
+                            fields: ['id', 'group', 'col1', 'col2', 'col3'],
+                            data: [{
+                                id: 1,
+                                group: 'group1',
+                                col1: 'fdsfds',
+                                col2: 'zeeazepze',
+                                col3: 'pokopkpok'
+                            }, {
+                                id: 2,
+                                group: 'group1',
+                                col1: 'fdsfds',
+                                col2: 'zeeazepze',
+                                col3: 'pokopkpok'
+                            }, {
+                                id: 3,
+                                group: 'group2',
+                                col1: 'fdsfds',
+                                col2: 'zeeazepze',
+                                col3: 'pokopkpok'
+                            }, {
+                                id: 4,
+                                group: 'group2',
+                                col1: 'fdsfds',
+                                col2: 'zeeazepze',
+                                col3: 'pokopkpok'
+                            }, {
+                                id: 5,
+                                group: 'group2',
+                                col1: 'fdsfds',
+                                col2: 'zeeazepze',
+                                col3: 'pokopkpok'
+                            }],
+                            grouper: {
+                                property: 'group',
+                                direction: 'ASC'
+                            }
+                        },
+                        enableLocking: true,
+                        syncRowHeight: true
+                    }]
+                }),
+                grid = p.down('grid'),
+                store = grid.getStore();
 
             store.getById(3).set('col1', 'AZERTY');
             grid.destroy();

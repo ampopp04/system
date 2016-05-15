@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * Represents a single sorter that can be used as part of the sorters configuration in Ext.mixin.Sortable.
  *
  * A common place for Sorters to be used are {@link Ext.data.Store Stores}. For example:
@@ -22,7 +22,7 @@
  *               { firstName: 'Scott',  level: 789}
  *           ]
  *        });
- *        
+ *
  *        Ext.create('Ext.grid.Panel', {
  *            title: 'Support',
  *            store: store,
@@ -33,7 +33,7 @@
  *            height: 300,
  *            width: 200,
  *            renderTo: Ext.getBody()
- *        });  
+ *        });
  *
  * In the next example, we specify a custom sorter function:
  *
@@ -66,7 +66,7 @@
  *               { firstName: 'Pat',    spiritAnimal: "The Cougar"}
  *           ]
  *        });
- *        
+ *
  *        Ext.create('Ext.grid.Panel', {
  *            title: 'Support',
  *            store: store,
@@ -167,7 +167,7 @@ Ext.define('Ext.util.Sorter', {
      */
     multiplier: 1,
 
-    constructor: function(config) {
+    constructor: function (config) {
         //<debug>
         if (config && !this.isGrouper) {
             if (!config.property === !config.sorterFn) {
@@ -225,8 +225,8 @@ Ext.define('Ext.util.Sorter', {
 
         return (lhs > rhs) ? 1 : (lhs < rhs ? -1 : 0);
     },
-    
-    applyDirection: function(direction) {
+
+    applyDirection: function (direction) {
         return direction ? direction : 'ASC';
     },
 
@@ -250,7 +250,7 @@ Ext.define('Ext.util.Sorter', {
      * Toggles the direction of this Sorter. Note that when you call this function,
      * the Collection this Sorter is part of does not get refreshed automatically.
      */
-    toggle: function() {
+    toggle: function () {
         this.setDirection(Ext.String.toggle(this.getDirection(), "ASC", "DESC"));
     },
 
@@ -258,7 +258,7 @@ Ext.define('Ext.util.Sorter', {
      * Returns this sorter's state.
      * @return {Object}
      */
-    getState: function() {
+    getState: function () {
         var me = this,
             result = {
                 root: me.getRoot(),
@@ -271,7 +271,7 @@ Ext.define('Ext.util.Sorter', {
         if (me._id) {
             result.id = me._id;
         }
-        
+
         return result;
     },
 

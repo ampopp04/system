@@ -5,7 +5,7 @@
 Ext.define('Ext.draw.SurfaceBase', {
     extend: 'Ext.Widget',
 
-    getOwnerBody: function() {
+    getOwnerBody: function () {
         return this.ownerCt.body;
     },
 

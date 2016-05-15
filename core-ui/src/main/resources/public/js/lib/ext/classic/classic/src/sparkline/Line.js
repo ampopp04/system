@@ -19,79 +19,79 @@ Ext.define('Ext.sparkline.Line', {
          * @cfg {String} [spotColor=#f80] The colour of the final value marker. Set to false or an empty string to hide it.
          */
         spotColor: '#f80',
-        
+
         /**
          * @cfg {String} [highlightSpotColor=#5f5] The colour of value marker spots when mouseovered.
          */
         highlightSpotColor: '#5f5',
-        
+
         /**
          * @cfg {String} [highlightLineColor=#f22] The colour of value line shown when the graph is mouseovered.
          */
         highlightLineColor: '#f22',
-        
+
         /**
          * @cfg {Number} [spotRadius=1.5] The pixel radius of min, max and final value dots.
          */
         spotRadius: 1.5,
-        
+
         /**
          * @cfg {String} [minSpotColor=#f80] The colour of the mimimum value marker. Set to false or an empty string to hide it.
          */
         minSpotColor: '#f80',
-        
+
         /**
          * @cfg {String} [maxSpotColor=#f80] The colour of the maximum value marker. Set to false or an empty string to hide it.
          */
         maxSpotColor: '#f80',
-        
+
         /**
          * @cfg {Number} [lineWidth=1] The pixel width of the line plotted.
          */
         lineWidth: 1,
-        
+
         /**
          * @cfg {Number} [normalRangeMin] See {@link #normalRangeMax} The minimum value to overlay a "normal range bar" over the graph using the {@link #normalRangeColor}.
          */
         normalRangeMin: null,
-        
+
         /**
          * @cfg {Number} [normalRangeMax] See {@link #normalRangeMin} The maximum value to overlay a "normal range bar" over the graph using the {@link #normalRangeColor}.
          */
         normalRangeMax: null,
-        
+
         /**
          * @cfg {String} [normalRangeColor=#ccc] See {@link #normalRangeMin} and {@link #normalRangeMax} The color of the undererlayed "normal range bar".
          */
         normalRangeColor: '#ccc',
-        
+
         /**
          * @cfg {Boolean} [drawNormalOnTop=false] Configure as `true` to draw the normal range overlaying the chart.
          */
         drawNormalOnTop: false,
-        
+
         /**
          * @cfg {Number} [chartRangeMin] The minimum value to use for the range of Y values of the chart - Defaults to the minimum value supplied.
          */
         chartRangeMin: null,
-        
+
         /**
          * @cfg {Number} [chartRangeMax] The maximum value to use for the range of Y values of the chart - Defaults to the minimum value supplied.
          */
         chartRangeMax: null,
-        
+
         /**
          * @cfg {Number} [chartRangeMinX] The minimum value to use for the X value of the chart.
          */
         chartRangeMinX: null,
-        
+
         /**
          * @cfg {Number} [chartRangeMaxX] The maximum value to use for the X value of the chart.
          */
         chartRangeMaxX: null,
-        
+
         tipTpl: new Ext.XTemplate('&#9679; {prefix}{y}{suffix}'),
-        
+
         /**
          * @cfg {Object} [valueSpots] An object which uses range specifiers as keys to indicate spot color values
          * for range of values. A range specifier is of the form `[number]:[number]` indicating start and end range.
@@ -109,7 +109,7 @@ Ext.define('Ext.sparkline.Line', {
         valueSpots: null
     },
 
-    applyValueSpots: function(valueSpots) {
+    applyValueSpots: function (valueSpots) {
         if (valueSpots && !valueSpots.get) {
             valueSpots = new Ext.sparkline.RangeMap(valueSpots);
         }
@@ -124,7 +124,7 @@ Ext.define('Ext.sparkline.Line', {
         this.yminmax = [];
     },
 
-    getRegion: function(x, y) {
+    getRegion: function (x, y) {
         var i,
             regionMap = this.regionMap; // maps regions to value positions
 
@@ -136,7 +136,7 @@ Ext.define('Ext.sparkline.Line', {
         return undefined;
     },
 
-    getRegionFields: function(region) {
+    getRegionFields: function (region) {
         return {
             isNull: this.yvalues[region] === null,
             x: this.xvalues[region],
@@ -147,7 +147,7 @@ Ext.define('Ext.sparkline.Line', {
         };
     },
 
-    renderHighlight: function(region) {
+    renderHighlight: function (region) {
         var me = this,
             canvas = me.canvas,
             vertex = me.vertices[region],
@@ -299,7 +299,7 @@ Ext.define('Ext.sparkline.Line', {
         }
         if (spotRadius) {
             // adjust the canvas size as required so that spots will fit
-            hlSpotsEnabled = me.getHighlightSpotColor() &&  !me.disableInteraction;
+            hlSpotsEnabled = me.getHighlightSpotColor() && !me.disableInteraction;
             if (hlSpotsEnabled || minSpotColor || (spotColor && yValues[yvallast] === me.miny)) {
                 canvasHeight -= Math.ceil(spotRadius);
             }
@@ -308,13 +308,13 @@ Ext.define('Ext.sparkline.Line', {
                 canvasTop += Math.ceil(spotRadius);
             }
             if (hlSpotsEnabled ||
-                    ((minSpotColor || maxSpotColor) && (yValues[0] === me.miny || yValues[0] === me.maxy))) {
+                ((minSpotColor || maxSpotColor) && (yValues[0] === me.miny || yValues[0] === me.maxy))) {
                 canvasLeft += Math.ceil(spotRadius);
                 canvasWidth -= Math.ceil(spotRadius);
             }
             if (hlSpotsEnabled || spotColor ||
                 (minSpotColor || maxSpotColor &&
-                    (yValues[yvallast] === me.miny || yValues[yvallast] === me.maxy))) {
+                (yValues[yvallast] === me.miny || yValues[yvallast] === me.maxy))) {
                 canvasWidth -= Math.ceil(spotRadius);
             }
         }

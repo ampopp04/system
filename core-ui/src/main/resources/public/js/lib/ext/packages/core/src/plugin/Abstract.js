@@ -26,7 +26,7 @@ Ext.define('Ext.plugin.Abstract', {
      * Instantiates the plugin.
      * @param {Object} [config] Configuration object.
      */
-    constructor: function(config) {
+    constructor: function (config) {
         if (config) {
             this.pluginConfig = config;
             this.initConfig(config);
@@ -37,7 +37,7 @@ Ext.define('Ext.plugin.Abstract', {
      * Creates clone of the plugin.
      * @param {Object} [overrideCfg] Additional config for the derived plugin.
      */
-    clonePlugin: function(overrideCfg) {
+    clonePlugin: function (overrideCfg) {
         return new this.self(Ext.apply({}, overrideCfg, this.pluginConfig));
     },
 
@@ -45,7 +45,7 @@ Ext.define('Ext.plugin.Abstract', {
      * Sets the component to which this plugin is attached.
      * @param {Ext.Component} cmp Owner component.
      */
-    setCmp: function(cmp) {
+    setCmp: function (cmp) {
         this.cmp = cmp;
     },
 
@@ -53,7 +53,7 @@ Ext.define('Ext.plugin.Abstract', {
      * Returns the component to which this plugin is attached.
      * @return {Ext.Component} Owner component.
      */
-    getCmp: function() {
+    getCmp: function () {
         return this.cmp;
     },
 
@@ -90,15 +90,15 @@ Ext.define('Ext.plugin.Abstract', {
      *
      * @method destroy
      */
-    destroy: function() {
+    destroy: function () {
         this.cmp = this.pluginConfig = null;
-        
+
         this.callParent();
     },
 
     // Private.
     // Inject a ptype property so that Component.findPlugin(ptype) works.
-    onClassExtended: function(cls, data, hooks) {
+    onClassExtended: function (cls, data, hooks) {
         var alias = data.alias;
 
         // No ptype built into the class
@@ -110,7 +110,7 @@ Ext.define('Ext.plugin.Abstract', {
         }
     },
 
-    resolveListenerScope: function(defaultScope) {
+    resolveListenerScope: function (defaultScope) {
         var me = this,
             cmp = me.getCmp(),
             scope;

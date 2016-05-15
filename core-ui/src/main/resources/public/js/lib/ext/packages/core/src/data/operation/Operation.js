@@ -7,9 +7,9 @@
  */
 Ext.define('Ext.data.operation.Operation', {
     alternateClassName: 'Ext.data.Operation',
-    
+
     isOperation: true,
-    
+
     config: {
         /**
          * @cfg {Boolean} synchronous
@@ -23,13 +23,13 @@ Ext.define('Ext.data.operation.Operation', {
          * The url for this operation. Typically this will be provided by a proxy and not configured here.
          */
         url: '',
-        
+
         /**
          * @cfg {Object} params
          * Parameters to pass along with the request when performing the operation.
          */
         params: undefined,
-    
+
         /**
          * @cfg {Function} callback
          * Function to execute when operation completed.
@@ -38,75 +38,75 @@ Ext.define('Ext.data.operation.Operation', {
          * @cfg {Boolean} callback.success True when operation completed successfully.
          */
         callback: undefined,
-    
+
         /**
          * @cfg {Object} scope
          * Scope for the {@link #callback} function.
          */
         scope: undefined,
-        
+
         /**
          * @cfg {Ext.data.ResultSet} resultSet
          * The ResultSet for this operation.
          * @accessor
          */
         resultSet: null,
-        
+
         /**
          * @private
          * @cfg {Object} response
          * The response for this operation.
          */
         response: null,
-        
+
         /**
          * @cfg {Ext.data.Request} request
          * The request for this operation.
          */
         request: null,
-        
+
         /**
          * @cfg {Ext.data.Model[]} records
          * The records associated with this operation. If this is a `read` operation, this will be
          * `null` until data is returned from the {@link Ext.data.proxy.Proxy}.
          */
         records: null,
-        
+
         /**
          * @cfg {Object} id
          * The id of the operation.
          */
         id: undefined,
-        
+
         /**
          * @cfg {Ext.data.proxy.Proxy} proxy
          * The proxy for this operation
          */
         proxy: null,
-        
+
         /**
-         * @cfg {Ext.data.Batch} 
+         * @cfg {Ext.data.Batch}
          * The batch for this operation, if applicable
          */
         batch: null,
-        
+
         /**
          * @cfg {Function} recordCreator
          * Passed to the reader, see {@link Ext.data.reader.Reader#read}
          * @private
          */
         recordCreator: null,
-        
+
         //We use this because in a lot of cases the developer can indirectly pass
         // a callback/scope and that will get pushed on to the operation. As such,
         // create our own hook for the callback that will fire first
         /**
          * @cfg {Function} internalCallback
-         * A callback to run before the {@link #callback}. 
+         * A callback to run before the {@link #callback}.
          * @private
          */
         internalCallback: null,
-        
+
         /**
          * @cfg {Object} internalScope
          * Scope to run the {@link #internalCallback}
@@ -186,14 +186,14 @@ Ext.define('Ext.data.operation.Operation', {
      * @private
      */
     error: undefined,
-    
+
     idPrefix: 'ext-operation-',
 
     /**
      * Creates new Operation object.
      * @param {Object} config (optional) Config object.
      */
-    constructor: function(config) {
+    constructor: function (config) {
         // This ugliness is here to prevent an issue when specifying scope
         // as an object literal. The object will be pulled in as part of
         // the merge() during initConfig which will change the object 
@@ -207,33 +207,33 @@ Ext.define('Ext.data.operation.Operation', {
         if (config) {
             config.scope = scope;
         }
-        
+
         if (scope) {
             this.setScope(scope);
             this.initialConfig.scope = scope;
         }
-        
+
         // We need an internal id to track operations in Proxy
         this._internalId = Ext.id(this, this.idPrefix);
     },
-    
-    getAction: function() {
-        return this.action;    
+
+    getAction: function () {
+        return this.action;
     },
-    
+
     /**
      * @private
      * Executes the operation on the configured {@link #proxy}.
      * @return {Ext.data.Request} The request object
      */
-    execute: function() {
+    execute: function () {
         var me = this,
             request;
 
         delete me.error;
         delete me.success;
         me.complete = me.exception = false;
-        
+
         me.setStarted();
         me.request = request = me.doExecute();
         if (request) {
@@ -241,28 +241,28 @@ Ext.define('Ext.data.operation.Operation', {
         }
         return request;
     },
-    
+
     doExecute: Ext.emptyFn,
-    
+
     /**
      * Aborts the processing of this operation on the {@link #proxy}.
      * This is only valid for proxies that make asynchronous requests.
      */
-    abort: function() {
+    abort: function () {
         var me = this,
             request = me.request;
-            
+
         if (me.running && request) {
             me.getProxy().abort(request);
             me.request = null;
-        }    
+        }
     },
-    
-    process: function(resultSet, request, response, autoComplete) {
+
+    process: function (resultSet, request, response, autoComplete) {
         var me = this;
-        
+
         autoComplete = autoComplete !== false;
-        
+
         me.setResponse(response);
         me.setResultSet(resultSet);
         if (resultSet.getSuccess()) {
@@ -279,20 +279,20 @@ Ext.define('Ext.data.operation.Operation', {
      * apply server record updates as part of a record commit performed by calling the
      * set() method on the record. See doProcess.
      */
-    _commitSetOptions: { convert: true, commit: true },
+    _commitSetOptions: {convert: true, commit: true},
 
     /**
      * Process records in the operation after the response is successful and the result
      * set is parsed correctly. The base class implementation of this method is used by
      * "create" and "update" operations to allow the server response to update the client
      * side records.
-     * 
+     *
      * @param {Ext.data.ResultSet} resultSet The result set
      * @param {Ext.data.Request} request The request
      * @param {Object} response The response
      * @protected
      */
-    doProcess: function(resultSet, request, response) {
+    doProcess: function (resultSet, request, response) {
         var me = this,
             commitSetOptions = me._commitSetOptions,
             clientRecords = me.getRecords(),
@@ -352,22 +352,22 @@ Ext.define('Ext.data.operation.Operation', {
     /**
      * Marks the Operation as started.
      */
-    setStarted: function() {
+    setStarted: function () {
         this.started = this.running = true;
     },
 
     /**
      * Marks the Operation as completed.
      */
-    setCompleted: function() {
+    setCompleted: function () {
         var me = this,
             proxy = me.getProxy();
-        
+
         me.complete = true;
-        me.running  = false;
-        
+        me.running = false;
+
         me.triggerCallbacks();
-        
+
         if (proxy) {
             proxy.completeOperation(me);
         }
@@ -378,7 +378,7 @@ Ext.define('Ext.data.operation.Operation', {
      * @param {Boolean} [complete] `true` to also mark this operation
      * as being complete See {@link #setCompleted}.
      */
-    setSuccessful: function(complete) {
+    setSuccessful: function (complete) {
         this.success = true;
         if (complete) {
             this.setCompleted();
@@ -389,17 +389,17 @@ Ext.define('Ext.data.operation.Operation', {
      * Marks the Operation as having experienced an exception. Can be supplied with an option error message/object.
      * @param {String/Object} error (optional) error string/object
      */
-    setException: function(error) {
+    setException: function (error) {
         var me = this;
-        
+
         me.exception = true;
         me.success = me.running = false;
         me.error = error;
-        
+
         me.setCompleted();
     },
 
-    triggerCallbacks: function() {
+    triggerCallbacks: function () {
         var me = this,
             callback = me.getInternalCallback();
 
@@ -423,7 +423,7 @@ Ext.define('Ext.data.operation.Operation', {
      * Returns true if this Operation encountered an exception (see also {@link #getError})
      * @return {Boolean} True if there was an exception
      */
-    hasException: function() {
+    hasException: function () {
         return this.exception;
     },
 
@@ -431,7 +431,7 @@ Ext.define('Ext.data.operation.Operation', {
      * Returns the error string or object that was set using {@link #setException}
      * @return {String/Object} The error object
      */
-    getError: function() {
+    getError: function () {
         return this.error;
     },
 
@@ -446,10 +446,10 @@ Ext.define('Ext.data.operation.Operation', {
      *
      * @return {Ext.data.Model[]}
      */
-    getRecords: function() {
+    getRecords: function () {
         var resultSet;
         return this._records ||
-               ((resultSet = this.getResultSet()) ? resultSet.getRecords() : null);
+            ((resultSet = this.getResultSet()) ? resultSet.getRecords() : null);
     },
 
     /**
@@ -457,7 +457,7 @@ Ext.define('Ext.data.operation.Operation', {
      * {@link #isRunning} to test if the Operation is currently running.
      * @return {Boolean} True if the Operation has started
      */
-    isStarted: function() {
+    isStarted: function () {
         return this.started;
     },
 
@@ -465,7 +465,7 @@ Ext.define('Ext.data.operation.Operation', {
      * Returns true if the Operation has been started but has not yet completed.
      * @return {Boolean} True if the Operation is currently running
      */
-    isRunning: function() {
+    isRunning: function () {
         return this.running;
     },
 
@@ -473,15 +473,15 @@ Ext.define('Ext.data.operation.Operation', {
      * Returns true if the Operation has been completed
      * @return {Boolean} True if the Operation is complete
      */
-    isComplete: function() {
+    isComplete: function () {
         return this.complete;
     },
 
     /**
      * Returns true if the Operation has completed and was successful
      * @return {Boolean} True if successful
-     */        
-    wasSuccessful: function() {
+     */
+    wasSuccessful: function () {
         return this.isComplete() && this.success === true; // success can be undefined
     },
 
@@ -489,7 +489,7 @@ Ext.define('Ext.data.operation.Operation', {
      * Checks whether this operation should cause writing to occur.
      * @return {Boolean} Whether the operation should cause a write to occur.
      */
-    allowWrite: function() {
+    allowWrite: function () {
         return true;
     }
 });

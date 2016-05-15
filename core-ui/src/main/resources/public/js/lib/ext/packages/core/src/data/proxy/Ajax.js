@@ -34,7 +34,7 @@
  *
  * A couple of extra configurations appeared here - {@link #model} and {@link #reader}. These are set by default when we
  * create the proxy via the Store - the Store already knows about the Model, and Proxy's default {@link
- * Ext.data.reader.Reader Reader} is {@link Ext.data.reader.Json JsonReader}.
+    * Ext.data.reader.Reader Reader} is {@link Ext.data.reader.Json JsonReader}.
  *
  * Now when we call store.load(), the AjaxProxy springs into action, making a request to the url we configured
  * ('users.json' in this case). As we're performing a read, it sends a GET request to that url (see
@@ -58,7 +58,7 @@
  * AjaxProxy can be configured to use any type of {@link Ext.data.reader.Reader Reader} to decode the server's response.
  * If no Reader is supplied, AjaxProxy will default to using a {@link Ext.data.reader.Json JsonReader}. Reader
  * configuration can be passed in as a simple object, which the Proxy automatically turns into a {@link
- * Ext.data.reader.Reader Reader} instance:
+    * Ext.data.reader.Reader Reader} instance:
  *
  *     var proxy = new Ext.data.proxy.Ajax({
  *         model: 'User',
@@ -213,26 +213,26 @@ Ext.define('Ext.data.proxy.Ajax', {
     alternateClassName: ['Ext.data.HttpProxy', 'Ext.data.AjaxProxy'],
 
     isAjaxProxy: true,
-    
+
     // Keep a default copy of the action methods here. Ideally could just null
     // out actionMethods and just check if it exists & has a property, otherwise
     // fallback to the default. But at the moment it's defined as a public property,
     // so we need to be able to maintain the ability to modify/access it. 
     defaultActionMethods: {
-        create : 'POST',
-        read   : 'GET',
-        update : 'POST',
-        destroy: 'POST'    
+        create: 'POST',
+        read: 'GET',
+        update: 'POST',
+        destroy: 'POST'
     },
 
     config: {
         /**
-        * @cfg {Boolean} binary
-        * True to request binary data from the server.  This feature requires
-        * the use of a binary reader such as {@link Ext.data.amf.Reader AMF Reader}
-        */
+         * @cfg {Boolean} binary
+         * True to request binary data from the server.  This feature requires
+         * the use of a binary reader such as {@link Ext.data.amf.Reader AMF Reader}
+         */
         binary: false,
-    
+
         /**
          * @cfg {Object} [headers]
          * Any headers to add to the Ajax request.
@@ -244,17 +244,17 @@ Ext.define('Ext.data.proxy.Ajax', {
          *         ...
          *     }
          */
-       headers: undefined,
-    
+        headers: undefined,
+
         /**
-        * @cfg {Boolean} paramsAsJson `true` to have any request parameters sent as {@link Ext.data.Connection#method-request jsonData} 
-        * where they can be parsed from the raw request. By default, parameters are sent via the 
-        * {@link Ext.data.Connection#method-request params} property. **Note**: This setting does not apply when the
-        * request is sent as a 'GET' request. See {@link #actionMethods} for controlling the HTTP verb
-        * that is used when sending requests.
-        */
+         * @cfg {Boolean} paramsAsJson `true` to have any request parameters sent as {@link Ext.data.Connection#method-request jsonData}
+         * where they can be parsed from the raw request. By default, parameters are sent via the
+         * {@link Ext.data.Connection#method-request params} property. **Note**: This setting does not apply when the
+         * request is sent as a 'GET' request. See {@link #actionMethods} for controlling the HTTP verb
+         * that is used when sending requests.
+         */
         paramsAsJson: false,
-        
+
         /**
          * @cfg {Boolean} withCredentials
          * This configuration is sometimes necessary when using cross-origin resource sharing.
@@ -285,43 +285,43 @@ Ext.define('Ext.data.proxy.Ajax', {
          * @accessor
          */
         password: null,
-        
+
         /**
-        * @cfg {Object} actionMethods
-        * Mapping of action name to HTTP request method. In the basic AjaxProxy these are set to 'GET' for 'read' actions
-        * and 'POST' for 'create', 'update' and 'destroy' actions. The {@link Ext.data.proxy.Rest} maps these to the
-        * correct RESTful methods.
-        */
+         * @cfg {Object} actionMethods
+         * Mapping of action name to HTTP request method. In the basic AjaxProxy these are set to 'GET' for 'read' actions
+         * and 'POST' for 'create', 'update' and 'destroy' actions. The {@link Ext.data.proxy.Rest} maps these to the
+         * correct RESTful methods.
+         */
         actionMethods: {
-            create : 'POST',
-            read   : 'GET',
-            update : 'POST',
+            create: 'POST',
+            read: 'GET',
+            update: 'POST',
             destroy: 'POST'
         }
     },
-    
-    doRequest: function(operation) {
+
+    doRequest: function (operation) {
         var me = this,
-            writer  = me.getWriter(),
+            writer = me.getWriter(),
             request = me.buildRequest(operation),
-            method  = me.getMethod(request),
+            method = me.getMethod(request),
             jsonData, params;
-            
+
         if (writer && operation.allowWrite()) {
             request = writer.write(request);
         }
-        
+
         request.setConfig({
-            binary              : me.getBinary(),
-            headers             : me.getHeaders(),
-            timeout             : me.getTimeout(),
-            scope               : me,
-            callback            : me.createRequestCallback(request, operation),
-            method              : method,
-            useDefaultXhrHeader : me.getUseDefaultXhrHeader(),
-            disableCaching      : false // explicitly set it to false, ServerProxy handles caching
+            binary: me.getBinary(),
+            headers: me.getHeaders(),
+            timeout: me.getTimeout(),
+            scope: me,
+            callback: me.createRequestCallback(request, operation),
+            method: method,
+            useDefaultXhrHeader: me.getUseDefaultXhrHeader(),
+            disableCaching: false // explicitly set it to false, ServerProxy handles caching
         });
-        
+
         if (method.toUpperCase() !== 'GET' && me.getParamsAsJson()) {
             params = request.getParams();
 
@@ -336,7 +336,7 @@ Ext.define('Ext.data.proxy.Ajax', {
                 request.setParams(undefined);
             }
         }
-        
+
         if (me.getWithCredentials()) {
             request.setWithCredentials(true);
             request.setUsername(me.getUsername());
@@ -344,49 +344,49 @@ Ext.define('Ext.data.proxy.Ajax', {
         }
         return me.sendRequest(request);
     },
-    
+
     /**
      * Fires a request
      * @param {Ext.data.Request} request The request
      * @return {Ext.data.Request} The request
      * @private
      */
-    sendRequest: function(request) {
+    sendRequest: function (request) {
         request.setRawRequest(Ext.Ajax.request(request.getCurrentConfig()));
         this.lastRequest = request;
-        
+
         return request;
     },
-    
+
     /**
      * Aborts a running request.
      * @param {Ext.data.Request} [request] The request to abort. If not passed, the most recent active
      * request will be aborted.
      */
-    abort: function(request) {
+    abort: function (request) {
         request = request || this.lastRequest;
         if (request) {
             Ext.Ajax.abort(request.getRawRequest());
-        }    
+        }
     },
-    
+
     /**
      * Returns the HTTP method name for a given request. By default this returns based on a lookup on
      * {@link #actionMethods}.
      * @param {Ext.data.Request} request The request object
      * @return {String} The HTTP method to use (should be one of 'GET', 'POST', 'PUT' or 'DELETE')
      */
-    getMethod: function(request) {
+    getMethod: function (request) {
         var actions = this.getActionMethods(),
             action = request.getAction(),
             method;
-            
+
         if (actions) {
             method = actions[action];
         }
         return method || this.defaultActionMethods[action];
     },
-    
+
     /**
      * @private
      * TODO: This is currently identical to the JsonPProxy version except for the return function's signature. There is a lot
@@ -395,20 +395,20 @@ Ext.define('Ext.data.proxy.Ajax', {
      * @param {Ext.data.operation.Operation} operation The Operation being executed
      * @return {Function} The callback function
      */
-    createRequestCallback: function(request, operation) {
+    createRequestCallback: function (request, operation) {
         var me = this;
-        
-        return function(options, success, response) {
+
+        return function (options, success, response) {
             if (request === me.lastRequest) {
                 me.lastRequest = null;
             }
             me.processResponse(success, operation, request, response);
         };
     },
-    
-    destroy: function() {
+
+    destroy: function () {
         this.lastRequest = null;
-        
+
         this.callParent();
     }
 });

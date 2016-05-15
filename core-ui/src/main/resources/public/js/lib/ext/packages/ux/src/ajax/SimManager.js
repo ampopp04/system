@@ -97,7 +97,7 @@ Ext.define('Ext.ux.ajax.SimManager', {
         if (index > 0) {
             url = url.substring(0, index);
         }
-        
+
         for (i = 0; i < len; ++i) {
             simlet = simlets[i];
             simUrl = simlet.url;
@@ -149,7 +149,7 @@ Ext.define('Ext.ux.ajax.SimManager', {
             Ext.data.request.Ajax.override({
                 openRequest: function (options, requestOptions, async) {
                     var xhr = !options.nosim &&
-                              me.getXhr(requestOptions.method, requestOptions.url, options, async);
+                        me.getXhr(requestOptions.method, requestOptions.url, options, async);
                     if (!xhr) {
                         xhr = this.callParent(arguments);
                     }
@@ -162,7 +162,7 @@ Ext.define('Ext.ux.ajax.SimManager', {
                     createScript: function (url, params, options) {
                         var fullUrl = Ext.urlAppend(url, Ext.Object.toQueryString(params)),
                             script = !options.nosim &&
-                                     me.getXhr('GET', fullUrl, options, true);
+                                me.getXhr('GET', fullUrl, options, true);
 
                         if (!script) {
                             script = this.callParent(arguments);
@@ -209,7 +209,7 @@ Ext.define('Ext.ux.ajax.SimManager', {
 
         me.init();
 
-        function reg (one) {
+        function reg(one) {
             var simlet = one;
             if (!simlet.isSimlet) {
                 simlet = Ext.create('simlet.' + (simlet.type || simlet.stype || me.defaultType), one);

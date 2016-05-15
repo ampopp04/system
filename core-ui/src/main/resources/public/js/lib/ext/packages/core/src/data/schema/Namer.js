@@ -1,26 +1,26 @@
 /**
  * This class provides name derivation methods for use by a `Schema`.
- * 
+ *
  * # Caching
- * 
+ *
  * Because most name derivations are only textual manipulations of input strings, the
  * results can be cached. This is handled by the `apply` method by giving it the name of
  * the method to call. For example:
- * 
+ *
  *      var str = namer.capitalize('foo'); //  = "Foo"
- *      
+ *
  *      var str = namer.apply('capitalize', 'foo');
- * 
+ *
  * The return value of the second call (using `apply`) is the same as the first, however,
  * the results of `capitalize` are cached. This allows repeated calls to `apply` given the
  * same operation and string to avoid the extra string manipulation.
- * 
+ *
  * # Usage
- * 
+ *
  * This class is not intended to be created by application code. It is created by `Schema`
  * instances as directed by the `namer` config. Application code can derive from this
  * class and set the `namer` config to customize naming conventions used by the `Schema`.
- * 
+ *
  * @protected
  */
 Ext.define('Ext.data.schema.Namer', {
@@ -61,7 +61,7 @@ Ext.define('Ext.data.schema.Namer', {
         return this.apply('uncapitalize,singularize', name) + 'Id';
     },
 
-    instanceName: function(roleName) {
+    instanceName: function (roleName) {
         return this.apply('underscore', roleName);
     },
 
@@ -72,7 +72,7 @@ Ext.define('Ext.data.schema.Namer', {
     pluralize: function (name) {
         return Ext.util.Inflector.pluralize(name);
     },
-    
+
     readerRoot: function (roleName) {
         return this.apply('uncapitalize', roleName);
     },
@@ -149,9 +149,9 @@ Ext.define('Ext.data.schema.Namer', {
 
     manyToMany: function (relation, leftType, rightType) {
         var me = this,
-            // ex: UserGroups
+        // ex: UserGroups
             ret = me.apply('undotted,capitalize,singularize', leftType) +
-                  me.apply('undotted,capitalize,pluralize', rightType);
+                me.apply('undotted,capitalize,pluralize', rightType);
 
         if (relation) {
             ret = me.apply('capitalize', relation + ret);
@@ -163,11 +163,11 @@ Ext.define('Ext.data.schema.Namer', {
     /**
      * Returns the name for a one-to-many association given the left and right type and
      * the associating `role`.
-     * 
+     *
      * In many cases the `role` matches the target type. For example, an OrderItem might
      * have an "orderId" field which would have a `role` of "order". If this is a reference
      * to an Order entity then the association name will be "OrderOrderItems".
-     * 
+     *
      * When the `role` does not match, it is included in the association name. For example,
      * consider a Ticket entity with a "creatorId" field that references a User entity.
      * The `role` of that field will (by default) be "creator". The returned association
@@ -177,7 +177,7 @@ Ext.define('Ext.data.schema.Namer', {
         // ex: OrderItem -> Order  ==> OrderOrderItems
         //  Ticket (creator) -> User ==> UserCreatorTickets
         return this.apply('capitalize,singularize', rightType) +
-               this.apply('capitalize', leftRole);
+            this.apply('capitalize', leftRole);
     },
 
     matrixRole: function (relation, entityType) {
@@ -187,13 +187,13 @@ Ext.define('Ext.data.schema.Namer', {
 
     oneToOne: function (leftType, leftRole, rightType, rightRole) {
         return this.apply('undotted,capitalize,singularize', rightType) +
-               this.apply('capitalize', leftRole);
+            this.apply('capitalize', leftRole);
     },
 
     setterName: function (role) {
         return 'set' + this.apply('capitalize', role.role);
     },
-    
+
     //-------------------------------------------------------------------------
     // Private
 

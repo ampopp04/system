@@ -12,8 +12,8 @@ Ext.define('Ext.draw.engine.SvgContext', {
      * Properties to be saved/restored in the `save` and `restore` methods.
      */
     toSave: ["strokeOpacity", "strokeStyle", "fillOpacity", "fillStyle", "globalAlpha", "lineWidth", "lineCap",
-             "lineJoin", "lineDash", "lineDashOffset", "miterLimit", "shadowOffsetX", "shadowOffsetY", "shadowBlur",
-             "shadowColor", "globalCompositeOperation", "position", "fillGradient", "strokeGradient"],
+        "lineJoin", "lineDash", "lineDashOffset", "miterLimit", "shadowOffsetX", "shadowOffsetY", "shadowBlur",
+        "shadowColor", "globalCompositeOperation", "position", "fillGradient", "strokeGradient"],
 
     "strokeOpacity": 1,
     "strokeStyle": "none",
@@ -131,7 +131,7 @@ Ext.define('Ext.draw.engine.SvgContext', {
             obj = this.state.pop(),
             children = this.group.dom.childNodes,
             key, i;
-        
+
         // Removing extra DOM elements that were not reused.
         while (children.length > this.position) {
             this.removeElement(children[children.length - 1]);

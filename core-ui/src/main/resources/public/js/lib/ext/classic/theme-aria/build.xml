@@ -50,19 +50,19 @@
 
         <property name="replace.pattern"
                   value="src=&quot;(.*/ext(.*)?.js)&quot;"/>
-        
-        <property name="package.sass.example.dir" 
+
+        <property name="package.sass.example.dir"
                   value="${package.dir}/sass/example"/>
-        
+
         <loadfile srcfile="${package.sass.example.dir}/theme.html"
                   property="theme.html.content"/>
-        
+
         <propertyregex property="ext.js.path"
                        input="${theme.html.content}"
                        regexp="${replace.pattern}"
                        select="\1"
                        casesensitive="false"/>
-        
+
         <available file="${package.sass.example.dir}/${ext.js.path}"
                    property="ext.js.path.exists"/>
 
@@ -72,10 +72,10 @@
             </not>
             <then>
                 <x-get-relative-path
-                    from="${package.sass.example.dir}"
-                    to="${framework.dir}"
-                    property="fwk.rel.path"
-                    />
+                        from="${package.sass.example.dir}"
+                        to="${framework.dir}"
+                        property="fwk.rel.path"
+                />
 
                 <available file="${package.sass.example.dir}/${fwk.rel.path}/extjs/ext-all-debug.js"
                            property="sencha.is.sdk.repo"/>
@@ -90,17 +90,17 @@
                     </else>
                 </if>
 
-                <property name="ext.js.path.detected" 
+                <property name="ext.js.path.detected"
                           value="${fwk.rel.path.actual}/ext-all-debug.js"/>
 
                 <echo>Updating theme.html reference '${ext.js.path}' to '${ext.js.path.detected}'</echo>
-                <replace token="${ext.js.path}" 
-                         value="${ext.js.path.detected}" 
+                <replace token="${ext.js.path}"
+                         value="${ext.js.path.detected}"
                          file="${package.sass.example.dir}/theme.html"/>
             </then>
         </if>
-        
-        
+
+
     </target>
 
     <target name="-before-build">

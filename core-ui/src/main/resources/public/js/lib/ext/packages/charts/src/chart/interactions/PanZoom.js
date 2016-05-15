@@ -109,7 +109,7 @@
  *             }
  *         }]
  *     });
- * 
+ *
  * The configuration object for the `panzoom` interaction type should specify which axes
  * will be made navigable via the `axes` config. See the {@link #axes} config documentation
  * for details on the allowed formats. If the `axes` config is not specified, it will default
@@ -215,7 +215,7 @@ Ext.define('Ext.chart.interactions.PanZoom', {
         modeToggleButton: {
             xtype: 'segmentedbutton',
             width: 200,
-            defaults: { ui: 'default-toolbar' },
+            defaults: {ui: 'default-toolbar'},
             cls: Ext.baseCSSPrefix + 'panzoom-toggle',
             items: [{
                 text: 'Pan'
@@ -522,8 +522,8 @@ Ext.define('Ext.chart.interactions.PanZoom', {
         var me = this,
             visibleLength = oldVisibleRange[1] - oldVisibleRange[0],
             visibleRange = axis.getVisibleRange(),
-            actualMinZoom =  minZoom || me.getMinZoom() || axis.config.minZoom,
-            actualMaxZoom =  maxZoom || me.getMaxZoom() || axis.config.maxZoom,
+            actualMinZoom = minZoom || me.getMinZoom() || axis.config.minZoom,
+            actualMaxZoom = maxZoom || me.getMaxZoom() || axis.config.maxZoom,
             rect = me.getChart().getInnerRect(),
             left, right;
         if (!rect) {

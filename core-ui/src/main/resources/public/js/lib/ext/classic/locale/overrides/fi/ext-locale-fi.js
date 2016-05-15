@@ -3,12 +3,12 @@
  * <tuomas.salo (at) iki.fi>
  * 'ä' should read as lowercase 'a' with two dots on top (&auml;)
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["tammikuu", "helmikuu", "maaliskuu", "huhtikuu", "toukokuu", "kesäkuu", "heinäkuu", "elokuu", "syyskuu", "lokakuu", "marraskuu", "joulukuu"];
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return (month + 1) + ".";
         };
 
@@ -27,7 +27,7 @@ Ext.onReady(function() {
             'joulukuu': 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             if (name.match(/^(1?\d)\./)) {
                 return -1 + RegExp.$1;
             } else {
@@ -37,7 +37,7 @@ Ext.onReady(function() {
 
         Ext.Date.dayNames = ["sunnuntai", "maanantai", "tiistai", "keskiviikko", "torstai", "perjantai", "lauantai"];
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day].substring(0, 2);
         };
     }
@@ -50,13 +50,13 @@ Ext.onReady(function() {
             // Finnish Euro
             dateFormat: 'j.n.Y'
         });
-        
-        Ext.util.Format.date = function(v, format) {
+
+        Ext.util.Format.date = function (v, format) {
             if (!v) return "";
             if (!(v instanceof Date)) v = new Date(Date.parse(v));
             return Ext.Date.format(v, format || "j.n.Y");
         };
-        
+
     }
 });
 
@@ -150,7 +150,7 @@ Ext.define("Ext.locale.fi.form.field.Date", {
 Ext.define("Ext.locale.fi.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Ladataan..."
     });
@@ -167,7 +167,7 @@ Ext.define("Ext.locale.fi.form.field.VTypes", {
 Ext.define("Ext.locale.fi.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Anna linkin URL-osoite:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -279,10 +279,10 @@ Ext.define("Ext.locale.fi.window.MessageBox", {
         cancel: "Peruuta",
         yes: "Kyllä",
         no: "Ei"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.fi.Component", {	
+Ext.define("Ext.locale.fi.Component", {
     override: "Ext.Component"
 });

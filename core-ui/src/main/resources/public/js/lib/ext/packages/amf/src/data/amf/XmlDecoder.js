@@ -26,7 +26,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
          * @private
          * @param {String} xml
          */
-        readXml: function(xml) {
+        readXml: function (xml) {
             var doc;
 
             if (window.DOMParser) {
@@ -44,7 +44,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
          * @param {HTMLElement/XMLElement} node the node
          * @return {Array} a byte array
          */
-        readByteArray: function(node) {
+        readByteArray: function (node) {
             var bytes = [],
                 c, i, str;
             str = node.firstChild.nodeValue;
@@ -60,7 +60,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
          * @param {Array} bytes the byte array containing one AMF3-encoded value
          * @return {Object} the decoded value
          */
-        readAMF3Value: function(bytes) {
+        readAMF3Value: function (bytes) {
             var packet;
             packet = Ext.create('Ext.data.amf.Packet');
             return packet.decodeValue(bytes);
@@ -71,9 +71,9 @@ Ext.define('Ext.data.amf.XmlDecoder', {
          * @param {String} messageId the message ID
          * @return {Number} the transaction ID
          */
-        decodeTidFromFlexUID: function(messageId) {
+        decodeTidFromFlexUID: function (messageId) {
             var str;
-            str = messageId.substr(0,8);
+            str = messageId.substr(0, 8);
             return parseInt(str, 16);
         }
 
@@ -83,7 +83,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
      * Creates new encoder.
      * @param {Object} config Configuration options
      */
-    constructor: function(config) {
+    constructor: function (config) {
         this.initConfig(config);
         this.clear();
     },
@@ -91,11 +91,11 @@ Ext.define('Ext.data.amf.XmlDecoder', {
     /**
      * Clears the accumulated data and reference tables
      */
-    clear: function() {
+    clear: function () {
         // reset reference counters
-        this.objectReferences=[];
-        this.traitsReferences=[];
-        this.stringReferences=[];
+        this.objectReferences = [];
+        this.traitsReferences = [];
+        this.stringReferences = [];
     },
 
     /**
@@ -103,9 +103,9 @@ Ext.define('Ext.data.amf.XmlDecoder', {
      * @param {String} xml the xml of the message
      * @return {Object} the response object containing the message
      */
-    readAmfxMessage: function(xml) {
+    readAmfxMessage: function (xml) {
         var doc, amfx, body,
-            i, resp={};
+            i, resp = {};
         this.clear(); // reset counters
         doc = Ext.data.amf.XmlDecoder.readXml(xml);
         amfx = doc.getElementsByTagName('amfx')[0];
@@ -136,7 +136,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
      * @param {HTMLElement} node The node to parse
      * @return {Object} a JavaScript object or value
      */
-    readValue: function(node) {
+    readValue: function (node) {
         var val;
         if (typeof node.normalize === 'function') {
             node.normalize();
@@ -185,7 +185,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
      * @param {HTMLElement/XMLElement} node the node containing a string object
      * @return {String} the parsed string
      */
-    readString: function(node) {
+    readString: function (node) {
         var val;
         if (node.getAttributeNode('id')) {
             return this.stringReferences[parseInt(node.getAttribute('id'))];
@@ -200,7 +200,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
      * @param {HTMLElement/XMLElement} node the traits node from the XML doc
      * @return {Array} an array of ordered trait names or null if it's an externalizable object
      */
-    readTraits: function(node) {
+    readTraits: function (node) {
         var traits = [], i, rawtraits;
         if (node === null) {
             return null;
@@ -241,7 +241,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
      * @param {HTMLElement/XMLElement} node the ref node
      * @return {Object} the previously instantiated object referred to by the ref node
      */
-    readObjectRef: function(node) {
+    readObjectRef: function (node) {
         var id;
         id = parseInt(node.getAttribute('id'));
         return this.objectReferences[id];
@@ -252,7 +252,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
      * @param {HTMLElement/XMLElement} node the `<object>` node to parse
      * @return {Object} the deserialized object
      */
-    readObject: function(node) {
+    readObject: function (node) {
         var obj,
             traits = [],
             traitsNode,
@@ -268,7 +268,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
 
         // check if we need special handling for this class
         if ((!klass) && this.converters[className]) {
-            obj = this.converters[className](this,node);
+            obj = this.converters[className](this, node);
             return obj; // we're done
         }
 
@@ -313,9 +313,9 @@ Ext.define('Ext.data.amf.XmlDecoder', {
      * @param {HTMLElement/XMLElement} node the array node
      * @return {Array} the deserialized array
      */
-    readArray: function(node) {
-        var arr=[],
-            n,i,j,l,name, val, len, childnodes, cn;
+    readArray: function (node) {
+        var arr = [],
+            n, i, j, l, name, val, len, childnodes, cn;
 
         // register array in object references table before we parse, in case of circular references
         this.objectReferences.push(arr);
@@ -367,7 +367,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
      * @param {HTMLElement/XMLElement} node the `<dictionary>` node
      * @return {Object} a javascript object with the dictionary value-pair elements
      */
-    readDictionary: function(node) {
+    readDictionary: function (node) {
         // For now, handle regular objects
         var dict = {},
             key, val,
@@ -411,7 +411,7 @@ Ext.define('Ext.data.amf.XmlDecoder', {
      * Converts externalizable flex objects with a source array to a regular array.
      * @private
      */
-    convertObjectWithSourceField: function(node) {
+    convertObjectWithSourceField: function (node) {
         var i, n, val;
         for (i = 0; i < node.childNodes.length; i++) {
             n = node.childNodes.item(i);
@@ -430,13 +430,13 @@ Ext.define('Ext.data.amf.XmlDecoder', {
      */
 
     converters: {
-        'flex.messaging.io.ArrayCollection': function(decoder,node) {
+        'flex.messaging.io.ArrayCollection': function (decoder, node) {
             return decoder.convertObjectWithSourceField(node);
         },
-        'mx.collections.ArrayList':  function(decoder,node) {
+        'mx.collections.ArrayList': function (decoder, node) {
             return decoder.convertObjectWithSourceField(node);
         },
-        'mx.collections.ArrayCollection':  function(decoder,node) {
+        'mx.collections.ArrayCollection': function (decoder, node) {
             return decoder.convertObjectWithSourceField(node);
         }
     }

@@ -23,7 +23,7 @@ Ext.define('Ext.form.field.Field', {
      * @property {Boolean} isFormField
      * Flag denoting that this component is a Field. Always true.
      */
-    isFormField : true,
+    isFormField: true,
 
     config: {
         /**
@@ -60,7 +60,7 @@ Ext.define('Ext.form.field.Field', {
      * @cfg {Boolean} disabled
      * True to disable the field. Disabled Fields will not be {@link Ext.form.Basic#submit submitted}.
      */
-    disabled : false,
+    disabled: false,
 
     /**
      * @cfg {Boolean} submitValue
@@ -97,7 +97,7 @@ Ext.define('Ext.form.field.Field', {
      * @private
      */
     suspendCheckChange: 0,
-    
+
     /**
      * @property {Boolean} dirty
      * The dirty state of the field.
@@ -107,9 +107,9 @@ Ext.define('Ext.form.field.Field', {
 
     /**
      * @event change
-     * Fires when the value of a field is changed. The value of a field is 
-     * checked for changes when the field's {@link #setValue} method 
-     * is called and when any of the events listed in 
+     * Fires when the value of a field is changed. The value of a field is
+     * checked for changes when the field's {@link #setValue} method
+     * is called and when any of the events listed in
      * {@link Ext.form.field.Base#checkChangeEvents checkChangeEvents} are fired.
      * @param {Ext.form.field.Field} this
      * @param {Object} newValue The new value
@@ -134,13 +134,13 @@ Ext.define('Ext.form.field.Field', {
      * Initializes this Field mixin on the current instance. Components using this mixin should call this method during
      * their own initialization process.
      */
-    initField: function() {
+    initField: function () {
         var me = this,
             valuePublishEvent = me.valuePublishEvent,
             len, i;
 
         me.initValue();
-        
+
         //<debug>
         var badNames = [
             'tagName',
@@ -148,11 +148,11 @@ Ext.define('Ext.form.field.Field', {
             'children',
             'childNodes'
         ], name = this.name;
-            
+
         if (name && Ext.Array.indexOf(badNames, name) > -1) {
             Ext.log.warn(
                 ['It is recommended to not use "', name, '" as a field name, because it ',
-                'can cause naming collisions during form submission.'].join('')
+                    'can cause naming collisions during form submission.'].join('')
             );
         }
         //</debug>
@@ -170,7 +170,7 @@ Ext.define('Ext.form.field.Field', {
     /**
      * Initializes the field's value based on the initial config.
      */
-    initValue: function() {
+    initValue: function () {
         var me = this;
 
         // Set the initial value if we have one.
@@ -180,7 +180,7 @@ Ext.define('Ext.form.field.Field', {
             me.setValue(me.value);
             me.suspendCheckChange--;
         }
-        
+
         /**
          * @property {Object} originalValue
          * The original value of the field as configured in the {@link #value} configuration, or as loaded by the last
@@ -201,7 +201,7 @@ Ext.define('Ext.form.field.Field', {
      * when including the field value in a {@link Ext.form.Basic#submit form submit()}.
      * @return {String} name The field {@link Ext.form.field.Field#name name}
      */
-    getName: function() {
+    getName: function () {
         return this.name;
     },
 
@@ -210,7 +210,7 @@ Ext.define('Ext.form.field.Field', {
      * particular field (e.g. a Date object for {@link Ext.form.field.Date}).
      * @return {Object} value The field value
      */
-    getValue: function() {
+    getValue: function () {
         return this.value;
     },
 
@@ -219,7 +219,7 @@ Ext.define('Ext.form.field.Field', {
      * @param {Object} value The value to set
      * @return {Ext.form.field.Field} this
      */
-    setValue: function(value) {
+    setValue: function (value) {
         var me = this;
         me.value = value;
         me.checkChange();
@@ -233,7 +233,7 @@ Ext.define('Ext.form.field.Field', {
      * @param {Object} value2 The second value to compare
      * @return {Boolean} True if the values are equal, false if inequal.
      */
-    isEqual: function(value1, value2) {
+    isEqual: function (value1, value2) {
         return String(value1) === String(value2);
     },
 
@@ -245,7 +245,7 @@ Ext.define('Ext.form.field.Field', {
      * @param {Object} value2 The second value to compare
      * @return {Boolean} True if the values are equal, false if inequal.
      */
-    isEqualAsString: function(value1, value2){
+    isEqualAsString: function (value1, value2) {
         return String(Ext.valueFrom(value1, '')) === String(Ext.valueFrom(value2, ''));
     },
 
@@ -261,7 +261,7 @@ Ext.define('Ext.form.field.Field', {
      * strings if that particular name has multiple values. It can also return null if there are no parameters to be
      * submitted.
      */
-    getSubmitData: function() {
+    getSubmitData: function () {
         var me = this,
             data = null;
         if (!me.disabled && me.submitValue) {
@@ -273,7 +273,7 @@ Ext.define('Ext.form.field.Field', {
 
     /**
      * Returns the value(s) that should be saved to the {@link Ext.data.Model} instance for this field, when {@link
-     * Ext.form.Basic#updateRecord} is called. Typically this will be an object with a single name-value pair, the name
+        * Ext.form.Basic#updateRecord} is called. Typically this will be an object with a single name-value pair, the name
      * being this field's {@link #getName name} and the value being its current data value. More advanced field
      * implementations may return more than one name-value pair. The returned values will be saved to the corresponding
      * field names in the Model.
@@ -285,10 +285,10 @@ Ext.define('Ext.form.field.Field', {
      * strings if that particular name has multiple values. It can also return null if there are no parameters to be
      * submitted.
      */
-    getModelData: function(includeEmptyText, /*private*/ isSubmitting) {
+    getModelData: function (includeEmptyText, /*private*/ isSubmitting) {
         var me = this,
             data = null;
-        
+
         // Note that we need to check if this operation is being called from a Submit action because displayfields aren't
         // to be submitted,  but they can call this to get their model data.
         if (!me.disabled && (me.submitValue || !isSubmitting)) {
@@ -300,9 +300,9 @@ Ext.define('Ext.form.field.Field', {
 
     /**
      * Resets the current field value to the originally loaded value and clears any validation messages. See {@link
-     * Ext.form.Basic}.{@link Ext.form.Basic#trackResetOnLoad trackResetOnLoad}
+        * Ext.form.Basic}.{@link Ext.form.Basic#trackResetOnLoad trackResetOnLoad}
      */
-    reset: function(){
+    reset: function () {
         var me = this;
 
         me.beforeReset();
@@ -311,7 +311,7 @@ Ext.define('Ext.form.field.Field', {
         // delete here so we reset back to the original state
         delete me.wasValid;
     },
-    
+
     /**
      * Template method before a field is reset.
      * @protected
@@ -323,7 +323,7 @@ Ext.define('Ext.form.field.Field', {
      * called by {@link Ext.form.Basic}.{@link Ext.form.Basic#setValues setValues} if the form's
      * {@link Ext.form.Basic#trackResetOnLoad trackResetOnLoad} property is set to true.
      */
-    resetOriginalValue: function() {
+    resetOriginalValue: function () {
         this.originalValue = this.getValue();
         this.checkDirty();
     },
@@ -338,14 +338,14 @@ Ext.define('Ext.form.field.Field', {
      * 3. Checks the {@link #isDirty dirty state} of the field and fires the {@link #dirtychange dirtychange event}
      *    if it has changed.
      */
-    checkChange: function() {
+    checkChange: function () {
         var me = this,
             newVal, oldVal;
-            
+
         if (!me.suspendCheckChange) {
             newVal = me.getValue();
             oldVal = me.lastValue;
-                
+
             if (!me.destroyed && me.didValueChange(newVal, oldVal)) {
                 me.lastValue = newVal;
                 me.fireEvent('change', me, newVal, oldVal);
@@ -353,13 +353,13 @@ Ext.define('Ext.form.field.Field', {
             }
         }
     },
-    
+
     /**
      * @private
      * Checks if the value has changed. Allows subclasses to override for
      * any more complex logic.
      */
-    didValueChange: function(newVal, oldVal){
+    didValueChange: function (newVal, oldVal) {
         return !this.isEqual(newVal, oldVal);
     },
 
@@ -401,7 +401,7 @@ Ext.define('Ext.form.field.Field', {
      * @return {Boolean} True if this field has been changed from its original value (and is not disabled),
      * false otherwise.
      */
-    isDirty : function() {
+    isDirty: function () {
         var me = this;
         return !me.disabled && !me.isEqual(me.getValue(), me.originalValue);
     },
@@ -410,10 +410,10 @@ Ext.define('Ext.form.field.Field', {
      * Checks the {@link #isDirty} state of the field and if it has changed since the last time it was checked,
      * fires the {@link #dirtychange} event.
      */
-    checkDirty: function() {
+    checkDirty: function () {
         var me = this,
             isDirty = me.isDirty();
-        
+
         if (isDirty !== me.wasDirty) {
             me.dirty = isDirty;
             me.fireEvent('dirtychange', me, isDirty);
@@ -469,7 +469,7 @@ Ext.define('Ext.form.field.Field', {
      *
      * @return {Boolean} True if the value is valid, else false
      */
-    isValid : function() {
+    isValid: function () {
         var me = this;
         return me.disabled || Ext.isEmpty(me.getErrors());
     },
@@ -484,11 +484,11 @@ Ext.define('Ext.form.field.Field', {
      *
      * @return {Boolean} True if the value is valid, else false
      */
-    validate : function() {
+    validate: function () {
         return this.checkValidityChange(this.isValid());
     },
 
-    checkValidityChange: function(isValid) {
+    checkValidityChange: function (isValid) {
         var me = this;
 
         if (isValid !== me.wasValid) {
@@ -505,7 +505,7 @@ Ext.define('Ext.form.field.Field', {
      * change.
      * @param {Function} fn The function to call with change checks suspended.
      */
-    batchChanges: function(fn) {
+    batchChanges: function (fn) {
         try {
             this.suspendCheckChange++;
             fn();
@@ -526,7 +526,7 @@ Ext.define('Ext.form.field.Field', {
      * input element.
      * @return {Boolean}
      */
-    isFileUpload: function() {
+    isFileUpload: function () {
         return false;
     },
 
@@ -536,14 +536,14 @@ Ext.define('Ext.form.field.Field', {
      * returned, so this method should also create a replacement.
      * @return {HTMLElement}
      */
-    extractFileInput: function() {
+    extractFileInput: function () {
         return null;
     },
 
     /**
      * @method
-     * Display one or more error messages associated with this field, using 
-     * {@link Ext.form.Labelable#msgTarget} to determine how to display the messages and 
+     * Display one or more error messages associated with this field, using
+     * {@link Ext.form.Labelable#msgTarget} to determine how to display the messages and
      * applying {@link Ext.form.Labelable#invalidCls} to the field's UI element.
      *
      *     var formPanel = Ext.create('Ext.form.Panel', {
@@ -568,12 +568,12 @@ Ext.define('Ext.form.field.Field', {
      *             }
      *         }]
      *     });
-     * 
-     * **Note**: this method does not cause the Field's {@link #validate} or 
-     * {@link #isValid} methods to return `false` if the value does _pass_ validation. 
+     *
+     * **Note**: this method does not cause the Field's {@link #validate} or
+     * {@link #isValid} methods to return `false` if the value does _pass_ validation.
      * So simply marking a Field as invalid will not prevent submission of forms
      * submitted with the {@link Ext.form.action.Submit#clientValidation} option set.
-     * 
+     *
      * @param {String/String[]} errors The validation message(s) to display.
      */
     markInvalid: Ext.emptyFn,
@@ -589,16 +589,16 @@ Ext.define('Ext.form.field.Field', {
      */
     clearInvalid: Ext.emptyFn,
 
-    updateValidation: function(validation, oldValidation) {
+    updateValidation: function (validation, oldValidation) {
         // Only validate if the validation is changing, not when we initial set it,
         // otherwise it will mark the field invalid as soon as it is bound.
         if (oldValidation) {
-            this.validate();    
+            this.validate();
         }
     },
 
     privates: {
-        resetToInitialValue: function() {
+        resetToInitialValue: function () {
             var me = this,
                 originalValue = me.originalValue;
 
@@ -606,5 +606,5 @@ Ext.define('Ext.form.field.Field', {
             me.reset();
             me.originalValue = originalValue;
         }
-     }
+    }
 });

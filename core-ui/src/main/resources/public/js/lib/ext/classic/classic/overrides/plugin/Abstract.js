@@ -44,7 +44,7 @@ Ext.define('Ext.overrides.plugin.Abstract', {
      * Plugin subclasses which need more complex processing may implement an overriding implementation.
      * @member Ext.plugin.Abstract
      */
-    enable: function() {
+    enable: function () {
         this.disabled = false;
     },
 
@@ -54,7 +54,7 @@ Ext.define('Ext.overrides.plugin.Abstract', {
      * Plugin subclasses which need more complex processing may implement an overriding implementation.
      * @member Ext.plugin.Abstract
      */
-    disable: function() {
+    disable: function () {
         this.disabled = true;
     }
 });

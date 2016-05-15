@@ -72,13 +72,13 @@ Ext.define('Ext.chart.series.Radar', {
     alias: 'series.radar',
     requires: ['Ext.chart.series.sprite.Radar'],
 
-    themeColorCount: function() {
+    themeColorCount: function () {
         return 1;
     },
 
     isStoreDependantColorCount: false,
 
-    themeMarkerCount: function() {
+    themeMarkerCount: function () {
         return 1;
     },
 
@@ -187,7 +187,7 @@ Ext.define('Ext.chart.series.Radar', {
             animation = me.getAnimation() || chart && chart.getAnimation(),
             sprite = me.sprites[0],
             marker;
-        
+
         if (!chart) {
             return [];
         }

@@ -1,4 +1,4 @@
-/** 
+/**
  * This class is used as a set of methods that are applied to the prototype of a
  * {@link Ext.data.Model Model} to decorate it with a Node API. This means that models
  * used in conjunction with a tree will have all of the tree related methods available
@@ -336,7 +336,7 @@ Ext.define('Ext.data.NodeInterface', {
             var model = Ext.data.schema.Schema.lookupEntity(modelClass),
                 proto = model.prototype,
                 idName, idField, idType;
-            
+
             if (!model.prototype.isObservable) {
                 model.mixin(Ext.mixin.Observable.prototype.mixinId, Ext.mixin.Observable);
             }
@@ -344,56 +344,56 @@ Ext.define('Ext.data.NodeInterface', {
                 return;
             }
 
-            idName  = proto.idProperty;
+            idName = proto.idProperty;
             idField = model.getField(idName);
-            idType  = idField.type;
+            idType = idField.type;
 
             model.override(this.getPrototypeBody());
             model.addFields([
-                { name : 'parentId',   type : idType,    defaultValue : null,  allowNull : idField.allowNull            },
-                { name : 'index',      type : 'int',     defaultValue : -1,    persist : false          , convert: null },
-                { name : 'depth',      type : 'int',     defaultValue : 0,     persist : false          , convert: null },
-                { name : 'expanded',   type : 'bool',    defaultValue : false, persist : false          , convert: null },
-                { name : 'expandable', type : 'bool',    defaultValue : true,  persist : false          , convert: null },
-                { name : 'checked',    type : 'auto',    defaultValue : null,  persist : false          , convert: null },
-                { name : 'leaf',       type : 'bool',    defaultValue : false                            },
-                { name : 'cls',        type : 'string',  defaultValue : '',    persist : false          , convert: null },
-                { name : 'iconCls',    type : 'string',  defaultValue : '',    persist : false          , convert: null },
-                { name : 'icon',       type : 'string',  defaultValue : '',    persist : false          , convert: null },
-                { name : 'root',       type : 'boolean', defaultValue : false, persist : false          , convert: null },
-                { name : 'isLast',     type : 'boolean', defaultValue : false, persist : false          , convert: null },
-                { name : 'isFirst',    type : 'boolean', defaultValue : false, persist : false          , convert: null },
-                { name : 'allowDrop',  type : 'boolean', defaultValue : true,  persist : false          , convert: null },
-                { name : 'allowDrag',  type : 'boolean', defaultValue : true,  persist : false          , convert: null },
-                { name : 'loaded',     type : 'boolean', defaultValue : false, persist : false          , convert: null },
-                { name : 'loading',    type : 'boolean', defaultValue : false, persist : false          , convert: null },
-                { name : 'href',       type : 'string',  defaultValue : '',    persist : false          , convert: null },
-                { name : 'hrefTarget', type : 'string',  defaultValue : '',    persist : false          , convert: null },
-                { name : 'qtip',       type : 'string',  defaultValue : '',    persist : false          , convert: null },
-                { name : 'qtitle',     type : 'string',  defaultValue : '',    persist : false          , convert: null },
-                { name : 'qshowDelay', type : 'int',     defaultValue : 0,     persist : false          , convert: null },
-                { name : 'children',   type : 'auto',    defaultValue : null,  persist : false          , convert: null },
-                { name : 'visible',    type : 'boolean', defaultValue : true,  persist : false },
-                { name : 'text',       type : 'string',                        persist : false }
+                {name: 'parentId', type: idType, defaultValue: null, allowNull: idField.allowNull},
+                {name: 'index', type: 'int', defaultValue: -1, persist: false, convert: null},
+                {name: 'depth', type: 'int', defaultValue: 0, persist: false, convert: null},
+                {name: 'expanded', type: 'bool', defaultValue: false, persist: false, convert: null},
+                {name: 'expandable', type: 'bool', defaultValue: true, persist: false, convert: null},
+                {name: 'checked', type: 'auto', defaultValue: null, persist: false, convert: null},
+                {name: 'leaf', type: 'bool', defaultValue: false},
+                {name: 'cls', type: 'string', defaultValue: '', persist: false, convert: null},
+                {name: 'iconCls', type: 'string', defaultValue: '', persist: false, convert: null},
+                {name: 'icon', type: 'string', defaultValue: '', persist: false, convert: null},
+                {name: 'root', type: 'boolean', defaultValue: false, persist: false, convert: null},
+                {name: 'isLast', type: 'boolean', defaultValue: false, persist: false, convert: null},
+                {name: 'isFirst', type: 'boolean', defaultValue: false, persist: false, convert: null},
+                {name: 'allowDrop', type: 'boolean', defaultValue: true, persist: false, convert: null},
+                {name: 'allowDrag', type: 'boolean', defaultValue: true, persist: false, convert: null},
+                {name: 'loaded', type: 'boolean', defaultValue: false, persist: false, convert: null},
+                {name: 'loading', type: 'boolean', defaultValue: false, persist: false, convert: null},
+                {name: 'href', type: 'string', defaultValue: '', persist: false, convert: null},
+                {name: 'hrefTarget', type: 'string', defaultValue: '', persist: false, convert: null},
+                {name: 'qtip', type: 'string', defaultValue: '', persist: false, convert: null},
+                {name: 'qtitle', type: 'string', defaultValue: '', persist: false, convert: null},
+                {name: 'qshowDelay', type: 'int', defaultValue: 0, persist: false, convert: null},
+                {name: 'children', type: 'auto', defaultValue: null, persist: false, convert: null},
+                {name: 'visible', type: 'boolean', defaultValue: true, persist: false},
+                {name: 'text', type: 'string', persist: false}
             ]);
         },
 
-        getPrototypeBody: function() {
+        getPrototypeBody: function () {
             var bubbledEvents = {
-                idchanged     : true,
-                append        : true,
-                remove        : true,
-                move          : true,
-                insert        : true,
-                beforeappend  : true,
-                beforeremove  : true,
-                beforemove    : true,
-                beforeinsert  : true,
-                expand        : true,
-                collapse      : true,
-                beforeexpand  : true,
+                idchanged: true,
+                append: true,
+                remove: true,
+                move: true,
+                insert: true,
+                beforeappend: true,
+                beforeremove: true,
+                beforemove: true,
+                beforeinsert: true,
+                expand: true,
+                collapse: true,
+                beforeexpand: true,
                 beforecollapse: true,
-                sort          : true
+                sort: true
             }, silently = {
                 silent: true
             };
@@ -421,7 +421,7 @@ Ext.define('Ext.data.NodeInterface', {
                 previousSibling: null,
                 nextSibling: null,
 
-                constructor: function() {
+                constructor: function () {
                     var me = this;
 
                     me.mixins.observable.constructor.call(me);
@@ -572,7 +572,7 @@ Ext.define('Ext.data.NodeInterface', {
                     // setup defaults here
                     if (!node.childNodes) {
                         node.firstChild = node.lastChild = node.parentNode =
-                                node.previousSibling = node.nextSibling = null;
+                            node.previousSibling = node.nextSibling = null;
                         node.childNodes = [];
                     }
 
@@ -583,7 +583,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * Returns true if this node is a leaf
                  * @return {Boolean}
                  */
-                isLeaf: function() {
+                isLeaf: function () {
                     return this.get('leaf') === true;
                 },
 
@@ -592,7 +592,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @private
                  * @param {Ext.data.NodeInterface} node
                  */
-                setFirstChild: function(node) {
+                setFirstChild: function (node) {
                     this.firstChild = node;
                 },
 
@@ -601,7 +601,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @private
                  * @param {Ext.data.NodeInterface} node
                  */
-                setLastChild: function(node) {
+                setLastChild: function (node) {
                     this.lastChild = node;
                 },
 
@@ -619,7 +619,7 @@ Ext.define('Ext.data.NodeInterface', {
                  *  @param {Object} info.depth
                  *  @param {Object} info.parentId
                  */
-                updateInfo: function(commit, info) {
+                updateInfo: function (commit, info) {
                     var me = this,
                         dataObject = me.data,
                         oldDepth = dataObject.depth,
@@ -681,7 +681,7 @@ Ext.define('Ext.data.NodeInterface', {
                                     // me.dirty:
                                     me.dirty = false;
                                     for (key in modified) {
-                                        if (modified.hasOwnProperty(key)){
+                                        if (modified.hasOwnProperty(key)) {
                                             me.dirty = true;
                                             break;
                                         }
@@ -716,23 +716,23 @@ Ext.define('Ext.data.NodeInterface', {
                  * Returns true if this node is the last child of its parent
                  * @return {Boolean}
                  */
-                isLast: function() {
-                   return this.get('isLast');
+                isLast: function () {
+                    return this.get('isLast');
                 },
 
                 /**
                  * Returns true if this node is the first child of its parent
                  * @return {Boolean}
                  */
-                isFirst: function() {
-                   return this.get('isFirst');
+                isFirst: function () {
+                    return this.get('isFirst');
                 },
 
                 /**
                  * Returns true if this node has one or more child nodes, else false.
                  * @return {Boolean}
                  */
-                hasChildNodes: function() {
+                hasChildNodes: function () {
                     return !this.isLeaf() && this.childNodes.length > 0;
                 },
 
@@ -741,7 +741,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * node attribute is explicitly specified as true, otherwise returns false.
                  * @return {Boolean}
                  */
-                isExpandable: function() {
+                isExpandable: function () {
                     var me = this;
 
                     if (me.get('expandable')) {
@@ -749,8 +749,8 @@ Ext.define('Ext.data.NodeInterface', {
                     }
                     return false;
                 },
-                
-                triggerUIUpdate: function() {
+
+                triggerUIUpdate: function () {
                     // This isn't ideal, however none of the underlying fields have changed
                     // but we still need to update the UI
                     // callJoined calls both the Stores we are joined to, and any TreeStore of which we may be a descendant.
@@ -763,12 +763,12 @@ Ext.define('Ext.data.NodeInterface', {
                  * If the node was previously a child node of another parent node, it will be removed from that node first.
                  *
                  * @param {Ext.data.NodeInterface/Ext.data.NodeInterface[]/Object} node The node or Array of nodes to append
-                 * @param {Boolean} [suppressEvents=false] True to suppress firing of 
+                 * @param {Boolean} [suppressEvents=false] True to suppress firing of
                  * events.
                  * @param {Boolean} [commit=false]
                  * @return {Ext.data.NodeInterface} The appended node if single append, or null if an array was passed
                  */
-                appendChild: function(node, suppressEvents, commit) {
+                appendChild: function (node, suppressEvents, commit) {
                     var me = this,
                         i, ln,
                         index,
@@ -777,7 +777,7 @@ Ext.define('Ext.data.NodeInterface', {
                         childInfo = {
                             isLast: true,
                             parentId: me.getId(),
-                            depth: (me.data.depth||0) + 1
+                            depth: (me.data.depth || 0) + 1
                         },
                         result,
                         treeStore = me.getTreeStore(),
@@ -923,10 +923,10 @@ Ext.define('Ext.data.NodeInterface', {
                 },
 
                 /**
-                * Returns the tree this node is in.
-                * @return {Ext.tree.Panel} The tree panel which owns this node.
-                */
-                getOwnerTree: function() {
+                 * Returns the tree this node is in.
+                 * @return {Ext.tree.Panel} The tree panel which owns this node.
+                 */
+                getOwnerTree: function () {
                     var store = this.getTreeStore();
                     if (store) {
                         return store.ownerTree;
@@ -937,7 +937,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * Returns the {@link Ext.data.TreeStore} which owns this node.
                  * @return {Ext.data.TreeStore} The TreeStore which owns this node.
                  */
-                getTreeStore: function() {
+                getTreeStore: function () {
                     var root = this;
 
                     while (root && !root.treeStore) {
@@ -953,7 +953,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * configured proxy.
                  * @return {Ext.data.NodeInterface} The removed node
                  */
-                removeChild: function(node, erase, suppressEvents, isMove) {
+                removeChild: function (node, erase, suppressEvents, isMove) {
                     var me = this,
                         index = me.indexOf(node),
                         i, childCount,
@@ -988,7 +988,7 @@ Ext.define('Ext.data.NodeInterface', {
                     if (previousSibling) {
                         node.previousSibling.nextSibling = node.nextSibling;
                     }
-                    
+
                     // Update the next sibling to point to its new previous
                     if (node.nextSibling) {
                         node.nextSibling.previousSibling = node.previousSibling;
@@ -1091,7 +1091,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * False to copy without child Nodes.
                  * @return {Ext.data.NodeInterface} A copy of this Node.
                  */
-                copy: function(newId, deep) {
+                copy: function (newId, deep) {
                     var me = this,
                         result = me.callParent([newId]),
                         len = me.childNodes ? me.childNodes.length : 0,
@@ -1112,7 +1112,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Boolean} [erase=false] True to erase the node using the configured
                  * proxy.
                  */
-                clear: function(erase) {
+                clear: function (erase) {
                     var me = this;
 
                     // clear any references from the node
@@ -1122,7 +1122,7 @@ Ext.define('Ext.data.NodeInterface', {
                     }
                 },
 
-                drop: function() {
+                drop: function () {
                     var me = this,
                         childNodes = me.childNodes,
                         parentNode = me.parentNode,
@@ -1175,7 +1175,7 @@ Ext.define('Ext.data.NodeInterface', {
                 /**
                  * Destroys the node.
                  */
-                erase: function(options) {
+                erase: function (options) {
                     var me = this,
                         childNodes = me.childNodes,
                         len = childNodes && childNodes.length,
@@ -1207,11 +1207,11 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Ext.data.NodeInterface} refNode The node to insert before (if null the node is appended)
                  * @return {Ext.data.NodeInterface} The inserted node
                  */
-                insertBefore: function(node, refNode, suppressEvents) {
+                insertBefore: function (node, refNode, suppressEvents) {
                     var me = this,
-                        index     = me.indexOf(refNode),
+                        index = me.indexOf(refNode),
                         oldParent = node.parentNode,
-                        refIndex  = index,
+                        refIndex = index,
                         childCount, previousSibling, i,
                         treeStore = me.getTreeStore(),
                         bulkUpdate = treeStore && treeStore.bulkUpdate;
@@ -1278,7 +1278,7 @@ Ext.define('Ext.data.NodeInterface', {
                         index: refIndex,
                         isFirst: refIndex === 0,
                         isLast: false,
-                        depth: (me.data.depth||0) + 1
+                        depth: (me.data.depth || 0) + 1
                     });
 
                     // Update the index for all following siblings.
@@ -1336,7 +1336,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Ext.data.NodeInterface/Object} node The node to insert
                  * @return {Ext.data.NodeInterface} The node you just inserted
                  */
-                insertChild: function(index, node) {
+                insertChild: function (index, node) {
                     var sibling = this.childNodes[index];
                     if (sibling) {
                         return this.insertBefore(node, sibling);
@@ -1350,9 +1350,9 @@ Ext.define('Ext.data.NodeInterface', {
                  * @private
                  * Used by {@link Ext.tree.Column#initTemplateRendererData} to determine whether a node is the last *visible*
                  * sibling.
-                 * 
+                 *
                  */
-                isLastVisible: function() {
+                isLastVisible: function () {
                     var me = this,
                         result = me.data.isLast,
                         next = me.nextSibling;
@@ -1388,7 +1388,7 @@ Ext.define('Ext.data.NodeInterface', {
                  *
                  * @return {Ext.data.NodeInterface} this
                  */
-                remove: function(erase, suppressEvents) {
+                remove: function (erase, suppressEvents) {
                     var me = this,
                         parentNode = me.parentNode;
 
@@ -1408,7 +1408,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @return {Ext.data.NodeInterface} this
                  * @return {Ext.data.NodeInterface} this
                  */
-                removeAll: function(erase, suppressEvents, fromParent) {
+                removeAll: function (erase, suppressEvents, fromParent) {
                     // This method duplicates logic from removeChild for the sake of
                     // speed since we can make a number of assumptions because we're
                     // getting rid of everything
@@ -1470,7 +1470,7 @@ Ext.define('Ext.data.NodeInterface', {
                     if (!fromParent) {
                         me.triggerUIUpdate();
                     }
-                    
+
                     return me;
                 },
 
@@ -1479,7 +1479,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Number} index
                  * @return {Ext.data.NodeInterface}
                  */
-                getChildAt: function(index) {
+                getChildAt: function (index) {
                     return this.childNodes[index];
                 },
 
@@ -1489,7 +1489,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Ext.data.NodeInterface} oldChild The node to replace
                  * @return {Ext.data.NodeInterface} The replaced node
                  */
-                replaceChild: function(newChild, oldChild, suppressEvents) {
+                replaceChild: function (newChild, oldChild, suppressEvents) {
                     var s = oldChild ? oldChild.nextSibling : null;
 
                     this.removeChild(oldChild, false, suppressEvents);
@@ -1502,24 +1502,24 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Ext.data.NodeInterface} node
                  * @return {Number} The index of the node or -1 if it was not found
                  */
-                indexOf: function(child) {
+                indexOf: function (child) {
                     return Ext.Array.indexOf(this.childNodes, child);
                 },
-                
+
                 /**
                  * Returns the index of a child node that matches the id
                  * @param {String} id The id of the node to find
                  * @return {Number} The index of the node or -1 if it was not found
                  */
-                indexOfId: function(id) {
+                indexOfId: function (id) {
                     var childNodes = this.childNodes,
                         len = childNodes.length,
                         i = 0;
-                        
+
                     for (; i < len; ++i) {
                         if (childNodes[i].getId() === id) {
                             return i;
-                        }    
+                        }
                     }
                     return -1;
                 },
@@ -1530,7 +1530,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {String} [separator='/'] A separator to use.
                  * @return {String} The node path
                  */
-                getPath: function(field, separator) {
+                getPath: function (field, separator) {
                     field = field || this.idProperty;
                     separator = separator || '/';
 
@@ -1548,7 +1548,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * Returns depth of this node (the root node has a depth of 0)
                  * @return {Number}
                  */
-                getDepth: function() {
+                getDepth: function () {
                     return this.get('depth');
                 },
 
@@ -1560,7 +1560,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Object} [scope] The scope (this reference) in which the function is executed. Defaults to the current Node.
                  * @param {Array} [args] The args to call the function with. Defaults to passing the current Node.
                  */
-                bubble: function(fn, scope, args) {
+                bubble: function (fn, scope, args) {
                     var p = this;
                     while (p) {
                         if (fn.apply(scope || p, args || [p]) === false) {
@@ -1571,7 +1571,7 @@ Ext.define('Ext.data.NodeInterface', {
                 },
 
                 //<deprecated since=0.99>
-                cascade: function() {
+                cascade: function () {
                     if (Ext.isDefined(Ext.global.console)) {
                         Ext.global.console.warn('Ext.data.Node: cascade has been deprecated. Please use cascadeBy instead.');
                     }
@@ -1594,7 +1594,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Object} [spec.scope] The scope (this reference) in which the functions are executed. Defaults to the current Node.
                  * @param {Array} [spec.args] The args to call the function with. Defaults to passing the current Node.
                  */
-                cascadeBy: function(before, scope, args, after) {
+                cascadeBy: function (before, scope, args, after) {
                     var me = this;
 
                     if (arguments.length === 1 && !Ext.isFunction(before)) {
@@ -1605,7 +1605,7 @@ Ext.define('Ext.data.NodeInterface', {
                     }
                     if (!before || before.apply(scope || me, args || [me]) !== false) {
                         var childNodes = me.childNodes,
-                            length     = childNodes.length,
+                            length = childNodes.length,
                             i;
 
                         for (i = 0; i < length; i++) {
@@ -1619,20 +1619,20 @@ Ext.define('Ext.data.NodeInterface', {
                 },
 
                 /**
-                 * Iterates the child nodes of this node, calling the specified function 
-                 * with each node. The arguments to the function will be the args 
-                 * provided or the current node. If the function returns false at any 
+                 * Iterates the child nodes of this node, calling the specified function
+                 * with each node. The arguments to the function will be the args
+                 * provided or the current node. If the function returns false at any
                  * point, the iteration stops.
                  * @param {Function} fn The function to call
-                 * @param {Object} [scope] The scope (_this_ reference) in which the 
-                 * function is executed. Defaults to the Node on which eachChild is 
+                 * @param {Object} [scope] The scope (_this_ reference) in which the
+                 * function is executed. Defaults to the Node on which eachChild is
                  * called.
-                 * @param {Array} [args] The args to call the function with. Defaults to 
+                 * @param {Array} [args] The args to call the function with. Defaults to
                  * passing the current Node.
                  */
-                eachChild: function(fn, scope, args) {
+                eachChild: function (fn, scope, args) {
                     var childNodes = this.childNodes,
-                        length     = childNodes.length,
+                        length = childNodes.length,
                         i;
 
                     for (i = 0; i < length; i++) {
@@ -1649,8 +1649,8 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Boolean} [deep=false] True to search through nodes deeper than the immediate children
                  * @return {Ext.data.NodeInterface} The found child or null if none was found
                  */
-                findChild: function(attribute, value, deep) {
-                    return this.findChildBy(function() {
+                findChild: function (attribute, value, deep) {
+                    return this.findChildBy(function () {
                         return this.get(attribute) == value;
                     }, null, deep);
                 },
@@ -1662,7 +1662,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Boolean} [deep=false] True to search through nodes deeper than the immediate children
                  * @return {Ext.data.NodeInterface} The found child or null if none was found
                  */
-                findChildBy: function(fn, scope, deep) {
+                findChildBy: function (fn, scope, deep) {
                     var cs = this.childNodes,
                         len = cs.length,
                         i = 0, n, res;
@@ -1688,7 +1688,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Ext.data.NodeInterface} node
                  * @return {Boolean}
                  */
-                contains: function(node) {
+                contains: function (node) {
                     return node.isAncestor(this);
                 },
 
@@ -1697,7 +1697,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Ext.data.NodeInterface} node
                  * @return {Boolean}
                  */
-                isAncestor: function(node) {
+                isAncestor: function (node) {
                     var p = this.parentNode;
                     while (p) {
                         if (p === node) {
@@ -1716,9 +1716,9 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Boolean} [recursive=false] True to apply this sort recursively
                  * @param {Boolean} [suppressEvent=false] True to not fire a sort event.
                  */
-                sort: function(sortFn, recursive, suppressEvent) {
+                sort: function (sortFn, recursive, suppressEvent) {
                     var me = this,
-                        childNodes  = me.childNodes,
+                        childNodes = me.childNodes,
                         ln = childNodes.length,
                         i, n, info = {
                             isFirst: true
@@ -1734,9 +1734,9 @@ Ext.define('Ext.data.NodeInterface', {
 
                         for (i = 0; i < ln; i++) {
                             n = childNodes[i];
-                            n.previousSibling = childNodes[i-1];
-                            n.nextSibling = childNodes[i+1];
-                            
+                            n.previousSibling = childNodes[i - 1];
+                            n.nextSibling = childNodes[i + 1];
+
                             // Update the index and first/last status of children
                             info.isLast = (i === ln - 1);
                             info.index = i;
@@ -1762,7 +1762,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * Returns `true` if this node is expanded.
                  * @return {Boolean}
                  */
-                isExpanded: function() {
+                isExpanded: function () {
                     return this.get('expanded');
                 },
 
@@ -1770,23 +1770,23 @@ Ext.define('Ext.data.NodeInterface', {
                  * Returns true if this node is loaded
                  * @return {Boolean}
                  */
-                isLoaded: function() {
+                isLoaded: function () {
                     return this.get('loaded');
                 },
-                
+
                 /**
                  * Returns true if this node is a branch node, and the entire branch is fully loaded.
                  *
                  * Using this method, it is possible to ascertain whether an
-                 * `expandAll()` call (_classic toolkit TreePanel method_) will have 
+                 * `expandAll()` call (_classic toolkit TreePanel method_) will have
                  * access to all descendant nodes without incurring a store load.
                  * @return {Boolean}
                  */
-                isBranchLoaded: function() {
+                isBranchLoaded: function () {
                     var isBranchLoaded = !this.isLeaf() && this.isLoaded();
 
                     if (isBranchLoaded) {
-                        this.cascadeBy(function(node) {
+                        this.cascadeBy(function (node) {
                             if (!node.isLeaf()) {
                                 isBranchLoaded = isBranchLoaded || node.isBranchLoaded();
                             }
@@ -1800,7 +1800,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * Returns true if this node is loading
                  * @return {Boolean}
                  */
-                isLoading: function() {
+                isLoading: function () {
                     return this.get('loading');
                 },
 
@@ -1808,7 +1808,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * Returns true if this node is the root node
                  * @return {Boolean}
                  */
-                isRoot: function() {
+                isRoot: function () {
                     return !this.parentNode;
                 },
 
@@ -1819,7 +1819,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * on the root node, it will always be visible.
                  * @return {Boolean}
                  */
-                isVisible: function() {
+                isVisible: function () {
                     var parent = this.parentNode;
                     while (parent) {
                         if (!parent.isExpanded()) {
@@ -1836,7 +1836,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Function} [callback] The function to execute once the expand completes
                  * @param {Object} [scope] The scope to run the callback in
                  */
-                expand: function(recursive, callback, scope) {
+                expand: function (recursive, callback, scope) {
                     var me = this,
                         treeStore,
                         resumeAddEvent;
@@ -1848,7 +1848,7 @@ Ext.define('Ext.data.NodeInterface', {
                     if (!me.isLeaf()) {
                         // If it's loading, wait until it loads before proceeding
                         if (me.isLoading()) {
-                            me.on('expand', function() {
+                            me.on('expand', function () {
                                 me.expand(recursive, callback, scope);
                             }, me, {single: true});
                         } else {
@@ -1914,7 +1914,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @private
                  * Called as a callback from the beforeexpand listener fired by {@link #method-expand} when the child nodes have been loaded and appended.
                  */
-                onChildNodesAvailable: function(records, recursive, callback, scope) {
+                onChildNodesAvailable: function (records, recursive, callback, scope) {
                     var me = this,
                         treeStore = me.getTreeStore(),
                         bulkUpdate = treeStore && treeStore.bulkUpdate,
@@ -1936,7 +1936,7 @@ Ext.define('Ext.data.NodeInterface', {
                     }
 
                     // Not structural. The TreeView's onUpdate listener just updates the [+] icon to [-] in response.
-                    
+
                     if (bulkUpdate) {
                         me.data.expanded = true;
                     } else {
@@ -1990,7 +1990,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Function} [callback] The function to execute once all the children are expanded
                  * @param {Object} [scope] The scope to run the callback in
                  */
-                expandChildren: function(recursive, callback, scope, /* private */ singleExpand) {
+                expandChildren: function (recursive, callback, scope, /* private */ singleExpand) {
                     var me = this,
                         origCallback, i, allNodes, expandNodes, ln, node, treeStore;
 
@@ -2036,7 +2036,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Function} [callback] The function to execute once the collapse completes
                  * @param {Object} [scope] The scope to run the callback in
                  */
-                collapse: function(recursive, callback, scope) {
+                collapse: function (recursive, callback, scope) {
                     var me = this,
                         expanded = me.isExpanded(),
                         treeStore = me.getTreeStore(),
@@ -2055,14 +2055,14 @@ Ext.define('Ext.data.NodeInterface', {
 
                         // Inform listeners of a collapse event if we are still expanded.
                         if (me.isExpanded()) {
-                            
+
                             // Set up the callback to set non-leaf descendants to collapsed if necessary.
                             // If recursive, we just need to set all non-leaf descendants to collapsed state.
                             // We *DO NOT* call collapse on them. That would attempt to remove their descendants
                             // from the UI, and that is done: THIS node is collapsed - ALL descendants are removed from the UI.
                             // Descendant non-leaves just silently change state.
                             if (recursive) {
-                                collapseChildren = function() {
+                                collapseChildren = function () {
                                     for (i = 0; i < len; i++) {
                                         me.childNodes[i].setCollapsed(true);
                                     }
@@ -2120,7 +2120,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * nodes will have been removed from the store, but descendant non-leaf nodes still
                  * need to be set to the collapsed state without affecting the UI.
                  */
-                setCollapsed: function(recursive) {
+                setCollapsed: function (recursive) {
                     var me = this,
                         len = me.childNodes.length,
                         i;
@@ -2150,7 +2150,7 @@ Ext.define('Ext.data.NodeInterface', {
                  * @param {Function} [callback] The function to execute once all the children are collapsed
                  * @param {Object} [scope] The scope to run the callback in
                  */
-                collapseChildren: function(recursive, callback, scope) {
+                collapseChildren: function (recursive, callback, scope) {
                     var me = this,
                         i,
                         allNodes = me.childNodes,
@@ -2185,24 +2185,24 @@ Ext.define('Ext.data.NodeInterface', {
                 },
 
                 /**
-                * Fires the specified event with the passed parameters (minus the event name, plus the `options` object passed
-                * to {@link Ext.mixin.Observable#addListener addListener}).
-                *
-                * An event may be set to bubble up an Observable parent hierarchy (See {@link Ext.Component#getBubbleTarget}) by
-                * calling {@link Ext.mixin.Observable#enableBubble enableBubble}.
-                *
-                * @param {String} eventName The name of the event to fire.
-                * @param {Object...} args Variable number of parameters are passed to handlers.
-                * @return {Boolean} returns false if any of the handlers return false otherwise it returns true.
-                */
-                fireEvent: function(eventName) {
+                 * Fires the specified event with the passed parameters (minus the event name, plus the `options` object passed
+                 * to {@link Ext.mixin.Observable#addListener addListener}).
+                 *
+                 * An event may be set to bubble up an Observable parent hierarchy (See {@link Ext.Component#getBubbleTarget}) by
+                 * calling {@link Ext.mixin.Observable#enableBubble enableBubble}.
+                 *
+                 * @param {String} eventName The name of the event to fire.
+                 * @param {Object...} args Variable number of parameters are passed to handlers.
+                 * @return {Boolean} returns false if any of the handlers return false otherwise it returns true.
+                 */
+                fireEvent: function (eventName) {
                     return this.fireEventArgs(eventName, Ext.Array.slice(arguments, 1));
                 },
 
                 // Node events always bubble, but events which bubble are always created, so bubble in a loop and
                 // only fire when there are listeners at each level.
                 // bubbled events always fire because they cannot tell if there is a listener at each level.
-                fireEventArgs: function(eventName, args) {
+                fireEventArgs: function (eventName, args) {
                     // Use the model prototype directly. If we have a BaseModel and then a SubModel,
                     // if we access the superclass fireEventArgs it will just refer to the same method
                     // and we end up in an infinite loop.
@@ -2236,10 +2236,10 @@ Ext.define('Ext.data.NodeInterface', {
                 /**
                  * Creates an object representation of this node including its children.
                  */
-                serialize: function(writerParam) {
+                serialize: function (writerParam) {
                     var writer = writerParam || new Ext.data.writer.Json({
-                            writeAllFields: true
-                        }),
+                                writeAllFields: true
+                            }),
                         result = writer.getRecordData(this),
                         childNodes = this.childNodes,
                         len = childNodes.length,
@@ -2255,7 +2255,7 @@ Ext.define('Ext.data.NodeInterface', {
                 },
 
                 // Used to inform the TreeStore that we belong to about some event which requires its participation.
-                callTreeStore: function(funcName, args) {
+                callTreeStore: function (funcName, args) {
                     var me = this,
                         target = me.getTreeStore(),
                         fn = target && target[funcName];
@@ -2271,8 +2271,8 @@ Ext.define('Ext.data.NodeInterface', {
 
                 // Override private methods from Model superclass
                 privates: {
-                    
-                    join: function(store) {
+
+                    join: function (store) {
 
                         // Only the root node is linked to the TreeStore
                         if (store.isTreeStore) {
@@ -2289,7 +2289,7 @@ Ext.define('Ext.data.NodeInterface', {
                     },
 
                     // Used by Model base class methods to inform all interested Stores that the record has been mutated.
-                    callJoined: function(funcName, args) {
+                    callJoined: function (funcName, args) {
                         this.callParent([funcName, args]);
                         this.callTreeStore(funcName, args);
                     }

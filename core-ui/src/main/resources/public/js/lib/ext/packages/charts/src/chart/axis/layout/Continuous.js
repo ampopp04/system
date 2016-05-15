@@ -1,7 +1,7 @@
 /**
  * @class Ext.chart.axis.layout.Continuous
  * @extends Ext.chart.axis.layout.Layout
- * 
+ *
  * Processor for axis data that can be interpolated.
  */
 Ext.define('Ext.chart.axis.layout.Continuous', {
@@ -13,7 +13,7 @@ Ext.define('Ext.chart.axis.layout.Continuous', {
         adjustMinimumByMajorUnit: false,
         adjustMaximumByMajorUnit: false
     },
-    
+
     getCoordFor: function (value, field, idx, items) {
         return +value;
     },
@@ -25,7 +25,7 @@ Ext.define('Ext.chart.axis.layout.Continuous', {
         var segmenter = context.segmenter,
             axis = this.getAxis(),
             majorTickSteps = axis.getMajorTickSteps(),
-            // if specific number of steps requested and the segmenter can do such segmentation
+        // if specific number of steps requested and the segmenter can do such segmentation
             out = majorTickSteps && segmenter.exactStep ?
                 segmenter.exactStep(min, (max - min) / majorTickSteps) :
                 segmenter.preferredStep(min, estStepSize),

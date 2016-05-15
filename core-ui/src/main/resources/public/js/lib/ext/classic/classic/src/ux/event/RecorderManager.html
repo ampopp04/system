@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Event Recorder Manager</title>
-    <link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css"/>
 
     <!-- GC -->
 
@@ -19,12 +19,12 @@
 
         Ext.onReady(function () {
             var vp = Ext.create('Ext.Viewport', {
-                    layout: 'fit',
-                    items: [{
-                        xtype: 'eventrecordermanager',
-                        attachTo: window.opener
-                    }]
-                });
+                layout: 'fit',
+                items: [{
+                    xtype: 'eventrecordermanager',
+                    attachTo: window.opener
+                }]
+            });
         });
     </script>
 </head>

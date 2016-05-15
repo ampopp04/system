@@ -87,8 +87,8 @@ Ext.define('Ext.perf.Monitor', {
         return ret;
     },
 
-    reset: function(){
-        Ext.each(this.accumulators, function(accum){
+    reset: function () {
+        Ext.each(this.accumulators, function (accum) {
             var me = accum;
             me.count = me.childCount = me.depth = me.maxDepth = 0;
             me.pure = {
@@ -137,11 +137,11 @@ Ext.define('Ext.perf.Monitor', {
         if (!config) {
             config = {
                 /*insertHtml: {
-                    'Ext.dom.Helper': 'insertHtml'
-                },*/
+                 'Ext.dom.Helper': 'insertHtml'
+                 },*/
                 /*xtplCompile: {
-                    'Ext.XTemplateCompiler': 'compile'
-                },*/
+                 'Ext.XTemplateCompiler': 'compile'
+                 },*/
 //                doInsert: {
 //                    'Ext.Template': 'doInsert'
 //                },
@@ -210,57 +210,57 @@ Ext.define('Ext.perf.Monitor', {
 
         this.watchGC();
     },
-    
+
     // This is a quick hack for now
-    setupLog: function(config) {
+    setupLog: function (config) {
         var className, cls, methods, method, override;
-        
+
         for (className in config) {
             if (config.hasOwnProperty(className)) {
                 cls = Ext.ClassManager.get(className);
-                
+
                 if (cls) {
                     methods = config[className];
-                    
+
                     override = {};
-                    
+
                     for (method in methods) {
-                        override[method] = (function(methodName, idProp) {
-                            return function() {
+                        override[method] = (function (methodName, idProp) {
+                            return function () {
                                 var before, diff, id, idHolder, ret;
-                                
+
                                 before = +Date.now();
                                 ret = this.callParent(arguments);
                                 diff = +Date.now() - before;
-                                
+
                                 if (window.console && diff > 0) {
-                                    idHolder = idProp === 'this'          ? this
-                                             : typeof idProp === 'string' ? this[idProp]
-                                             : typeof idProp === 'number' ? arguments[idProp]
-                                             :                             null
-                                             ;
-                                    
+                                    idHolder = idProp === 'this' ? this
+                                        : typeof idProp === 'string' ? this[idProp]
+                                        : typeof idProp === 'number' ? arguments[idProp]
+                                        : null
+                                    ;
+
                                     if (idHolder) {
                                         id = idHolder.id;
                                     }
-                                    
+
                                     if (id != null) {
                                         console.log(methodName + ' for ' + id + ': ' + diff + 'ms');
                                     }
                                     else {
                                         console.log(methodName + ' for unknown: ' + diff + 'ms');
                                     }
-                                    
+
                                     if (console.trace) {
                                         console.trace();
                                     }
                                 }
-                                
+
                                 return ret;
                             }
                         })(method, methods[method]);
                     }
-                    
+
                     Ext.override(cls, override);
                 }
             }

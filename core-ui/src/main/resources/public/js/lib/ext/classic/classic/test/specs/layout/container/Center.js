@@ -1,8 +1,8 @@
-describe("Ext.layout.container.Center", function() {
+describe("Ext.layout.container.Center", function () {
 
     var ct, item;
 
-    afterEach(function() {
+    afterEach(function () {
         item = ct = Ext.destroy(ct);
     });
 
@@ -36,7 +36,7 @@ describe("Ext.layout.container.Center", function() {
         return '<div style="' + css.join(';') + '"></div>';
     }
 
-    it("should respect bodyPadding when used as a panel", function() {
+    it("should respect bodyPadding when used as a panel", function () {
         var pad = 20;
 
         ct = new Ext.panel.Panel({
@@ -59,9 +59,9 @@ describe("Ext.layout.container.Center", function() {
         expect(item.getY() - ct.getY()).toBe(pad);
     });
 
-    describe("container: fixed width, fixed height", function() {
+    describe("container: fixed width, fixed height", function () {
         function makeSuiteCt(item) {
-           makeCt({
+            makeCt({
                 width: 400,
                 height: 400,
                 items: item
@@ -73,9 +73,9 @@ describe("Ext.layout.container.Center", function() {
             expectResult(w, h, left, top, 400, 400);
         }
 
-        describe("component: fixed width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: fixed width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         height: 200
@@ -83,7 +83,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 100, 100);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         height: 200,
@@ -93,8 +93,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         height: '40%'
@@ -102,7 +102,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 160, 100, 120);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         height: '40%',
@@ -111,8 +111,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 144, 70, 128);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             height: '10%',
@@ -121,7 +121,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 100, 50);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             height: '80%',
@@ -132,8 +132,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         html: makeAutoSizer(null, 50)
@@ -141,7 +141,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 50, 100, 175);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         html: makeAutoSizer(null, 50),
@@ -150,8 +150,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 50, 70, 155);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             html: makeAutoSizer(null, 50),
@@ -160,7 +160,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 100, 50);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             html: makeAutoSizer(null, 300),
@@ -172,9 +172,9 @@ describe("Ext.layout.container.Center", function() {
             });
         });
 
-        describe("component: calculated width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: calculated width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: 200
@@ -182,7 +182,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(320, 200, 40, 100);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: 200,
@@ -191,8 +191,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(272, 200, 64, 80);
                 });
 
-                describe("constraints", function() {
-                    it("should take minWidth into account", function() {
+                describe("constraints", function () {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '10%',
                             minWidth: 320,
@@ -201,7 +201,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 200, 40, 100);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             maxWidth: 100,
@@ -212,8 +212,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: '40%'
@@ -221,7 +221,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(320, 160, 40, 120);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: '40%',
@@ -230,8 +230,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(272, 144, 64, 128);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -240,7 +240,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 300, 40, 50);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -249,7 +249,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 50, 40, 175);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -258,7 +258,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(350, 160, 25, 120);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -269,8 +269,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         html: makeAutoSizer(null, 100)
@@ -278,7 +278,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(320, 100, 40, 150);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         html: makeAutoSizer(null, 100),
@@ -287,8 +287,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(272, 100, 64, 130);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -297,7 +297,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 300, 40, 50);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 350),
@@ -306,7 +306,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 300, 40, 50);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -315,7 +315,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(350, 100, 25, 150);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -327,9 +327,9 @@ describe("Ext.layout.container.Center", function() {
             });
         });
 
-        describe("component: auto width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: auto width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: 200
@@ -337,7 +337,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 100, 100);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: 200,
@@ -346,8 +346,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 70, 80);
                 });
 
-                describe("constraints", function() {
-                    it("should take minWidth into account", function() {
+                describe("constraints", function () {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: 200,
@@ -356,7 +356,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 200, 50, 100);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: 200,
@@ -367,8 +367,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: '40%'
@@ -376,7 +376,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 160, 100, 120);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: '40%',
@@ -385,8 +385,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 144, 70, 128);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -395,7 +395,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 100, 50);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -404,7 +404,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 50, 100, 175);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -413,7 +413,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 160, 50, 120);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -424,15 +424,15 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200, 100)
                     });
                     expectSuiteResult(200, 100, 100, 150);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200, 100),
                         margin: '20 30'
@@ -440,8 +440,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 100, 70, 130);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             minHeight: 300
@@ -449,7 +449,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 100, 50);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             maxHeight: 50
@@ -457,7 +457,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 50, 100, 175);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             minWidth: 300
@@ -465,7 +465,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 100, 50, 150);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             maxWidth: 100
@@ -475,9 +475,9 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
         });
-     });
+    });
 
-    describe("container: fixed width, auto height", function() {
+    describe("container: fixed width, auto height", function () {
         function makeSuiteCt(item) {
             makeCt({
                 width: 400,
@@ -490,9 +490,9 @@ describe("Ext.layout.container.Center", function() {
             expectResult(w, h, left, 0, 400, ctHeight);
         }
 
-        describe("component: fixed width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: fixed width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         height: 200
@@ -500,7 +500,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 100, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         height: 200,
@@ -510,8 +510,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         height: '40%'
@@ -519,7 +519,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 0, 100, 0);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         height: '40%',
@@ -528,8 +528,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 0, 70, 40);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             height: '10%',
@@ -538,7 +538,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 100, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             height: '80%',
@@ -549,8 +549,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         html: makeAutoSizer(null, 50)
@@ -558,7 +558,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 50, 100, 50);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         html: makeAutoSizer(null, 50),
@@ -567,8 +567,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 50, 70, 90);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             html: makeAutoSizer(null, 50),
@@ -577,7 +577,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 100, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             html: makeAutoSizer(null, 300),
@@ -589,9 +589,9 @@ describe("Ext.layout.container.Center", function() {
             });
         });
 
-        describe("component: calculated width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: calculated width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: 200
@@ -599,7 +599,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(320, 200, 40, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: 200,
@@ -608,8 +608,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(272, 200, 64, 240);
                 });
 
-                describe("constraints", function() {
-                    it("should take minWidth into account", function() {
+                describe("constraints", function () {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '10%',
                             minWidth: 320,
@@ -618,7 +618,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 200, 40, 200);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             maxWidth: 100,
@@ -629,8 +629,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: '40%'
@@ -638,7 +638,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(320, 0, 40, 0);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: '40%',
@@ -647,8 +647,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(272, 0, 64, 40);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -657,7 +657,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 300, 40, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -666,7 +666,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 0, 40, 0);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -675,7 +675,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(350, 0, 25, 0);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -686,8 +686,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         html: makeAutoSizer(null, 100)
@@ -695,7 +695,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(320, 100, 40, 100);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         html: makeAutoSizer(null, 100),
@@ -704,8 +704,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(272, 100, 64, 140);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -714,7 +714,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 300, 40, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 350),
@@ -723,7 +723,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 300, 40, 300);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -732,7 +732,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(350, 100, 25, 100);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -744,9 +744,9 @@ describe("Ext.layout.container.Center", function() {
             });
         });
 
-        describe("component: auto width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: auto width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: 200
@@ -754,7 +754,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 100, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: 200,
@@ -763,8 +763,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 70, 240);
                 });
 
-                describe("constraints", function() {
-                    it("should take minWidth into account", function() {
+                describe("constraints", function () {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: 200,
@@ -773,7 +773,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 200, 50, 200);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: 200,
@@ -784,8 +784,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: '40%'
@@ -793,7 +793,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 0, 100, 0);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: '40%',
@@ -802,8 +802,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 0, 70, 40);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -812,7 +812,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 100, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -821,7 +821,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 0, 100, 0);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -830,7 +830,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 0, 50, 0);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -841,15 +841,15 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200, 100)
                     });
                     expectSuiteResult(200, 100, 100, 100);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200, 100),
                         margin: '20 30'
@@ -857,8 +857,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 100, 70, 140);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             minHeight: 300
@@ -866,7 +866,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 100, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             maxHeight: 50
@@ -874,7 +874,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 50, 100, 50);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             minWidth: 300
@@ -882,7 +882,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 100, 50, 100);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             maxWidth: 100
@@ -894,7 +894,7 @@ describe("Ext.layout.container.Center", function() {
         });
     });
 
-    describe("container: auto width, fixed height", function() {
+    describe("container: auto width, fixed height", function () {
         function makeSuiteCt(item) {
             makeCt({
                 floating: true, // Float the ct so it shrink wraps
@@ -908,9 +908,9 @@ describe("Ext.layout.container.Center", function() {
             expectResult(w, h, 0, top, ctWidth, 400);
         }
 
-        describe("component: fixed width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: fixed width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         height: 200
@@ -918,7 +918,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 100, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         height: 200,
@@ -928,8 +928,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         height: '40%'
@@ -937,7 +937,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 160, 120, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         height: '40%',
@@ -946,8 +946,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 144, 128, 260);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             height: '10%',
@@ -956,7 +956,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 50, 200);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             height: '80%',
@@ -967,8 +967,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         html: makeAutoSizer(null, 50)
@@ -976,7 +976,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 50, 175, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         html: makeAutoSizer(null, 50),
@@ -985,8 +985,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 50, 155, 260);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             html: makeAutoSizer(null, 50),
@@ -995,7 +995,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 50, 200);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             html: makeAutoSizer(null, 300),
@@ -1007,9 +1007,9 @@ describe("Ext.layout.container.Center", function() {
             });
         });
 
-        describe("component: calculated width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: calculated width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: 200
@@ -1017,7 +1017,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 200, 100, 0);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: 200,
@@ -1026,8 +1026,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 200, 80, 60);
                 });
 
-                describe("constraints", function() {
-                    it("should take minWidth into account", function() {
+                describe("constraints", function () {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '10%',
                             minWidth: 320,
@@ -1036,7 +1036,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 200, 100, 320);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             maxWidth: 100,
@@ -1047,8 +1047,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: '40%'
@@ -1056,7 +1056,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 160, 120, 0);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: '40%',
@@ -1065,8 +1065,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 144, 128, 60);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -1075,7 +1075,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(0, 300, 50, 0);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -1084,7 +1084,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(0, 50, 175, 0);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -1093,7 +1093,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(350, 160, 120, 350);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -1104,8 +1104,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         html: makeAutoSizer(null, 100)
@@ -1113,7 +1113,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 100, 150, 0);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         html: makeAutoSizer(null, 100),
@@ -1122,8 +1122,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 100, 130, 60);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -1132,7 +1132,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(0, 300, 50, 0);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 350),
@@ -1141,7 +1141,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(0, 300, 50, 0);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -1150,7 +1150,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(350, 100, 150, 350);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -1162,9 +1162,9 @@ describe("Ext.layout.container.Center", function() {
             });
         });
 
-        describe("component: auto width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: auto width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: 200
@@ -1172,7 +1172,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 100, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: 200,
@@ -1181,8 +1181,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 80, 260);
                 });
 
-                describe("constraints", function() {
-                    it("should take minWidth into account", function() {
+                describe("constraints", function () {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: 200,
@@ -1191,7 +1191,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 200, 100, 300);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: 200,
@@ -1202,8 +1202,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: '40%'
@@ -1211,7 +1211,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 160, 120, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: '40%',
@@ -1220,8 +1220,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 144, 128, 260);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -1230,7 +1230,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 50, 200);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -1239,7 +1239,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 50, 175, 200);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -1248,7 +1248,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 160, 120, 300);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -1259,15 +1259,15 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200, 100)
                     });
                     expectSuiteResult(200, 100, 150, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200, 100),
                         margin: '20 30'
@@ -1275,8 +1275,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 100, 130, 260);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             minHeight: 300
@@ -1284,7 +1284,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 50, 200);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             maxHeight: 50
@@ -1292,7 +1292,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 50, 175, 200);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             minWidth: 300
@@ -1300,7 +1300,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 100, 150, 300);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             maxWidth: 100
@@ -1312,7 +1312,7 @@ describe("Ext.layout.container.Center", function() {
         });
     });
 
-    describe("container: auto width, auto height", function() {
+    describe("container: auto width, auto height", function () {
         function makeSuiteCt(item) {
             makeCt({
                 floating: true, // Float the ct so it shrink wraps
@@ -1325,9 +1325,9 @@ describe("Ext.layout.container.Center", function() {
             expectResult(w, h, 0, 0, ctWidth, ctHeight);
         }
 
-        describe("component: fixed width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: fixed width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         height: 200
@@ -1335,7 +1335,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 200, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         height: 200,
@@ -1345,8 +1345,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         height: '40%'
@@ -1354,7 +1354,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 0, 200, 0);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         height: '40%',
@@ -1363,8 +1363,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 0, 260, 40);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             height: '10%',
@@ -1373,7 +1373,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 200, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             height: '80%',
@@ -1384,8 +1384,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: 200,
                         html: makeAutoSizer(null, 50)
@@ -1393,7 +1393,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 50, 200, 50);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: 200,
                         html: makeAutoSizer(null, 50),
@@ -1402,8 +1402,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 50, 260, 90);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             html: makeAutoSizer(null, 50),
@@ -1412,7 +1412,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 200, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: 200,
                             html: makeAutoSizer(null, 300),
@@ -1424,9 +1424,9 @@ describe("Ext.layout.container.Center", function() {
             });
         });
 
-        describe("component: calculated width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: calculated width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: 200
@@ -1434,7 +1434,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 200, 0, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: 200,
@@ -1443,8 +1443,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 200, 60, 240);
                 });
 
-                describe("constraints", function() {
-                    it("should take minWidth into account", function() {
+                describe("constraints", function () {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '10%',
                             minWidth: 320,
@@ -1453,7 +1453,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(320, 200, 320, 200);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             maxWidth: 100,
@@ -1464,8 +1464,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: '40%'
@@ -1473,7 +1473,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 0, 0, 0);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         height: '40%',
@@ -1482,8 +1482,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 0, 60, 40);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -1492,7 +1492,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(0, 300, 0, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -1501,7 +1501,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(0, 0, 0, 0);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -1510,7 +1510,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(350, 0, 350, 0);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             height: '40%',
@@ -1521,8 +1521,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         width: '80%',
                         html: makeAutoSizer(null, 100)
@@ -1530,7 +1530,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 100, 0, 100);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         width: '80%',
                         html: makeAutoSizer(null, 100),
@@ -1539,8 +1539,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(0, 100, 60, 140);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -1549,7 +1549,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(0, 300, 0, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 350),
@@ -1558,7 +1558,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(0, 300, 0, 300);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -1567,7 +1567,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(350, 100, 350, 100);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             width: '80%',
                             html: makeAutoSizer(null, 100),
@@ -1579,9 +1579,9 @@ describe("Ext.layout.container.Center", function() {
             });
         });
 
-        describe("component: auto width", function() {
-            describe("fixed height", function() {
-                it("should center the item", function() {
+        describe("component: auto width", function () {
+            describe("fixed height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: 200
@@ -1589,7 +1589,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 200, 200);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: 200,
@@ -1598,8 +1598,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 200, 260, 240);
                 });
 
-                describe("constraints", function() {
-                    it("should take minWidth into account", function() {
+                describe("constraints", function () {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: 200,
@@ -1608,7 +1608,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 200, 300, 200);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: 200,
@@ -1619,8 +1619,8 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("calculated height", function() {
-                it("should center the item", function() {
+            describe("calculated height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: '40%'
@@ -1628,7 +1628,7 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 0, 200, 0);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200),
                         height: '40%',
@@ -1637,8 +1637,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 0, 260, 40);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -1647,7 +1647,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 200, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -1656,7 +1656,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 0, 200, 0);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -1665,7 +1665,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 0, 300, 0);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200),
                             height: '40%',
@@ -1676,15 +1676,15 @@ describe("Ext.layout.container.Center", function() {
                 });
             });
 
-            describe("auto height", function() {
-                it("should center the item", function() {
+            describe("auto height", function () {
+                it("should center the item", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200, 100)
                     });
                     expectSuiteResult(200, 100, 200, 100);
                 });
 
-                it("should take margins into account", function() {
+                it("should take margins into account", function () {
                     makeSuiteCt({
                         html: makeAutoSizer(200, 100),
                         margin: '20 30'
@@ -1692,8 +1692,8 @@ describe("Ext.layout.container.Center", function() {
                     expectSuiteResult(200, 100, 260, 140);
                 });
 
-                describe("constraints", function() {
-                    it("should take minHeight into account", function() {
+                describe("constraints", function () {
+                    it("should take minHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             minHeight: 300
@@ -1701,7 +1701,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 300, 200, 300);
                     });
 
-                    it("should take maxHeight into account", function() {
+                    it("should take maxHeight into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             maxHeight: 50
@@ -1709,7 +1709,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(200, 50, 200, 50);
                     });
 
-                    it("should take minWidth into account", function() {
+                    it("should take minWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             minWidth: 300
@@ -1717,7 +1717,7 @@ describe("Ext.layout.container.Center", function() {
                         expectSuiteResult(300, 100, 300, 100);
                     });
 
-                    it("should take maxWidth into account", function() {
+                    it("should take maxWidth into account", function () {
                         makeSuiteCt({
                             html: makeAutoSizer(200, 100),
                             maxWidth: 100

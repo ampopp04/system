@@ -13,7 +13,7 @@ Ext.define('Ext.device.globalization.Abstract', {
         currencyCode: "USD"
     },
 
-    getPreferredLanguage: function(config) {
+    getPreferredLanguage: function (config) {
         // <debug>
         if (!config.success) {
             Ext.Logger.warn('You need to specify a `success` function for #getPreferredLanguage');
@@ -22,7 +22,7 @@ Ext.define('Ext.device.globalization.Abstract', {
 
         return config;
     },
-    getLocaleName: function(config) {
+    getLocaleName: function (config) {
         // <debug>
         if (!config.success) {
             Ext.Logger.warn('You need to specify a `success` function for #getLocaleName');
@@ -31,7 +31,7 @@ Ext.define('Ext.device.globalization.Abstract', {
 
         return config;
     },
-    dateToString: function(config) {
+    dateToString: function (config) {
         var defaultConfig = Ext.device.globalization.Abstract.prototype.config;
 
         config = Ext.applyIf(config, {
@@ -48,7 +48,7 @@ Ext.define('Ext.device.globalization.Abstract', {
 
         return config;
     },
-    stringToDate: function(config) {
+    stringToDate: function (config) {
         var defaultConfig = Ext.device.globalization.Abstract.prototype.config;
 
         config = Ext.applyIf(config, {
@@ -65,7 +65,7 @@ Ext.define('Ext.device.globalization.Abstract', {
 
         return config;
     },
-    getDatePattern: function(config) {
+    getDatePattern: function (config) {
         var defaultConfig = Ext.device.globalization.Abstract.prototype.config;
 
         config = Ext.applyIf(config, {
@@ -81,7 +81,7 @@ Ext.define('Ext.device.globalization.Abstract', {
 
         return config;
     },
-    getDateNames: function(config) {
+    getDateNames: function (config) {
         var defaultConfig = Ext.device.globalization.Abstract.prototype.config;
 
         config = Ext.applyIf(config, {
@@ -97,7 +97,7 @@ Ext.define('Ext.device.globalization.Abstract', {
 
         return config;
     },
-    isDayLightSavingsTime: function(config) {
+    isDayLightSavingsTime: function (config) {
         config = Ext.applyIf(config, {
             date: new Date()
         });
@@ -110,7 +110,7 @@ Ext.define('Ext.device.globalization.Abstract', {
 
         return config;
     },
-    getFirstDayOfWeek: function(config) {
+    getFirstDayOfWeek: function (config) {
         // <debug>
         if (!config.success) {
             Ext.Logger.warn('You need to specify a `success` function for #getFirstDayOfWeek');
@@ -119,7 +119,7 @@ Ext.define('Ext.device.globalization.Abstract', {
 
         return config;
     },
-    numberToString: function(config) {
+    numberToString: function (config) {
         var defaultConfig = Ext.device.globalization.Abstract.prototype.config;
 
         config = Ext.applyIf(config, {
@@ -139,7 +139,7 @@ Ext.define('Ext.device.globalization.Abstract', {
 
         return config;
     },
-    stringToNumber: function(config) {
+    stringToNumber: function (config) {
         var defaultConfig = Ext.device.globalization.Abstract.prototype.config;
 
         config = Ext.applyIf(config, {
@@ -158,7 +158,7 @@ Ext.define('Ext.device.globalization.Abstract', {
 
         return config;
     },
-    getNumberPattern: function(config) {
+    getNumberPattern: function (config) {
         var defaultConfig = Ext.device.globalization.Abstract.prototype.config;
 
         config = Ext.applyIf(config, {
@@ -172,7 +172,7 @@ Ext.define('Ext.device.globalization.Abstract', {
 
         return config;
     },
-    getCurrencyPattern: function(config) {
+    getCurrencyPattern: function (config) {
         var defaultConfig = Ext.device.globalization.Abstract.prototype.config;
 
         config = Ext.applyIf(config, {

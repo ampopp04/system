@@ -5,13 +5,13 @@
  * English (AU) Translations
  * created by Dawesi (2012) - modified from en_GB
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.defaultDateFormat = "d/m/Y";
         Ext.Date.monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return Ext.Date.monthNames[month].substring(0, 3);
         };
 
@@ -30,13 +30,13 @@ Ext.onReady(function() {
             Dec: 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1, 3).toLowerCase()];
         };
 
         Ext.Date.dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day].substring(0, 3);
         };
 
@@ -189,7 +189,7 @@ Ext.define("Ext.locale.en_AU.form.field.Date", {
 Ext.define("Ext.locale.en_AU.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Loading..."
     });
@@ -206,7 +206,7 @@ Ext.define("Ext.locale.en_AU.form.field.VTypes", {
 Ext.define("Ext.locale.en_AU.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Please enter the URL for the link:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -290,10 +290,10 @@ Ext.define("Ext.locale.en_AU.grid.header.Container", {
     columnsText: "Columns"
 });
 
-Ext.define("Ext.locale.en_AU.grid.DateColumn", {        
-    override: "Ext.grid.DateColumn",       
-    format: 'd/m/Y'    
-});  
+Ext.define("Ext.locale.en_AU.grid.DateColumn", {
+    override: "Ext.grid.DateColumn",
+    format: 'd/m/Y'
+});
 
 Ext.define("Ext.locale.en_AU.grid.GroupingFeature", {
     override: "Ext.grid.feature.Grouping",
@@ -342,7 +342,7 @@ Ext.define("Ext.locale.en_AU.window.MessageBox", {
         cancel: "Cancel",
         yes: "Yes",
         no: "No"
-    }    
+    }
 });
 
 Ext.define("Ext.locale.en_AU.grid.filters.Filters", {
@@ -383,6 +383,6 @@ Ext.define("Ext.locale.en_AU.grid.filters.filter.String", {
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.en_AU.Component", {	
+Ext.define("Ext.locale.en_AU.Component", {
     override: "Ext.Component"
 });

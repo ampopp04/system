@@ -18,7 +18,7 @@ Ext.define('Ext.dom.GarbageCollector', {
      */
     interval: 30000,
 
-    constructor: function() {
+    constructor: function () {
         var me = this;
         me.collect = Ext.Function.bind(me.collect, me);
         me.lastTime = Ext.now();
@@ -33,15 +33,15 @@ Ext.define('Ext.dom.GarbageCollector', {
      * collected, prefixed by their tag names.  Only applies in dev mode.  Returns nothing
      * in a production build.
      */
-    collect: function() {
+    collect: function () {
         var me = this,
             cache = Ext.cache,
             eid, dom, el, t, isGarbage, tagName;
-        
+
         //<debug>
         var collectedIds = [];
         //</debug>
-        
+
 
         for (eid in cache) {
             if (!cache.hasOwnProperty(eid)) {
@@ -62,7 +62,7 @@ Ext.define('Ext.dom.GarbageCollector', {
                 Ext.raise('Missing DOM node in element garbage collection: ' + eid);
             }
             //</debug>
-            
+
             try {
                 // In IE, accessing any properties of the window object of an orphaned iframe
                 // can result in a "Permission Denied" error.  The same error also occurs
@@ -81,7 +81,7 @@ Ext.define('Ext.dom.GarbageCollector', {
                 //</debug>
                 continue;
             }
-            
+
             if (isGarbage) {
                 if (el && el.dom) {
                     //<debug>
@@ -117,14 +117,14 @@ Ext.define('Ext.dom.GarbageCollector', {
     /**
      * Pauses the timer and stops garbage collection
      */
-    pause: function() {
+    pause: function () {
         clearTimeout(this.timerId);
     },
 
     /**
      * Resumes garbage collection at the specified {@link #interval}
      */
-    resume: function() {
+    resume: function () {
         var me = this,
             lastTime = me.lastTime;
 

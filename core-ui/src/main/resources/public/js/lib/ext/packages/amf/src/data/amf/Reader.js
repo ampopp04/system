@@ -1,19 +1,19 @@
 // @tag enterprise
 /**
- * The AMF Reader is used by an {@link Ext.data.amf.Proxy AMF Proxy} to read 
+ * The AMF Reader is used by an {@link Ext.data.amf.Proxy AMF Proxy} to read
  * records from a server response that contains binary data in either AMF0 or
  * AMF3 format. AMF Reader constructs an {@link Ext.data.amf.Packet AMF Packet}
  * and uses it to decode the binary data into javascript objects, then simply
  * allows its superclass ({@link Ext.data.reader.Json}) to handle converting the
  * raw javascript objects into {@link Ext.data.Model} instances.
- * 
+ *
  * For a more detailed tutorial see the [AMF Guide](#/guide/amf).
  */
 Ext.define('Ext.data.amf.Reader', {
 
     extend: 'Ext.data.reader.Json',
 
-    alias : 'reader.amf',
+    alias: 'reader.amf',
 
     requires: [
         'Ext.data.amf.Packet'
@@ -32,7 +32,7 @@ Ext.define('Ext.data.amf.Reader', {
      * @param {Object} response The XMLHttpRequest response object
      * @return {Ext.data.ResultSet}
      */
-    read: function(response) {
+    read: function (response) {
         var me = this,
             bytes = response.responseBytes,
             packet, messages, resultSet;
@@ -40,7 +40,7 @@ Ext.define('Ext.data.amf.Reader', {
         if (!bytes) {
             throw "AMF Reader cannot process the response because it does not contain binary data. Make sure the Proxy's 'binary' config is true.";
         }
-            
+
         packet = new Ext.data.amf.Packet();
         packet.decode(bytes);
         messages = packet.messages;

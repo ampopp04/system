@@ -4,8 +4,8 @@ Ext.define('Ext.layout.container.ColumnSplitterTracker', {
     extend: 'Ext.resizer.SplitterTracker',
 
     // We move the splitter el. Add the proxy class.
-    onStart: function(e) {
-        Ext.apply(this.getSplitter().el.dom.style, { top : 0, left : 0} );
+    onStart: function (e) {
+        Ext.apply(this.getSplitter().el.dom.style, {top: 0, left: 0});
         this.callParent(arguments);
     },
 
@@ -15,13 +15,13 @@ Ext.define('Ext.layout.container.ColumnSplitterTracker', {
         me.getSplitter().el.dom.style.left = 0;
     },
 
-    performResize: function(e, offset) {
-        var me        = this,
-            prevCmp   = me.getPrevCmp(),
-            nextCmp   = me.getNextCmp(),
-            splitter  = me.getSplitter(),
-            owner     = splitter.ownerCt,
-            delta     = offset[0],
+    performResize: function (e, offset) {
+        var me = this,
+            prevCmp = me.getPrevCmp(),
+            nextCmp = me.getNextCmp(),
+            splitter = me.getSplitter(),
+            owner = splitter.ownerCt,
+            delta = offset[0],
             prevWidth, nextWidth, ratio;
 
         if (prevCmp && nextCmp) {

@@ -24,7 +24,7 @@
 Ext.define('Ext.dom.ElementEvent', {
     extend: 'Ext.util.Event',
 
-    addListener: function(fn, scope, options, caller, manager) {
+    addListener: function (fn, scope, options, caller, manager) {
         var me = this,
             added = false,
             name = me.name,
@@ -51,7 +51,7 @@ Ext.define('Ext.dom.ElementEvent', {
         return added;
     },
 
-    removeListener: function(fn, scope) {
+    removeListener: function (fn, scope) {
         var me = this,
             captures = me.captures,
             directs = me.directs,
@@ -87,7 +87,7 @@ Ext.define('Ext.dom.ElementEvent', {
         return removed;
     },
 
-    clearListeners: function() {
+    clearListeners: function () {
         var me = this,
             directCaptures = me.directCaptures,
             directs = me.directs,
@@ -108,7 +108,7 @@ Ext.define('Ext.dom.ElementEvent', {
         me.callParent();
     },
 
-    suspend: function() {
+    suspend: function () {
         var me = this,
             directCaptures = me.directCaptures,
             directs = me.directs,
@@ -129,7 +129,7 @@ Ext.define('Ext.dom.ElementEvent', {
         me.callParent();
     },
 
-    resume: function() {
+    resume: function () {
         var me = this,
             directCaptures = me.directCaptures,
             directs = me.directs,

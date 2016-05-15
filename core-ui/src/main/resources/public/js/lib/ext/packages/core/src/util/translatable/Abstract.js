@@ -65,19 +65,19 @@ Ext.define('Ext.util.translatable.Abstract', {
 
     isTranslatable: true,
 
-    constructor: function(config) {
+    constructor: function (config) {
         this.mixins.observable.constructor.call(this, config);
         // this.position is simply an internal reusable object for GC purposes and should
         // not be accessed directly as it's values are not kept in sync.  always use
         // getPosition() to get the position
-        this.position = { x: 0, y: 0};
+        this.position = {x: 0, y: 0};
     },
 
-    factoryEasing: function(easing) {
+    factoryEasing: function (easing) {
         return Ext.factory(easing, Ext.fx.easing.Linear, null, 'easing');
     },
 
-    applyEasing: function(easing) {
+    applyEasing: function (easing) {
         if (!this.getEasingX()) {
             this.setEasingX(this.factoryEasing(easing));
         }
@@ -87,17 +87,17 @@ Ext.define('Ext.util.translatable.Abstract', {
         }
     },
 
-    applyEasingX: function(easing) {
+    applyEasingX: function (easing) {
         return this.factoryEasing(easing);
     },
 
-    applyEasingY: function(easing) {
+    applyEasingY: function (easing) {
         return this.factoryEasing(easing);
     },
 
     doTranslate: Ext.emptyFn,
 
-    translate: function(x, y, animation) {
+    translate: function (x, y, animation) {
         if (animation) {
             return this.translateAnimated(x, y, animation);
         }
@@ -116,7 +116,7 @@ Ext.define('Ext.util.translatable.Abstract', {
         this.doTranslate(x, y);
     },
 
-    translateAxis: function(axis, value, animation) {
+    translateAxis: function (axis, value, animation) {
         var x, y;
 
         if (axis == 'x') {
@@ -133,7 +133,7 @@ Ext.define('Ext.util.translatable.Abstract', {
      * Returns the translatable object's current position.
      * @return {Object} position An object with x and y properties
      */
-    getPosition: function() {
+    getPosition: function () {
         var me = this,
             position = me.position;
 
@@ -143,7 +143,7 @@ Ext.define('Ext.util.translatable.Abstract', {
         return position;
     },
 
-    animate: function(easingX, easingY) {
+    animate: function (easingX, easingY) {
         this.activeEasingX = easingX;
         this.activeEasingY = easingY;
 
@@ -157,7 +157,7 @@ Ext.define('Ext.util.translatable.Abstract', {
         return this;
     },
 
-    translateAnimated: function(x, y, animation) {
+    translateAnimated: function (x, y, animation) {
         var me = this;
 
         if (!Ext.isObject(animation)) {
@@ -202,7 +202,7 @@ Ext.define('Ext.util.translatable.Abstract', {
         return me.animate(easingX, easingY);
     },
 
-    doAnimationFrame: function() {
+    doAnimationFrame: function () {
         var me = this,
             easingX = me.activeEasingX,
             easingY = me.activeEasingY,
@@ -254,7 +254,7 @@ Ext.define('Ext.util.translatable.Abstract', {
         me.fireEvent('animationframe', me, x, y);
     },
 
-    stopAnimation: function() {
+    stopAnimation: function () {
         var me = this;
 
         if (!me.isAnimating) {
@@ -274,11 +274,11 @@ Ext.define('Ext.util.translatable.Abstract', {
         }
     },
 
-    refresh: function() {
+    refresh: function () {
         this.translate(this.x, this.y);
     },
 
-    destroy: function() {
+    destroy: function () {
         if (this.isAnimating) {
             this.stopAnimation();
         }

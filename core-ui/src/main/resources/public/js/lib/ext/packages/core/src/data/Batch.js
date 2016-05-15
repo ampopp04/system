@@ -11,27 +11,27 @@ Ext.define('Ext.data.Batch', {
         observable: 'Ext.mixin.Observable'
     },
 
-    config: {    
+    config: {
         /**
-        * @cfg {Boolean} pauseOnException
-        * True to pause the execution of the batch if any operation encounters an exception
-        * (defaults to false). If you set this to true you are responsible for implementing the appropriate
-        * handling logic and restarting or discarding the batch as needed. There are different ways you could 
-        * do this, e.g. by handling the batch's {@link #event-exception} event directly, or perhaps by overriding
-        * {@link Ext.data.ProxyStore#onBatchException onBatchException} at the store level. If you do pause
-        * and attempt to handle the exception you can call {@link #retry} to process the same operation again. 
-        * 
-        * Note that {@link Ext.data.operation.Operation operations} are atomic, so any operations that may have succeeded
-        * prior to an exception (and up until pausing the batch) will be finalized at the server level and will
-        * not be automatically reversible. Any transactional / rollback behavior that might be desired would have
-        * to be implemented at the application level. Pausing on exception will likely be most beneficial when
-        * used in coordination with such a scheme, where an exception might actually affect subsequent operations
-        * in the same batch and so should be handled before continuing with the next operation.
-        * 
-        * If you have not implemented transactional operation handling then this option should typically be left 
-        * to the default of false (e.g. process as many operations as possible, and handle any exceptions 
-        * asynchronously without holding up the rest of the batch).
-        */
+         * @cfg {Boolean} pauseOnException
+         * True to pause the execution of the batch if any operation encounters an exception
+         * (defaults to false). If you set this to true you are responsible for implementing the appropriate
+         * handling logic and restarting or discarding the batch as needed. There are different ways you could
+         * do this, e.g. by handling the batch's {@link #event-exception} event directly, or perhaps by overriding
+         * {@link Ext.data.ProxyStore#onBatchException onBatchException} at the store level. If you do pause
+         * and attempt to handle the exception you can call {@link #retry} to process the same operation again.
+         *
+         * Note that {@link Ext.data.operation.Operation operations} are atomic, so any operations that may have succeeded
+         * prior to an exception (and up until pausing the batch) will be finalized at the server level and will
+         * not be automatically reversible. Any transactional / rollback behavior that might be desired would have
+         * to be implemented at the application level. Pausing on exception will likely be most beneficial when
+         * used in coordination with such a scheme, where an exception might actually affect subsequent operations
+         * in the same batch and so should be handled before continuing with the next operation.
+         *
+         * If you have not implemented transactional operation handling then this option should typically be left
+         * to the default of false (e.g. process as many operations as possible, and handle any exceptions
+         * asynchronously without holding up the rest of the batch).
+         */
         pauseOnException: false
     },
 
@@ -74,7 +74,7 @@ Ext.define('Ext.data.Batch', {
      * Creates new Batch object.
      * @param {Object} [config] Config object
      */
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this;
 
         me.mixins.observable.constructor.call(me, config);
@@ -106,7 +106,7 @@ Ext.define('Ext.data.Batch', {
          * @private
          */
         me.operations = [];
-        
+
         /**
          * Ordered array of operations that raised an exception during the most recent
          * batch execution and did not successfully complete
@@ -117,21 +117,21 @@ Ext.define('Ext.data.Batch', {
 
     /**
      * Adds a new operation to this batch at the end of the {@link #operations} array
-     * @param {Ext.data.operation.Operation/Ext.data.operation.Operation[]} operation 
+     * @param {Ext.data.operation.Operation/Ext.data.operation.Operation[]} operation
      * The {@link Ext.data.operation.Operation Operation} object or an array of operations.
      * @return {Ext.data.Batch} this
      */
-    add: function(operation) {
+    add: function (operation) {
         var me = this,
             i, len;
-            
+
         if (Ext.isArray(operation)) {
             for (i = 0, len = operation.length; i < len; ++i) {
                 me.add(operation[i]);
             }
         } else {
             me.total++;
-    
+
             operation.setBatch(me);
 
             me.operations.push(operation);
@@ -195,39 +195,39 @@ Ext.define('Ext.data.Batch', {
      * operation encountered an exception, or if execution was paused. Use this method to start
      * the batch for the first time or to restart a paused batch by skipping the current
      * unsuccessful operation.
-     * 
+     *
      * To retry processing the current operation before continuing to the rest of the batch (e.g.
      * because you explicitly handled the operation's exception), call {@link #retry} instead.
-     * 
+     *
      * Note that if the batch is already running any call to start will be ignored.
-     * 
+     *
      * @return {Ext.data.Batch} this
      */
-    start: function(/* private */ index) {
+    start: function (/* private */ index) {
         var me = this;
-        
+
         if (!me.operations.length || me.running) {
             return me;
         }
-        
+
         me.exceptions.length = 0;
         me.exception = false;
         me.running = true;
 
         return me.runOperation(Ext.isDefined(index) ? index : me.current + 1);
     },
-    
+
     /**
      * Kicks off execution of the batch, continuing from the current operation. This is intended
      * for restarting a {@link #pause paused} batch after an exception, and the operation that raised
      * the exception will now be retried. The batch will then continue with its normal processing until
      * all operations are complete or another exception is encountered.
-     * 
+     *
      * Note that if the batch is already running any call to retry will be ignored.
-     * 
+     *
      * @return {Ext.data.Batch} this
      */
-    retry: function() {
+    retry: function () {
         return this.start(this.current);
     },
 
@@ -236,9 +236,9 @@ Ext.define('Ext.data.Batch', {
      * Runs the next operation, relative to this.current.
      * @return {Ext.data.Batch} this
      */
-    runNextOperation: function() {
+    runNextOperation: function () {
         var me = this;
-        
+
         if (me.running) {
             me.runOperation(me.current + 1);
         }
@@ -249,82 +249,82 @@ Ext.define('Ext.data.Batch', {
      * Pauses execution of the batch, but does not cancel the current operation
      * @return {Ext.data.Batch} this
      */
-    pause: function() {
+    pause: function () {
         this.running = false;
         return this;
     },
-    
+
     /**
      * Gets the operations for this batch.
      * @return {Ext.data.operation.Operation[]} The operations.
      */
-    getOperations: function() {
-        return this.operations;    
+    getOperations: function () {
+        return this.operations;
     },
-    
+
     /**
      * Gets any operations that have returned without success in this batch.
      * @return {Ext.data.operation.Operation[]} The exceptions
      */
-    getExceptions: function() {
+    getExceptions: function () {
         return this.exceptions;
     },
-    
+
     /**
      * Gets the currently running operation. Will return null if the batch has
      * not started or is completed.
      * @return {Ext.data.operation.Operation} The operation
      */
-    getCurrent: function() {
+    getCurrent: function () {
         var out = null,
             current = this.current;
-            
+
         if (!(current === -1 || this.complete)) {
             out = this.operations[current];
-        }    
+        }
         return out;
     },
-    
+
     /**
      * Gets the total number of operations in this batch.
      * @return {Number} The total
      */
-    getTotal: function() {
+    getTotal: function () {
         return this.total;
     },
-    
+
     /**
      * Checks if this batch is running.
      * @return {Boolean} `true` if this batch is running.
      */
-    isRunning: function() {
+    isRunning: function () {
         return this.running;
     },
-    
+
     /**
      * Checks if this batch is complete.
      * @return {Boolean} `true` if this batch is complete.
      */
-    isComplete: function() {
-        return this.complete;    
+    isComplete: function () {
+        return this.complete;
     },
-    
+
     /**
      * Checks if this batch has any exceptions.
      * @return {Boolean} `true` if this batch has any exceptions.
      */
-    hasException: function() {
-        return this.exception;    
+    hasException: function () {
+        return this.exception;
     },
 
     /**
      * Executes an operation by its numeric index in the {@link #operations} array
      * @param {Number} index The operation index to run
      * @return {Ext.data.Batch} this
-     * 
+     *
      * @private
      */
-    runOperation: function(index) {
+    runOperation: function (index) {
         var me = this,
             operations = me.operations,
             operation = operations[index];
@@ -341,11 +341,11 @@ Ext.define('Ext.data.Batch', {
         }
         return me;
     },
-    
-    onOperationComplete: function(operation) {
+
+    onOperationComplete: function (operation) {
         var me = this,
             exception = operation.hasException();
-            
+
         if (exception) {
             me.exception = true;
             me.exceptions.push(operation);

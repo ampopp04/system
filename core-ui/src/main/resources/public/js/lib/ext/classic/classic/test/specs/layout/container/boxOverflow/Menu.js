@@ -19,7 +19,7 @@ describe('Ext.layout.container.boxOverflow.Menu', function () {
         toolbar = null;
     });
 
-    it("should be able to show a button menu after being overflowed", function() {
+    it("should be able to show a button menu after being overflowed", function () {
         createToolbar({
             items: [{
                 xtype: 'button',
@@ -124,8 +124,8 @@ describe('Ext.layout.container.boxOverflow.Menu', function () {
         });
     });
 
-    describe('form fields in toolbar', function() {
-        it('should sync the value both ways on change', function() {
+    describe('form fields in toolbar', function () {
+        it('should sync the value both ways on change', function () {
             var overflowHandler, master, clone;
 
             createToolbar({
@@ -137,13 +137,13 @@ describe('Ext.layout.container.boxOverflow.Menu', function () {
             });
             overflowHandler = toolbar.layout.overflowHandler;
             master = toolbar.down('#text1');
-            
+
             overflowHandler.menu.show();
             clone = overflowHandler.menu.down('[name=text1]');
 
             // Check syncing both ways
             master.setValue('foo');
-            expect(clone.getValue()).toBe('foo');            
+            expect(clone.getValue()).toBe('foo');
             clone.setValue('bar');
             expect(master.getValue()).toBe('bar')
         });

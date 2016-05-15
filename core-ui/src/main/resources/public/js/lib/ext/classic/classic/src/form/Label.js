@@ -1,26 +1,26 @@
 /**
  * Produces a standalone `<label />` element which can be inserted into a form and be associated with a field
  * in that form using the {@link #forId} property.
- * 
+ *
  * **NOTE:** in most cases it will be more appropriate to use the {@link Ext.form.Labelable#fieldLabel fieldLabel}
  * and associated config properties ({@link Ext.form.Labelable#labelAlign}, {@link Ext.form.Labelable#labelWidth},
  * etc.) in field components themselves, as that allows labels to be uniformly sized throughout the form.
  * Ext.form.Label should only be used when your layout can not be achieved with the standard
  * {@link Ext.form.Labelable field layout}.
- * 
+ *
  * You will likely be associating the label with a field component that extends {@link Ext.form.field.Base}, so
  * you should make sure the {@link #forId} is set to the same value as the {@link Ext.form.field.Base#inputId inputId}
  * of that field.
- * 
+ *
  * The label's text can be set using either the {@link #text} or {@link #html} configuration properties; the
  * difference between the two is that the former will automatically escape HTML characters when rendering, while
  * the latter will not.
  *
  * # Example
- * 
+ *
  * This example creates a Label after its associated Text field, an arrangement that cannot currently
  * be achieved using the standard Field layout's labelAlign.
- * 
+ *
  *     @example
  *     Ext.create('Ext.form.Panel', {
  *         title: 'Field with Label',
@@ -44,7 +44,7 @@
  *     });
  */
 Ext.define('Ext.form.Label', {
-    extend:'Ext.Component',
+    extend: 'Ext.Component',
     alias: 'widget.label',
     requires: ['Ext.util.Format'],
 
@@ -67,10 +67,10 @@ Ext.define('Ext.form.Label', {
      * An HTML fragment that will be used as the label's innerHTML.
      * Note that if {@link #text} is specified it will take precedence and this value will be ignored.
      */
-    
+
     maskOnDisable: false,
 
-    getElConfig: function(){
+    getElConfig: function () {
         var me = this;
 
         me.html = me.text ? Ext.util.Format.htmlEncode(me.text) : (me.html || '');
@@ -87,19 +87,19 @@ Ext.define('Ext.form.Label', {
      * than rendering them as string literals per the default logic.
      * @return {Ext.form.Label} this
      */
-    setText : function(text, encode){
+    setText: function (text, encode) {
         var me = this;
-        
+
         encode = encode !== false;
-        if(encode) {
+        if (encode) {
             me.text = text;
             delete me.html;
         } else {
             me.html = text;
             delete me.text;
         }
-        
-        if(me.rendered){
+
+        if (me.rendered) {
             me.el.dom.innerHTML = encode !== false ? Ext.util.Format.htmlEncode(text) : text;
             me.updateLayout();
         }

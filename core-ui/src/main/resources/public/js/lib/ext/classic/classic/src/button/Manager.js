@@ -10,7 +10,7 @@ Ext.define('Ext.button.Manager', {
 
     pressedButton: null,
 
-    init: function() {
+    init: function () {
         var me = this;
         if (!me.initialized) {
             Ext.getDoc().on({
@@ -24,7 +24,7 @@ Ext.define('Ext.button.Manager', {
     // Called by buton instances.
     // Track the button which was mousedowned upon so that the next *document* mouseup can be delivered to it
     // in case mouse is moved outside of button element.
-    onButtonMousedown: function(button, e) {
+    onButtonMousedown: function (button, e) {
         var pressed = this.pressedButton;
         if (pressed) {
             pressed.onMouseUp(e);
@@ -32,16 +32,16 @@ Ext.define('Ext.button.Manager', {
         this.pressedButton = button;
     },
 
-    onDocumentMouseUp: function(e) {
+    onDocumentMouseUp: function (e) {
         var pressed = this.pressedButton;
-        
+
         if (pressed) {
             pressed.onMouseUp(e);
             this.pressedButton = null;
         }
     },
 
-    toggleGroup: function(btn, state) {
+    toggleGroup: function (btn, state) {
         if (state) {
             var g = this.groups[btn.toggleGroup],
                 length = g.length,
@@ -55,7 +55,7 @@ Ext.define('Ext.button.Manager', {
         }
     },
 
-    register: function(btn) {
+    register: function (btn) {
         var me = this,
             groups = this.groups,
             group = groups[btn.toggleGroup];
@@ -72,7 +72,7 @@ Ext.define('Ext.button.Manager', {
         btn.on('toggle', me.toggleGroup, me);
     },
 
-    unregister: function(btn) {
+    unregister: function (btn) {
         if (!btn.toggleGroup) {
             return;
         }
@@ -90,7 +90,7 @@ Ext.define('Ext.button.Manager', {
      * @param {String} groupName
      * @return {Ext.button.Button}
      */
-    getPressed: function(groupName) {
+    getPressed: function (groupName) {
         var group = this.groups[groupName],
             i = 0,
             len;

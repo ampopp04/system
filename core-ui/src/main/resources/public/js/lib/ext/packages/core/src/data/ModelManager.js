@@ -7,7 +7,7 @@ Ext.define('Ext.data.ModelManager', {
     requires: [
         'Ext.data.schema.Schema'
     ],
-    
+
     singleton: true,
 
     deprecated: {
@@ -25,15 +25,15 @@ Ext.define('Ext.data.ModelManager', {
                     return T.createWithId(id, data);
                 },
 
-                each: function(fn, scope) {
+                each: function (fn, scope) {
                     Ext.data.Model.schema.eachEntity(fn, scope);
                 },
 
-                get: function(name) {
+                get: function (name) {
                     return this.getModel(name);
                 },
 
-                getCount: function() {
+                getCount: function () {
                     return Ext.data.Model.schema.entityCount;
                 },
 
@@ -47,7 +47,7 @@ Ext.define('Ext.data.ModelManager', {
                     return Ext.data.schema.Schema.lookupEntity(id);
                 },
 
-                isRegistered: function(name) {
+                isRegistered: function (name) {
                     return !!this.getModel(name);
                 }
             }

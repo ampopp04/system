@@ -5,30 +5,30 @@ Ext.define('Ext.device.connection.Cordova', {
     alternateClassName: 'Ext.device.connection.PhoneGap',
     extend: 'Ext.device.connection.Abstract',
 
-    constructor: function() {
+    constructor: function () {
         var me = this;
-        
-        document.addEventListener('online', function() {
+
+        document.addEventListener('online', function () {
             me.fireEvent('online', me);
         });
 
-        document.addEventListener('offline', function() {
+        document.addEventListener('offline', function () {
             me.fireEvent('offline', me);
         });
     },
 
-    syncOnline: function() {
+    syncOnline: function () {
         var type = navigator.connection.type;
         this._type = type;
         this._online = type != Connection.NONE;
     },
 
-    getOnline: function() {
+    getOnline: function () {
         this.syncOnline();
         return this._online;
     },
 
-    getType: function() {
+    getType: function () {
         this.syncOnline();
         return this._type;
     }

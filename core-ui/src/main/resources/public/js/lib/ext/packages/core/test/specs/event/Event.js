@@ -1,15 +1,15 @@
-describe("Ext.event.Event", function() {
+describe("Ext.event.Event", function () {
     var E = Ext.event.Event,
         e;
-    
+
     function makeKeyEvent(config) {
         e = new E(Ext.apply({
             type: 'keydown'
         }, config));
-        
+
         return e;
     }
-    
+
     // The following key specs have their behaviour taken from the listed browsers.
     // IE/WebKit share the same behaviour, however Gecko behaves differently in various
     // cases.
@@ -17,18 +17,18 @@ describe("Ext.event.Event", function() {
     // Each item listed is
     // [expected, name, keyCode, charCode, options]
 
-    describe("isSpecialKey", function() {
+    describe("isSpecialKey", function () {
         function makeKeySuite(options) {
-            Ext.Object.each(options, function(type, values) {
-                describe(type, function() {
-                    Ext.Array.forEach(values, function(value) {
+            Ext.Object.each(options, function (type, values) {
+                describe(type, function () {
+                    Ext.Array.forEach(values, function (value) {
                         var result = value[0],
                             key = value[1],
                             keyCode = value[2],
                             charCode = value[3],
                             keyOptions = value[4] || {};
 
-                        it("should have " + key + " " + result, function() {
+                        it("should have " + key + " " + result, function () {
                             makeKeyEvent(Ext.apply({
                                 type: type,
                                 keyCode: keyCode,
@@ -40,9 +40,10 @@ describe("Ext.event.Event", function() {
                 });
             });
         }
+
         // IE8-11 + Chrome follow the same behaviour
         if (Ext.isGecko) {
-            makeKeySuite((function() {
+            makeKeySuite((function () {
                 var downupData = [
                     [true, 'ctrl', 17, 0, {ctrlKey: true}],
                     [true, 'shift', 16, 18, {shiftKey: true}],
@@ -157,7 +158,7 @@ describe("Ext.event.Event", function() {
                 };
             })());
         } else {
-            makeKeySuite((function() {
+            makeKeySuite((function () {
                 var downupData = [
                     [true, 'ctrl', 17, 0, {ctrlKey: true}],
                     [true, 'shift', 16, 18, {shiftKey: true}],
@@ -273,21 +274,21 @@ describe("Ext.event.Event", function() {
             })());
         }
     });
-    
-    describe("isNavKeyPress", function() {
+
+    describe("isNavKeyPress", function () {
         function makeSuite(scrollableOnly) {
-            describe("scrollableOnly: " + scrollableOnly, function() {
+            describe("scrollableOnly: " + scrollableOnly, function () {
                 function makeKeySuite(options) {
-                    Ext.Object.each(options, function(type, values) {
-                        describe(type, function() {
-                            Ext.Array.forEach(values, function(value) {
+                    Ext.Object.each(options, function (type, values) {
+                        describe(type, function () {
+                            Ext.Array.forEach(values, function (value) {
                                 var result = value[0],
                                     key = value[1],
                                     keyCode = value[2],
                                     charCode = value[3],
                                     keyOptions = value[4] || {};
 
-                                it("should have " + key + " " + result, function() {
+                                it("should have " + key + " " + result, function () {
                                     makeKeyEvent(Ext.apply({
                                         type: type,
                                         keyCode: keyCode,
@@ -302,7 +303,7 @@ describe("Ext.event.Event", function() {
 
                 // IE8-11 + Chrome follow the same behaviour
                 if (Ext.isGecko) {
-                    makeKeySuite((function() {
+                    makeKeySuite((function () {
                         var downupData = [
                             [false, 'ctrl', 17, 0, {ctrlKey: true}],
                             [false, 'shift', 16, 18, {shiftKey: true}],
@@ -417,7 +418,7 @@ describe("Ext.event.Event", function() {
                         };
                     })());
                 } else {
-                    makeKeySuite((function() {
+                    makeKeySuite((function () {
                         var downupData = [
                             [false, 'ctrl', 17, 0, {ctrlKey: true}],
                             [false, 'shift', 16, 18, {shiftKey: true}],
@@ -534,6 +535,7 @@ describe("Ext.event.Event", function() {
                 }
             });
         }
+
         makeSuite(false);
         makeSuite(true);
     });

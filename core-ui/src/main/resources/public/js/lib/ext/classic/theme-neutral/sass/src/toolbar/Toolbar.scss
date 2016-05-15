@@ -168,175 +168,175 @@
  * @member Ext.toolbar.Toolbar
  */
 @mixin extjs-toolbar-ui(
-    $ui,
+  $ui,
 
-    $background-color: $toolbar-background-color,
-    $background-gradient: $toolbar-background-gradient,
+  $background-color: $toolbar-background-color,
+  $background-gradient: $toolbar-background-gradient,
 
-    $vertical-spacing: $toolbar-vertical-spacing,
-    $horizontal-spacing: $toolbar-horizontal-spacing,
+  $vertical-spacing: $toolbar-vertical-spacing,
+  $horizontal-spacing: $toolbar-horizontal-spacing,
 
-    $border-color: $toolbar-border-color,
-    $border-width: $toolbar-border-width,
-    $border-style: $toolbar-border-style,
+  $border-color: $toolbar-border-color,
+  $border-width: $toolbar-border-width,
+  $border-style: $toolbar-border-style,
 
-    $spacer-width: $toolbar-spacer-width,
-    $separator-color: $toolbar-separator-color,
-    $separator-highlight-color: $toolbar-separator-highlight-color,
-    $separator-horizontal-margin: $toolbar-separator-horizontal-margin,
-    $separator-horizontal-height: $toolbar-separator-horizontal-height,
-    $separator-horizontal-border-style: $toolbar-separator-horizontal-border-style,
-    $separator-horizontal-border-width: $toolbar-separator-horizontal-border-width,
-    $separator-vertical-margin: $toolbar-separator-vertical-margin,
-    $separator-vertical-border-style: $toolbar-separator-vertical-border-style,
-    $separator-vertical-border-width: $toolbar-separator-vertical-border-width,
+  $spacer-width: $toolbar-spacer-width,
+  $separator-color: $toolbar-separator-color,
+  $separator-highlight-color: $toolbar-separator-highlight-color,
+  $separator-horizontal-margin: $toolbar-separator-horizontal-margin,
+  $separator-horizontal-height: $toolbar-separator-horizontal-height,
+  $separator-horizontal-border-style: $toolbar-separator-horizontal-border-style,
+  $separator-horizontal-border-width: $toolbar-separator-horizontal-border-width,
+  $separator-vertical-margin: $toolbar-separator-vertical-margin,
+  $separator-vertical-border-style: $toolbar-separator-vertical-border-style,
+  $separator-vertical-border-width: $toolbar-separator-vertical-border-width,
 
-    $text-font-family: $toolbar-text-font-family,
-    $text-font-size: $toolbar-text-font-size,
-    $text-font-weight: $toolbar-text-font-weight,
-    $text-color: $toolbar-text-color,
-    $text-line-height: $toolbar-text-line-height,
-    $text-padding: $toolbar-text-padding,
+  $text-font-family: $toolbar-text-font-family,
+  $text-font-size: $toolbar-text-font-size,
+  $text-font-weight: $toolbar-text-font-weight,
+  $text-color: $toolbar-text-color,
+  $text-line-height: $toolbar-text-line-height,
+  $text-padding: $toolbar-text-padding,
 
-    $scroller-width: $toolbar-scroller-width,
-    $scroller-height: $toolbar-scroller-height,
-    $scroller-vertical-width: $toolbar-scroller-vertical-width,
-    $scroller-vertical-height: $toolbar-scroller-vertical-height,
-    $scroller-border-color: $toolbar-scroller-border-color,
-    $scroller-border-width: $toolbar-scroller-border-width,
-    $scroller-vertical-border-color: $toolbar-scroller-vertical-border-color,
-    $scroller-vertical-border-width: $toolbar-scroller-vertical-border-width,
-    $scroller-top-margin: $toolbar-scroller-top-margin,
-    $scroller-right-margin: $toolbar-scroller-right-margin,
-    $scroller-bottom-margin: $toolbar-scroller-bottom-margin,
-    $scroller-left-margin: $toolbar-scroller-left-margin,
-    $scroller-cursor: $toolbar-scroller-cursor,
-    $scroller-cursor-disabled: $toolbar-scroller-cursor-disabled,
-    $scroller-opacity: $toolbar-scroller-opacity,
-    $scroller-opacity-over: $toolbar-scroller-opacity-over,
-    $scroller-opacity-pressed: $toolbar-scroller-opacity-pressed,
-    $scroller-opacity-disabled: $toolbar-scroller-opacity-disabled,
-    $scroller-glyph-color: $toolbar-scroller-glyph-color,
-    $scroller-top-glyph: $toolbar-scroller-top-glyph,
-    $scroller-right-glyph: $toolbar-scroller-right-glyph,
-    $scroller-bottom-glyph: $toolbar-scroller-bottom-glyph,
-    $scroller-left-glyph: $toolbar-scroller-left-glyph,
+  $scroller-width: $toolbar-scroller-width,
+  $scroller-height: $toolbar-scroller-height,
+  $scroller-vertical-width: $toolbar-scroller-vertical-width,
+  $scroller-vertical-height: $toolbar-scroller-vertical-height,
+  $scroller-border-color: $toolbar-scroller-border-color,
+  $scroller-border-width: $toolbar-scroller-border-width,
+  $scroller-vertical-border-color: $toolbar-scroller-vertical-border-color,
+  $scroller-vertical-border-width: $toolbar-scroller-vertical-border-width,
+  $scroller-top-margin: $toolbar-scroller-top-margin,
+  $scroller-right-margin: $toolbar-scroller-right-margin,
+  $scroller-bottom-margin: $toolbar-scroller-bottom-margin,
+  $scroller-left-margin: $toolbar-scroller-left-margin,
+  $scroller-cursor: $toolbar-scroller-cursor,
+  $scroller-cursor-disabled: $toolbar-scroller-cursor-disabled,
+  $scroller-opacity: $toolbar-scroller-opacity,
+  $scroller-opacity-over: $toolbar-scroller-opacity-over,
+  $scroller-opacity-pressed: $toolbar-scroller-opacity-pressed,
+  $scroller-opacity-disabled: $toolbar-scroller-opacity-disabled,
+  $scroller-glyph-color: $toolbar-scroller-glyph-color,
+  $scroller-top-glyph: $toolbar-scroller-top-glyph,
+  $scroller-right-glyph: $toolbar-scroller-right-glyph,
+  $scroller-bottom-glyph: $toolbar-scroller-bottom-glyph,
+  $scroller-left-glyph: $toolbar-scroller-left-glyph,
 
-    $tool-background-image: $toolbar-tool-background-image,
-    $tool-glyph-color: $toolbar-tool-glyph-color,
-    $menu-overflow-glyph-color: $toolbar-menu-overflow-glyph-color,
-    $menu-overflow-glyph: $toolbar-menu-overflow-glyph,
-    $classic-scrollers: $toolbar-classic-scrollers
+  $tool-background-image: $toolbar-tool-background-image,
+  $tool-glyph-color: $toolbar-tool-glyph-color,
+  $menu-overflow-glyph-color: $toolbar-menu-overflow-glyph-color,
+  $menu-overflow-glyph: $toolbar-menu-overflow-glyph,
+  $classic-scrollers: $toolbar-classic-scrollers
 ) {
-    $ui-padding: $vertical-spacing 0 $vertical-spacing $horizontal-spacing;
-    .#{$prefix}toolbar-#{$ui} {
-        padding: $ui-padding;
+  $ui-padding: $vertical-spacing 0 $vertical-spacing $horizontal-spacing;
+  .#{$prefix}toolbar-#{$ui} {
+    padding: $ui-padding;
 
-        @if $include-rtl {
-            &.#{$prefix}rtl {
-                padding: $vertical-spacing $horizontal-spacing $vertical-spacing 0;
-            }
-        }
-
-        border-style: $border-style;
-        border-color: $border-color;
-        border-width: $border-width;
-
-        @include background-gradient($background-color, $background-gradient);
-
-        @if $include-ext-panel-tool {
-            .#{$prefix}tool-img {
-                @if $enable-font-icons {
-                    color: $tool-glyph-color;
-                } @else if not is-null($tool-background-image) {
-                    background-image: theme-background-image($tool-background-image);
-                }
-                @if is-null($background-gradient) {
-                    // EXTJSIV-8846: partially transparent png images do not display correctly
-                    // in winXP/IE8m when the image element has a transparent background.
-                    // to fix this, we give the element the same background-color as the toolbar.
-                    background-color: $background-color;
-                }
-            }
-        }
-
-        .#{$prefix}toolbar-item {
-            margin: 0 $horizontal-spacing 0 0;
-
-            @if $include-rtl {
-                &.#{$prefix}rtl {
-                    margin: 0 0 0 $horizontal-spacing;
-                }
-            }
-        }
-
-        .#{$prefix}toolbar-separator-horizontal {
-            margin: $separator-horizontal-margin;
-            height: $separator-horizontal-height;
-            border-style: $separator-horizontal-border-style;
-            border-width: $separator-horizontal-border-width;
-            border-left-color: $separator-color;
-            border-right-color: $separator-highlight-color;
-        }
-
-        .#{$prefix}box-menu-after {
-            margin: 0 $horizontal-spacing;
-        }
+    @if $include-rtl {
+      &.#{$prefix}rtl {
+        padding: $vertical-spacing $horizontal-spacing $vertical-spacing 0;
+      }
     }
 
-    .#{$prefix}toolbar-#{$ui}-vertical {
+    border-style: $border-style;
+    border-color: $border-color;
+    border-width: $border-width;
+
+    @include background-gradient($background-color, $background-gradient);
+
+    @if $include-ext-panel-tool {
+      .#{$prefix}tool-img {
+        @if $enable-font-icons {
+          color: $tool-glyph-color;
+        } @else if not is-null($tool-background-image) {
+          background-image: theme-background-image($tool-background-image);
+        }
+        @if is-null($background-gradient) {
+          // EXTJSIV-8846: partially transparent png images do not display correctly
+          // in winXP/IE8m when the image element has a transparent background.
+          // to fix this, we give the element the same background-color as the toolbar.
+          background-color: $background-color;
+        }
+      }
+    }
+
+    .#{$prefix}toolbar-item {
+      margin: 0 $horizontal-spacing 0 0;
+
+      @if $include-rtl {
+        &.#{$prefix}rtl {
+          margin: 0 0 0 $horizontal-spacing;
+        }
+      }
+    }
+
+    .#{$prefix}toolbar-separator-horizontal {
+      margin: $separator-horizontal-margin;
+      height: $separator-horizontal-height;
+      border-style: $separator-horizontal-border-style;
+      border-width: $separator-horizontal-border-width;
+      border-left-color: $separator-color;
+      border-right-color: $separator-highlight-color;
+    }
+
+    .#{$prefix}box-menu-after {
+      margin: 0 $horizontal-spacing;
+    }
+  }
+
+  .#{$prefix}toolbar-#{$ui}-vertical {
+    padding: $vertical-spacing $horizontal-spacing 0;
+
+    @if $include-rtl {
+      &.#{$prefix}rtl {
         padding: $vertical-spacing $horizontal-spacing 0;
-
-        @if $include-rtl {
-            &.#{$prefix}rtl {
-                padding: $vertical-spacing $horizontal-spacing 0;
-            }
-        }
-
-        .#{$prefix}toolbar-item {
-            margin: 0 0 $vertical-spacing 0;
-            @if $include-rtl {
-                &.#{$prefix}rtl {
-                    margin: 0 0 $vertical-spacing 0;
-                }
-            }
-        }
-
-        .#{$prefix}toolbar-separator-vertical {
-            margin: $separator-vertical-margin;
-            border-style: $separator-vertical-border-style;
-            border-width: $separator-vertical-border-width;
-            border-top-color: $separator-color;
-            border-bottom-color: $separator-highlight-color;
-        }
-
-        .#{$prefix}box-menu-after {
-            margin: $vertical-spacing 0;
-        }
+      }
     }
 
-    @if $include-slicer-gradient and not is-null($background-gradient) {
-        .#{$prefix}nlg {
-            .#{$prefix}toolbar-#{$ui} {
-                background-image: slicer-background-image(toolbar-#{$ui}, 'toolbar/toolbar-#{$ui}-bg') !important;
-                background-repeat: repeat-x;
-            }
+    .#{$prefix}toolbar-item {
+      margin: 0 0 $vertical-spacing 0;
+      @if $include-rtl {
+        &.#{$prefix}rtl {
+          margin: 0 0 $vertical-spacing 0;
         }
-        $stretch: slicer-background-stretch(toolbar-#{$ui}, bottom);
+      }
     }
 
-    .#{$prefix}toolbar-text-#{$ui} {
-        padding: $text-padding;
-        color: $text-color;
-        font: $text-font-weight #{$text-font-size}/#{$text-line-height} $text-font-family;
+    .#{$prefix}toolbar-separator-vertical {
+      margin: $separator-vertical-margin;
+      border-style: $separator-vertical-border-style;
+      border-width: $separator-vertical-border-width;
+      border-top-color: $separator-color;
+      border-bottom-color: $separator-highlight-color;
     }
 
-    .#{$prefix}toolbar-spacer-#{$ui} {
-        width: $spacer-width;
+    .#{$prefix}box-menu-after {
+      margin: $vertical-spacing 0;
     }
+  }
 
-    @if $include-ext-layout-container-boxoverflow-scroller {
-        @include extjs-box-scroller-ui(
+  @if $include-slicer-gradient and not is-null($background-gradient) {
+    .#{$prefix}nlg {
+      .#{$prefix}toolbar-#{$ui} {
+        background-image: slicer-background-image(toolbar-#{$ui}, 'toolbar/toolbar-#{$ui}-bg') !important;
+        background-repeat: repeat-x;
+      }
+    }
+    $stretch: slicer-background-stretch(toolbar-#{$ui}, bottom);
+  }
+
+  .#{$prefix}toolbar-text-#{$ui} {
+    padding: $text-padding;
+    color: $text-color;
+    font: $text-font-weight #{$text-font-size}/#{$text-line-height} $text-font-family;
+  }
+
+  .#{$prefix}toolbar-spacer-#{$ui} {
+    width: $spacer-width;
+  }
+
+  @if $include-ext-layout-container-boxoverflow-scroller {
+    @include extjs-box-scroller-ui(
             $ui: $ui,
             $type: 'toolbar',
             $horizontal-width: $scroller-width,
@@ -366,50 +366,50 @@
             $opacity-disabled: $scroller-opacity-disabled,
             $classic: $classic-scrollers,
             $include-vertical: if($ui == 'footer', false, true)
-        );
-    }
+    );
+  }
 
-    // EXTJSIV-8846: partially transparent png images do not display correctly
-    // in winXP/IE8 when the image element has a transparent background.
-    // to fix this, we give the element the same background-color as the toolbar.
-    .#{$prefix}ie8 {
-        .#{$prefix}box-scroller-toolbar-#{$ui} {
-            background-color: $background-color;
+  // EXTJSIV-8846: partially transparent png images do not display correctly
+  // in winXP/IE8 when the image element has a transparent background.
+  // to fix this, we give the element the same background-color as the toolbar.
+  .#{$prefix}ie8 {
+    .#{$prefix}box-scroller-toolbar-#{$ui} {
+      background-color: $background-color;
+    }
+  }
+
+  @if $include-ext-layout-container-boxoverflow-menu {
+    .#{$prefix}toolbar-more-icon {
+      @if $enable-font-icons and ($menu-overflow-glyph != null) {
+        @include font-icon($menu-overflow-glyph);
+        color: $menu-overflow-glyph-color;
+      } @else {
+        background-image: theme-background-image('toolbar/#{$ui}-more');
+
+        @if $include-rtl {
+          &.#{$prefix}rtl {
+            background-image: theme-background-image('toolbar/#{$ui}-more-left');
+          }
         }
+      }
     }
+  }
 
-    @if $include-ext-layout-container-boxoverflow-menu {
-        .#{$prefix}toolbar-more-icon {
-            @if $enable-font-icons and ($menu-overflow-glyph != null) {
-                @include font-icon($menu-overflow-glyph);
-                color: $menu-overflow-glyph-color;
-            } @else {
-                background-image: theme-background-image('toolbar/#{$ui}-more');
-
-                @if $include-rtl {
-                    &.#{$prefix}rtl {
-                        background-image: theme-background-image('toolbar/#{$ui}-more-left');
-                    }
-                }
-            }
-        }
-    }
-
-    @include x-slicer(toolbar-#{$ui});
+  @include x-slicer(toolbar-#{$ui});
 }
 
 @if $include-toolbar-default-ui {
-    @include extjs-toolbar-ui(
-        $ui: 'default'
-    );
+  @include extjs-toolbar-ui(
+          $ui: 'default'
+  );
 }
 
 @if $include-toolbar-footer-ui {
-    @include extjs-toolbar-ui(
-        $ui: 'footer',
-        $background-color: $toolbar-footer-background-color,
-        $border-width: $toolbar-footer-border-width,
-        $vertical-spacing: $toolbar-footer-vertical-spacing,
-        $horizontal-spacing: $toolbar-footer-horizontal-spacing
-    );
+  @include extjs-toolbar-ui(
+          $ui: 'footer',
+          $background-color: $toolbar-footer-background-color,
+          $border-width: $toolbar-footer-border-width,
+          $vertical-spacing: $toolbar-footer-vertical-spacing,
+          $horizontal-spacing: $toolbar-footer-horizontal-spacing
+  );
 }

@@ -21,7 +21,7 @@ Ext.define('Ext.grid.selection.Rows', {
     //-------------------------------------------------------------------------
     // Base Selection API
 
-    clone: function() {
+    clone: function () {
         var me = this,
             result = new me.self(me.view);
 
@@ -40,7 +40,7 @@ Ext.define('Ext.grid.selection.Rows', {
     //-------------------------------------------------------------------------
     // Methods unique to this type of Selection
 
-    add: function(record) {
+    add: function (record) {
         //<debug>
         if (!(record.isModel)) {
             Ext.raise('Row selection must be passed a record');
@@ -55,7 +55,7 @@ Ext.define('Ext.grid.selection.Rows', {
         }
     },
 
-    remove: function(record) {
+    remove: function (record) {
         //<debug>
         if (!(record.isModel)) {
             Ext.raise('Row selection must be passed a record');
@@ -71,7 +71,7 @@ Ext.define('Ext.grid.selection.Rows', {
             // Flag when selectAll called.
             // While this is set, a call to contains will add the record to the collection and return true
             me.allSelected = false;
-            
+
             return true;
         }
     },
@@ -120,7 +120,7 @@ Ext.define('Ext.grid.selection.Rows', {
      * Returns the number of records selected
      * @return {Number} The number of records selected.
      */
-    getCount: function() {
+    getCount: function () {
         var me = this,
             selectedRecords = me.selectedRecords,
             result = selectedRecords ? selectedRecords.getCount() : 0,
@@ -141,12 +141,12 @@ Ext.define('Ext.grid.selection.Rows', {
      * Returns the records selected.
      * @return {Ext.data.Model[]} The records selected.
      */
-    getRecords: function() {
+    getRecords: function () {
         var selectedRecords = this.selectedRecords;
         return selectedRecords ? selectedRecords.getRange() : [];
     },
 
-    selectAll: function() {
+    selectAll: function () {
         var me = this;
 
         me.clear();
@@ -164,18 +164,18 @@ Ext.define('Ext.grid.selection.Rows', {
     /**
      * @return {Number} The row index of the first row in the range or zero if no range.
      */
-    getFirstRowIndex: function() {
+    getFirstRowIndex: function () {
         return this.getCount() ? this.view.dataSource.indexOf(this.selectedRecords.first()) : 0;
     },
 
     /**
      * @return {Number} The row index of the last row in the range or -1 if no range.
      */
-    getLastRowIndex: function() {
+    getLastRowIndex: function () {
         return this.getCount() ? this.view.dataSource.indexOf(this.selectedRecords.first()) : -1;
     },
 
-    eachRow: function(fn, scope) {
+    eachRow: function (fn, scope) {
         var selectedRecords = this.selectedRecords;
 
         if (selectedRecords) {
@@ -183,7 +183,7 @@ Ext.define('Ext.grid.selection.Rows', {
         }
     },
 
-    eachColumn: function(fn, scope) {
+    eachColumn: function (fn, scope) {
         var columns = this.view.getVisibleColumnManager().getColumns(),
             len = columns.length,
             i;
@@ -198,7 +198,7 @@ Ext.define('Ext.grid.selection.Rows', {
         }
     },
 
-    eachCell: function(fn, scope) {
+    eachCell: function (fn, scope) {
         var me = this,
             selection = me.selectedRecords,
             view = me.view,
@@ -217,7 +217,7 @@ Ext.define('Ext.grid.selection.Rows', {
 
             // Use Collection#each instead of copying the entire dataset into an array and iterating that.
             if (selection) {
-                selection.each(function(record) {
+                selection.each(function (record) {
                     context.setRow(record);
                     for (i = 0; i < colCount; i++) {
                         context.setColumn(columns[i]);
@@ -228,12 +228,12 @@ Ext.define('Ext.grid.selection.Rows', {
                     }
                 });
             }
-            
+
             // If called during a drag select, or SHIFT+arrow select, include the drag range
             if (!abort && me.rangeStart != null) {
                 range = me.getRange();
                 me.view.dataSource.getRange(range[0], range[1], {
-                    callback: function(records) {
+                    callback: function (records) {
                         recCount = records.length;
                         for (i = 0; !abort && i < recCount; i++) {
                             context.setRow(records[i]);
@@ -258,9 +258,9 @@ Ext.define('Ext.grid.selection.Rows', {
      * call with a call to `endUpdate` or you will prevent the collection from updating
      * properly.
      */
-    beginUpdate: function() {
+    beginUpdate: function () {
         var selectedRecords = this.selectedRecords;
-        
+
         if (selectedRecords) {
             selectedRecords.beginUpdate();
         }
@@ -270,15 +270,15 @@ Ext.define('Ext.grid.selection.Rows', {
      * This method is called after modifications are complete on a selected row set. For details
      * see `{@link #beginUpdate}`.
      */
-    endUpdate: function() {
+    endUpdate: function () {
         var selectedRecords = this.selectedRecords;
-        
+
         if (selectedRecords) {
             selectedRecords.endUpdate();
         }
     },
 
-    destroy: function() {
+    destroy: function () {
         this.selectedRecords = Ext.destroy(this.selectedRecords);
         this.callParent();
     },
@@ -289,7 +289,7 @@ Ext.define('Ext.grid.selection.Rows', {
         /**
          * @private
          */
-        clear: function() {
+        clear: function () {
             var me = this,
                 view = me.view;
 
@@ -298,7 +298,7 @@ Ext.define('Ext.grid.selection.Rows', {
             me.allSelected = false;
 
             if (me.selectedRecords) {
-                me.eachRow(function(record) {
+                me.eachRow(function (record) {
                     view.onRowDeselect(record);
                 });
                 me.selectedRecords.clear();
@@ -309,7 +309,7 @@ Ext.define('Ext.grid.selection.Rows', {
          * @return {Boolean}
          * @private
          */
-        isAllSelected: function() {
+        isAllSelected: function () {
             // This branch has a flag because it encompasses a possibly buffered store,
             // where the full dataset might not be present, so a flag indicates that all
             // records are selected even as they flow into or out of the buffered page cache.
@@ -321,7 +321,7 @@ Ext.define('Ext.grid.selection.Rows', {
          * @param {Number} start The start row index of the row drag selection.
          * @private
          */
-        setRangeStart: function(start) {
+        setRangeStart: function (start) {
 
             // Flag when selectAll called.
             // While this is set, a call to contains will add the record to the collection and return true
@@ -336,7 +336,7 @@ Ext.define('Ext.grid.selection.Rows', {
          * @param {Number} end The end row index of the row drag selection.
          * @private
          */
-        setRangeEnd: function(end) {
+        setRangeEnd: function (end) {
             var me = this,
                 range,
                 lastRange,
@@ -356,7 +356,7 @@ Ext.define('Ext.grid.selection.Rows', {
 
             // Loop through the union of last range and current range
             for (rowIdx = Math.max(Math.min(range[0], lastRange[0]), rows.startIndex),
-                end = Math.min(Math.max(range[1], lastRange[1]), rows.endIndex); rowIdx <= end; rowIdx++) {
+                     end = Math.min(Math.max(range[1], lastRange[1]), rows.endIndex); rowIdx <= end; rowIdx++) {
                 row = rows.item(rowIdx);
 
                 // If we are outside the current range, deselect
@@ -374,12 +374,12 @@ Ext.define('Ext.grid.selection.Rows', {
             me.lastRange = range;
         },
 
-        extendRange: function(extensionVector) {
+        extendRange: function (extensionVector) {
             var me = this,
                 store = me.view.dataSource,
                 i;
 
-            for (i = extensionVector.start.rowIdx; i <=  extensionVector.end.rowIdx; i++) {
+            for (i = extensionVector.start.rowIdx; i <= extensionVector.end.rowIdx; i++) {
                 me.add(store.getAt(i));
             }
         },
@@ -388,13 +388,13 @@ Ext.define('Ext.grid.selection.Rows', {
          * @return {Number[]}
          * @private
          */
-        getRange: function() {
+        getRange: function () {
             var start = this.rangeStart,
                 end = this.rangeEnd;
 
             if (start == null) {
                 return [0, -1];
-            } else if (start <= end ){
+            } else if (start <= end) {
                 return [start, end];
             }
             return [end, start];
@@ -405,7 +405,7 @@ Ext.define('Ext.grid.selection.Rows', {
          * @return {Number}
          * @private
          */
-        getRangeSize: function() {
+        getRangeSize: function () {
             var range = this.getRange();
             return range[1] - range[0] + 1;
         },
@@ -414,7 +414,7 @@ Ext.define('Ext.grid.selection.Rows', {
          * @return {Ext.util.Collection}
          * @private
          */
-        createRecordCollection: function() {
+        createRecordCollection: function () {
             var store = this.view.dataSource,
                 result = new Ext.util.Collection({
                     rootProperty: 'data',
@@ -425,7 +425,7 @@ Ext.define('Ext.grid.selection.Rows', {
                         }
                     },
                     sorters: [
-                        function(r1, r2) {
+                        function (r1, r2) {
                             return store.indexOf(r1) - store.indexOf(r2);
                         }
                     ]
@@ -439,7 +439,7 @@ Ext.define('Ext.grid.selection.Rows', {
          * The record range delineated by the start and end row indices is added to the selected Collection.
          * @private
          */
-        addRange: function() {
+        addRange: function () {
             var me = this,
                 range,
                 selection;
@@ -448,7 +448,7 @@ Ext.define('Ext.grid.selection.Rows', {
                 range = me.getRange();
                 selection = me.selectedRecords || (me.selectedRecords = me.createRecordCollection());
                 me.view.dataSource.getRange(range[0], range[1], {
-                    callback: function(range) {
+                    callback: function (range) {
                         selection.add.apply(selection, range);
                     }
                 });
@@ -458,7 +458,7 @@ Ext.define('Ext.grid.selection.Rows', {
             }
         },
 
-        onSelectionFinish: function() {
+        onSelectionFinish: function () {
             var me = this,
                 range = me.getContiguousSelection();
 
@@ -476,14 +476,14 @@ Ext.define('Ext.grid.selection.Rows', {
          * The SelectionReplicator is only enabled if there is a contiguous block.
          * @private
          */
-        getContiguousSelection: function() {
+        getContiguousSelection: function () {
             var store = this.view.dataSource,
                 selection,
                 len,
                 i;
 
             if (this.selectedRecords) {
-                selection = Ext.Array.sort(this.selectedRecords.getRange(), function(r1, r2) {
+                selection = Ext.Array.sort(this.selectedRecords.getRange(), function (r1, r2) {
                     return store.indexOf(r1) - store.indexOf(r2);
                 });
                 len = selection.length;

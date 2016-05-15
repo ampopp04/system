@@ -4,35 +4,35 @@
  * A collection of useful static methods to deal with strings.
  * @singleton
  */
-Ext.String = (function() {
+Ext.String = (function () {
 // @define Ext.lang.String
 // @define Ext.String
 // @require Ext
 // @require Ext.lang.Array
-    var trimRegex     = /^[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]+|[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]+$/g,
-        escapeRe      = /('|\\)/g,
+    var trimRegex = /^[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]+|[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]+$/g,
+        escapeRe = /('|\\)/g,
         escapeRegexRe = /([-.*+?\^${}()|\[\]\/\\])/g,
-        basicTrimRe   = /^\s+|\s+$/g,
-        whitespaceRe  = /\s+/,
-        varReplace    = /(^[^a-z]*|[^\w])/gi,
+        basicTrimRe = /^\s+|\s+$/g,
+        whitespaceRe = /\s+/,
+        varReplace = /(^[^a-z]*|[^\w])/gi,
         charToEntity,
         entityToChar,
         charToEntityRegex,
         entityToCharRegex,
-        htmlEncodeReplaceFn = function(match, capture) {
+        htmlEncodeReplaceFn = function (match, capture) {
             return charToEntity[capture];
         },
-        htmlDecodeReplaceFn = function(match, capture) {
+        htmlDecodeReplaceFn = function (match, capture) {
             return (capture in entityToChar) ? entityToChar[capture] : String.fromCharCode(parseInt(capture.substr(2), 10));
         },
-        boundsCheck = function(s, other){
+        boundsCheck = function (s, other) {
             if (s === null || s === undefined || other === null || other === undefined) {
                 return false;
             }
 
-            return other.length <= s.length; 
+            return other.length <= s.length;
         },
-        
+
         ExtString;
 
     return ExtString = {
@@ -42,27 +42,27 @@ Ext.String = (function() {
          * @param {String} s The original string.
          * @param {String} value The substring to insert.
          * @param {Number} index The index to insert the substring. Negative indexes will insert from the end of
-         * the string. Example: 
+         * the string. Example:
          *
          *     Ext.String.insert("abcdefg", "h", -1); // abcdefhg
          *
          * @return {String} The value with the inserted substring
          */
-        insert: function(s, value, index) {
+        insert: function (s, value, index) {
             if (!s) {
                 return value;
             }
-            
+
             if (!value) {
                 return s;
             }
-            
+
             var len = s.length;
-            
+
             if (!index && index !== 0) {
                 index = len;
             }
-            
+
             if (index < 0) {
                 index *= -1;
                 if (index >= len) {
@@ -72,7 +72,7 @@ Ext.String = (function() {
                     index = len - index;
                 }
             }
-            
+
             if (index === 0) {
                 s = value + s;
             } else if (index >= s.length) {
@@ -82,16 +82,16 @@ Ext.String = (function() {
             }
             return s;
         },
-        
+
         /**
          * Checks if a string starts with a substring
          * @param {String} s The original string
          * @param {String} start The substring to check
          * @param {Boolean} [ignoreCase=false] True to ignore the case in the comparison
          */
-        startsWith: function(s, start, ignoreCase){
+        startsWith: function (s, start, ignoreCase) {
             var result = boundsCheck(s, start);
-            
+
             if (result) {
                 if (ignoreCase) {
                     s = s.toLowerCase();
@@ -101,16 +101,16 @@ Ext.String = (function() {
             }
             return result;
         },
-        
+
         /**
          * Checks if a string ends with a substring
          * @param {String} s The original string
          * @param {String} end The substring to check
          * @param {Boolean} [ignoreCase=false] True to ignore the case in the comparison
          */
-        endsWith: function(s, end, ignoreCase){
+        endsWith: function (s, end, ignoreCase) {
             var result = boundsCheck(s, end);
-            
+
             if (result) {
                 if (ignoreCase) {
                     s = s.toLowerCase();
@@ -128,7 +128,7 @@ Ext.String = (function() {
          * @param {String} s A string to be converted into a `var` name.
          * @return {String} A legal JavaScript `var` name.
          */
-        createVarName: function(s) {
+        createVarName: function (s) {
             return s.replace(varReplace, '');
         },
 
@@ -138,7 +138,7 @@ Ext.String = (function() {
          * @return {String} The encoded text.
          * @method
          */
-        htmlEncode: function(value) {
+        htmlEncode: function (value) {
             return (!value) ? value : String(value).replace(charToEntityRegex, htmlEncodeReplaceFn);
         },
 
@@ -148,17 +148,17 @@ Ext.String = (function() {
          * @return {String} The decoded text.
          * @method
          */
-        htmlDecode: function(value) {
+        htmlDecode: function (value) {
             return (!value) ? value : String(value).replace(entityToCharRegex, htmlDecodeReplaceFn);
         },
-        
+
         /**
          * Checks if a string has values needing to be html encoded.
          * @private
          * @param {String} s The string to test
          * @return {Boolean} `true` if the string contains HTML characters
          */
-        hasHtmlCharacters: function(s) {
+        hasHtmlCharacters: function (s) {
             return charToEntityRegex.test(s);
         },
 
@@ -191,7 +191,7 @@ Ext.String = (function() {
          * @param {Object} newEntities The set of character entities to add to the current
          * definitions.
          */
-        addCharacterEntities: function(newEntities) {
+        addCharacterEntities: function (newEntities) {
             var charKeys = [],
                 entityKeys = [],
                 key, echar;
@@ -211,16 +211,16 @@ Ext.String = (function() {
          * {@link Ext.String#htmlEncode} and {@link Ext.String#htmlDecode} back to the
          * default state.
          */
-        resetCharacterEntities: function() {
+        resetCharacterEntities: function () {
             charToEntity = {};
             entityToChar = {};
             // add the default set
             this.addCharacterEntities({
-                '&amp;'     :   '&',
-                '&gt;'      :   '>',
-                '&lt;'      :   '<',
-                '&quot;'    :   '"',
-                '&#39;'     :   "'"
+                '&amp;': '&',
+                '&gt;': '>',
+                '&lt;': '<',
+                '&quot;': '"',
+                '&#39;': "'"
             });
         },
 
@@ -231,7 +231,7 @@ Ext.String = (function() {
          * @param {String} string The content to append to the URL.
          * @return {String} The resulting URL
          */
-        urlAppend : function(url, string) {
+        urlAppend: function (url, string) {
             if (!Ext.isEmpty(string)) {
                 return url + (url.indexOf('?') === -1 ? '?' : '&') + string;
             }
@@ -249,7 +249,7 @@ Ext.String = (function() {
          * @param {String} string The string to trim.
          * @return {String} The trimmed string.
          */
-        trim: function(string) {
+        trim: function (string) {
             if (string) {
                 string = string.replace(trimRegex, "");
             }
@@ -261,7 +261,7 @@ Ext.String = (function() {
          * @param {String} string
          * @return {String}
          */
-        capitalize: function(string) {
+        capitalize: function (string) {
             if (string) {
                 string = string.charAt(0).toUpperCase() + string.substr(1);
             }
@@ -273,7 +273,7 @@ Ext.String = (function() {
          * @param {String} string
          * @return {String}
          */
-        uncapitalize: function(string) {
+        uncapitalize: function (string) {
             if (string) {
                 string = string.charAt(0).toLowerCase() + string.substr(1);
             }
@@ -287,11 +287,11 @@ Ext.String = (function() {
          * @param {Boolean} [word=false] `true` to try to find a common word break.
          * @return {String} The converted text.
          */
-        ellipsis: function(value, length, word) {
+        ellipsis: function (value, length, word) {
             if (value && value.length > length) {
                 if (word) {
                     var vs = value.substr(0, length - 2),
-                    index = Math.max(vs.lastIndexOf(' '), vs.lastIndexOf('.'), vs.lastIndexOf('!'), vs.lastIndexOf('?'));
+                        index = Math.max(vs.lastIndexOf(' '), vs.lastIndexOf('.'), vs.lastIndexOf('!'), vs.lastIndexOf('?'));
                     if (index !== -1 && index >= (length - 15)) {
                         return vs.substr(0, index) + "...";
                     }
@@ -306,7 +306,7 @@ Ext.String = (function() {
          * @param {String} string The string to escape.
          * @return {String} The escaped string.
          */
-        escapeRegex: function(string) {
+        escapeRegex: function (string) {
             return string.replace(escapeRegexRe, "\\$1");
         },
 
@@ -325,8 +325,8 @@ Ext.String = (function() {
          *      var regex2 = /world/;
          *
          * @param {String/RegExp} value The String to convert to a `RegExp`.
-         * @param {Boolean} [startsWith=true] Pass `false` to allow a match to start 
-         * anywhere in the string. By default the `value` will match only at the start 
+         * @param {Boolean} [startsWith=true] Pass `false` to allow a match to start
+         * anywhere in the string. By default the `value` will match only at the start
          * of the string.
          * @param {Boolean} [endsWith=true] Pass `false` to allow the match to end before
          * the end of the string. By default the `value` will match only at the end of the
@@ -360,7 +360,7 @@ Ext.String = (function() {
          * @param {String} string The string to escape.
          * @return {String} The escaped string.
          */
-        escape: function(string) {
+        escape: function (string) {
             return string.replace(escapeRe, "\\$1");
         },
 
@@ -381,7 +381,7 @@ Ext.String = (function() {
          * @param {String} other The new value to use if the string already equals the first value passed in.
          * @return {String} The new value.
          */
-        toggle: function(string, value, other) {
+        toggle: function (string, value, other) {
             return string === value ? other : value;
         },
 
@@ -397,7 +397,7 @@ Ext.String = (function() {
          * @param {String} [character=' '] (optional) The character with which to pad the original string.
          * @return {String} The padded string.
          */
-        leftPad: function(string, size, character) {
+        leftPad: function (string, size, character) {
             var result = String(string);
             character = character || " ";
             while (result.length < size) {
@@ -417,11 +417,11 @@ Ext.String = (function() {
          * @param {Number} count The number of times to repeat the pattern (may be 0).
          * @param {String} sep An option string to separate each pattern.
          */
-        repeat: function(pattern, count, sep) {
+        repeat: function (pattern, count, sep) {
             if (count < 1) {
                 count = 0;
             }
-            for (var buf = [], i = count; i--; ) {
+            for (var buf = [], i = count; i--;) {
                 buf.push(pattern);
             }
             return buf.join(sep || '');

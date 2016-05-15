@@ -5,7 +5,7 @@
  *
  * This class is intended to be extended or created via the {@link Ext.container.Container#layout layout}: 'anchor'
  * config, and should generally not need to be created directly via the new keyword.
- * 
+ *
  * AnchorLayout does not have any direct config options (other than inherited ones). By default,
  * AnchorLayout will calculate anchor measurements based on the size of the container itself. However, the
  * container using the AnchorLayout can supply an anchoring-specific config property of `anchorSize`.
@@ -55,7 +55,7 @@ Ext.define('Ext.layout.container.Anchor', {
     /**
      * @cfg {String} anchor
      *
-     * This configuration option is to be applied to **child `items`** of a container managed 
+     * This configuration option is to be applied to **child `items`** of a container managed
      * by an {@link Ext.layout.container.Anchor Anchor Layout}.
      *
      * This value is what tells the layout how an item should be anchored to the container. `items`
@@ -91,12 +91,12 @@ Ext.define('Ext.layout.container.Anchor', {
      *
      *   Either the container must have a fixed size or an anchorSize config value defined at render time in
      *   order for these to have any effect.
-     *   
+     *
      * - **Mixed** :
      *
      *   Anchor values can also be mixed as needed.  For example, to render the width offset from the container
      *   right edge by 50 pixels and 75% of the container's height use:
-     *   
+     *
      *       anchor:   '-50 75%'
      */
 
@@ -214,7 +214,7 @@ Ext.define('Ext.layout.container.Anchor', {
                     if (shrinkWrapWidth) {
                         Ext.log({
                             level: 'warn',
-                            msg: 'Right anchor on '+comp.id+' in shrinkWrap width container'
+                            msg: 'Right anchor on ' + comp.id + ' in shrinkWrap width container'
                         });
                     }
                 }
@@ -223,7 +223,7 @@ Ext.define('Ext.layout.container.Anchor', {
                     if (shrinkWrapHeight) {
                         Ext.log({
                             level: 'warn',
-                            msg: 'Bottom anchor on '+comp.id+' in shrinkWrap height container'
+                            msg: 'Bottom anchor on ' + comp.id + ' in shrinkWrap height container'
                         });
                     }
                 }
@@ -237,33 +237,33 @@ Ext.define('Ext.layout.container.Anchor', {
      */
     anchorFactory: {
         offset: function (delta) {
-            return function(v) {
+            return function (v) {
                 return v + delta;
             };
         },
         ratio: function (ratio) {
-            return function(v) {
+            return function (v) {
                 return Math.floor(v * ratio);
             };
         },
         standard: function (diff) {
-            return function(v) {
+            return function (v) {
                 return v - diff;
             };
         }
     },
 
-    parseAnchor: function(a, start, cstart) {
+    parseAnchor: function (a, start, cstart) {
         if (a && a !== 'none') {
             var factory = this.anchorFactory,
                 delta;
 
             if (this.parseAnchorRE.test(a)) {
                 return factory.standard(cstart - start);
-            }    
+            }
             if (a.indexOf('%') !== -1) {
                 return factory.ratio(parseFloat(a.replace('%', '')) * 0.01);
-            }    
+            }
             delta = parseInt(a, 10);
             if (!isNaN(delta)) {
                 return factory.offset(delta);
@@ -275,21 +275,21 @@ Ext.define('Ext.layout.container.Anchor', {
     /**
      * @private
      */
-    adjustWidthAnchor: function(value, childContext) {
+    adjustWidthAnchor: function (value, childContext) {
         return value;
     },
 
     /**
      * @private
      */
-    adjustHeightAnchor: function(value, childContext) {
+    adjustHeightAnchor: function (value, childContext) {
         return value;
     },
 
-    configureItem: function(item) {
+    configureItem: function (item) {
         var me = this,
             owner = me.owner,
-            anchor= item.anchor,
+            anchor = item.anchor,
             anchorsArray,
             anchorWidth,
             anchorHeight;
@@ -305,7 +305,7 @@ Ext.define('Ext.layout.container.Anchor', {
          * Defines the anchoring size of container.
          * Either a number to define the width of the container or an object with `width` and `height` fields.
          * @member Ext.container.Container
-         */ 
+         */
         if (owner.anchorSize) {
             if (typeof owner.anchorSize === 'number') {
                 anchorWidth = owner.anchorSize;

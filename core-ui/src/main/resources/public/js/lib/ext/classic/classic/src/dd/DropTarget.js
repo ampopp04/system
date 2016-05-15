@@ -11,17 +11,17 @@ Ext.define('Ext.dd.DropTarget', {
      * @param {String/HTMLElement/Ext.dom.Element} el The container element or ID of it.
      * @param {Object} config
      */
-    constructor : function(el, config){
+    constructor: function (el, config) {
         this.el = Ext.get(el);
 
         Ext.apply(this, config);
 
-        if(this.containerScroll){
+        if (this.containerScroll) {
             Ext.dd.ScrollManager.register(this.el);
         }
 
         this.callParent([this.el.dom, this.ddGroup || this.group,
-              {isTarget: true}]);
+            {isTarget: true}]);
     },
 
     /**
@@ -44,22 +44,22 @@ Ext.define('Ext.dd.DropTarget', {
      * @cfg {String} dropAllowed
      * The CSS class returned to the drag source when drop is allowed.
      */
-    dropAllowed : Ext.baseCSSPrefix + 'dd-drop-ok',
+    dropAllowed: Ext.baseCSSPrefix + 'dd-drop-ok',
     /**
      * @cfg {String} dropNotAllowed
      * The CSS class returned to the drag source when drop is not allowed.
      */
-    dropNotAllowed : Ext.baseCSSPrefix + 'dd-drop-nodrop',
+    dropNotAllowed: Ext.baseCSSPrefix + 'dd-drop-nodrop',
 
     /**
      * @private
      */
-    isTarget : true,
+    isTarget: true,
 
     /**
      * @private
      */
-    isNotifyTarget : true,
+    isNotifyTarget: true,
 
     /**
      * The function a {@link Ext.dd.DragSource} calls once to notify this drop target that the source is now over the
@@ -72,8 +72,8 @@ Ext.define('Ext.dd.DropTarget', {
      * underlying {@link Ext.dd.StatusProxy} can be updated
      * @template
      */
-    notifyEnter : function(dd, e, data){
-        if(this.overClass){
+    notifyEnter: function (dd, e, data) {
+        if (this.overClass) {
             this.el.addCls(this.overClass);
         }
         return this.dropAllowed;
@@ -90,7 +90,7 @@ Ext.define('Ext.dd.DropTarget', {
      * underlying {@link Ext.dd.StatusProxy} can be updated
      * @template
      */
-    notifyOver : function(dd, e, data){
+    notifyOver: function (dd, e, data) {
         return this.dropAllowed;
     },
 
@@ -103,8 +103,8 @@ Ext.define('Ext.dd.DropTarget', {
      * @param {Object} data An object containing arbitrary data supplied by the drag source
      * @template
      */
-    notifyOut : function(dd, e, data){
-        if (this.overClass){
+    notifyOut: function (dd, e, data) {
+        if (this.overClass) {
             this.el.removeCls(this.overClass);
         }
     },
@@ -124,14 +124,14 @@ Ext.define('Ext.dd.DropTarget', {
      * @return {Boolean} False if the drop was invalid.
      * @template
      */
-    notifyDrop : function(dd, e, data){
-        if (this.overClass){
+    notifyDrop: function (dd, e, data) {
+        if (this.overClass) {
             this.el.removeCls(this.overClass);
         }
         return false;
     },
 
-    destroy : function(){
+    destroy: function () {
         this.callParent();
         if (this.containerScroll) {
             Ext.dd.ScrollManager.unregister(this.el);

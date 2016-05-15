@@ -19,66 +19,66 @@ Ext.define('Ext.sparkline.Bar', {
          * @cfg {String} [barColor=#3366cc] The bar color for positive values.
          */
         barColor: '#3366cc',
-        
+
         /**
          * @cfg {String} [negBarColor=#f44] The bar color for negative values.
          */
         negBarColor: '#f44',
-        
+
         /**
          * @cfg {String[]} [stackedBarColor] An array of colours to use for stacked bar charts.
-         * The first series will use the first value in the array, the second series will use the second, etc. 
+         * The first series will use the first value in the array, the second series will use the second, etc.
          */
         stackedBarColor: ['#3366cc', '#dc3912', '#ff9900', '#109618', '#66aa00', '#dd4477', '#0099c6', '#990099'],
-        
+
         /**
          * @cfg {String} [zeroColor] The bar color for zero values.
          */
         zeroColor: null,
-        
+
         /**
          * @cfg {String} [nullColor] The bar color for null values. Usually null values are omitted and not plotted. Setting
          * this config causes a very thin bar to be plotted with the special color in the case that null is a meaningful value in the series.
          */
         nullColor: null,
-        
+
         /**
          * @cfg {Boolean} [zeroAxis=true] Centers the Y axis at zero by default.
          */
         zeroAxis: true,
-        
+
         /**
          * @cfg {Number} [barWidth=4] The pixel width of bars.
          */
         barWidth: 4,
-        
+
         /**
          * @cfg {Number} [barSpacing=1] The pixel spacing between bars.
          */
         barSpacing: 1,
-        
+
         /**
          * @cfg {Number} [chartRangeMin] The minimum value to use for the range of Y values of the chart - Defaults to the minimum value supplied.
          */
         chartRangeMin: null,
-        
+
         /**
          * @cfg {Number} [chartRangeMax] The maximum value to use for the range of Y values of the chart - Defaults to the minimum value supplied.
          */
         chartRangeMax: null,
-        
+
         /**
          * @cfg {Boolean} chartRangeClip If true then the y values supplied to plot will be clipped to fall
          * between {@link #chartRangeMin} and {@link #chartRangeMax} - By default chartRangeMin/Max just ensure that the chart
          * spans at least that range of values, but does not constrain it.
          */
         chartRangeClip: false,
-        
+
         /**
          * @inheritdoc Ext.sparkline.TriState
          */
         colorMap: null,
-        
+
         tipTpl: new Ext.XTemplate('&#9679; {prefix}{value}{suffix}')
     },
 
@@ -94,9 +94,9 @@ Ext.define('Ext.sparkline.Bar', {
 
     // determine if all values of an array match a value
     // returns true if the array is empty
-    all: function(arr, val, ignoreNull) {
+    all: function (arr, val, ignoreNull) {
         var i;
-        for (i = arr.length; i--; ) {
+        for (i = arr.length; i--;) {
             if (ignoreNull && arr[i] === null) {
                 continue;
             }
@@ -107,7 +107,7 @@ Ext.define('Ext.sparkline.Bar', {
         return true;
     },
 
-    applyColorMap: function(colorMap) {
+    applyColorMap: function (colorMap) {
         var me = this;
 
         if (Ext.isArray(colorMap)) {
@@ -295,7 +295,7 @@ Ext.define('Ext.sparkline.Bar', {
     /*
      * Render bar(s) for a region
      */
-    renderRegion: function(valuenum, highlight) {
+    renderRegion: function (valuenum, highlight) {
         var me = this,
             vals = me.values[valuenum],
             xaxisOffset = me.xAxisOffset,
@@ -353,6 +353,6 @@ Ext.define('Ext.sparkline.Bar', {
             canvas.drawRect(x, y, barWidth - 1, height - 1, color, color).append();
         }
     }
-}, function(cls) {
+}, function (cls) {
     cls.onClassCreated(cls);
 });

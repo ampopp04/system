@@ -235,7 +235,7 @@ describe("Ext.Evented", function () {
             });
         });
     }
-    
+
     createSuite('extension');
     createSuite('metadata');
 });

@@ -5,30 +5,30 @@
  */
 Ext.define('Ext.data.request.Form', {
     extend: 'Ext.data.request.Base',
-    alias:  'request.form',
+    alias: 'request.form',
 
-    start: function(data) {
+    start: function (data) {
         var me = this,
             options = me.options,
             requestOptions = me.requestOptions;
-        
+
         // Parent will set the timeout
         me.callParent([data]);
-        
+
         me.form = me.upload(options.form, requestOptions.url, requestOptions.data, options);
-        
+
         return me;
     },
 
-    abort: function(force) {
+    abort: function (force) {
         var me = this,
             frame;
-        
+
         if (me.isLoading()) {
-            
+
             try {
                 frame = me.frame.dom;
-                
+
                 if (frame.stop) {
                     frame.stop();
                 }
@@ -40,33 +40,33 @@ Ext.define('Ext.data.request.Form', {
                 // ignore
             }
         }
-        
+
         me.callParent([force]);
-        
+
         me.onComplete();
         me.cleanup();
     },
-    
+
     /*
      * Clean up any left over information from the form submission.
      */
-    cleanup: function() {
+    cleanup: function () {
         var me = this,
             frame = me.frame;
-        
+
         if (frame) {
             // onComplete hasn't fired yet if frame != null so need to clean up
             frame.un('load', me.onComplete, me);
             Ext.removeNode(frame);
         }
-        
+
         me.frame = me.form = null;
     },
-    
-    isLoading: function() {
+
+    isLoading: function () {
         return !!this.frame;
     },
-    
+
     /**
      * Uploads a form using a hidden iframe.
      * @param {String/HTMLElement/Ext.dom.Element} form The form to upload
@@ -75,7 +75,7 @@ Ext.define('Ext.data.request.Form', {
      * @param {Object} options The initial options
      * @private
      */
-    upload: function(form, url, params, options) {
+    upload: function (form, url, params, options) {
         form = Ext.getDom(form);
         options = options || {};
 
@@ -91,7 +91,7 @@ Ext.define('Ext.data.request.Form', {
                 enctype: form.enctype,
                 action: form.action
             },
-            addField = function(name, value) {
+            addField = function (name, value) {
                 hiddenItem = document.createElement('input');
                 Ext.fly(hiddenItem).set({
                     type: 'hidden',
@@ -148,9 +148,9 @@ Ext.define('Ext.data.request.Form', {
                 }
             }
         }
-        
+
         this.frame = frame;
-        
+
         frame.on({
             load: this.onComplete,
             scope: this,
@@ -170,14 +170,14 @@ Ext.define('Ext.data.request.Form', {
         return form;
     },
 
-    getDoc: function() {
+    getDoc: function () {
         var frame = this.frame.dom;
 
         return (frame && (frame.contentWindow.document || frame.contentDocument)) ||
-                (window.frames[frame.id] || {}).document;
+            (window.frames[frame.id] || {}).document;
     },
 
-    getTimeout: function() {
+    getTimeout: function () {
         // For a form post, since it can include large file uploads, we do not use the
         // default timeout from the owner. Only explicit timeouts passed in the options
         // are meaningful here.
@@ -191,36 +191,36 @@ Ext.define('Ext.data.request.Form', {
      * body). We then clean up by removing the iframe.
      * @private
      */
-    onComplete: function() {
+    onComplete: function () {
         var me = this,
             frame = me.frame,
             owner = me.owner,
             options = me.options,
             callback, doc, success, contentNode, response;
-        
+
         // Nulled out frame means onComplete was fired already
         if (!frame) {
             return;
         }
-        
+
         if (me.aborted || me.timedout) {
             me.result = response = me.createException();
             response.responseXML = null;
             response.responseText = '{success:false,message:"' + Ext.String.trim(response.statusText) + '"}';
-            
+
             callback = options.failure;
             success = false;
         }
         else {
             try {
                 doc = me.getDoc();
-                
+
                 // bogus response object
                 me.result = response = {
                     responseText: '',
                     responseXML: null
                 };
-                
+
                 // Opera will fire an extraneous load event on about:blank
                 // We want to ignore this since the load event will be fired twice
                 if (doc) {
@@ -228,7 +228,7 @@ Ext.define('Ext.data.request.Form', {
                     if (Ext.isOpera && doc.location == Ext.SSL_SECURE_URL) {
                         return;
                     }
-                    
+
                     if (doc.body) {
                         // Response sent as Content-Type: text/json or text/plain.
                         // Browser will embed it in a <pre> element.
@@ -248,7 +248,7 @@ Ext.define('Ext.data.request.Form', {
                             response.responseText = doc.body.textContent || doc.body.innerText;
                         }
                     }
-                    
+
                     //in IE the document may still have a body even if returns XML.
                     // TODO What is this about?
                     response.responseXML = doc.XMLDocument || doc;
@@ -262,13 +262,13 @@ Ext.define('Ext.data.request.Form', {
             }
             catch (e) {
                 me.result = response = me.createException();
-                
+
                 // Report any error in the message property
                 response.status = 400;
                 response.statusText = (e.message || e.description) + '';
                 response.responseText = '{success:false,message:"' + Ext.String.trim(response.statusText) + '"}';
                 response.responseXML = null;
-                
+
                 callback = options.failure;
                 success = false;
             }
@@ -281,16 +281,16 @@ Ext.define('Ext.data.request.Form', {
 
         Ext.callback(callback, options.scope, [response, options]);
         Ext.callback(options.callback, options.scope, [options, success, response]);
-        
+
         owner.onRequestComplete(me);
-        
+
         // Must defer slightly to permit full exit from load event before destruction
         Ext.asap(frame.destroy, frame);
 
         me.callParent();
     },
-    
-    destroy: function() {
+
+    destroy: function () {
         this.cleanup();
         this.callParent();
     }

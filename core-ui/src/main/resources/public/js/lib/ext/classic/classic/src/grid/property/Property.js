@@ -34,7 +34,7 @@ Ext.define('Ext.grid.property.Property', {
     }],
     idProperty: 'name',
 
-    constructor: function(data, value) {
+    constructor: function (data, value) {
         if (!Ext.isObject(data)) {
             data = {
                 name: data,

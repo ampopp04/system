@@ -75,7 +75,7 @@ Ext.define('Ext.promise.Deferred', {
      */
     completionValue: null,
 
-    constructor: function() {
+    constructor: function () {
         var me = this;
 
         me.promise = new Ext.promise.Promise(me);
@@ -102,7 +102,7 @@ Ext.define('Ext.promise.Deferred', {
      * @return Promise that is fulfilled with the callback return value or rejected with
      * any error thrown by the callback.
      */
-    then: function(onFulfilled, onRejected, onProgress) {
+    then: function (onFulfilled, onRejected, onProgress) {
         var me = this,
             consequence = new Ext.promise.Consequence(onFulfilled, onRejected, onProgress);
 
@@ -135,7 +135,7 @@ Ext.define('Ext.promise.Deferred', {
      * @param {Mixed} value Value to resolve as either a fulfillment value or rejection
      * reason.
      */
-    resolve: function(value) {
+    resolve: function (value) {
         var me = this,
             isHandled, thenFn;
 
@@ -149,16 +149,16 @@ Ext.define('Ext.promise.Deferred', {
             }
 
             if ((Ext.isObject(value) || Ext.isFunction(value)) &&
-                        Ext.isFunction(thenFn = value.then)) {
+                Ext.isFunction(thenFn = value.then)) {
                 isHandled = false;
 
                 try {
-                    thenFn.call(value, function(value) {
+                    thenFn.call(value, function (value) {
                         if (!isHandled) {
                             isHandled = true;
                             me.resolve(value);
                         }
-                    }, function(error) {
+                    }, function (error) {
                         if (!isHandled) {
                             isHandled = true;
                             me.reject(error);
@@ -188,11 +188,11 @@ Ext.define('Ext.promise.Deferred', {
      *
      * @param {Error} reason Rejection reason.
      */
-    reject: function(reason) {
+    reject: function (reason) {
         if (this.completed) {
             return;
         }
-        
+
         this.complete('reject', reason);
     },
 
@@ -203,14 +203,14 @@ Ext.define('Ext.promise.Deferred', {
      *
      * @param {Mixed} progress The progress value.
      */
-    update: function(progress) {
+    update: function (progress) {
         var consequences = this.consequences,
             consequence, i, len;
-        
+
         if (this.completed) {
             return;
         }
-        
+
         for (i = 0, len = consequences.length; i < len; i++) {
             consequence = consequences[i];
             consequence.update(progress);
@@ -225,7 +225,7 @@ Ext.define('Ext.promise.Deferred', {
      *
      * @private
      */
-    complete: function(action, value) {
+    complete: function (action, value) {
         var me = this,
             consequences = me.consequences,
             consequence, i, len;

@@ -66,7 +66,7 @@ Ext.define('Ext.chart.series.sprite.PieSlice', {
         var me = this,
             attr = me.attr,
             hasGradients = (attr.fillStyle && attr.fillStyle.isGradient) ||
-                           (attr.strokeStyle && attr.strokeStyle.isGradient);
+                (attr.strokeStyle && attr.strokeStyle.isGradient);
 
         if (hasGradients && !attr.constrainGradients) {
             var midAngle = me.getMidAngle(),
@@ -180,15 +180,15 @@ Ext.define('Ext.chart.series.sprite.PieSlice', {
             switch (labelTpl.attr.orientation) {
                 case 'horizontal':
                     labelCfg.rotationRads = midAngle + Math.atan2(
-                        surfaceMatrix.y(1, 0) - surfaceMatrix.y(0, 0),
-                        surfaceMatrix.x(1, 0) - surfaceMatrix.x(0, 0)
-                    ) + Math.PI/2;
+                            surfaceMatrix.y(1, 0) - surfaceMatrix.y(0, 0),
+                            surfaceMatrix.x(1, 0) - surfaceMatrix.x(0, 0)
+                        ) + Math.PI / 2;
                     break;
                 case 'vertical':
                     labelCfg.rotationRads = midAngle + Math.atan2(
-                        surfaceMatrix.y(1, 0) - surfaceMatrix.y(0, 0),
-                        surfaceMatrix.x(1, 0) - surfaceMatrix.x(0, 0)
-                    );
+                            surfaceMatrix.y(1, 0) - surfaceMatrix.y(0, 0),
+                            surfaceMatrix.x(1, 0) - surfaceMatrix.x(0, 0)
+                        );
                     break;
             }
         }
@@ -257,7 +257,7 @@ Ext.define('Ext.chart.series.sprite.PieSlice', {
         l1 = Math.sqrt(attr.endRho * attr.endRho - outer * outer);
         l2 = Math.sqrt(attr.endRho * attr.endRho - inner * inner);
         sliceAngle = Math.abs(attr.endAngle - attr.startAngle);
-        l3 = (sliceAngle > Math.PI/2 ? inner : Math.abs(Math.tan(sliceAngle / 2)) * inner);
+        l3 = (sliceAngle > Math.PI / 2 ? inner : Math.abs(Math.tan(sliceAngle / 2)) * inner);
         if (bbox.height + padding * 2 > Math.min(l1, l2, l3) * 2) {
             return 0;
         }

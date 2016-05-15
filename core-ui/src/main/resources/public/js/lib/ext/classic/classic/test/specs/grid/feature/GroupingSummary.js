@@ -10,17 +10,17 @@ describe('Ext.grid.feature.GroupingSummary', function () {
             subject: 'Math',
             mark: 84,
             allowance: 15.50
-        },{
+        }, {
             student: 'Student 1',
             subject: 'Science',
             mark: 72,
             allowance: 10.75
-        },{
+        }, {
             student: 'Student 2',
             subject: 'Math',
             mark: 96,
             allowance: 100.75
-        },{
+        }, {
             student: 'Student 2',
             subject: 'Science',
             mark: 68,
@@ -60,40 +60,40 @@ describe('Ext.grid.feature.GroupingSummary', function () {
         }, groupingSummaryCfg));
 
         columns = columns || [{
-            itemId: 'studentColumn',
-            dataIndex: 'student',
-            text: 'Name',
-            summaryType: 'count',
-            summaryRenderer: function (value, summaryData, field, metaData) {
-                params = arguments;
-                return Ext.String.format('{0} student{1}', value, value !== 1 ? 's' : '');
-            }
-        }, {
-            itemId: 'markColumn',
-            dataIndex: 'mark',
-            text: 'Mark',
-            summaryType: 'average'
-        }, {
-            itemId: 'noDataIndexColumn',
-            summaryType: function (records, values) {
-                var i = 0,
-                    length = records.length,
-                    total = 0,
-                    record;
-
-                for (; i < length; ++i) {
-                    record = records[i];
-                    total += record.get('allowance');
+                itemId: 'studentColumn',
+                dataIndex: 'student',
+                text: 'Name',
+                summaryType: 'count',
+                summaryRenderer: function (value, summaryData, field, metaData) {
+                    params = arguments;
+                    return Ext.String.format('{0} student{1}', value, value !== 1 ? 's' : '');
                 }
-                return total;
-            },
-            summaryRenderer: function (value, summaryData, field, metaData) {
-                return Ext.util.Format.usMoney(value || metaData.record.get('allowance'));
-            },
-            renderer: function(value, metaData, record, rowIdx, colIdx, store, view) {
-                return Ext.util.Format.usMoney(record.get('allowance'));
-            }
-        }];
+            }, {
+                itemId: 'markColumn',
+                dataIndex: 'mark',
+                text: 'Mark',
+                summaryType: 'average'
+            }, {
+                itemId: 'noDataIndexColumn',
+                summaryType: function (records, values) {
+                    var i = 0,
+                        length = records.length,
+                        total = 0,
+                        record;
+
+                    for (; i < length; ++i) {
+                        record = records[i];
+                        total += record.get('allowance');
+                    }
+                    return total;
+                },
+                summaryRenderer: function (value, summaryData, field, metaData) {
+                    return Ext.util.Format.usMoney(value || metaData.record.get('allowance'));
+                },
+                renderer: function (value, metaData, record, rowIdx, colIdx, store, view) {
+                    return Ext.util.Format.usMoney(record.get('allowance'));
+                }
+            }];
 
         grid = new Ext.grid.Panel(Ext.apply({
             store: store,
@@ -120,9 +120,9 @@ describe('Ext.grid.feature.GroupingSummary', function () {
         expect((summaryRow.textContent || summaryRow.innerText).replace(/\s/g, '')).toBe(view);
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -131,7 +131,7 @@ describe('Ext.grid.feature.GroupingSummary', function () {
         };
     });
 
-    afterEach(function() {
+    afterEach(function () {
         // Undo the overrides.
         Ext.data.ProxyStore.prototype.load = proxyStoreLoad;
 
@@ -194,31 +194,31 @@ describe('Ext.grid.feature.GroupingSummary', function () {
         });
     });
 
-    describe("toggling the summary row", function() {
+    describe("toggling the summary row", function () {
         function toggle(visible) {
             groupingSummary.toggleSummaryRow(visible);
         }
 
-        it("should show the summary row by default", function() {
+        it("should show the summary row by default", function () {
             createGrid();
             expect(grid.getView().getEl().select(selector).getCount()).toBe(2);
         });
 
-        it("should not render the summary rows if configured with showSummaryRow: false", function() {
+        it("should not render the summary rows if configured with showSummaryRow: false", function () {
             createGrid(null, {
                 showSummaryRow: false
             });
             expect(grid.getView().getEl().select(selector).getCount()).toBe(0);
         });
 
-        it("should not show summary rows when toggling off", function() {
+        it("should not show summary rows when toggling off", function () {
             createGrid();
             expect(grid.getView().getEl().select(selector).getCount()).toBe(2);
             toggle();
             expect(grid.getView().getEl().select(selector).getCount()).toBe(0);
         });
 
-        it("should show summary rows when toggling on", function() {
+        it("should show summary rows when toggling on", function () {
             createGrid(null, {
                 showSummaryRow: false
             });
@@ -227,20 +227,20 @@ describe('Ext.grid.feature.GroupingSummary', function () {
             expect(grid.getView().getEl().select(selector).getCount()).toBe(2);
         });
 
-        it("should leave the summary visible when explicitly passing visible: true", function() {
+        it("should leave the summary visible when explicitly passing visible: true", function () {
             createGrid();
             toggle(true);
             expect(grid.getView().getEl().select(selector).getCount()).toBe(2);
         });
 
-        it("should leave the summary off when explicitly passed visible: false", function() {
+        it("should leave the summary off when explicitly passed visible: false", function () {
             createGrid();
             toggle();
             toggle(false);
             expect(grid.getView().getEl().select(selector).getCount()).toBe(0);
         });
 
-        it("should update the summary row if the change happened while not visible", function() {
+        it("should update the summary row if the change happened while not visible", function () {
             createGrid();
             // Off
             toggle();
@@ -340,7 +340,7 @@ describe('Ext.grid.feature.GroupingSummary', function () {
                         subject: 'Math',
                         mark: 84,
                         allowance: 15.50
-                    },{
+                    }, {
                         student: 'Student 2',
                         subject: 'Science',
                         mark: 68,
@@ -388,16 +388,16 @@ describe('Ext.grid.feature.GroupingSummary', function () {
         });
     });
 
-    describe("loading the store", function() {
-        beforeEach(function() {
+    describe("loading the store", function () {
+        beforeEach(function () {
             MockAjaxManager.addMethods();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             MockAjaxManager.removeMethods();
         });
 
-        it("should update the summary when loading remote data", function() {
+        it("should update the summary when loading remote data", function () {
             createGrid(null, null, null, {
                 data: null,
                 proxy: {
@@ -448,7 +448,7 @@ describe('Ext.grid.feature.GroupingSummary', function () {
             expect((rows[1].textContent || rows[1].innerText).replace(/\s/g, '')).toBe('3students30$43.12');
         });
 
-        it("should update the summary when loading local data", function() {
+        it("should update the summary when loading local data", function () {
             createGrid();
 
             var rows = grid.view.el.query(groupingSummary.summaryRowSelector);

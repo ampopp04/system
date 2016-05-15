@@ -30,41 +30,41 @@ Ext.define('Ext.slider.Tip', {
     extend: 'Ext.tip.Tip',
     minWidth: 10,
     alias: 'widget.slidertip',
-    
+
     /**
      * @cfg {Array} [offsets=null]
      * Offsets for aligning the tip to the slider. See {@link Ext.util.Positionable#alignTo}. Default values
      * for offsets are provided by specifying the {@link #position} config.
      */
-    offsets : null,
-    
+    offsets: null,
+
     /**
      * @cfg {String} [align=null]
      * Alignment configuration for the tip to the slider. See {@link Ext.util.Positionable#alignTo}. Default
      * values for alignment are provided by specifying the {@link #position} config.
      */
     align: null,
-    
+
     /**
-     * @cfg {String} [position=For horizontal sliders, "top", for vertical sliders, "left"] 
+     * @cfg {String} [position=For horizontal sliders, "top", for vertical sliders, "left"]
      * Sets the position for where the tip will be displayed related to the thumb. This sets
-     * defaults for {@link #align} and {@link #offsets} configurations. If {@link #align} or 
+     * defaults for {@link #align} and {@link #offsets} configurations. If {@link #align} or
      * {@link #offsets} configurations are specified, they will override the defaults defined
      * by position.
      */
     position: '',
-    
+
     defaultVerticalPosition: 'left',
 
     defaultHorizontalPosition: 'top',
 
     isSliderTip: true,
 
-    init: function(slider) {
+    init: function (slider) {
         var me = this,
             align,
             offsets;
-        
+
         if (!me.position) {
             me.position = slider.vertical ? me.defaultVerticalPosition : me.defaultHorizontalPosition;
         }
@@ -86,21 +86,21 @@ Ext.define('Ext.slider.Tip', {
                 offsets = [10, 0];
                 align = 'l-r?';
         }
-        
+
         if (!me.align) {
             me.align = align;
         }
-        
+
         if (!me.offsets) {
             me.offsets = offsets;
         }
 
         slider.on({
-            scope    : me,
+            scope: me,
             dragstart: me.onSlide,
-            drag     : me.onSlide,
-            dragend  : me.hide,
-            destroy  : me.destroy
+            drag: me.onSlide,
+            dragend: me.hide,
+            destroy: me.destroy
         });
     },
     /**
@@ -111,7 +111,7 @@ Ext.define('Ext.slider.Tip', {
      * @param {Ext.event.Event} e The Event object
      * @param {Ext.slider.Thumb} thumb The thumb that the Tip is attached to
      */
-    onSlide : function(slider, e, thumb) {
+    onSlide: function (slider, e, thumb) {
         var me = this;
         me.show();
         me.update(me.getText(thumb));
@@ -126,7 +126,7 @@ Ext.define('Ext.slider.Tip', {
      * @protected
      * @template
      */
-    getText : function(thumb) {
+    getText: function (thumb) {
         return String(thumb.value);
     }
 });

@@ -2,7 +2,7 @@
  * @private
  */
 Ext.define('Ext.device.capture.Cordova', {
-    captureAudio: function(config) {
+    captureAudio: function (config) {
         // <debug>
         if (!config.success) {
             Ext.Logger.warn('You need to specify a `success` function for #captureAudio');
@@ -17,7 +17,7 @@ Ext.define('Ext.device.capture.Cordova', {
         navigator.device.capture.captureAudio(config.success, config.failure, options);
     },
 
-    captureVideo: function(config) {
+    captureVideo: function (config) {
         // <debug>
         if (!config.success) {
             Ext.Logger.warn('You need to specify a `success` function for #captureVideo');

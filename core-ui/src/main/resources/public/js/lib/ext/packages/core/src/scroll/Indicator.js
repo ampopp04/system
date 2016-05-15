@@ -1,6 +1,6 @@
 /**
  * Provides a visual indicator of scroll position while scrolling using a {@link
- * Ext.scroll.TouchScroller TouchScroller}.  This class should not be created directly.
+    * Ext.scroll.TouchScroller TouchScroller}.  This class should not be created directly.
  * To configure scroll indicators please use the {@link Ext.scroll.Scroller#indicators
  * indicators} config of the Scroller.
  */
@@ -69,7 +69,7 @@ Ext.define('Ext.scroll.Indicator', {
 
     cls: Ext.baseCSSPrefix + 'scroll-indicator',
 
-    applyHideAnimation: function(hideAnimation) {
+    applyHideAnimation: function (hideAnimation) {
         if (hideAnimation) {
             hideAnimation = Ext.mergeIf({
                 onEnd: this.onHideAnimationEnd,
@@ -79,7 +79,7 @@ Ext.define('Ext.scroll.Indicator', {
         return hideAnimation;
     },
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this,
             axis;
 
@@ -95,7 +95,7 @@ Ext.define('Ext.scroll.Indicator', {
     /**
      * Hides this scroll indicator
      */
-    hide: function() {
+    hide: function () {
         var me = this,
             delay = me.getHideDelay();
 
@@ -110,7 +110,7 @@ Ext.define('Ext.scroll.Indicator', {
      * Sets the value of this scroll indicator.
      * @param {Number} value The scroll position on the configured {@link #axis}
      */
-    setValue: function(value) {
+    setValue: function (value) {
         var me = this,
             el = me.element,
             names = me.names,
@@ -128,14 +128,14 @@ Ext.define('Ext.scroll.Indicator', {
 
         if (value < 0) {
             length = round(max(
-                    baseLength + (baseLength * value / elementSize),
+                baseLength + (baseLength * value / elementSize),
                 minLength
             ));
             position = 0;
         } else if (value > maxScrollPosition) {
             length = round(max(
-                    baseLength - (baseLength *
-                    (value - maxScrollPosition) / elementSize),
+                baseLength - (baseLength *
+                (value - maxScrollPosition) / elementSize),
                 minLength
             ));
             position = maxPosition + baseLength - length;
@@ -150,7 +150,7 @@ Ext.define('Ext.scroll.Indicator', {
     /**
      * Shows this scroll indicator
      */
-    show: function() {
+    show: function () {
         var me = this,
             el = me.element,
             anim = el.getActiveAnimation();
@@ -179,7 +179,7 @@ Ext.define('Ext.scroll.Indicator', {
          * Caches the values that are set via stylesheet rules (size and margin)
          * @private
          */
-        cacheStyles: function() {
+        cacheStyles: function () {
             var me = this,
                 el = me.element,
                 names = me.names;
@@ -199,7 +199,7 @@ Ext.define('Ext.scroll.Indicator', {
             me.margin = el.getMargin(names.side);
         },
 
-        doHide: function() {
+        doHide: function () {
             var animation = this.getHideAnimation(),
                 el = this.element;
 
@@ -216,17 +216,17 @@ Ext.define('Ext.scroll.Indicator', {
          * @private
          * @return {Boolean}
          */
-        hasOpposite: function() {
+        hasOpposite: function () {
             return this.getScroller().isAxisEnabled(this.oppositeAxis[this.getAxis()]);
         },
 
-        onHideAnimationEnd: function() {
+        onHideAnimationEnd: function () {
             // When using the touch animation system (css transforms) we don't end up with opacity
             // of 0 on the element at the end of the animation so we have to set it here
             this.element.setStyle('opacity', '0');
         },
 
-        refreshLength: function() {
+        refreshLength: function () {
             var me = this,
                 names = me.names,
                 axis = me.getAxis(),
@@ -250,11 +250,11 @@ Ext.define('Ext.scroll.Indicator', {
             me.element[names.setLength](length);
         },
 
-        translateX: function(value) {
+        translateX: function (value) {
             this.element.translate(value);
         },
 
-        translateY: function(value) {
+        translateY: function (value) {
             this.element.translate(0, value);
         }
     }

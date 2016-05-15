@@ -1,51 +1,51 @@
 .#{$prefix}tagfield-body {
-    vertical-align: top;
+  vertical-align: top;
 }
 
 .#{$prefix}tagfield {
-    height: auto!important; /* The wrap has to accommodate the list, so override the .x-form-text height rule */
-    cursor: text;
-    overflow-y: auto;
+  height: auto !important; /* The wrap has to accommodate the list, so override the .x-form-text height rule */
+  cursor: text;
+  overflow-y: auto;
 }
 
 .#{$prefix}tagfield .#{$prefix}tagfield-list {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .#{$prefix}tagfield-list.#{$prefix}tagfield-singleselect {
-    white-space: nowrap;
-    overflow: hidden;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .#{$prefix}tagfield-input, .#{$prefix}tagfield-item {
-    vertical-align: top;
-    display: inline-block;
-    position: relative;
+  vertical-align: top;
+  display: inline-block;
+  position: relative;
 }
 
 .#{$prefix}tagfield-empty-input,
 .#{$prefix}tagfield-input-field {
-    font: inherit;
-    border: 0;
-    margin: 0;
-    background: none;
-    width: 100%;
+  font: inherit;
+  border: 0;
+  margin: 0;
+  background: none;
+  width: 100%;
 }
 
 .#{$prefix}tagfield-emptyinput {
-    display: none;
+  display: none;
 }
 
 .#{$prefix}tagfield-stacked .#{$prefix}tagfield-item {
-    display: block;
+  display: block;
 }
 
 .#{$prefix}tagfield-item {
-    cursor: default;
+  cursor: default;
 }
 
 .#{$prefix}tagfield-item-close {
-    cursor: pointer;
-    position: absolute;
+  cursor: pointer;
+  position: absolute;
 }

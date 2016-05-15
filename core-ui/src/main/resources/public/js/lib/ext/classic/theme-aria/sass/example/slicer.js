@@ -13,12 +13,12 @@ if (document.addEventListener) {
 // screenshot.
 var slicerManifest;
 
-function generateSlicerManifest () {
+function generateSlicerManifest() {
     var elements = document.body.querySelectorAll('.x-slicer-target');
     var widgets = [];
     var slicesRe = /^'x-slicer\:(.+)'$/;
 
-    function getData (el) {
+    function getData(el) {
         var data = el.getAttribute('data-slicer');
         if (data) {
             return JSON.parse(data);
@@ -26,7 +26,7 @@ function generateSlicerManifest () {
         return null;
     }
 
-    function getSlices (slices, src) {
+    function getSlices(slices, src) {
         var content = src && src.content;
         if (content) {
             var m = slicesRe.exec(content);
@@ -36,7 +36,7 @@ function generateSlicerManifest () {
         }
     }
 
-    function forEach (it, fn) {
+    function forEach(it, fn) {
         for (var i = 0; i < it.length; ++i) {
             fn(it[i]);
         }
@@ -75,7 +75,7 @@ function generateSlicerManifest () {
 
         if (bg.indexOf('-gradient') !== -1) {
             if (bg.indexOf('50% 0') !== -1 || bg.indexOf('top') !== -1 ||
-                                              bg.indexOf('bottom') !== -1) {
+                bg.indexOf('bottom') !== -1) {
                 entry.gradient = 'top';
             } else {
                 entry.gradient = 'left';

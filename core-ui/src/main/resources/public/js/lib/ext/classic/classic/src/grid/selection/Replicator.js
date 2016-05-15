@@ -16,13 +16,13 @@ Ext.define('Ext.grid.selection.Replicator', {
     alias: 'plugin.selectionreplicator',
 
     /**
-     * 
+     *
      * @property {Ext.grid.column.Column[]} columns
      * An array of the columns encompassed by the selection block. This is gathered before {@link #replicateSelection}
      * is called, so is available to subclasses which implement their own {@link #replicateSelection} method.
      */
 
-    init: function(grid) {
+    init: function (grid) {
         this.gridListeners = grid.on({
             beforeselectionextend: this.onBeforeSelectionExtend,
             scope: this,
@@ -30,10 +30,10 @@ Ext.define('Ext.grid.selection.Replicator', {
         });
     },
 
-    onBeforeSelectionExtend: function(ownerGrid, sel, extension) {
+    onBeforeSelectionExtend: function (ownerGrid, sel, extension) {
         var columns = this.columns = [];
 
-        sel.eachColumn(function(column) {
+        sel.eachColumn(function (column) {
             columns.push(column);
         });
         return this.replicateSelection(ownerGrid, sel, extension);
@@ -59,7 +59,7 @@ Ext.define('Ext.grid.selection.Replicator', {
      * @param {number} [extension.columns] The number of columns extended (-ve means on the left side).
      * @param {number} [extension.rows] The number of rows extended (-ve means on the top side).
      */
-    replicateSelection: function(ownerGrid, sel, extension) {
+    replicateSelection: function (ownerGrid, sel, extension) {
 
         // This can only handle extending rows
         if (extension.columns || sel.isColumns) {
@@ -88,7 +88,7 @@ Ext.define('Ext.grid.selection.Replicator', {
             y;
 
         colCount = columns.length,
-        store = columns[0].getView().dataSource;
+            store = columns[0].getView().dataSource;
 
         // Single row, just duplicate values into extension
         if (selectedRowCount === 1) {
@@ -171,7 +171,7 @@ Ext.define('Ext.grid.selection.Replicator', {
      * @param {Ext.data.Model} record The record from which to read values.
      * @return {Mixed[]} The values of the fields used by the selected column range for the passed record.
      */
-    getColumnValues: function(record) {
+    getColumnValues: function (record) {
         var columns = this.columns,
             len = columns.length,
             i,
@@ -189,7 +189,7 @@ Ext.define('Ext.grid.selection.Replicator', {
         return result;
     },
 
-    destroy: function() {
+    destroy: function () {
         this.gridListeners = Ext.destroy(this.gridListeners);
         this.callParent();
     }

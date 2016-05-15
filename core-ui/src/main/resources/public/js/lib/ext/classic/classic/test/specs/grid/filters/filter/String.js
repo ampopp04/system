@@ -7,12 +7,12 @@ describe('Ext.grid.filters.filter.String', function () {
     function createGrid(listCfg, storeCfg, gridCfg) {
         synchronousLoad = false;
         store = new Ext.data.Store(Ext.apply({
-            fields:['name', 'email', 'phone'],
+            fields: ['name', 'email', 'phone'],
             data: [
-                { name: 'Lisa',  email: 'lisa@simpsons.com',  phone: '555-111-1224' },
-                { name: 'Bart',  email: 'bart@simpsons.com',  phone: '555-222-1234' },
-                { name: 'Homer', email: 'homer@simpsons.com', phone: '555-222-1244' },
-                { name: 'Marge', email: 'marge@simpsons.com', phone: '555-222-1254' }
+                {name: 'Lisa', email: 'lisa@simpsons.com', phone: '555-111-1224'},
+                {name: 'Bart', email: 'bart@simpsons.com', phone: '555-222-1234'},
+                {name: 'Homer', email: 'homer@simpsons.com', phone: '555-222-1244'},
+                {name: 'Marge', email: 'marge@simpsons.com', phone: '555-222-1254'}
             ]
         }, storeCfg));
 
@@ -70,9 +70,9 @@ describe('Ext.grid.filters.filter.String', function () {
         menu = filtersCheckItem.menu;
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);

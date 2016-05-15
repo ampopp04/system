@@ -4,12 +4,12 @@
 Ext.define('Ext.panel.Header', {
     extend: 'Ext.panel.Bar',
     xtype: 'header',
-    
+
     requires: [
         'Ext.panel.Title',
         'Ext.panel.Tool'
     ],
-    
+
     mixins: [
         'Ext.util.FocusableContainer'
     ],
@@ -32,7 +32,7 @@ Ext.define('Ext.panel.Header', {
     titleAlign: 'left',
     titlePosition: 0,
     titleRotation: 'default',
-    
+
     autoEl: {
         role: 'presentation'
     },
@@ -41,33 +41,33 @@ Ext.define('Ext.panel.Header', {
         /**
          * @cfg {Number/String} glyph
          * @accessor
-         * A numeric unicode character code to use as the icon.  The default font-family 
-         * for glyphs can be set globally using 
-         * {@link Ext.app.Application#glyphFontFamily glyphFontFamily} application 
+         * A numeric unicode character code to use as the icon.  The default font-family
+         * for glyphs can be set globally using
+         * {@link Ext.app.Application#glyphFontFamily glyphFontFamily} application
          * config or the {@link Ext#setGlyphFontFamily Ext.setGlyphFontFamily()} method.
-         * 
-         * The following shows how to set the glyph using the font icons provided in the 
+         *
+         * The following shows how to set the glyph using the font icons provided in the
          * SDK (assuming the font-family has been configured globally):
-         * 
+         *
          *     // assumes the glyphFontFamily is "FontAwesome"
          *     glyph: 'xf005'     // the "home" icon
-         * 
+         *
          *     // assumes the glyphFontFamily is "Pictos"
          *     glyph: 'H'         // the "home" icon
-         * 
-         * Alternatively, this config option accepts a string with the charCode and 
+         *
+         * Alternatively, this config option accepts a string with the charCode and
          * font-family separated by the `@` symbol.
-         * 
+         *
          *     // using Font Awesome
          *     glyph: 'xf005@FontAwesome'     // the "home" icon
-         * 
+         *
          *     // using Pictos
          *     glyph: 'H@Pictos'              // the "home" icon
-         * 
-         * Depending on the theme you're using, you may need include the font icon 
-         * packages in your application in order to use the icons included in the 
+         *
+         * Depending on the theme you're using, you may need include the font icon
+         * packages in your application in order to use the icons included in the
          * SDK.  For more information see:
-         * 
+         *
          *  - [Font Awesome icons](http://fortawesome.github.io/Font-Awesome/cheatsheet/)
          *  - [Pictos icons](http://docs.sencha.com/extjs/6.0/core_concepts/font_ext.html)
          *  - [Theming Guide](http://docs.sencha.com/extjs/6.0/core_concepts/theming.html)
@@ -78,7 +78,7 @@ Ext.define('Ext.panel.Header', {
          * @cfg {String} icon
          * Path to an image to use as an icon.
          *
-         * For instructions on how you can use icon fonts including those distributed in 
+         * For instructions on how you can use icon fonts including those distributed in
          * the SDK see {@link #iconCls}.
          * @accessor
          */
@@ -87,8 +87,8 @@ Ext.define('Ext.panel.Header', {
         /**
          * @cfg {String} iconCls
          * @accessor
-         * One or more space separated CSS classes to be applied to the icon element.  
-         * The CSS rule(s) applied should specify a background image to be used as the 
+         * One or more space separated CSS classes to be applied to the icon element.
+         * The CSS rule(s) applied should specify a background image to be used as the
          * icon.
          *
          * An example of specifying a custom icon class would be something like:
@@ -100,20 +100,20 @@ Ext.define('Ext.panel.Header', {
          *     .my-home-icon {
          *         background-image: url(../images/my-home-icon.gif) !important;
          *     }
-         * 
-         * In addition to specifying your own classes, you can use the font icons 
+         *
+         * In addition to specifying your own classes, you can use the font icons
          * provided in the SDK using the following syntax:
-         * 
+         *
          *     // using Font Awesome
          *     iconCls: 'x-fa fa-home'
-         * 
+         *
          *     // using Pictos
          *     iconCls: 'pictos pictos-home'
-         * 
-         * Depending on the theme you're using, you may need include the font icon 
-         * packages in your application in order to use the icons included in the 
+         *
+         * Depending on the theme you're using, you may need include the font icon
+         * packages in your application in order to use the icons included in the
          * SDK.  For more information see:
-         * 
+         *
          *  - [Font Awesome icons](http://fortawesome.github.io/Font-Awesome/cheatsheet/)
          *  - [Pictos icons](http://docs.sencha.com/extjs/6.0/core_concepts/font_ext.html)
          *  - [Theming Guide](http://docs.sencha.com/extjs/6.0/core_concepts/theming.html)
@@ -137,7 +137,7 @@ Ext.define('Ext.panel.Header', {
                 xtype: 'title',
                 flex: 1
             },
-            merge: function(newValue, oldValue) {
+            merge: function (newValue, oldValue) {
                 if (typeof newValue !== 'object') {
                     newValue = {
                         text: newValue
@@ -168,7 +168,7 @@ Ext.define('Ext.panel.Header', {
          * @accessor
          */
         titlePosition: null,
-        
+
         /**
          * @cfg {'default'/0/1/2} [titleRotation='default']
          * @accessor
@@ -235,7 +235,7 @@ Ext.define('Ext.panel.Header', {
      *     });
      */
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this,
             items = me.items,
             itemPosition = me.itemPosition,
@@ -259,7 +259,7 @@ Ext.define('Ext.panel.Header', {
         me.syncNoBorderCls();
 
         me.enableFocusableContainer = !me.isAccordionHeader && me.tools.length > 0;
-        
+
         if (me.enableFocusableContainer) {
             me.ariaRole = 'toolbar';
         }
@@ -283,17 +283,17 @@ Ext.define('Ext.panel.Header', {
      * Add a tool to the header
      * @param {Object} tool
      */
-    addTool: function(tool) {
+    addTool: function (tool) {
         var me = this;
-        
+
         // Even though the defaultType is tool, it may be changed,
         // so let's be safe and forcibly specify tool
         me.add(Ext.ComponentManager.create(tool, 'tool'));
-        
+
         if (!me.isAccordionHeader && me.tools.length > 0 && !me.enableFocusableContainer) {
             me.enableFocusableContainer = true;
             me.ariaRole = 'toolbar';
-            
+
             if (me.rendered) {
                 me.ariaEl.dom.setAttribute('role', 'toolbar');
                 me.initFocusableContainer(true);
@@ -301,7 +301,7 @@ Ext.define('Ext.panel.Header', {
         }
     },
 
-    afterLayout: function() {
+    afterLayout: function () {
         var me = this,
             frameBR, frameTR, frameTL, xPos;
 
@@ -322,7 +322,7 @@ Ext.define('Ext.panel.Header', {
         this.callParent();
     },
 
-    applyTitle: function(title, oldTitle) {
+    applyTitle: function (title, oldTitle) {
         var me = this,
             isString, configHasRotation;
 
@@ -348,10 +348,10 @@ Ext.define('Ext.panel.Header', {
             }
             title.ui = me.ui;
             configHasRotation = ('rotation' in title);
-            
+
             // Important Panel attribute aria-labelledby depends on title textEl id
             title.id = me.id + '-title';
-            
+
             if (me.isAccordionHeader) {
                 title.ariaRole = 'tab';
                 title.textElRole = null;
@@ -359,7 +359,7 @@ Ext.define('Ext.panel.Header', {
             }
 
             title = Ext.create(title);
-            
+
             // avoid calling the title's rotation updater on initial startup in the default scenario
             if (!configHasRotation && me.vertical && me.titleRotation === 'default') {
                 title.rotation = 1;
@@ -369,7 +369,7 @@ Ext.define('Ext.panel.Header', {
         return title;
     },
 
-    applyTitlePosition: function(position) {
+    applyTitlePosition: function (position) {
         var max = this.items.getCount();
 
         if (this._titleInItems) {
@@ -383,7 +383,7 @@ Ext.define('Ext.panel.Header', {
         this.syncBeforeAfterTitleClasses();
     },
 
-    beforeRender: function() {
+    beforeRender: function () {
         var me = this,
             itemPosition = me.itemPosition;
 
@@ -399,11 +399,11 @@ Ext.define('Ext.panel.Header', {
      * Gets the tools for this header.
      * @return {Ext.panel.Tool[]} The tools
      */
-    getTools: function(){
+    getTools: function () {
         return this.tools.slice();
     },
 
-    onAdd: function(component, index) {
+    onAdd: function (component, index) {
         var tools = this.tools;
         this.callParent([component, index]);
         if (component.isTool) {
@@ -412,17 +412,17 @@ Ext.define('Ext.panel.Header', {
         }
     },
 
-    onAdded: function(container, pos, instanced) {
+    onAdded: function (container, pos, instanced) {
         this.syncNoBorderCls();
         this.callParent([container, pos, instanced]);
     },
 
-    onRemoved: function(container, pos, instanced) {
+    onRemoved: function (container, pos, instanced) {
         this.syncNoBorderCls();
         this.callParent([container, pos, instanced]);
     },
 
-    setDock: function(dock) {
+    setDock: function (dock) {
         var me = this,
             title = me.getTitle(),
             rotation = me.getTitleRotation(),
@@ -438,7 +438,7 @@ Ext.define('Ext.panel.Header', {
             if (rotation !== titleRotation) {
                 title.setRotation(rotation);
             }
-            
+
             if (me.rendered) {
                 // remove margins set on items by box layout last time around.
                 // TODO: this will no longer be needed when EXTJS-13359 is fixed
@@ -449,23 +449,23 @@ Ext.define('Ext.panel.Header', {
         Ext.resumeLayouts(true);
     },
 
-    updateGlyph: function(glyph) {
+    updateGlyph: function (glyph) {
         this.getTitle().setGlyph(glyph);
     },
 
-    updateIcon: function(icon) {
+    updateIcon: function (icon) {
         this.getTitle().setIcon(icon);
     },
 
-    updateIconAlign: function(align, oldAlign) {
+    updateIconAlign: function (align, oldAlign) {
         this.getTitle().setIconAlign(align);
     },
 
-    updateIconCls: function(cls) {
+    updateIconCls: function (cls) {
         this.getTitle().setIconCls(cls);
     },
 
-    updateTitle: function(title, oldTitle) {
+    updateTitle: function (title, oldTitle) {
         if (!oldTitle) {
             this.insert(this.getTitlePosition(), title);
             this._titleInItems = true;
@@ -474,15 +474,15 @@ Ext.define('Ext.panel.Header', {
         this.titleCmp = title;
     },
 
-    updateTitleAlign: function(align, oldAlign) {
+    updateTitleAlign: function (align, oldAlign) {
         this.getTitle().setTextAlign(align);
     },
 
-    updateTitlePosition: function(position) {
+    updateTitlePosition: function (position) {
         this.insert(position, this.getTitle());
     },
 
-    updateTitleRotation: function(rotation) {
+    updateTitleRotation: function (rotation) {
         if (rotation === 'default') {
             rotation = (this.vertical ? 1 : 0);
         }
@@ -490,14 +490,14 @@ Ext.define('Ext.panel.Header', {
     },
 
     privates: {
-        fireClickEvent: function(type, e){
+        fireClickEvent: function (type, e) {
             var toolCls = '.' + Ext.panel.Tool.prototype.baseCls;
             if (!e.getTarget(toolCls)) {
                 this.fireEvent(type, this, e);
             }
         },
 
-        getFramingInfoCls: function(){
+        getFramingInfoCls: function () {
             var me = this,
                 cls = me.callParent(),
                 owner = me.ownerCt;
@@ -508,17 +508,17 @@ Ext.define('Ext.panel.Header', {
             return cls + '-' + me.dock;
         },
 
-        onClick: function(e) {
+        onClick: function (e) {
             this.fireClickEvent('click', e);
         },
 
-        onDblClick: function(e){
+        onDblClick: function (e) {
             this.fireClickEvent('dblclick', e);
         },
-        
-        onFocusableContainerMousedown: function(e, target) {
+
+        onFocusableContainerMousedown: function (e, target) {
             var targetCmp = Ext.Component.fromElement(target);
-            
+
             // We don't want to focus the header on mousedown
             if (targetCmp === this) {
                 e.preventDefault();
@@ -528,7 +528,7 @@ Ext.define('Ext.panel.Header', {
             }
         },
 
-        syncBeforeAfterTitleClasses: function(force) {
+        syncBeforeAfterTitleClasses: function (force) {
             var me = this,
                 items = me.items,
                 childItems = items.items,
@@ -546,7 +546,7 @@ Ext.define('Ext.panel.Header', {
             for (i = 0; i < itemCount; ++i) {
                 item = childItems[i];
 
-                afterCls  = item.afterTitleCls  || (item.afterTitleCls  = item.baseCls + '-after-title');
+                afterCls = item.afterTitleCls || (item.afterTitleCls = item.baseCls + '-after-title');
                 beforeCls = item.beforeTitleCls || (item.beforeTitleCls = item.baseCls + '-before-title');
 
                 if (!me.title || i < titlePosition) {
@@ -563,7 +563,7 @@ Ext.define('Ext.panel.Header', {
             }
         },
 
-        syncNoBorderCls: function() {
+        syncNoBorderCls: function () {
             var me = this,
                 ownerCt = this.ownerCt,
                 noBorderCls = me.headerCls + '-noborder';

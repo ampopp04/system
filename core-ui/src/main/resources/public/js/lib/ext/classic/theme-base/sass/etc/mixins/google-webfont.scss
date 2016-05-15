@@ -18,8 +18,8 @@
  * @member Global_CSS
  */
 @mixin google-webfont(
-    $font-name,
-    $font-weights: 400
+  $font-name,
+  $font-weights: 400
 ) {
-    @import url('//fonts.googleapis.com/css?family=#{$font-name}:#{$font-weights}');
+  @import url('//fonts.googleapis.com/css?family=#{$font-name}:#{$font-weights}');
 }

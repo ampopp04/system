@@ -1,26 +1,26 @@
-describe("Ext.window.MessageBox", function(){
+describe("Ext.window.MessageBox", function () {
     var M;
-    
-    beforeEach(function(){
+
+    beforeEach(function () {
         M = new Ext.window.MessageBox();
     });
-    
-    afterEach(function(){
+
+    afterEach(function () {
         if (M.isVisible()) {
             M.hide();
         }
         Ext.destroy(M);
     });
-    
-    it("should have a single instance", function(){
+
+    it("should have a single instance", function () {
         var MessageBox = Ext.MessageBox,
             Msg = Ext.Msg;
-            
+
         expect(MessageBox).toBe(Msg);
         expect(MessageBox instanceof Ext.window.MessageBox).toBe(true);
     });
 
-    it('should show up on top of another window', function() {
+    it('should show up on top of another window', function () {
         var win = Ext.widget('window', {
             height: 200,
             width: 200
@@ -32,11 +32,11 @@ describe("Ext.window.MessageBox", function(){
         expect(M.el.dom.style.zIndex).toBeGreaterThan(win.el.dom.style.zIndex);
         Ext.destroy(win);
     });
-    
-    it("should be able to hide before being shown", function() {
-        expect(function() {
+
+    it("should be able to hide before being shown", function () {
+        expect(function () {
             M.hide();
-        }).not.toThrow();    
+        }).not.toThrow();
     });
 
     it('should show even when not passed a config object', function () {
@@ -157,55 +157,55 @@ describe("Ext.window.MessageBox", function(){
         });
     });
 
-    describe("custom button text", function(){
+    describe("custom button text", function () {
         var oldText;
-        beforeEach(function(){
+        beforeEach(function () {
             oldText = M.buttonText;
             M.buttonText = {
                 ok: 'okText',
                 yes: 'yesText',
                 no: 'noText',
-                cancel: 'cancelText'    
+                cancel: 'cancelText'
             };
-        });    
-        
-        afterEach(function(){
+        });
+
+        afterEach(function () {
             M.buttonText = oldText;
         });
-        
-        it("should apply custom text to the buttons", function(){
+
+        it("should apply custom text to the buttons", function () {
             var btns = M.msgButtons;
             M.show({
                 buttons: M.YESNO
-            });  
+            });
             expect(btns.yes.text).toBe('yesText');
             expect(btns.no.text).toBe('noText');
-            
+
             M.hide();
-            
+
             M.show({
                 buttons: M.OKCANCEL
             });
             expect(btns.ok.text).toBe('okText');
             expect(btns.cancel.text).toBe('cancelText');
         });
-        
-        it("should persist the custom text on each show", function(){
+
+        it("should persist the custom text on each show", function () {
             var btns = M.msgButtons;
             M.show({
                 buttons: M.YES
-            });  
+            });
             expect(btns.yes.text).toBe('yesText');
-            
+
             M.hide();
-            
+
             M.show({
                 buttons: M.YES
-            });  
+            });
             expect(btns.yes.text).toBe('yesText');
         });
-        
-        it("should accept a buttonText config", function(){
+
+        it("should accept a buttonText config", function () {
             var btns = M.msgButtons;
             M.show({
                 buttons: M.YESNO,
@@ -213,85 +213,85 @@ describe("Ext.window.MessageBox", function(){
                     yes: 'newYesText',
                     no: 'newNoText'
                 }
-            });  
+            });
             expect(btns.yes.text).toBe('newYesText');
             expect(btns.no.text).toBe('newNoText');
         });
     });
-    
-    describe("shortcuts", function(){
-        
-        describe("buttons", function(){
-            it("should use the OK shortcut", function(){
+
+    describe("shortcuts", function () {
+
+        describe("buttons", function () {
+            it("should use the OK shortcut", function () {
                 M.show({
                     buttons: M.OK
-                });    
+                });
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(false);
                 expect(btns.no.isVisible()).toBe(false);
                 expect(btns.ok.isVisible()).toBe(true);
                 expect(btns.cancel.isVisible()).toBe(false);
-            }); 
-            
-            it("should use the YES shortcut", function(){
+            });
+
+            it("should use the YES shortcut", function () {
                 M.show({
                     buttons: M.YES
-                });    
+                });
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(true);
                 expect(btns.no.isVisible()).toBe(false);
                 expect(btns.ok.isVisible()).toBe(false);
                 expect(btns.cancel.isVisible()).toBe(false);
-            }); 
-            
-            it("should use the NO shortcut", function(){
+            });
+
+            it("should use the NO shortcut", function () {
                 M.show({
                     buttons: M.NO
-                });    
+                });
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(false);
                 expect(btns.no.isVisible()).toBe(true);
                 expect(btns.ok.isVisible()).toBe(false);
                 expect(btns.cancel.isVisible()).toBe(false);
             });
-            
-            it("should use the CANCEL shortcut", function(){
+
+            it("should use the CANCEL shortcut", function () {
                 M.show({
                     buttons: M.CANCEL
-                });    
+                });
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(false);
                 expect(btns.no.isVisible()).toBe(false);
                 expect(btns.ok.isVisible()).toBe(false);
                 expect(btns.cancel.isVisible()).toBe(true);
             });
-            
-            it("should use the OKCANCEL shortcut", function(){
+
+            it("should use the OKCANCEL shortcut", function () {
                 M.show({
                     buttons: M.OKCANCEL
-                });    
+                });
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(false);
                 expect(btns.no.isVisible()).toBe(false);
                 expect(btns.ok.isVisible()).toBe(true);
                 expect(btns.cancel.isVisible()).toBe(true);
             });
-            
-            it("should use the YESNO shortcut", function(){
+
+            it("should use the YESNO shortcut", function () {
                 M.show({
                     buttons: M.YESNO
-                });    
+                });
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(true);
                 expect(btns.no.isVisible()).toBe(true);
                 expect(btns.ok.isVisible()).toBe(false);
                 expect(btns.cancel.isVisible()).toBe(false);
             });
-            
-            it("should use the YESNOCANCEL shortcut", function(){
+
+            it("should use the YESNOCANCEL shortcut", function () {
                 M.show({
                     buttons: M.YESNOCANCEL
-                });    
+                });
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(true);
                 expect(btns.no.isVisible()).toBe(true);
@@ -299,10 +299,10 @@ describe("Ext.window.MessageBox", function(){
                 expect(btns.cancel.isVisible()).toBe(true);
             });
         });
-        
-        describe("confirm", function(){
-            
-            it("should configure yes/no buttons", function(){
+
+        describe("confirm", function () {
+
+            it("should configure yes/no buttons", function () {
                 M.confirm('a', 'b');
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(true);
@@ -310,15 +310,15 @@ describe("Ext.window.MessageBox", function(){
                 expect(btns.ok.isVisible()).toBe(false);
                 expect(btns.cancel.isVisible()).toBe(false);
             });
-            
-            it("should show the close tool", function(){
+
+            it("should show the close tool", function () {
                 M.confirm('a', 'b');
                 expect(M.down('tool').isVisible()).toBe(true);
             });
         });
-        
-        describe("prompt", function(){
-            it("should configure ok/cancel buttons", function(){
+
+        describe("prompt", function () {
+            it("should configure ok/cancel buttons", function () {
                 M.prompt('a', 'b');
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(false);
@@ -326,15 +326,15 @@ describe("Ext.window.MessageBox", function(){
                 expect(btns.ok.isVisible()).toBe(true);
                 expect(btns.cancel.isVisible()).toBe(true);
             });
-            
-            it("should show the close tool", function(){
+
+            it("should show the close tool", function () {
                 M.prompt('a', 'b');
                 expect(M.down('tool').isVisible()).toBe(true);
             });
         });
-        
-        describe("wait", function(){
-            it("should hide all buttons", function(){
+
+        describe("wait", function () {
+            it("should hide all buttons", function () {
                 M.wait('a', 'b');
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(false);
@@ -342,15 +342,15 @@ describe("Ext.window.MessageBox", function(){
                 expect(btns.ok.isVisible()).toBe(false);
                 expect(btns.cancel.isVisible()).toBe(false);
             });
-            
-            it("should hide the close tool", function(){
+
+            it("should hide the close tool", function () {
                 M.wait('a', 'b');
                 expect(M.down('tool').isVisible()).toBe(false);
             });
         });
-        
-        describe("alert", function(){
-            it("should configure an ok button", function(){
+
+        describe("alert", function () {
+            it("should configure an ok button", function () {
                 M.alert('a', 'b');
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(false);
@@ -358,15 +358,15 @@ describe("Ext.window.MessageBox", function(){
                 expect(btns.ok.isVisible()).toBe(true);
                 expect(btns.cancel.isVisible()).toBe(false);
             });
-            
-            it("should show the close tool", function(){
+
+            it("should show the close tool", function () {
                 M.alert('a', 'b');
                 expect(M.down('tool').isVisible()).toBe(true);
             });
         });
-        
-        describe("progress", function(){
-            it("should hide all buttons", function(){
+
+        describe("progress", function () {
+            it("should hide all buttons", function () {
                 M.progress('a', 'b');
                 var btns = M.msgButtons;
                 expect(btns.yes.isVisible()).toBe(false);
@@ -374,19 +374,19 @@ describe("Ext.window.MessageBox", function(){
                 expect(btns.ok.isVisible()).toBe(false);
                 expect(btns.cancel.isVisible()).toBe(false);
             });
-            
-            it("should show the close tool", function(){
+
+            it("should show the close tool", function () {
                 M.progress('a', 'b');
                 expect(M.down('tool').isVisible()).toBe(true);
             });
         });
     });
-    
-    describe("callbacks", function(){
+
+    describe("callbacks", function () {
         var click;
-        
-        beforeEach(function(){
-            click = function(btn){
+
+        beforeEach(function () {
+            click = function (btn) {
                 if (typeof btn == 'string') {
                     btn = M.msgButtons[btn];
                 }
@@ -397,82 +397,82 @@ describe("Ext.window.MessageBox", function(){
                 })
             };
         });
-        
-        afterEach(function(){
-            click = null;    
+
+        afterEach(function () {
+            click = null;
         });
-        
-        it("should pass ok when ok is clicked", function(){
+
+        it("should pass ok when ok is clicked", function () {
             var name;
             M.show({
                 buttons: M.OK,
-                callback: function(btn){
+                callback: function (btn) {
                     name = btn;
                 }
-            });    
+            });
             click('ok');
             expect(name).toBe('ok');
         });
-        
-        it("should pass cancel when cancel is clicked", function(){
+
+        it("should pass cancel when cancel is clicked", function () {
             var name;
             M.show({
                 buttons: M.CANCEL,
-                callback: function(btn){
+                callback: function (btn) {
                     name = btn;
                 }
-            });    
+            });
             click('cancel');
             expect(name).toBe('cancel');
         });
-        
-        it("should pass yes when yes is clicked", function(){
+
+        it("should pass yes when yes is clicked", function () {
             var name;
             M.show({
                 buttons: M.YES,
-                callback: function(btn){
+                callback: function (btn) {
                     name = btn;
                 }
-            });    
+            });
             click('yes');
             expect(name).toBe('yes');
         });
-        
-        it("should pass no when no is clicked", function(){
+
+        it("should pass no when no is clicked", function () {
             var name;
             M.show({
                 buttons: M.NO,
-                callback: function(btn){
+                callback: function (btn) {
                     name = btn;
                 }
-            });    
+            });
             click('no');
             expect(name).toBe('no');
         });
-        
-        it("should pass cancel when close is pressed", function(){
+
+        it("should pass cancel when close is pressed", function () {
             var name;
             M.show({
                 buttons: M.OKCANCEL,
-                callback: function(btn){
+                callback: function (btn) {
                     name = btn;
                 }
-            });    
+            });
             click(M.down('tool'));
             expect(name).toBe('cancel');
         });
     });
-    
-    describe("closable", function(){
-        it("should be closable by default", function(){
+
+    describe("closable", function () {
+        it("should be closable by default", function () {
             M.show({
                 title: 'a',
                 msg: 'b'
             });
             expect(M.down('tool').isVisible()).toBe(true);
         });
-        
-        it("should not show the tool if closable it set to false", function(){
+
+        it("should not show the tool if closable it set to false", function () {
             M.show({
                 title: 'a',
                 msg: 'b',
@@ -481,45 +481,45 @@ describe("Ext.window.MessageBox", function(){
             expect(M.down('tool').isVisible()).toBe(false);
         });
     });
-    
-    describe("layouts", function(){
+
+    describe("layouts", function () {
 
         var widths = [
-            null,
-            10,
-            250,
-            10000
-        ],
-        longLine = "a b c d e f g h i j k l m n o p q r s t u v w x y z",
-        veryLongLine = longLine + ' ' + longLine.toUpperCase() + '<br>',
-        shortMsg = [
-            "line1<br>",
-            "line2<br>",
-            "line3<br>",
-            "line4<br>",
-            "line5<br>",
-            "<ol>",
-            "<li>list1 list1 list1</li>",
-            "<li>list2 list2 list2</li>",
-            "</ol>",
-            "line6<br>"
-        ].join(''),
-        minW = 250,
-        minH = 110,
-        maxW = 600,
-        maxH = 500,
-        framePadding = 4,
-        hboxPadding = 10,
-        longMsg = veryLongLine + '<br>' + shortMsg,
-        headerPad = 5,
-        displayTopPad = 3,
-        displayBtmMargin = 5,
-        footerPadTB = 4,
-        footerPadL = 6,
-        footerPadR = 0,
-        border = 1,
-        mbox = Ext.MessageBox;
-    
+                null,
+                10,
+                250,
+                10000
+            ],
+            longLine = "a b c d e f g h i j k l m n o p q r s t u v w x y z",
+            veryLongLine = longLine + ' ' + longLine.toUpperCase() + '<br>',
+            shortMsg = [
+                "line1<br>",
+                "line2<br>",
+                "line3<br>",
+                "line4<br>",
+                "line5<br>",
+                "<ol>",
+                "<li>list1 list1 list1</li>",
+                "<li>list2 list2 list2</li>",
+                "</ol>",
+                "line6<br>"
+            ].join(''),
+            minW = 250,
+            minH = 110,
+            maxW = 600,
+            maxH = 500,
+            framePadding = 4,
+            hboxPadding = 10,
+            longMsg = veryLongLine + '<br>' + shortMsg,
+            headerPad = 5,
+            displayTopPad = 3,
+            displayBtmMargin = 5,
+            footerPadTB = 4,
+            footerPadL = 6,
+            footerPadR = 0,
+            border = 1,
+            mbox = Ext.MessageBox;
+
         function verifyMessageBoxLayout(isShrinkWrap) {
 
             var panelH = mbox.el.getHeight(),
@@ -540,27 +540,27 @@ describe("Ext.window.MessageBox", function(){
                     msg: {
                         el: {
                             w: panelW -
-                                deltaW -
-                                ((framePadding + hboxPadding + border) * 2),
+                            deltaW -
+                            ((framePadding + hboxPadding + border) * 2),
                             h: panelH - (
                                 headerPad +
-                                    hdrH +
-                                    hboxPadding * 2 +
-                                    displayBtmMargin +
-                                    footerPadTB +
-                                    tbH +
-                                    framePadding
-                                )
+                                hdrH +
+                                hboxPadding * 2 +
+                                displayBtmMargin +
+                                footerPadTB +
+                                tbH +
+                                framePadding
+                            )
                         }
                     }
                 };
-    
+
             expect(mbox).toHaveLayout(layout);
         }
 
-        xdescribe("Standard Layouts (Msg Only - No Icons)", function(){
+        xdescribe("Standard Layouts (Msg Only - No Icons)", function () {
 
-            beforeEach(function() {
+            beforeEach(function () {
                 mbox = Ext.MessageBox = Ext.Msg = new Ext.window.MessageBox();
             });
             afterEach(function () {
@@ -568,7 +568,7 @@ describe("Ext.window.MessageBox", function(){
                 mbox = null;
             });
 
-            it('should layout an unspecified width (shrinkWrap)', function(){
+            it('should layout an unspecified width (shrinkWrap)', function () {
                 var cfg = {
                     title: "TEXT",
                     modal: true,
@@ -581,7 +581,7 @@ describe("Ext.window.MessageBox", function(){
                 mbox.hide();
             });
 
-            it('should layout a configured width', function(){
+            it('should layout a configured width', function () {
                 var cfg = {
                     width: 250,
                     title: "TEXT",
@@ -594,7 +594,7 @@ describe("Ext.window.MessageBox", function(){
                 mbox.hide();
             });
 
-            it('should honor minWidth constraints', function(){
+            it('should honor minWidth constraints', function () {
                 var cfg = {
                     width: 10,
                     title: "TEXT",
@@ -607,7 +607,7 @@ describe("Ext.window.MessageBox", function(){
                 mbox.hide();
             });
 
-            it('should honor maxWidth constraints', function(){
+            it('should honor maxWidth constraints', function () {
                 var cfg = {
                     width: 10000,
                     title: "TEXT",
@@ -622,9 +622,9 @@ describe("Ext.window.MessageBox", function(){
 
         });
 
-        xdescribe('Generated Test', function(){
+        xdescribe('Generated Test', function () {
 
-            beforeEach(function() {
+            beforeEach(function () {
                 mbox = Ext.MessageBox = Ext.Msg = new Ext.window.MessageBox();
             });
             afterEach(function () {
@@ -632,7 +632,7 @@ describe("Ext.window.MessageBox", function(){
                 mbox = null;
             });
 
-            it('should layout shrinkWrap', function(){
+            it('should layout shrinkWrap', function () {
                 var cfg = {
                     title: "TEXT",
                     modal: true,
@@ -676,7 +676,7 @@ describe("Ext.window.MessageBox", function(){
                                 }
                             }
                         }
-                    },  
+                    },
                     "dockedItems": {
                         "messagebox-1001_header": {
                             "el": {
@@ -749,7 +749,7 @@ describe("Ext.window.MessageBox", function(){
                 });
             });
 
-            it("should layout configured width", function(){
+            it("should layout configured width", function () {
                 var cfg = {
                     width: 250,
                     title: "TEXT",
@@ -764,7 +764,7 @@ describe("Ext.window.MessageBox", function(){
                     },
                     "body": {
                         "xywh": "0 0 250 196"
-                    },  
+                    },
                     "items": {
                         "container-1004": {
                             "el": {
@@ -792,7 +792,7 @@ describe("Ext.window.MessageBox", function(){
                                         }
                                     }
                                 }
-                            }   
+                            }
                         }
                     },
                     "dockedItems": {
@@ -833,7 +833,7 @@ describe("Ext.window.MessageBox", function(){
                                     },
                                     "btnIconEl": {
                                         "xywh": "50 21 0 0"
-                                    },  
+                                    },
                                     "btnInnerEl": {
                                         "xywh": "50 5 69 16"
                                     },

@@ -26,7 +26,7 @@ Ext.define('Ext.event.gesture.EdgeSwipe', {
         minDistance: 60
     },
 
-    onTouchStart: function(e) {
+    onTouchStart: function (e) {
         if (this.callParent(arguments) === false) {
             return false;
         }
@@ -44,7 +44,7 @@ Ext.define('Ext.event.gesture.EdgeSwipe', {
         this.startY = touch.pageY;
     },
 
-    onTouchMove: function(e) {
+    onTouchMove: function (e) {
         var touch = e.changedTouches[0],
             x = touch.pageX,
             y = touch.pageY,
@@ -108,10 +108,10 @@ Ext.define('Ext.event.gesture.EdgeSwipe', {
             if (direction === 'right' && this.startX > minDistance) {
                 return this.fail(this.self.NOT_NEAR_EDGE);
             }
-            else if (direction === 'down' &&  this.startY > minDistance) {
+            else if (direction === 'down' && this.startY > minDistance) {
                 return this.fail(this.self.NOT_NEAR_EDGE);
             }
-            else if (direction === 'left' &&  (elementWidth - this.startX) > minDistance) {
+            else if (direction === 'left' && (elementWidth - this.startX) > minDistance) {
                 return this.fail(this.self.NOT_NEAR_EDGE);
             }
             else if (direction === 'up' && (elementHeight - this.startY) > minDistance) {
@@ -138,7 +138,7 @@ Ext.define('Ext.event.gesture.EdgeSwipe', {
         }
     },
 
-    onTouchEnd: function(e) {
+    onTouchEnd: function (e) {
         var duration;
 
         if (this.onTouchMove(e) !== false) {
@@ -153,20 +153,20 @@ Ext.define('Ext.event.gesture.EdgeSwipe', {
         }
     },
 
-    onTouchCancel: function(e) {
+    onTouchCancel: function (e) {
         this.fire('edgeswipecancel', e, {
             touch: e.changedTouches[0]
         });
         return false;
     },
 
-    reset: function() {
+    reset: function () {
         var me = this;
 
         me.started = me.direction = me.isHorizontal = me.isVertical = me.startX =
             me.startY = me.startTime = me.distance = null;
     }
-}, function(EdgeSwipe) {
+}, function (EdgeSwipe) {
     var gestures = Ext.manifest.gestures;
     EdgeSwipe.instance = new EdgeSwipe(gestures && gestures.edgeSwipe);
 });

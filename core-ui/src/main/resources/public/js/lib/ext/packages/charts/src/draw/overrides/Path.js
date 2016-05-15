@@ -111,8 +111,8 @@ Ext.define('Ext.draw.overrides.Path', {
                     break;
                 case 'C':
                     if (solver.pointOnCubic(
-                        lastX, params[j], params[j + 2], params[j + 4],
-                        lastY, params[j + 1], params[j + 3], params[j + 5], x, y)) {
+                            lastX, params[j], params[j + 2], params[j + 4],
+                            lastY, params[j + 1], params[j + 3], params[j + 5], x, y)) {
                         return true;
                     }
                     lastX = params[j + 4];

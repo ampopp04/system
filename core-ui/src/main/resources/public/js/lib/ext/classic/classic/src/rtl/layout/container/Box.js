@@ -1,7 +1,7 @@
 Ext.define('Ext.rtl.layout.container.Box', {
     override: 'Ext.layout.container.Box',
 
-    initLayout: function() {
+    initLayout: function () {
         var me = this;
 
         if (me.owner.getInherited().rtl) {
@@ -19,7 +19,7 @@ Ext.define('Ext.rtl.layout.container.Box', {
             renderData.targetElCls =
                 (renderData.targetElCls || '') + ' ' + Ext.baseCSSPrefix + 'rtl';
         }
-        
+
         return renderData;
     }
 });

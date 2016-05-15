@@ -101,7 +101,7 @@ Ext.define('Ext.list.TreeItem', {
         }
     },
 
-    isSelectionEvent: function(e) {
+    isSelectionEvent: function (e) {
         var owner = this.getOwner();
         return (!this.isToggleEvent(e) || !owner.getExpanderOnly() || owner.getSelectOnExpander());
     },
@@ -132,7 +132,7 @@ Ext.define('Ext.list.TreeItem', {
         // ending any in progress expand animation.
         height = animation && itemContainer.getHeight();
 
-        me.callParent([ animation, collapsingForExpand ]);
+        me.callParent([animation, collapsingForExpand]);
 
         if (animation) {
             // The collapsed state is now in effect, so itemContainer is hidden.
@@ -172,7 +172,7 @@ Ext.define('Ext.list.TreeItem', {
             me.stopAnimation(me.collapsing);
         }
 
-        me.callParent([ animation ]);
+        me.callParent([animation]);
 
         if (animation) {
             // The expanded state is in effect, so itemContainer is visible again.
@@ -204,7 +204,7 @@ Ext.define('Ext.list.TreeItem', {
 
     updateNode: function (node, oldNode) {
         this.syncIndent();
-        this.callParent([ node, oldNode ]);
+        this.callParent([node, oldNode]);
     },
 
     updateExpandable: function () {
@@ -246,7 +246,7 @@ Ext.define('Ext.list.TreeItem', {
     updateOver: function (over) {
         var me = this;
 
-        me.element.toggleCls(me.hoverCls, !! over); // off if over==0, on otherwise
+        me.element.toggleCls(me.hoverCls, !!over); // off if over==0, on otherwise
         me.rowElement.toggleCls(me.rowHoverCls, over > 1); // off if over = 0 or 1
     },
 
@@ -254,12 +254,12 @@ Ext.define('Ext.list.TreeItem', {
         this.rowElement.replaceCls(oldValue, value);
     },
 
-    updateSelected: function(selected, oldSelected) {
+    updateSelected: function (selected, oldSelected) {
         var me = this,
             cls = me.selectedCls,
             tool = me.getToolElement();
 
-        me.callParent([ selected, oldSelected ]);
+        me.callParent([selected, oldSelected]);
 
         me.element.toggleCls(cls, selected);
 
@@ -268,9 +268,9 @@ Ext.define('Ext.list.TreeItem', {
         }
     },
 
-    updateSelectedParent: function(selectedParent) {
+    updateSelectedParent: function (selectedParent) {
         var me = this;
-        
+
         me.element.toggleCls(me.selectedParentCls, selectedParent);
         var tool = me.getToolElement();
         if (tool) {
@@ -287,7 +287,7 @@ Ext.define('Ext.list.TreeItem', {
 
     privates: {
         doNodeUpdate: function (node) {
-            this.callParent([ node ]);
+            this.callParent([node]);
 
             this.setRowCls(node && node.data[this.rowClsProperty]);
         },
@@ -341,7 +341,7 @@ Ext.define('Ext.list.TreeItem', {
 
         updateIndent: function (value, oldValue) {
             this.syncIndent();
-            this.callParent([ value, oldValue ]);
+            this.callParent([value, oldValue]);
         }
     }
 });

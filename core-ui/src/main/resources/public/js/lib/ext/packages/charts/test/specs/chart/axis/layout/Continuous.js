@@ -13,13 +13,13 @@ describe('Ext.chart.axis.layout.Continuous', function () {
                     autoDestroy: true,
                     fields: ['category', 'value'],
                     data: [
-                        { category: 7, value: 0.2 },
-                        { category: 6, value: 0.7 },
-                        { category: 5, value: 1.2 },
-                        { category: 4, value: 0.5 },
-                        { category: 3, value: 0.1 },
-                        { category: 2, value: 0.4 },
-                        { category: 1, value: 0   }
+                        {category: 7, value: 0.2},
+                        {category: 6, value: 0.7},
+                        {category: 5, value: 1.2},
+                        {category: 4, value: 0.5},
+                        {category: 3, value: 0.1},
+                        {category: 2, value: 0.4},
+                        {category: 1, value: 0}
                     ]
                 },
                 axes: [{

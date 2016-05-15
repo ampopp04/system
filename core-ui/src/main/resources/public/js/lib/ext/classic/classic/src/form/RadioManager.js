@@ -6,22 +6,22 @@ Ext.define('Ext.form.RadioManager', {
     extend: 'Ext.util.MixedCollection',
     singleton: true,
 
-    getByName: function(name, formId) {
-        return this.filterBy(function(item) {
+    getByName: function (name, formId) {
+        return this.filterBy(function (item) {
             return item.name === name && item.getFormId() === formId;
         });
     },
 
-    getWithValue: function(name, value, formId) {
-        return this.filterBy(function(item) {
+    getWithValue: function (name, value, formId) {
+        return this.filterBy(function (item) {
             return item.name === name &&
-                   item.inputValue == value && // jshint ignore:line
-                   item.getFormId() === formId;
+                item.inputValue == value && // jshint ignore:line
+                item.getFormId() === formId;
         });
     },
 
-    getChecked: function(name, formId) {
-        return this.findBy(function(item) {
+    getChecked: function (name, formId) {
+        return this.findBy(function (item) {
             return item.name === name && item.checked && item.getFormId() === formId;
         });
     }

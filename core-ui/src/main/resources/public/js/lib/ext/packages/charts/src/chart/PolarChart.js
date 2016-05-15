@@ -7,7 +7,7 @@
  * A polar chart has two axes: an angular axis (which is a circle) and
  * a radial axis (a straight line from the center to the edge of the circle).
  * The angular axis is usually a Category axis while the radial axis is
- * typically numerical. 
+ * typically numerical.
  *
  * Pie charts and Radar charts are common examples of Polar charts.
  *
@@ -56,7 +56,7 @@ Ext.define('Ext.chart.PolarChart', {
             axes = me.getAxes(),
             series = me.getSeries(),
             i, ln, axis, seriesItem;
-            
+
         for (i = 0, ln = axes.length; i < ln; i++) {
             axis = axes[i];
             axis.setCenter(center);

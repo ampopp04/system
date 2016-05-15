@@ -3,7 +3,7 @@ Ext.define('Ext.theme.neptune.panel.Table', {
 
     lockableBodyBorder: true,
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
 
         me.callParent();

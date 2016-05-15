@@ -162,7 +162,9 @@ var Ext = Ext || {};
         </x-compile>
 
         <if>
-            <not><isset property="skip.post.compress"/></not>
+            <not>
+                <isset property="skip.post.compress"/>
+            </not>
             <then>
                 <for list="ext,ext-all,ext-all-rtl" param="file">
                     <sequential>
@@ -330,7 +332,7 @@ var Ext = Ext || {};
                      overrideTpl="Ext.Loader.loadScriptsSyncBasePrefix"
                      overrideTplType="jsonp"
                      overrideExcludeTags="">
-<![CDATA[
+            <![CDATA[
 Ext.Boot.loadSyncBasePrefix([
     "bootstrap-manifest.js",
     "bootstrap-files.js"

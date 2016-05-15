@@ -2,12 +2,12 @@ body {
     font-size: 12px;
     font-family: "Helvetica Neue", HelveticaNeue, "Helvetica-Neue", Helvetica, sans-serif;
     font-weight: normal;
-    padding:0;
-    -moz-osx-font-smoothing:grayscale;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-    overflow:hidden;
-    margin:0;
+    padding: 0;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+    margin: 0;
 }
 
 .treegrid {
@@ -183,9 +183,8 @@ body {
 }
 
 .treegrid .toolBar .options .show label {
-    margin-left:2px;
+    margin-left: 2px;
 }
-
 
 .actionLink {
     margin-left: 10px;
@@ -219,7 +218,6 @@ body {
     background-repeat: no-repeat;
 }
 
-
 .actionLink.run-all {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAABPUlEQVRIDc2WAQ6DIAxF3a5g9DK7k6d0J9ju4/5HOr9YIQaWrAmDAf7X0mLsun+zZVlGtDm2obl/EfBGb8ZxOxDEGIEC2oKg1gtAQTZm31cdHQQmNNoLjRGZaXRTLWSAKkHBWyNQlHNxrV1uonDgXPH8nm6u8Q7P7qJOtcN/bCqecwgDP54Api1/LIbjEWJSAUyyWzGYD3YCSStxA+EpBdCL0RPh3IrwI4nrqdZwiwsz+gfHP7DnIfE/gKySOAJWhd7g7SwT6sXjYm43LQdUm/g9wJxNQO6rIhcJ1qyEfYCAWIbcvIVpi+gLkPJlFK3TYQ5y9lCxuhgR2vcFqUKYz0ate7PjCEAXqo8XzUwvnZu/rLAuQpHeankbROfcSlSd4hiq6rVB2BPkFkhR1NtAsSiKLlhbgEEhTdDlT6IPwcZ+LN/r7UUAAAAASUVORK5CYII=);
 }
@@ -234,37 +232,37 @@ body {
 }
 
 .expand {
-    width:0px;
-    height:0px;
-    border-style:solid;
-    border-width:7px 0 8px 9px;
-    border-color:transparent transparent transparent #8E9194;
-    line-height:0px;
-    _border-color:#FFFFFF #FFFFFF #FFFFFF #8E9194;
-    _filter:progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 7px 0 8px 9px;
+    border-color: transparent transparent transparent #8E9194;
+    line-height: 0px;
+    _border-color: #FFFFFF #FFFFFF #FFFFFF #8E9194;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
 
 .spec .expand {
-    border-color:transparent transparent transparent #8E9194;
-    _border-color:#FFFFFF #FFFFFF #FFFFFF #8E9194;
-    _filter:progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+    border-color: transparent transparent transparent #8E9194;
+    _border-color: #FFFFFF #FFFFFF #FFFFFF #8E9194;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
 
 .collapse {
-    width:0px;
-    height:0px;
-    border-style:solid;
-    border-width:0 0 11px 11px;
-    border-color:transparent transparent #8E9194 transparent;
-    line-height:0px;
-    _border-color:#FFFFFF #FFFFFF #8E9194 #FFFFFF;
-    _filter:progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 0 11px 11px;
+    border-color: transparent transparent #8E9194 transparent;
+    line-height: 0px;
+    _border-color: #FFFFFF #FFFFFF #8E9194 #FFFFFF;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
 
 .spec .collapse {
-    border-color:transparent transparent #8E9194 transparent;
-    _border-color:#FFFFFF #FFFFFF #8E9194 #FFFFFF;
-    _filter:progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+    border-color: transparent transparent #8E9194 transparent;
+    _border-color: #FFFFFF #FFFFFF #8E9194 #FFFFFF;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
 
 .checkbox-col {
@@ -301,7 +299,7 @@ body {
 }
 
 .row.failed {
-    background-color:#F74848;
+    background-color: #F74848;
 }
 
 .row:after {
@@ -333,7 +331,6 @@ body {
 .row.passed:hover:after {;;
 }
 
-
 .row.passed {
     background-color: green;
 }
@@ -357,7 +354,7 @@ div.results {
 }
 
 .row.results-collapsed div.results .resultMessage {
-    display:none;
+    display: none;
 }
 
 .row.results-collapsed div.results .resultMessage.first {
@@ -380,16 +377,16 @@ div.results.results-expanded .resultMessage {
     padding-bottom: 5px;
     background-color: #EEE;
     color: #585858 !important;
-    
+
     background: #eeeeee;
     background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U1ZTVlNSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlZWVlZWUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-    background: -moz-linear-gradient(top,  #e5e5e5 0%, #eeeeee 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e5e5e5), color-stop(100%,#eeeeee));
-    background: -webkit-linear-gradient(top,  #e5e5e5 0%,#eeeeee 100%);
-    background: -o-linear-gradient(top,  #e5e5e5 0%,#eeeeee 100%);
-    background: -ms-linear-gradient(top,  #e5e5e5 0%,#eeeeee 100%);
+    background: -moz-linear-gradient(top, #e5e5e5 0%, #eeeeee 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e5e5e5), color-stop(100%, #eeeeee));
+    background: -webkit-linear-gradient(top, #e5e5e5 0%, #eeeeee 100%);
+    background: -o-linear-gradient(top, #e5e5e5 0%, #eeeeee 100%);
+    background: -ms-linear-gradient(top, #e5e5e5 0%, #eeeeee 100%);
     background: #F8F8F8;
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#eeeeee',GradientType=0 );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e5e5e5', endColorstr='#eeeeee', GradientType=0);
     border-top: 2px solid #CCC;
 }
 
@@ -405,6 +402,7 @@ div.results.results-expanded .resultMessage {
     color: #585858;
     font-size: 14px;
 }
+
 .infos .infoMessage.warning {
     color: red;
 }
@@ -424,7 +422,7 @@ div.results.results-expanded .resultMessage {
 }
 
 .resultMessage.first {
-    border:none;
+    border: none;
 }
 
 .suite .description, .spec .description {
@@ -668,8 +666,8 @@ div.inspectStackTrace {
 }
 
 .failed .parent-suite {
-    color:white;
-    background-color:#CACACA !important;
+    color: white;
+    background-color: #CACACA !important;
 }
 
 .failed .suite {
@@ -715,7 +713,7 @@ div.inspectStackTrace {
 }
 
 .row.results-collapsed .results-expander {
-    display:block !important;
+    display: block !important;
 }
 
 .expander-expand {

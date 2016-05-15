@@ -10,8 +10,8 @@ Ext.define('Ext.app.EventBus', {
     requires: [
         'Ext.app.domain.Component'
     ],
-    
-    constructor: function() {
+
+    constructor: function () {
         var me = this,
             domains = Ext.app.EventDomain.instances;
 
@@ -28,7 +28,7 @@ Ext.define('Ext.app.EventBus', {
      * @param {Object} selectors Config object containing selectors and listeners.
      * @param {Ext.app.BaseController} controller The listening controller instance.
      */
-    control: function(selectors, controller) {
+    control: function (selectors, controller) {
         return this.domains.component.listen(selectors, controller);
     },
 
@@ -39,7 +39,7 @@ Ext.define('Ext.app.EventBus', {
      * @param {Object} to Config object containing domains, selectors and listeners.
      * @param {Ext.app.BaseController} controller The listening controller instance.
      */
-    listen: function(to, controller) {
+    listen: function (to, controller) {
         var domains = this.domains,
             domain;
 
@@ -55,10 +55,10 @@ Ext.define('Ext.app.EventBus', {
      *
      * @param {String/Ext.app.BaseController} controllerId The id or the controller instance.
      */
-    unlisten: function(controllerId) {
+    unlisten: function (controllerId) {
         var domains = Ext.app.EventDomain.instances,
             domain;
-        
+
         for (domain in domains) {
             domains[domain].unlisten(controllerId);
         }

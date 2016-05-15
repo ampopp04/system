@@ -10,7 +10,7 @@ Ext.define('Ext.rtl.Component', {
      * Can be explicitly set to false to override a true value inherited from an ancestor.
      */
 
-    applyScrollable: function(scrollable, oldScrollable) {
+    applyScrollable: function (scrollable, oldScrollable) {
         var ret = this.callParent([scrollable, oldScrollable]);
 
         if (ret && this.getInherited().rtl) {
@@ -20,7 +20,7 @@ Ext.define('Ext.rtl.Component', {
         return ret;
     },
 
-    convertPositionSpec: function(posSpec) {
+    convertPositionSpec: function (posSpec) {
         // Since anchoring is done based on page level coordinates, we need to invert
         // left and right in the position spec when the direction of the compoent being
         // aligned is not the same as the direction of the viewport/body
@@ -30,7 +30,7 @@ Ext.define('Ext.rtl.Component', {
         return posSpec;
     },
 
-    getAnchorToXY: function(el, anchor, local, mySize) {
+    getAnchorToXY: function (el, anchor, local, mySize) {
         var doc = document,
             pos, scroll, extraX, extraY;
 
@@ -48,10 +48,10 @@ Ext.define('Ext.rtl.Component', {
         return el.calculateAnchorXY(anchor, extraX, extraY, mySize);
     },
 
-    getBorderPadding: function() {
+    getBorderPadding: function () {
         var borderPadding = this.el.getBorderPadding(),
             xBegin;
-                
+
         if (this.isParentRtl()) {
             xBegin = borderPadding.xBegin;
             borderPadding.xBegin = borderPadding.xEnd;
@@ -61,20 +61,20 @@ Ext.define('Ext.rtl.Component', {
         return borderPadding;
     },
 
-    getLocalX: function() {
+    getLocalX: function () {
         return this.isLocalRtl() ? this.el.rtlGetLocalX() : this.el.getLocalX();
     },
 
-    getLocalXY: function() {
+    getLocalXY: function () {
         return this.isLocalRtl() ? this.el.rtlGetLocalXY() : this.el.getLocalXY();
     },
-    
-    unitizeBox: function(box) {
+
+    unitizeBox: function (box) {
         if (this.getInherited().rtl) {
-            return Ext.dom.Element.rtlUnitizeBox(box); 
+            return Ext.dom.Element.rtlUnitizeBox(box);
         } else {
             return this.callParent(arguments);
-        } 
+        }
     },
 
     initInheritedState: function (inheritedState) {
@@ -100,13 +100,13 @@ Ext.define('Ext.rtl.Component', {
      * @return {Boolean}
      * @private
      */
-    isLocalRtl: function() {
+    isLocalRtl: function () {
         var me = this,
             rtl, offsetParent;
 
         if (me.floating) {
             if (me._isOffsetParentRtl === undefined) {
-                
+
                 // position:fixed elements do not report an offsetParent, so fall back to parentNode
                 offsetParent = this.el.dom.offsetParent || this.el.dom.parentNode;
                 if (offsetParent) {
@@ -129,7 +129,7 @@ Ext.define('Ext.rtl.Component', {
      * @return {Boolean}
      * @private
      */
-    isParentRtl: function() {
+    isParentRtl: function () {
         var me = this,
             inheritedState = me.getInherited(),
             isRtl = false,
@@ -160,27 +160,27 @@ Ext.define('Ext.rtl.Component', {
         return isRtl;
     },
 
-    setLocalX: function(x) {
+    setLocalX: function (x) {
         return this.isLocalRtl() ? this.el.rtlSetLocalX(x) : this.el.setLocalX(x);
     },
 
-    setLocalXY: function(x, y) {
+    setLocalXY: function (x, y) {
         return this.isLocalRtl() ? this.el.rtlSetLocalXY(x, y) : this.el.setLocalXY(x, y);
     },
-    
-    isOppositeRootDirection: function(){
+
+    isOppositeRootDirection: function () {
         return !this.getInherited().rtl !== !Ext.rootInheritedState.rtl; // jshint ignore:line
     },
 
     privates: {
-        initStyles: function(){
+        initStyles: function () {
             if (this.getInherited().rtl) {
                 this.horizontalPosProp = 'right';
             }
             this.callParent(arguments);
         },
 
-        parseBox: function(box) {
+        parseBox: function (box) {
             if (this.getInherited().rtl) {
                 return Ext.dom.Element.rtlParseBox(box);
             } else {
@@ -188,8 +188,8 @@ Ext.define('Ext.rtl.Component', {
             }
         }
     }
-}, function() {
-    Ext.onInternalReady(function() {
+}, function () {
+    Ext.onInternalReady(function () {
         // If the document or body has "direction:rtl" then we set the rtl flag in the
         // root hierarchy state so that the page-level coordinate system will be
         // right-based (similar to using a Viewport with "rtl: true").

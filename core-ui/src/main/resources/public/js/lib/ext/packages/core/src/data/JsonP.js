@@ -115,7 +115,7 @@ Ext.define('Ext.data.JsonP', {
      * </ul>
      * @return {Object} request An object containing the request details.
      */
-    request: function(options) {
+    request: function (options) {
         options = Ext.apply({}, options);
 
         //<debug>
@@ -175,7 +175,7 @@ Ext.define('Ext.data.JsonP', {
      * be aborted.
      * @param {Object/String} request (Optional) The request to abort
      */
-    abort: function(request){
+    abort: function (request) {
         var me = this,
             requests = me.requests,
             key;
@@ -199,7 +199,7 @@ Ext.define('Ext.data.JsonP', {
      * @private
      * @param {Object} request The request
      */
-    setupErrorHandling: function(request){
+    setupErrorHandling: function (request) {
         request.script.onerror = Ext.bind(this.handleError, this, [request]);
     },
 
@@ -208,7 +208,7 @@ Ext.define('Ext.data.JsonP', {
      * @private
      * @param {Object} request The request
      */
-    handleAbort: function(request){
+    handleAbort: function (request) {
         request.errorType = 'abort';
         this.handleResponse(null, request);
     },
@@ -218,7 +218,7 @@ Ext.define('Ext.data.JsonP', {
      * @private
      * @param {Object} request The request
      */
-    handleError: function(request){
+    handleError: function (request) {
         request.errorType = 'error';
         this.handleResponse(null, request);
     },
@@ -228,7 +228,7 @@ Ext.define('Ext.data.JsonP', {
      * @private
      * @param {Object} request The request
      */
-    cleanupErrorHandling: function(request){
+    cleanupErrorHandling: function (request) {
         request.script.onerror = null;
     },
 
@@ -237,7 +237,7 @@ Ext.define('Ext.data.JsonP', {
      * @private
      * @param {Object} request The request
      */
-    handleTimeout: function(request){
+    handleTimeout: function (request) {
         request.errorType = 'timeout';
         this.handleResponse(null, request);
     },
@@ -248,7 +248,7 @@ Ext.define('Ext.data.JsonP', {
      * @param {Object} result The result from the request
      * @param {Object} request The request
      */
-    handleResponse: function(result, request){
+    handleResponse: function (result, request) {
 
         var success = true,
             globalEvents = Ext.GlobalEvents;
@@ -282,7 +282,7 @@ Ext.define('Ext.data.JsonP', {
      * @param {Object} params Any extra params to be sent
      * @param {Object} options The object passed to {@link #request}.
      */
-    createScript: function(url, params, options) {
+    createScript: function (url, params, options) {
         var script = document.createElement('script');
         script.setAttribute("src", Ext.urlAppend(url, Ext.Object.toQueryString(params)));
         script.setAttribute("async", true);

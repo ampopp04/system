@@ -4,7 +4,7 @@
 Ext.define('Ext.sparkline.VmlCanvas', {
     extend: 'Ext.sparkline.CanvasBase',
 
-    setWidth: function(width) {
+    setWidth: function (width) {
         var me = this;
 
         me.callParent(arguments);
@@ -12,7 +12,7 @@ Ext.define('Ext.sparkline.VmlCanvas', {
         me.owner.groupEl.dom.style.width = width + 'px';
     },
 
-    setHeight: function(height) {
+    setHeight: function (height) {
         var me = this;
 
         me.callParent(arguments);
@@ -41,9 +41,9 @@ Ext.define('Ext.sparkline.VmlCanvas', {
         fill = fillColor == null ? ' filled="false"' : ' fillColor="' + fillColor + '" filled="true" ';
         closed = vpath[0] === vpath[vpath.length - 1] ? 'x ' : '';
         return ['<svml:shape coordorigin="0 0" coordsize="', this.pixelWidth, ' ', this.pixelHeight,
-                '" id="jqsshape', shapeid, '" ',
-                stroke,
-                fill,
+            '" id="jqsshape', shapeid, '" ',
+            stroke,
+            fill,
             ' style="position:absolute;height:', this.pixelHeight, 'px;width:', this.pixelWidth, 'px" ',
             ' path="m ', initial, ' l ', vpath.join(', '), ' ', closed, 'e"></svml:shape>'
         ].join('');
@@ -152,7 +152,7 @@ Ext.define('Ext.sparkline.VmlCanvas', {
 
     insertAfterShape: function (shapeid, shape) {
         var existing = this.el.getById('jqsshape' + shapeid, true),
-                vel = this['_draw' + shape.type].apply(this, shape.args);
+            vel = this['_draw' + shape.type].apply(this, shape.args);
         existing.insertAdjacentHTML('afterEnd', vel);
     },
 
@@ -169,10 +169,10 @@ Ext.define('Ext.sparkline.VmlCanvas', {
     render: function () {
         this.group.dom.innerHTML = this.prerender.join('');
     }
-}, function() {
-    Ext.onInternalReady(function() {
+}, function () {
+    Ext.onInternalReady(function () {
         var doc = document;
-    
+
         if (doc.namespaces && !doc.namespaces.svml) {
             doc.namespaces.add("svml", "urn:schemas-microsoft-com:vml", '#default#VML');
         }

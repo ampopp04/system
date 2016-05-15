@@ -1,7 +1,7 @@
 Ext.define('Ext.rtl.layout.container.Absolute', {
     override: 'Ext.layout.container.Absolute',
-    
-    adjustWidthAnchor: function(value, childContext) {
+
+    adjustWidthAnchor: function (value, childContext) {
         if (this.owner.getInherited().rtl) {
             var padding = this.targetPadding,
                 x = childContext.getStyle('right');

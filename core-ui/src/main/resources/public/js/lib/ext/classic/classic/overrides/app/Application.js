@@ -24,7 +24,7 @@ Ext.define('Ext.overrides.app.Application', {
         enableQuickTips: true
     },
 
-    applyMainView: function(mainView) {
+    applyMainView: function (mainView) {
         var view, proto, config, plugins;
 
         if (typeof mainView === 'string') {
@@ -46,7 +46,7 @@ Ext.define('Ext.overrides.app.Application', {
         return view.create(config);
     },
 
-    getDependencies: function(cls, data, requires) {
+    getDependencies: function (cls, data, requires) {
         var Controller = Ext.app.Controller,
             proto = cls.prototype,
             namespace = data.$namespace,
@@ -70,7 +70,7 @@ Ext.define('Ext.overrides.app.Application', {
         }
     },
 
-    onBeforeLaunch: function() {
+    onBeforeLaunch: function () {
         var me = this,
             autoCreateViewport = me.autoCreateViewport;
 
@@ -78,7 +78,7 @@ Ext.define('Ext.overrides.app.Application', {
             me.initQuickTips();
         }
 
-        if(autoCreateViewport) {
+        if (autoCreateViewport) {
             me.initViewport();
         }
 
@@ -96,11 +96,11 @@ Ext.define('Ext.overrides.app.Application', {
         return name;
     },
 
-    initViewport: function() {
+    initViewport: function () {
         this.setMainView(this.getViewportName());
     },
 
-    initQuickTips: function() {
+    initQuickTips: function () {
         Ext.tip.QuickTipManager.init();
     }
 });

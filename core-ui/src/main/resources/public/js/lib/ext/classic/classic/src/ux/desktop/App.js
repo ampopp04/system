@@ -32,7 +32,7 @@ Ext.define('Ext.ux.desktop.App', {
         }
     },
 
-    init: function() {
+    init: function () {
         var me = this, desktopCfg;
 
         if (me.useQuickTips) {
@@ -49,7 +49,7 @@ Ext.define('Ext.ux.desktop.App', {
 
         me.viewport = new Ext.container.Viewport({
             layout: 'fit',
-            items: [ me.desktop ]
+            items: [me.desktop]
         });
 
         Ext.getWin().on('beforeunload', me.onUnload, me);
@@ -101,7 +101,7 @@ Ext.define('Ext.ux.desktop.App', {
         return cfg;
     },
 
-    createWindow: function(module) {
+    createWindow: function (module) {
         var window = module.createWindow();
         window.show();
     },
@@ -121,15 +121,15 @@ Ext.define('Ext.ux.desktop.App', {
         return cfg;
     },
 
-    initModules : function(modules) {
+    initModules: function (modules) {
         var me = this;
         Ext.each(modules, function (module) {
             module.app = me;
         });
     },
 
-    getModule : function(name) {
-    	var ms = this.modules;
+    getModule: function (name) {
+        var ms = this.modules;
         for (var i = 0, len = ms.length; i < len; i++) {
             var m = ms[i];
             if (m.id == name || m.appType == name) {
@@ -139,7 +139,7 @@ Ext.define('Ext.ux.desktop.App', {
         return null;
     },
 
-    onReady : function(fn, scope) {
+    onReady: function (fn, scope) {
         if (this.isReady) {
             fn.call(scope, this);
         } else {
@@ -151,11 +151,11 @@ Ext.define('Ext.ux.desktop.App', {
         }
     },
 
-    getDesktop : function() {
+    getDesktop: function () {
         return this.desktop;
     },
 
-    onUnload : function(e) {
+    onUnload: function (e) {
         if (this.fireEvent('beforeunload', this) === false) {
             e.stopEvent();
         }

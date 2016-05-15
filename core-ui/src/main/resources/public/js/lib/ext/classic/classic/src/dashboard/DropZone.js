@@ -39,8 +39,8 @@ Ext.define('Ext.dashboard.DropZone', {
                 column: null,
                 dashboard: dashboard,
                 above: null,
-                extensible : false,
-                beforeAfter : 0,
+                extensible: false,
+                beforeAfter: 0,
                 data: data,
                 panel: data.panel,
                 rawEvent: e,
@@ -52,8 +52,8 @@ Ext.define('Ext.dashboard.DropZone', {
         for (i = 0; i < count; i += 2) {
             item = items[i];
             w = item.lastBox.width;
-            if (items[i+1]) {
-                w += items[i+1].lastBox.width;
+            if (items[i + 1]) {
+                w += items[i + 1].lastBox.width;
             }
 
             //if (x < w) {
@@ -111,15 +111,14 @@ Ext.define('Ext.dashboard.DropZone', {
         data.lastOver = over;
 
         if ((!hasListeners.validatedrop || dashboard.fireEvent('validatedrop', over) !== false) &&
-            (!hasListeners.beforedragover || dashboard.fireEvent('beforedragover', over) !== false ))
-            {
+            (!hasListeners.beforedragover || dashboard.fireEvent('beforedragover', over) !== false )) {
 
             proxyProxy = dd.panelProxy.getProxy();
 
             // make sure proxy width is fluid in different width columns
             proxy.getProxy().setWidth('auto');
 
-            if ( colEl) {
+            if (colEl) {
 
                 width = colWidth = colEl.getWidth();
                 // A floating column was targeted
@@ -144,16 +143,16 @@ Ext.define('Ext.dashboard.DropZone', {
                 }
                 proxyProxy.setStyle({
                     'float': 'none',
-                    'clear' : 'none',
+                    'clear': 'none',
                     'margin-left': (over.beforeAfter > 0) ? (colWidth - width - colEl.getPadding('lr')) + 'px' : '',
-                    'margin-top' : '7px'
+                    'margin-top': '7px'
                 });
 
             } else {
                 padding = dashboard.body.getPadding('lr');
                 proxyProxy.setStyle({
-                    'float' : 'left',
-                    'clear' : 'left',
+                    'float': 'left',
+                    'clear': 'left',
                     'margin': '0 7px 0 7px'
                 });
                 proxyProxy.setWidth(dashboard.body.getWidth() - padding);
@@ -172,12 +171,12 @@ Ext.define('Ext.dashboard.DropZone', {
         return over.status;
     },
 
-    isRowExtensible : function(rowIndex) {
-      var me = this,
-          dashboard = me.dashboard,
-          maxColumns = dashboard.getMaxColumns() || 1;
+    isRowExtensible: function (rowIndex) {
+        var me = this,
+            dashboard = me.dashboard,
+            maxColumns = dashboard.getMaxColumns() || 1;
 
-      return Ext.Array.from(dashboard.query('>dashboard-column[rowIndex=' + rowIndex + ']')).length < maxColumns;
+        return Ext.Array.from(dashboard.query('>dashboard-column[rowIndex=' + rowIndex + ']')).length < maxColumns;
     },
 
     notifyDrop: function (dd, e, data) {

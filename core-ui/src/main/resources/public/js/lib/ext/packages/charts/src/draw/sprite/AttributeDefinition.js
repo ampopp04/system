@@ -321,7 +321,7 @@ Ext.define('Ext.draw.sprite.AttributeDefinition', {
                             normalized[name][i] = subVal;
                         }
                     }
-                } else if (keepUnrecognized){
+                } else if (keepUnrecognized) {
                     normalized[name] = val;
                 }
             } else {
@@ -333,7 +333,7 @@ Ext.define('Ext.draw.sprite.AttributeDefinition', {
                     if (typeof val !== 'undefined') {
                         normalized[name] = val;
                     }
-                } else if (keepUnrecognized){
+                } else if (keepUnrecognized) {
                     normalized[name] = val;
                 }
             }
@@ -462,7 +462,7 @@ Ext.define('Ext.draw.sprite.AttributeDefinition', {
                 if (typeof val !== 'undefined') {
                     normalized[name] = val;
                 }
-            } else if (keepUnrecognized){
+            } else if (keepUnrecognized) {
                 normalized[name] = val;
             }
         }

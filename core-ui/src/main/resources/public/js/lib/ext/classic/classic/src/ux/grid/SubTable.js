@@ -1,5 +1,5 @@
 /**
- * A small grid nested within a parent grid's row. 
+ * A small grid nested within a parent grid's row.
  *
  * See the [Kitchen Sink](http://dev.sencha.com/extjs/5.0.1/examples/kitchensink/#customer-grid) for example usage.
  */
@@ -10,12 +10,12 @@ Ext.define('Ext.ux.grid.SubTable', {
 
     rowBodyTpl: ['<table class="' + Ext.baseCSSPrefix + 'grid-subtable"><tbody>',
         '{%',
-            'this.owner.renderTable(out, values);',
+        'this.owner.renderTable(out, values);',
         '%}',
         '</tbody></table>'
     ],
 
-    init: function(grid) {
+    init: function (grid) {
         var me = this,
             columns = me.columns,
             len, i, columnCfg;
@@ -36,7 +36,7 @@ Ext.define('Ext.ux.grid.SubTable', {
         }
     },
 
-    destroy: function() {
+    destroy: function () {
         var columns = this.columns,
             len, i;
 
@@ -49,12 +49,12 @@ Ext.define('Ext.ux.grid.SubTable', {
         this.callParent();
     },
 
-    getRowBodyFeatureData: function(record, idx, rowValues) {
+    getRowBodyFeatureData: function (record, idx, rowValues) {
         this.callParent(arguments);
         rowValues.rowBodyCls += ' ' + Ext.baseCSSPrefix + 'grid-subtable-row';
     },
 
-    renderTable: function(out, rowValues) {
+    renderTable: function (out, rowValues) {
         var me = this,
             columns = me.columns,
             numColumns = columns.length,
@@ -85,16 +85,16 @@ Ext.define('Ext.ux.grid.SubTable', {
             out.push('</tr>');
         }
     },
-    
-    getRowBodyContentsFn: function(rowBodyTpl) {
+
+    getRowBodyContentsFn: function (rowBodyTpl) {
         var me = this;
         return function (rowValues) {
             rowBodyTpl.owner = me;
             return rowBodyTpl.applyTemplate(rowValues);
         };
     },
-    
-    getAssociatedRecords: function(record) {
+
+    getAssociatedRecords: function (record) {
         return record[this.association]().getRange();
     }
 });

@@ -2,29 +2,29 @@
  * The {@link Ext.direct.RemotingProvider RemotingProvider} exposes access to
  * server side methods on the client (a remote procedure call (RPC) type of
  * connection where the client can initiate a procedure on the server).
- * 
+ *
  * This allows for code to be organized in a fashion that is maintainable,
  * while providing a clear path between client and server, something that is
  * not always apparent when using URLs.
- * 
+ *
  * To accomplish this the server-side needs to describe what classes and methods
  * are available on the client-side. This configuration will typically be
  * outputted by the server-side Ext Direct stack when the API description is built.
  */
 Ext.define('Ext.direct.RemotingProvider', {
-    extend: 'Ext.direct.JsonProvider', 
-    alias:  'direct.remotingprovider',
-    
+    extend: 'Ext.direct.JsonProvider',
+    alias: 'direct.remotingprovider',
+
     requires: [
-        'Ext.util.MixedCollection', 
-        'Ext.util.DelayedTask', 
+        'Ext.util.MixedCollection',
+        'Ext.util.DelayedTask',
         'Ext.direct.Transaction',
         'Ext.direct.RemotingMethod',
         'Ext.direct.Manager'
     ],
-    
+
     type: 'remoting',
-    
+
     /**
      * @cfg {Object} actions
      *
@@ -75,7 +75,7 @@ Ext.define('Ext.direct.RemotingProvider', {
      *      TestAction.multiply(
      *          // pass two arguments to server, so specify len=2
      *          2, 4,
-     *          
+     *
      *          // callback function after the server is called
      *          //  result: the result returned by the server
      *          //       e: Ext.direct.RemotingEvent object
@@ -95,10 +95,10 @@ Ext.define('Ext.direct.RemotingProvider', {
      *                  var msg = e.message; // failure message
      *              }
      *          },
-     *          
+     *
      *          // Scope to call the callback in (optional)
      *          window,
-     *          
+     *
      *          // Options to apply to this method call. This can include
      *          // Ajax.request() options; only `timeout` is supported at this time.
      *          // When timeout is set for a method call, it will be executed immediately
@@ -113,9 +113,9 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * In the example above, the server side "multiply" function will be passed two
      * arguments (2 and 4). The "multiply" method should return the value 8 which will be
-     * available as the `result` in the callback example above. 
+     * available as the `result` in the callback example above.
      */
-    
+
     /**
      * @cfg {Boolean} [disableNestedActions=false]
      * In versions prior to 4.2, using dotted Action names was not really meaningful,
@@ -165,7 +165,7 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * If you find this behavior undesirable, set this config option to `true`.
      */
-    
+
     /**
      * @cfg {String/Object} namespace
      *
@@ -173,19 +173,19 @@ Ext.define('Ext.direct.RemotingProvider', {
      * Explicitly specify the namespace Object, or specify a String to have a
      * {@link Ext#namespace namespace} created implicitly.
      */
-    
+
     /**
      * @cfg {String} url
      *
-     * **Required**. The url to connect to the {@link Ext.direct.Manager} server-side router. 
+     * **Required**. The url to connect to the {@link Ext.direct.Manager} server-side router.
      */
-    
+
     /**
      * @cfg {String} [enableUrlEncode=data]
      *
      * Specify which param will hold the arguments for the method.
      */
-    
+
     /**
      * @cfg {Number/Boolean} [enableBuffer=10]
      *
@@ -200,31 +200,31 @@ Ext.define('Ext.direct.RemotingProvider', {
      * `timeout` parameter in `options` object for that method call.
      */
     enableBuffer: 10,
-    
+
     /**
      * @cfg {Number} bufferLimit The maximum number of requests to batch together.
      * By default, an unlimited number of requests will be batched. This option will
      * allow to wait only for a certain number of Direct method calls before
      * dispatching a request to the server, even if {@link #enableBuffer} timeout
      * has not yet expired.
-     * 
+     *
      * Note that this option does nothing if {@link #enableBuffer} is set to `false`.
      */
     bufferLimit: Number.MAX_VALUE,
-    
+
     /**
      * @cfg {Number} [maxRetries=1]
      *
      * Number of times to re-attempt delivery on failure of a call.
      */
     maxRetries: 1,
-    
+
     /**
      * @cfg {Number} [timeout]
      *
      * The timeout to use for each request.
      */
-    
+
     /**
      * @event beforecall
      * @preventable
@@ -235,7 +235,7 @@ Ext.define('Ext.direct.RemotingProvider', {
      * @param {Ext.direct.RemotingProvider} provider
      * @param {Ext.direct.Transaction} transaction
      * @param {Object} meta The meta data
-     */            
+     */
 
     /**
      * @event call
@@ -246,7 +246,7 @@ Ext.define('Ext.direct.RemotingProvider', {
      * @param {Ext.direct.RemotingProvider} provider
      * @param {Ext.direct.Transaction} transaction
      * @param {Object} meta The meta data
-     */            
+     */
 
     /**
      * @event beforecallback
@@ -261,7 +261,7 @@ Ext.define('Ext.direct.RemotingProvider', {
      * is about to be fired
      */
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this;
 
         me.callParent(arguments);
@@ -270,27 +270,27 @@ Ext.define('Ext.direct.RemotingProvider', {
         me.transactions = new Ext.util.MixedCollection();
         me.callBuffer = [];
     },
-    
-    doConnect: function() {
+
+    doConnect: function () {
         if (!this.apiCreated) {
             this.initAPI();
             this.apiCreated = true;
         }
     },
-    
+
     /**
      * Get nested namespace by property.
      *
      * @private
      */
-    getNamespace: function(root, action) {
+    getNamespace: function (root, action) {
         var parts, ns, i, len;
-        
-        root  = root || Ext.global;
+
+        root = root || Ext.global;
         parts = action.toString().split('.');
 
         for (i = 0, len = parts.length; i < len; i++) {
-            ns   = parts[i];
+            ns = parts[i];
             root = root[ns];
 
             if (typeof root === 'undefined') {
@@ -307,39 +307,39 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * @private
      */
-    createNamespaces: function(root, action) {
+    createNamespaces: function (root, action) {
         var parts, ns, i, len;
-        
-        root  = root || Ext.global;
+
+        root = root || Ext.global;
         parts = action.toString().split('.');
-        
+
         for (i = 0, len = parts.length; i < len; i++) {
             ns = parts[i];
-            
+
             root[ns] = root[ns] || {};
-            root     = root[ns];
+            root = root[ns];
         }
-        
+
         return root;
     },
-    
+
     /**
      * Initialize the API
      *
      * @private
      */
-    initAPI: function() {
+    initAPI: function () {
         var me = this,
             actions = me.actions,
             namespace = me.namespace,
             Manager = Ext.direct.Manager,
             action, cls, methods, i, len, method, handler;
-            
+
         for (action in actions) {
             if (actions.hasOwnProperty(action)) {
                 if (me.disableNestedActions) {
                     cls = namespace[action];
-                    
+
                     if (!cls) {
                         cls = namespace[action] = {};
                     }
@@ -357,13 +357,13 @@ Ext.define('Ext.direct.RemotingProvider', {
                 for (i = 0, len = methods.length; i < len; ++i) {
                     method = new Ext.direct.RemotingMethod(methods[i]);
                     cls[method.name] = handler = me.createHandler(action, method);
-                    
+
                     Manager.registerMethod(handler.$name, handler);
                 }
             }
         }
     },
-    
+
     /**
      * Create a handler function for a direct call.
      *
@@ -374,25 +374,25 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * @private
      */
-    createHandler: function(action, method) {
+    createHandler: function (action, method) {
         var me = this,
             slice = Array.prototype.slice,
             handler;
-        
+
         if (!method.formHandler) {
-            handler = function() {
+            handler = function () {
                 me.configureRequest(action, method, slice.call(arguments, 0));
             };
         }
         else {
-            handler = function() {
+            handler = function () {
                 me.configureFormRequest(action, method, slice.call(arguments, 0));
             };
         }
-        
+
         handler.name = handler.$name = action + '.' + method.name;
         handler.$directFn = true;
-        
+
         handler.directCfg = handler.$directCfg = {
             action: action,
             method: method
@@ -400,20 +400,20 @@ Ext.define('Ext.direct.RemotingProvider', {
 
         return handler;
     },
-    
+
     /**
      * @inheritdoc
      */
-    connect: function() {
+    connect: function () {
         var me = this;
 
         //<debug>
         if (!me.url) {
             Ext.raise('Error initializing RemotingProvider "' + me.id +
-                            '", no url configured.');
+                '", no url configured.');
         }
         //</debug>
-        
+
         me.callParent();
     },
 
@@ -425,35 +425,35 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * @private
      */
-    runCallback: function(transaction, event) {
+    runCallback: function (transaction, event) {
         var success = !!event.status,
             funcName = success ? 'success' : 'failure',
             callback, options, result;
-        
+
         if (transaction && transaction.callback) {
             callback = transaction.callback;
-            options  = transaction.callbackOptions;
-            result   = typeof event.result !== 'undefined' ? event.result : event.data;
+            options = transaction.callbackOptions;
+            result = typeof event.result !== 'undefined' ? event.result : event.data;
 
             if (Ext.isFunction(callback)) {
                 callback(result, event, success, options);
             }
             else {
                 Ext.callback(callback[funcName], callback.scope, [result, event, success, options]);
-                Ext.callback(callback.callback,  callback.scope, [result, event, success, options]);
+                Ext.callback(callback.callback, callback.scope, [result, event, success, options]);
             }
         }
     },
-    
+
     /**
      * React to the ajax request being completed
      *
      * @private
      */
-    onData: function(options, success, response) {
+    onData: function (options, success, response) {
         var me = this,
             i, len, events, event, transaction, transactions;
-            
+
         if (success) {
             events = me.createEvents(response);
 
@@ -465,13 +465,13 @@ Ext.define('Ext.direct.RemotingProvider', {
                 if (transaction && me.fireEvent('beforecallback', me, event, transaction) !== false) {
                     me.runCallback(transaction, event, true);
                 }
-                
+
                 Ext.direct.Manager.removeTransaction(transaction);
             }
         }
         else {
             transactions = [].concat(options.transaction);
-            
+
             for (i = 0, len = transactions.length; i < len; ++i) {
                 transaction = me.getTransaction(transactions[i]);
 
@@ -492,13 +492,13 @@ Ext.define('Ext.direct.RemotingProvider', {
                     if (transaction && me.fireEvent('beforecallback', me, event, transaction) !== false) {
                         me.runCallback(transaction, event, false);
                     }
-                    
+
                     Ext.direct.Manager.removeTransaction(transaction);
                 }
             }
         }
     },
-    
+
     /**
      * Get transaction from XHR options
      *
@@ -508,10 +508,10 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * @private
      */
-    getTransaction: function(options) {
+    getTransaction: function (options) {
         return options && options.tid ? Ext.direct.Manager.getTransaction(options.tid) : null;
     },
-    
+
     /**
      * Gets the Ajax call info for a transaction
      *
@@ -521,7 +521,7 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * @private
      */
-    getPayload: function(transaction) {
+    getPayload: function (transaction) {
         var result = {
             action: transaction.action,
             method: transaction.method,
@@ -529,14 +529,14 @@ Ext.define('Ext.direct.RemotingProvider', {
             type: 'rpc',
             tid: transaction.id
         };
-        
+
         if (transaction.metadata) {
             result.metadata = transaction.metadata;
         }
-        
+
         return result;
     },
-    
+
     /**
      * Sends a request to the server
      *
@@ -544,7 +544,7 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * @private
      */
-    sendRequest: function(transaction) {
+    sendRequest: function (transaction) {
         var me = this,
             request, callData, params,
             enableUrlEncode = me.enableUrlEncode,
@@ -586,7 +586,7 @@ Ext.define('Ext.direct.RemotingProvider', {
 
         Ext.Ajax.request(request);
     },
-    
+
     /**
      * Add a new transaction to the queue
      *
@@ -594,11 +594,11 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * @private
      */
-    queueTransaction: function(transaction) {
+    queueTransaction: function (transaction) {
         var me = this,
             callBuffer = me.callBuffer,
             enableBuffer = me.enableBuffer;
-        
+
         if (transaction.form) {
             me.sendFormRequest(transaction);
             return;
@@ -609,7 +609,7 @@ Ext.define('Ext.direct.RemotingProvider', {
             me.sendRequest(transaction);
             return;
         }
-        
+
         callBuffer.push(transaction);
 
         if (enableBuffer && callBuffer.length < me.bufferLimit) {
@@ -623,23 +623,23 @@ Ext.define('Ext.direct.RemotingProvider', {
             me.combineAndSend();
         }
     },
-    
+
     /**
      * Combine any buffered requests and send them off
      *
      * @private
      */
-    combineAndSend : function() {
+    combineAndSend: function () {
         var me = this,
             buffer = me.callBuffer,
             len = buffer.length;
-            
+
         if (len > 0) {
             me.sendRequest(len === 1 ? buffer[0] : buffer);
             me.callBuffer = [];
         }
     },
-    
+
     /**
      * Configure a transaction for a Direct request
      *
@@ -652,27 +652,27 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * @private
      */
-    configureTransaction: function(action, method, args, isForm) {
+    configureTransaction: function (action, method, args, isForm) {
         var data, cb, scope, options, params;
-        
+
         data = method.getCallData(args);
-        
-        cb      = data.callback;
-        scope   = data.scope;
+
+        cb = data.callback;
+        scope = data.scope;
         options = data.options;
-        
+
         //<debug>
         if (cb && !Ext.isFunction(cb)) {
             Ext.raise("Callback argument is not a function " +
-                            "for Ext Direct method " +
-                            action + "." + method.name);
+                "for Ext Direct method " +
+                action + "." + method.name);
         }
         //</debug>
-        
+
         // Callback might be unspecified for a notification
         // that does not expect any return value
         cb = cb && scope ? Ext.Function.bind(cb, scope) : cb;
-        
+
         params = Ext.apply({}, {
             provider: this,
             args: args,
@@ -686,14 +686,14 @@ Ext.define('Ext.direct.RemotingProvider', {
             isForm: isForm,
             disableBatching: method.disableBatching
         });
-        
+
         if (options && options.timeout != null) {
             params.timeout = options.timeout;
         }
-        
+
         return new Ext.direct.Transaction(params);
     },
-    
+
     /**
      * Configure a direct request
      *
@@ -702,10 +702,10 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * @private
      */
-    configureRequest: function(action, method, args) {
+    configureRequest: function (action, method, args) {
         var me = this,
             transaction;
-        
+
         transaction = me.configureTransaction(action, method, args);
 
         if (me.fireEvent('beforecall', me, transaction, method) !== false) {
@@ -714,7 +714,7 @@ Ext.define('Ext.direct.RemotingProvider', {
             me.fireEvent('call', me, transaction, method);
         }
     },
-    
+
     /**
      * Configure a form submission request
      *
@@ -724,19 +724,19 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * @private
      */
-    configureFormRequest: function(action, method, args) {
+    configureFormRequest: function (action, method, args) {
         var me = this,
             transaction, form, isUpload, postParams;
-        
+
         transaction = me.configureTransaction(action, method, args, true);
-        
+
         if (me.fireEvent('beforecall', me, transaction, method) !== false) {
             Ext.direct.Manager.addTransaction(transaction);
-            
+
             form = transaction.form;
-            
+
             isUpload = String(form.getAttribute("enctype")).toLowerCase() === 'multipart/form-data';
-            
+
             postParams = {
                 extTID: transaction.id,
                 extAction: action,
@@ -744,11 +744,11 @@ Ext.define('Ext.direct.RemotingProvider', {
                 extType: 'rpc',
                 extUpload: String(isUpload)
             };
-            
+
             if (transaction.metadata) {
                 postParams.extMetadata = Ext.JSON.encode(transaction.metadata);
             }
-            
+
             Ext.apply(transaction, {
                 form: form,
                 isUpload: isUpload,
@@ -759,7 +759,7 @@ Ext.define('Ext.direct.RemotingProvider', {
             me.fireEvent('call', me, transaction, method);
         }
     },
-    
+
     /**
      * Sends a form request
      *
@@ -767,7 +767,7 @@ Ext.define('Ext.direct.RemotingProvider', {
      *
      * @private
      */
-    sendFormRequest: function(transaction) {
+    sendFormRequest: function (transaction) {
         var me = this;
 
         Ext.Ajax.request({
@@ -780,18 +780,18 @@ Ext.define('Ext.direct.RemotingProvider', {
             transaction: transaction
         });
     },
-    
+
     inheritableStatics: {
         /**
          * @private
          * @static
          * @inheritable
          */
-        checkConfig: function(config) {
+        checkConfig: function (config) {
             // RemotingProvider needs service URI,
             // type and array of Actions
             return config && config.type === 'remoting' &&
-                   config.url && Ext.isArray(config.actions);
+                config.url && Ext.isArray(config.actions);
         }
     }
 });

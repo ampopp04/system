@@ -1,7 +1,7 @@
 Ext.define('Ext.rtl.panel.Title', {
     override: 'Ext.panel.Title',
 
-    getIconRenderData: function() {
+    getIconRenderData: function () {
         var me = this,
             data = me.callParent(),
             header = me.ownerCt;
@@ -14,7 +14,7 @@ Ext.define('Ext.rtl.panel.Title', {
     },
 
     privates: {
-        _getVerticalAdjustDirection: function() {
+        _getVerticalAdjustDirection: function () {
             var header = this.ownerCt;
             return (header && header.isParentRtl()) ? 'right' : 'left';
         }

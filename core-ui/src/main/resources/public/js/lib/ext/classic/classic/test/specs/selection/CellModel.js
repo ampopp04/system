@@ -1,19 +1,19 @@
-describe("Ext.selection.CellModel", function() {
-    
+describe("Ext.selection.CellModel", function () {
+
     var grid, view, store, sm, colRef;
-    
+
     function triggerCellMouseEvent(type, rowIdx, cellIdx, button, x, y) {
         var target = findCell(rowIdx, cellIdx);
         jasmine.fireMouseEvent(target, type, x, y, button);
     }
-    
+
     function findCell(rowIdx, cellIdx) {
         return grid.getView().getCellInclusive({
             row: rowIdx,
             column: cellIdx
         }, true);
     }
-    
+
     function makeGrid(columns, cfg, selModelCfg) {
         Ext.define('spec.CellModel', {
             extend: 'Ext.data.Model',
@@ -25,12 +25,12 @@ describe("Ext.selection.CellModel", function() {
         });
 
         sm = new Ext.selection.CellModel(selModelCfg || {});
-        
-        
+
+
         var data = [],
             defaultCols = [],
             i;
-        
+
         if (!columns) {
             for (i = 1; i <= 5; ++i) {
                 defaultCols.push({
@@ -39,7 +39,7 @@ describe("Ext.selection.CellModel", function() {
                 });
             }
         }
-            
+
         for (i = 1; i <= 10; ++i) {
             data.push({
                 field1: i + '.' + 1,
@@ -49,12 +49,12 @@ describe("Ext.selection.CellModel", function() {
                 field5: i + '.' + 5
             });
         }
-        
+
         store = new Ext.data.Store({
             model: spec.CellModel,
             data: data
         });
-        
+
         grid = new Ext.grid.Panel(Ext.apply({
             columns: columns || defaultCols,
             store: store,
@@ -67,8 +67,8 @@ describe("Ext.selection.CellModel", function() {
         sm = grid.getSelectionModel();
         colRef = grid.getColumnManager().getColumns();
     }
-    
-    afterEach(function(){
+
+    afterEach(function () {
         Ext.destroy(grid, store);
         sm = grid = store = view = null;
         Ext.undefine('spec.CellModel');
@@ -82,14 +82,14 @@ describe("Ext.selection.CellModel", function() {
         expect(sm.getSelection().length).toBe(1);
     });
 
-    describe("deselectOnContainerClick", function() {
-        it("should default to false", function() {
+    describe("deselectOnContainerClick", function () {
+        it("should default to false", function () {
             makeGrid();
             expect(sm.deselectOnContainerClick).toBe(false);
         });
 
-        describe("deselectOnContainerClick: false", function() {
-            it("should not deselect when clicking the container", function() {
+        describe("deselectOnContainerClick: false", function () {
+            it("should not deselect when clicking the container", function () {
                 makeGrid(null, null, {
                     deselectOnContainerClick: false
                 });
@@ -104,8 +104,8 @@ describe("Ext.selection.CellModel", function() {
             });
         });
 
-        describe("deselectOnContainerClick: true", function() {
-            it("should deselect when clicking the container", function() {
+        describe("deselectOnContainerClick: true", function () {
+            it("should deselect when clicking the container", function () {
                 makeGrid(null, null, {
                     deselectOnContainerClick: true
                 });
@@ -118,9 +118,9 @@ describe("Ext.selection.CellModel", function() {
             });
         });
     });
-    
-    describe("hidden columns", function() {
-        it("should take a hidden column into account on click", function() {
+
+    describe("hidden columns", function () {
+        it("should take a hidden column into account on click", function () {
             makeGrid([{
                 dataIndex: 'field1'
             }, {
@@ -130,14 +130,14 @@ describe("Ext.selection.CellModel", function() {
                 dataIndex: 'field3'
             }]);
             triggerCellMouseEvent('click', 0, 2);
-            var pos = sm.getPosition();    
+            var pos = sm.getPosition();
             expect(pos.column).toBe(colRef[2]);
             expect(pos.record).toBe(grid.getStore().getAt(0));
-        });  
+        });
     });
-    
-    describe("store actions", function(){
-        it("should have no selection when clearing the store", function(){
+
+    describe("store actions", function () {
+        it("should have no selection when clearing the store", function () {
             makeGrid();
             sm.selectByPosition({
                 row: 1,
@@ -145,12 +145,12 @@ describe("Ext.selection.CellModel", function() {
             });
             store.removeAll();
             expect(sm.getPosition()).toBeNull();
-        });  
-        
-        it("should update the position when removing records", function() {
+        });
+
+        it("should update the position when removing records", function () {
             makeGrid();
             var rec = store.getAt(8);
-            
+
             sm.selectByPosition({
                 column: 1,
                 row: 8
@@ -159,16 +159,16 @@ describe("Ext.selection.CellModel", function() {
             store.removeAt(0);
             store.removeAt(0);
             store.removeAt(0);
-            
+
             var pos = sm.getPosition();
             expect(pos.column).toBe(colRef[1]);
             expect(pos.record).toBe(rec);
         });
-        
-        it("should update the position on inserting records", function() {
+
+        it("should update the position on inserting records", function () {
             makeGrid();
             var rec = store.getAt(1);
-            
+
             sm.selectByPosition({
                 column: 2,
                 row: 1
@@ -177,14 +177,14 @@ describe("Ext.selection.CellModel", function() {
             store.insert(0, {});
             store.insert(0, {});
             store.insert(0, {});
-            
+
             var pos = sm.getPosition();
             expect(pos.column).toBe(colRef[2]);
             expect(pos.record).toBe(rec);
         });
     });
 
-    it("should render cells with the x-grid-cell-selected cls (EXTJSIV-11254)", function() {
+    it("should render cells with the x-grid-cell-selected cls (EXTJSIV-11254)", function () {
         makeGrid();
         sm.select(0);
 
@@ -194,12 +194,12 @@ describe("Ext.selection.CellModel", function() {
         }]);
 
         var col = grid.getColumnManager().getHeaderAtIndex(0);
-            
+
         expect(grid.getView().getCell(0, col)).toHaveCls('x-grid-cell-selected');
     });
 
-    describe("column move", function() {
-        it("should have the correct position after moving column", function() {
+    describe("column move", function () {
+        it("should have the correct position after moving column", function () {
             makeGrid();
             triggerCellMouseEvent('click', 0, 0);
             grid.headerCt.move(0, 3);
@@ -210,7 +210,7 @@ describe("Ext.selection.CellModel", function() {
             expect(pos.columnHeader).toBe(colRef[0]);
         });
 
-        it("should not fire a change event", function() {
+        it("should not fire a change event", function () {
             makeGrid();
             triggerCellMouseEvent('click', 0, 0);
             var spy = jasmine.createSpy();
@@ -220,8 +220,8 @@ describe("Ext.selection.CellModel", function() {
         });
     });
 
-    describe('with DD', function() {
-        it('should start dragging', function() {
+    describe('with DD', function () {
+        it('should start dragging', function () {
             makeGrid(null, {
                 viewConfig: {
                     plugins: {
@@ -232,16 +232,16 @@ describe("Ext.selection.CellModel", function() {
             });
             var plugin = grid.view.findPlugin('gridviewdragdrop');
 
-            runs(function() {
+            runs(function () {
                 triggerCellMouseEvent('mousedown', 0, 0, null, 10, 30);
                 jasmine.fireMouseEvent(document.body, 'mousemove', 20, 20);
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return plugin.dragZone.proxy.el.isVisible();
             });
 
-            runs (function() {
+            runs(function () {
                 var proxyInner;
 
                 // The proxy should contain the configured dragText
@@ -254,5 +254,5 @@ describe("Ext.selection.CellModel", function() {
             });
         });
     });
-    
+
 });

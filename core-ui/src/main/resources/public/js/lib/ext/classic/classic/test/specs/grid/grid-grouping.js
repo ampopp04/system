@@ -1,6 +1,6 @@
-describe("grid-grouping", function() {
+describe("grid-grouping", function () {
     function createSuite(buffered) {
-        describe(buffered ? "with buffered rendering" : "without buffered rendering", function() {
+        describe(buffered ? "with buffered rendering" : "without buffered rendering", function () {
             var grid, view, store, dataSource, grouping,
                 GridGroupModel = Ext.define(null, {
                     extend: 'Ext.data.Model',
@@ -12,9 +12,9 @@ describe("grid-grouping", function() {
 
             function spyOnEvent(object, eventName, fn) {
                 var obj = {
-                    fn: fn || Ext.emptyFn
-                },
-                spy = spyOn(obj, "fn");
+                        fn: fn || Ext.emptyFn
+                    },
+                    spy = spyOn(obj, "fn");
                 object.addListener(eventName, obj.fn);
                 return spy;
             }
@@ -24,7 +24,7 @@ describe("grid-grouping", function() {
 
                 jasmine.fireMouseEvent(target, type, x, y, button);
             }
-            
+
             function triggerCellKeyEvent(rowIdx, cellIdx, type, key, altKey) {
                 var target = findCell(rowIdx, cellIdx);
                 jasmine.fireKeyEvent(target, type, key, null, null, altKey);
@@ -34,20 +34,20 @@ describe("grid-grouping", function() {
                 var target = findHeader(key, theView);
                 jasmine.fireMouseEvent(target, 'click');
             }
-            
+
             function findHeader(key, theView) {
                 theView = theView || view;
                 var feature = (theView.normalView || theView).features[0];
                 return feature.getHeaderNode(key);
             }
-            
+
             function findCell(rowIdx, cellIdx) {
                 return grid.getView().getCellInclusive({
                     row: rowIdx,
                     column: cellIdx
                 }, true);
             }
-            
+
             function getRec(index) {
                 return store.getAt(index);
             }
@@ -57,7 +57,7 @@ describe("grid-grouping", function() {
                     i, n;
 
                 for (i = 0; i < 300; ++i) {
-                    n = i + 1; 
+                    n = i + 1;
                     data.push({
                         id: n,
                         name: 'Item' + n,
@@ -87,7 +87,7 @@ describe("grid-grouping", function() {
                         });
                     }
                 }
-                
+
                 storeConfig = {
                     model: GridGroupModel,
                     data: data
@@ -165,17 +165,17 @@ describe("grid-grouping", function() {
                 }, gridCfg));
                 view = grid.getView();
             }
-            
-            afterEach(function() {
+
+            afterEach(function () {
                 grouping = grid = store = view = Ext.destroy(grid, store);
             });
 
-            describe("basic functionality", function() {
-                beforeEach(function(){
+            describe("basic functionality", function () {
+                beforeEach(function () {
                     makeGrid();
                 });
 
-                it("should start with all groups expanded", function() {
+                it("should start with all groups expanded", function () {
                     expect(view.all.getCount()).toBe(store.getCount());
 
                     // Collapse all four groups
@@ -188,12 +188,12 @@ describe("grid-grouping", function() {
                     expect(view.all.getCount()).toBe(grid.store.getGroups().length);
                 });
 
-                it("should collapse the header on clicking", function(){
+                it("should collapse the header on clicking", function () {
                     triggerHeaderClick('t1');
                     expect(grouping.isExpanded('t1')).toBe(false);
                 });
 
-                it("should NOT fire itemupdate for records in collapsed groups", function() {
+                it("should NOT fire itemupdate for records in collapsed groups", function () {
                     var spy = spyOnEvent(grid.view, "itemupdate").andCallThrough();
 
                     triggerHeaderClick('t1');
@@ -201,7 +201,7 @@ describe("grid-grouping", function() {
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should fire itemupdate event with recordIndex", function() {
+                it("should fire itemupdate event with recordIndex", function () {
                     var spy = spyOnEvent(view, "itemupdate").andCallThrough(),
                         rec25 = view.store.getAt(25),
                         groupStoreIndex = view.dataSource.indexOf(rec25);
@@ -210,7 +210,7 @@ describe("grid-grouping", function() {
                     expect(spy).toHaveBeenCalledWith(rec25, 25, view.all.item(groupStoreIndex).dom);
                 });
 
-                it("should fire itemupdate event with recordIndex when group above is collapsed", function() {
+                it("should fire itemupdate event with recordIndex when group above is collapsed", function () {
                     var spy = spyOnEvent(view, "itemupdate").andCallThrough(),
                         rec25 = view.store.getAt(25),
                         groupStoreIndex;
@@ -221,19 +221,19 @@ describe("grid-grouping", function() {
                     expect(spy).toHaveBeenCalledWith(rec25, 25, view.all.item(groupStoreIndex).dom);
                 });
 
-                it("should expand a collapsed header on clicking", function(){
+                it("should expand a collapsed header on clicking", function () {
                     triggerHeaderClick('t1');
                     triggerHeaderClick('t1');
                     expect(grouping.isExpanded('t1')).toBe(true);
                 });
 
-                it("should allow selection after collapsing", function(){
+                it("should allow selection after collapsing", function () {
                     triggerHeaderClick('t1');
                     triggerCellMouseEvent('click', 1, 0);
                     expect(grid.getSelectionModel().isSelected(getRec(25))).toBe(true);
                 });
 
-                it("should restore selection after collapsing and expading", function(){
+                it("should restore selection after collapsing and expading", function () {
                     var row;
 
                     // Select record 0
@@ -256,11 +256,11 @@ describe("grid-grouping", function() {
                     expect(Ext.fly(row).hasCls(view.selectedItemCls)).toBe(false);
                 });
 
-                describe("events", function() {
+                describe("events", function () {
                     // Don't test this for buffered rendering, it makes decisions on what to render
                     // (or replace the whole) in a manner that's difficult to predict via testing
                     if (!buffered) {
-                        it("should fire itemremove for each item on collapse", function() {
+                        it("should fire itemremove for each item on collapse", function () {
                             var spy = jasmine.createSpy(),
                                 view = grid.getView(),
                                 items, i, records;
@@ -302,11 +302,11 @@ describe("grid-grouping", function() {
                 });
             });
 
-            describe("expand/collapse", function() {
-                describe("expand", function() {
-                    describe("with focus: true", function() {
-                        describe("with the group in view", function() {
-                            it("should expand the group", function() {
+            describe("expand/collapse", function () {
+                describe("expand", function () {
+                    describe("with focus: true", function () {
+                        describe("with the group in view", function () {
+                            it("should expand the group", function () {
                                 makeGrid(null, {
                                     height: 400
                                 }, manyGroups(), false, {
@@ -321,8 +321,8 @@ describe("grid-grouping", function() {
                             });
                         });
 
-                        describe("with the group not in the view", function() {
-                            it("should expand the group & scroll to the first record", function() {
+                        describe("with the group not in the view", function () {
+                            it("should expand the group & scroll to the first record", function () {
                                 makeGrid(null, {
                                     height: 400,
                                     trailingBufferZone: 20,
@@ -332,13 +332,13 @@ describe("grid-grouping", function() {
                                 });
                                 grouping.expand('group100', true);
                                 expect(grouping.isExpanded('group100')).toBe(true);
-                                waitsFor(function() {
+                                waitsFor(function () {
                                     var node = view.getNodeByRecord(store.getById(298));
                                     if (node) {
                                         return view.getScrollable().isInView(node).y;
                                     }
                                 });
-                                runs(function() {
+                                runs(function () {
                                     // Although already implied by the wait above, let's just be explicit
                                     // anyway, seems weird to have the test end on a waitsFor
                                     var node = view.getNodeByRecord(store.getById(298));
@@ -349,10 +349,10 @@ describe("grid-grouping", function() {
                     });
                 });
 
-                describe("collapse", function() {
-                    describe("with focus: true", function() {
-                        describe("with the group in view", function() {
-                            it("should collapse the group", function() {
+                describe("collapse", function () {
+                    describe("with focus: true", function () {
+                        describe("with the group in view", function () {
+                            it("should collapse the group", function () {
                                 makeGrid(null, {
                                     height: 400
                                 }, manyGroups());
@@ -365,8 +365,8 @@ describe("grid-grouping", function() {
                             });
                         });
 
-                        describe("with the group not in the view", function() {
-                            it("should collapse the group & scroll to the placeholder", function() {
+                        describe("with the group not in the view", function () {
+                            it("should collapse the group & scroll to the placeholder", function () {
                                 makeGrid(null, {
                                     height: 400,
                                     trailingBufferZone: 20,
@@ -374,13 +374,13 @@ describe("grid-grouping", function() {
                                 }, manyGroups());
                                 grouping.collapse('group100', true);
                                 expect(grouping.isExpanded('group100')).toBe(false);
-                                waitsFor(function() {
+                                waitsFor(function () {
                                     var node = grouping.getHeaderNode('group100');
                                     if (node) {
                                         return view.getScrollable().isInView(node).y;
                                     }
                                 });
-                                runs(function() {
+                                runs(function () {
                                     // Although already implied by the wait above, let's just be explicit
                                     // anyway, seems weird to have the test end on a waitsFor
                                     var node = grouping.getHeaderNode('group100');
@@ -392,14 +392,14 @@ describe("grid-grouping", function() {
                 })
             });
 
-            describe("moving columns", function() {
+            describe("moving columns", function () {
                 function dragColumn(from, to, onRight, locked) {
                     var fromBox = from.el.getBox(),
-                        fromMx = fromBox.x + fromBox.width/2,
-                        fromMy = fromBox.y + fromBox.height/2,
+                        fromMx = fromBox.x + fromBox.width / 2,
+                        fromMy = fromBox.y + fromBox.height / 2,
                         toBox = to.el.getBox(),
                         toMx = toBox.x,
-                        toMy = toBox.y + toBox.height/2,
+                        toMy = toBox.y + toBox.height / 2,
                         offset = onRight ? toBox.width - 6 : 5,
                         moveOffset = toMx + offset,
                         dragThresh = onRight ? Ext.dd.DragDropManager.clickPixelThresh + 1 : -Ext.dd.DragDropManager.clickPixelThresh - 1;
@@ -429,8 +429,8 @@ describe("grid-grouping", function() {
 
                 // https://sencha.jira.com/browse/EXTJS-18781
                 // Cells with preventUpdate caused an error.
-                describe('with collapsed group', function() {
-                    it('should move columns with a collapsed group without throwing an error', function() {
+                describe('with collapsed group', function () {
+                    it('should move columns with a collapsed group without throwing an error', function () {
                         makeGrid(null, {
                             columns: [{
                                 text: 'A',
@@ -457,7 +457,7 @@ describe("grid-grouping", function() {
                     });
                 });
 
-                it("should not fire an update event on the store", function() {
+                it("should not fire an update event on the store", function () {
                     makeGrid(false, {
                         columns: [{
                             text: 'A',
@@ -477,7 +477,7 @@ describe("grid-grouping", function() {
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should react to events when collapsed", function() {
+                it("should react to events when collapsed", function () {
                     makeGrid(false, {
                         columns: [{
                             text: 'A',
@@ -499,11 +499,11 @@ describe("grid-grouping", function() {
                     expect(grouping.isExpanded('t1')).toBe(true);
                 });
 
-                it("should update the summary rows", function() {
+                it("should update the summary rows", function () {
                     function expectSummaryText(row, values) {
                         var row = Ext.fly(view.getNode(row)).down(grouping.summaryRowSelector);
-                        
-                        Ext.Array.forEach(grid.getColumnManager().getColumns(), function(col, index) {
+
+                        Ext.Array.forEach(grid.getColumnManager().getColumns(), function (col, index) {
                             var text = row.down(col.getCellInnerSelector()).dom.innerHTML;
                             expect(text).toBe(values[index]);
                         });
@@ -512,17 +512,17 @@ describe("grid-grouping", function() {
                     makeGrid(false, {
                         columns: [{
                             dataIndex: 'name',
-                            summaryRenderer: function(val, summaryData, dataIndex, meta) {
+                            summaryRenderer: function (val, summaryData, dataIndex, meta) {
                                 return 'A' + meta.record.ownerGroup;
                             }
                         }, {
                             dataIndex: 'name',
-                            summaryRenderer: function(val, summaryData, dataIndex, meta) {
+                            summaryRenderer: function (val, summaryData, dataIndex, meta) {
                                 return 'B' + meta.record.ownerGroup;
                             }
                         }, {
                             dataIndex: 'name',
-                            summaryRenderer: function(val, summaryData, dataIndex, meta) {
+                            summaryRenderer: function (val, summaryData, dataIndex, meta) {
                                 return 'C' + meta.record.ownerGroup;
                             }
                         }]
@@ -543,58 +543,58 @@ describe("grid-grouping", function() {
                 });
             });
 
-            describe("enable/disable", function() {
-                describe("enable", function() {
-                    describe("when grouped", function() {
-                        it("should show group headers", function() {
+            describe("enable/disable", function () {
+                describe("enable", function () {
+                    describe("when grouped", function () {
+                        it("should show group headers", function () {
                             makeGrid();
                             grouping.disable();
                             grouping.enable();
-                            expect(view.el.select('.x-grid-group-hd').getCount()).toBe(4);    
+                            expect(view.el.select('.x-grid-group-hd').getCount()).toBe(4);
                         });
                     });
 
-                    describe("when not grouped", function() {
-                        it("should not show group headers", function() {
+                    describe("when not grouped", function () {
+                        it("should not show group headers", function () {
                             makeGrid(true);
                             grouping.disable();
                             grouping.enable();
-                            expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);    
+                            expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);
                         });
                     });
                 });
 
-                describe("disable", function() {
-                    describe("when grouped", function() {
-                        it("should not show group headers", function() {
+                describe("disable", function () {
+                    describe("when grouped", function () {
+                        it("should not show group headers", function () {
                             makeGrid();
                             grouping.disable();
-                            expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);    
+                            expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);
                         });
 
-                        it("should show all rows when collapsed", function() {
+                        it("should show all rows when collapsed", function () {
                             makeGrid();
                             grouping.collapseAll();
                             grouping.disable();
-                            expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);   
+                            expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);
                             expect(view.all.getCount()).toBe(100);
                         });
                     });
 
-                    describe("when not grouped", function() {
-                        it("should not show group headers", function() {
+                    describe("when not grouped", function () {
+                        it("should not show group headers", function () {
                             makeGrid(true);
                             grouping.disable();
-                            expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);  
-                            expect(view.all.getCount()).toBe(100);  
+                            expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);
+                            expect(view.all.getCount()).toBe(100);
                         });
                     });
                 });
             });
 
-            describe("markup generation", function() {
-                it("should not cause an error when generating markup with group names with special characters", function() {
-                    expect(function() {
+            describe("markup generation", function () {
+                it("should not cause an error when generating markup with group names with special characters", function () {
+                    expect(function () {
                         makeGrid(false, null, [{
                             type: 'Foo Bar *&#^$%',
                             name: 'Group 1'
@@ -603,8 +603,8 @@ describe("grid-grouping", function() {
                 });
             });
 
-            describe("column visibility", function() {
-                it("should not throw an exception when hiding all columns", function() {
+            describe("column visibility", function () {
+                it("should not throw an exception when hiding all columns", function () {
                     makeGrid(false, {
                         columns: [{
                             dataIndex: 'name',
@@ -623,7 +623,7 @@ describe("grid-grouping", function() {
                             itemId: 'col5'
                         }]
                     });
-                    expect(function() {
+                    expect(function () {
                         grid.down('#col1').hide();
                         grid.down('#col2').hide();
                         grid.down('#col3').hide();
@@ -634,9 +634,9 @@ describe("grid-grouping", function() {
             });
 
             if (buffered) {
-                describe("basic functionality with buffered renderer", function() {
-                    describe('collapseAll with locked columns', function() {
-                        beforeEach(function(){
+                describe("basic functionality with buffered renderer", function () {
+                    describe('collapseAll with locked columns', function () {
+                        beforeEach(function () {
                             makeGrid(null, {
                                 columns: [{
                                     dataIndex: 'type',
@@ -648,7 +648,7 @@ describe("grid-grouping", function() {
                                 }]
                             });
                         });
-                        it('should collapseAll with no errors', function() {
+                        it('should collapseAll with no errors', function () {
 
                             // Every record should be prepresented in the GroupStore
                             expect(dataSource.getCount()).toBe(store.getCount());
@@ -660,12 +660,11 @@ describe("grid-grouping", function() {
                     });
 
                     describe('expanding/collapsing, selecting and scrolling', function () {
-                        beforeEach(function(){
-                            makeGrid(null, {
-                            });
+                        beforeEach(function () {
+                            makeGrid(null, {});
                         });
 
-                        it("should start with all groups expanded - buffered rendering", function() {
+                        it("should start with all groups expanded - buffered rendering", function () {
                             var selectedRecord,
                                 viewIndex,
                                 selItem,
@@ -710,24 +709,24 @@ describe("grid-grouping", function() {
                             expect(view.getCell(selItem, view.getHeaderAtIndex(0))).toHaveCls(view.focusedItemCls);
                         });
 
-                        it("should collapse the header on clicking", function(){
+                        it("should collapse the header on clicking", function () {
                             triggerHeaderClick('t1');
                             expect(grouping.isExpanded('t1')).toBe(false);
                         });
 
-                        it("should expand a collapsed header on clicking", function(){
+                        it("should expand a collapsed header on clicking", function () {
                             triggerHeaderClick('t1');
                             triggerHeaderClick('t1');
                             expect(grouping.isExpanded('t1')).toBe(true);
                         });
 
-                        it("should allow selection after collapsing", function(){
+                        it("should allow selection after collapsing", function () {
                             triggerHeaderClick('t1');
                             triggerCellMouseEvent('click', 1, 0);
                             expect(grid.getSelectionModel().isSelected(getRec(25))).toBe(true);
                         });
 
-                        it('should scroll to the passed row', function() {
+                        it('should scroll to the passed row', function () {
                             grouping.collapseAll();
 
                             // It's out of range and in a collapsed group - not there
@@ -748,8 +747,7 @@ describe("grid-grouping", function() {
                             storeClearSpy;
 
                         beforeEach(function () {
-                            makeGrid(true, {
-                            }, 5000);
+                            makeGrid(true, {}, 5000);
 
                             bufferedRenderer = grid.view.bufferedRenderer;
 
@@ -773,10 +771,10 @@ describe("grid-grouping", function() {
                             var scrollTop = bufferedRenderer.scrollTop,
                                 position = bufferedRenderer.position;
 
-                            waitsFor(function() {
+                            waitsFor(function () {
                                 return bufferedRenderer.bodyTop === 62517;
                             });
-                            runs(function() {
+                            runs(function () {
                                 expect(scrollTop).toBeWithin(1, scrollTop);
                                 expect(position).toBeWithin(1, position);
                             });
@@ -789,19 +787,19 @@ describe("grid-grouping", function() {
                 });
             }
 
-            describe("without grouping", function(){
-                it("should render no headers", function() {
+            describe("without grouping", function () {
+                it("should render no headers", function () {
                     makeGrid(true);
-                    expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);    
+                    expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);
                 });
-                
-                it("should allow selection", function() {
+
+                it("should allow selection", function () {
                     makeGrid(true);
                     triggerCellMouseEvent('click', 0, 0);
                     expect(grid.getSelectionModel().isSelected(getRec(0))).toBe(true);
                 });
 
-                it("should render group when 'group by this field' is clicked and not configured with grouping", function() {
+                it("should render group when 'group by this field' is clicked and not configured with grouping", function () {
                     makeGrid(true, {
                         columns: [{
                             dataIndex: 'name'
@@ -811,46 +809,46 @@ describe("grid-grouping", function() {
                         }]
                     });
 
-                    expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);    
+                    expect(view.el.select('.x-grid-group-hd').getCount()).toBe(0);
 
                     jasmine.fireMouseEvent(grid.down('#type').triggerEl.dom, 'click');
                     jasmine.fireMouseEvent(grid.headerCt.getMenu().down('#groupMenuItem').getEl(), 'click');
-                    expect(view.el.select('.x-grid-group-hd').getCount()).toBe(4);    
+                    expect(view.el.select('.x-grid-group-hd').getCount()).toBe(4);
                 });
             });
 
-            describe("selection/focus", function() {
-                describe("when the grid is not focused", function() {
-                    it("should not focus/select when collapsing a group", function() {
+            describe("selection/focus", function () {
+                describe("when the grid is not focused", function () {
+                    it("should not focus/select when collapsing a group", function () {
                         makeGrid();
                         var view = grid.getView(),
                             t2head = view.getEl().select('.x-grid-group-hd').item(1);
-                            
+
 
                         grid.getView().scrollElIntoView(t2head);
-                        waitsFor(function() {
+                        waitsFor(function () {
                             return view.getEl().dom.scrollTop > 0;
                         }, "Never scrolled");
-                        runs(function() {
+                        runs(function () {
                             triggerHeaderClick('t2');
                             expect(grid.getSelectionModel().getCount()).toBe(0);
                             expect(grid.getNavigationModel().getPosition()).toBeNull();
                         });
                     });
 
-                    it("should not focus/select when expanding a group", function() {
+                    it("should not focus/select when expanding a group", function () {
                         makeGrid();
                         grouping.collapse('t2');
 
                         var view = grid.getView(),
                             t2head = view.getEl().select('.x-grid-group-hd').item(1);
-                            
+
 
                         grid.getView().scrollElIntoView(t2head);
-                        waitsFor(function() {
+                        waitsFor(function () {
                             return view.getEl().dom.scrollTop > 0;
                         }, "Never scrolled");
-                        runs(function() {
+                        runs(function () {
                             triggerHeaderClick('t2');
                             expect(grid.getSelectionModel().getCount()).toBe(0);
                             expect(grid.getNavigationModel().getPosition()).toBeNull();
@@ -858,9 +856,9 @@ describe("grid-grouping", function() {
                     });
                 });
             });
-            
-            describe("scrolling", function() {
-                it("should not focus the selected row when collapsing a group", function() {
+
+            describe("scrolling", function () {
+                it("should not focus the selected row when collapsing a group", function () {
                     makeGrid();
                     // scroll to the bottom. Record 0 must not be focused, otherwise it will
                     // scroll into view upon a refresh caused by the collapse;
@@ -869,26 +867,26 @@ describe("grid-grouping", function() {
                     grid.scrollByDeltaY(2000);
                     grouping.collapse('t4');
                     var el = grid.getView().el.dom;
-                             
+
                     expect(el.scrollTop).toBe(el.scrollHeight - el.clientHeight);
-                });  
-                
-                it("should not focus the selected row when expanding a group", function() {
+                });
+
+                it("should not focus the selected row when expanding a group", function () {
                     makeGrid();
                     // scroll to the bottom
                     grid.getSelectionModel().select(0);
                     grid.scrollByDeltaY(2000);
                     grouping.collapse('t4');
-                    
+
                     var el = grid.getView().el.dom,
                         top = el.scrollTop;
-                        
-                    grouping.expand('t4');
-                             
-                    expect(el.scrollTop).toBe(top);
-                });  
 
-                it("should scroll to the group when expanding and it is out of the viewport and not expand other groups", function() {
+                    grouping.expand('t4');
+
+                    expect(el.scrollTop).toBe(top);
+                });
+
+                it("should scroll to the group when expanding and it is out of the viewport and not expand other groups", function () {
                     var data = [],
                         i;
 
@@ -908,42 +906,42 @@ describe("grid-grouping", function() {
                     }, data, false, {
                         startCollapsed: true
                     });
-                    
+
                     grouping.expand('200', true);
 
                     for (i = 1; i < 200; ++i) {
                         expect(grouping.isExpanded('' + i)).toBe(false);
                     }
                     expect(grouping.isExpanded('200')).toBe(true);
-                    
+
                     var nodes = view.getNodes(),
                         rec = view.getRecord(nodes[nodes.length - 1]);
 
                     expect(rec.id).toBe(400);
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return view.el.dom.scrollTop > 0;
                     });
-                    runs(function() {
+                    runs(function () {
                         expect(view.el.dom.scrollTop).toBeGreaterThan(0);
                     });
 
-                });  
+                });
             });
-            
-            describe("adding", function() {
-                it("should be able to add a record to an empty grid", function() {
-                    makeGrid(false, {}, 0);        
+
+            describe("adding", function () {
+                it("should be able to add a record to an empty grid", function () {
+                    makeGrid(false, {}, 0);
                     store.add({
                         name: 'Foo',
                         type: 'test'
-                    });    
+                    });
                     expect(view.getNode(0).getAttribute('data-recordindex')).toBe('0');
                 });
             });
 
-            describe("updating", function() {
-                describe("the id", function() {
-                    it("should be able to modify the id of the first item in a group", function() {
+            describe("updating", function () {
+                describe("the id", function () {
+                    it("should be able to modify the id of the first item in a group", function () {
                         makeGrid();
                         store.first().set('id', 1000);
                         triggerHeaderClick('t1');
@@ -953,28 +951,28 @@ describe("grid-grouping", function() {
                     });
                 });
 
-                it("should not cause an error when updating the first row of a group", function() {
+                it("should not cause an error when updating the first row of a group", function () {
                     makeGrid();
-                    expect(function() {
+                    expect(function () {
                         store.first().set('name', 'foo');
                     }).not.toThrow();
                 });
 
-                it("should not cause an error when updating the first row of a group that has a column with preventUpdate: true", function() {
+                it("should not cause an error when updating the first row of a group that has a column with preventUpdate: true", function () {
                     makeGrid(false, {
                         columns: [{
                             dataIndex: 'name',
                             preventUpdate: true
                         }]
                     });
-                    expect(function() {
+                    expect(function () {
                         store.first().set('name', 'foo');
                     }).not.toThrow();
                 });
             });
 
-            describe("locking", function() {
-                it("should not cause an exception when collapsing/expanding after unlocking the only locked column", function() {
+            describe("locking", function () {
+                it("should not cause an exception when collapsing/expanding after unlocking the only locked column", function () {
                     makeGrid(false, {
                         columns: [{
                             locked: true,
@@ -985,14 +983,14 @@ describe("grid-grouping", function() {
                         }]
                     });
                     grid.unlock(grid.down('#locked'));
-                    expect(function() {
+                    expect(function () {
                         triggerHeaderClick('t1');
                         triggerHeaderClick('t1');
                     }).not.toThrow();
                 });
 
                 // https://sencha.jira.com/browse/EXTJS-18047
-                it('should not throw an exception when focusing a view in which all groups are collapsed', function() {
+                it('should not throw an exception when focusing a view in which all groups are collapsed', function () {
                     makeGrid(false, {
                         columns: [{
                             locked: true,
@@ -1011,12 +1009,12 @@ describe("grid-grouping", function() {
                 });
             });
 
-            describe("reconfiguring", function() {
+            describe("reconfiguring", function () {
                 function createReconfigureSuite(withLocking) {
-                    describe(withLocking ? "with locking" : "without locking", function() {
+                    describe(withLocking ? "with locking" : "without locking", function () {
                         var cols;
 
-                        beforeEach(function() {
+                        beforeEach(function () {
                             grouping = new Ext.grid.feature.Grouping();
                             // Start empty
                             makeGrid(null, {
@@ -1059,23 +1057,23 @@ describe("grid-grouping", function() {
                             }, cfg));
                         }
 
-                        it("should render the rows", function() {
+                        it("should render the rows", function () {
                             grid.reconfigure(store, cols);
-                            waitsFor(function() {
+                            waitsFor(function () {
                                 return getView().getNodes().length > 0;
                             }, "Rows never rendered");
-                            runs(function() {
+                            runs(function () {
                                 expect(getView().getNodes().length).toBe(4);
                             });
                         });
 
-                        it("should render the group headers", function() {
+                        it("should render the group headers", function () {
                             grid.reconfigure(store, cols);
-                            waitsFor(function() {
+                            waitsFor(function () {
                                 return getView().getNodes().length > 0;
                             }, "Rows never rendered");
 
-                            runs(function() {
+                            runs(function () {
                                 var t1 = findHeader('t1', getView()),
                                     t2 = findHeader('t2', getView());
 
@@ -1084,53 +1082,54 @@ describe("grid-grouping", function() {
                             });
                         });
 
-                        it("should react to click events", function() {
+                        it("should react to click events", function () {
                             grid.reconfigure(store, cols);
-                            waitsFor(function() {
+                            waitsFor(function () {
                                 return getView().getNodes().length > 0;
                             }, "Rows never rendered");
-                            runs(function() {
+                            runs(function () {
                                 triggerHeaderClick('t1', getView());
                                 // 2 from the second group + 1 placeholder
                                 expect(getView().getNodes().length).toBe(3);
                             });
                         });
 
-                        it("should not cause an error when using an autoDestroy store", function() {
+                        it("should not cause an error when using an autoDestroy store", function () {
                             store.autoDestroy = true;
-                            expect(function() {
+                            expect(function () {
                                 grid.reconfigure(store, cols);
                             }).not.toThrow();
                         });
 
-                        it("should be able to reconfigure from grouped store -> not grouped store", function() {
+                        it("should be able to reconfigure from grouped store -> not grouped store", function () {
                             grid.reconfigure(store, cols);
-                            expect(function() {
+                            expect(function () {
                                 grid.reconfigure(makeStore({
                                     groupField: ''
                                 }));
                             }).not.toThrow();
                         });
 
-                        it("should be able to reconfigure from not grouped store -> grouped store", function() {
+                        it("should be able to reconfigure from not grouped store -> grouped store", function () {
                             store.destroy();
                             store = makeStore({
                                 groupField: ''
                             });
                             grid.reconfigure(store, cols);
-                            expect(function() {
+                            expect(function () {
                                 grid.reconfigure(makeStore());
                             }).not.toThrow();
                         });
                     });
                 }
+
                 createReconfigureSuite(false);
                 createReconfigureSuite(true);
             });
-            
+
             if (buffered) {
-                describe('Selection', function() {
-                    it('should skip collapsed groups', function() {
+                describe('Selection', function () {
+                    it('should skip collapsed groups', function () {
                         makeGrid();
 
                         triggerHeaderClick('t1');
@@ -1185,22 +1184,22 @@ describe("grid-grouping", function() {
                     });
                 });
 
-                describe('grouping buffered stores', function() {
-                    it('should work', function() {
+                describe('grouping buffered stores', function () {
+                    it('should work', function () {
                         var isLoaded;
 
                         makeBufferedStoreGrid({
                             listeners: {
-                                load: function() {
+                                load: function () {
                                     isLoaded = true;
                                 }
                             }
                         });
 
-                        waitsFor(function() {
+                        waitsFor(function () {
                             return isLoaded;
                         }, 'for initial load');
-                        runs(function() {
+                        runs(function () {
                             view.bufferedRenderer.scrollTo(25);
 
                             // We should scroll with no error, and the following should run with no error.
@@ -1220,18 +1219,18 @@ describe("grid-grouping", function() {
                             isLoaded = false;
                             grouping.disable();
                         });
-                        waitsFor(function() {
+                        waitsFor(function () {
                             return isLoaded;
                         }, 'second load after group clear');
-                        runs(function() {
+                        runs(function () {
                             // No opening group header. First item is the first row., NOT a wrapper.
                             expect(view.all.item(0, true).firstChild.firstChild === view.getRow(0)).toBe(true);
                         });
                     });
                 });
-                
-                describe('Expand *and scrollTo* unrendered group', function() {
-                    it('should use the buffered renderer to scroll to unrendered group headers', function() {
+
+                describe('Expand *and scrollTo* unrendered group', function () {
+                    it('should use the buffered renderer to scroll to unrendered group headers', function () {
                         makeGrid(null, {
                             leadingBufferZone: Ext.grid.plugin.BufferedRenderer.prototype.leadingBufferZone,
                             trailingBufferZone: Ext.grid.plugin.BufferedRenderer.prototype.trailingBufferZone
@@ -1243,6 +1242,7 @@ describe("grid-grouping", function() {
             }
         });
     }
+
     createSuite(false);
     createSuite(true);
 });

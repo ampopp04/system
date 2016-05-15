@@ -64,94 +64,95 @@
  * @since 6.0.0
  */
 Ext.define('Ext.Promise', function () {
-    var Polyfiller;
+        var Polyfiller;
 
-return {
-    requires: [
-        'Ext.promise.Promise'
-    ],
+        return {
+            requires: [
+                'Ext.promise.Promise'
+            ],
 
-    statics: {
-        _ready: function () {
-            // We can cache this now that our requires are met
-            Polyfiller = Ext.promise.Promise;
-        },
+            statics: {
+                _ready: function () {
+                    // We can cache this now that our requires are met
+                    Polyfiller = Ext.promise.Promise;
+                },
 
-        /**
-         * Returns a new Promise that will only resolve once all the specified
-         * `promisesOrValues` have resolved.
-         *
-         * The resolution value will be an Array containing the resolution value of each
-         * of the `promisesOrValues`.
-         *
-         * @param {Mixed[]/Ext.Promise[]/Ext.Promise} promisesOrValues An Array of values
-         * or Promises, or a Promise of an Array of values or Promises.
-         *
-         * @return {Ext.Promise} A Promise of an Array of the resolved values.
-         * @static
-         */
-        all: function () {
-            return Polyfiller.all.apply(Polyfiller, arguments);
-        },
+                /**
+                 * Returns a new Promise that will only resolve once all the specified
+                 * `promisesOrValues` have resolved.
+                 *
+                 * The resolution value will be an Array containing the resolution value of each
+                 * of the `promisesOrValues`.
+                 *
+                 * @param {Mixed[]/Ext.Promise[]/Ext.Promise} promisesOrValues An Array of values
+                 * or Promises, or a Promise of an Array of values or Promises.
+                 *
+                 * @return {Ext.Promise} A Promise of an Array of the resolved values.
+                 * @static
+                 */
+                all: function () {
+                    return Polyfiller.all.apply(Polyfiller, arguments);
+                },
 
-        race: function () {
-            //TODO
-            //<debug>
-            Ext.raise("Not implemented");
-            //</debug>
-        },
+                race: function () {
+                    //TODO
+                    //<debug>
+                    Ext.raise("Not implemented");
+                    //</debug>
+                },
 
-        /**
-         * Convenience method that returns a new Promise rejected with the specified
-         * reason.
-         *
-         * @param {Error} reason Rejection reason.
-         * @return {Ext.Promise} The rejected Promise.
-         * @static
-         */
-        reject: function (reason) {
-            var deferred = new Ext.promise.Deferred();
+                /**
+                 * Convenience method that returns a new Promise rejected with the specified
+                 * reason.
+                 *
+                 * @param {Error} reason Rejection reason.
+                 * @return {Ext.Promise} The rejected Promise.
+                 * @static
+                 */
+                reject: function (reason) {
+                    var deferred = new Ext.promise.Deferred();
 
-            deferred.reject(reason);
+                    deferred.reject(reason);
 
-            return deferred.promise;
-        },
+                    return deferred.promise;
+                },
 
-        /**
-         * Returns a new Promise that either
-         *
-         *  * Resolves immediately for the specified value, or
-         *  * Resolves or rejects when the specified promise (or third-party Promise or
-         *    then()-able) is resolved or rejected.
-         *
-         * @param {Mixed} promiseOrValue A Promise (or third-party Promise or then()-able)
-         * or value.
-         * @return {Ext.Promise} A Promise of the specified Promise or value.
-         * @static
-         */
-        resolve: function (value) {
-            var deferred = new Ext.promise.Deferred();
+                /**
+                 * Returns a new Promise that either
+                 *
+                 *  * Resolves immediately for the specified value, or
+                 *  * Resolves or rejects when the specified promise (or third-party Promise or
+                 *    then()-able) is resolved or rejected.
+                 *
+                 * @param {Mixed} promiseOrValue A Promise (or third-party Promise or then()-able)
+                 * or value.
+                 * @return {Ext.Promise} A Promise of the specified Promise or value.
+                 * @static
+                 */
+                resolve: function (value) {
+                    var deferred = new Ext.promise.Deferred();
 
-            deferred.resolve(value);
+                    deferred.resolve(value);
 
-            return deferred.promise;
+                    return deferred.promise;
+                }
+            },
+
+            constructor: function (action) {
+                var deferred = new Ext.promise.Deferred();
+
+                action(deferred.resolve.bind(deferred), deferred.reject.bind(deferred));
+
+                return deferred.promise;
+            }
         }
     },
+    function (ExtPromise) {
+        var P = Ext.global.Promise;
 
-    constructor: function (action) {
-        var deferred = new Ext.promise.Deferred();
-
-        action(deferred.resolve.bind(deferred), deferred.reject.bind(deferred));
-
-        return deferred.promise;
-    }
-}},
-function (ExtPromise) {
-    var P = Ext.global.Promise;
-
-    if (P && P.resolve) {
-        Ext.Promise = P;
-    } else {
-        ExtPromise._ready();
-    }
-});
+        if (P && P.resolve) {
+            Ext.Promise = P;
+        } else {
+            ExtPromise._ready();
+        }
+    });

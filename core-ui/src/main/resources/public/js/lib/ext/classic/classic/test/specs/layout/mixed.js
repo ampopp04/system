@@ -1,7 +1,7 @@
-describe("mixed layout tests", function() {
-    it("mixed test 1 - no failure", function() {
+describe("mixed layout tests", function () {
+    it("mixed test 1 - no failure", function () {
         var vp;
-        expect(function() {
+        expect(function () {
             vp = new Ext.container.Viewport({
                 renderTo: Ext.getBody(),
                 layout: "fit",

@@ -1,4 +1,4 @@
-describe("Ext.view.NavigationModel", function() {
+describe("Ext.view.NavigationModel", function () {
 
     var view, navModel, store;
 
@@ -40,18 +40,18 @@ describe("Ext.view.NavigationModel", function() {
         navModel = view.getNavigationModel();
     }
 
-    afterEach(function() {
+    afterEach(function () {
         view = navModel = Ext.destroy(view);
     });
 
-    describe("filter changes", function() {
-        it("should focus the item correctly when making the dataset smaller", function() {
+    describe("filter changes", function () {
+        it("should focus the item correctly when making the dataset smaller", function () {
             makeView();
             var rec = store.getById(10);
 
             navModel.setPosition(rec);
             expect(navModel.getPosition()).toBe(9);
-            store.filterBy(function(rec) {
+            store.filterBy(function (rec) {
                 return rec.id % 2 === 0;
             });
 
@@ -61,11 +61,11 @@ describe("Ext.view.NavigationModel", function() {
             expect(navModel.getPosition()).toBe(4);
         });
 
-        it("should focus the item correctly when making the dataset larger", function() {
+        it("should focus the item correctly when making the dataset larger", function () {
             makeView();
             var rec = store.getById(10);
 
-            store.filterBy(function(rec) {
+            store.filterBy(function (rec) {
                 return rec.id % 2 === 0;
             });
             navModel.setPosition(rec);

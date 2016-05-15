@@ -1,32 +1,32 @@
-describe("Ext.form.field.Base", function() {
+describe("Ext.form.field.Base", function () {
     var c, makeField;
-    
+
     function expectAria(attr, value) {
         jasmine.expectAriaAttr(c, attr, value);
     }
-    
+
     function createField(cfg) {
         cfg = Ext.apply({
             ariaRole: 'foo',
             renderTo: Ext.getBody(),
         }, cfg);
-        
+
         return c = new Ext.form.field.Base(cfg);
     }
 
-    beforeEach(function() {
-        makeField = function(cfg) {
+    beforeEach(function () {
+        makeField = function (cfg) {
             cfg = cfg || {};
             c = new Ext.form.field.Base(cfg);
         };
     });
 
-    afterEach(function() {
+    afterEach(function () {
         Ext.destroy(c);
         makeField = c = null;
     });
 
-    it("should encode the input value in the template", function() {
+    it("should encode the input value in the template", function () {
         makeField({
             renderTo: Ext.getBody(),
             value: 'test "  <br/> test'
@@ -35,13 +35,13 @@ describe("Ext.form.field.Base", function() {
         expect(c.inputEl.dom.value).toBe('test "  <br/> test');
     });
 
-    describe("readOnly", function() {
-        it("should be readOnly false by default", function() {
+    describe("readOnly", function () {
+        it("should be readOnly false by default", function () {
             makeField();
             expect(c.readOnly).toBe(false);
         });
 
-        it("should add the readOnlyCls if configured with readOnly: true", function() {
+        it("should add the readOnlyCls if configured with readOnly: true", function () {
             makeField({
                 readOnly: true,
                 renderTo: Ext.getBody()
@@ -49,7 +49,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.el.hasCls(c.readOnlyCls)).toBe(true);
         });
 
-        it("should add readOnly to the inputEl if configured with readOnly: true", function() {
+        it("should add readOnly to the inputEl if configured with readOnly: true", function () {
             makeField({
                 readOnly: true,
                 renderTo: Ext.getBody()
@@ -57,7 +57,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.inputEl.dom.readOnly).toBe(true);
         });
 
-        it("should use a custom readOnlyCls if provided", function() {
+        it("should use a custom readOnlyCls if provided", function () {
             makeField({
                 readOnly: true,
                 renderTo: Ext.getBody(),
@@ -66,7 +66,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.el.hasCls('myCustomReadOnlyCls')).toBe(true);
         });
 
-        it("should be able to set readOnly: true at runtime", function() {
+        it("should be able to set readOnly: true at runtime", function () {
             makeField({
                 renderTo: Ext.getBody()
             });
@@ -75,7 +75,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.inputEl.dom.readOnly).toBe(true);
         });
 
-        it("should be able to set readOnly: false at runtime", function() {
+        it("should be able to set readOnly: false at runtime", function () {
             makeField({
                 renderTo: Ext.getBody(),
                 readOnly: true
@@ -87,10 +87,10 @@ describe("Ext.form.field.Base", function() {
 
     });
 
-    describe("fieldLabel", function() {
+    describe("fieldLabel", function () {
 
-        describe("hasVisibleLabel", function() {
-            it("should always return false when hideLabel: true", function() {
+        describe("hasVisibleLabel", function () {
+            it("should always return false when hideLabel: true", function () {
                 makeField({
                     hideLabel: true,
                     fieldLabel: 'Foo'
@@ -98,14 +98,14 @@ describe("Ext.form.field.Base", function() {
                 expect(c.hasVisibleLabel()).toBe(false);
             });
 
-            it("should return false with an empty label and hideEmptyLabel: true", function() {
+            it("should return false with an empty label and hideEmptyLabel: true", function () {
                 makeField({
                     hideEmptyLabel: true
                 });
                 expect(c.hasVisibleLabel()).toBe(false);
             });
 
-            it("should return true when we specify a label, even if it's empty", function() {
+            it("should return true when we specify a label, even if it's empty", function () {
                 makeField({
                     fieldLabel: '',
                     hideEmptyLabel: false
@@ -113,7 +113,7 @@ describe("Ext.form.field.Base", function() {
                 expect(c.hasVisibleLabel()).toBe(true);
             });
 
-            it("should return true when we have a label and hideEmptyLabel: true", function() {
+            it("should return true when we have a label and hideEmptyLabel: true", function () {
                 makeField({
                     fieldLabel: 'Foo',
                     hideEmptyLabel: true
@@ -122,7 +122,7 @@ describe("Ext.form.field.Base", function() {
             });
         });
 
-        it("should be able to set the label before being rendered", function() {
+        it("should be able to set the label before being rendered", function () {
             makeField({
                 labelSeparator: ''
             });
@@ -131,7 +131,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.labelEl.dom.firstChild).hasHTML('Foo');
         });
 
-        it("should set a configured label", function() {
+        it("should set a configured label", function () {
             makeField({
                 labelSeparator: '',
                 fieldLabel: 'Foo',
@@ -140,7 +140,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.labelEl.dom.firstChild).hasHTML('Foo');
         });
 
-        it("should not hide an empty label with hideEmptyLabel: false", function() {
+        it("should not hide an empty label with hideEmptyLabel: false", function () {
             makeField({
                 fieldLabel: '',
                 hideEmptyLabel: false,
@@ -149,7 +149,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.labelEl.isVisible()).toBe(true);
         });
 
-        it("should hide an empty label with hideEmptyLabel: true", function() {
+        it("should hide an empty label with hideEmptyLabel: true", function () {
             makeField({
                 fieldLabel: '',
                 hideEmptyLabel: true,
@@ -158,7 +158,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.labelEl.isVisible()).toBe(false);
         });
 
-        it("should always hide the label with hideLabel: true", function() {
+        it("should always hide the label with hideLabel: true", function () {
             makeField({
                 fieldLabel: 'Foo',
                 hideLabel: true,
@@ -167,7 +167,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.labelEl.isVisible()).toBe(false);
         });
 
-        it("should set the label after render", function() {
+        it("should set the label after render", function () {
             makeField({
                 labelSeparator: '',
                 renderTo: Ext.getBody(),
@@ -177,7 +177,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.labelEl.dom.firstChild).hasHTML('Bar');
         });
 
-        it("should append the separator when explicitly set", function() {
+        it("should append the separator when explicitly set", function () {
             makeField({
                 labelSeparator: ':',
                 renderTo: Ext.getBody(),
@@ -187,7 +187,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.labelEl.dom.firstChild).hasHTML('Bar:');
         });
 
-        it("should only append the separator if the label doesn't end with the separator when explicitly set", function() {
+        it("should only append the separator if the label doesn't end with the separator when explicitly set", function () {
             makeField({
                 labelSeparator: ':',
                 renderTo: Ext.getBody(),
@@ -197,7 +197,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.labelEl.dom.firstChild).hasHTML('Bar:');
         });
 
-        it("should append the separator when implicitly set", function() {
+        it("should append the separator when implicitly set", function () {
             makeField({
                 labelSeparator: ':',
                 renderTo: Ext.getBody(),
@@ -206,7 +206,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.labelEl.dom.firstChild).hasHTML('Foo:');
         });
 
-        it("should only append the separator if the label doesn't end with the separator when implicitly set", function() {
+        it("should only append the separator if the label doesn't end with the separator when implicitly set", function () {
             makeField({
                 labelSeparator: ':',
                 renderTo: Ext.getBody(),
@@ -215,7 +215,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.labelEl.dom.firstChild).hasHTML('Foo:');
         });
 
-        it("should hide the label if an empty one is set with hideEmptyLabel: true", function() {
+        it("should hide the label if an empty one is set with hideEmptyLabel: true", function () {
             makeField({
                 fieldLabel: 'Foo',
                 hideEmptyLabel: true,
@@ -225,7 +225,7 @@ describe("Ext.form.field.Base", function() {
             expect(c.labelEl.isVisible()).toBe(false);
         });
 
-        it("should show the label if an non-empty one is set with hideEmptyLabel: true", function() {
+        it("should show the label if an non-empty one is set with hideEmptyLabel: true", function () {
             makeField({
                 fieldLabel: '',
                 hideEmptyLabel: true,
@@ -236,7 +236,7 @@ describe("Ext.form.field.Base", function() {
         });
     });
 
-    describe("validitychange", function() {
+    describe("validitychange", function () {
         var error, spy;
 
         function makeDisableField(cfg) {
@@ -245,31 +245,31 @@ describe("Ext.form.field.Base", function() {
                 listeners: {
                     validitychange: spy
                 },
-                getErrors: function() {
+                getErrors: function () {
                     return error === null ? [] : [error];
                 }
             }, cfg));
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             error = null;
             spy = jasmine.createSpy();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             spy = error = null;
         });
 
-        describe("starting disabled", function() {
-            describe("initialization", function() {
-                it("should not fire the event with a valid value", function() {
+        describe("starting disabled", function () {
+            describe("initialization", function () {
+                it("should not fire the event with a valid value", function () {
                     makeDisableField({
                         disabled: true
                     });
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should not fire the event with an invalid value", function() {
+                it("should not fire the event with an invalid value", function () {
                     error = 'Foo';
                     makeDisableField({
                         disabled: true
@@ -278,8 +278,8 @@ describe("Ext.form.field.Base", function() {
                 });
             });
 
-            describe("enabling before having validated", function() {
-                it("should not fire the event with a valid value", function() {
+            describe("enabling before having validated", function () {
+                it("should not fire the event with a valid value", function () {
                     makeDisableField({
                         disabled: true
                     });
@@ -287,7 +287,7 @@ describe("Ext.form.field.Base", function() {
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should not fire the event with an invalid value", function() {
+                it("should not fire the event with an invalid value", function () {
                     error = 'Foo';
                     makeDisableField({
                         disabled: true
@@ -297,27 +297,27 @@ describe("Ext.form.field.Base", function() {
                 });
             });
 
-            describe("enabling after having validated", function() {
-                beforeEach(function() {
+            describe("enabling after having validated", function () {
+                beforeEach(function () {
                     makeDisableField({
                         disabled: true
                     });
                 });
 
-                describe("after validating with an invalid value", function() {
-                    beforeEach(function() {
+                describe("after validating with an invalid value", function () {
+                    beforeEach(function () {
                         error = 'Foo';
                         c.validate();
                         spy.reset();
                     });
 
-                    it("should not fire the event with a valid value", function() {
+                    it("should not fire the event with a valid value", function () {
                         error = null;
                         c.enable();
                         expect(spy).not.toHaveBeenCalled();
                     });
 
-                    it("should fire the event with an invalid value", function() {
+                    it("should fire the event with an invalid value", function () {
                         c.enable();
                         expect(spy.callCount).toBe(1);
                         expect(spy.mostRecentCall.args[0]).toBe(c);
@@ -325,18 +325,18 @@ describe("Ext.form.field.Base", function() {
                     });
                 });
 
-                describe("after validating with a valid value", function() {
-                    beforeEach(function() {
+                describe("after validating with a valid value", function () {
+                    beforeEach(function () {
                         c.validate();
                         spy.reset();
                     });
 
-                    it("should not fire the event with a valid value", function() {
+                    it("should not fire the event with a valid value", function () {
                         c.enable();
                         expect(spy).not.toHaveBeenCalled();
                     });
 
-                    it("should fire the event with an invalid value", function() {
+                    it("should fire the event with an invalid value", function () {
                         error = 'Foo';
                         c.enable();
                         expect(spy.callCount).toBe(1);
@@ -347,28 +347,28 @@ describe("Ext.form.field.Base", function() {
             });
         });
 
-        describe("starting enabled", function() {
-            describe("initialization", function() {
-                it("should not fire the event with a valid value", function() {
+        describe("starting enabled", function () {
+            describe("initialization", function () {
+                it("should not fire the event with a valid value", function () {
                     makeDisableField();
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should not fire the event with an invalid value", function() {
+                it("should not fire the event with an invalid value", function () {
                     error = 'Foo';
                     makeDisableField();
                     expect(spy).not.toHaveBeenCalled();
                 });
             });
 
-            describe("disabling before having validated", function() {
-                it("should not fire the event with a valid value", function() {
+            describe("disabling before having validated", function () {
+                it("should not fire the event with a valid value", function () {
                     makeDisableField();
                     c.disable();
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should not fire the event with an invalid value", function() {
+                it("should not fire the event with an invalid value", function () {
                     error = 'Foo';
                     makeDisableField();
                     c.disable();
@@ -376,19 +376,19 @@ describe("Ext.form.field.Base", function() {
                 });
             });
 
-            describe("disabling after having validated", function() {
-                beforeEach(function() {
+            describe("disabling after having validated", function () {
+                beforeEach(function () {
                     makeDisableField();
                 });
 
-                describe("after validating with an invalid value", function() {
-                    beforeEach(function() {
+                describe("after validating with an invalid value", function () {
+                    beforeEach(function () {
                         error = 'Foo';
                         c.validate();
                         spy.reset();
                     });
 
-                    it("should fire the event with a valid value", function() {
+                    it("should fire the event with a valid value", function () {
                         error = null;
                         c.disable();
                         expect(spy.callCount).toBe(1);
@@ -396,7 +396,7 @@ describe("Ext.form.field.Base", function() {
                         expect(spy.mostRecentCall.args[1]).toBe(true);
                     });
 
-                    it("should fire the event with an invalid value", function() {
+                    it("should fire the event with an invalid value", function () {
                         c.disable();
                         expect(spy.callCount).toBe(1);
                         expect(spy.mostRecentCall.args[0]).toBe(c);
@@ -404,18 +404,18 @@ describe("Ext.form.field.Base", function() {
                     });
                 });
 
-                describe("after validating with a valid value", function() {
-                    beforeEach(function() {
+                describe("after validating with a valid value", function () {
+                    beforeEach(function () {
                         c.validate();
                         spy.reset();
                     });
 
-                    it("should not fire the event with a valid value", function() {
+                    it("should not fire the event with a valid value", function () {
                         c.disable();
                         expect(spy).not.toHaveBeenCalled();
                     });
 
-                    it("should fire the event with an invalid value", function() {
+                    it("should fire the event with an invalid value", function () {
                         error = 'Foo';
                         c.disable();
                         expect(spy).not.toHaveBeenCalled();
@@ -424,33 +424,33 @@ describe("Ext.form.field.Base", function() {
             });
         });
     });
-    
-    describe("errors", function() {
-        describe("enabling/disabling", function() {
-            beforeEach(function() {
+
+    describe("errors", function () {
+        describe("enabling/disabling", function () {
+            beforeEach(function () {
                 makeField({
                     renderTo: Ext.getBody(),
                     allowBlank: false,
-                    getErrors: function() {
+                    getErrors: function () {
                         return ['Some error'];
                     }
                 });
             });
-            
-            it("should remove any active errors during a disable", function(){
+
+            it("should remove any active errors during a disable", function () {
                 c.validate();
                 c.disable();
                 expect(c.hasActiveError()).toBe(false);
             });
-            
-            it("should should revalidate when enabled if invalid when disabled", function(){
+
+            it("should should revalidate when enabled if invalid when disabled", function () {
                 c.validate();
                 c.disable();
                 c.enable();
                 expect(c.hasActiveError()).toBe(true);
             });
-            
-            it("should should not revalidate when enabled if clearInvalid is called", function(){
+
+            it("should should not revalidate when enabled if clearInvalid is called", function () {
                 c.validate();
                 c.disable();
                 c.clearInvalid();
@@ -459,152 +459,152 @@ describe("Ext.form.field.Base", function() {
             });
         });
     });
-    
-    describe("ARIA", function() {
-        describe("ariaEl", function() {
-            it("should be inputEl", function() {
+
+    describe("ARIA", function () {
+        describe("ariaEl", function () {
+            it("should be inputEl", function () {
                 createField();
-                
+
                 expect(c.ariaEl).toBe(c.inputEl);
             });
         });
-        
-        describe("attributes", function() {
-            describe("in general", function() {
-                it("should not be applied when !ariaRole", function() {
-                    createField({ ariaRole: undefined });
-                    
+
+        describe("attributes", function () {
+            describe("in general", function () {
+                it("should not be applied when !ariaRole", function () {
+                    createField({ariaRole: undefined});
+
                     expect(c.ariaEl.dom.hasAttribute('role')).toBe(false);
                 });
-                
-                it("should be applied when ariaRole is defined", function() {
+
+                it("should be applied when ariaRole is defined", function () {
                     createField();
-                    
+
                     expectAria('role', 'foo');
                 });
             });
-            
-            describe("aria-hidden", function() {
-                it("should be false when visible", function() {
+
+            describe("aria-hidden", function () {
+                it("should be false when visible", function () {
                     createField();
-                    
+
                     expectAria('aria-hidden', 'false');
                 });
-                
-                it("should be true when hidden", function() {
-                    createField({ hidden: true });
-                    
+
+                it("should be true when hidden", function () {
+                    createField({hidden: true});
+
                     expectAria('aria-hidden', 'true');
                 });
             });
-            
-            describe("aria-disabled", function() {
-                it("should be false when enabled", function() {
+
+            describe("aria-disabled", function () {
+                it("should be false when enabled", function () {
                     createField();
-                    
+
                     expectAria('aria-disabled', 'false');
                 });
-                
-                it("should be true when disabled", function() {
-                    createField({ disabled: true });
-                    
+
+                it("should be true when disabled", function () {
+                    createField({disabled: true});
+
                     expectAria('aria-disabled', 'true');
                 });
             });
-            
-            describe("aria-readonly", function() {
-                it("should be false by default", function() {
+
+            describe("aria-readonly", function () {
+                it("should be false by default", function () {
                     createField();
-                    
+
                     expectAria('aria-readonly', 'false');
                 });
-                
-                it("should be true when readOnly", function() {
-                    createField({ readOnly: true });
-                    
+
+                it("should be true when readOnly", function () {
+                    createField({readOnly: true});
+
                     expectAria('aria-readonly', 'true');
                 });
             });
-            
-            describe("aria-invalid", function() {
-                it("should be false by default", function() {
+
+            describe("aria-invalid", function () {
+                it("should be false by default", function () {
                     createField();
-                    
+
                     expectAria('aria-invalid', 'false');
                 });
             });
-            
-            describe("aria-label", function() {
-                it("should not exist by default", function() {
+
+            describe("aria-label", function () {
+                it("should not exist by default", function () {
                     createField();
-                    
+
                     expectAria('aria-label', null);
                 });
-                
-                it("should be rendered when set", function() {
-                    createField({ ariaLabel: 'foo' });
-                    
+
+                it("should be rendered when set", function () {
+                    createField({ariaLabel: 'foo'});
+
                     expectAria('aria-label', 'foo');
                 });
             });
-            
-            describe("title", function() {
-                it("should be set to formatText", function() {
+
+            describe("title", function () {
+                it("should be set to formatText", function () {
                     createField({
                         format: 'foo',
                         formatText: '{0} bar'
                     });
-                    
+
                     expectAria('title', 'foo bar');
                 });
             });
-            
-            describe("via config", function() {
-                it("should set aria-foo", function() {
+
+            describe("via config", function () {
+                it("should set aria-foo", function () {
                     createField({
                         ariaAttributes: {
                             'aria-foo': 'bar'
                         }
                     });
-                    
+
                     expectAria('aria-foo', 'bar');
                 });
             });
         });
-        
-        describe("state", function() {
-            beforeEach(function() {
+
+        describe("state", function () {
+            beforeEach(function () {
                 createField();
             });
-            
-            describe("aria-readonly", function() {
-                beforeEach(function() {
+
+            describe("aria-readonly", function () {
+                beforeEach(function () {
                     c.setReadOnly(true);
                 });
-                
-                it("should change to true", function() {
+
+                it("should change to true", function () {
                     expectAria('aria-readonly', 'true');
                 });
-                
-                it("should change to false", function() {
+
+                it("should change to false", function () {
                     c.setReadOnly(false);
-                    
+
                     expectAria('aria-readonly', 'false');
                 });
             });
-            
-            describe("aria-invalid", function() {
-                beforeEach(function() {
+
+            describe("aria-invalid", function () {
+                beforeEach(function () {
                     c.markInvalid(['foo']);
                 });
-                
-                it("should change to true", function() {
+
+                it("should change to true", function () {
                     expectAria('aria-invalid', 'true');
                 });
-                
-                it("should change to false", function() {
+
+                it("should change to false", function () {
                     c.clearInvalid();
-                    
+
                     expectAria('aria-invalid', 'false');
                 });
             });

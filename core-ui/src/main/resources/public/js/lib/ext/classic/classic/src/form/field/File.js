@@ -62,9 +62,9 @@ Ext.define('Ext.form.field.File', {
      * @cfg {String} emptyText
      * Overridden to undefined as {@link #emptyText} is not supported with {@link #inputType inputType}:'file' and should be avoided.
      * The default text to place into an empty field.
-     */     
+     */
     emptyText: undefined,
-    
+
     needArrowKeys: false,
 
     triggers: {
@@ -103,7 +103,7 @@ Ext.define('Ext.form.field.File', {
      * applies if {@link #buttonOnly} = false.
      */
     buttonMargin: 3,
-    
+
     /**
      * @cfg {Boolean} clearOnSubmit
      * True to clear the selected file value when the form this field belongs to
@@ -176,7 +176,7 @@ Ext.define('Ext.form.field.File', {
     /**
      * @private
      */
-    applyTriggers: function(triggers) {
+    applyTriggers: function (triggers) {
         var me = this,
             triggerCfg = (triggers || {}).filebutton;
 
@@ -204,22 +204,22 @@ Ext.define('Ext.form.field.File', {
         }
         // </debug>
     },
-    
-    getSubTplData: function(fieldData) {
+
+    getSubTplData: function (fieldData) {
         var data = this.callParent([fieldData]);
-        
+
         // Input field itself should not be focusable since it's always decorative;
         // however the input element is naturally focusable (and tabbable) so we have to
         // deactivate it by setting its tabIndex to -1.
         data.tabIdx = -1;
-        
+
         return data;
     },
 
     /**
      * @private
      */
-    onRender: function() {
+    onRender: function () {
         var me = this,
             inputEl, button, buttonEl, trigger;
 
@@ -227,8 +227,8 @@ Ext.define('Ext.form.field.File', {
 
         inputEl = me.inputEl;
         //name goes on the fileInput, not the text input
-        inputEl.dom.name = ''; 
-        
+        inputEl.dom.name = '';
+
         // Some browsers will show a blinking cursor in the field, even if it's readonly. If we do happen
         // to receive focus, forward it on to our focusEl. Also note that in IE, the file input is treated as
         // 2 elements for tabbing purposes (the text, then the button). So as you tab through, it will take 2
@@ -256,7 +256,7 @@ Ext.define('Ext.form.field.File', {
     /**
      * Gets the markup to be inserted into the subTplMarkup.
      */
-    getTriggerMarkup: function() {
+    getTriggerMarkup: function () {
         return '<td id="' + this.id + '-browseButtonWrap" data-ref="browseButtonWrap" role="presentation"></td>';
     },
 
@@ -264,13 +264,13 @@ Ext.define('Ext.form.field.File', {
      * @private
      * Event handler fired when the user selects a file.
      */
-    onFileChange: function(button, e, value) {
+    onFileChange: function (button, e, value) {
         this.duringFileSelect = true;
         Ext.form.field.File.superclass.setValue.call(this, value);
         delete this.duringFileSelect;
     },
-    
-    didValueChange: function(){
+
+    didValueChange: function () {
         // In the case of the file field, the change event will only ever fire 
         // if the value actually changes, so we always want to fire the change event
         // This affects Chrome specifically, because hitting the cancel button will
@@ -290,7 +290,7 @@ Ext.define('Ext.form.field.File', {
      */
     setValue: Ext.emptyFn,
 
-    reset : function(){
+    reset: function () {
         var me = this,
             clear = me.clearOnSubmit;
         if (me.rendered) {
@@ -304,20 +304,20 @@ Ext.define('Ext.form.field.File', {
         }
         me.callParent();
     },
-    
-    onShow: function(){
+
+    onShow: function () {
         this.callParent();
         // If we started out hidden, the button may have a messed up layout
         // since we don't act like a container
-        this.button.updateLayout();    
+        this.button.updateLayout();
     },
 
-    onDisable: function(){
+    onDisable: function () {
         this.callParent();
         this.button.disable();
     },
 
-    onEnable: function(){
+    onEnable: function () {
         this.callParent();
         this.button.enable();
     },
@@ -328,10 +328,10 @@ Ext.define('Ext.form.field.File', {
      */
     isFileUpload: Ext.returnTrue,
 
-    extractFileInput: function() {
+    extractFileInput: function () {
         var me = this,
             fileInput;
-            
+
         if (me.rendered) {
             fileInput = me.button.fileInputEl.dom;
             me.reset();
@@ -345,8 +345,8 @@ Ext.define('Ext.form.field.File', {
         }
         return fileInput;
     },
-    
-    restoreInput: function(el) {
+
+    restoreInput: function (el) {
         // If we're not rendered we don't need to do anything, it will be created
         // when we get flushed to the DOM.
         if (this.rendered) {
@@ -356,18 +356,18 @@ Ext.define('Ext.form.field.File', {
         }
     },
 
-    onDestroy: function(){
+    onDestroy: function () {
         this.fileInputEl = this.button = null;
         this.callParent();
     },
 
-    getButtonMarginProp: function() {
+    getButtonMarginProp: function () {
         return 'margin-left:';
     },
-    
-    onInputFocus: function(e) {
+
+    onInputFocus: function (e) {
         this.focus();
-        
+
         // Switching focus from read only input element to file input
         // results in incorrect positioning of the file input.
         // Adding and removing position: relative helps to fix that.
@@ -377,22 +377,22 @@ Ext.define('Ext.form.field.File', {
             this.fileInputEl.removeCls(Ext.baseCSSPrefix + 'position-relative');
         }
     },
-    
-    onInputMouseDown: function(e) {
+
+    onInputMouseDown: function (e) {
         // Some browsers will show the cursor even if the input is read only,
         // which will be visible in the short instant between inputEl focusing
         // and subsequent focus jump to the FileButton. Preventing inputEl from
         // focusing eliminates that flicker.
         e.preventDefault();
-        
+
         this.focus();
     },
-    
+
     privates: {
-        getFocusEl: function() {
+        getFocusEl: function () {
             return this.button;
         },
-        
+
         getFocusClsEl: Ext.privateFn
     }
 });

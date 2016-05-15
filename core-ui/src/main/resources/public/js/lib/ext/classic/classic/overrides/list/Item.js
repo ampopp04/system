@@ -29,15 +29,15 @@ Ext.define('Ext.overrides.list.TreeItem', {
         floater.add(me);
         floater.show();
         floater.el.alignTo(me.getToolElement(), 'tr?');
-        
+
         return floater;
     },
 
-    runAnimation: function(animation) {
+    runAnimation: function (animation) {
         return this.itemContainer.addAnimation(animation);
     },
 
-    stopAnimation: function(animation) {
+    stopAnimation: function (animation) {
         animation.jumpToEnd();
     }
 });

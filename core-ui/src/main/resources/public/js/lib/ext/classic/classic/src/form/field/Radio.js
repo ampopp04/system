@@ -170,7 +170,7 @@
  *     });
  */
 Ext.define('Ext.form.field.Radio', {
-    extend:'Ext.form.field.Checkbox',
+    extend: 'Ext.form.field.Checkbox',
     alias: ['widget.radiofield', 'widget.radio'],
     alternateClassName: 'Ext.form.Radio',
     requires: ['Ext.form.RadioManager'],
@@ -188,18 +188,18 @@ Ext.define('Ext.form.field.Radio', {
 
     inputType: 'radio',
     ariaRole: 'radio',
-    
+
     // Radios are naturally focusable but they need to participate in RadioGroups
     // which are focusable containers; we set tabIndex to >= 0 here to make that work
     tabIndex: 0,
-    
+
     formId: null,
 
     /**
      * If this radio is part of a group, it will return the selected value
      * @return {String}
      */
-    getGroupValue: function() {
+    getGroupValue: function () {
         var selected = this.getManager().getChecked(this.name, this.getFormId());
         return selected ? selected.inputValue : null;
     },
@@ -208,14 +208,14 @@ Ext.define('Ext.form.field.Radio', {
      * @private
      * Handle click on the radio button
      */
-    onBoxClick: function() {
+    onBoxClick: function () {
         var me = this;
         if (!me.disabled && !me.readOnly) {
             this.setValue(true);
         }
     },
-    
-    onRemoved: function(){
+
+    onRemoved: function () {
         this.callParent(arguments);
         this.formId = null;
     },
@@ -226,7 +226,7 @@ Ext.define('Ext.form.field.Radio', {
      * @param {String/Boolean} value Checked value, or the value of the sibling radio button to check.
      * @return {Ext.form.field.Radio} this
      */
-    setValue: function(value) {
+    setValue: function (value) {
         var me = this,
             active;
 
@@ -245,11 +245,11 @@ Ext.define('Ext.form.field.Radio', {
      * Returns the submit value for the checkbox which can be used when submitting forms.
      * @return {Boolean/Object} True if checked, null if not.
      */
-    getSubmitValue: function() {
+    getSubmitValue: function () {
         return this.checked ? this.inputValue : null;
     },
 
-    getModelData: function() {
+    getModelData: function () {
         var o = this.callParent(arguments);
         if (o) {
             o[this.getName()] = this.getSubmitValue();
@@ -257,7 +257,7 @@ Ext.define('Ext.form.field.Radio', {
         return o;
     },
 
-    onChange: function(newVal, oldVal) {
+    onChange: function (newVal, oldVal) {
         var me = this,
             r, rLen, radio, radios;
 
@@ -265,7 +265,7 @@ Ext.define('Ext.form.field.Radio', {
 
         if (newVal) {
             radios = me.getManager().getByName(me.name, me.getFormId()).items;
-            rLen   = radios.length;
+            rLen = radios.length;
 
             for (r = 0; r < rLen; r++) {
                 radio = radios[r];
@@ -277,7 +277,7 @@ Ext.define('Ext.form.field.Radio', {
         }
     },
 
-    getManager: function() {
+    getManager: function () {
         return Ext.form.RadioManager;
     }
 });

@@ -51,154 +51,154 @@
  * @member Ext.form.trigger.Spinner
  */
 @mixin extjs-spinner-trigger-ui(
-    $ui: null,
-    $ui-trigger-vertical: $spinner-trigger-vertical,
-    $ui-trigger-width: $form-trigger-width,
-    $ui-field-height: $form-text-field-height,
-    $ui-field-border-width: $form-text-field-border-width,
-    $ui-trigger-vertical-background-image: $spinner-trigger-vertical-background-image,
-    $ui-trigger-up-background-image: $spinner-trigger-up-background-image,
-    $ui-trigger-down-background-image: $spinner-trigger-down-background-image,
-    $ui-trigger-up-glyph: $spinner-trigger-up-glyph,
-    $ui-trigger-down-glyph: $spinner-trigger-down-glyph,
-    $ui-trigger-glyph-color: $spinner-trigger-glyph-color,
-    $ui-trigger-background-color: $form-text-field-background-color,
-    $ui-classic-border: $form-text-field-classic-border
-){
-    $ui-inner-height: if($ui-classic-border, $ui-field-height, $ui-field-height - vertical($ui-field-border-width));
-    $ui-trigger-height: if($ui-trigger-vertical, $ui-inner-height / 2, $ui-inner-height);
+  $ui: null,
+  $ui-trigger-vertical: $spinner-trigger-vertical,
+  $ui-trigger-width: $form-trigger-width,
+  $ui-field-height: $form-text-field-height,
+  $ui-field-border-width: $form-text-field-border-width,
+  $ui-trigger-vertical-background-image: $spinner-trigger-vertical-background-image,
+  $ui-trigger-up-background-image: $spinner-trigger-up-background-image,
+  $ui-trigger-down-background-image: $spinner-trigger-down-background-image,
+  $ui-trigger-up-glyph: $spinner-trigger-up-glyph,
+  $ui-trigger-down-glyph: $spinner-trigger-down-glyph,
+  $ui-trigger-glyph-color: $spinner-trigger-glyph-color,
+  $ui-trigger-background-color: $form-text-field-background-color,
+  $ui-classic-border: $form-text-field-classic-border
+) {
+  $ui-inner-height: if($ui-classic-border, $ui-field-height, $ui-field-height - vertical($ui-field-border-width));
+  $ui-trigger-height: if($ui-trigger-vertical, $ui-inner-height / 2, $ui-inner-height);
 
-    .#{$prefix}form-trigger-spinner-#{$ui} {
-        width: if($ui-trigger-vertical, $ui-trigger-width, $ui-trigger-width * 2);
-        @if $ui-classic-border {
-            border: 0;
-        }
-
-        @if $enable-font-icons and ($ui-trigger-up-glyph != null or $ui-trigger-down-glyph != null) {
-            // remove pseduo element from default trigger
-            &:before {
-                content: '';
-            }
-        }
+  .#{$prefix}form-trigger-spinner-#{$ui} {
+    width: if($ui-trigger-vertical, $ui-trigger-width, $ui-trigger-width * 2);
+    @if $ui-classic-border {
+      border: 0;
     }
 
-    .#{$prefix}form-spinner-#{$ui} {
-        @if $ui-trigger-vertical {
-            @if (not $enable-font-icons) or ($ui-trigger-up-glyph == null and $ui-trigger-down-glyph == null) {
-                background-image: theme-background-image($ui-trigger-vertical-background-image);
-                @if $include-rtl {
-                    &.#{$prefix}rtl {
-                        background-image: theme-background-image($ui-trigger-vertical-background-image + '-rtl');
-                    }
-                }
-            }
-        } @else {
-            display: inline-block;
-        }
-        background-color: $ui-trigger-background-color;
-        width: $ui-trigger-width;
-        height: $ui-trigger-height;
-        @if $enable-font-icons {
-            color: $ui-trigger-glyph-color;
-        }
+    @if $enable-font-icons and ($ui-trigger-up-glyph != null or $ui-trigger-down-glyph != null) {
+      // remove pseduo element from default trigger
+      &:before {
+        content: '';
+      }
     }
+  }
 
-    @if not $spinner-trigger-vertical {
-        @if (not $enable-font-icons) or ($ui-trigger-up-glyph == null) {
-            .#{$prefix}form-spinner-up-#{$ui} {
-                background-image: theme-background-image($ui-trigger-up-background-image);
-                @if $include-rtl {
-                    &.#{$prefix}rtl {
-                        background-image: theme-background-image($ui-trigger-up-background-image + '-rtl');
-                    }
-                }
-            }
-        }
-
-        @if (not $enable-font-icons) or ($ui-trigger-down-glyph == null) {
-            .#{$prefix}form-spinner-down-#{$ui} {
-                background-image: theme-background-image($ui-trigger-down-background-image);
-                @if $include-rtl {
-                    &.#{$prefix}rtl {
-                        background-image: theme-background-image($ui-trigger-down-background-image + '-rtl');
-                    }
-                }
-            }
-        }
-    }
-
-    @if $enable-font-icons and ($ui-trigger-up-glyph != null) {
-        .#{$prefix}form-spinner-up-#{$ui} {
-            @include font-icon($ui-trigger-up-glyph);
-        }
-    }
-
-    @if $enable-font-icons and ($ui-trigger-down-glyph != null) {
-        .#{$prefix}form-spinner-down-#{$ui} {
-            @include font-icon($ui-trigger-down-glyph);
-        }
-    }
-
+  .#{$prefix}form-spinner-#{$ui} {
     @if $ui-trigger-vertical {
-        .#{$prefix}form-spinner-up-#{$ui} {
-            background-position: 0 0;
-
-            &.#{$prefix}form-spinner-over {
-                background-position: (-$ui-trigger-width) 0;
-                &.#{$prefix}form-spinner-focus {
-                    background-position: -($ui-trigger-width * 4) 0;
-                }
-            }
-
-            &.#{$prefix}form-spinner-focus {
-                background-position: -($ui-trigger-width * 3) 0;
-            }
-
-            // add x-form-spinner class to increase specificity of "click" above focus/over
-            &.#{$prefix}form-spinner.#{$prefix}form-spinner-click {
-                background-position: -($ui-trigger-width * 2) 0;
-            }
+      @if (not $enable-font-icons) or ($ui-trigger-up-glyph == null and $ui-trigger-down-glyph == null) {
+        background-image: theme-background-image($ui-trigger-vertical-background-image);
+        @if $include-rtl {
+          &.#{$prefix}rtl {
+            background-image: theme-background-image($ui-trigger-vertical-background-image + '-rtl');
+          }
         }
-
-        .#{$prefix}form-spinner-down-#{$ui} {
-            background-position: 0 (-$ui-trigger-height);
-
-            &.#{$prefix}form-spinner-over {
-                background-position: (-$ui-trigger-width) (-$ui-trigger-height);
-                &.#{$prefix}form-spinner-focus {
-                    background-position: -($ui-trigger-width * 4) (-$ui-trigger-height);
-                }
-            }
-
-            &.#{$prefix}form-spinner-focus {
-                background-position: -($ui-trigger-width * 3) (-$ui-trigger-height);
-            }
-
-            // add x-form-spinner class to increase specificity of "click" above focus/over
-            &.#{$prefix}form-spinner.#{$prefix}form-spinner-click {
-                background-position: -($ui-trigger-width * 2) (-$ui-trigger-height);
-            }
-        }
+      }
     } @else {
-        .#{$prefix}form-spinner-#{$ui} {
-            background-position: 0 0;
-
-            &.#{$prefix}form-spinner-over {
-                background-position: (-$ui-trigger-width) 0;
-                &.#{$prefix}form-spinner-focus {
-                    background-position: -($ui-trigger-width * 4) 0;
-                }
-            }
-
-            &.#{$prefix}form-spinner-focus {
-                background-position: -($ui-trigger-width * 3) 0;
-            }
-
-            // add x-form-spinner class to increase specificity of "click" above focus/over
-            &.#{$prefix}form-spinner.#{$prefix}form-spinner-click {
-                background-position: -($ui-trigger-width * 2) 0;
-            }
-        }
+      display: inline-block;
     }
+    background-color: $ui-trigger-background-color;
+    width: $ui-trigger-width;
+    height: $ui-trigger-height;
+    @if $enable-font-icons {
+      color: $ui-trigger-glyph-color;
+    }
+  }
+
+  @if not $spinner-trigger-vertical {
+    @if (not $enable-font-icons) or ($ui-trigger-up-glyph == null) {
+      .#{$prefix}form-spinner-up-#{$ui} {
+        background-image: theme-background-image($ui-trigger-up-background-image);
+        @if $include-rtl {
+          &.#{$prefix}rtl {
+            background-image: theme-background-image($ui-trigger-up-background-image + '-rtl');
+          }
+        }
+      }
+    }
+
+    @if (not $enable-font-icons) or ($ui-trigger-down-glyph == null) {
+      .#{$prefix}form-spinner-down-#{$ui} {
+        background-image: theme-background-image($ui-trigger-down-background-image);
+        @if $include-rtl {
+          &.#{$prefix}rtl {
+            background-image: theme-background-image($ui-trigger-down-background-image + '-rtl');
+          }
+        }
+      }
+    }
+  }
+
+  @if $enable-font-icons and ($ui-trigger-up-glyph != null) {
+    .#{$prefix}form-spinner-up-#{$ui} {
+      @include font-icon($ui-trigger-up-glyph);
+    }
+  }
+
+  @if $enable-font-icons and ($ui-trigger-down-glyph != null) {
+    .#{$prefix}form-spinner-down-#{$ui} {
+      @include font-icon($ui-trigger-down-glyph);
+    }
+  }
+
+  @if $ui-trigger-vertical {
+    .#{$prefix}form-spinner-up-#{$ui} {
+      background-position: 0 0;
+
+      &.#{$prefix}form-spinner-over {
+        background-position: (-$ui-trigger-width) 0;
+        &.#{$prefix}form-spinner-focus {
+          background-position: -($ui-trigger-width * 4) 0;
+        }
+      }
+
+      &.#{$prefix}form-spinner-focus {
+        background-position: -($ui-trigger-width * 3) 0;
+      }
+
+      // add x-form-spinner class to increase specificity of "click" above focus/over
+      &.#{$prefix}form-spinner.#{$prefix}form-spinner-click {
+        background-position: -($ui-trigger-width * 2) 0;
+      }
+    }
+
+    .#{$prefix}form-spinner-down-#{$ui} {
+      background-position: 0 (-$ui-trigger-height);
+
+      &.#{$prefix}form-spinner-over {
+        background-position: (-$ui-trigger-width) (-$ui-trigger-height);
+        &.#{$prefix}form-spinner-focus {
+          background-position: -($ui-trigger-width * 4) (-$ui-trigger-height);
+        }
+      }
+
+      &.#{$prefix}form-spinner-focus {
+        background-position: -($ui-trigger-width * 3) (-$ui-trigger-height);
+      }
+
+      // add x-form-spinner class to increase specificity of "click" above focus/over
+      &.#{$prefix}form-spinner.#{$prefix}form-spinner-click {
+        background-position: -($ui-trigger-width * 2) (-$ui-trigger-height);
+      }
+    }
+  } @else {
+    .#{$prefix}form-spinner-#{$ui} {
+      background-position: 0 0;
+
+      &.#{$prefix}form-spinner-over {
+        background-position: (-$ui-trigger-width) 0;
+        &.#{$prefix}form-spinner-focus {
+          background-position: -($ui-trigger-width * 4) 0;
+        }
+      }
+
+      &.#{$prefix}form-spinner-focus {
+        background-position: -($ui-trigger-width * 3) 0;
+      }
+
+      // add x-form-spinner class to increase specificity of "click" above focus/over
+      &.#{$prefix}form-spinner.#{$prefix}form-spinner-click {
+        background-position: -($ui-trigger-width * 2) 0;
+      }
+    }
+  }
 }
 

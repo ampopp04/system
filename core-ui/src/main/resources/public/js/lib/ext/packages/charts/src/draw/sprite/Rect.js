@@ -52,9 +52,7 @@ Ext.define('Ext.draw.sprite.Rect', {
                  */
                 radius: 'number'
             },
-            aliases: {
-
-            },
+            aliases: {},
             triggers: {
                 x: 'path',
                 y: 'path',

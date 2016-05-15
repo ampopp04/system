@@ -33,17 +33,16 @@ Ext.define('Ext.ux.Explorer', {
             region: 'center',
             cls: Ext.baseCSSPrefix + 'explorer-view',
             itemSelector: '.' + Ext.baseCSSPrefix + 'explorer-item',
-            tpl:
-                '<tpl for=".">' +
-                    '<div class="' + Ext.baseCSSPrefix + 'explorer-item">' +
-                        '<div class="{iconCls}">' +
-                            '<div class="' + Ext.baseCSSPrefix + 'explorer-node-icon' +
-                                '{[values.leaf ? " ' + Ext.baseCSSPrefix + 'explorer-leaf-icon' + '" : ""]}' + '">' +
-                            '</div>' +
-                            '<div class="' + Ext.baseCSSPrefix + 'explorer-item-text">{text}</div>' +
-                        '</div>' +
-                    '</div>' +
-                '</tpl>'
+            tpl: '<tpl for=".">' +
+            '<div class="' + Ext.baseCSSPrefix + 'explorer-item">' +
+            '<div class="{iconCls}">' +
+            '<div class="' + Ext.baseCSSPrefix + 'explorer-node-icon' +
+            '{[values.leaf ? " ' + Ext.baseCSSPrefix + 'explorer-leaf-icon' + '" : ""]}' + '">' +
+            '</div>' +
+            '<div class="' + Ext.baseCSSPrefix + 'explorer-item-text">{text}</div>' +
+            '</div>' +
+            '</div>' +
+            '</tpl>'
         },
 
         /**
@@ -78,7 +77,7 @@ Ext.define('Ext.ux.Explorer', {
     defaultListenerScope: true,
     cls: Ext.baseCSSPrefix + 'explorer',
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this,
             store = me.getStore();
 
@@ -88,14 +87,14 @@ Ext.define('Ext.ux.Explorer', {
         }
         //</debug>
 
-        me.dockedItems = [ me.getBreadcrumb() ];
+        me.dockedItems = [me.getBreadcrumb()];
 
-        me.items = [ me.getTree(), me.getContentView() ];
+        me.items = [me.getTree(), me.getContentView()];
 
         me.callParent();
     },
 
-    applyBreadcrumb: function(breadcrumb) {
+    applyBreadcrumb: function (breadcrumb) {
         var store = this.getStore();
 
         breadcrumb = Ext.create(Ext.apply({
@@ -108,7 +107,7 @@ Ext.define('Ext.ux.Explorer', {
         return breadcrumb;
     },
 
-    applyContentView: function(contentView) {
+    applyContentView: function (contentView) {
         /**
          * @property {Ext.data.Store} contentStore
          * @private
@@ -125,7 +124,7 @@ Ext.define('Ext.ux.Explorer', {
         return contentView;
     },
 
-    applyTree: function(tree) {
+    applyTree: function (tree) {
         tree = Ext.create(Ext.apply({
             store: this.getStore()
         }, tree));
@@ -135,7 +134,7 @@ Ext.define('Ext.ux.Explorer', {
         return tree;
     },
 
-    updateSelection: function(node) {
+    updateSelection: function (node) {
         var me = this,
             refs = me.getReferences(),
             breadcrumb = refs.breadcrumb,
@@ -162,7 +161,7 @@ Ext.define('Ext.ux.Explorer', {
         contentStore.add(node.hasChildNodes() ? node.childNodes : [node]);
     },
 
-    updateStore: function(store) {
+    updateStore: function (store) {
         this.getBreadcrumb().setStore(store);
     },
 
@@ -173,14 +172,14 @@ Ext.define('Ext.ux.Explorer', {
          * @param {Ext.tree.Panel} tree
          * @param {Ext.data.TreeModel[]} selection
          */
-        _onTreeSelectionChange: function(tree, selection) {
+        _onTreeSelectionChange: function (tree, selection) {
             this.setSelection(selection[0]);
         },
 
         /**
          * Handles the breadcrumb bar's selectionchange event
          */
-        _onBreadcrumbSelectionChange: function(breadcrumb, selection) {
+        _onBreadcrumbSelectionChange: function (breadcrumb, selection) {
             this.setSelection(selection);
         }
     }

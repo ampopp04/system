@@ -6,12 +6,12 @@ Ext.define('Ext.ux.GroupTabPanel', {
 
     alias: 'widget.grouptabpanel',
 
-    requires:[
+    requires: [
         'Ext.tree.Panel',
         'Ext.ux.GroupTabRenderer'
     ],
 
-    baseCls : Ext.baseCSSPrefix + 'grouptabpanel',
+    baseCls: Ext.baseCSSPrefix + 'grouptabpanel',
 
     /**
      * @event beforetabchange
@@ -47,7 +47,7 @@ Ext.define('Ext.ux.GroupTabPanel', {
      * @param {Ext.Component} oldGroup The previously active root group item
      */
 
-    initComponent: function(config) {
+    initComponent: function (config) {
         var me = this;
 
         Ext.apply(me, config);
@@ -105,11 +105,11 @@ Ext.define('Ext.ux.GroupTabPanel', {
                     if (node.data.activeTab) {
                         cls += ' x-active-tab';
                     }
-                    cell.tdCls= 'x-grouptab'+ cls;
+                    cell.tdCls = 'x-grouptab' + cls;
 
                     return value;
                 }
-             }]
+            }]
         }, {
             xtype: 'container',
             flex: 1,
@@ -125,10 +125,10 @@ Ext.define('Ext.ux.GroupTabPanel', {
         me.mon(me.down('treepanel').getSelectionModel(), 'select', me.onNodeSelect, me);
     },
 
-    getRowClass: function(node, rowIndex, rowParams, store) {
+    getRowClass: function (node, rowIndex, rowParams, store) {
         var cls = '';
         if (node.data.activeGroup) {
-           cls += ' x-active-group';
+            cls += ' x-active-group';
         }
         return cls;
     },
@@ -159,7 +159,7 @@ Ext.define('Ext.ux.GroupTabPanel', {
         }
 
         parent.set('activeGroup', true);
-        parent.eachChild(function(child) {
+        parent.eachChild(function (child) {
             child.set('activeGroup', true);
         });
         node.set('activeTab', true);
@@ -170,12 +170,12 @@ Ext.define('Ext.ux.GroupTabPanel', {
      * Makes the given component active (makes it the visible card in the GroupTabPanel's CardLayout)
      * @param {Ext.Component} cmp The component to make active
      */
-    setActiveTab: function(cmp) {
+    setActiveTab: function (cmp) {
         var me = this,
             newTab = cmp,
             oldTab;
 
-        if(Ext.isString(cmp)) {
+        if (Ext.isString(cmp)) {
             newTab = Ext.getCmp(newTab);
         }
 
@@ -185,25 +185,25 @@ Ext.define('Ext.ux.GroupTabPanel', {
 
         oldTab = me.activeTab;
         if (me.fireEvent('beforetabchange', me, newTab, oldTab) !== false) {
-             me.activeTab = newTab;
-             if (me.rendered) {
-                 me.down('container[baseCls=' + Ext.baseCSSPrefix + 'grouptabcontainer' + ']').getLayout().setActiveItem(newTab);
-             }
-             me.fireEvent('tabchange', me, newTab, oldTab);
-         }
-         return true;
+            me.activeTab = newTab;
+            if (me.rendered) {
+                me.down('container[baseCls=' + Ext.baseCSSPrefix + 'grouptabcontainer' + ']').getLayout().setActiveItem(newTab);
+            }
+            me.fireEvent('tabchange', me, newTab, oldTab);
+        }
+        return true;
     },
 
     /**
      * Makes the given group active
      * @param {Ext.Component} cmp The root component to make active.
      */
-    setActiveGroup: function(cmp) {
+    setActiveGroup: function (cmp) {
         var me = this,
             newGroup = cmp,
             oldGroup;
 
-        if(Ext.isString(cmp)) {
+        if (Ext.isString(cmp)) {
             newGroup = Ext.getCmp(newGroup);
         }
 
@@ -213,19 +213,19 @@ Ext.define('Ext.ux.GroupTabPanel', {
 
         oldGroup = me.activeGroup;
         if (me.fireEvent('beforegroupchange', me, newGroup, oldGroup) !== false) {
-             me.activeGroup = newGroup;
-             me.fireEvent('groupchange', me, newGroup, oldGroup);
-         } else {
-             return false;
-         }
-         return true;
+            me.activeGroup = newGroup;
+            me.fireEvent('groupchange', me, newGroup, oldGroup);
+        } else {
+            return false;
+        }
+        return true;
     },
 
     /**
      * @private
      * Creates the TreeStore used by the GroupTabBar.
      */
-    createTreeStore: function() {
+    createTreeStore: function () {
         var me = this,
             groups = me.prepareItems(me.items),
             data = {
@@ -234,8 +234,8 @@ Ext.define('Ext.ux.GroupTabPanel', {
             },
             cards = me.cards = [];
         me.activeGroup = me.activeGroup || 0;
-        
-        Ext.each(groups, function(groupItem, idx) {
+
+        Ext.each(groups, function (groupItem, idx) {
             var leafItems = groupItem.items.items,
                 rootItem = (leafItems[groupItem.mainItem] || leafItems[0]),
                 groupRoot = {
@@ -259,7 +259,7 @@ Ext.define('Ext.ux.GroupTabPanel', {
                 me.activeGroup = groupRoot.id;
             }
 
-            Ext.each(leafItems, function(leafItem) {
+            Ext.each(leafItems, function (leafItem) {
                 // First node has been done
                 if (leafItem.id !== groupRoot.id) {
                     var child = {
@@ -280,9 +280,9 @@ Ext.define('Ext.ux.GroupTabPanel', {
             });
 
             data.children.push(groupRoot);
-      });
+        });
 
-       return Ext.create('Ext.data.TreeStore', {
+        return Ext.create('Ext.data.TreeStore', {
             fields: ['id', 'text', 'activeGroup', 'activeTab'],
             root: {
                 expanded: true
@@ -298,7 +298,7 @@ Ext.define('Ext.ux.GroupTabPanel', {
      * Returns the item that is currently active inside this GroupTabPanel.
      * @return {Ext.Component/Number} The currently active item
      */
-    getActiveTab: function() {
+    getActiveTab: function () {
         return this.activeTab;
     },
 
@@ -306,7 +306,7 @@ Ext.define('Ext.ux.GroupTabPanel', {
      * Returns the root group item that is currently active inside this GroupTabPanel.
      * @return {Ext.Component/Number} The currently active root group item
      */
-    getActiveGroup: function() {
+    getActiveGroup: function () {
         return this.activeGroup;
     }
 });

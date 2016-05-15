@@ -1,13 +1,13 @@
-describe("Ext.data.Request", function() {
+describe("Ext.data.Request", function () {
     var Request = Ext.data.Request;
 
-    describe("instantiation", function(){
+    describe("instantiation", function () {
         var action = 'create',
             config = {
                 action: action
             };
 
-        it("should have correct configuration options", function(){
+        it("should have correct configuration options", function () {
             var request = new Request();
             expect(request.getAction()).toBeUndefined();
             expect(request.getParams()).toBeUndefined();

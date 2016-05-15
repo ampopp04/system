@@ -30,10 +30,10 @@ Ext.define('Ext.toolbar.TextItem', {
     text: '',
 
     baseCls: Ext.baseCSSPrefix + 'toolbar-text',
-    
+
     ariaRole: null,
 
-    beforeRender : function() {
+    beforeRender: function () {
         var text = this.text;
 
         this.callParent();
@@ -49,7 +49,7 @@ Ext.define('Ext.toolbar.TextItem', {
      *
      * @deprecated 5.1.0 Use {@link #update}
      */
-    setText : function(text) {
+    setText: function (text) {
         this.update(text);
     }
 });

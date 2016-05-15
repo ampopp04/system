@@ -17,7 +17,7 @@ Ext.define('Ext.device.Splashscreen', {
         'Ext.device.splashscreen.Simulator'
     ],
 
-    constructor: function() {
+    constructor: function () {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView) {
             if (browserEnv.Cordova) {

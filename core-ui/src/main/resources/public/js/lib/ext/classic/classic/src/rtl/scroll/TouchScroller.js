@@ -3,7 +3,7 @@ Ext.define('Ext.rtl.scroll.TouchScroller', {
 
     _rtlCls: Ext.baseCSSPrefix + 'rtl',
 
-    updateRtl: function(rtl) {
+    updateRtl: function (rtl) {
         var indicators, xIndicator, yIndicator, rtlCls;
 
         if (rtl) {
@@ -27,7 +27,7 @@ Ext.define('Ext.rtl.scroll.TouchScroller', {
     },
 
     privates: {
-        convertX: function(x) {
+        convertX: function (x) {
             // rtl gets set by based on the owner component's inheritedState
             if (x && this.getRtl()) {
                 x = -x;
@@ -35,7 +35,7 @@ Ext.define('Ext.rtl.scroll.TouchScroller', {
             return x;
         },
 
-        convertEasingConfig: function(config) {
+        convertEasingConfig: function (config) {
             var minMomentumValue = config.minMomentumValue,
                 maxMomentumValue = config.maxMomentumValue;
 

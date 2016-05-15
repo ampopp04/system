@@ -11,15 +11,15 @@ Ext.define('Ext.sparkline.CanvasBase', {
 
     _pxregex: /(\d+)(px)?\s*$/i,
 
-    constructor: function(ownerSparkLine) {
+    constructor: function (ownerSparkLine) {
         this.owner = ownerSparkLine;
     },
 
-    setWidth: function(width) {
+    setWidth: function (width) {
         this.pixelWidth = width;
     },
 
-    setHeight: function(height) {
+    setHeight: function (height) {
         this.pixelHeight = height;
     },
 

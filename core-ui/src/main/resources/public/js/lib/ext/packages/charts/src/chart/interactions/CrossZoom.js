@@ -153,7 +153,7 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
          * default axis options.
          */
         axes: true,
-        
+
         gestures: {
             dragstart: 'onGestureStart',
             drag: 'onGesture',
@@ -224,7 +224,7 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
     getSurface: function () {
         return this.getChart() && this.getChart().getSurface('main');
     },
-    
+
     setSeriesOpacity: function (opacity) {
         var surface = this.getChart() && this.getChart().getSurface('series');
         if (surface) {
@@ -406,8 +406,8 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
 
         if (isRtl) {
             rect = rect.slice();
-            x1 =  1 - rect[0];
-            x2 =  1 - rect[2];
+            x1 = 1 - rect[0];
+            x2 = 1 - rect[2];
             rect[0] = Math.min(x1, x2);
             rect[2] = Math.max(x1, x2);
         }

@@ -16,12 +16,12 @@ Ext.define('Ext.ux.desktop.Wallpaper', {
     alias: 'widget.wallpaper',
 
     cls: 'ux-wallpaper',
-    html: '<img src="'+Ext.BLANK_IMAGE_URL+'">',
+    html: '<img src="' + Ext.BLANK_IMAGE_URL + '">',
 
     stretch: false,
     wallpaper: null,
-    stateful  : true,
-    stateId  : 'desk-wallpaper',
+    stateful: true,
+    stateId: 'desk-wallpaper',
 
     afterRender: function () {
         var me = this;
@@ -38,7 +38,7 @@ Ext.define('Ext.ux.desktop.Wallpaper', {
     },
 
     getState: function () {
-        return this.wallpaper && { wallpaper: this.wallpaper };
+        return this.wallpaper && {wallpaper: this.wallpaper};
     },
 
     setWallpaper: function (wallpaper, stretch) {
@@ -63,14 +63,14 @@ Ext.define('Ext.ux.desktop.Wallpaper', {
             } else {
                 Ext.fly(imgEl).hide();
 
-                bkgnd = 'url('+wallpaper+')';
+                bkgnd = 'url(' + wallpaper + ')';
                 me.el.addCls('ux-wallpaper-tiled');
             }
 
             me.el.setStyle({
                 backgroundImage: bkgnd || ''
             });
-            if(me.stateful) {
+            if (me.stateful) {
                 me.saveState();
             }
         }

@@ -254,7 +254,7 @@ Ext.define('Ext.app.bind.Template', {
             }
 
             if (fmt) {
-                if (fmt.substring(0,5) === 'this.') {
+                if (fmt.substring(0, 5) === 'this.') {
                     slot.fmt = fmt.substring(5);
                 } else {
                     //<debug>
@@ -309,7 +309,7 @@ Ext.define('Ext.app.bind.Template', {
             } else if (stringRe.test(arg)) {
                 args[i] = arg.substring(1, arg.length - 1);
             } else {
-                slot.fn = Ext.functionFactory('return ['+  argsString +'];');
+                slot.fn = Ext.functionFactory('return [' + argsString + '];');
                 slot.format = me._formatEval;
                 break;
             }

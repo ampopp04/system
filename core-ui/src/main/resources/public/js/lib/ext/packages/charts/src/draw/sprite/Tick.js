@@ -1,6 +1,6 @@
 /**
- * A veritical line sprite. The x and y configs set the center of the line with the size 
- * value determining the height of the line (the line will be twice the height of 'size' 
+ * A veritical line sprite. The x and y configs set the center of the line with the size
+ * value determining the height of the line (the line will be twice the height of 'size'
  * since 'size' is added to above and below 'y' to set the line endpoints).
  *
  *     @example

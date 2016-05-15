@@ -1,7 +1,6 @@
 /*
   Copied from touch/resources/themes/stylesheets/sencha-touch/base/src/chart/_AbstractChart.scss
 */
-
 // import 'user-interface' to use the 'user-select' mixin
 @import "compass/css3/user-interface";
 
@@ -102,7 +101,7 @@
       }
     }
   }
-  
+
   &.#{$prefix}docked-left, &.#{$prefix}docked-right {
     .#{$prefix}legend-item {
       border-top: $chart-legend-item-border;

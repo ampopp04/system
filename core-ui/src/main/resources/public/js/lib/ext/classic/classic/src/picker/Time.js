@@ -37,7 +37,7 @@ Ext.define('Ext.picker.Time', {
          * is loaded with all possible times, and it is later filtered to hide those times outside
          * the minValue/maxValue.
          */
-        createStore: function(format, increment) {
+        createStore: function (format, increment) {
             var dateUtil = Ext.Date,
                 clearTime = dateUtil.clearTime,
                 initDate = this.prototype.initDate,
@@ -45,7 +45,7 @@ Ext.define('Ext.picker.Time', {
                 min = clearTime(new Date(initDate[0], initDate[1], initDate[2])),
                 max = dateUtil.add(clearTime(new Date(initDate[0], initDate[1], initDate[2])), 'mi', (24 * 60) - 1);
 
-            while(min <= max){
+            while (min <= max) {
                 times.push({
                     disp: dateUtil.dateFormat(min, format),
                     date: min
@@ -86,7 +86,7 @@ Ext.define('Ext.picker.Time', {
      *
      * Defaults to `'g:i A'`, e.g., `'3:15 PM'`. For 24-hour time format try `'H:i'` instead.
      */
-    format : "g:i A",
+    format: "g:i A",
     //</locale>
 
     /**
@@ -100,7 +100,7 @@ Ext.define('Ext.picker.Time', {
      * @private
      * Year, month, and day that all times will be normalized into internally.
      */
-    initDate: [2008,0,1],
+    initDate: [2008, 0, 1],
 
     componentCls: Ext.baseCSSPrefix + 'timepicker',
 
@@ -110,7 +110,7 @@ Ext.define('Ext.picker.Time', {
      */
     loadMask: false,
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this,
             dateUtil = Ext.Date,
             clearTime = dateUtil.clearTime,
@@ -139,7 +139,7 @@ Ext.define('Ext.picker.Time', {
      * fields will be used); no parsing of String values will be done.
      * @param {Date} value
      */
-    setMinValue: function(value) {
+    setMinValue: function (value) {
         this.minValue = value;
         this.updateList();
     },
@@ -149,7 +149,7 @@ Ext.define('Ext.picker.Time', {
      * fields will be used); no parsing of String values will be done.
      * @param {Date} value
      */
-    setMaxValue: function(value) {
+    setMaxValue: function (value) {
         this.maxValue = value;
         this.updateList();
     },
@@ -160,7 +160,7 @@ Ext.define('Ext.picker.Time', {
      * the time fields are significant. This makes values suitable for time comparison.
      * @param {Date} date
      */
-    normalizeDate: function(date) {
+    normalizeDate: function (date) {
         var initDate = this.initDate;
         date.setFullYear(initDate[0], initDate[1], initDate[2]);
         return date;
@@ -170,19 +170,19 @@ Ext.define('Ext.picker.Time', {
      * Update the list of available times in the list to be constrained within the {@link #minValue}
      * and {@link #maxValue}.
      */
-    updateList: function() {
+    updateList: function () {
         var me = this,
             min = me.normalizeDate(me.minValue || me.absMin),
             max = me.normalizeDate(me.maxValue || me.absMax),
             filters = me.getStore().getFilters(),
             filter = me.rangeFilter;
-        
+
         filters.beginUpdate();
         if (filter) {
             filters.remove(filter);
         }
         filter = me.rangeFilter = new Ext.util.Filter({
-            filterFn: function(record) {
+            filterFn: function (record) {
                 var date = record.get('date');
                 return date >= min && date <= max;
             }
@@ -190,7 +190,7 @@ Ext.define('Ext.picker.Time', {
         filters.add(filter);
         filters.endUpdate();
     }
-}, function() {
+}, function () {
     this.prototype.modelType = Ext.define(null, {
         extend: 'Ext.data.Model',
         fields: ['disp', 'date']

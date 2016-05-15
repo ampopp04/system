@@ -46,15 +46,15 @@ Ext.define('Ext.app.EventDomain', {
          */
         instances: {}
     },
-    
+
     /**
      * @cfg {String} idProperty Name of the identifier property for this event domain.
      */
-         
+
     isEventDomain: true,
     isInstance: false,
 
-    constructor: function() {
+    constructor: function () {
         var me = this;
 
         if (!me.isInstance) {
@@ -68,7 +68,7 @@ Ext.define('Ext.app.EventDomain', {
     /**
      * This method dispatches an event fired by an object monitored by this domain. This
      * is not called directly but is called by interceptors injected by the `monitor` method.
-     * 
+     *
      * @param {Object} target The firer of the event.
      * @param {String} ev The event being fired.
      * @param {Array} args The arguments for the event. This array **does not** include the event name.
@@ -79,9 +79,9 @@ Ext.define('Ext.app.EventDomain', {
      *
      * @private
      */
-    dispatch: function(target, ev, args) {
+    dispatch: function (target, ev, args) {
         ev = Ext.canonicalEventName(ev);
-        
+
         var me = this,
             bus = me.bus,
             selectors = bus[ev],
@@ -108,15 +108,15 @@ Ext.define('Ext.app.EventDomain', {
                             // on the current controller
                             events = info.list;
                             len = events.length;
-                    
+
                             for (i = 0; i < len; i++) {
                                 event = events[i];
-                    
+
                                 // Fire the event!
                                 if (event.fire.apply(event, args) === false) {
                                     return false;
                                 }
-                            } 
+                            }
                         }
                     }
                 }
@@ -130,7 +130,7 @@ Ext.define('Ext.app.EventDomain', {
      * This method adds listeners on behalf of a controller. This method is passed an
      * object that is keyed by selectors. The value of these is also an object but now
      * keyed by event name. For example:
-     * 
+     *
      *      domain.listen({
      *          'some[selector]': {
      *              click: function() { ... }
@@ -144,12 +144,12 @@ Ext.define('Ext.app.EventDomain', {
      *          }
      *      
      *      }, controller);
-     * 
+     *
      * @param {Object} selectors Config object containing selectors and listeners.
      *
      * @private
      */
-    listen: function(selectors, controller) {
+    listen: function (selectors, controller) {
         var me = this,
             bus = me.bus,
             idProperty = me.idProperty,
@@ -187,27 +187,27 @@ Ext.define('Ext.app.EventDomain', {
                         Ext.raise('Selectors containing id should begin with #');
                     }
                     //</debug>
-                
+
                     selector = selector === '*' ? selector : selector.substring(1);
                 }
-                
+
                 for (ev in listeners) {
-                    options  = null;
+                    options = null;
                     listener = listeners[ev];
-                    scope    = controller;
+                    scope = controller;
                     ev = Ext.canonicalEventName(ev);
-                    event    = new Ext.util.Event(controller, ev);
+                    event = new Ext.util.Event(controller, ev);
 
                     // Normalize the listener
                     if (Ext.isObject(listener)) {
-                        options  = listener;
+                        options = listener;
                         listener = options.fn;
-                        scope    = options.scope || controller;
+                        scope = options.scope || controller;
 
                         delete options.fn;
                         delete options.scope;
                     }
-                    
+
                     //<debug>
                     if ((!options || !options.scope) && typeof listener === 'string') {
                         // Allow this lookup to be dynamic in debug mode.
@@ -215,7 +215,7 @@ Ext.define('Ext.app.EventDomain', {
                         if (!scope[listener]) {
                             Ext.raise('Cannot resolve "' + listener + '" on controller.');
                         }
-                        scope = null;    
+                        scope = null;
                     } else
                     //</debug>
 
@@ -233,12 +233,12 @@ Ext.define('Ext.app.EventDomain', {
                     }
 
                     // Create the bus tree if it is not there yet
-                    tree = bus[ev]             || (bus[ev] = {});
-                    tree = tree[selector]      || (tree[selector] = {});
-                    info = tree[controllerId]  || (tree[controllerId] = {
-                        controller: controller,
-                        list: []
-                    });
+                    tree = bus[ev] || (bus[ev] = {});
+                    tree = tree[selector] || (tree[selector] = {});
+                    info = tree[controllerId] || (tree[controllerId] = {
+                            controller: controller,
+                            list: []
+                        });
 
                     // Push our listener in our bus
                     info.list.push(event);
@@ -252,7 +252,7 @@ Ext.define('Ext.app.EventDomain', {
      * Default matching is very simple: a match is true when selector equals target's
      * {@link #cfg-idProperty idProperty}, or when selector is '*' wildcard to match any
      * target.
-     * 
+     *
      * @param {Object} target The firer of the event.
      * @param {String} selector The selector to which to match the `target`.
      *
@@ -260,13 +260,13 @@ Ext.define('Ext.app.EventDomain', {
      *
      * @protected
      */
-    match: function(target, selector) {
+    match: function (target, selector) {
         var idProperty = this.idProperty;
-        
+
         if (idProperty) {
             return selector === '*' || target[idProperty] === selector;
         }
-        
+
         return false;
     },
 
@@ -275,21 +275,21 @@ Ext.define('Ext.app.EventDomain', {
      * to `fireEvent` on the target Observable will be intercepted and dispatched to any
      * listening Controllers. Assuming the original `fireEvent` method does not return
      * `false`, the event is passed to the `dispatch` method of this object.
-     * 
+     *
      * This is typically called in the `constructor` of derived classes.
-     * 
+     *
      * @param {Ext.Class} observable The Observable to monitor for events.
      *
      * @protected
      */
-    monitor: function(observable) {
+    monitor: function (observable) {
         var domain = this,
             prototype = observable.isInstance ? observable : observable.prototype,
             doFireEvent = prototype.doFireEvent;
 
         domain.monitoredClasses.push(observable);
 
-        prototype.doFireEvent = function(ev, args) {
+        prototype.doFireEvent = function (ev, args) {
             var ret = doFireEvent.apply(this, arguments);
 
             if (ret !== false && !this.isSuspended(ev)) {
@@ -307,14 +307,14 @@ Ext.define('Ext.app.EventDomain', {
      *
      * @private
      */
-    unlisten: function(controllerId) {
+    unlisten: function (controllerId) {
         var bus = this.bus,
             id = controllerId,
             monitoredClasses = this.monitoredClasses,
             monitoredClassesCount = monitoredClasses.length,
             controllers, ev, events, len,
             item, selector, selectors, i, j, info, classHasListeners;
-            
+
         if (controllerId.isController) {
             id = controllerId.getId();
         }
@@ -342,14 +342,14 @@ Ext.define('Ext.app.EventDomain', {
                             }
                             delete controllers[id];
                         }
-                    } 
+                    }
                 }
             }
         }
-        
+
     },
-    
-    destroy: function() {
+
+    destroy: function () {
         this.monitoredClasses = this.bus = null;
         this.callParent();
     }

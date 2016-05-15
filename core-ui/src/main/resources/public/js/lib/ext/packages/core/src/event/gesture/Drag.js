@@ -24,13 +24,13 @@ Ext.define('Ext.event.gesture.Drag', {
         minDistance: 8
     },
 
-    constructor: function() {
+    constructor: function () {
         this.callParent(arguments);
 
         this.initInfo();
     },
 
-    initInfo: function() {
+    initInfo: function () {
         this.info = {
             touch: null,
             previous: {
@@ -65,7 +65,7 @@ Ext.define('Ext.event.gesture.Drag', {
         };
     },
 
-    onTouchStart: function(e) {
+    onTouchStart: function (e) {
         if (this.callParent(arguments) === false) {
             if (this.isStarted && this.lastMoveEvent !== null) {
                 this.lastMoveEvent.isStopped = false;
@@ -78,7 +78,7 @@ Ext.define('Ext.event.gesture.Drag', {
         this.startPoint = e.changedTouches[0].point;
     },
 
-    tryDragStart: function(e) {
+    tryDragStart: function (e) {
         var startPoint = this.startPoint,
             touch = e.changedTouches[0],
             point = touch.point,
@@ -99,7 +99,7 @@ Ext.define('Ext.event.gesture.Drag', {
         }
     },
 
-    onTouchMove: function(e) {
+    onTouchMove: function (e) {
         if (!this.isStarted) {
             this.tryDragStart(e);
         }
@@ -126,7 +126,7 @@ Ext.define('Ext.event.gesture.Drag', {
         this.fire('drag', e, this.info);
     },
 
-    onAxisDragEnd: function(axis, info) {
+    onAxisDragEnd: function (axis, info) {
         var duration = info.time - info.previousTime[axis];
 
         if (duration > 0) {
@@ -134,7 +134,7 @@ Ext.define('Ext.event.gesture.Drag', {
         }
     },
 
-    resetInfo: function(axis, e, touch) {
+    resetInfo: function (axis, e, touch) {
         var value = this.lastPoint[axis],
             startValue = this.startPoint[axis],
             delta = value - startValue,
@@ -160,7 +160,7 @@ Ext.define('Ext.event.gesture.Drag', {
         info.startTime = this.startTime;
     },
 
-    updateInfo: function(axis, e, touch) {
+    updateInfo: function (axis, e, touch) {
         var me = this,
             value = me.lastPoint[axis],
             previousValue = me.previousPoint[axis],
@@ -198,16 +198,16 @@ Ext.define('Ext.event.gesture.Drag', {
         info.startTime = me.startTime;
     },
 
-    onTouchEnd: function(e) {
+    onTouchEnd: function (e) {
         this.doEnd(e);
     },
 
-    onTouchCancel: function(e) {
+    onTouchCancel: function (e) {
         this.doEnd(e, true);
         return false;
     },
 
-    doEnd: function(e, isCancel) {
+    doEnd: function (e, isCancel) {
         if (!this.isStarted) {
             this.tryDragStart(e);
         }
@@ -237,15 +237,15 @@ Ext.define('Ext.event.gesture.Drag', {
         }
     },
 
-    reset: function() {
+    reset: function () {
         var me = this;
 
-        me.isStarted = me.lastPoint =  me.startPoint = me.previousPoint = me.lastPoint =
+        me.isStarted = me.lastPoint = me.startPoint = me.previousPoint = me.lastPoint =
             me.lastMoveEvent = null;
 
         me.initInfo();
     }
-}, function(Drag) {
+}, function (Drag) {
     var gestures = Ext.manifest.gestures;
     Drag.instance = new Drag(gestures && gestures.drag);
 });

@@ -2,7 +2,7 @@ Ext.define('Ext.rtl.button.Segmented', {
     override: 'Ext.button.Segmented',
 
     privates: {
-        _getFirstCls: function() {
+        _getFirstCls: function () {
             var cls = this._firstCls;
             if (!this.getVertical() && this.getInherited().rtl) {
                 cls = this._lastCls;
@@ -10,7 +10,7 @@ Ext.define('Ext.rtl.button.Segmented', {
             return cls;
         },
 
-        _getLastCls: function() {
+        _getLastCls: function () {
             var cls = this._lastCls;
             if (!this.getVertical() && this.getInherited().rtl) {
                 cls = this._firstCls;

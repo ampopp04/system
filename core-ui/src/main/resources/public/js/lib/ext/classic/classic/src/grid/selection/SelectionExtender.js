@@ -1,9 +1,9 @@
 Ext.define('Ext.grid.selection.SelectionExtender', {
     extend: 'Ext.dd.DragTracker',
-    
+
     maskBox: {},
-    
-    constructor: function(config) {
+
+    constructor: function (config) {
         var me = this;
 
         // We can only initialize properly if there are elements to work with
@@ -19,7 +19,7 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
         }
     },
 
-    initSelectionExtender: function(config) {
+    initSelectionExtender: function (config) {
         var me = this,
             displayMode = Ext.dom.Element.DISPLAY;
 
@@ -30,11 +30,11 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
             style: 'display:none'
         }).setVisibilityMode(displayMode);
         me.handle.on({
-            contextmenu: function(e) {
+            contextmenu: function (e) {
                 e.stopEvent();
             }
         });
-        
+
         me.mask = me.el.createChild({
             cls: Ext.baseCSSPrefix + 'ssm-extender-mask',
             style: 'display:none'
@@ -60,7 +60,7 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
         me.extendY = !!(me.axes & 2);
     },
 
-    setHandle: function(firstPos, lastPos) {
+    setHandle: function (firstPos, lastPos) {
         var me = this;
 
         if (!me.view.rendered) {
@@ -93,7 +93,7 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
         }
     },
 
-    alignHandle: function() {
+    alignHandle: function () {
         var me = this,
             lastCell = me.lastPos && me.lastPos.getCell();
 
@@ -107,18 +107,18 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
         }
     },
 
-    enable: function() {
+    enable: function () {
         this.handle.show();
         this.callParent();
     },
 
-    disable: function() {
+    disable: function () {
         this.handle.hide();
         this.mask.hide();
         this.callParent();
     },
 
-    onDrag: function(e) {
+    onDrag: function (e) {
         // pointer-events-none is not supported on IE10m.
         // So if shrinking the extension zone, the mousemove target may be the mask.
         // We have to retarget on the cell *below* that.
@@ -134,10 +134,10 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
             viewLeft = view.el.getX(),
             overCell = e.getTarget(me.view.getCellSelector()),
             scrollTask = me.scrollTask || (me.scrollTask = Ext.util.TaskManager.newTask({
-                run: me.doAutoScroll,
-                scope: me,
-                interval: 10
-            })),
+                    run: me.doAutoScroll,
+                    scope: me,
+                    interval: 10
+                })),
             scrollBy = me.scrollBy || (me.scrollBy = []);
 
         // Dragged outside the view; stop scrolling.
@@ -153,7 +153,7 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
                 scrollTask.start();
             }
         }
-        
+
         // Near top of view
         else if (me.lastXY[1] < viewTop + 10) {
             if (me.extendY) {
@@ -169,7 +169,7 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
                 scrollTask.start();
             }
         }
-        
+
         // Near left edge of view
         else if (me.lastXY[0] < viewLeft + 10) {
             if (me.extendX) {
@@ -177,7 +177,7 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
                 scrollTask.start();
             }
         }
-        
+
         // Not near an edge, cancel autoscrolling
         else {
             scrollBy[0] = scrollBy[1] = 0;
@@ -190,7 +190,7 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
         }
     },
 
-    doAutoScroll: function() {
+    doAutoScroll: function () {
         var me = this,
             view = me.view,
             scrollOverCell;
@@ -209,7 +209,7 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
         }
     },
 
-    onEnd: function(e) {
+    onEnd: function (e) {
         var me = this;
 
         if (me.scrollTask) {
@@ -220,8 +220,8 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
             me.view.getSelectionModel().extendSelection(me.extensionDescriptor);
         }
     },
-    
-    onViewScroll: function() {
+
+    onViewScroll: function () {
         var me = this;
 
         // If being dragged
@@ -237,7 +237,7 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
         }
     },
 
-    syncMaskOnCell: function(overCell) {
+    syncMaskOnCell: function (overCell) {
         var me = this,
             view = me.view,
             rows = view.all,
@@ -251,7 +251,7 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
 
         // Constrain cell positions to be within rendered range.
         firstPos.setRow(Math.min(Math.max(firstPos.rowIdx, rows.startIndex), rows.endIndex));
-        lastPos.setRow( Math.min(Math.max(lastPos.rowIdx,  rows.startIndex), rows.endIndex));
+        lastPos.setRow(Math.min(Math.max(lastPos.rowIdx, rows.startIndex), rows.endIndex));
 
         me.selectionRegion = selRegion = firstPos.getCell().getRegion().union(lastPos.getCell().getRegion());
 
@@ -345,7 +345,7 @@ Ext.define('Ext.grid.selection.SelectionExtender', {
         }
     },
 
-    destroy: function() {
+    destroy: function () {
         var me = this;
         Ext.destroy(me.gridListeners, me.viewListeners, me.mask, me.handle);
         me.callParent();

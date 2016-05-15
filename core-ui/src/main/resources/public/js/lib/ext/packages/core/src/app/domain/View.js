@@ -3,16 +3,16 @@
  */
 Ext.define('Ext.app.domain.View', {
     extend: 'Ext.app.EventDomain',
-    
+
     isInstance: true,
-    
-    constructor: function(controller) {
+
+    constructor: function (controller) {
         this.callParent(arguments);
         this.controller = controller;
         this.monitoredClasses = [Ext.Component];
     },
-    
-    match: function(target, selector, controller) {
+
+    match: function (target, selector, controller) {
         var out = false;
         if (selector === '#') {
             out = controller === target.getController();
@@ -21,8 +21,8 @@ Ext.define('Ext.app.domain.View', {
         }
         return out;
     },
-    
-    destroy: function() {
+
+    destroy: function () {
         this.controller = null;
         this.callParent();
     }

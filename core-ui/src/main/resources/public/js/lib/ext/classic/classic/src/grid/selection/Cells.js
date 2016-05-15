@@ -20,7 +20,7 @@ Ext.define('Ext.grid.selection.Cells', {
     //-------------------------------------------------------------------------
     // Base Selection API
 
-    clone: function() {
+    clone: function () {
         var me = this,
             result = new me.self(me.view);
 
@@ -36,7 +36,7 @@ Ext.define('Ext.grid.selection.Cells', {
      * @param {Ext.grid.CellContext} cellContext The cell context to test.
      * @return {Boolean} `true` if the passed {@link Ext.grid.CellContext cell context} is selected.
      */
-    contains: function(cellContext) {
+    contains: function (cellContext) {
         var range;
 
         if (!cellContext || !cellContext.isCellContext) {
@@ -57,7 +57,7 @@ Ext.define('Ext.grid.selection.Cells', {
         return false;
     },
 
-    eachRow: function(fn, scope) {
+    eachRow: function (fn, scope) {
         var me = this,
             rowRange = me.getRowRange(),
             context = new Ext.grid.CellContext(me.view),
@@ -71,7 +71,7 @@ Ext.define('Ext.grid.selection.Cells', {
         }
     },
 
-    eachColumn: function(fn, scope) {
+    eachColumn: function (fn, scope) {
         var me = this,
             colRange = me.getColumnRange(),
             context = new Ext.grid.CellContext(me.view),
@@ -85,7 +85,7 @@ Ext.define('Ext.grid.selection.Cells', {
         }
     },
 
-    eachCell: function(fn, scope) {
+    eachCell: function (fn, scope) {
         var me = this,
             rowRange = me.getRowRange(),
             colRange = me.getColumnRange(),
@@ -106,28 +106,28 @@ Ext.define('Ext.grid.selection.Cells', {
     /**
      * @return {Number} The row index of the first row in the range or zero if no range.
      */
-    getFirstRowIndex: function() {
+    getFirstRowIndex: function () {
         return this.startCell ? Math.min(this.startCell.rowIdx, this.endCell.rowIdx) : 0;
     },
 
     /**
      * @return {Number} The row index of the last row in the range or -1 if no range.
      */
-    getLastRowIndex: function() {
+    getLastRowIndex: function () {
         return this.startCell ? Math.max(this.startCell.rowIdx, this.endCell.rowIdx) : -1;
     },
 
     /**
      * @return {Number} The column index of the first column in the range or zero if no range.
      */
-    getFirstColumnIndex: function() {
+    getFirstColumnIndex: function () {
         return this.startCell ? Math.min(this.startCell.colIdx, this.endCell.colIdx) : 0;
     },
 
     /**
      * @return {Number} The column index of the last column in the range or -1 if no range.
      */
-    getLastColumnIndex: function() {
+    getLastColumnIndex: function () {
         return this.startCell ? Math.max(this.startCell.colIdx, this.endCell.colIdx) : -1;
     },
 
@@ -137,11 +137,11 @@ Ext.define('Ext.grid.selection.Cells', {
         /**
          * @private
          */
-        clear: function() {
+        clear: function () {
             var me = this,
                 view = me.view;
 
-            me.eachCell(function(cellContext) {
+            me.eachCell(function (cellContext) {
                 view.onCellDeselect(cellContext);
             });
             me.startCell = me.endCell = null;
@@ -183,10 +183,10 @@ Ext.define('Ext.grid.selection.Cells', {
             lastRange = me.lastRange || range;
 
             rowStart = Math.max(Math.min(range[0][1], lastRange[0][1]), rows.startIndex);
-            rowEnd   = Math.min(Math.max(range[1][1], lastRange[1][1]), rows.endIndex);
+            rowEnd = Math.min(Math.max(range[1][1], lastRange[1][1]), rows.endIndex);
 
             colStart = Math.min(range[0][0], lastRange[0][0]);
-            colEnd   = Math.min(Math.max(range[1][0], lastRange[1][0]), maxColIdx);
+            colEnd = Math.min(Math.max(range[1][0], lastRange[1][0]), maxColIdx);
 
             // Loop through the union of last range and current range
             for (rowIdx = rowStart; rowIdx <= rowEnd; rowIdx++) {
@@ -204,7 +204,7 @@ Ext.define('Ext.grid.selection.Cells', {
             me.lastRange = range;
         },
 
-        extendRange: function(extensionVector) {
+        extendRange: function (extensionVector) {
             var me = this,
                 newEndCell;
 
@@ -230,7 +230,7 @@ Ext.define('Ext.grid.selection.Cells', {
          * @return {Number[][]}
          * @private
          */
-        getRange: function() {
+        getRange: function () {
             return [[this.getFirstColumnIndex(), this.getFirstRowIndex()], [this.getLastColumnIndex(), this.getLastRowIndex()]];
         },
 
@@ -239,7 +239,7 @@ Ext.define('Ext.grid.selection.Cells', {
          * @return {Number}
          * @private
          */
-        getRangeSize: function() {
+        getRangeSize: function () {
             return this.getCount();
         },
 
@@ -248,7 +248,7 @@ Ext.define('Ext.grid.selection.Cells', {
          * @return {Number} The nuimber of cells selected
          * @private
          */
-        getCount: function() {
+        getCount: function () {
             var range = this.getRange();
 
             return (range[1][0] - range[0][0] + 1) * (range[1][1] - range[0][1] + 1);
@@ -257,7 +257,7 @@ Ext.define('Ext.grid.selection.Cells', {
         /**
          * @private
          */
-        selectAll: function() {
+        selectAll: function () {
             var me = this,
                 view = me.view;
 
@@ -270,7 +270,7 @@ Ext.define('Ext.grid.selection.Cells', {
          * @return {Boolean}
          * @private
          */
-        isAllSelected: function() {
+        isAllSelected: function () {
             var start = this.rangeStart,
                 end = this.rangeEnd;
 
@@ -287,7 +287,7 @@ Ext.define('Ext.grid.selection.Cells', {
          * @return {Number[]} The column range which encapsulates the range.
          * @private
          */
-        getColumnRange: function() {
+        getColumnRange: function () {
             return [this.getFirstColumnIndex(), this.getLastColumnIndex()];
         },
 
@@ -297,11 +297,11 @@ Ext.define('Ext.grid.selection.Cells', {
          * @return {Number[]}
          * @private
          */
-        getRowRange: function() {
+        getRowRange: function () {
             return [this.getFirstRowIndex(), this.getLastRowIndex()];
         },
 
-        onSelectionFinish: function() {
+        onSelectionFinish: function () {
             var me = this;
 
             if (me.getCount()) {

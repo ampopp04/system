@@ -6,14 +6,14 @@ Ext.define('Ext.chart.LegendBase', {
     config: {
         tpl: [
             '<div class="', Ext.baseCSSPrefix, 'legend-container">',
-                '<tpl for=".">',
-                    '<div class="', Ext.baseCSSPrefix, 'legend-item">',
-                        '<span ',
-                            'class="', Ext.baseCSSPrefix, 'legend-item-marker {[ values.disabled ? Ext.baseCSSPrefix + \'legend-inactive\' : \'\' ]}" ',
-                            'style="background:{mark};">',
-                        '</span>{name}',
-                    '</div>',
-                '</tpl>',
+            '<tpl for=".">',
+            '<div class="', Ext.baseCSSPrefix, 'legend-item">',
+            '<span ',
+            'class="', Ext.baseCSSPrefix, 'legend-item-marker {[ values.disabled ? Ext.baseCSSPrefix + \'legend-inactive\' : \'\' ]}" ',
+            'style="background:{mark};">',
+            '</span>{name}',
+            '</div>',
+            '</tpl>',
             '</div>'
         ],
         nodeContainerSelector: 'div.' + Ext.baseCSSPrefix + 'legend-container',

@@ -134,21 +134,21 @@ Ext.define('Ext.data.proxy.JsonP', {
          * @cfg {String} callbackKey
          * See {@link Ext.data.JsonP#callbackKey}.
          */
-        callbackKey : 'callback',
+        callbackKey: 'callback',
 
         /**
-        * @cfg {String} [recordParam]
-        * The HTTP parameter name to use when passing records to the server and the {@link #writer Json writer} is not configured
-        * to {@link Ext.data.writer.Json#encode encode} records into a parameter.
-        * 
-        * The {@link #encodeRecords} method is used to encode the records to create this parameter's value.
-        */
+         * @cfg {String} [recordParam]
+         * The HTTP parameter name to use when passing records to the server and the {@link #writer Json writer} is not configured
+         * to {@link Ext.data.writer.Json#encode encode} records into a parameter.
+         *
+         * The {@link #encodeRecords} method is used to encode the records to create this parameter's value.
+         */
         recordParam: 'records',
 
         /**
-        * @cfg {Boolean} autoAppendParams
-        * True to automatically append the request's params to the generated url. Defaults to true
-        */
+         * @cfg {Boolean} autoAppendParams
+         * True to automatically append the request's params to the generated url. Defaults to true
+         */
         autoAppendParams: true
     },
 
@@ -160,14 +160,14 @@ Ext.define('Ext.data.proxy.JsonP', {
      * @param {Function} callback A callback function to execute when the Operation has been completed
      * @param {Object} scope The scope to execute the callback in
      */
-    doRequest: function(operation) {
+    doRequest: function (operation) {
         //generate the unique IDs for this request
-        var me      = this,
+        var me = this,
             request = me.buildRequest(operation),
-            params  = request.getParams();
+            params = request.getParams();
 
         // apply JsonP proxy-specific attributes to the Request
-       request.setConfig({
+        request.setConfig({
             callbackKey: me.callbackKey,
             timeout: me.timeout,
             scope: me,
@@ -206,10 +206,10 @@ Ext.define('Ext.data.proxy.JsonP', {
      * @param {Object} scope The scope in which to execute the callback function
      * @return {Function} The callback function
      */
-    createRequestCallback: function(request, operation) {
+    createRequestCallback: function (request, operation) {
         var me = this;
 
-        return function(success, response, errorType) {
+        return function (success, response, errorType) {
             if (request === me.lastRequest) {
                 me.lastRequest = null;
             }
@@ -217,7 +217,7 @@ Ext.define('Ext.data.proxy.JsonP', {
         };
     },
 
-    setException: function(operation, response) {
+    setException: function (operation, response) {
         operation.setException(operation.getRequest().getRawRequest().errorType);
     },
 
@@ -227,11 +227,11 @@ Ext.define('Ext.data.proxy.JsonP', {
      * @param {Ext.data.Request} request The request object
      * @return {String} The url
      */
-    buildUrl: function(request) {
-        var me      = this,
-            url     = me.callParent(arguments),
+    buildUrl: function (request) {
+        var me = this,
+            url = me.callParent(arguments),
             records = request.getRecords(),
-            writer  = me.getWriter(),
+            writer = me.getWriter(),
             params,
             filters,
             filter, i, v;
@@ -243,7 +243,7 @@ Ext.define('Ext.data.proxy.JsonP', {
         }
 
         // Encode filters into the URL via params
-        params  = request.getParams();
+        params = request.getParams();
         filters = params.filters;
         delete params.filters;
         if (filters && filters.length) {
@@ -276,7 +276,7 @@ Ext.define('Ext.data.proxy.JsonP', {
      * will be aborted.
      * @param {Ext.data.Request} [request] The request to abort.
      */
-    abort: function(request) {
+    abort: function (request) {
         request = request || this.lastRequest;
         if (request) {
             Ext.data.JsonP.abort(request.getRawRequest());
@@ -286,12 +286,12 @@ Ext.define('Ext.data.proxy.JsonP', {
     /**
      * Encodes an array of records into a value suitable to be added to the request `params` as the {@link #recordParam} parameter.
      * This is broken out into its own function so that it can be easily overridden.
-     * 
-     * The default implementation 
+     *
+     * The default implementation
      * @param {Ext.data.Model[]} records The records array
      * @return {Array} An array of record data objects
      */
-    encodeRecords: function(records) {
+    encodeRecords: function (records) {
         var encoded = [],
             i = 0,
             len = records.length;

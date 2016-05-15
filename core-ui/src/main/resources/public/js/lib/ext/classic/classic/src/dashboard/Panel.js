@@ -12,15 +12,15 @@ Ext.define('Ext.dashboard.Panel', {
 
     anchor: '100%',
 
-    layout  : 'fit',
+    layout: 'fit',
 
     frame: true,
     closable: true,
     collapsible: true,
     animCollapse: true,
-    titleCollapse  : true,
+    titleCollapse: true,
 
-    stateful : true,
+    stateful: true,
 
     draggable: {
         moveOnDrag: false
@@ -38,7 +38,7 @@ Ext.define('Ext.dashboard.Panel', {
 
     // Override Panel's default doClose to provide a custom fade out effect
     // when a portlet is removed from the portal
-    doClose: function() {
+    doClose: function () {
         var me = this;
 
         if (me.animateClose) {
@@ -147,7 +147,7 @@ Ext.define('Ext.dashboard.Panel', {
     },
 
     /** @private */
-    getState : function() {
+    getState: function () {
         var me = this,
             state = me.callParent() || {};
 

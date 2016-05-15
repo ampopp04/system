@@ -12,7 +12,7 @@ Ext.define('Ext.chart.TipSurface', {
     spriteArray: false,
     renderFirst: true,
 
-    constructor: function(config) {
+    constructor: function (config) {
         this.callParent([config]);
         if (config.sprites) {
             this.spriteArray = [].concat(config.sprites);
@@ -20,22 +20,22 @@ Ext.define('Ext.chart.TipSurface', {
         }
     },
 
-    onRender: function() {
+    onRender: function () {
         var me = this,
             i = 0,
             l = 0,
             sp,
             sprites;
-            this.callParent(arguments);
+        this.callParent(arguments);
         sprites = me.spriteArray;
         if (me.renderFirst && sprites) {
             me.renderFirst = false;
             for (l = sprites.length; i < l; i++) {
                 sp = me.surface.add(sprites[i]);
                 sp.setAttributes({
-                    hidden: false
-                },
-                true);
+                        hidden: false
+                    },
+                    true);
             }
         }
     }

@@ -77,13 +77,13 @@
                 <available file="@{dir}/build.xml"/>
                 <then>
                     <local name="sub.name"/>
-                    <basename file="@{dir}" 
-                             property="sub.name"/>
-                    <ant dir="@{dir}" 
-                         inheritall="false" 
+                    <basename file="@{dir}"
+                              property="sub.name"/>
+                    <ant dir="@{dir}"
+                         inheritall="false"
                          inheritrefs="true"
                          target="@{target}">
-                        <property name="compiler.ref.id" 
+                        <property name="compiler.ref.id"
                                   value="compiler-${sub.name}"/>
                         <properties/>
                     </ant>
@@ -176,7 +176,7 @@
             </x-sencha-command>
         </x-process-examples>
     </target>
-    
+
     <target name="-before-upgrade-examples"/>
     <target name="-after-upgrade-examples"/>
     <target name="-upgrade-examples">
@@ -190,7 +190,7 @@
             <delete dir="@{example-dir}/.sencha_backup"/>
         </x-process-examples>
     </target>
-        
+
     <target name="-before-clean-examples"/>
     <target name="-after-clean-examples"/>
     <target name="-clean-examples">
@@ -200,5 +200,5 @@
                          target="clean"/>
         </x-process-examples>
     </target>
-    
+
 </project>

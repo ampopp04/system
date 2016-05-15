@@ -1,6 +1,6 @@
-describe("Ext.plugin.Abstract", function() {
+describe("Ext.plugin.Abstract", function () {
 
-    describe("listener scope resolution", function() {
+    describe("listener scope resolution", function () {
         var spies, Plugin, plugin, Component, component, Parent, parent,
             Controller, Controller, ParentController;
 
@@ -40,7 +40,7 @@ describe("Ext.plugin.Abstract", function() {
             }
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             spies = {
                 plugin: jasmine.createSpy(),
                 component: jasmine.createSpy(),
@@ -60,7 +60,7 @@ describe("Ext.plugin.Abstract", function() {
             });
         });
 
-        afterEach(function() {
+        afterEach(function () {
             if (plugin) {
                 plugin.destroy();
             }
@@ -73,12 +73,12 @@ describe("Ext.plugin.Abstract", function() {
             Plugin = Component = Parent = Controller = ParentController = null;
         });
 
-        describe("listener declared on class body", function() {
+        describe("listener declared on class body", function () {
             function definePlugin(cfg) {
                 Plugin = Ext.define(null, Ext.merge({
                     extend: 'Ext.plugin.Abstract',
                     mixins: ['Ext.mixin.Observable'],
-                    constructor: function(config) {
+                    constructor: function (config) {
                         this.callParent([config]);
                         this.mixins.observable.constructor.call(this);
                     },
@@ -89,12 +89,12 @@ describe("Ext.plugin.Abstract", function() {
                 }, cfg));
             }
 
-            describe("with no defaultListenerScope or controller", function() {
-                beforeEach(function() {
+            describe("with no defaultListenerScope or controller", function () {
+                beforeEach(function () {
                     defineComponent();
                 });
 
-                it("should resolve to the plugin with unspecified scope", function() {
+                it("should resolve to the plugin with unspecified scope", function () {
                     definePlugin();
                     plugin = new Plugin();
                     component = new Component({
@@ -104,7 +104,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('plugin');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'controller'
@@ -114,12 +114,12 @@ describe("Ext.plugin.Abstract", function() {
                     component = new Component({
                         plugins: plugin
                     });
-                    expect(function() {
+                    expect(function () {
                         plugin.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'this'
@@ -134,14 +134,14 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with defaultListenerScope on component", function() {
-                beforeEach(function() {
+            describe("with defaultListenerScope on component", function () {
+                beforeEach(function () {
                     defineComponent({
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to the component with unspecified scope", function() {
+                it("should resolve to the component with unspecified scope", function () {
                     definePlugin();
                     plugin = new Plugin();
                     component = new Component({
@@ -151,7 +151,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('component');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'controller'
@@ -161,12 +161,12 @@ describe("Ext.plugin.Abstract", function() {
                     component = new Component({
                         plugins: plugin
                     });
-                    expect(function() {
+                    expect(function () {
                         plugin.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'this'
@@ -181,14 +181,14 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with view controller on component", function() {
-                beforeEach(function() {
+            describe("with view controller on component", function () {
+                beforeEach(function () {
                     defineComponent({
                         controller: new Controller()
                     });
                 });
 
-                it("should resolve to the view controller with unspecified scope", function() {
+                it("should resolve to the view controller with unspecified scope", function () {
                     definePlugin();
                     plugin = new Plugin();
                     component = new Component({
@@ -198,7 +198,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('controller');
                 });
 
-                it("should resolve to the view controller with scope:'controller'", function() {
+                it("should resolve to the view controller with scope:'controller'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'controller'
@@ -212,7 +212,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('controller');
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'this'
@@ -227,15 +227,15 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with view controller and defaultListenerScope on component", function() {
-                beforeEach(function() {
+            describe("with view controller and defaultListenerScope on component", function () {
+                beforeEach(function () {
                     defineComponent({
                         controller: new Controller(),
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to the component with unspecified scope", function() {
+                it("should resolve to the component with unspecified scope", function () {
                     definePlugin();
                     plugin = new Plugin();
                     component = new Component({
@@ -245,7 +245,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('component');
                 });
 
-                it("should resolve to the view controller with scope:'controller'", function() {
+                it("should resolve to the view controller with scope:'controller'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'controller'
@@ -259,7 +259,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('controller');
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'this'
@@ -274,12 +274,12 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with parent and no defaultListenerScope or controller", function() {
-                beforeEach(function() {
+            describe("with parent and no defaultListenerScope or controller", function () {
+                beforeEach(function () {
                     defineParent();
                 });
 
-                it("should resolve to the plugin with unspecified scope", function() {
+                it("should resolve to the plugin with unspecified scope", function () {
                     definePlugin();
                     plugin = new Plugin();
                     parent = new Parent({
@@ -291,7 +291,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('plugin');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'controller'
@@ -303,12 +303,12 @@ describe("Ext.plugin.Abstract", function() {
                             plugins: plugin
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         plugin.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'this'
@@ -325,14 +325,14 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with defaultListenerScope on parent", function() {
-                beforeEach(function() {
+            describe("with defaultListenerScope on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to the parent with unspecified scope", function() {
+                it("should resolve to the parent with unspecified scope", function () {
                     definePlugin();
                     plugin = new Plugin();
                     parent = new Parent({
@@ -344,7 +344,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('parent');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'controller'
@@ -356,12 +356,12 @@ describe("Ext.plugin.Abstract", function() {
                             plugins: plugin
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         plugin.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'this'
@@ -378,14 +378,14 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with view controller on parent", function() {
-                beforeEach(function() {
+            describe("with view controller on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController()
                     });
                 });
 
-                it("should resolve to the parent view controller with unspecified scope", function() {
+                it("should resolve to the parent view controller with unspecified scope", function () {
                     definePlugin();
                     plugin = new Plugin();
                     parent = new Parent({
@@ -397,7 +397,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('parentController');
                 });
 
-                it("should resolve to the parent view controller with scope:'controller'", function() {
+                it("should resolve to the parent view controller with scope:'controller'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'controller'
@@ -413,7 +413,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('parentController');
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'this'
@@ -430,15 +430,15 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with view controller and defaultListenerScope on parent", function() {
-                beforeEach(function() {
+            describe("with view controller and defaultListenerScope on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController(),
                         defaultListenerScope: true
                     });
                 });
 
-                it("should resolve to the parent with unspecified scope", function() {
+                it("should resolve to the parent with unspecified scope", function () {
                     definePlugin();
                     plugin = new Plugin();
                     parent = new Parent({
@@ -450,7 +450,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('parent');
                 });
 
-                it("should resolve to the parent view controller with scope:'controller'", function() {
+                it("should resolve to the parent view controller with scope:'controller'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'controller'
@@ -466,7 +466,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('parentController');
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     definePlugin({
                         listeners: {
                             scope: 'this'
@@ -483,14 +483,14 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with handler declared as a function reference", function() {
+            describe("with handler declared as a function reference", function () {
                 var handler, scope;
 
                 function definePlugin(cfg) {
                     Plugin = Ext.define(null, Ext.merge({
                         extend: 'Ext.plugin.Abstract',
                         mixins: ['Ext.mixin.Observable'],
-                        constructor: function(config) {
+                        constructor: function (config) {
                             this.callParent([config]);
                             this.mixins.observable.constructor.call(this);
                         },
@@ -500,23 +500,23 @@ describe("Ext.plugin.Abstract", function() {
                     }, cfg))
                 }
 
-                beforeEach(function() {
+                beforeEach(function () {
                     handler = jasmine.createSpy();
-                    handler.andCallFake(function() {
+                    handler.andCallFake(function () {
                         scope = this;
                     });
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     scope = null;
                 });
 
-                describe("with no defaultListenerScope or controller", function() {
-                    beforeEach(function() {
+                describe("with no defaultListenerScope or controller", function () {
+                    beforeEach(function () {
                         defineComponent();
                     });
 
-                    it("should resolve to the plugin with unspecified scope", function() {
+                    it("should resolve to the plugin with unspecified scope", function () {
                         definePlugin();
                         plugin = new Plugin();
                         component = new Component({
@@ -526,7 +526,7 @@ describe("Ext.plugin.Abstract", function() {
                         expect(scope).toBe(plugin);
                     });
 
-                    it("should fail with scope:'controller'", function() {
+                    it("should fail with scope:'controller'", function () {
                         definePlugin({
                             listeners: {
                                 scope: 'controller'
@@ -536,12 +536,12 @@ describe("Ext.plugin.Abstract", function() {
                         component = new Component({
                             plugins: plugin
                         });
-                        expect(function() {
+                        expect(function () {
                             plugin.fireEvent('foo');
                         }).toThrow();
                     });
 
-                    it("should resolve to the plugin with scope:'this'", function() {
+                    it("should resolve to the plugin with scope:'this'", function () {
                         definePlugin({
                             listeners: {
                                 scope: 'this'
@@ -556,14 +556,14 @@ describe("Ext.plugin.Abstract", function() {
                     });
                 });
 
-                describe("with defaultListenerScope on component", function() {
-                    beforeEach(function() {
+                describe("with defaultListenerScope on component", function () {
+                    beforeEach(function () {
                         defineComponent({
                             defaultListenerScope: true
                         });
                     });
 
-                    it("should resolve to the plugin with unspecified scope", function() {
+                    it("should resolve to the plugin with unspecified scope", function () {
                         definePlugin();
                         plugin = new Plugin();
                         component = new Component({
@@ -573,7 +573,7 @@ describe("Ext.plugin.Abstract", function() {
                         expect(scope).toBe(plugin);
                     });
 
-                    it("should fail with scope:'controller'", function() {
+                    it("should fail with scope:'controller'", function () {
                         definePlugin({
                             listeners: {
                                 scope: 'controller'
@@ -583,12 +583,12 @@ describe("Ext.plugin.Abstract", function() {
                         component = new Component({
                             plugins: plugin
                         });
-                        expect(function() {
+                        expect(function () {
                             plugin.fireEvent('foo');
                         }).toThrow();
                     });
 
-                    it("should resolve to the plugin with scope:'this'", function() {
+                    it("should resolve to the plugin with scope:'this'", function () {
                         definePlugin({
                             listeners: {
                                 scope: 'this'
@@ -603,14 +603,14 @@ describe("Ext.plugin.Abstract", function() {
                     });
                 });
 
-                describe("with view controller on component", function() {
-                    beforeEach(function() {
+                describe("with view controller on component", function () {
+                    beforeEach(function () {
                         defineComponent({
                             controller: new Controller()
                         });
                     });
 
-                    it("should resolve to the plugin with unspecified scope", function() {
+                    it("should resolve to the plugin with unspecified scope", function () {
                         definePlugin();
                         plugin = new Plugin();
                         component = new Component({
@@ -620,7 +620,7 @@ describe("Ext.plugin.Abstract", function() {
                         expect(scope).toBe(plugin);
                     });
 
-                    it("should resolve to the component view controller with scope:'controller'", function() {
+                    it("should resolve to the component view controller with scope:'controller'", function () {
                         definePlugin({
                             listeners: {
                                 scope: 'controller'
@@ -634,7 +634,7 @@ describe("Ext.plugin.Abstract", function() {
                         expect(scope).toBe(component.getController());
                     });
 
-                    it("should resolve to the plugin with scope:'this'", function() {
+                    it("should resolve to the plugin with scope:'this'", function () {
                         definePlugin({
                             listeners: {
                                 scope: 'this'
@@ -651,12 +651,12 @@ describe("Ext.plugin.Abstract", function() {
             });
         });
 
-        describe("listener declared on instance config", function() {
+        describe("listener declared on instance config", function () {
             function definePlugin(cfg) {
                 Plugin = Ext.define(null, Ext.merge({
                     extend: 'Ext.plugin.Abstract',
                     mixins: ['Ext.mixin.Observable'],
-                    constructor: function(config) {
+                    constructor: function (config) {
                         this.callParent([config]);
                         this.mixins.observable.constructor.call(this);
                     },
@@ -664,13 +664,13 @@ describe("Ext.plugin.Abstract", function() {
                 }, cfg));
             }
 
-            describe("with no defaultListenerScope or controller", function() {
-                beforeEach(function() {
+            describe("with no defaultListenerScope or controller", function () {
+                beforeEach(function () {
                     defineComponent();
                     definePlugin();
                 });
 
-                it("should resolve to the component with unspecified scope", function() {
+                it("should resolve to the component with unspecified scope", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo'
@@ -683,7 +683,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('component');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -693,12 +693,12 @@ describe("Ext.plugin.Abstract", function() {
                     component = new Component({
                         plugins: plugin
                     });
-                    expect(function() {
+                    expect(function () {
                         plugin.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -713,15 +713,15 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with defaultListenerScope on component", function() {
-                beforeEach(function() {
+            describe("with defaultListenerScope on component", function () {
+                beforeEach(function () {
                     defineComponent({
                         defaultListenerScope: true
                     });
                     definePlugin();
                 });
 
-                it("should resolve to the component with unspecified scope", function() {
+                it("should resolve to the component with unspecified scope", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo'
@@ -734,7 +734,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('component');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -744,12 +744,12 @@ describe("Ext.plugin.Abstract", function() {
                     component = new Component({
                         plugins: plugin
                     });
-                    expect(function() {
+                    expect(function () {
                         plugin.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -764,15 +764,15 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with view controller on component", function() {
-                beforeEach(function() {
+            describe("with view controller on component", function () {
+                beforeEach(function () {
                     defineComponent({
                         controller: new Controller()
                     });
                     definePlugin();
                 });
 
-                it("should resolve to the component view controller with unspecified scope", function() {
+                it("should resolve to the component view controller with unspecified scope", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo'
@@ -785,7 +785,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('controller');
                 });
 
-                it("should resolve to the component view controller with scope:'controller'", function() {
+                it("should resolve to the component view controller with scope:'controller'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -799,7 +799,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('controller');
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -814,8 +814,8 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with view controller and defaultListenerScope on component", function() {
-                beforeEach(function() {
+            describe("with view controller and defaultListenerScope on component", function () {
+                beforeEach(function () {
                     defineComponent({
                         controller: new Controller(),
                         defaultListenerScope: true
@@ -823,7 +823,7 @@ describe("Ext.plugin.Abstract", function() {
                     definePlugin();
                 });
 
-                it("should resolve to the component with unspecified scope", function() {
+                it("should resolve to the component with unspecified scope", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo'
@@ -836,7 +836,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('component');
                 });
 
-                it("should resolve to the component view controller with scope:'controller'", function() {
+                it("should resolve to the component view controller with scope:'controller'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -850,7 +850,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('controller');
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -865,14 +865,14 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with parent and no defaultListenerScope or controller", function() {
-                beforeEach(function() {
+            describe("with parent and no defaultListenerScope or controller", function () {
+                beforeEach(function () {
                     defineParent();
                     definePlugin();
                     defineComponent();
                 });
 
-                it("should resolve to the component with unspecified scope", function() {
+                it("should resolve to the component with unspecified scope", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo'
@@ -887,7 +887,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('component');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -899,12 +899,12 @@ describe("Ext.plugin.Abstract", function() {
                             plugins: plugin
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         plugin.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -921,15 +921,15 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with defaultListenerScope on parent", function() {
-                beforeEach(function() {
+            describe("with defaultListenerScope on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         defaultListenerScope: true
                     });
                     definePlugin();
                 });
 
-                it("should resolve to the parent with unspecified scope", function() {
+                it("should resolve to the parent with unspecified scope", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo'
@@ -944,7 +944,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('parent');
                 });
 
-                it("should fail with scope:'controller'", function() {
+                it("should fail with scope:'controller'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -956,12 +956,12 @@ describe("Ext.plugin.Abstract", function() {
                             plugins: plugin
                         }
                     });
-                    expect(function() {
+                    expect(function () {
                         plugin.fireEvent('foo');
                     }).toThrow();
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -978,15 +978,15 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with view controller on parent", function() {
-                beforeEach(function() {
+            describe("with view controller on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController()
                     });
                     definePlugin();
                 });
 
-                it("should resolve to the parent view controller with unspecified scope", function() {
+                it("should resolve to the parent view controller with unspecified scope", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo'
@@ -1001,7 +1001,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('parentController');
                 });
 
-                it("should resolve to the parent view controller with scope:'controller'", function() {
+                it("should resolve to the parent view controller with scope:'controller'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -1017,7 +1017,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('parentController');
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -1034,8 +1034,8 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with view controller and defaultListenerScope on parent", function() {
-                beforeEach(function() {
+            describe("with view controller and defaultListenerScope on parent", function () {
+                beforeEach(function () {
                     defineParent({
                         controller: new ParentController(),
                         defaultListenerScope: true
@@ -1043,7 +1043,7 @@ describe("Ext.plugin.Abstract", function() {
                     definePlugin();
                 });
 
-                it("should resolve to the parent with unspecified scope", function() {
+                it("should resolve to the parent with unspecified scope", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo'
@@ -1058,7 +1058,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('parent');
                 });
 
-                it("should resolve to the parent view controller with scope:'controller'", function() {
+                it("should resolve to the parent view controller with scope:'controller'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -1074,7 +1074,7 @@ describe("Ext.plugin.Abstract", function() {
                     expectScope('parentController');
                 });
 
-                it("should resolve to the plugin with scope:'this'", function() {
+                it("should resolve to the plugin with scope:'this'", function () {
                     plugin = new Plugin({
                         listeners: {
                             foo: 'onFoo',
@@ -1091,38 +1091,38 @@ describe("Ext.plugin.Abstract", function() {
                 });
             });
 
-            describe("with handler declared as a function reference", function() {
+            describe("with handler declared as a function reference", function () {
                 var handler, scope;
 
                 function definePlugin(cfg) {
                     Plugin = Ext.define(null, Ext.merge({
                         extend: 'Ext.plugin.Abstract',
                         mixins: ['Ext.mixin.Observable'],
-                        constructor: function(config) {
+                        constructor: function (config) {
                             this.callParent([config]);
                             this.mixins.observable.constructor.call(this);
                         }
                     }, cfg));
                 }
 
-                beforeEach(function() {
+                beforeEach(function () {
                     handler = jasmine.createSpy();
-                    handler.andCallFake(function() {
+                    handler.andCallFake(function () {
                         scope = this;
                     });
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     scope = null;
                 });
 
-                describe("with no defaultListenerScope or controller", function() {
-                    beforeEach(function() {
+                describe("with no defaultListenerScope or controller", function () {
+                    beforeEach(function () {
                         defineComponent();
                         definePlugin();
                     });
 
-                    it("should resolve to the plugin with unspecified scope", function() {
+                    it("should resolve to the plugin with unspecified scope", function () {
                         plugin = new Plugin({
                             listeners: {
                                 foo: handler
@@ -1135,7 +1135,7 @@ describe("Ext.plugin.Abstract", function() {
                         expect(scope).toBe(plugin);
                     });
 
-                    it("should fail with scope:'controller'", function() {
+                    it("should fail with scope:'controller'", function () {
                         plugin = new Plugin({
                             listeners: {
                                 foo: handler,
@@ -1145,12 +1145,12 @@ describe("Ext.plugin.Abstract", function() {
                         component = new Component({
                             plugins: plugin
                         });
-                        expect(function() {
+                        expect(function () {
                             plugin.fireEvent('foo');
                         }).toThrow();
                     });
 
-                    it("should resolve to the plugin with scope:'this'", function() {
+                    it("should resolve to the plugin with scope:'this'", function () {
                         plugin = new Plugin({
                             listeners: {
                                 foo: handler,
@@ -1165,15 +1165,15 @@ describe("Ext.plugin.Abstract", function() {
                     });
                 });
 
-                describe("with defaultListenerScope on component", function() {
-                    beforeEach(function() {
+                describe("with defaultListenerScope on component", function () {
+                    beforeEach(function () {
                         defineComponent({
                             defaultListenerScope: true
                         });
                         definePlugin();
                     });
 
-                    it("should resolve to the plugin with unspecified scope", function() {
+                    it("should resolve to the plugin with unspecified scope", function () {
                         plugin = new Plugin({
                             listeners: {
                                 foo: handler
@@ -1186,7 +1186,7 @@ describe("Ext.plugin.Abstract", function() {
                         expect(scope).toBe(plugin);
                     });
 
-                    it("should fail with scope:'controller'", function() {
+                    it("should fail with scope:'controller'", function () {
                         plugin = new Plugin({
                             listeners: {
                                 foo: handler,
@@ -1196,12 +1196,12 @@ describe("Ext.plugin.Abstract", function() {
                         component = new Component({
                             plugins: plugin
                         });
-                        expect(function() {
+                        expect(function () {
                             plugin.fireEvent('foo');
                         }).toThrow();
                     });
 
-                    it("should resolve to the plugin with scope:'this'", function() {
+                    it("should resolve to the plugin with scope:'this'", function () {
                         plugin = new Plugin({
                             listeners: {
                                 foo: handler,
@@ -1216,15 +1216,15 @@ describe("Ext.plugin.Abstract", function() {
                     });
                 });
 
-                describe("with view controller on component", function() {
-                    beforeEach(function() {
+                describe("with view controller on component", function () {
+                    beforeEach(function () {
                         defineComponent({
                             controller: new Controller()
                         });
                         definePlugin();
                     });
 
-                    it("should resolve to the plugin with unspecified scope", function() {
+                    it("should resolve to the plugin with unspecified scope", function () {
                         plugin = new Plugin({
                             listeners: {
                                 foo: handler
@@ -1237,7 +1237,7 @@ describe("Ext.plugin.Abstract", function() {
                         expect(scope).toBe(plugin);
                     });
 
-                    it("should resolve to the controller with scope:'controller'", function() {
+                    it("should resolve to the controller with scope:'controller'", function () {
                         plugin = new Plugin({
                             listeners: {
                                 foo: handler,
@@ -1251,7 +1251,7 @@ describe("Ext.plugin.Abstract", function() {
                         expect(scope).toBe(component.getController());
                     });
 
-                    it("should resolve to the plugin with scope:'this'", function() {
+                    it("should resolve to the plugin with scope:'this'", function () {
                         plugin = new Plugin({
                             listeners: {
                                 foo: handler,

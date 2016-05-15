@@ -8,7 +8,7 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
         intRegex = /^[+-]?\d+$/,
         floatRegex = /^[+-]?\d+\.\d+$/;
 
-    function parseParamValue (value) {
+    function parseParamValue(value) {
         var m;
 
         if (Ext.isDefined(value)) {
@@ -19,7 +19,7 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
             } else if (floatRegex.test(value)) {
                 value = parseFloat(value);
             } else if (!!(m = dateRegex.test(value))) {
-                value = new Date(Date.UTC(+m[1], +m[2]-1, +m[3], +m[4], +m[5], +m[6]));
+                value = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]));
             }
         }
 
@@ -71,7 +71,7 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
 
             return ret;
         },
-        
+
         doPost: function (ctx) {
             var me = this,
                 ret = {};
@@ -93,7 +93,7 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
             var me = this,
                 xhr = ctx.xhr,
                 records = xhr.options.records;
-            me.removeFromData(ctx,records);
+            me.removeFromData(ctx, records);
         },
 
         /**
@@ -113,7 +113,7 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
             if (fn) {
                 ret = fn.call(me, me.getCtx(xhr.method, xhr.url, xhr));
             } else {
-                ret = { status: 405, statusText: 'Method Not Allowed' };
+                ret = {status: 405, statusText: 'Method Not Allowed'};
             }
 
             return ret;
@@ -132,7 +132,7 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
             var ctx = this.getCtx(method, url),
                 redirect = this.doRedirect(ctx),
                 xhr;
-            if (options.action === 'destroy'){
+            if (options.action === 'destroy') {
                 method = 'delete';
             }
             if (redirect) {
@@ -145,11 +145,11 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
                 });
                 xhr.open(method, url, async);
             }
-            
+
             return xhr;
         },
 
-        parseQueryString : function (str) {
+        parseQueryString: function (str) {
             var m = urlRegex.exec(str),
                 ret = {},
                 key,
@@ -185,7 +185,7 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
                         break;
                     }
                     params = url;
-                    // fall...
+                // fall...
                 case 1:
                     url = method;
                     method = 'GET';
@@ -198,13 +198,13 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
             return this.manager.openRequest(method, url);
         },
 
-        removeFromData: function(ctx, records) {
+        removeFromData: function (ctx, records) {
             var me = this,
                 data = me.getData(ctx),
                 model = (ctx.xhr.options.proxy && ctx.xhr.options.proxy.getModel()) || {},
                 idProperty = model.idProperty || 'id';
 
-            Ext.each(records, function(record) {
+            Ext.each(records, function (record) {
                 var id = record.get(idProperty);
                 for (var i = data.length; i-- > 0;) {
                     if (data[i][idProperty] === id) {

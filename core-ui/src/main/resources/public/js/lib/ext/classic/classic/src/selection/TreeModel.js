@@ -11,7 +11,7 @@ Ext.define('Ext.selection.TreeModel', {
      * @cfg {Boolean} pruneRemoved
      * @hide
      */
-    
+
     /**
      * @cfg {Boolean} selectOnExpanderClick
      * `true` to select the row when clicking on the icon to collapse or expand
@@ -21,7 +21,7 @@ Ext.define('Ext.selection.TreeModel', {
      */
     selectOnExpanderClick: false,
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this;
 
         me.callParent([config]);
@@ -35,7 +35,7 @@ Ext.define('Ext.selection.TreeModel', {
         }
     },
 
-    getStoreListeners: function() {
+    getStoreListeners: function () {
         var me = this,
             result = me.callParent();
 
@@ -43,7 +43,7 @@ Ext.define('Ext.selection.TreeModel', {
         return result;
     },
 
-    onNodeRemove: function(parent, node, isMove) {
+    onNodeRemove: function (parent, node, isMove) {
         // deselection of deleted records done in base Model class
         if (!isMove) {
             var toDeselect = [];
@@ -58,11 +58,11 @@ Ext.define('Ext.selection.TreeModel', {
     // longer findable in the store after the refresh.
     // TreeModel does not use the pruneRemoved flag because records are being added and removed
     // from TreeStores on exand and collapse. It uses the pruneRemovedNodes flag.
-    pruneRemovedOnRefresh: function() {
+    pruneRemovedOnRefresh: function () {
         return this.pruneRemovedNodes;
     },
 
-    vetoSelection: function(e) {
+    vetoSelection: function (e) {
         var view = this.view,
             select = this.selectOnExpanderClick,
             veto = !select && e.type === 'click' && e.getTarget(view.expanderSelector || (view.lockingPartner && view.lockingPartner.expanderSelector));
@@ -71,7 +71,7 @@ Ext.define('Ext.selection.TreeModel', {
     },
 
     privates: {
-        gatherSelected: function(node, toDeselect) {
+        gatherSelected: function (node, toDeselect) {
             var childNodes = node.childNodes,
                 i, len, child;
 

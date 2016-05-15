@@ -44,7 +44,7 @@ Ext.define('Ext.data.matrix.Side', {
         me.slices = {};
     },
 
-    commit: function() {
+    commit: function () {
         var slices = this.slices,
             id;
 
@@ -57,7 +57,7 @@ Ext.define('Ext.data.matrix.Side', {
         var me = this,
             slices = me.slices,
             slice = slices[id1] ||
-                   (slices[id1] = new Ext.data.matrix.Slice(me, id1));
+                (slices[id1] = new Ext.data.matrix.Slice(me, id1));
 
         return (id2 || id2 === 0) ? slice.members[id2] : slice;
     },
@@ -67,14 +67,14 @@ Ext.define('Ext.data.matrix.Side', {
         return slice.update(id2, state);
     },
 
-    updateId: function(oldId, newId) {
+    updateId: function (oldId, newId) {
         var slice = this.get(oldId);
         if (slice) {
             slice.updateId(newId);
         }
     },
 
-    destroy: function() {
+    destroy: function () {
         var me = this,
             slices = me.slices,
             id;

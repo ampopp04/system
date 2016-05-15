@@ -1,56 +1,56 @@
 /**
  * This class provides a common API to LocalStorage with backwards compatibility for IE.
- * 
+ *
  * The primary aspects of this API match the HTML5 standard API except that this class
  * provides a scoping mechanism to isolate property values by instance. This scope is
  * determined from the `id` property. Further, this class does not expose the number of
  * keys in the store as a `length` property as this cannot be maintained reliably without
  * undue cost. Instead there is a `getKeys` method that returns the cached array of keys
  * which is lazily populated on first call.
- * 
+ *
  * For example:
- * 
+ *
  *      var store = new Ext.util.LocalStorage({
  *              id: 'foo'
  *          });
- * 
+ *
  *      store.setItem('bar', 'stuff');
- *      
+ *
  *      // Equivalent to:
  *      window.localStorage.setItem('foo-bar', 'stuff');
- * 
+ *
  * In all cases, the `id` property is only used by the underlying storage and should not
  * be needed in item access calls or appear when enumerating keys.
- * 
+ *
  * To continue with the previous example:
- * 
+ *
  *      var keys = store.getKeys();
  *      console.log(keys.length);   // logs 1
  *      console.log(store.key(0));  // logs "bar"
  *
  * ## Sharing Instances
- * 
+ *
  * The management of the underlying storage can be broken if multiple instances of this
  * class are created with the same `id` simultaneously. To avoid creating multiple instances
  * with the same `id`, use the `get` method and it will lazily create and share a single
  * instance. When you are done with the shared instance, call `release`.
- * 
+ *
  *      var storage = Ext.util.LocalStorage.get('id');
- *      
+ *
  *      ...
- *      
+ *
  *      storage.release(); // do not call `destroy` as others may be using this object
  *
  * **IMPORTANT:** Do not mix direction instantiation and `get` with the same `id`.
- * 
+ *
  * ## Legacy IE
- * 
+ *
  * Older IE browsers (specifically IE7 and below) do not support `localStorage` so this
  * class provides equivalent support using the IE proprietary persistence mechanism: the
  * [`userData` behavior](http://msdn.microsoft.com/en-us/library/ms531424(VS.85).aspx). In
  * this mode, the `id` serves as name passed to the `load` and `save` methods and as the
  * suffix on the DOM element added to the `head`.
- * 
+ *
  * In this mode, writes to the underlying storage are buffered and delayed for performance
  * reasons. This can be managed using the `flushDelay` config or by directly calling the
  * `save` method.
@@ -131,13 +131,13 @@ Ext.define('Ext.util.LocalStorage', {
         /**
          * Returns a shared instance of the desired local store given its `id`. When you
          * are finished with the returned object call the `release` method:
-         * 
+         *
          *      var store = Ext.util.LocalStorage.get('foo');
-         *      
+         *
          *      // .. use store
-         *      
+         *
          *      store.release();
-         * 
+         *
          * **NOTE:** Do not mix this call with direct instantiation of the same `id`.
          * @param {String/Object} id The `id` of the desired instance or a config object
          * with an `id` property at a minimum.
@@ -235,7 +235,7 @@ Ext.define('Ext.util.LocalStorage', {
      * Destroys this instance and for legacy IE, ensures data is flushed to persistent
      * storage. This method should not be called directly on instances returned by the
      * `get` method. Call `release` instead for such instances.
-     * 
+     *
      * *NOTE:* For non-legacy IE browsers, there is no harm in failing to call this
      * method. In legacy IE, however, failing to call this method can result in memory
      * leaks.
@@ -270,7 +270,7 @@ Ext.define('Ext.util.LocalStorage', {
         if (!keys) {
             me._keys = keys = [];
 
-            for (i = store.length; i--; ) {
+            for (i = store.length; i--;) {
                 key = store.key(i);
                 if (key.length > n) {
                     if (prefix === key.substring(0, n)) {
@@ -287,11 +287,11 @@ Ext.define('Ext.util.LocalStorage', {
      * Call this method when finished with an instance returned by `get` instead of calling
      * `destroy`. When the last shared use of this instance calls `release`, the `destroy`
      * method is called automatically.
-     * 
+     *
      * *NOTE:* Failing to call this method will result in memory leaks.
      */
     release: function () {
-        if (! --this._users) {
+        if (!--this._users) {
             this.destroy();
         }
     },
@@ -313,7 +313,7 @@ Ext.define('Ext.util.LocalStorage', {
             keys = me._keys || me.getKeys(),
             i;
 
-        for (i = keys.length; i--; ) {
+        for (i = keys.length; i--;) {
             store.removeItem(prefix + keys[i]);
         }
 

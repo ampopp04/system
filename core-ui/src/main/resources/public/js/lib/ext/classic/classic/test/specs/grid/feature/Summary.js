@@ -4,8 +4,8 @@ describe('Ext.grid.feature.Summary', function () {
         loadStore;
 
     function makeSuite(withLocking) {
-        describe(withLocking ? "with locking" : "without locking", function() {
-            var grid, view, store, summary, params, selector, 
+        describe(withLocking ? "with locking" : "without locking", function () {
+            var grid, view, store, summary, params, selector,
                 data, lockedGrid, normalGrid, lockedView, normalView,
                 hideMarkColumn = false;
 
@@ -14,15 +14,15 @@ describe('Ext.grid.feature.Summary', function () {
                     student: 'Student 1',
                     subject: 'Math',
                     mark: 84
-                },{
+                }, {
                     student: 'Student 1',
                     subject: 'Science',
                     mark: 72
-                },{
+                }, {
                     student: 'Student 2',
                     subject: 'Math',
                     mark: 96
-                },{
+                }, {
                     student: 'Student 2',
                     subject: 'Science',
                     mark: 68
@@ -80,9 +80,9 @@ describe('Ext.grid.feature.Summary', function () {
                 }
             }
 
-            beforeEach(function() {
+            beforeEach(function () {
                 // Override so that we can control asynchronous loading
-                loadStore = Ext.data.ProxyStore.prototype.load = function() {
+                loadStore = Ext.data.ProxyStore.prototype.load = function () {
                     proxyStoreLoad.apply(this, arguments);
                     if (synchronousLoad) {
                         this.flushLoad.apply(this, arguments);
@@ -157,7 +157,7 @@ describe('Ext.grid.feature.Summary', function () {
                 });
             });
 
-            describe('No data', function() {
+            describe('No data', function () {
                 it('should size the columns in the summary', function () {
                     var row;
                     createGrid(null, null, null, []);
@@ -178,7 +178,7 @@ describe('Ext.grid.feature.Summary', function () {
             });
 
             describe('summaryRenderer', function () {
-                it("should render a column's summary on show of the column", function() {
+                it("should render a column's summary on show of the column", function () {
                     hideMarkColumn = true;
                     createGrid();
                     hideMarkColumn = false;
@@ -190,7 +190,7 @@ describe('Ext.grid.feature.Summary', function () {
                     grid.getColumnManager().getColumns()[1].show();
                     expect(getSummaryContent()).toBe('4students80');
                 });
-                
+
                 it('should be passed the expected function parameters', function () {
                     createGrid();
 
@@ -264,8 +264,8 @@ describe('Ext.grid.feature.Summary', function () {
             });
 
             // These aren't great tests, but there isn't really an API for these things
-            describe("dock", function() {
-                it("should dock top under the headers", function() {
+            describe("dock", function () {
+                it("should dock top under the headers", function () {
                     createGrid(null, {
                         dock: 'top'
                     });
@@ -277,7 +277,7 @@ describe('Ext.grid.feature.Summary', function () {
                     }
                 });
 
-                it("should dock at the bottom under the headers", function() {
+                it("should dock at the bottom under the headers", function () {
                     var item;
                     createGrid(null, {
                         dock: 'bottom'
@@ -299,12 +299,12 @@ describe('Ext.grid.feature.Summary', function () {
                 });
             });
 
-            describe("toggling the summary row", function() {
+            describe("toggling the summary row", function () {
                 function toggle(visible) {
                     summary.toggleSummaryRow(visible);
                 }
 
-                describe("without docking", function() {
+                describe("without docking", function () {
                     function expectVisible(visible) {
                         if (withLocking) {
                             if (visible) {
@@ -323,26 +323,26 @@ describe('Ext.grid.feature.Summary', function () {
                         }
                     }
 
-                    it("should show the summary row by default", function() {
+                    it("should show the summary row by default", function () {
                         createGrid();
                         expectVisible(true);
                     });
 
-                    it("should not render the summary rows if configured with showSummaryRow: false", function() {
+                    it("should not render the summary rows if configured with showSummaryRow: false", function () {
                         createGrid(null, {
                             showSummaryRow: false
                         });
                         expectVisible(false);
                     });
 
-                    it("should not show summary rows when toggling off", function() {
+                    it("should not show summary rows when toggling off", function () {
                         createGrid();
                         expectVisible(true);
                         toggle();
                         expectVisible(false);
                     });
 
-                    it("should show summary rows when toggling on", function() {
+                    it("should show summary rows when toggling on", function () {
                         createGrid(null, {
                             showSummaryRow: false
                         });
@@ -351,20 +351,20 @@ describe('Ext.grid.feature.Summary', function () {
                         expectVisible(true);
                     });
 
-                    it("should leave the summary visible when explicitly passing visible: true", function() {
+                    it("should leave the summary visible when explicitly passing visible: true", function () {
                         createGrid();
                         toggle(true);
                         expectVisible(true);
                     });
 
-                    it("should leave the summary off when explicitly passed visible: false", function() {
+                    it("should leave the summary off when explicitly passed visible: false", function () {
                         createGrid();
                         toggle();
                         toggle(false);
                         expectVisible(false);
                     });
 
-                    it("should update the summary row if the change happened while not visible", function() {
+                    it("should update the summary row if the change happened while not visible", function () {
                         var cellSelector, cell, content;
 
                         createGrid();
@@ -387,15 +387,15 @@ describe('Ext.grid.feature.Summary', function () {
                     });
                 });
 
-                describe("with docking", function() {
-                    it("should show the summary row by default", function() {
+                describe("with docking", function () {
+                    it("should show the summary row by default", function () {
                         createGrid(null, {
                             dock: 'top'
                         });
                         expect(summary.getSummaryBar().isVisible()).toBe(true);
                     });
 
-                    it("should not render the summary rows if configured with showSummaryRow: false", function() {
+                    it("should not render the summary rows if configured with showSummaryRow: false", function () {
                         createGrid(null, {
                             dock: 'top',
                             showSummaryRow: false
@@ -403,7 +403,7 @@ describe('Ext.grid.feature.Summary', function () {
                         expect(summary.getSummaryBar().isVisible()).toBe(false);
                     });
 
-                    it("should not show summary rows when toggling off", function() {
+                    it("should not show summary rows when toggling off", function () {
                         createGrid(null, {
                             dock: 'top'
                         });
@@ -412,7 +412,7 @@ describe('Ext.grid.feature.Summary', function () {
                         expect(summary.getSummaryBar().isVisible()).toBe(false);
                     });
 
-                    it("should show summary rows when toggling on", function() {
+                    it("should show summary rows when toggling on", function () {
                         createGrid(null, {
                             dock: 'top',
                             showSummaryRow: false
@@ -422,7 +422,7 @@ describe('Ext.grid.feature.Summary', function () {
                         expect(summary.getSummaryBar().isVisible()).toBe(true);
                     });
 
-                    it("should leave the summary visible when explicitly passing visible: true", function() {
+                    it("should leave the summary visible when explicitly passing visible: true", function () {
                         createGrid(null, {
                             dock: 'top'
                         });
@@ -430,7 +430,7 @@ describe('Ext.grid.feature.Summary', function () {
                         expect(summary.getSummaryBar().isVisible()).toBe(true);
                     });
 
-                    it("should leave the summary off when explicitly passed visible: false", function() {
+                    it("should leave the summary off when explicitly passed visible: false", function () {
                         createGrid(null, {
                             dock: 'top'
                         });
@@ -439,7 +439,7 @@ describe('Ext.grid.feature.Summary', function () {
                         expect(summary.getSummaryBar().isVisible()).toBe(false);
                     });
 
-                    it("should update the summary row when if the change happened while not visible and docked", function() {
+                    it("should update the summary row when if the change happened while not visible and docked", function () {
                         var cellSelector, cell, content;
 
                         createGrid(null, {
@@ -458,14 +458,14 @@ describe('Ext.grid.feature.Summary', function () {
                             cell = summary.summaryBar.getEl().down(cellSelector);
                             content = cell.down(grid.getView().innerSelector).dom.innerHTML;
                         }
-                        
+
                         expect(content).toBe('59');
                     });
                 });
             });
-            
-            describe('calculated fields', function() {
-                it('should work', function() {
+
+            describe('calculated fields', function () {
+                it('should work', function () {
                     createGrid({
                         // put calculated column first, so that when the priceEx is set in the summary record
                         // we test that this dependent field is NOT updated
@@ -497,7 +497,7 @@ describe('Ext.grid.feature.Summary', function () {
                             type: 'float'
                         }, {
                             name: 'priceInc',
-                            calculate: function(data) {
+                            calculate: function (data) {
                                 return data.priceEx * data.vat;
                             },
                             type: 'float'
@@ -586,7 +586,7 @@ describe('Ext.grid.feature.Summary', function () {
                 });
             });
 
-            describe("reacting to store changes", function() {
+            describe("reacting to store changes", function () {
                 function expectContent(dock, expected) {
                     var content;
 
@@ -608,16 +608,16 @@ describe('Ext.grid.feature.Summary', function () {
                     theView = theView || view;
                     var content = '';
 
-                    Ext.Array.forEach(bar.el.query(theView.innerSelector), function(node) {
+                    Ext.Array.forEach(bar.el.query(theView.innerSelector), function (node) {
                         content += node.textContent || node.innerText || '';
                     });
                     return content.replace(/\s/g, '');
                 }
 
-                describe("before being rendered", function() {
+                describe("before being rendered", function () {
                     function beforeRenderSuite(withDocking) {
-                        describe(withDocking ? "with docking" : "without docking", function() {
-                            beforeEach(function() {
+                        describe(withDocking ? "with docking" : "without docking", function () {
+                            beforeEach(function () {
                                 createGrid({
                                     renderTo: null
                                 }, {
@@ -625,14 +625,14 @@ describe('Ext.grid.feature.Summary', function () {
                                 });
                             });
 
-                            it("should not cause an exception on update", function() {
-                                expect(function() {
+                            it("should not cause an exception on update", function () {
+                                expect(function () {
                                     store.getAt(0).set('mark', 100);
                                 }).not.toThrow();
                             });
 
-                            it("should not cause an exception on add", function() {
-                                expect(function() {
+                            it("should not cause an exception on add", function () {
+                                expect(function () {
                                     store.add({
                                         student: 'Student 5',
                                         subject: 'Math',
@@ -641,20 +641,20 @@ describe('Ext.grid.feature.Summary', function () {
                                 }).not.toThrow();
                             });
 
-                            it("should not cause an exception on remove", function() {
-                                expect(function() {
+                            it("should not cause an exception on remove", function () {
+                                expect(function () {
                                     store.removeAt(3);
                                 }).not.toThrow();
                             });
 
-                            it("should not cause an exception on removeAll", function() {
-                                expect(function() {
+                            it("should not cause an exception on removeAll", function () {
+                                expect(function () {
                                     store.removeAll();
                                 }).not.toThrow();
                             });
 
-                            it("should not cause an exception on load of new data", function() {
-                                expect(function() {
+                            it("should not cause an exception on load of new data", function () {
+                                expect(function () {
                                     store.loadData([{
                                         student: 'Foo',
                                         mark: 75
@@ -666,25 +666,26 @@ describe('Ext.grid.feature.Summary', function () {
                             });
                         });
                     }
+
                     beforeRenderSuite(false);
                     beforeRenderSuite(true);
                 });
 
-                describe("original store", function() {
+                describe("original store", function () {
                     function makeOriginalStoreSuite(withDocking) {
-                        describe(withDocking ? "with docking" : "without docking", function() {
-                            beforeEach(function() {
+                        describe(withDocking ? "with docking" : "without docking", function () {
+                            beforeEach(function () {
                                 createGrid(null, {
                                     dock: withDocking ? 'top' : null
                                 });
                             });
 
-                            it("should react to an update", function() {
+                            it("should react to an update", function () {
                                 store.getAt(0).set('mark', 100);
                                 expectContent(withDocking, '4students84');
                             });
 
-                            it("should react to an add", function() {
+                            it("should react to an add", function () {
                                 store.add({
                                     student: 'Student 5',
                                     subject: 'Math',
@@ -693,17 +694,17 @@ describe('Ext.grid.feature.Summary', function () {
                                 expectContent(withDocking, '5students66');
                             });
 
-                            it("should react to a remove", function() {
+                            it("should react to a remove", function () {
                                 store.removeAt(3);
                                 expectContent(withDocking, '3students84');
                             });
 
-                            it("should react to a removeAll", function() {
+                            it("should react to a removeAll", function () {
                                 store.removeAll();
                                 expectContent(withDocking, '0students0');
                             });
 
-                            it("should react to a load of new data", function() {
+                            it("should react to a load of new data", function () {
                                 store.loadData([{
                                     student: 'Foo',
                                     mark: 75
@@ -715,14 +716,15 @@ describe('Ext.grid.feature.Summary', function () {
                             });
                         });
                     }
+
                     makeOriginalStoreSuite(false);
                     makeOriginalStoreSuite(true);
                 });
 
-                describe("reconfigured store", function() {
+                describe("reconfigured store", function () {
                     function makeReconfigureSuite(withDocking) {
-                        describe(withDocking ? "with docking" : "without docking", function() {
-                            beforeEach(function() {
+                        describe(withDocking ? "with docking" : "without docking", function () {
+                            beforeEach(function () {
                                 createGrid(null, {
                                     dock: withDocking ? 'top' : null
                                 });
@@ -745,12 +747,12 @@ describe('Ext.grid.feature.Summary', function () {
                                 oldStore.destroy();
                             });
 
-                            it("should react to an update", function() {
+                            it("should react to an update", function () {
                                 store.getAt(0).set('mark', 100);
                                 expectContent(withDocking, '2students75');
                             });
 
-                            it("should react to an add", function() {
+                            it("should react to an add", function () {
                                 store.add({
                                     student: 'Student 3',
                                     mark: 10
@@ -758,17 +760,17 @@ describe('Ext.grid.feature.Summary', function () {
                                 expectContent(withDocking, '3students30');
                             });
 
-                            it("should react to a remove", function() {
+                            it("should react to a remove", function () {
                                 store.removeAt(0);
                                 expectContent(withDocking, '1student50');
                             });
 
-                            it("should react to a removeAll", function() {
+                            it("should react to a removeAll", function () {
                                 store.removeAll();
                                 expectContent(withDocking, '0students0');
                             });
 
-                            it("should react to a load of new data", function() {
+                            it("should react to a load of new data", function () {
                                 store.loadData([{
                                     student: 'Foo',
                                     mark: 75
@@ -780,13 +782,14 @@ describe('Ext.grid.feature.Summary', function () {
                             });
                         });
                     }
+
                     makeReconfigureSuite(false);
                     makeReconfigureSuite(true);
                 });
             });
 
-            describe("buffered rendering", function() {
-                it("should not render the summary row until the last row is in the view", function() {
+            describe("buffered rendering", function () {
+                it("should not render the summary row until the last row is in the view", function () {
 
                     var data = [],
                         i;
@@ -811,7 +814,7 @@ describe('Ext.grid.feature.Summary', function () {
                     // Scroll downwards 100px at a time
                     // While the last row is not present, there should be no summary el.
                     // As soon as it is present, check that the summary is there and quit.
-                    waitsFor(function() {
+                    waitsFor(function () {
                         grid.scrollByDeltaY(100);
                         if (view.all.endIndex === store.getCount() - 1) {
                             expect(theView.getEl().down(selector)).not.toBeNull();

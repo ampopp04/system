@@ -5,15 +5,15 @@
  */
 Ext.define('Ext.util.Memento', (function () {
 
-    function captureOne (src, target, prop, prefix) {
+    function captureOne(src, target, prop, prefix) {
         src[prefix ? prefix + prop : prop] = target[prop];
     }
 
-    function removeOne (src, target, prop) {
+    function removeOne(src, target, prop) {
         delete src[prop];
     }
 
-    function restoreOne (src, target, prop, prefix) {
+    function restoreOne(src, target, prop, prefix) {
         var name = prefix ? prefix + prop : prop,
             value = src[name];
 
@@ -22,7 +22,7 @@ Ext.define('Ext.util.Memento', (function () {
         }
     }
 
-    function restoreValue (target, prop, value) {
+    function restoreValue(target, prop, value) {
         if (Ext.isDefined(value)) {
             target[prop] = value;
         } else {
@@ -30,7 +30,7 @@ Ext.define('Ext.util.Memento', (function () {
         }
     }
 
-    function doMany (doOne, src, target, props, prefix) {
+    function doMany(doOne, src, target, props, prefix) {
         if (src) {
             if (Ext.isArray(props)) {
                 var p, pLen = props.length;
@@ -114,8 +114,8 @@ Ext.define('Ext.util.Memento', (function () {
          * @param {Object} target The object to which to restore properties.
          */
         restoreAll: function (clear, target) {
-            var me   = this,
-                t    = target || this.target,
+            var me = this,
+                t = target || this.target,
                 data = me.data,
                 prop;
 

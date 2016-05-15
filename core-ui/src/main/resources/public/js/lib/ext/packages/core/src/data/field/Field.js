@@ -130,9 +130,9 @@
  *
  * ### Updating
  *
- * Fields modified with the {@link Ext.data.Model#set set} method will have their stored 
+ * Fields modified with the {@link Ext.data.Model#set set} method will have their stored
  * value set using the convert / calculate method when present.
- * 
+ *
  * For example:
  *
  *     Ext.define('MyApp.model.Employee', {
@@ -146,21 +146,21 @@
  *         }],
  *         convertOnSet: false
  *     });
- *     
+ *
  *     var tina = Ext.create('MyApp.model.Employee', {
  *         salary: 50000
  *     });
- *     
+ *
  *     console.log(tina.get('salary')); // logs 55000
- *     
+ *
  *     tina.set('salary', 60000);
  *     console.log(tina.get('salary')); // logs 60000
- * 
- * This default behavior can be disabled by setting the Model's 
+ *
+ * This default behavior can be disabled by setting the Model's
  * `{@link Ext.data.Model#cfg-convertOnSet}` config to `false`.
- * 
- * **Note:** convertOnSet `false` only prevents the convert / calculate call when the 
- * set `fieldName` param matches the field's `{@link #name}`.  See 
+ *
+ * **Note:** convertOnSet `false` only prevents the convert / calculate call when the
+ * set `fieldName` param matches the field's `{@link #name}`.  See
  * {@link Ext.data.Model#convertOnSet convertOnSet} for additional details.
  *
  * ### Dependencies
@@ -339,11 +339,11 @@ Ext.define('Ext.data.field.Field', {
      *
      * The only advantage of a `calculate` method over a `convert` method is automatic
      * determination of `depends`.
-     * 
-     * **Note:** The use of calculate and {@link #method-convert} are exclusive.  The 
+     *
+     * **Note:** The use of calculate and {@link #method-convert} are exclusive.  The
      * calculate method will override the convert method if both are configured.
-     * 
-     * @param {Object} data An object with all values for each field in the parent 
+     *
+     * @param {Object} data An object with all values for each field in the parent
      * model.  See {@link Ext.data.Model#getData getData}.
      * @return {Mixed} value The value of the calculated field
      */
@@ -352,8 +352,8 @@ Ext.define('Ext.data.field.Field', {
      * @cfg {Function} convert
      * If specified this config overrides the `{@link #method-convert convert}` method. See
      * also `{@link #cfg-calculate calculate}` for simple field calculations.
-     * 
-     * **Note:** The use of {@link #calculate} and convert are exclusive.  The calculate 
+     *
+     * **Note:** The use of {@link #calculate} and convert are exclusive.  The calculate
      * method will override the convert method if both are configured.
      */
 
@@ -869,16 +869,16 @@ Ext.define('Ext.data.field.Field', {
         }
 
         me.cloneDefaultValue = defaultValue !== undefined &&
-                               (Ext.isDate(defaultValue) || Ext.isArray(defaultValue) ||
-                                Ext.isObject(defaultValue));
+            (Ext.isDate(defaultValue) || Ext.isArray(defaultValue) ||
+            Ext.isObject(defaultValue));
     },
 
-    setModelValidators: function(modelValidators) {
+    setModelValidators: function (modelValidators) {
         this._validators = null;
         this.modelValidators = modelValidators;
     },
 
-    compileValidators: function() {
+    compileValidators: function () {
         var me = this;
         me._validators = [];
         me.constructValidators(me.validators);
@@ -1053,7 +1053,7 @@ Ext.define('Ext.data.field.Field', {
      * @template
      * @since 5.0.0
      */
-    validate: function(value, separator, errors, record) {
+    validate: function (value, separator, errors, record) {
         var me = this,
             ret = '',
             result, validator, validators, length, i;
@@ -1066,7 +1066,7 @@ Ext.define('Ext.data.field.Field', {
 
         for (i = 0, length = validators.length; i < length; ++i) {
             validator = validators[i];
-            result = validator.validate(value, record); 
+            result = validator.validate(value, record);
 
             if (result !== true) {
                 result = result || me.defaultInvalidMessage;
@@ -1096,7 +1096,7 @@ Ext.define('Ext.data.field.Field', {
      * Gets the name for this field. See {@link #name}.
      * @return {String} name
      */
-    getName: function() {
+    getName: function () {
         return this.name;
     },
 
@@ -1104,7 +1104,7 @@ Ext.define('Ext.data.field.Field', {
      * Gets allowBlank for this field. See {@link #allowBlank}.
      * @return {Boolean} allowBlank
      */
-    getAllowBlank: function() {
+    getAllowBlank: function () {
         return this.allowBlank;
     },
 
@@ -1112,7 +1112,7 @@ Ext.define('Ext.data.field.Field', {
      * Gets allowNull for this field. See {@link #allowNull}.
      * @return {Boolean} allowNull
      */
-    getAllowNull: function() {
+    getAllowNull: function () {
         return this.allowNull;
     },
 
@@ -1120,7 +1120,7 @@ Ext.define('Ext.data.field.Field', {
      * Gets converter for this field. See {@link #method-convert}.
      * @return {Function} convert
      */
-    getConvert: function() {
+    getConvert: function () {
         return this.convert;
     },
 
@@ -1128,7 +1128,7 @@ Ext.define('Ext.data.field.Field', {
      * Gets the defaultValue for this field. See {@link #defaultValue}.
      * @return {Object} defaultValue
      */
-    getDefaultValue: function() {
+    getDefaultValue: function () {
         return this.defaultValue;
     },
 
@@ -1136,7 +1136,7 @@ Ext.define('Ext.data.field.Field', {
      * Gets the depends for this field. See {@link #depends}.
      * @return {String[]} depends
      */
-    getDepends: function() {
+    getDepends: function () {
         return this.depends;
     },
 
@@ -1144,7 +1144,7 @@ Ext.define('Ext.data.field.Field', {
      * Get the mapping for this field. See {@link #mapping}.
      * @return {Object} mapping
      */
-    getMapping: function() {
+    getMapping: function () {
         return this.mapping;
     },
 
@@ -1152,7 +1152,7 @@ Ext.define('Ext.data.field.Field', {
      * Checks if this field has a mapping applied.
      * @return {Boolean} `true` if this field has a mapping.
      */
-    hasMapping: function() {
+    hasMapping: function () {
         var map = this.mapping;
         return !!(map || map === 0);
     },
@@ -1161,7 +1161,7 @@ Ext.define('Ext.data.field.Field', {
      * Gets the persist for this field. See {@link #persist}.
      * @return {Boolean} persist
      */
-    getPersist: function() {
+    getPersist: function () {
         return this.persist;
     },
 
@@ -1169,7 +1169,7 @@ Ext.define('Ext.data.field.Field', {
      * Gets the sortType for this field. See {@link #sortType}.
      * @return {Function} sortType
      */
-    getSortType: function() {
+    getSortType: function () {
         return this.sortType;
     },
 
@@ -1177,7 +1177,7 @@ Ext.define('Ext.data.field.Field', {
      * Gets a string representation of the type of this field.
      * @return {String} type
      */
-    getType: function() {
+    getType: function () {
         return 'auto';
     },
     deprecated: {

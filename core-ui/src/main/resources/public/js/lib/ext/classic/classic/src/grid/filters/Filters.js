@@ -19,7 +19,7 @@
  *             {id: 5, show: 'Star Wars: Christmas Special'}
  *         ]
  *     });
- *   
+ *
  *     Ext.create('Ext.grid.Panel', {
  *         renderTo: Ext.getBody(),
  *         title: 'Sci-Fi Television',
@@ -45,7 +45,7 @@
  *                 }
  *             }
  *         }]
- *     }); 
+ *     });
  *
  * # Features
  *
@@ -59,7 +59,7 @@
  *   * `{@link Ext.grid.filters.filter.Number number}`
  *   * `{@link Ext.grid.filters.filter.String string}`
  *
- * **Note:** You can find inline examples for each filter on its specific filter page. 
+ * **Note:** You can find inline examples for each filter on its specific filter page.
  *
  * ## Graphical Indicators
  *
@@ -93,7 +93,7 @@
  * Since this plugin now uses actual store filters, the `onBeforeLoad` listener and all
  * helper methods that were used to clean and build the params have been removed. The store
  * will send the filters managed by this plugin along in its normal request.
-*/
+ */
 Ext.define('Ext.grid.filters.Filters', {
     extend: 'Ext.plugin.Abstract',
 
@@ -245,7 +245,7 @@ Ext.define('Ext.grid.filters.Filters', {
             type = field && field.type;
 
             filter.type = (type && me.defaultFilterTypes[type]) ||
-                           column.defaultFilterType || 'string';
+                column.defaultFilterType || 'string';
         }
 
         column.filter = Ext.Factory.gridFilter(filter);
@@ -347,11 +347,11 @@ Ext.define('Ext.grid.filters.Filters', {
         me.grid = null;
     },
 
-    onUnbindStore: function(store) {
+    onUnbindStore: function (store) {
         store.getFilters().un('remove', this.onFilterRemove, this);
     },
 
-    onBindStore: function(store, initial, propName) {
+    onBindStore: function (store, initial, propName) {
         this.local = !store.getRemoteFilter();
         store.getFilters().on('remove', this.onFilterRemove, this);
     },
@@ -519,7 +519,7 @@ Ext.define('Ext.grid.filters.Filters', {
         }
     },
 
-    onReconfigure: function(grid, store, columns, oldStore) {
+    onReconfigure: function (grid, store, columns, oldStore) {
         var filterMenuItem = this.filterMenuItem,
             key;
 

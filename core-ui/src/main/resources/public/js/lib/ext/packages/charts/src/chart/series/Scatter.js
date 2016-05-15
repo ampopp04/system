@@ -108,7 +108,7 @@ Ext.define('Ext.chart.series.Scatter', {
         }
     },
 
-    themeMarkerCount: function() {
+    themeMarkerCount: function () {
         return 1;
     },
 

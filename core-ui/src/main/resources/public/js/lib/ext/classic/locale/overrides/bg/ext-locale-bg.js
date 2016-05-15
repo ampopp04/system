@@ -8,7 +8,7 @@
  *
  * (utf-8 encoding)
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември"];
@@ -132,7 +132,7 @@ Ext.define("Ext.locale.bg.form.field.Date", {
 Ext.define("Ext.locale.bg.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Зареждане..."
     });
@@ -149,7 +149,7 @@ Ext.define("Ext.locale.bg.form.field.VTypes", {
 Ext.define("Ext.locale.bg.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Моля, въведете URL за връзката:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -249,10 +249,10 @@ Ext.define("Ext.locale.bg.window.MessageBox", {
         cancel: "Отмени",
         yes: "Да",
         no: "Не"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.bg.Component", {	
+Ext.define("Ext.locale.bg.Component", {
     override: "Ext.Component"
 });

@@ -1,6 +1,6 @@
 describe('Ext.mixin.Responsive', function () {
-    function stashProps (object, backup, props) {
-        for (var i = props.length; i-- > 0; ) {
+    function stashProps(object, backup, props) {
+        for (var i = props.length; i-- > 0;) {
             var name = props[i];
             if (name in backup) {
                 object[name] = backup[name];

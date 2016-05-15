@@ -23,7 +23,7 @@ Ext.define('Ext.dd.DDTarget', {
      * @param {Object} config an object containing configurable attributes.
      * Valid properties for DDTarget in addition to those in DragDrop: none.
      */
-    constructor: function(id, sGroup, config) {
+    constructor: function (id, sGroup, config) {
         if (id) {
             this.initTarget(id, sGroup, config);
         }
@@ -165,7 +165,7 @@ Ext.define('Ext.dd.DDTarget', {
      */
     removeInvalidHandleType: Ext.emptyFn,
 
-    toString: function() {
+    toString: function () {
         return ("DDTarget " + this.id);
     }
 });

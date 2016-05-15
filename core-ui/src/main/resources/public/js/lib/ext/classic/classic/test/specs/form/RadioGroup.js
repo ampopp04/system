@@ -1,4 +1,4 @@
-describe("Ext.form.RadioGroup", function() {
+describe("Ext.form.RadioGroup", function () {
     var group;
 
     function makeGroup(items, cfg) {
@@ -8,13 +8,13 @@ describe("Ext.form.RadioGroup", function() {
         }, cfg));
     }
 
-    afterEach(function() {
+    afterEach(function () {
         Ext.destroy(group);
         group = null;
     });
 
-    describe("setValue", function() {
-        it("should check the matching item", function() {
+    describe("setValue", function () {
+        it("should check the matching item", function () {
             makeGroup([{
                 name: 'foo',
                 inputValue: 'a'
@@ -35,8 +35,8 @@ describe("Ext.form.RadioGroup", function() {
             });
         });
 
-        describe("with a view model", function() {
-            it("should be able to set the value with inline data", function() {
+        describe("with a view model", function () {
+            it("should be able to set the value with inline data", function () {
                 var vm = new Ext.app.ViewModel({
                     data: {
                         theValue: {
@@ -68,7 +68,7 @@ describe("Ext.form.RadioGroup", function() {
                 });
             });
 
-            it("should be able to set the value with a defined viewmodel", function() {
+            it("should be able to set the value with a defined viewmodel", function () {
                 Ext.define('spec.Bar', {
                     extend: 'Ext.app.ViewModel',
                     alias: 'viewmodel.bar',
@@ -107,13 +107,13 @@ describe("Ext.form.RadioGroup", function() {
             });
         });
     });
-    
-    describe("ARIA", function() {
+
+    describe("ARIA", function () {
         function expectAria(attr, value) {
             jasmine.expectAriaAttr(group, attr, value);
         }
-        
-        beforeEach(function() {
+
+        beforeEach(function () {
             makeGroup([{
                 name: 'foo'
             }, {
@@ -122,36 +122,36 @@ describe("Ext.form.RadioGroup", function() {
                 name: 'baz'
             }]);
         });
-        
-        describe("ariaEl", function() {
-            it("should have containerEl as ariaEl", function() {
+
+        describe("ariaEl", function () {
+            it("should have containerEl as ariaEl", function () {
                 expect(group.ariaEl).toBe(group.containerEl);
             });
         });
-        
-        describe("attributes", function() {
-            it("should have radiogroup role", function() {
+
+        describe("attributes", function () {
+            it("should have radiogroup role", function () {
                 expectAria('role', 'radiogroup');
             });
-            
-            it("should have aria-invalid", function() {
+
+            it("should have aria-invalid", function () {
                 expectAria('aria-invalid', 'false');
             });
-            
-            it("should have aria-owns", function() {
+
+            it("should have aria-owns", function () {
                 var foo = group.down('[name=foo]').inputEl,
                     bar = group.down('[name=bar]').inputEl,
                     baz = group.down('[name=baz]').inputEl;
-                
+
                 expectAria('aria-owns', [foo.id, bar.id, baz.id].join(' '));
             });
-            
-            describe("aria-required", function() {
-                it("should be false when allowBlank", function() {
+
+            describe("aria-required", function () {
+                it("should be false when allowBlank", function () {
                     expectAria('aria-required', 'false');
                 });
-                
-                it("should be true when !allowBlank", function() {
+
+                it("should be true when !allowBlank", function () {
                     var group2 = new Ext.form.RadioGroup({
                         renderTo: Ext.getBody(),
                         allowBlank: false,
@@ -161,28 +161,28 @@ describe("Ext.form.RadioGroup", function() {
                             name: 'bar'
                         }]
                     });
-                    
+
                     jasmine.expectAriaAttr(group2, 'aria-required', 'true');
-                    
+
                     Ext.destroy(group2);
                     group2 = null;
                 });
             });
         });
-        
-        describe("state", function() {
-            describe("aria-invalid", function() {
-                beforeEach(function() {
+
+        describe("state", function () {
+            describe("aria-invalid", function () {
+                beforeEach(function () {
                     group.markInvalid(['foo']);
                 });
-                
-                it("should set aria-invalid to tru in markInvalid", function() {
+
+                it("should set aria-invalid to tru in markInvalid", function () {
                     expectAria('aria-invalid', 'true');
                 });
-                
-                it("should set aria-invalid to false in clearInvalid", function() {
+
+                it("should set aria-invalid to false in clearInvalid", function () {
                     group.clearInvalid();
-                    
+
                     expectAria('aria-invalid', 'false');
                 });
             });

@@ -29,7 +29,7 @@ Ext.define('Ext.ux.ajax.JsonSimlet', {
         return ret;
     },
 
-    doPost : function(ctx) {
+    doPost: function (ctx) {
         return this.doGet(ctx);
     }
 });

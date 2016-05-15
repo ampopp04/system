@@ -7,83 +7,84 @@
  * Ext.Base is the building block of all Ext classes. All classes in Ext inherit from Ext.Base.
  * All prototype and static members of this class are inherited by all other classes.
  */
-Ext.Base = (function(flexSetter) {
+Ext.Base = (function (flexSetter) {
 // @define Ext.Base
 // @require Ext.Util
 // @require Ext.Version
 // @require Ext.Configurator
 // @uses Ext.ClassManager
-var noArgs = [],
-    baseStaticMember,
-    baseStaticMembers = [],
-    getConfig = function (name, peek) {
-        var me = this,
-            ret, cfg, getterName;
+    var noArgs = [],
+        baseStaticMember,
+        baseStaticMembers = [],
+        getConfig = function (name, peek) {
+            var me = this,
+                ret, cfg, getterName;
 
-        if (name) {
-            cfg = Ext.Config.map[name];
-            //<debug>
-            if (!cfg) {
-                Ext.Logger.error("Invalid property name for getter: '" + name + "' for '" + me.$className + "'.");
-            }
-            //</debug>
-            getterName = cfg.names.get;
-            if (peek && me.hasOwnProperty(getterName)) {
-                ret = me.config[name];
+            if (name) {
+                cfg = Ext.Config.map[name];
+                //<debug>
+                if (!cfg) {
+                    Ext.Logger.error("Invalid property name for getter: '" + name + "' for '" + me.$className + "'.");
+                }
+                //</debug>
+                getterName = cfg.names.get;
+                if (peek && me.hasOwnProperty(getterName)) {
+                    ret = me.config[name];
+                } else {
+                    ret = me[getterName]();
+                }
             } else {
-                ret = me[getterName]();
+                ret = me.getCurrentConfig();
             }
-        } else {
-            ret = me.getCurrentConfig();
-        }
-        return ret;
-    },
+            return ret;
+        },
     //<debug>
-    makeDeprecatedMethod = function (oldName, newName, msg) {
-        var message = '"'+ oldName +'" is deprecated.';
+        makeDeprecatedMethod = function (oldName, newName, msg) {
+            var message = '"' + oldName + '" is deprecated.';
 
-        if (msg) {
-            message += ' ' + msg;
-        } else if (newName) {
-            message += ' Please use "'+ newName +'" instead.';
-        }
+            if (msg) {
+                message += ' ' + msg;
+            } else if (newName) {
+                message += ' Please use "' + newName + '" instead.';
+            }
 
-        return function () {
-            Ext.raise(message);
-        };
-    },
-    addDeprecatedProperty = function (object, oldName, newName, message) {
-        if (!message) {
-            message = '"' + oldName + '" is deprecated.';
-        }
-        if (newName) {
-            message += ' Please use "' + newName + '" instead.';
-        }
+            return function () {
+                Ext.raise(message);
+            };
+        },
+        addDeprecatedProperty = function (object, oldName, newName, message) {
+            if (!message) {
+                message = '"' + oldName + '" is deprecated.';
+            }
+            if (newName) {
+                message += ' Please use "' + newName + '" instead.';
+            }
 
-        if (message) {
-            Ext.Object.defineProperty(object, oldName, {
-                get: function() {
-                    Ext.raise(message);
-                },
-                set: function(value) {
-                    Ext.raise(message);
-                },
-                configurable: true
-            });
-        }
-    },
+            if (message) {
+                Ext.Object.defineProperty(object, oldName, {
+                    get: function () {
+                        Ext.raise(message);
+                    },
+                    set: function (value) {
+                        Ext.raise(message);
+                    },
+                    configurable: true
+                });
+            }
+        },
     //</debug>
-    makeAliasFn = function (name) {
-        return function () {
-            return this[name].apply(this, arguments);
-        };
-    },
-    Version = Ext.Version,
-    leadingDigitRe = /^\d/,
-    oneMember = {},
-    aliasOneMember = {},
-    Base = function(){},
-    BasePrototype = Base.prototype;
+        makeAliasFn = function (name) {
+            return function () {
+                return this[name].apply(this, arguments);
+            };
+        },
+        Version = Ext.Version,
+        leadingDigitRe = /^\d/,
+        oneMember = {},
+        aliasOneMember = {},
+        Base = function () {
+        },
+        BasePrototype = Base.prototype;
 
     // These static properties will be copied to every newly created class with {@link Ext#define}
     Ext.apply(Base, {
@@ -108,7 +109,7 @@ var noArgs = [],
          * @static
          * @inheritable
          */
-        create: function() {
+        create: function () {
             return Ext.create.apply(Ext, [this].concat(Array.prototype.slice.call(arguments, 0)));
         },
 
@@ -121,10 +122,10 @@ var noArgs = [],
             var me = this,
                 all = [],
                 compatVersion = Ext.getCompatVersion(deprecations.name),
-                //<debug>
+            //<debug>
                 configurator = me.getConfigurator(),
                 displayName = (me.$className || '') + '#',
-                //</debug>
+            //</debug>
                 deprecate, versionSpec, index, message, target,
                 enabled, existing, fn, names, oldName, newName, member, statics, version;
 
@@ -138,7 +139,7 @@ var noArgs = [],
 
             all.sort(Version.compare);
 
-            for (index = all.length; index--; ) {
+            for (index = all.length; index--;) {
                 deprecate = (version = all[index]).deprecations;
                 target = me.prototype;
                 statics = deprecate.statics;
@@ -152,7 +153,8 @@ var noArgs = [],
                 enabled = compatVersion && compatVersion.lt(version);
 
                 //<debug>
-                if (!enabled) {} else
+                if (!enabled) {
+                } else
                 //</debug>
                 if (!enabled) {
                     // we won't get here in dev mode when !enabled
@@ -280,7 +282,7 @@ var noArgs = [],
                                 //<debug>
                                 else if (!existing) {
                                     fn = makeDeprecatedMethod(displayName + oldName, null,
-                                                              message);
+                                        message);
                                 }
                                 //</debug>
                             }
@@ -325,7 +327,7 @@ var noArgs = [],
                                 addDeprecatedProperty(target, displayName + oldName, newName);
                             } else if (newName && newName.message) {
                                 addDeprecatedProperty(target, displayName + oldName, null,
-                                                      newName.message);
+                                    newName.message);
                             } else {
                                 addDeprecatedProperty(target, displayName + oldName);
                             }
@@ -349,7 +351,7 @@ var noArgs = [],
          * @inheritable
          * @param config
          */
-        extend: function(parent) {
+        extend: function (parent) {
             var me = this,
                 parentPrototype = parent.prototype,
                 prototype, i, ln, name, statics;
@@ -372,7 +374,7 @@ var noArgs = [],
             statics = parentPrototype.$inheritableStatics;
 
             if (statics) {
-                for (i = 0,ln = statics.length; i < ln; i++) {
+                for (i = 0, ln = statics.length; i < ln; i++) {
                     name = statics[i];
 
                     if (!me.hasOwnProperty(name)) {
@@ -403,11 +405,11 @@ var noArgs = [],
          * @static
          * @inheritable
          */
-        triggerExtended: function() {
+        triggerExtended: function () {
             //<debug>
             Ext.classSystemMonitor && Ext.classSystemMonitor(this, 'Ext.Base#triggerExtended', arguments);
             //</debug>
-        
+
             var callbacks = this.$onExtended,
                 ln = callbacks.length,
                 i, callback;
@@ -425,7 +427,7 @@ var noArgs = [],
          * @static
          * @inheritable
          */
-        onExtended: function(fn, scope) {
+        onExtended: function (fn, scope) {
             this.$onExtended.push({
                 fn: fn,
                 scope: scope
@@ -463,7 +465,7 @@ var noArgs = [],
          * @inheritable
          * @param {Object} members
          */
-        addInheritableStatics: function(members) {
+        addInheritableStatics: function (members) {
             var inheritableStatics,
                 hasInheritableStatics,
                 prototype = this.prototype,
@@ -547,7 +549,7 @@ var noArgs = [],
                     privateStatics = privates.statics;
                     delete privates.statics;
                 }
-                
+
                 //<debug>
                 subPrivacy = privates.privacy || privacy || 'framework';
                 //</debug>
@@ -607,8 +609,8 @@ var noArgs = [],
                             Ext.privacyViolation(me, existing, member, isStatic);
                         }
                         //</debug>
-                    // The last part of the check here resolves a conflict if we have the same property
-                    // declared as both a config and a member on the class so that the config wins.
+                        // The last part of the check here resolves a conflict if we have the same property
+                        // declared as both a config and a member on the class so that the config wins.
                     } else if (defaultConfig && (name in defaultConfig) && !target.config.hasOwnProperty(name)) {
                         // This is a config property so it must be added to the configs
                         // collection not just smashed on the prototype...
@@ -697,7 +699,7 @@ var noArgs = [],
          * @inheritable
          * @private
          */
-        borrow: function(fromClass, members) {
+        borrow: function (fromClass, members) {
             //<debug>
             Ext.classSystemMonitor && Ext.classSystemMonitor(this, 'Ext.Base#borrow', arguments);
             //</debug>
@@ -708,7 +710,7 @@ var noArgs = [],
 
             members = Ext.Array.from(members);
 
-            for (i = 0,ln = members.length; i < ln; i++) {
+            for (i = 0, ln = members.length; i < ln; i++) {
                 name = members[i];
                 membersObj[name] = prototype[name];
             }
@@ -765,7 +767,7 @@ var noArgs = [],
          * @static
          * @inheritable
          */
-        override: function(members) {
+        override: function (members) {
             var me = this,
                 statics = members.statics,
                 inheritableStatics = members.inheritableStatics,
@@ -782,7 +784,7 @@ var noArgs = [],
                 delete members.statics;
             }
 
-            if (inheritableStatics){
+            if (inheritableStatics) {
                 me.addInheritableStatics(inheritableStatics);
                 delete members.inheritableStatics;
             }
@@ -791,12 +793,12 @@ var noArgs = [],
                 me.addConfig(config);
                 delete members.config;
             }
-            
+
             if (cachedConfig) {
                 me.addCachedConfig(cachedConfig);
                 delete members.cachedConfig;
             }
-            
+
             delete members.mixins;
 
             me.addMembers(members);
@@ -811,13 +813,13 @@ var noArgs = [],
          * @static
          * @inheritable
          */
-        callParent: function(args) {
+        callParent: function (args) {
             var method;
 
             // This code is intentionally inlined for the least amount of debugger stepping
             return (method = this.callParent.caller) && (method.$previous ||
-                  ((method = method.$owner ? method : method.caller) &&
-                        method.$owner.superclass.self[method.$name])).apply(this, args || noArgs);
+                ((method = method.$owner ? method : method.caller) &&
+                method.$owner.superclass.self[method.$name])).apply(this, args || noArgs);
         },
 
         /**
@@ -825,13 +827,13 @@ var noArgs = [],
          * @static
          * @inheritable
          */
-        callSuper: function(args) {
+        callSuper: function (args) {
             var method;
 
             // This code is intentionally inlined for the least amount of debugger stepping
             return (method = this.callSuper.caller) &&
-                    ((method = method.$owner ? method : method.caller) &&
-                      method.$owner.superclass.self[method.$name]).apply(this, args || noArgs);
+                ((method = method.$owner ? method : method.caller) &&
+                method.$owner.superclass.self[method.$name]).apply(this, args || noArgs);
         },
 
         //<feature classSystem.mixins>
@@ -841,14 +843,14 @@ var noArgs = [],
          * @static
          * @inheritable
          */
-        mixin: function(name, mixinClass) {
+        mixin: function (name, mixinClass) {
             var me = this,
                 mixin, prototype, key, statics, i, ln, staticName, mixinValue, mixins;
 
             if (typeof name !== 'string') {
                 mixins = name;
                 if (mixins instanceof Array) {
-                    for (i = 0,ln = mixins.length; i < ln; i++) {
+                    for (i = 0, ln = mixins.length; i < ln; i++) {
                         mixin = mixins[i];
                         me.mixin(mixin.prototype.mixinId || mixin.$className, mixin);
                     }
@@ -936,7 +938,7 @@ var noArgs = [],
          * Adds new config properties to this class. This is called for classes when they
          * are declared, then for any mixins that class may define and finally for any
          * overrides defined that target the class.
-         * 
+         *
          * @param {Object} config
          * @param {Ext.Class} [mixinClass] The mixin class if the configs are from a mixin.
          * @private
@@ -948,10 +950,10 @@ var noArgs = [],
             cfg.add(config, mixinClass);
         },
 
-        addCachedConfig: function(config, isMixin) {
+        addCachedConfig: function (config, isMixin) {
             var cached = {},
                 key;
-                
+
             for (key in config) {
                 cached[key] = {
                     cached: true,
@@ -963,7 +965,7 @@ var noArgs = [],
 
         /**
          * Returns the `Ext.Configurator` for this class.
-         * 
+         *
          * @return {Ext.Configurator}
          * @private
          * @static
@@ -990,7 +992,7 @@ var noArgs = [],
          * @static
          * @inheritable
          */
-        getName: function() {
+        getName: function () {
             return Ext.getClassName(this);
         },
 
@@ -1022,8 +1024,8 @@ var noArgs = [],
          * @inheritable
          * @method
          */
-        createAlias: flexSetter(function(alias, origin) {
-            aliasOneMember[alias] = function() {
+        createAlias: flexSetter(function (alias, origin) {
+            aliasOneMember[alias] = function () {
                 return this[origin].apply(this, arguments);
             };
             this.override(aliasOneMember);
@@ -1067,7 +1069,7 @@ var noArgs = [],
          * @since 5.0.0
          */
         $configPrefixed: true,
-        
+
         /**
          * @property {Boolean} [$configStrict]
          * The value `true` instructs the `initConfig` method to only honor values for
@@ -1160,7 +1162,7 @@ var noArgs = [],
          * @protected
          * @return {Ext.Class}
          */
-        statics: function() {
+        statics: function () {
             var method = this.statics.caller,
                 self = this.self;
 
@@ -1252,15 +1254,15 @@ var noArgs = [],
          * from the current method, for example: `this.callParent(arguments)`
          * @return {Object} Returns the result of calling the parent method
          */
-        callParent: function(args) {
+        callParent: function (args) {
             // NOTE: this code is deliberately as few expressions (and no function calls)
             // as possible so that a debugger can skip over this noise with the minimum number
             // of steps. Basically, just hit Step Into until you are where you really wanted
             // to be.
             var method,
                 superMethod = (method = this.callParent.caller) && (method.$previous ||
-                        ((method = method.$owner ? method : method.caller) &&
-                                method.$owner.superclass[method.$name]));
+                    ((method = method.$owner ? method : method.caller) &&
+                    method.$owner.superclass[method.$name]));
 
             //<debug>
             if (!superMethod) {
@@ -1280,7 +1282,7 @@ var noArgs = [],
 
                 if (!(methodName in parentClass)) {
                     throw new Error("this.callParent() was called but there's no such method (" + methodName +
-                                ") found in the parent class (" + (Ext.getClassName(parentClass) || 'Object') + ")");
+                        ") found in the parent class (" + (Ext.getClassName(parentClass) || 'Object') + ")");
                 }
             }
             //</debug>
@@ -1289,18 +1291,18 @@ var noArgs = [],
         },
 
         /**
-         * This method is used by an **override** to call the superclass method but 
-         * bypass any overridden method. This is often done to "patch" a method that 
+         * This method is used by an **override** to call the superclass method but
+         * bypass any overridden method. This is often done to "patch" a method that
          * contains a bug but for whatever reason cannot be fixed directly.
-         * 
+         *
          * Consider:
-         * 
+         *
          *      Ext.define('Ext.some.Class', {
          *          method: function () {
          *              console.log('Good');
          *          }
          *      });
-         * 
+         *
          *      Ext.define('Ext.some.DerivedClass', {
          *          extend: 'Ext.some.Class',
          *          
@@ -1312,10 +1314,10 @@ var noArgs = [],
          *              this.callParent();
          *          }
          *      });
-         * 
+         *
          * To patch the bug in `Ext.some.DerivedClass.method`, the typical solution is to create an
          * override:
-         * 
+         *
          *      Ext.define('App.patches.DerivedClass', {
          *          override: 'Ext.some.DerivedClass',
          *          
@@ -1327,11 +1329,11 @@ var noArgs = [],
          *              this.callSuper();
          *          }
          *      });
-         * 
-         * The patch method cannot use {@link #method-callParent} to call the superclass 
-         * `method` since that would call the overridden method containing the bug. In 
-         * other words, the above patch would only produce "Fixed" then "Good" in the 
-         * console log, whereas, using `callParent` would produce "Fixed" then "Bad" 
+         *
+         * The patch method cannot use {@link #method-callParent} to call the superclass
+         * `method` since that would call the overridden method containing the bug. In
+         * other words, the above patch would only produce "Fixed" then "Good" in the
+         * console log, whereas, using `callParent` would produce "Fixed" then "Bad"
          * then "Good".
          *
          * @protected
@@ -1339,15 +1341,15 @@ var noArgs = [],
          * from the current method, for example: `this.callSuper(arguments)`
          * @return {Object} Returns the result of calling the superclass method
          */
-        callSuper: function(args) {
+        callSuper: function (args) {
             // NOTE: this code is deliberately as few expressions (and no function calls)
             // as possible so that a debugger can skip over this noise with the minimum number
             // of steps. Basically, just hit Step Into until you are where you really wanted
             // to be.
             var method,
                 superMethod = (method = this.callSuper.caller) &&
-                        ((method = method.$owner ? method : method.caller) &&
-                          method.$owner.superclass[method.$name]);
+                    ((method = method.$owner ? method : method.caller) &&
+                    method.$owner.superclass[method.$name]);
 
             //<debug>
             if (!superMethod) {
@@ -1367,7 +1369,7 @@ var noArgs = [],
 
                 if (!(methodName in parentClass)) {
                     throw new Error("this.callSuper() was called but there's no such method (" + methodName +
-                                ") found in the parent class (" + (Ext.getClassName(parentClass) || 'Object') + ")");
+                        ") found in the parent class (" + (Ext.getClassName(parentClass) || 'Object') + ")");
                 }
             }
             //</debug>
@@ -1415,7 +1417,7 @@ var noArgs = [],
         self: Base,
 
         // Default constructor, simply returns `this`
-        constructor: function() {
+        constructor: function () {
             return this;
         },
 
@@ -1449,7 +1451,7 @@ var noArgs = [],
          * @param {Object} config
          * @return {Ext.Base} this
          */
-        initConfig: function(instanceConfig) {
+        initConfig: function (instanceConfig) {
             var me = this,
                 cfg = me.getConfigurator();
 
@@ -1479,7 +1481,7 @@ var noArgs = [],
          * @param {Object} [value] The value to set for the name parameter.
          * @return {Ext.Base} this
          */
-        setConfig: function(name, value, /* private */ options) {
+        setConfig: function (name, value, /* private */ options) {
             // options can have the following properties:
             // - defaults `true` to only set the config(s) that have not been already set on
             // this instance.
@@ -1505,7 +1507,7 @@ var noArgs = [],
         /**
          * @private
          */
-        getCurrentConfig: function() {
+        getCurrentConfig: function () {
             var cfg = this.getConfigurator();
 
             return cfg.getCurrentConfig(this);
@@ -1515,16 +1517,16 @@ var noArgs = [],
          * @private
          * @param config
          */
-        hasConfig: function(name) {
+        hasConfig: function (name) {
             return name in this.defaultConfig;
         },
 
         /**
-         * Returns the initial configuration passed to the constructor when 
+         * Returns the initial configuration passed to the constructor when
          * instantiating this class.
-         * 
+         *
          * Given this example Ext.button.Button definition and instance:
-         * 
+         *
          *     Ext.define('MyApp.view.Button', {
          *         extend: 'Ext.button.Button',
          *         xtype: 'mybutton',
@@ -1532,27 +1534,27 @@ var noArgs = [],
          *         scale: 'large',
          *         enableToggle: true
          *     });
-         *     
+         *
          *     var btn = Ext.create({
          *         xtype: 'mybutton',
          *         renderTo: Ext.getBody(),
          *         text: 'Test Button'
          *     });
-         * 
-         * Calling `btn.getInitialConfig()` would return an object including the config 
+         *
+         * Calling `btn.getInitialConfig()` would return an object including the config
          * options passed to the `create` method:
-         * 
+         *
          *     xtype: 'mybutton',
          *     renderTo: // The document body itself
          *     text: 'Test Button'
-         * 
+         *
          * Calling `btn.getInitialConfig('text')`returns **'Test Button'**.
-         * 
+         *
          * @param {String} [name] Name of the config option to return.
          * @return {Object/Mixed} The full config object or a single config value
          * when `name` parameter specified.
          */
-        getInitialConfig: function(name) {
+        getInitialConfig: function (name) {
             var config = this.config;
 
             if (!name) {
@@ -1623,12 +1625,12 @@ var noArgs = [],
          * This method is called to cleanup an object and its resources. After calling
          * this method, the object should not be used any further.
          */
-        destroy: function() {
+        destroy: function () {
             var me = this,
                 links = me.$links;
-            
+
             me.initialConfig = me.config = null;
-            
+
             me.destroy = Ext.emptyFn;
             // isDestroyed added for compat reasons
             me.isDestroyed = me.destroyed = true;
@@ -1691,7 +1693,7 @@ var noArgs = [],
         } else {
             msg += conflictCls
                 ? ' conflicts with private ' + existing.$privacy +
-                  ' method declared by ' + conflictCls
+            ' method declared by ' + conflictCls
                 : ' conflicts with inherited private ' + existing.$privacy + ' method.';
         }
 

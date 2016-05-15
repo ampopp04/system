@@ -13,10 +13,14 @@ describe('Ext.form.field.Field', function () {
             config.form = {};
         }
         Ext.applyIf(config.form, {
-            isValid: function() { return true; },
+            isValid: function () {
+                return true;
+            },
             afterAction: Ext.emptyFn,
             getValues: Ext.emptyFn,
-            hasUpload: function() { return false; },
+            hasUpload: function () {
+                return false;
+            },
             markInvalid: Ext.emptyFn
         });
         action = new Ext.form.action.Submit(config);
@@ -27,7 +31,7 @@ describe('Ext.form.field.Field', function () {
         ct = action = form = ajaxRequestCfg = null;
     });
 
-    describe("data binding", function() {
+    describe("data binding", function () {
         var viewModel, field;
 
         function makeField(cfg) {
@@ -37,17 +41,17 @@ describe('Ext.form.field.Field', function () {
             field = new Ext.form.field.Base(cfg);
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             viewModel = new Ext.app.ViewModel();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             Ext.destroy(field);
             field = null;
         });
 
-        describe("valuePublishEvent", function() {
-            it("should accept a string", function() {
+        describe("valuePublishEvent", function () {
+            it("should accept a string", function () {
                 makeField({
                     valuePublishEvent: 'foo',
                     renderTo: Ext.getBody(),
@@ -58,7 +62,7 @@ describe('Ext.form.field.Field', function () {
                 expect(viewModel.get('theValue')).toBe('XXX');
             });
 
-            it("should accept an array", function() {
+            it("should accept an array", function () {
                 makeField({
                     valuePublishEvent: ['foo', 'bar'],
                     renderTo: Ext.getBody(),
@@ -76,13 +80,13 @@ describe('Ext.form.field.Field', function () {
             });
         });
 
-        describe("valid values", function() {
-            it("should publish a valid value", function() {
+        describe("valid values", function () {
+            it("should publish a valid value", function () {
                 makeField({
                     renderTo: Ext.getBody(),
                     bind: '{theValue}'
                 })
-                field.getErrors = function() {
+                field.getErrors = function () {
                     return [];
                 };
 
@@ -90,12 +94,12 @@ describe('Ext.form.field.Field', function () {
                 expect(viewModel.get('theValue')).toBe('abc');
             });
 
-            it("should not publish an invalid value", function() {
+            it("should not publish an invalid value", function () {
                 makeField({
                     renderTo: Ext.getBody(),
                     bind: '{theValue}'
                 })
-                field.getErrors = function() {
+                field.getErrors = function () {
                     var v = this.getValue();
                     return v === 'abc' ? ['Invalid'] : [];
                 };
@@ -107,9 +111,9 @@ describe('Ext.form.field.Field', function () {
             });
         });
 
-        describe("with records", function() {
+        describe("with records", function () {
             var rec;
-            beforeEach(function() {
+            beforeEach(function () {
                 Ext.define('spec.Person', {
                     extend: 'Ext.data.Model',
                     fields: [{
@@ -128,12 +132,12 @@ describe('Ext.form.field.Field', function () {
                 viewModel.set('thePerson', rec);
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 Ext.undefine('spec.Person');
                 Ext.data.Model.schema.clear(true);
             });
 
-            it("should not validate model fields without modelValidation", function() {
+            it("should not validate model fields without modelValidation", function () {
                 makeField({
                     renderTo: Ext.getBody(),
                     bind: '{thePerson.name}'
@@ -143,7 +147,7 @@ describe('Ext.form.field.Field', function () {
                 expect(field.getErrors()).toEqual([]);
             });
 
-            it("should not attempt to model validate when the field is not in the model", function() {
+            it("should not attempt to model validate when the field is not in the model", function () {
                 makeField({
                     renderTo: Ext.getBody(),
                     modelValidation: true,
@@ -152,7 +156,7 @@ describe('Ext.form.field.Field', function () {
                 expect(field.getErrors()).toEqual([]);
             });
 
-            it("should not include results for fields that do not have validators", function() {
+            it("should not include results for fields that do not have validators", function () {
                 makeField({
                     renderTo: Ext.getBody(),
                     modelValidation: true,
@@ -162,7 +166,7 @@ describe('Ext.form.field.Field', function () {
                 expect(field.getErrors()).toEqual([]);
             });
 
-            it("should validate using the model validator", function() {
+            it("should validate using the model validator", function () {
                 makeField({
                     renderTo: Ext.getBody(),
                     modelValidation: true,
@@ -173,7 +177,7 @@ describe('Ext.form.field.Field', function () {
                 expect(field.getErrors()).toEqual(['Must be present']);
             });
 
-            it("should combine with field validations", function() {
+            it("should combine with field validations", function () {
                 makeField({
                     renderTo: Ext.getBody(),
                     modelValidation: true,
@@ -181,7 +185,7 @@ describe('Ext.form.field.Field', function () {
                 });
                 viewModel.notify();
                 Ext.override(field, {
-                    getErrors: function() {
+                    getErrors: function () {
                         var result = this.callParent(arguments);
                         result.push('Fail');
                         return result;
@@ -192,7 +196,7 @@ describe('Ext.form.field.Field', function () {
             });
         });
     });
-    
+
     describe('getModelData', function () {
         var form;
 
@@ -201,7 +205,7 @@ describe('Ext.form.field.Field', function () {
             form = null;
         });
 
-        it ('should return filefield data', function () {
+        it('should return filefield data', function () {
             var field1 = new Ext.form.field.Display({
                 name: 'field1',
                 value: 'foo'
@@ -214,12 +218,12 @@ describe('Ext.form.field.Field', function () {
 
             expect(field1.getModelData()).toEqual({field1: 'foo'});
             expect(field2.getModelData()).toEqual({field2: ''});
-            
+
             Ext.destroy(field1, field2);
         });
 
         describe('in a form with jsonSubmit', function () {
-            it ('should return values for fields in a form regardless of submitValue (not submitting)', function () {
+            it('should return values for fields in a form regardless of submitValue (not submitting)', function () {
                 makeContainer([
                     new Ext.form.field.Base({
                         name: 'field1',
@@ -247,12 +251,12 @@ describe('Ext.form.field.Field', function () {
 
     describe('getSubmitData', function () {
         var file;
-        
-        afterEach(function() {
+
+        afterEach(function () {
             Ext.destroy(file);
             file = null;
         });
-        
+
         it('should not be able to get the submit data for a filefield by default, non-submission', function () {
             file = new Ext.form.field.File({
                 name: 'foo'
@@ -293,7 +297,7 @@ describe('Ext.form.field.Field', function () {
 
     describe('submitValue config', function () {
         beforeEach(function () {
-            spyOn(Ext.Ajax, 'request').andCallFake(function() {
+            spyOn(Ext.Ajax, 'request').andCallFake(function () {
                 // store what was passed to the request call for later inspection
                 expect(arguments.length).toEqual(1);
                 ajaxRequestCfg = arguments[0];
@@ -312,12 +316,12 @@ describe('Ext.form.field.Field', function () {
                     value: 'bar'
                 })
             ]);
-            
+
             form = new Ext.form.Basic(ct, {
                 jsonSubmit: true
             });
-            
-            createAction({ form: form });
+
+            createAction({form: form});
 
             action.run();
             expect(ajaxRequestCfg.jsonData).toEqual({field1: 'foo', field2: 'bar'});
@@ -340,8 +344,8 @@ describe('Ext.form.field.Field', function () {
             form = new Ext.form.Basic(ct, {
                 jsonSubmit: true
             });
-            
-            createAction({ form: form });
+
+            createAction({form: form});
 
             action.run();
             expect(ajaxRequestCfg.jsonData).toEqual({field1: 'foo'});
@@ -363,8 +367,8 @@ describe('Ext.form.field.Field', function () {
             form = new Ext.form.Basic(ct, {
                 jsonSubmit: true
             });
-            
-            createAction({ form: form });
+
+            createAction({form: form});
 
             action.run();
             expect(ajaxRequestCfg.jsonData).toEqual({field1: 'foo'});
@@ -390,8 +394,8 @@ describe('Ext.form.field.Field', function () {
             form = new Ext.form.Basic(ct, {
                 jsonSubmit: true
             });
-            
-            createAction({ form: form });
+
+            createAction({form: form});
 
             action.run();
             expect(ajaxRequestCfg.jsonData).toEqual({field1: 'foo', field3: 'baz'});

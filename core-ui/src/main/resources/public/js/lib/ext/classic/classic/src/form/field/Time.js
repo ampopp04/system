@@ -37,7 +37,7 @@
  *     });
  */
 Ext.define('Ext.form.field.Time', {
-    extend:'Ext.form.field.ComboBox',
+    extend: 'Ext.form.field.ComboBox',
     alias: 'widget.timefield',
     requires: ['Ext.form.field.Date', 'Ext.picker.Time', 'Ext.view.BoundListKeyNav', 'Ext.Date'],
     alternateClassName: ['Ext.form.TimeField', 'Ext.form.Time'],
@@ -66,7 +66,7 @@ Ext.define('Ext.form.field.Time', {
      * @cfg {String} minText
      * The error text to display when the entered time is before {@link #minValue}.
      */
-    minText : "The time in this field must be equal to or after {0}",
+    minText: "The time in this field must be equal to or after {0}",
     //</locale>
 
     //<locale>
@@ -74,7 +74,7 @@ Ext.define('Ext.form.field.Time', {
      * @cfg {String} maxText
      * The error text to display when the entered time is after {@link #maxValue}.
      */
-    maxText : "The time in this field must be equal to or before {0}",
+    maxText: "The time in this field must be equal to or before {0}",
     //</locale>
 
     //<locale>
@@ -82,18 +82,18 @@ Ext.define('Ext.form.field.Time', {
      * @cfg {String} invalidText
      * The error text to display when the time in the field is invalid.
      */
-    invalidText : "{0} is not a valid time",
+    invalidText: "{0} is not a valid time",
     //</locale>
 
     //<locale>
     /**
      * @cfg {String} [format=undefined]
-     * The default time format string which can be overridden for localization support. 
+     * The default time format string which can be overridden for localization support.
      * The format must be valid according to {@link Ext.Date#parse}.
      *
      * Defaults to `'g:i A'`, e.g., `'3:15 PM'`. For 24-hour time format try `'H:i'` instead.
      */
-    format : "g:i A",
+    format: "g:i A",
     //</locale>
 
     //<locale>
@@ -112,9 +112,9 @@ Ext.define('Ext.form.field.Time', {
      * Multiple date formats separated by "|" to try when parsing a user input value and it doesn't match the defined
      * format.
      */
-    altFormats : "g:ia|g:iA|g:i a|g:i A|h:i|g:i|H:i|ga|ha|gA|h a|g a|g A|gi|hi|gia|hia|g|H|gi a|hi a|giA|hiA|gi A|hi A",
+    altFormats: "g:ia|g:iA|g:i a|g:i A|h:i|g:i|H:i|ga|ha|gA|h a|g a|g A|gi|hi|gia|hia|g|H|gi a|hi a|giA|hiA|gi A|hi A",
     //</locale>
-    
+
     //<locale>
     // The default format for the time field is 'g:i A', which is hardly informative
     /**
@@ -178,11 +178,11 @@ Ext.define('Ext.form.field.Time', {
 
     valueField: 'date',
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this,
             min = me.minValue,
             max = me.maxValue;
-        
+
         if (min) {
             me.setMinValue(min);
         }
@@ -191,11 +191,11 @@ Ext.define('Ext.form.field.Time', {
         }
         me.displayTpl = new Ext.XTemplate(
             '<tpl for=".">' +
-                '{[typeof values === "string" ? values : this.formatDate(values["' + me.displayField + '"])]}' +
-                '<tpl if="xindex < xcount">' + me.delimiter + '</tpl>' +
+            '{[typeof values === "string" ? values : this.formatDate(values["' + me.displayField + '"])]}' +
+            '<tpl if="xindex < xcount">' + me.delimiter + '</tpl>' +
             '</tpl>', {
-            formatDate: me.formatDate.bind(me)
-        });
+                formatDate: me.formatDate.bind(me)
+            });
 
         // Create a store of times.
         me.store = Ext.picker.Time.createStore(me.format, me.increment);
@@ -236,7 +236,7 @@ Ext.define('Ext.form.field.Time', {
      * Replaces any existing {@link #minValue} with the new time and refreshes the picker's range.
      * @param {Date/String} value The minimum time that can be selected
      */
-    setMinValue: function(value) {
+    setMinValue: function (value) {
         var me = this,
             picker = me.picker;
         me.setLimit(value, true);
@@ -249,7 +249,7 @@ Ext.define('Ext.form.field.Time', {
      * Replaces any existing {@link #maxValue} with the new time and refreshes the picker's range.
      * @param {Date/String} value The maximum time that can be selected
      */
-    setMaxValue: function(value) {
+    setMaxValue: function (value) {
         var me = this,
             picker = me.picker;
         me.setLimit(value, false);
@@ -263,7 +263,7 @@ Ext.define('Ext.form.field.Time', {
      * Updates either the min or max value. Converts the user's value into a Date object whose
      * year/month/day is set to the {@link #initDate} so that only the time fields are significant.
      */
-    setLimit: function(value, isMin) {
+    setLimit: function (value, isMin) {
         var me = this,
             d, val;
         if (Ext.isString(value)) {
@@ -282,14 +282,14 @@ Ext.define('Ext.form.field.Time', {
         }
         me[isMin ? 'minValue' : 'maxValue'] = val;
     },
-    
+
     getInitDate: function (hours, minutes, seconds) {
         var parts = this.initDateParts;
 
-        return new Date(parts[0], parts[1], parts[2], hours || 0, minutes || 0, seconds || 0, 0);    
+        return new Date(parts[0], parts[1], parts[2], hours || 0, minutes || 0, seconds || 0, 0);
     },
 
-    valueToRaw: function(value) {
+    valueToRaw: function (value) {
         return this.formatDate(this.parseDate(value));
     },
 
@@ -301,7 +301,7 @@ Ext.define('Ext.form.field.Time', {
      * @param {Object} [value] The value to get errors for (defaults to the current field value)
      * @return {String[]} All validation errors for this field
      */
-    getErrors: function(value) {
+    getErrors: function (value) {
         value = arguments.length > 0 ? value : this.getRawValue();
 
         var me = this,
@@ -314,7 +314,7 @@ Ext.define('Ext.form.field.Time', {
             i, len, date, item;
 
         if (data && data.length > 0) {
-            for (i = 0, len = data.length; i < len; i++ ){
+            for (i = 0, len = data.length; i < len; i++) {
                 item = data[i];
                 item = item.date || item.disp;
                 date = me.parseDate(item);
@@ -339,7 +339,7 @@ Ext.define('Ext.form.field.Time', {
         return errors;
     },
 
-    formatDate: function(items) {
+    formatDate: function (items) {
         var formatted = [],
             i, len;
 
@@ -357,7 +357,7 @@ Ext.define('Ext.form.field.Time', {
      * Parses an input value into a valid Date object.
      * @param {String/Date} value
      */
-    parseDate: function(value) {
+    parseDate: function (value) {
         var me = this,
             val = value,
             altFormats = me.altFormats,
@@ -384,7 +384,7 @@ Ext.define('Ext.form.field.Time', {
         return val;
     },
 
-    safeParse: function(value, format){
+    safeParse: function (value, format) {
         var me = this,
             utilDate = Ext.Date,
             parsedDate,
@@ -406,7 +406,7 @@ Ext.define('Ext.form.field.Time', {
     /**
      * @private
      */
-    getSubmitValue: function() {
+    getSubmitValue: function () {
         var me = this,
             format = me.submitFormat || me.format,
             value = me.getValue();
@@ -418,7 +418,7 @@ Ext.define('Ext.form.field.Time', {
      * @private
      * Creates the {@link Ext.picker.Time}
      */
-    createPicker: function() {
+    createPicker: function () {
         var me = this;
 
         me.listConfig = Ext.apply({
@@ -434,7 +434,7 @@ Ext.define('Ext.form.field.Time', {
         return me.callParent();
     },
 
-    completeEdit: function() {
+    completeEdit: function () {
         var me = this,
             val = me.getValue();
 

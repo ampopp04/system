@@ -16,7 +16,7 @@ Ext.define('Ext.rtl.scroll.Scroller', {
     updateRtl: Ext.emptyFn,
 
     privates: {
-        updateSpacerXY: function(pos) {
+        updateSpacerXY: function (pos) {
             var spacer = this.getSpacer();
             if (this.getRtl()) {
                 spacer.rtlSetLocalXY(pos.x, pos.y);

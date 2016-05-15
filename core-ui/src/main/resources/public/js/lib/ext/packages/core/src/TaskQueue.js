@@ -11,7 +11,7 @@ Ext.define('Ext.TaskQueue', {
 
     mode: true,
 
-    constructor: function() {
+    constructor: function () {
         this.readQueue = [];
         this.writeQueue = [];
 
@@ -26,17 +26,17 @@ Ext.define('Ext.TaskQueue', {
         }
     },
 
-    requestRead: function(fn, scope, args) {
+    requestRead: function (fn, scope, args) {
         this.request(true);
         this.readQueue.push(arguments);
     },
 
-    requestWrite: function(fn, scope, args) {
+    requestWrite: function (fn, scope, args) {
         this.request(false);
         this.writeQueue.push(arguments);
     },
 
-    request: function(mode) {
+    request: function (mode) {
         if (!this.pending) {
             this.pendingTime = Date.now();
             this.pending = true;
@@ -49,13 +49,13 @@ Ext.define('Ext.TaskQueue', {
         }
     },
 
-    watch: function() {
+    watch: function () {
         if (this.pending && Date.now() - this.pendingTime >= 500) {
             this.run();
         }
     },
 
-    run: function() {
+    run: function () {
         this.pending = false;
 
         var readQueue = this.readQueue,
@@ -108,8 +108,8 @@ Ext.define('Ext.TaskQueue', {
     }
 
     //<debug>
-    ,privates: {
-        flush: function() {
+    , privates: {
+        flush: function () {
             while (this.readQueue.length || this.writeQueue.length) {
                 this.run();
             }

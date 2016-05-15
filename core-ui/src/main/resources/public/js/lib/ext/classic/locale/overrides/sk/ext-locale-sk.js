@@ -4,7 +4,7 @@
  * Slovak Translation by Michal Thomka
  * 14 April 2007
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December"];
@@ -105,7 +105,7 @@ Ext.define("Ext.locale.sk.form.field.Date", {
 Ext.define("Ext.locale.sk.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Nahrávam..."
     });
@@ -142,10 +142,10 @@ Ext.define("Ext.locale.sk.window.MessageBox", {
         cancel: "Zrušiť",
         yes: "Áno",
         no: "Nie"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.sk.Component", {	
+Ext.define("Ext.locale.sk.Component", {
     override: "Ext.Component"
 });

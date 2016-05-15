@@ -36,12 +36,12 @@ this file in most cases.
         <echo>using cmd.dir : ${cmd.dir}</echo>
         <x-sencha-command
                 dir="cmd-test.specs.dir">
-            <property name="cmd-test.run.launch-browser" 
+            <property name="cmd-test.run.launch-browser"
                       value="${cmd-test.run.launch-browser}"/>
             test
-                console
-                    -configFile
-                    ${cmd-test.specs.test-json}
+            console
+            -configFile
+            ${cmd-test.specs.test-json}
         </x-sencha-command>
     </target>
     <target name="-after-test-console"/>
@@ -56,9 +56,9 @@ this file in most cases.
         <x-sencha-command
                 dir="cmd-test.specs.dir">
             test
-                run
-                    -configFile
-                    ${cmd-test.specs.test-json}
+            run
+            -configFile
+            ${cmd-test.specs.test-json}
         </x-sencha-command>
     </target>
     <target name="-after-test-run"/>
@@ -91,7 +91,7 @@ this file in most cases.
                      appendClassMetadata="false"
                      includeOverrides="false"
                      overrideExcludeTags="">
-<![CDATA[
+            <![CDATA[
 Ext.Boot.loadSync([
     "../bootstrap-files.js"
 ]);
@@ -99,7 +99,7 @@ Ext.Boot.load([
     "../bootstrap-launch.js"
 ]);
 ]]>
-         </x-bootstrap>
+        </x-bootstrap>
 
         <!--
         for the local runner, we also need to include all spec files in the bootstrap
@@ -173,7 +173,7 @@ Ext.Boot.load([
                 ]]>
         </x-script-def>
         <x-load-specs base="${local.runner.dir}" property="specfiles.list" configprop="specs"/>
-<echo file="${local.runner.dir}/${bootstrap.specs.file}"><![CDATA[
+        <echo file="${local.runner.dir}/${bootstrap.specs.file}"><![CDATA[
 (function() {
     var url = [
 ${specfiles.list}
@@ -192,7 +192,7 @@ ${specfiles.list}
     });
 })();
 ]]>
-</echo>
+        </echo>
     </target>
     <target name="-after-test-bootstrap"/>
     <target name="test-bootstrap"

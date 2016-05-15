@@ -2,8 +2,8 @@
  * @private
  */
 Ext.define('Ext.ux.colorpick.SelectorController', {
-    extend : 'Ext.app.ViewController',
-    alias  : 'controller.colorpick-selectorcontroller',
+    extend: 'Ext.app.ViewController',
+    alias: 'controller.colorpick-selectorcontroller',
 
     requires: [
         'Ext.ux.colorpick.ColorUtils'
@@ -50,7 +50,7 @@ Ext.define('Ext.ux.colorpick.SelectorController', {
     // Updates Saturation/Value in the model based on ColorMap; params:
     // xPercent - where is the handle relative to the color map width
     // yPercent - where is the handle relative to the color map height
-    onColorMapHandleDrag: function(xPercent, yPercent) {
+    onColorMapHandleDrag: function (xPercent, yPercent) {
         this.changeHSV({
             s: xPercent,
             v: 1 - yPercent
@@ -58,21 +58,21 @@ Ext.define('Ext.ux.colorpick.SelectorController', {
     },
 
     // Updates HSV Value in the model and downstream RGB settings
-    onValueSliderHandleDrag: function(yPercent) {
+    onValueSliderHandleDrag: function (yPercent) {
         this.changeHSV({
             v: 1 - yPercent
         });
     },
 
     // Updates HSV Saturation in the model and downstream RGB settings
-    onSaturationSliderHandleDrag: function(yPercent) {
+    onSaturationSliderHandleDrag: function (yPercent) {
         this.changeHSV({
             s: 1 - yPercent
         });
     },
 
     // Updates Hue in the model and downstream RGB settings
-    onHueSliderHandleDrag: function(yPercent) {
+    onHueSliderHandleDrag: function (yPercent) {
         this.changeHSV({
             h: 1 - yPercent
         });
@@ -96,7 +96,7 @@ Ext.define('Ext.ux.colorpick.SelectorController', {
     },
 
     onOK: function () {
-        var me   = this,
+        var me = this,
             view = me.getView();
 
         view.fireEvent('ok', view, view.getValue());
@@ -106,10 +106,10 @@ Ext.define('Ext.ux.colorpick.SelectorController', {
         this.fireViewEvent('cancel', this.getView());
     },
 
-    onResize: function() {
-        var me   = this,
+    onResize: function () {
+        var me = this,
             view = me.getView(),
-            vm   = view.childViewModel,
+            vm = view.childViewModel,
             refs = me.getReferences(),
             h, s, v, a;
 
@@ -123,7 +123,7 @@ Ext.define('Ext.ux.colorpick.SelectorController', {
         s = vm.get('saturation');
         v = vm.get('value');
         a = vm.get('alpha');
-console.log('h=' + h);
+        console.log('h=' + h);
         // Reposition the colormap's & sliders' drag handles
         refs.colorMap.setPosition(vm.getData());
         refs.hueSlider.setHue(h);

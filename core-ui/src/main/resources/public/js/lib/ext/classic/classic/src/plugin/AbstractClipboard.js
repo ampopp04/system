@@ -128,7 +128,7 @@ Ext.define('Ext.plugin.AbstractClipboard', {
             // If we have a keyMap then we have incremented the shared usage counter
             // and now need to remove ourselves.
             me.keyMap = Ext.destroy(keyMap);
-            if (! --shared.counter) {
+            if (!--shared.counter) {
                 shared.textArea = Ext.destroy(shared.textArea);
             }
         } else {
@@ -163,7 +163,7 @@ Ext.define('Ext.plugin.AbstractClipboard', {
      * @param {Ext.Component} comp The component this plugin is initialized on.
      * @return {Ext.dom.Element} The element target.
      */
-    getTarget: function(comp) {
+    getTarget: function (comp) {
         return comp.el;
     },
 
@@ -208,7 +208,7 @@ Ext.define('Ext.plugin.AbstractClipboard', {
 
             //<debug>
             if (value) {
-                for (var i = value.length; i-- > 0; ) {
+                for (var i = value.length; i-- > 0;) {
                     if (value[i] === 'system') {
                         Ext.raise('Invalid clipboard format "' + value[i] + '"');
                     }
@@ -233,7 +233,7 @@ Ext.define('Ext.plugin.AbstractClipboard', {
             if (value) {
                 var formats = this.getFormats();
 
-                for (var i = value.length; i-- > 0; ) {
+                for (var i = value.length; i-- > 0;) {
                     if (value[i] !== 'system' && !formats[value[i]]) {
                         Ext.raise('Invalid clipboard format "' + value[i] + '"');
                     }
@@ -333,7 +333,7 @@ Ext.define('Ext.plugin.AbstractClipboard', {
                     names = Ext.Object.getAllKeys(formats);
                 }
 
-                for (i = names.length; i-- > 0; ) {
+                for (i = names.length; i-- > 0;) {
                     data[name] = me[formats[name].get](name, erase && !i);
                 }
             }
@@ -348,9 +348,9 @@ Ext.define('Ext.plugin.AbstractClipboard', {
         getHiddenTextArea: function () {
             var shared = this.shared,
                 el;
-            
+
             el = shared.textArea;
-            
+
             if (!el) {
                 el = shared.textArea = Ext.getBody().createChild({
                     tag: 'textarea',
@@ -362,11 +362,11 @@ Ext.define('Ext.plugin.AbstractClipboard', {
                         height: '1px'
                     }
                 });
-                
+
                 // We don't want this element to fire focus events ever
                 el.suspendFocusEvents();
             }
-            
+
             return el;
         },
 
@@ -401,13 +401,13 @@ Ext.define('Ext.plugin.AbstractClipboard', {
             }
         },
 
-        pasteClipboardData: function(format) {
+        pasteClipboardData: function (format) {
             var me = this,
                 clippy = window.clipboardData,
                 area, focusEl;
 
             if (clippy && clippy.getData) {
-                 me.doPaste(format, clippy.getData("text"));
+                me.doPaste(format, clippy.getData("text"));
             }
             else {
                 focusEl = Ext.Element.getActiveElement(true);
@@ -418,28 +418,28 @@ Ext.define('Ext.plugin.AbstractClipboard', {
                 if (focusEl) {
                     focusEl.suspendFocusEvents();
                 }
-                
+
                 area.focus();
 
                 // Between now and the deferred function, the CTRL+V hotkey will have
                 // its default action processed which will paste the clipboard content
                 // into the textarea.
-                Ext.defer(function() {
+                Ext.defer(function () {
                     // Focus back to the real destination
                     if (focusEl) {
                         focusEl.focus();
-                        
+
                         // Restore framework focus handling
                         focusEl.resumeFocusEvents();
                     }
-                    
+
                     me.doPaste(format, area.value);
                     area.value = '';
                 }, 100, me);
             }
         },
 
-        setClipboardData: function(data) {
+        setClipboardData: function (data) {
             var clippy = window.clipboardData;
 
             if (clippy && clippy.setData) {
@@ -456,19 +456,19 @@ Ext.define('Ext.plugin.AbstractClipboard', {
                 if (focusEl) {
                     focusEl.suspendFocusEvents();
                 }
-                
+
                 area.focus();
                 area.select();
 
                 // Between now and the deferred function, the CTRL+C/X hotkey will have
                 // its default action processed which will update the clipboard from the
                 // textarea.
-                Ext.defer(function() {
+                Ext.defer(function () {
                     area.value = '';
-                    
+
                     if (focusEl) {
                         focusEl.focus();
-                        
+
                         // Restore framework focus handling
                         focusEl.resumeFocusEvents();
                     }
@@ -488,7 +488,7 @@ Ext.define('Ext.plugin.AbstractClipboard', {
             }
 
             if (memory) {
-                for (i = memory.length; i-- > 0; ) {
+                for (i = memory.length; i-- > 0;) {
                     s = memory[i];
                     map[s] = map[s] ? 3 : 2;
                 }

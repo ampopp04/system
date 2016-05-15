@@ -1,4 +1,4 @@
-describe("Ext.button.Segmented", function() {
+describe("Ext.button.Segmented", function () {
     var button;
 
     function makeButton(cfg) {
@@ -12,31 +12,31 @@ describe("Ext.button.Segmented", function() {
         jasmine.fireMouseEvent(button.items.getAt(index).el, 'click');
     }
 
-    afterEach(function() {
+    afterEach(function () {
         button.destroy();
     });
 
-    describe("value", function() {
-        describe("allowMultiple:false", function() {
+    describe("value", function () {
+        describe("allowMultiple:false", function () {
             function makeButton(cfg) {
                 button = Ext.create(Ext.apply({
                     xtype: 'segmentedbutton',
                     renderTo: document.body,
                     items: [
-                        { text: 'Foo', value: 'foo' },
-                        { text: 'Bar' }
+                        {text: 'Foo', value: 'foo'},
+                        {text: 'Bar'}
                     ]
                 }, cfg));
             }
 
-            it("should initialize with a null value", function() {
+            it("should initialize with a null value", function () {
                 makeButton();
                 expect(button.getValue()).toBeNull();
                 expect(button.items.getAt(0).pressed).toBe(false);
                 expect(button.items.getAt(1).pressed).toBe(false);
             });
 
-            it("should initialize with a value", function() {
+            it("should initialize with a value", function () {
                 makeButton({
                     value: 'foo'
                 });
@@ -46,7 +46,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(1).pressed).toBe(false);
             });
 
-            it("should initialize with an index value", function() {
+            it("should initialize with an index value", function () {
                 makeButton({
                     value: 1
                 });
@@ -56,7 +56,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(1).pressed).toBe(true);
             });
 
-            it("should set a null value", function() {
+            it("should set a null value", function () {
                 makeButton({
                     value: 'foo'
                 });
@@ -68,7 +68,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(1).pressed).toBe(false);
             });
 
-            it("should set a value", function() {
+            it("should set a value", function () {
                 makeButton();
 
                 button.setValue('foo');
@@ -78,7 +78,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(1).pressed).toBe(false);
             });
 
-            it("should set an index value", function() {
+            it("should set an index value", function () {
                 makeButton();
 
                 button.setValue(1);
@@ -88,7 +88,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(1).pressed).toBe(true);
             });
 
-            it("should set the value if a button is initialized with pressed:true", function() {
+            it("should set the value if a button is initialized with pressed:true", function () {
                 makeButton({
                     items: [{
                         text: 'Foo',
@@ -101,7 +101,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(0).pressed).toBe(true);
             });
 
-            it("should set the index value if a button with no value is initialized with pressed:true", function() {
+            it("should set the index value if a button with no value is initialized with pressed:true", function () {
                 makeButton({
                     items: [{
                         text: 'Foo'
@@ -116,7 +116,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(1).pressed).toBe(true);
             });
 
-            it("should set the value when a button is pressed by the user", function() {
+            it("should set the value when a button is pressed by the user", function () {
                 makeButton();
 
                 clickButton(0);
@@ -132,7 +132,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(1).pressed).toBe(true);
             });
 
-            it("should transform an index into a value if button value is available", function() {
+            it("should transform an index into a value if button value is available", function () {
                 makeButton();
 
                 // button at index 0 has a value of 'foo' so 0 will be transformed to 'foo'
@@ -143,7 +143,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(1).pressed).toBe(false);
             });
 
-            it("should throw an error if multiple values are set", function() {
+            it("should throw an error if multiple values are set", function () {
                 makeButton();
 
                 expect(function () {
@@ -151,7 +151,7 @@ describe("Ext.button.Segmented", function() {
                 }).toThrow("Cannot set multiple values when allowMultiple is false");
             });
 
-            it("should throw an error if no button value is matched", function() {
+            it("should throw an error if no button value is matched", function () {
                 makeButton({
                     id: 'my-button'
                 });
@@ -161,7 +161,7 @@ describe("Ext.button.Segmented", function() {
                 }).toThrow("Invalid value 'blah' for segmented button: 'my-button'");
             });
 
-            it("should thow an error if index value is out of bounds", function() {
+            it("should thow an error if index value is out of bounds", function () {
                 makeButton({
                     id: 'my-button'
                 });
@@ -171,12 +171,12 @@ describe("Ext.button.Segmented", function() {
                 }).toThrow("Invalid value '2' for segmented button: 'my-button'");
             });
 
-            it("should error if multiple items have the same value", function() {
+            it("should error if multiple items have the same value", function () {
                 makeButton({
                     id: 'my-button'
                 });
 
-                expect(function() {
+                expect(function () {
                     button.add({
                         text: 'Foo2',
                         value: 'foo'
@@ -186,8 +186,8 @@ describe("Ext.button.Segmented", function() {
                 Ext.resumeLayouts();
             });
 
-            describe("allowDepress:true", function() {
-                it("should set the value to null when a button is depressed", function() {
+            describe("allowDepress:true", function () {
+                it("should set the value to null when a button is depressed", function () {
                     makeButton({
                         allowDepress: true,
                         items: [{
@@ -204,21 +204,21 @@ describe("Ext.button.Segmented", function() {
             });
         });
 
-        describe("allowMultiple:true", function() {
+        describe("allowMultiple:true", function () {
             function makeButton(cfg) {
                 button = Ext.create(Ext.apply({
                     xtype: 'segmentedbutton',
                     allowMultiple: true,
                     renderTo: document.body,
                     items: [
-                        { text: 'Seg', value: 'seg' },
-                        { text: 'Men' },
-                        { text: 'Ted', value: 'ted' }
+                        {text: 'Seg', value: 'seg'},
+                        {text: 'Men'},
+                        {text: 'Ted', value: 'ted'}
                     ]
                 }, cfg));
             }
 
-            it("should initialize with a null value", function() {
+            it("should initialize with a null value", function () {
                 makeButton();
                 expect(button.getValue()).toEqual([]);
                 expect(button.items.getAt(0).pressed).toBe(false);
@@ -226,7 +226,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(false);
             });
 
-            it("should initialize with an empty array", function() {
+            it("should initialize with an empty array", function () {
                 makeButton({
                     value: []
                 });
@@ -236,7 +236,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(false);
             });
 
-            it("should initialize with a single value", function() {
+            it("should initialize with a single value", function () {
                 makeButton({
                     value: ['seg']
                 });
@@ -247,7 +247,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(false);
             });
 
-            it("should initialize with a single index value", function() {
+            it("should initialize with a single index value", function () {
                 makeButton({
                     value: [1]
                 });
@@ -258,7 +258,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(false);
             });
 
-            it("should initialize with multiple values", function() {
+            it("should initialize with multiple values", function () {
                 makeButton({
                     value: ['seg', 'ted']
                 });
@@ -269,7 +269,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(true);
             });
 
-            it("should initialize with multiple index values", function() {
+            it("should initialize with multiple index values", function () {
                 makeButton({
                     value: [0, 1]
                 });
@@ -280,7 +280,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(false);
             });
 
-            it("should set a null value", function() {
+            it("should set a null value", function () {
                 makeButton({
                     value: ['seg', 'ted']
                 });
@@ -293,7 +293,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(false);
             });
 
-            it("should set the value to emtpy array", function() {
+            it("should set the value to emtpy array", function () {
                 makeButton({
                     value: ['seg', 'ted']
                 });
@@ -306,7 +306,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(false);
             });
 
-            it("should set a single value", function() {
+            it("should set a single value", function () {
                 makeButton();
 
                 button.setValue(['ted']);
@@ -316,7 +316,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(true);
             });
 
-            it("should set a single index value", function() {
+            it("should set a single index value", function () {
                 makeButton();
 
                 button.setValue([1]);
@@ -327,7 +327,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(false);
             });
 
-            it("should set multiple values", function() {
+            it("should set multiple values", function () {
                 makeButton();
 
                 button.setValue(['seg', 'ted']);
@@ -338,7 +338,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(true);
             });
 
-            it("should set multiple index values", function() {
+            it("should set multiple index values", function () {
                 makeButton();
 
                 button.setValue([1, 2]);
@@ -349,7 +349,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(true);
             });
 
-            it("should set values for buttons that are initialized with pressed:true", function() {
+            it("should set values for buttons that are initialized with pressed:true", function () {
                 makeButton({
                     items: [{
                         text: 'Seg',
@@ -370,7 +370,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(false);
             });
 
-            it("should set the value when a button is pressed by the user", function() {
+            it("should set the value when a button is pressed by the user", function () {
                 makeButton();
 
                 clickButton(0);
@@ -402,7 +402,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(false);
             });
 
-            it("should accept a non-array value", function() {
+            it("should accept a non-array value", function () {
                 makeButton({
                     value: 'seg'
                 });
@@ -413,7 +413,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(false);
             });
 
-            it("should accept a non-array index value", function() {
+            it("should accept a non-array index value", function () {
                 makeButton({
                     value: 2
                 });
@@ -424,7 +424,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).pressed).toBe(true);
             });
 
-            it("should throw an error if no button value is matched", function() {
+            it("should throw an error if no button value is matched", function () {
                 makeButton({
                     id: 'my-button'
                 });
@@ -434,7 +434,7 @@ describe("Ext.button.Segmented", function() {
                 }).toThrow("Invalid value 'blah' for segmented button: 'my-button'");
             });
 
-            it("should thow an error if an index value is out of bounds", function() {
+            it("should thow an error if an index value is out of bounds", function () {
                 makeButton({
                     id: 'my-button'
                 });
@@ -443,14 +443,14 @@ describe("Ext.button.Segmented", function() {
                     button.setValue(['seg', 3, 'ted']);
                 }).toThrow("Invalid value '3' for segmented button: 'my-button'");
             });
-            
-            it("should fire a change event", function() {
+
+            it("should fire a change event", function () {
                 var newValues = [],
                     oldValues = [];
 
                 makeButton({
                     listeners: {
-                        change: function(b, newValue, oldValue) {
+                        change: function (b, newValue, oldValue) {
                             // Do not use push because that pushes the value array *contents*, not the array itself.
                             newValues[newValues.length] = newValue;
                             oldValues[oldValues.length] = oldValue;
@@ -464,7 +464,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(0).pressed).toBe(false);
                 expect(button.items.getAt(1).pressed).toBe(true);
                 expect(button.items.getAt(2).pressed).toBe(true);
-                
+
                 clickButton(1);
 
                 expect(button.getValue()).toEqual(['ted']);
@@ -476,11 +476,11 @@ describe("Ext.button.Segmented", function() {
                 expect(oldValues[0]).toEqual([]);
                 expect(newValues[1]).toEqual(['ted']);
                 expect(oldValues[1]).toEqual([1, 'ted']);
-                
+
             });
 
-            describe('forceSelection', function() {
-                it("should initialize with the value of the first button if none configured pressed", function() {
+            describe('forceSelection', function () {
+                it("should initialize with the value of the first button if none configured pressed", function () {
                     makeButton({
                         forceSelection: true
                     });
@@ -499,7 +499,7 @@ describe("Ext.button.Segmented", function() {
             });
         });
 
-        describe("with a viewmodel", function() {
+        describe("with a viewmodel", function () {
             function makeButton(cfg) {
                 button = Ext.create(Ext.apply({
                     xtype: 'segmentedbutton',
@@ -517,12 +517,12 @@ describe("Ext.button.Segmented", function() {
                 }, cfg));
             }
 
-            it("should have the defaultBindProperty be value", function() {
+            it("should have the defaultBindProperty be value", function () {
                 makeButton();
                 expect(button.defaultBindProperty).toBe('value');
             });
 
-            it("should be able to set an initial value from the view model", function() {
+            it("should be able to set an initial value from the view model", function () {
                 var vm = new Ext.app.ViewModel({
                     data: {
                         value: 'baz'
@@ -536,7 +536,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.getValue()).toBe('baz');
             });
 
-            it("should react to view model changes", function() {
+            it("should react to view model changes", function () {
                 var vm = new Ext.app.ViewModel();
                 makeButton({
                     viewModel: vm,
@@ -547,7 +547,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.getValue()).toBe('foo');
             });
 
-            it("should update the value in the view model", function() {
+            it("should update the value in the view model", function () {
                 var vm = new Ext.app.ViewModel();
                 makeButton({
                     viewModel: vm,
@@ -559,17 +559,17 @@ describe("Ext.button.Segmented", function() {
         });
     });
 
-    describe("the toggle event", function() {
+    describe("the toggle event", function () {
         var handler;
 
-        beforeEach(function() {
+        beforeEach(function () {
             handler = jasmine.createSpy();
             makeButton({
                 allowMultiple: true,
                 items: [
-                    { text: 'Seg' },
-                    { text: 'Men' },
-                    { text: 'Ted', pressed: true }
+                    {text: 'Seg'},
+                    {text: 'Men'},
+                    {text: 'Ted', pressed: true}
                 ],
                 listeners: {
                     toggle: handler
@@ -577,7 +577,7 @@ describe("Ext.button.Segmented", function() {
             });
         });
 
-        it("should fire the toggle event when a child button is pressed", function() {
+        it("should fire the toggle event when a child button is pressed", function () {
             var item = button.items.getAt(1);
 
             item.setPressed(true);
@@ -588,7 +588,7 @@ describe("Ext.button.Segmented", function() {
             expect(handler.mostRecentCall.args[2]).toBe(true);
         });
 
-        it("should fire the toggle event when a child button is depressed", function() {
+        it("should fire the toggle event when a child button is depressed", function () {
             var item = button.items.getAt(2);
 
             item.setPressed(false);
@@ -600,13 +600,13 @@ describe("Ext.button.Segmented", function() {
         });
     });
 
-    describe("allowToggle", function() {
-        it("should allow buttons to be toggled when allowToggle is true", function() {
+    describe("allowToggle", function () {
+        it("should allow buttons to be toggled when allowToggle is true", function () {
             makeButton({
                 items: [
-                    { text: 'Seg' },
-                    { text: 'Men' },
-                    { text: 'Ted' }
+                    {text: 'Seg'},
+                    {text: 'Men'},
+                    {text: 'Ted'}
                 ]
             });
 
@@ -624,13 +624,13 @@ describe("Ext.button.Segmented", function() {
             expect(button.items.getAt(1).pressed).toBe(true);
         });
 
-        it("should not allow toggling when allowToggle is false", function() {
+        it("should not allow toggling when allowToggle is false", function () {
             makeButton({
                 allowToggle: false,
                 items: [
-                    { text: 'Seg' },
-                    { text: 'Men' },
-                    { text: 'Ted' }
+                    {text: 'Seg'},
+                    {text: 'Men'},
+                    {text: 'Ted'}
                 ]
             });
 
@@ -644,14 +644,14 @@ describe("Ext.button.Segmented", function() {
         });
     });
 
-    describe("allowMultiple", function() {
-        describe("when false", function() {
-            it("should use a toggleGroup", function() {
+    describe("allowMultiple", function () {
+        describe("when false", function () {
+            it("should use a toggleGroup", function () {
                 makeButton({
                     items: [
-                        { text: 'Seg' },
-                        { text: 'Men' },
-                        { text: 'Ted' }
+                        {text: 'Seg'},
+                        {text: 'Men'},
+                        {text: 'Ted'}
                     ]
                 });
 
@@ -660,13 +660,13 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).toggleGroup).toBe(button.getId());
             });
 
-            it("should not use a toggleGroup when allowToggle is false", function() {
+            it("should not use a toggleGroup when allowToggle is false", function () {
                 makeButton({
                     allowToggle: false,
                     items: [
-                        { text: 'Seg' },
-                        { text: 'Men' },
-                        { text: 'Ted' }
+                        {text: 'Seg'},
+                        {text: 'Men'},
+                        {text: 'Ted'}
                     ]
                 });
 
@@ -675,11 +675,11 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(2).toggleGroup).toBeUndefined();
             });
 
-            it("should only allow one button to be pressed at a time", function() {
+            it("should only allow one button to be pressed at a time", function () {
                 makeButton({
                     items: [
-                        { text: 'Seg' },
-                        { text: 'Men' }
+                        {text: 'Seg'},
+                        {text: 'Men'}
                     ]
                 });
 
@@ -694,11 +694,11 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(1).pressed).toBe(true);
             });
 
-            it("should not allow buttons to be depressed", function() {
+            it("should not allow buttons to be depressed", function () {
                 makeButton({
                     items: [
-                        { text: 'Seg' },
-                        { text: 'Men' }
+                        {text: 'Seg'},
+                        {text: 'Men'}
                     ]
                 });
 
@@ -709,23 +709,23 @@ describe("Ext.button.Segmented", function() {
             });
         });
 
-        describe("when true", function() {
-            beforeEach(function() {
+        describe("when true", function () {
+            beforeEach(function () {
                 makeButton({
                     allowMultiple: true,
                     items: [
-                        { text: 'Seg' },
-                        { text: 'Men' }
+                        {text: 'Seg'},
+                        {text: 'Men'}
                     ]
                 });
             });
 
-            it("should not use a toggleGroup", function() {
+            it("should not use a toggleGroup", function () {
                 expect(button.items.getAt(0).toggleGroup).toBeUndefined();
                 expect(button.items.getAt(1).toggleGroup).toBeUndefined();
             });
 
-            it("should allow multiple buttons to be pressed", function() {
+            it("should allow multiple buttons to be pressed", function () {
                 clickButton(0);
 
                 expect(button.items.getAt(0).pressed).toBe(true);
@@ -737,7 +737,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(1).pressed).toBe(true);
             });
 
-            it("should allow buttons to be depressed", function() {
+            it("should allow buttons to be depressed", function () {
                 clickButton(0);
                 expect(button.items.getAt(0).pressed).toBe(true);
                 clickButton(0);
@@ -746,21 +746,21 @@ describe("Ext.button.Segmented", function() {
         });
     });
 
-    describe("allowDepress", function() {
+    describe("allowDepress", function () {
         function makeButton(cfg) {
             button = Ext.create(Ext.apply({
                 xtype: 'segmentedbutton',
                 renderTo: document.body,
                 items: [
-                    { text: 'Seg' },
-                    { text: 'Men' },
-                    { text: 'Ted' }
+                    {text: 'Seg'},
+                    {text: 'Men'},
+                    {text: 'Ted'}
                 ]
             }, cfg));
         }
 
-        describe("when true", function() {
-            it("should allow buttons to be depressed", function() {
+        describe("when true", function () {
+            it("should allow buttons to be depressed", function () {
                 makeButton({
                     allowDepress: true
                 });
@@ -772,8 +772,8 @@ describe("Ext.button.Segmented", function() {
             });
         });
 
-        describe("when false", function() {
-            it("should not allow buttons to be depressed", function() {
+        describe("when false", function () {
+            it("should not allow buttons to be depressed", function () {
                 makeButton();
 
                 clickButton(0);
@@ -782,7 +782,7 @@ describe("Ext.button.Segmented", function() {
                 expect(button.items.getAt(0).pressed).toBe(true);
             });
 
-            it("should have no effect when allowMultiple is true", function() {
+            it("should have no effect when allowMultiple is true", function () {
                 makeButton({
                     allowMultiple: true,
                     allowDepress: false
@@ -796,12 +796,12 @@ describe("Ext.button.Segmented", function() {
         });
     });
 
-    describe("disable/enable", function() {
-        it("should disable the child buttons when disable() is called", function() {
+    describe("disable/enable", function () {
+        it("should disable the child buttons when disable() is called", function () {
             makeButton({
                 items: [
-                    { text: 'foo' },
-                    { text: 'bar' }
+                    {text: 'foo'},
+                    {text: 'bar'}
                 ]
             });
 
@@ -814,12 +814,12 @@ describe("Ext.button.Segmented", function() {
             expect(button.items.getAt(1).disabled).toBe(true);
         });
 
-        it("should enable the child buttons when enable() is called", function() {
+        it("should enable the child buttons when enable() is called", function () {
             makeButton({
                 disabled: true,
                 items: [
-                    { text: 'foo' },
-                    { text: 'bar' }
+                    {text: 'foo'},
+                    {text: 'bar'}
                 ]
             });
 
@@ -832,14 +832,14 @@ describe("Ext.button.Segmented", function() {
             expect(button.items.getAt(1).disabled).toBe(false);
         });
 
-        it("should not mask the element when disabled", function() {
+        it("should not mask the element when disabled", function () {
             makeButton();
             expect(button.maskOnDisable).toBe(false);
         });
     });
 
-    describe("defaultUI", function() {
-        it("should default to 'default'", function() {
+    describe("defaultUI", function () {
+        it("should default to 'default'", function () {
             makeButton({
                 items: [{
                     text: 'Foo'
@@ -849,7 +849,7 @@ describe("Ext.button.Segmented", function() {
             expect(button.items.getAt(0).ui).toBe('default-small');
         });
 
-        it("should allow buttons to configure their own UI", function() {
+        it("should allow buttons to configure their own UI", function () {
             makeButton({
                 items: [{
                     text: 'Foo',
@@ -860,7 +860,7 @@ describe("Ext.button.Segmented", function() {
             expect(button.items.getAt(0).ui).toBe('bar-small');
         });
 
-        it("should use the defaultUI as the UI of the items", function() {
+        it("should use the defaultUI as the UI of the items", function () {
             makeButton({
                 defaultUI: 'bob',
                 items: [{
@@ -870,7 +870,7 @@ describe("Ext.button.Segmented", function() {
             expect(button.items.getAt(0).ui).toBe('bob-small');
         });
 
-        it("should not use the defaultUI for items that have a ui on the item instance", function() {
+        it("should not use the defaultUI for items that have a ui on the item instance", function () {
             makeButton({
                 defaultUI: 'bob',
                 items: [{
@@ -881,7 +881,7 @@ describe("Ext.button.Segmented", function() {
             expect(button.items.getAt(0).ui).toBe('hooray-small');
         });
 
-        it("should not use the defaultUI for items that have a ui on the item class", function() {
+        it("should not use the defaultUI for items that have a ui on the item class", function () {
             Ext.define('spec.Btn', {
                 extend: 'Ext.button.Button',
                 ui: 'baz'
@@ -900,7 +900,7 @@ describe("Ext.button.Segmented", function() {
             Ext.undefine('spec.Btn');
         });
 
-        it("should not use the defaultUI for items that have a ui of 'default' on the item instance", function() {
+        it("should not use the defaultUI for items that have a ui of 'default' on the item instance", function () {
             makeButton({
                 defaultUI: 'bob',
                 items: [{
@@ -912,7 +912,7 @@ describe("Ext.button.Segmented", function() {
         });
     });
 
-    describe("item classes", function() {
+    describe("item classes", function () {
         var firstCls = 'x-segmented-button-first',
             middleCls = 'x-segmented-button-middle',
             lastCls = 'x-segmented-button-last';
@@ -931,7 +931,7 @@ describe("Ext.button.Segmented", function() {
                 expect(el.hasCls(middleCls)).toBe(false);
                 expect(el.hasCls(lastCls)).toBe(false);
             } else {
-                Ext.each(items, function(item, index) {
+                Ext.each(items, function (item, index) {
                     el = item.getEl();
 
                     if (index === 0) {
@@ -952,46 +952,46 @@ describe("Ext.button.Segmented", function() {
         }
 
 
-        it("should have the correct classes when there is only one item", function() {
+        it("should have the correct classes when there is only one item", function () {
             makeButton({
                 items: [
-                    { text: 'Seg' }
+                    {text: 'Seg'}
                 ]
             });
 
             expectClasses();
         });
 
-        it("should have the correct classes when there are two items", function() {
+        it("should have the correct classes when there are two items", function () {
             makeButton({
                 items: [
-                    { text: 'Seg' },
-                    { text: 'Men' }
+                    {text: 'Seg'},
+                    {text: 'Men'}
                 ]
             });
 
             expectClasses();
         });
 
-        it("should have the correct classes when there are three items", function() {
+        it("should have the correct classes when there are three items", function () {
             makeButton({
                 items: [
-                    { text: 'Seg' },
-                    { text: 'Men' },
-                    { text: 'Ted' }
+                    {text: 'Seg'},
+                    {text: 'Men'},
+                    {text: 'Ted'}
                 ]
             });
 
             expectClasses();
         });
 
-        it("should have the correct classes when there are four items", function() {
+        it("should have the correct classes when there are four items", function () {
             makeButton({
                 items: [
-                    { text: 'Seg' },
-                    { text: 'Men' },
-                    { text: 'Ted' },
-                    { text: 'Btn' }
+                    {text: 'Seg'},
+                    {text: 'Men'},
+                    {text: 'Ted'},
+                    {text: 'Btn'}
                 ]
             });
 
@@ -1001,20 +1001,20 @@ describe("Ext.button.Segmented", function() {
         it("should have the correct classes when items are added or removed", function () {
             makeButton({
                 items: [
-                    { text: 'Seg' }
+                    {text: 'Seg'}
                 ]
             });
 
             // add button at the end
-            button.add({ text: 'Men' });
+            button.add({text: 'Men'});
             expectClasses();
 
             // insert button before first
-            button.insert(0, { text: 'Ted' });
+            button.insert(0, {text: 'Ted'});
             expectClasses();
 
             // insert button in middle
-            button.insert(1, { text: 'Btn' });
+            button.insert(1, {text: 'Btn'});
             expectClasses();
 
             // remove button from middle
@@ -1033,10 +1033,10 @@ describe("Ext.button.Segmented", function() {
         it("should have the correct classes when items are shown or hidden", function () {
             makeButton({
                 items: [
-                    { text: 'Seg', hidden: true },
-                    { text: 'Men' },
-                    { text: 'Ted', hidden: true },
-                    { text: 'Btn', hidden: true }
+                    {text: 'Seg', hidden: true},
+                    {text: 'Men'},
+                    {text: 'Ted', hidden: true},
+                    {text: 'Btn', hidden: true}
                 ]
             });
 
@@ -1083,7 +1083,7 @@ describe("Ext.button.Segmented", function() {
         });
     });
 
-    describe("layout", function() {
+    describe("layout", function () {
         var dimensions = {
                 1: 'width',
                 2: 'height',
@@ -1129,15 +1129,15 @@ describe("Ext.button.Segmented", function() {
                     width: (shrinkWrap & 1) ? null : vertical ? 100 : 300,
                     height: (shrinkWrap & 2) ? null : vertical ? 300 : 100,
                     items: [
-                        { text: itemTextFirst },
-                        { text: itemText },
-                        { text: itemText }
+                        {text: itemTextFirst},
+                        {text: itemText},
+                        {text: itemText}
                     ]
                 }, cfg));
             }
 
-            describe((shrinkWrap ? ("shrink wrap " + dimensions[shrinkWrap]) : "fixed width and height"), function() {
-                it("should layout horizontal", function() {
+            describe((shrinkWrap ? ("shrink wrap " + dimensions[shrinkWrap]) : "fixed width and height"), function () {
+                it("should layout horizontal", function () {
                     makeButton({});
 
                     expect(button).toHaveLayout({
@@ -1174,7 +1174,7 @@ describe("Ext.button.Segmented", function() {
                     });
                 });
 
-                it("should layout vertical", function() {
+                it("should layout vertical", function () {
                     makeButton({
                         vertical: true
                     });
@@ -1225,15 +1225,15 @@ describe("Ext.button.Segmented", function() {
         makeLayoutSuite(2); // shrinkWrap height
         makeLayoutSuite(3); // shrinkWrap both
 
-        describe("horizontal", function() {
-            it("should divide width evenly among non-widthed items", function() {
+        describe("horizontal", function () {
+            it("should divide width evenly among non-widthed items", function () {
                 makeButton({
                     width: 300,
                     height: 100,
                     items: [
-                        { text: 'Seg', width: 50 },
-                        { text: 'Men' },
-                        { text: 'Ted' }
+                        {text: 'Seg', width: 50},
+                        {text: 'Men'},
+                        {text: 'Ted'}
                     ]
                 });
 
@@ -1271,13 +1271,13 @@ describe("Ext.button.Segmented", function() {
                 });
             });
 
-            it("should stretch all items to the height of the largest item", function() {
+            it("should stretch all items to the height of the largest item", function () {
                 makeButton({
                     width: 300,
                     items: [
-                        { text: 'Seg', height: 100 },
-                        { text: 'Men' },
-                        { text: 'Ted' }
+                        {text: 'Seg', height: 100},
+                        {text: 'Men'},
+                        {text: 'Ted'}
                     ]
                 });
 
@@ -1314,17 +1314,17 @@ describe("Ext.button.Segmented", function() {
                     }
                 });
             });
-            
+
             if (!Ext.supports.CSS3BorderRadius) {
-                it("should stretch the frameBody when the width of the segmented button is stretched", function() {
+                it("should stretch the frameBody when the width of the segmented button is stretched", function () {
                     makeButton({
                         width: 300,
                         items: [
-                            { text: 'Foo' },
-                            { text: 'Bar' }
+                            {text: 'Foo'},
+                            {text: 'Bar'}
                         ]
                     });
-                    
+
                     var btn = button.items.getAt(1);
 
                     expect(btn.frameBody.getWidth()).toBe(150 - btn.getFrameInfo().right);
@@ -1332,16 +1332,16 @@ describe("Ext.button.Segmented", function() {
             }
         });
 
-        describe("vertical", function() {
-            it("should divide height evenly among non-heighted items", function() {
+        describe("vertical", function () {
+            it("should divide height evenly among non-heighted items", function () {
                 makeButton({
                     vertical: true,
                     width: 100,
                     height: 300,
                     items: [
-                        { text: 'Seg', height: 50 },
-                        { text: 'Men' },
-                        { text: 'Ted' }
+                        {text: 'Seg', height: 50},
+                        {text: 'Men'},
+                        {text: 'Ted'}
                     ]
                 });
 
@@ -1379,13 +1379,13 @@ describe("Ext.button.Segmented", function() {
                 });
             });
 
-            it("should stretch all items to the width of the largest item", function() {
+            it("should stretch all items to the width of the largest item", function () {
                 makeButton({
                     vertical: true,
                     items: [
-                        { text: 'Seg', width: 100 },
-                        { text: 'Men' },
-                        { text: 'Ted' }
+                        {text: 'Seg', width: 100},
+                        {text: 'Men'},
+                        {text: 'Ted'}
                     ]
                 });
 

@@ -1,9 +1,9 @@
 /**
  * @class Ext.util.Format
- *  
+ *
  * This class is a centralized place for formatting functions. It includes
  * functions to format various different types of data, such as text, dates and numeric values.
- *  
+ *
  * ## Localization
  *
  * This class contains several options for localization. These can be set once the library has loaded,
@@ -23,7 +23,7 @@
  *
  * There are two helper functions that return a new function that can be used in conjunction with
  * grid renderers:
- *  
+ *
  *     columns: [{
  *         dataIndex: 'date',
  *         renderer: Ext.util.Format.dateRenderer('Y-m-d')
@@ -31,7 +31,7 @@
  *         dataIndex: 'time',
  *         renderer: Ext.util.Format.numberRenderer('0.000')
  *     }]
- *  
+ *
  * Functions that only take a single argument can also be passed directly:
  *
  *     columns: [{
@@ -41,11 +41,11 @@
  *         dataIndex: 'productCode',
  *         renderer: Ext.util.Format.uppercase
  *     }]
- *  
+ *
  * ## Using with XTemplates
  *
  * XTemplates can also directly use Ext.util.Format functions:
- *  
+ *
  *     new Ext.XTemplate([
  *         'Date: {startDate:date("Y-m-d")}',
  *         'Cost: {cost:usMoney}'
@@ -101,7 +101,7 @@ Ext.define('Ext.util.Format', function () {
         currencyPrecision: 2,
         //</locale>
 
-         //<locale>
+        //<locale>
         /**
          * @property {String} currencySign
          * The currency sign that the {@link #currency} function displays.
@@ -158,7 +158,7 @@ Ext.define('Ext.util.Format', function () {
          * @param {Object} value Reference to check
          * @return {Object} Empty string if converted, otherwise the original value
          */
-        undef : function(value) {
+        undef: function (value) {
             return value !== undefined ? value : "";
         },
 
@@ -168,7 +168,7 @@ Ext.define('Ext.util.Format', function () {
          * @param {String} [defaultValue=""] The value to insert of it's undefined.
          * @return {String}
          */
-        defaultValue : function(value, defaultValue) {
+        defaultValue: function (value, defaultValue) {
             return value !== undefined && value !== '' ? value : defaultValue;
         },
 
@@ -180,14 +180,14 @@ Ext.define('Ext.util.Format', function () {
          * @return {String} The substring
          * @method
          */
-        substr : 'ab'.substr(-1) != 'b'
-        ? function (value, start, length) {
+        substr: 'ab'.substr(-1) != 'b'
+            ? function (value, start, length) {
             var str = String(value);
             return (start < 0)
                 ? str.substr(Math.max(str.length + start, 0), length)
                 : str.substr(start, length);
         }
-        : function(value, start, length) {
+            : function (value, start, length) {
             return String(value).substr(start, length);
         },
 
@@ -196,7 +196,7 @@ Ext.define('Ext.util.Format', function () {
          * @param {String} value The text to convert
          * @return {String} The converted text
          */
-        lowercase : function(value) {
+        lowercase: function (value) {
             return String(value).toLowerCase();
         },
 
@@ -205,7 +205,7 @@ Ext.define('Ext.util.Format', function () {
          * @param {String} value The text to convert
          * @return {String} The converted text
          */
-        uppercase : function(value) {
+        uppercase: function (value) {
             return String(value).toUpperCase();
         },
 
@@ -214,7 +214,7 @@ Ext.define('Ext.util.Format', function () {
          * @param {Number/String} value The numeric value to format
          * @return {String} The formatted currency string
          */
-        usMoney : function(v) {
+        usMoney: function (v) {
             return me.currency(v, '$', 2);
         },
 
@@ -228,7 +228,7 @@ Ext.define('Ext.util.Format', function () {
          * (defaults to {@link #currencyAtEnd})
          * @return {String} The formatted currency string
          */
-        currency: function(v, currencySign, decimals, end) {
+        currency: function (v, currencySign, decimals, end) {
             var negativeSign = '',
                 format = ",0",
                 i = 0;
@@ -255,14 +255,14 @@ Ext.define('Ext.util.Format', function () {
          * Note that this uses the native Javascript Date.parse() method and is therefore subject to its idiosyncrasies.
          * Most formats assume the local timezone unless specified. One notable exception is 'YYYY-MM-DD' (note the dashes)
          * which is typically interpreted in UTC and can cause date shifting.
-         * 
+         *
          * @param {String/Date} value The value to format. Strings must conform to the format
          * expected by the JavaScript Date object's
          * [parse() method](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date/parse).
          * @param {String} [format] Any valid date format string. Defaults to {@link Ext.Date#defaultFormat}.
          * @return {String} The formatted date string.
          */
-        date: function(v, format) {
+        date: function (v, format) {
             if (!v) {
                 return "";
             }
@@ -277,8 +277,8 @@ Ext.define('Ext.util.Format', function () {
          * @param {String} format Any valid date format string. Defaults to {@link Ext.Date#defaultFormat}.
          * @return {Function} The date formatting function
          */
-        dateRenderer : function(format) {
-            return function(v) {
+        dateRenderer: function (format) {
+            return function (v) {
                 return me.date(v, format);
             };
         },
@@ -369,7 +369,7 @@ Ext.define('Ext.util.Format', function () {
          * @param {Object} value The text from which to strip tags
          * @return {String} The stripped text
          */
-        stripTags: function(v) {
+        stripTags: function (v) {
             return !v ? v : String(v).replace(me.stripTagsRe, "");
         },
 
@@ -378,7 +378,7 @@ Ext.define('Ext.util.Format', function () {
          * @param {Object} value The text from which to strip script tags
          * @return {String} The stripped text
          */
-        stripScripts : function(v) {
+        stripScripts: function (v) {
             return !v ? v : String(v).replace(me.stripScriptsRe, "");
         },
 
@@ -388,25 +388,25 @@ Ext.define('Ext.util.Format', function () {
          * @param {Number/String} size The numeric value to format
          * @return {String} The formatted file size
          */
-        fileSize : (function(){
+        fileSize: (function () {
             var byteLimit = 1024,
                 kbLimit = 1048576,
                 mbLimit = 1073741824;
-                
-            return function(size) {
+
+            return function (size) {
                 var out;
                 if (size < byteLimit) {
                     if (size === 1) {
-                        out = '1 byte';    
+                        out = '1 byte';
                     } else {
                         out = size + ' bytes';
                     }
                 } else if (size < kbLimit) {
-                    out = (Math.round(((size*10) / byteLimit))/10) + ' KB';
+                    out = (Math.round(((size * 10) / byteLimit)) / 10) + ' KB';
                 } else if (size < mbLimit) {
-                    out = (Math.round(((size*10) / kbLimit))/10) + ' MB';
+                    out = (Math.round(((size * 10) / kbLimit)) / 10) + ' MB';
                 } else {
-                    out = (Math.round(((size*10) / mbLimit))/10) + ' GB';
+                    out = (Math.round(((size * 10) / mbLimit)) / 10) + ' GB';
                 }
                 return out;
             };
@@ -420,10 +420,10 @@ Ext.define('Ext.util.Format', function () {
          * @return {Function} A function that operates on the passed value.
          * @method
          */
-        math : (function(){
+        math: (function () {
             var fns = {};
 
-            return function(v, a){
+            return function (v, a) {
                 if (!fns[a]) {
                     fns[a] = Ext.functionFactory('v', 'return v ' + a + ';');
                 }
@@ -439,7 +439,7 @@ Ext.define('Ext.util.Format', function () {
          * otherwise the value is returned unmodified.
          * @return {Number} The rounded value.
          */
-        round : function(value, precision) {
+        round: function (value, precision) {
             var result = Number(value);
             if (typeof precision === 'number') {
                 precision = Math.pow(10, precision);
@@ -475,7 +475,7 @@ Ext.define('Ext.util.Format', function () {
          * can be specified as `'0.000,00'`. This would be equivalent to using `'0,000.00'` when using US style formatting.
          *
          * Examples (123456.789):
-         * 
+         *
          * - `0` - (123457) show only digits, no precision
          * - `0.00` - (123456.79) show only digits, 2 precision
          * - `0.0000` - (123456.7890) show only digits, 4 precision
@@ -489,14 +489,14 @@ Ext.define('Ext.util.Format', function () {
          * @param {String} formatString The way you would like to format this text.
          * @return {String} The formatted number.
          */
-        number : function(v, formatString) {
+        number: function (v, formatString) {
             if (!formatString) {
                 return v;
             }
             if (isNaN(v)) {
                 return '';
             }
-            
+
             var formatFn = me.formatFns[formatString];
 
             // Generate formatting function to be cached and reused keyed by the format string.
@@ -522,7 +522,7 @@ Ext.define('Ext.util.Format', function () {
                     // In a vast majority of cases, the separator will never change over the lifetime of the application.
                     // So we'll only regenerate this if we really need to
                     if (!me.I18NFormatCleanRe || me.lastDecimalSeparator !== decimalSeparator) {
-                        me.I18NFormatCleanRe = new RegExp('[^\\d\\' + decimalSeparator + '#]','g');
+                        me.I18NFormatCleanRe = new RegExp('[^\\d\\' + decimalSeparator + '#]', 'g');
                         me.lastDecimalSeparator = decimalSeparator;
                     }
                     formatString = formatString.substr(0, formatString.length - 2);
@@ -555,13 +555,13 @@ Ext.define('Ext.util.Format', function () {
                         trimPart = 'trailingZeroes=new RegExp(Ext.String.escapeRegex(utilFormat.decimalSeparator) + "*0{0,' + len + '}$")';
                     }
                 }
-                
+
                 // The function we create is called immediately and returns a closure which has access to vars and some fixed values; RegExes and the format string.
                 code = [
                     'var utilFormat=Ext.util.Format,extNumber=Ext.Number,neg,absVal,fnum,parts' +
-                        (hasComma ? ',thousandSeparator,thousands=[],j,n,i' : '') +
-                        (extraChars  ? ',formatString="' + formatString + '",formatPattern=/[\\d,\\.#]+/' : '') +
-                        ',trailingZeroes;' +
+                    (hasComma ? ',thousandSeparator,thousands=[],j,n,i' : '') +
+                    (extraChars ? ',formatString="' + formatString + '",formatPattern=/[\\d,\\.#]+/' : '') +
+                    ',trailingZeroes;' +
                     'return function(v){' +
                     'if(typeof v!=="number"&&isNaN(v=extNumber.from(v,NaN)))return"";' +
                     'neg=v<0;',
@@ -572,7 +572,7 @@ Ext.define('Ext.util.Format', function () {
 
                 if (hasComma) {
                     // If we have to insert commas...
-                    
+
                     // split the string up into whole and decimal parts if there are decimals
                     if (precision) {
                         code[code.length] = 'parts=fnum.split(".");';
@@ -580,28 +580,28 @@ Ext.define('Ext.util.Format', function () {
                     }
                     code[code.length] =
                         'if(absVal>=1000) {';
-                            code[code.length] = 'thousandSeparator=utilFormat.thousandSeparator;' +
-                            'thousands.length=0;' +
-                            'j=fnum.length;' +
-                            'n=fnum.length%3||3;' +
-                            'for(i=0;i<j;i+=n){' +
-                                'if(i!==0){' +
-                                    'n=3;' +
-                                '}' +
-                                'thousands[thousands.length]=fnum.substr(i,n);' +
-                            '}' +
-                            'fnum=thousands.join(thousandSeparator);' + 
+                    code[code.length] = 'thousandSeparator=utilFormat.thousandSeparator;' +
+                        'thousands.length=0;' +
+                        'j=fnum.length;' +
+                        'n=fnum.length%3||3;' +
+                        'for(i=0;i<j;i+=n){' +
+                        'if(i!==0){' +
+                        'n=3;' +
+                        '}' +
+                        'thousands[thousands.length]=fnum.substr(i,n);' +
+                        '}' +
+                        'fnum=thousands.join(thousandSeparator);' +
                         '}';
                     if (precision) {
                         code[code.length] = 'fnum += utilFormat.decimalSeparator+parts[1];';
                     }
-                    
+
                 } else if (precision) {
                     // If they are using a weird decimal separator, split and concat using it
                     code[code.length] = 'if(utilFormat.decimalSeparator!=="."){' +
                         'parts=fnum.split(".");' +
                         'fnum=parts[0]+utilFormat.decimalSeparator+parts[1];' +
-                    '}';
+                        '}';
                 }
 
                 /*
@@ -637,8 +637,8 @@ Ext.define('Ext.util.Format', function () {
          * @param {String} format Any valid number format string for {@link #number}
          * @return {Function} The number formatting function
          */
-        numberRenderer : function(format) {
-            return function(v) {
+        numberRenderer: function (format) {
+            return function (v) {
                 return me.number(v, format);
             };
         },
@@ -659,16 +659,16 @@ Ext.define('Ext.util.Format', function () {
          * Formats an object of name value properties as HTML element attribute values suitable for using when creating textual markup.
          * @param {Object} attributes An object containing the HTML attributes as properties eg: `{height:40, vAlign:'top'}`
          */
-        attributes: function(attributes) {
+        attributes: function (attributes) {
             if (typeof attributes === 'object') {
                 var result = [],
                     name;
 
                 for (name in attributes) {
                     if (attributes.hasOwnProperty(name)) {
-                        result.push(name, '="', name === 'style' ? 
-                                Ext.DomHelper.generateStyles(attributes[name], null, true) :
-                                Ext.htmlEncode(attributes[name]), '" ');
+                        result.push(name, '="', name === 'style' ?
+                            Ext.DomHelper.generateStyles(attributes[name], null, true) :
+                            Ext.htmlEncode(attributes[name]), '" ');
                     }
                 }
                 attributes = result.join('');
@@ -678,32 +678,32 @@ Ext.define('Ext.util.Format', function () {
 
         /**
          * Selectively return the plural form of a word based on a numeric value.
-         * 
-         * For example, the following template would result in "1 Comment".  If the 
+         *
+         * For example, the following template would result in "1 Comment".  If the
          * value of `count` was 0 or greater than 1, the result would be "x Comments".
-         * 
+         *
          *     var tpl = new Ext.XTemplate('{count:plural("Comment")}');
-         *     
+         *
          *     tpl.apply({
          *         count: 1
          *     }); // returns "1 Comment"
-         * 
+         *
          * Examples using the static `plural` method call:
-         * 
+         *
          *     Ext.util.Format.plural(2, 'Comment');
          *     // returns "2 Comments"
-         * 
+         *
          *     Ext.util.Format.plural(4, 'person', 'people');
          *     // returns "4 people"
          *
          * @param {Number} value The value to compare against
          * @param {String} singular The singular form of the word
-         * @param {String} [plural] The plural form of the word (defaults to the 
+         * @param {String} [plural] The plural form of the word (defaults to the
          * singular form with an "s" appended)
          * @return {String} output The pluralized output of the passed singular form
          */
-        plural : function(v, s, p) {
-            return v +' ' + (v === 1 ? s : (p ? p : s+'s'));
+        plural: function (v, s, p) {
+            return v + ' ' + (v === 1 ? s : (p ? p : s + 's'));
         },
 
         /**
@@ -712,7 +712,7 @@ Ext.define('Ext.util.Format', function () {
          * @param {String} v The string value to format.
          * @return {String} The string with embedded `<br/>` tags in place of newlines.
          */
-        nl2br : function(v) {
+        nl2br: function (v) {
             return Ext.isEmpty(v) ? '' : v.replace(me.nl2brRe, '<br/>');
         },
 
@@ -749,7 +749,7 @@ Ext.define('Ext.util.Format', function () {
          * @method
          * @inheritdoc Ext.String#escapeRegex
          */
-        escapeRegex : Ext.String.escapeRegex,
+        escapeRegex: Ext.String.escapeRegex,
 
         /**
          * Alias for {@link Ext.String#htmlDecode}.
@@ -784,7 +784,7 @@ Ext.define('Ext.util.Format', function () {
          * @method
          * @inheritdoc Ext.String#trim
          */
-        trim : Ext.String.trim,
+        trim: Ext.String.trim,
 
         /**
          * Parses a number or string representing margin sizes into an object.
@@ -794,19 +794,19 @@ Ext.define('Ext.util.Format', function () {
          * @param {Number/String} box The encoded margins
          * @return {Object} An object with margin sizes for top, right, bottom and left
          */
-        parseBox : function(box) {
+        parseBox: function (box) {
             box = box || 0;
 
             if (typeof box === 'number') {
                 return {
-                    top   : box,
-                    right : box,
+                    top: box,
+                    right: box,
                     bottom: box,
-                    left  : box
+                    left: box
                 };
-             }
+            }
 
-            var parts  = box.split(' '),
+            var parts = box.split(' '),
                 ln = parts.length;
 
             if (ln === 1) {
@@ -821,10 +821,10 @@ Ext.define('Ext.util.Format', function () {
             }
 
             return {
-                top   :parseInt(parts[0], 10) || 0,
-                right :parseInt(parts[1], 10) || 0,
-                bottom:parseInt(parts[2], 10) || 0,
-                left  :parseInt(parts[3], 10) || 0
+                top: parseInt(parts[0], 10) || 0,
+                right: parseInt(parts[1], 10) || 0,
+                bottom: parseInt(parts[2], 10) || 0,
+                left: parseInt(parts[3], 10) || 0
             };
         }
     };

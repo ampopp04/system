@@ -1,17 +1,17 @@
-describe("Ext.form.field.VTypes", function() {
+describe("Ext.form.field.VTypes", function () {
     var VTYPES = Ext.form.field.VTypes;
 
-    beforeEach(function() {
+    beforeEach(function () {
 
     });
 
-    afterEach(function() {
+    afterEach(function () {
 
     });
 
-    describe('Ext.form.field.VTypes.url()', function() {
+    describe('Ext.form.field.VTypes.url()', function () {
 
-        it("should return TRUE for properly formatted URLs", function() {
+        it("should return TRUE for properly formatted URLs", function () {
 
             //missing WWW
             expect(VTYPES.url('http://sencha.com')).toEqual(true);
@@ -55,7 +55,7 @@ describe("Ext.form.field.VTypes", function() {
 
         });
 
-        it("should return FALSE for improperly formatted URLs", function() {
+        it("should return FALSE for improperly formatted URLs", function () {
 
             //domains should have at least a 2 letter TLD
             //missing WWW
@@ -77,7 +77,7 @@ describe("Ext.form.field.VTypes", function() {
 
         });
 
-        it("should return TRUE for localhost URLs", function() {
+        it("should return TRUE for localhost URLs", function () {
 
             //normal localhost
             expect(VTYPES.url('http://localhost')).toEqual(true);
@@ -116,25 +116,25 @@ describe("Ext.form.field.VTypes", function() {
 
     });
 
-    describe('Ext.form.field.VTypes.email()', function() {
-        describe('local-part of email address', function() {
-            it("should allow for alpha characters", function() {
+    describe('Ext.form.field.VTypes.email()', function () {
+        describe('local-part of email address', function () {
+            it("should allow for alpha characters", function () {
                 expect(VTYPES.email('abcdefghijklmnopqrstuvwxyz@extjs.com')).toEqual(true);
             });
 
-            it("should allow for numeric characters", function() {
+            it("should allow for numeric characters", function () {
                 expect(VTYPES.email('0123456789@extjs.com')).toEqual(true);
             });
 
-            it("should allow for alphanumeric characters", function() {
+            it("should allow for alphanumeric characters", function () {
                 expect(VTYPES.email('0a1b2c3d4e5f6g7h9i@extjs.com')).toEqual(true);
             });
 
-            it("should allow for a mix of alphanumeric and special chars", function() {
+            it("should allow for a mix of alphanumeric and special chars", function () {
                 expect(VTYPES.email('"baba_o\'reilly.1.-who4?"@extjs.com')).toEqual(true);
             });
 
-            it("should allow for special characters at the beginning", function() {
+            it("should allow for special characters at the beginning", function () {
                 expect(VTYPES.email('!dev@extjs.com')).toEqual(true);
                 expect(VTYPES.email('#dev@extjs.com')).toEqual(true);
                 expect(VTYPES.email('$dev@extjs.com')).toEqual(true);
@@ -155,7 +155,7 @@ describe("Ext.form.field.VTypes", function() {
                 expect(VTYPES.email('~dev@extjs.com')).toEqual(true);
             });
 
-            it("should allow for special characters at the end", function() {
+            it("should allow for special characters at the end", function () {
                 expect(VTYPES.email('dev!@extjs.com')).toEqual(true);
                 expect(VTYPES.email('dev#@extjs.com')).toEqual(true);
                 expect(VTYPES.email('dev$@extjs.com')).toEqual(true);
@@ -176,60 +176,60 @@ describe("Ext.form.field.VTypes", function() {
                 expect(VTYPES.email('dev~@extjs.com')).toEqual(true);
             });
 
-            it("should allow for special characters mixed within the body", function() {
+            it("should allow for special characters mixed within the body", function () {
                 expect(VTYPES.email("!d#e$v%e&l'o*p+e/r=@extjs.com")).toEqual(true);
                 expect(VTYPES.email("?d^e_v`e{l|o}p~er@extjs.com")).toEqual(true);
             });
 
-            it("should allow for repeated special characters mixed within the body", function() {
+            it("should allow for repeated special characters mixed within the body", function () {
                 expect(VTYPES.email("!d####e$v%%e&l'''o*p+e////r@extjs.com")).toEqual(true);
                 expect(VTYPES.email("?d^^^^e_v`e{l|||||||o}}}p~er@extjs.com")).toEqual(true);
             });
 
-            it("should allow for periods anywhere within the body", function() {
+            it("should allow for periods anywhere within the body", function () {
                 expect(VTYPES.email('d.e.v.e.l.o.p.e.r@extjs.com')).toEqual(true);
             });
 
-            it("should not allow for a period at the beginning", function() {
+            it("should not allow for a period at the beginning", function () {
                 expect(VTYPES.email('.d.e.v.e.l.o.p.e.r@extjs.com')).toEqual(false);
                 expect(VTYPES.email('.dev@extjs.com')).toEqual(false);
             });
 
-            it("should not allow for a period at the end", function() {
+            it("should not allow for a period at the end", function () {
                 expect(VTYPES.email('d.e.v.e.l.o.p.e.r.@extjs.com')).toEqual(false);
                 expect(VTYPES.email('dev.@extjs.com')).toEqual(false);
             });
 
-            it("should not allow for more than one period in a row", function() {
+            it("should not allow for more than one period in a row", function () {
                 expect(VTYPES.email('de..v@extjs.com')).toEqual(false);
                 expect(VTYPES.email('d...e....v@extjs.com')).toEqual(false);
             });
 
-            it("should allow for it to be wrapped by double quotes", function() {
+            it("should allow for it to be wrapped by double quotes", function () {
                 expect(VTYPES.email('"dev"@extjs.com')).toEqual(true);
             });
-            
-            it("should not allow a single white space at the beginning", function() {
+
+            it("should not allow a single white space at the beginning", function () {
                 expect(VTYPES.email(' dev@extjs.com')).toEqual(false);
             });
 
-            it("should not allow multiple white spaces at the beginning", function() {
+            it("should not allow multiple white spaces at the beginning", function () {
                 expect(VTYPES.email('     dev@extjs.com')).toEqual(false);
             });
 
-            it("should not allow for a single double quote at the beginning", function() {
+            it("should not allow for a single double quote at the beginning", function () {
                 expect(VTYPES.email('"dev@extjs.com')).toEqual(false);
             });
 
-            it("should not allow for a single double quote at the end", function() {
+            it("should not allow for a single double quote at the end", function () {
                 expect(VTYPES.email('dev"@extjs.com')).toEqual(false);
             });
 
-            it("should allow for it to contain special chars and to be wrapped by double quotes", function() {
+            it("should allow for it to contain special chars and to be wrapped by double quotes", function () {
                 expect(VTYPES.email('"baba_o\'reilly-who?"@extjs.com')).toEqual(true);
             });
 
-            it("should validate the examples in the docs", function() {
+            it("should validate the examples in the docs", function () {
                 expect(VTYPES.email('barney@example.de')).toEqual(true);
                 expect(VTYPES.email('barney.rubble@example.com')).toEqual(true);
                 expect(VTYPES.email('barney-rubble@example.coop')).toEqual(true);

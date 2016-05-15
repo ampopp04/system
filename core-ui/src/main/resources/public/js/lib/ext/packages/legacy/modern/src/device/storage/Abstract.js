@@ -10,7 +10,7 @@ Ext.define('Ext.device.storage.Abstract', {
         databaseSize: 5 * 1024 * 1024
     },
 
-    openDatabase: function(config) {
+    openDatabase: function (config) {
         var defaultConfig = Ext.device.storage.Abstract.prototype.config;
 
         config = Ext.applyIf(config, {

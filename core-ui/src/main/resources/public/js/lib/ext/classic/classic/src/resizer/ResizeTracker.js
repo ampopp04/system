@@ -9,10 +9,10 @@ Ext.define('Ext.resizer.ResizeTracker', {
 
     // Default to no constraint
     constrainTo: null,
-    
-    proxyCls:  Ext.baseCSSPrefix + 'resizable-proxy',
 
-    constructor: function(config) {
+    proxyCls: Ext.baseCSSPrefix + 'resizable-proxy',
+
+    constructor: function (config) {
         var me = this,
             widthRatio, heightRatio,
             throttledResizeFn;
@@ -44,11 +44,11 @@ Ext.define('Ext.resizer.ResizeTracker', {
         // If configured as throttled, create an instance version of resize which calls
         // a throttled function to perform the resize operation.
         if (me.throttle) {
-            throttledResizeFn = Ext.Function.createThrottled(function() {
-                    Ext.resizer.ResizeTracker.prototype.resize.apply(me, arguments);
-                }, me.throttle);
+            throttledResizeFn = Ext.Function.createThrottled(function () {
+                Ext.resizer.ResizeTracker.prototype.resize.apply(me, arguments);
+            }, me.throttle);
 
-            me.resize = function(box, direction, atEnd) {
+            me.resize = function (box, direction, atEnd) {
                 if (atEnd) {
                     Ext.resizer.ResizeTracker.prototype.resize.apply(me, arguments);
                 } else {
@@ -58,7 +58,7 @@ Ext.define('Ext.resizer.ResizeTracker', {
         }
     },
 
-    onBeforeStart: function(e) {
+    onBeforeStart: function (e) {
         // record the startBox
         this.startBox = this.target.getBox();
     },
@@ -68,7 +68,7 @@ Ext.define('Ext.resizer.ResizeTracker', {
      * Returns the object that will be resized instead of the true target on every mousemove event.
      * If dynamic is false, this will be a proxy, otherwise it will be null target.
      */
-    getProxy: function() {
+    getProxy: function () {
         var me = this;
 
         if (!me.dynamic && !me.proxy) {
@@ -89,7 +89,7 @@ Ext.define('Ext.resizer.ResizeTracker', {
      * @param {Ext.Component/Ext.dom.Element} target The target
      * @return {Ext.dom.Element} A proxy element
      */
-    createProxy: function(target){
+    createProxy: function (target) {
         var proxy,
             cls = this.proxyCls;
 
@@ -107,7 +107,7 @@ Ext.define('Ext.resizer.ResizeTracker', {
         return proxy;
     },
 
-    onStart: function(e) {
+    onStart: function (e) {
         // returns the Ext.ResizeHandle that the user started dragging
         this.activeResizeHandle = Ext.get(this.getDragTarget().id);
 
@@ -127,32 +127,32 @@ Ext.define('Ext.resizer.ResizeTracker', {
         // get tricked by the maximize button onMouseDown and mask everything but will
         // noever get the onMopuseUp to unmask.
         var targetEl = Ext.fly(target.parentNode);
-            
+
         this.callParent(arguments);
-        
+
         if (targetEl && targetEl.shim) {
             targetEl.maskIframes();
         }
     },
 
-    onMouseUp: function(e) {
+    onMouseUp: function (e) {
         var targetEl = Ext.fly(this.dragTarget.parentNode);
-        
+
         this.callParent(arguments);
-        
+
         if (targetEl && targetEl.shim) {
             targetEl.unmaskIframes();
         }
     },
 
-    onDrag: function(e) {
+    onDrag: function (e) {
         // dynamic resizing, update dimensions during resize
         if (this.dynamic || this.proxy) {
             this.updateDimensions(e);
         }
     },
 
-    updateDimensions: function(e, atEnd) {
+    updateDimensions: function (e, atEnd) {
         var me = this,
             region = me.activeResizeHandle.region,
             offset = me.getOffset(me.constrainTo ? 'dragTarget' : null),
@@ -231,7 +231,7 @@ Ext.define('Ext.resizer.ResizeTracker', {
         // Snap value between stops according to configured increments
         snappedWidth = Ext.Number.snap(newBox.width, me.widthIncrement);
         snappedHeight = Ext.Number.snap(newBox.height, me.heightIncrement);
-        if (snappedWidth !== newBox.width || snappedHeight !== newBox.height){
+        if (snappedWidth !== newBox.width || snappedHeight !== newBox.height) {
             switch (region) {
                 case 'northeast':
                     newBox.y -= snappedHeight - newBox.height;
@@ -323,7 +323,7 @@ Ext.define('Ext.resizer.ResizeTracker', {
         me.resize(newBox, atEnd);
     },
 
-    resize: function(box, atEnd) {
+    resize: function (box, atEnd) {
         var me = this,
             target,
             setPosition = me.setPosition;
@@ -352,14 +352,14 @@ Ext.define('Ext.resizer.ResizeTracker', {
         }
     },
 
-    onEnd: function(e) {
+    onEnd: function (e) {
         this.updateDimensions(e, true);
         if (this.proxy && this.hideProxy) {
             this.proxy.hide();
         }
     },
 
-    convertRegionName: function(name) {
+    convertRegionName: function (name) {
         return name;
     }
 });

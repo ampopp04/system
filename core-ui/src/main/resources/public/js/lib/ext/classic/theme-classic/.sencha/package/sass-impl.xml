@@ -291,7 +291,9 @@
 
     <target name="-compile-css" depends="-compass-compile">
         <if>
-            <not><x-is-true value="${package.sass.fashion}"/></not>
+            <not>
+                <x-is-true value="${package.sass.fashion}"/>
+            </not>
             <then>
                 <x-compress-css-files
                         dir="${build.resources.dir}"

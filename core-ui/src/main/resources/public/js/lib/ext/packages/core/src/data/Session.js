@@ -35,7 +35,7 @@
  * class, there is the `getSaveBatch` method. That method returns an `Ext.data.Batch`
  * object populated with the necessary `create`, `update` and `destory` operations to
  * save all of the changes in the Session.
- * 
+ *
  * @since 5.0.0
  */
 Ext.define('Ext.data.Session', {
@@ -74,9 +74,9 @@ Ext.define('Ext.data.Session', {
 
         crudProperties: {
             create: 'C',
-            read:   'R',
+            read: 'R',
             update: 'U',
-            drop:   'D'
+            drop: 'D'
         }
     },
 
@@ -174,7 +174,7 @@ Ext.define('Ext.data.Session', {
      * use {@link #createRecord}.
      * @param {Ext.data.Model} record The record to adopt.
      */
-    adopt: function(record) {
+    adopt: function (record) {
         var me = this,
             associations = record.associations,
             roleName;
@@ -206,7 +206,7 @@ Ext.define('Ext.data.Session', {
      *
      * @since 5.1.0
      */
-    commit: function() {
+    commit: function () {
         var data = this.data,
             matrices = this.matrices,
             entityName, entities, id, record;
@@ -267,12 +267,12 @@ Ext.define('Ext.data.Session', {
     /**
      * The same functionality as {@link #getChanges}, however we also take into account our
      * parent session.
-     * 
+     *
      * @return {Object} An object in the CRUD format (see the intro docs). `null` if there are no changes.
      *
      * @protected
      */
-    getChangesForParent: function() {
+    getChangesForParent: function () {
         var visitor = new Ext.data.session.ChildChangesVisitor(this);
         this.visitData(visitor);
         return visitor.result;
@@ -281,12 +281,12 @@ Ext.define('Ext.data.Session', {
     /**
      * Get a cached record from the session. If the record does not exist, it will
      * be created. If the `autoLoad` parameter is not set to `false`, the record will
-     * be loaded via the {@link Ext.data.Model#proxy proxy} of the Model. 
-     * 
-     * If this session is configured with a `{@link #parent}` session, a *copy* of any existing record 
+     * be loaded via the {@link Ext.data.Model#proxy proxy} of the Model.
+     *
+     * If this session is configured with a `{@link #parent}` session, a *copy* of any existing record
      * in the `parent` will be adopted into this session. If the `parent` does not contain the record,
      * the record will be created and *not* inserted into the parent.
-     * 
+     *
      * See also {@link #peekRecord}.
      *
      * @param {String/Ext.Class/Ext.data.Model} type The `entityName` or the actual class of record to create.
@@ -298,7 +298,7 @@ Ext.define('Ext.data.Session', {
      * it does not exist. If this parameter is an object, it will be passed to the {@link Ext.data.Model#load} call.
      * @return {Ext.data.Model} The record.
      */
-    getRecord: function(type, id, autoLoad) {
+    getRecord: function (type, id, autoLoad) {
         var me = this,
             wasInstance = type.isModel,
             record, Model, parent, parentRec;
@@ -370,7 +370,7 @@ Ext.define('Ext.data.Session', {
      * @protected
      * @template
      */
-    onInvalidAssociationEntity: function(entityType, id) {
+    onInvalidAssociationEntity: function (entityType, id) {
         Ext.raise('Unable to read association entity: ' + this.getModelIdentifier(entityType, id));
     },
 
@@ -383,7 +383,7 @@ Ext.define('Ext.data.Session', {
      * @protected
      * @template
      */
-    onInvalidEntityCreate: function(entityType, id) {
+    onInvalidEntityCreate: function (entityType, id) {
         Ext.raise('Cannot create, record already not exists: ' + this.getModelIdentifier(entityType, id));
     },
 
@@ -396,7 +396,7 @@ Ext.define('Ext.data.Session', {
      * @protected
      * @template
      */
-    onInvalidEntityDrop: function(entityType, id) {
+    onInvalidEntityDrop: function (entityType, id) {
         Ext.raise('Cannot drop, record does not exist: ' + this.getModelIdentifier(entityType, id));
     },
 
@@ -409,7 +409,7 @@ Ext.define('Ext.data.Session', {
      * @protected
      * @template
      */
-    onInvalidEntityRead: function(entityType, id) {
+    onInvalidEntityRead: function (entityType, id) {
         Ext.raise('Cannot read, record already not exists: ' + this.getModelIdentifier(entityType, id));
     },
 
@@ -423,7 +423,7 @@ Ext.define('Ext.data.Session', {
      * @protected
      * @template
      */
-    onInvalidEntityUpdate: function(entityType, id, dropped) {
+    onInvalidEntityUpdate: function (entityType, id, dropped) {
         if (dropped) {
             Ext.raise('Cannot update, record dropped: ' + this.getModelIdentifier(entityType, id));
         } else {
@@ -436,13 +436,13 @@ Ext.define('Ext.data.Session', {
      * not exist.
      *
      * See also: {@link #getRecord}.
-     * 
+     *
      * @param {String/Ext.Class} type The `entityName` or the actual class of record to create.
      * @param {Object} id The id of the record.
-     * @param {Boolean} [deep=false] `true` to consult 
+     * @param {Boolean} [deep=false] `true` to consult
      * @return {Ext.data.Model} The record, `null` if it does not exist.
      */
-    peekRecord: function(type, id, deep) {
+    peekRecord: function (type, id, deep) {
         // Duplicate some of this logic from getEntry here to prevent the creation
         // of entries when asking for the existence of records. We may not need them
         //<debug>
@@ -466,7 +466,7 @@ Ext.define('Ext.data.Session', {
     /**
      * Save any changes in this session to a {@link #parent} session.
      */
-    save: function() {
+    save: function () {
         //<debug>
         if (!this.getParent()) {
             Ext.raise('Cannot commit session, no parent exists');
@@ -492,7 +492,7 @@ Ext.define('Ext.data.Session', {
      * Complete a bulk update for this session.
      * @param {Object} data Data in the CRUD format (see the intro docs).
      */
-    update: function(data) {
+    update: function (data) {
         var me = this,
             schema = me.getSchema(),
             crudOperations = me.crudOperations,
@@ -544,14 +544,14 @@ Ext.define('Ext.data.Session', {
                 role.processUpdate(me, associationData);
             }
         }
-    }, 
+    },
 
     //-------------------------------------------------------------------------
     privates: {
         /**
          * Add a record instance to this session. Called by model.
          * @param {Ext.data.Model} record The record.
-         * 
+         *
          * @private
          */
         add: function (record) {
@@ -581,7 +581,7 @@ Ext.define('Ext.data.Session', {
          *
          * @private
          */
-        afterErase: function(record) {
+        afterErase: function (record) {
             this.evict(record);
         },
 
@@ -601,7 +601,7 @@ Ext.define('Ext.data.Session', {
          *
          * @private
          */
-        checkModelType: function(name) {
+        checkModelType: function (name) {
             if (name.$isClass) {
                 name = name.entityName;
             }
@@ -621,7 +621,7 @@ Ext.define('Ext.data.Session', {
          *
          * @private
          */
-        createEntities: function(entityType, items) {
+        createEntities: function (entityType, items) {
             var len = items.length,
                 i, data, rec, id;
 
@@ -647,7 +647,7 @@ Ext.define('Ext.data.Session', {
          *
          * @private
          */
-        dropEntities: function(entityType, ids) {
+        dropEntities: function (entityType, ids) {
             var len = ids.length,
                 i, rec, id, extractId;
 
@@ -676,7 +676,7 @@ Ext.define('Ext.data.Session', {
          *
          * @private
          */
-        evict: function(record) {
+        evict: function (record) {
             var entityName = record.entityName,
                 entities = this.data[entityName],
                 id = record.id,
@@ -693,7 +693,7 @@ Ext.define('Ext.data.Session', {
          * @param {Object[]} ids The ids to transform.
          * @return {Ext.data.Model[]} The models corresponding to the ids.
          */
-        getEntityList: function(entityType, ids) {
+        getEntityList: function (entityType, ids) {
             var len = ids.length,
                 i, id, rec, invalid;
 
@@ -722,9 +722,9 @@ Ext.define('Ext.data.Session', {
          *
          * @private
          */
-        getEntry: function(type, id) {
+        getEntry: function (type, id) {
             if (type.isModel) {
-                id = type.getId();    
+                id = type.getId();
                 type = type.self;
             }
 
@@ -739,7 +739,7 @@ Ext.define('Ext.data.Session', {
             return entry;
         },
 
-        getRefs: function(record, role, includeParent) {
+        getRefs: function (record, role, includeParent) {
             var entry = this.getEntry(record),
                 refs = entry && entry.refs && entry.refs[role.role],
                 parent = includeParent && this.getParent(),
@@ -817,7 +817,7 @@ Ext.define('Ext.data.Session', {
          * @param {Object} id The id of the entity.
          * @return {String} The identifier.
          */
-        getModelIdentifier: function(entityType, id) {
+        getModelIdentifier: function (entityType, id) {
             return id + '@' + entityType.entityName;
         },
 
@@ -836,7 +836,7 @@ Ext.define('Ext.data.Session', {
             //<debug>
             if (bucket[newId]) {
                 Ext.raise('Cannot change ' + entityName + ' id from ' + oldId +
-                                ' to ' + newId + ' id already exists');
+                    ' to ' + newId + ' id already exists');
             }
             //</debug>
 
@@ -866,7 +866,7 @@ Ext.define('Ext.data.Session', {
             me.registerReferences(record, oldId);
         },
 
-        processManyBlock: function(entityType, role, items, processor) {
+        processManyBlock: function (entityType, role, items, processor) {
             var me = this,
                 id, record, records, store;
 
@@ -884,23 +884,23 @@ Ext.define('Ext.data.Session', {
             }
         },
 
-        processManyCreate: function(role, store, record, records) {
+        processManyCreate: function (role, store, record, records) {
             if (store) {
                 // Will handle any duplicates
                 store.add(records);
             } else {
                 record[role.getterName](null, null, records);
             }
-                 
+
         },
 
-        processManyDrop: function(role, store, record, records) {
+        processManyDrop: function (role, store, record, records) {
             if (store) {
                 store.remove(records);
             }
         },
 
-        processManyRead: function(role, store, record, records) {
+        processManyRead: function (role, store, record, records) {
             if (store) {
                 store.setRecords(records);
             } else {
@@ -916,7 +916,7 @@ Ext.define('Ext.data.Session', {
          *
          * @private
          */
-        readEntities: function(entityType, items) {
+        readEntities: function (entityType, items) {
             var len = items.length,
                 i, data, rec, id;
 
@@ -952,7 +952,7 @@ Ext.define('Ext.data.Session', {
                 //TODO some (potentially new) data. We probably should check for mid-air
                 //TODO collisions using versionProperty but for now we just ignore the
                 //TODO new data in favor of our potentially edited data.
-                
+
                 // Peek checks if it exists at any level, by getting it we ensure that the record is copied down
                 record = me.getRecord(Model, id);
             }
@@ -999,7 +999,7 @@ Ext.define('Ext.data.Session', {
          *
          * @private
          */
-        updateEntities: function(entityType, items) {
+        updateEntities: function (entityType, items) {
             var len = items.length,
                 i, data, rec, id, modified;
 

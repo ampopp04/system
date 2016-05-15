@@ -43,12 +43,12 @@
  *             }
  *         }]
  *     });
- * 
+ *
  * ## Vetoing Changes
- * 
+ *
  * User interaction when changing the tabs can be vetoed by listening to the {@link #beforetabchange} event.
  * By returning `false`, the tab change will not occur.
- * 
+ *
  *     @example
  *     Ext.create('Ext.tab.Panel', {
  *         renderTo: Ext.getBody(),
@@ -66,7 +66,7 @@
  *         }, {
  *             title: 'P3'
  *         }]
- *     }); 
+ *     });
  *
  * # Examples
  *
@@ -316,14 +316,14 @@ Ext.define('Ext.tab.Panel', {
 
         /**
          * @cfg {"top"/"bottom"/"left"/"right"} tabPosition
-         * The position where the tab strip should be rendered. Possible values are: 
-         * 
+         * The position where the tab strip should be rendered. Possible values are:
+         *
          *  - top
          *  - bottom
          *  - left
          *  - right
          */
-        tabPosition : 'top',
+        tabPosition: 'top',
 
         /**
          * @cfg {'default'/0/1/2} tabRotation
@@ -416,11 +416,11 @@ Ext.define('Ext.tab.Panel', {
      * performance.
      *
      * The deferredRender property is internally passed to the layout manager for TabPanels ({@link
-     * Ext.layout.container.Card}) as its {@link Ext.layout.container.Card#deferredRender} configuration value.
+        * Ext.layout.container.Card}) as its {@link Ext.layout.container.Card#deferredRender} configuration value.
      *
      * **Note**: leaving deferredRender as true means that the content within an unactivated tab will not be available
      */
-    deferredRender : true,
+    deferredRender: true,
 
     _defaultTabRotation: {
         top: 0,
@@ -446,9 +446,9 @@ Ext.define('Ext.tab.Panel', {
      * @param {Ext.Component} oldCard The previously active item
      */
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this,
-            // Default to 0 if undefined and not null!
+        // Default to 0 if undefined and not null!
             activeTab = me.activeTab !== null ? (me.activeTab || 0) : null,
             dockedItems = me.dockedItems,
             header = me.header,
@@ -499,7 +499,7 @@ Ext.define('Ext.tab.Panel', {
      * @ignore
      */
 
-    onRender: function() {
+    onRender: function () {
         var items = this.items.items,
             len = items.length,
             i;
@@ -522,7 +522,7 @@ Ext.define('Ext.tab.Panel', {
      * @return {Ext.Component} The resulting active child Component. The call may have been vetoed, or otherwise
      * modified by an event listener.
      */
-    setActiveTab: function(card) {
+    setActiveTab: function (card) {
         var me = this,
             previous;
 
@@ -577,7 +577,7 @@ Ext.define('Ext.tab.Panel', {
         return previous;
     },
 
-    setActiveItem: function(item) {
+    setActiveItem: function (item) {
         return this.setActiveTab(item);
     },
 
@@ -585,9 +585,9 @@ Ext.define('Ext.tab.Panel', {
      * Returns the item that is currently active inside this TabPanel.
      * @return {Ext.Component} The currently active item.
      */
-    getActiveTab: function() {
+    getActiveTab: function () {
         var me = this,
-            // Ensure the calculated result references a Component
+        // Ensure the calculated result references a Component
             result = me.getComponent(me.activeTab);
 
         // Sanitize the result in case the active tab is no longer there.
@@ -600,10 +600,10 @@ Ext.define('Ext.tab.Panel', {
         return me.activeTab;
     },
 
-    applyTabBar: function(tabBar) {
+    applyTabBar: function (tabBar) {
         var me = this,
-            // if we are rendering the tabbar into the panel header, use same alignment
-            // as header position, and ignore tabPosition.
+        // if we are rendering the tabbar into the panel header, use same alignment
+        // as header position, and ignore tabPosition.
             dock = (me.tabBarHeaderPosition != null) ? me.getHeaderPosition() : me.getTabPosition();
 
         return new Ext.tab.Bar(Ext.apply({
@@ -617,7 +617,7 @@ Ext.define('Ext.tab.Panel', {
         }, tabBar));
     },
 
-    updateHeaderPosition: function(headerPosition, oldHeaderPosition) {
+    updateHeaderPosition: function (headerPosition, oldHeaderPosition) {
         var tabBar = this.getTabBar();
 
         if (tabBar && (this.tabBarHeaderPosition != null)) {
@@ -627,7 +627,7 @@ Ext.define('Ext.tab.Panel', {
         this.callParent([headerPosition, oldHeaderPosition]);
     },
 
-    updateTabPosition: function(tabPosition) {
+    updateTabPosition: function (tabPosition) {
         var tabBar = this.getTabBar();
 
         if (tabBar && (this.tabBarHeaderPosition == null)) {
@@ -635,7 +635,7 @@ Ext.define('Ext.tab.Panel', {
         }
     },
 
-    updateTabRotation: function(tabRotation) {
+    updateTabRotation: function (tabRotation) {
         var tabBar = this.getTabBar();
 
         if (tabBar) {
@@ -647,7 +647,7 @@ Ext.define('Ext.tab.Panel', {
      * @protected
      * Makes sure we have a Tab for each item added to the TabPanel
      */
-    onAdd: function(item, index) {
+    onAdd: function (item, index) {
         var me = this,
             cfg = Ext.apply({}, item.tabConfig),
             tabBar = me.getTabBar(),
@@ -677,13 +677,13 @@ Ext.define('Ext.tab.Panel', {
 
         // Create the correspondiong tab in the tab bar
         item.tab = me.tabBar.insert(index, cfg);
-        
+
         // We want to force the relationship of the tabpanel to the tab
         item.ariaRole = 'tabpanel';
-        
+
         // Item might be already rendered and then added to the TabPanel
         ariaDom = item.ariaEl.dom;
-        
+
         if (ariaDom) {
             ariaDom.setAttribute('aria-labelledby', item.tab.id);
         }
@@ -693,7 +693,7 @@ Ext.define('Ext.tab.Panel', {
         }
 
         item.on({
-            scope : me,
+            scope: me,
             enable: me.onItemEnable,
             disable: me.onItemDisable,
             beforeshow: me.onItemBeforeShow,
@@ -731,7 +731,7 @@ Ext.define('Ext.tab.Panel', {
         }
     },
 
-    onMove: function(item, fromIdx, toIdx) {
+    onMove: function (item, fromIdx, toIdx) {
         var tabBar = this.getTabBar();
 
         this.callParent([item, fromIdx, toIdx]);
@@ -747,7 +747,7 @@ Ext.define('Ext.tab.Panel', {
      * @private
      * Enable corresponding tab when item is enabled.
      */
-    onItemEnable: function(item){
+    onItemEnable: function (item) {
         item.tab.enable();
     },
 
@@ -755,7 +755,7 @@ Ext.define('Ext.tab.Panel', {
      * @private
      * Disable corresponding tab when item is enabled.
      */
-    onItemDisable: function(item){
+    onItemDisable: function (item) {
         item.tab.disable();
     },
 
@@ -763,7 +763,7 @@ Ext.define('Ext.tab.Panel', {
      * @private
      * Sets activeTab before item is shown.
      */
-    onItemBeforeShow: function(item) {
+    onItemBeforeShow: function (item) {
         if (item !== this.activeTab) {
             this.setActiveTab(item);
             return false;
@@ -774,7 +774,7 @@ Ext.define('Ext.tab.Panel', {
      * @private
      * Update the tab icon when panel glyph has been set or changed.
      */
-    onItemGlyphChange: function(item, newGlyph) {
+    onItemGlyphChange: function (item, newGlyph) {
         item.tab.setGlyph(newGlyph);
     },
 
@@ -782,15 +782,15 @@ Ext.define('Ext.tab.Panel', {
      * @private
      * Update the tab icon when panel icon has been set or changed.
      */
-    onItemIconChange: function(item, newIcon) {
+    onItemIconChange: function (item, newIcon) {
         item.tab.setIcon(newIcon);
     },
-    
+
     /**
      * @private
      * Update the tab iconCls when panel iconCls has been set or changed.
      */
-    onItemIconClsChange: function(item, newIconCls) {
+    onItemIconClsChange: function (item, newIconCls) {
         item.tab.setIconCls(newIconCls);
     },
 
@@ -798,7 +798,7 @@ Ext.define('Ext.tab.Panel', {
      * @private
      * Update the tab title when panel title has been set or changed.
      */
-    onItemTitleChange: function(item, newTitle) {
+    onItemTitleChange: function (item, newTitle) {
         item.tab.setText(newTitle);
     },
 
@@ -806,11 +806,11 @@ Ext.define('Ext.tab.Panel', {
      * @private
      * Makes sure we remove the corresponding Tab when an item is removed
      */
-    onRemove: function(item, destroying) {
+    onRemove: function (item, destroying) {
         var me = this;
 
         item.un({
-            scope : me,
+            scope: me,
             enable: me.onItemEnable,
             disable: me.onItemDisable,
             beforeshow: me.onItemBeforeShow,

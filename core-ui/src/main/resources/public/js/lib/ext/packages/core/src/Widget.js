@@ -92,7 +92,7 @@ Ext.define('Ext.Widget', {
      * reference on some element within the template (usually the outermost one).
      *
      * 2. `listeners` - a standard listeners object as specified by {@link
-     * Ext.mixin.Observable}.
+        * Ext.mixin.Observable}.
      *
      *     element: {
      *         reference: 'element',
@@ -193,13 +193,13 @@ Ext.define('Ext.Widget', {
     /**
      * @property {Array} template
      * An array of child elements to use as the children of the main element in the {@link
-     * #element} template.  Only used if "children" are not specified explicitly in the
+        * #element} template.  Only used if "children" are not specified explicitly in the
      * {@link #element} template.
      * @protected
      */
     template: [],
-    
-    constructor: function(config) {
+
+    constructor: function (config) {
         var me = this,
             controller;
 
@@ -214,7 +214,7 @@ Ext.define('Ext.Widget', {
         }
     },
 
-    afterCachedConfig: function() {
+    afterCachedConfig: function () {
         // This method runs once for the first instance of this Widget type that is
         // created.  It runs after the element config has been processed for the first
         // instance, and after all the cachedConfigs (whose appliers/updaters may modify
@@ -235,7 +235,7 @@ Ext.define('Ext.Widget', {
 
         elements = renderTemplate.querySelectorAll('[id]');
 
-        for (i = 0,ln = elements.length; i < ln; i++) {
+        for (i = 0, ln = elements.length; i < ln; i++) {
             element = elements[i];
             element.removeAttribute('id');
         }
@@ -244,31 +244,31 @@ Ext.define('Ext.Widget', {
         // the reference attributes will be present in the cached element when it is cloned.
         // Now that we're done cloning and caching the template element, it is safe to
         // remove the reference attributes from this instance's elements
-        for (i = 0,ln = referenceList.length; i < ln; i++) {
+        for (i = 0, ln = referenceList.length; i < ln; i++) {
             reference = referenceList[i];
             me[reference].dom.removeAttribute('reference');
         }
     },
 
-    addCls: function(cls) {
+    addCls: function (cls) {
         this.el.addCls(cls);
     },
 
-    applyWidth: function(width) {
+    applyWidth: function (width) {
         return this.filterLengthValue(width);
     },
 
-    applyHeight: function(height) {
+    applyHeight: function (height) {
         return this.filterLengthValue(height);
     },
 
-    clearListeners: function() {
+    clearListeners: function () {
         var me = this;
         me.mixins.observable.clearListeners.call(me);
         me.mixins.componentDelegation.clearDelegatedListeners.call(me);
     },
 
-    destroy: function() {
+    destroy: function () {
         var me = this,
             referenceList = me.referenceList,
             i, ln, reference;
@@ -289,7 +289,7 @@ Ext.define('Ext.Widget', {
         Ext.ComponentManager.unregister(me);
     },
 
-    doFireEvent: function(eventName, args, bubbles) {
+    doFireEvent: function (eventName, args, bubbles) {
         var me = this,
             ret = me.mixins.observable.doFireEvent.call(me, eventName, args, bubbles);
 
@@ -302,10 +302,10 @@ Ext.define('Ext.Widget', {
 
     /**
      * A template method for modifying the {@link #element} config before it is processed.
-     * By default adds the result of `this.getTemplate()` as the `children` array of 
-     * {@link #element} if `children` were not specified in the original 
-     * {@link #element} config.  Typically this method should not need to be implemented 
-     * in subclasses.  Instead the {@link #element} property should be use to configure 
+     * By default adds the result of `this.getTemplate()` as the `children` array of
+     * {@link #element} if `children` were not specified in the original
+     * {@link #element} config.  Typically this method should not need to be implemented
+     * in subclasses.  Instead the {@link #element} property should be use to configure
      * the element template for a given Widget subclass.
      *
      * This method is called once when the first instance of each Widget subclass is
@@ -316,7 +316,7 @@ Ext.define('Ext.Widget', {
      * @return {Object} the element config object
      * @protected
      */
-    getElementConfig: function() {
+    getElementConfig: function () {
         var me = this,
             el = me.element;
 
@@ -335,14 +335,14 @@ Ext.define('Ext.Widget', {
      * @return {Number} return.width
      * @return {Number} return.height
      */
-    getSize: function() {
+    getSize: function () {
         return {
             width: this.getWidth(),
             height: this.getHeight()
         };
     },
 
-    getTemplate: function() {
+    getTemplate: function () {
         return this.template;
     },
 
@@ -354,13 +354,13 @@ Ext.define('Ext.Widget', {
      * cloning the Element that was cached by the first instance.
      * @protected
      */
-    initElement: function() {
+    initElement: function () {
         var me = this,
             prototype = me.self.prototype,
             id = me.getId(),
-            // The double assignment is intentional to workaround a JIT issue that prevents
-            // me.referenceList from being assigned in random scenarios. The issue occurs on 4th gen 
-            // iPads and lower, possibly other older iOS devices. See EXTJS-16494.
+        // The double assignment is intentional to workaround a JIT issue that prevents
+        // me.referenceList from being assigned in random scenarios. The issue occurs on 4th gen 
+        // iPads and lower, possibly other older iOS devices. See EXTJS-16494.
             referenceList = me.referenceList = me.referenceList = [],
             cleanAttributes = true,
             renderTemplate, renderElement, element, referenceNodes, i, ln, referenceNode,
@@ -384,7 +384,7 @@ Ext.define('Ext.Widget', {
 
         referenceNodes = renderTemplate.querySelectorAll('[reference]');
 
-        for (i = 0,ln = referenceNodes.length; i < ln; i++) {
+        for (i = 0, ln = referenceNodes.length; i < ln; i++) {
             referenceNode = referenceNodes[i];
             reference = referenceNode.getAttribute('reference');
 
@@ -442,7 +442,7 @@ Ext.define('Ext.Widget', {
      * @param {String} selector The selector string to test against.
      * @return {Boolean} `true` if this Widget matches the selector.
      */
-    is: function(selector) {
+    is: function (selector) {
         return Ext.ComponentQuery.is(this, selector);
     },
 
@@ -466,12 +466,12 @@ Ext.define('Ext.Widget', {
      * the default), or `true` to check whether this Component is directly of the specified xtype.
      * @return {Boolean} `true` if this component descends from the specified xtype, `false` otherwise.
      */
-    isXType: function(xtype, shallow) {
+    isXType: function (xtype, shallow) {
         return shallow ? (Ext.Array.indexOf(this.xtypes, xtype) !== -1) :
-                !!this.xtypesMap[xtype];
+            !!this.xtypesMap[xtype];
     },
 
-    removeCls: function(cls) {
+    removeCls: function (cls) {
         this.el.removeCls(cls);
     },
 
@@ -483,10 +483,10 @@ Ext.define('Ext.Widget', {
      * specified as `false`, causes the class to be removed.
      */
     toggleCls: function (cls, state) {
-        this.element.toggleCls(cls,state);
+        this.element.toggleCls(cls, state);
     },
 
-    resolveListenerScope: function(defaultScope, skipThis) {
+    resolveListenerScope: function (defaultScope, skipThis) {
         // break the tie between Observable and Inheritable resolveListenerScope
         return this.mixins.inheritable.resolveListenerScope.call(this, defaultScope, skipThis);
     },
@@ -496,7 +496,7 @@ Ext.define('Ext.Widget', {
      * @param {Number} width The new width for the Component.
      * @param {Number} height The new height for the Component.
      */
-    setSize: function(width, height) {
+    setSize: function (width, height) {
         if (width !== undefined) {
             this.setWidth(width);
         }
@@ -508,7 +508,7 @@ Ext.define('Ext.Widget', {
     /**
      * @protected
      */
-    applyStyle: function(style, oldStyle) {
+    applyStyle: function (style, oldStyle) {
         // If we're doing something with data binding, say:
         // style: {
         //     backgroundColor: 'rgba({r}, {g}, {b}, 1)'
@@ -524,7 +524,7 @@ Ext.define('Ext.Widget', {
     /**
      * @protected
      */
-    updateStyle: function(style) {
+    updateStyle: function (style) {
         this.element.applyStyles(style);
     },
 
@@ -532,7 +532,7 @@ Ext.define('Ext.Widget', {
      * @param width
      * @protected
      */
-    updateWidth: function(width) {
+    updateWidth: function (width) {
         this.element.setWidth(width);
     },
 
@@ -540,7 +540,7 @@ Ext.define('Ext.Widget', {
      * @param height
      * @protected
      */
-    updateHeight: function(height) {
+    updateHeight: function (height) {
         this.element.setHeight(height);
     },
 
@@ -548,7 +548,9 @@ Ext.define('Ext.Widget', {
     // Widgets.  TODO: remove these emptyFns when proper focus handling is implmented
     onFocusEnter: Ext.emptyFn,
     onFocusLeave: Ext.emptyFn,
-    isAncestor: function () { return false; },
+    isAncestor: function () {
+        return false;
+    },
 
     //-------------------------------------------------------------------------
 
@@ -562,7 +564,7 @@ Ext.define('Ext.Widget', {
          * @param {HTMLElement} domNode
          * @private
          */
-        addElementReferenceOnDemand: function(name, domNode) {
+        addElementReferenceOnDemand: function (name, domNode) {
             if (this._elementListeners[name]) {
                 // if the element was configured with listeners then we cannot add the
                 // reference on demand because we need to make sure the element responds
@@ -572,7 +574,7 @@ Ext.define('Ext.Widget', {
                 // no listeners - element reference can be resolved on demand.
                 // TODO: measure if this has any significant performance impact.
                 Ext.Object.defineProperty(this, name, {
-                    get: function() {
+                    get: function () {
                         // remove the property that was defined using defineProperty because
                         // addElementReference will set the property on the instance, - the
                         // getter is not needed after the first access.
@@ -650,7 +652,7 @@ Ext.define('Ext.Widget', {
             return referenceEl;
         },
 
-        detachFromBody: function() {
+        detachFromBody: function () {
             // See reattachToBody
             Ext.getDetachedBody().appendChild(this.element);
             this.isDetached = true;
@@ -659,7 +661,7 @@ Ext.define('Ext.Widget', {
         /**
          * @private
          */
-        doAddListener: function(name, fn, scope, options, order, caller, manager) {
+        doAddListener: function (name, fn, scope, options, order, caller, manager) {
             var me = this,
                 delegate;
 
@@ -686,13 +688,13 @@ Ext.define('Ext.Widget', {
             me.callParent([name, fn, scope, options, order, caller, manager]);
         },
 
-        doRemoveListener: function(eventName, fn, scope) {
+        doRemoveListener: function (eventName, fn, scope) {
             var me = this;
             me.mixins.observable.doRemoveListener.call(me, eventName, fn, scope);
             me.mixins.componentDelegation.removeDelegatedListener.call(me, eventName, fn, scope);
         },
 
-        filterLengthValue: function(value) {
+        filterLengthValue: function (value) {
             if (value === 'auto' || (!value && value !== 0)) {
                 return null;
             }
@@ -731,7 +733,7 @@ Ext.define('Ext.Widget', {
          *
          * @private
          */
-        initElementListeners: function(elementConfig) {
+        initElementListeners: function (elementConfig) {
             var prototype = this,
                 superPrototype = prototype.self.superclass,
                 superElementListeners = superPrototype._elementListeners,
@@ -772,7 +774,7 @@ Ext.define('Ext.Widget', {
             }
         },
 
-        initId: function(config) {
+        initId: function (config) {
             var me = this,
                 defaultConfig = me.config,
                 id = (config && config.id) || (defaultConfig && defaultConfig.id);
@@ -796,7 +798,7 @@ Ext.define('Ext.Widget', {
          * @private
          * @return {Object}
          */
-        processElementConfig: function() {
+        processElementConfig: function () {
             var prototype = this,
                 superPrototype = prototype.self.superclass,
                 elementConfig;
@@ -824,7 +826,7 @@ Ext.define('Ext.Widget', {
             return elementConfig;
         },
 
-        reattachToBody: function() {
+        reattachToBody: function () {
             // See detachFromBody
             this.isDetached = false;
         },
@@ -833,7 +835,7 @@ Ext.define('Ext.Widget', {
             this.element.replaceCls(oldCls, newCls);
         }
     }
-}, function(Widget) {
+}, function (Widget) {
     var prototype = Widget.prototype;
 
     // event options for listeners that use the "element" event options must also include

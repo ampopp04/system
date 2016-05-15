@@ -8,7 +8,7 @@
  * uniqueness constraint, it would limit the field to be non-nullable. Even if this were
  * acceptable, this also creates challenges for a "soft-delete" strategy where records are
  * kept in the table, but only marked as "deleted" in a field.
- * 
+ *
  * Ensuring uniqueness on the client-side is also difficult. So, at the present time, this
  * is not enforced.
  */
@@ -24,7 +24,7 @@ Ext.define('Ext.data.schema.OneToOne', {
     Left: Ext.define(null, {
         extend: 'Ext.data.schema.Role',
 
-        onDrop: function(rightRecord, session) {
+        onDrop: function (rightRecord, session) {
             var leftRecord = this.getAssociatedItem(rightRecord);
             rightRecord[this.getInstanceName()] = null;
             if (leftRecord) {
@@ -32,7 +32,7 @@ Ext.define('Ext.data.schema.OneToOne', {
             }
         },
 
-        createGetter: function() {
+        createGetter: function () {
             var me = this;
             return function () {
                 // 'this' refers to the Model instance inside this function
@@ -91,7 +91,7 @@ Ext.define('Ext.data.schema.OneToOne', {
             return ret;
         },
 
-        read: function(rightRecord, node, fromReader, readOptions) {
+        read: function (rightRecord, node, fromReader, readOptions) {
             var me = this,
                 leftRecords = me.callParent([rightRecord, node, fromReader, readOptions]),
                 leftRecord;
@@ -114,8 +114,8 @@ Ext.define('Ext.data.schema.OneToOne', {
 
         left: false,
         side: 'right',
-        
-        createGetter: function() {
+
+        createGetter: function () {
             // As the target of the FK (say "manager" for the Department entity) this
             // getter is responsible for getting the entity referenced by the FK value.
             var me = this;
@@ -125,17 +125,17 @@ Ext.define('Ext.data.schema.OneToOne', {
                 return me.doGetFK(this, options, scope);
             };
         },
-        
-        createSetter: function() {
+
+        createSetter: function () {
             var me = this;
 
-            return function(value, options, scope) {
+            return function (value, options, scope) {
                 // 'this' refers to the Model instance inside this function
                 return me.doSetFK(this, value, options, scope);
             };
         },
 
-        onDrop: function(leftRecord, session) {
+        onDrop: function (leftRecord, session) {
             var me = this,
                 field = me.association.field,
                 rightRecord = me.getAssociatedItem(leftRecord),
@@ -156,7 +156,7 @@ Ext.define('Ext.data.schema.OneToOne', {
                     }
                 }
             }
-             
+
             if (field) {
                 leftRecord.set(field.name, null);
             }
@@ -166,7 +166,7 @@ Ext.define('Ext.data.schema.OneToOne', {
             }
         },
 
-        onValueChange: function(leftRecord, session, newValue) {
+        onValueChange: function (leftRecord, session, newValue) {
             // Important to get the record before changing the key.
             var me = this,
                 rightRecord = leftRecord[me.getOldInstanceName()] || me.getAssociatedItem(leftRecord),
@@ -188,18 +188,18 @@ Ext.define('Ext.data.schema.OneToOne', {
             leftRecord.changingKey = false;
         },
 
-        checkKeyForDrop: function(rightRecord) {
+        checkKeyForDrop: function (rightRecord) {
             var leftRecord = this.inverse.getAssociatedItem(rightRecord);
             if (!leftRecord) {
                 // Not reassigned to another parent
                 rightRecord.drop();
             }
         },
-        
-        read: function(leftRecord, node, fromReader, readOptions) {
+
+        read: function (leftRecord, node, fromReader, readOptions) {
             var me = this,
                 rightRecords = me.callParent([leftRecord, node, fromReader, readOptions]),
-                rightRecord, field, fieldName, session, 
+                rightRecord, field, fieldName, session,
                 refs, id, oldId, setKey, data;
 
             if (rightRecords) {
@@ -221,7 +221,7 @@ Ext.define('Ext.data.schema.OneToOne', {
                         setKey = true;
                     }
 
-                    
+
                     if (setKey) {
                         // We want to poke the inferred key onto record if it exists, but we don't
                         // want to mess with the dirty or modified state of the record.

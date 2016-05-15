@@ -77,7 +77,7 @@ Ext.define('Ext.dom.Layer', {
      * @param {String/HTMLElement} [existingEl] Uses an existing DOM element.
      * If the element is not found it creates it.
      */
-    constructor: function(config, existingEl) {
+    constructor: function (config, existingEl) {
         config = config || {};
         var me = this,
             dh = Ext.DomHelper,
@@ -96,9 +96,9 @@ Ext.define('Ext.dom.Layer', {
 
         if (!dom) {
             dom = dh.append(pel, config.dh || {
-                tag: 'div',
-                cls: cls // primarily to give el 'position:absolute' or, if fixed, 'position:fixed'
-            });
+                    tag: 'div',
+                    cls: cls // primarily to give el 'position:absolute' or, if fixed, 'position:fixed'
+                });
         }
 
         if (config.id) {

@@ -4,7 +4,7 @@
 Ext.define('Ext.ux.colorpick.Selection', {
     mixinId: 'colorselection',
 
-    config : {
+    config: {
         /**
          * @cfg {"hex6","hex8","#hex6","#hex8","HEX6","HEX8","#HEX6","#HEX8"} [format=hex6]
          * The color format to for the `value` config. The `value` can be set using any

@@ -1,9 +1,9 @@
 /*!
-* Ext JS Library
-* Copyright(c) 2006-2015 Sencha Inc.
-* licensing@sencha.com
-* http://www.sencha.com/license
-*/
+ * Ext JS Library
+ * Copyright(c) 2006-2015 Sencha Inc.
+ * licensing@sencha.com
+ * http://www.sencha.com/license
+ */
 
 /**
  * From code originally written by David Davis
@@ -24,10 +24,10 @@ Ext.define('Ext.ux.desktop.Video', {
     html: '',
     tpl: [
         '<video id="{id}-video" autoPlay="{autoplay}" controls="{controls}" poster="{poster}" start="{start}" loopstart="{loopstart}" loopend="{loopend}" autobuffer="{autobuffer}" loop="{loop}" style="width:100%;height:100%">',
-            '<tpl for="src">',
-                '<source src="{src}" type="{type}"/>',
-            '</tpl>',
-            '{html}',
+        '<tpl for="src">',
+        '<source src="{src}" type="{type}"/>',
+        '</tpl>',
+        '{html}',
         '</video>'
     ],
 
@@ -63,10 +63,10 @@ Ext.define('Ext.ux.desktop.Video', {
         me.fallbackHTML = fallback;
 
         cfg = me.data = Ext.copyTo({
-            tag   : 'video',
-            html: fallback
-        },
-        me, 'id,poster,start,loopstart,loopend,playcount,autobuffer,loop');
+                tag: 'video',
+                html: fallback
+            },
+            me, 'id,poster,start,loopstart,loopend,playcount,autobuffer,loop');
 
         // just having the params exist enables them
         if (me.autoplay) {
@@ -78,14 +78,14 @@ Ext.define('Ext.ux.desktop.Video', {
 
         // handle multiple sources
         if (Ext.isArray(me.src)) {
-            cfg.src  = me.src;
+            cfg.src = me.src;
         } else {
-            cfg.src  = [ {src: me.src} ];
+            cfg.src = [{src: me.src}];
         }
         me.callParent();
     },
 
-    afterRender: function() {
+    afterRender: function () {
         var me = this;
         me.callParent();
         me.video = me.body.getById(me.id + '-video');
@@ -95,12 +95,12 @@ Ext.define('Ext.ux.desktop.Video', {
             me.video.on('error', me.onVideoError, me);
         }
     },
-    
-    getFallback: function() {
+
+    getFallback: function () {
         return '<h1 style="background-color:#ff4f4f;padding: 10px;">' + this.fallbackHTML + '</h1>';
     },
 
-    onVideoError: function() {
+    onVideoError: function () {
         var me = this;
 
         me.video.remove();

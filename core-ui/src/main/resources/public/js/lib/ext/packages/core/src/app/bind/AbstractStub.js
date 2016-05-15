@@ -80,7 +80,7 @@ Ext.define('Ext.app.bind.AbstractStub', {
         if (!name) {
             name = me.name || me.id;
             if (parent && (s = parent.getFullName())) {
-                name = ((s.charAt(s.length-1) !== ':') ? s + '.' : s) + name;
+                name = ((s.charAt(s.length - 1) !== ':') ? s + '.' : s) + name;
             }
             me.fullName = name;
         }
@@ -128,16 +128,16 @@ Ext.define('Ext.app.bind.AbstractStub', {
 
         // Now for the fun part...
         if (bindings) {
-            for (i = bindings.length; i-- > 0; ) {
+            for (i = bindings.length; i-- > 0;) {
                 bindings[i].stub = replacement;
             }
-        } 
+        }
 
         return replacement;
     },
 
     isDescendantOf: function (item) {
-        for (var parent = this; parent = parent.parent; ) {
+        for (var parent = this; parent = parent.parent;) {
             if (parent === item) {
                 return true;
             }
@@ -145,7 +145,7 @@ Ext.define('Ext.app.bind.AbstractStub', {
         return false;
     },
 
-    onSchedule: function() {
+    onSchedule: function () {
         // When a stub changes, say "foo.bar.baz" we may need to notify bindings on our
         // parents "foo.bar" and "foo", This is true especially when these are targets of
         // links. To economize on this we require that bindings that want to be notified
@@ -166,7 +166,7 @@ Ext.define('Ext.app.bind.AbstractStub', {
     react: function () {
         var bindings = this.bindings,
             binding, i, len;
-            
+
         if (bindings) {
             for (i = 0, len = bindings.length; i < len; ++i) {
                 binding = bindings[i];
@@ -186,14 +186,14 @@ Ext.define('Ext.app.bind.AbstractStub', {
     },
 
     privates: {
-        collect: function() {
+        collect: function () {
             var children = this.children,
                 bindings = this.bindings,
                 totalCount = 0,
                 count = 0,
                 child,
                 key;
-            
+
             if (children) {
                 for (key in children) {
                     child = children[key];
@@ -207,19 +207,19 @@ Ext.define('Ext.app.bind.AbstractStub', {
                     totalCount += count;
                 }
             }
-            
+
             if (bindings) {
                 totalCount += bindings.length;
             }
-            
+
             return totalCount;
         },
-        
+
         getScheduler: function () {
             var owner = this.owner;
             return owner && owner.getScheduler();
         },
-        
+
         sort: function () {
             var parent = this.parent;
 

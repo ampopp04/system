@@ -1,7 +1,7 @@
-describe("Ext.container.ButtonGroup", function() {
+describe("Ext.container.ButtonGroup", function () {
     var group;
 
-    afterEach(function() {
+    afterEach(function () {
         if (group) {
             group.destroy();
             group = null;
@@ -11,52 +11,52 @@ describe("Ext.container.ButtonGroup", function() {
     function createButtonGroup(config) {
         // ARIA warnings are expected
         spyOn(Ext.log, 'warn');
-        
+
         group = new Ext.container.ButtonGroup(config || {});
         return group;
     }
-    
+
     function makeGroup(cfg) {
         cfg = Ext.apply({
             renderTo: Ext.getBody()
         }, cfg);
-        
+
         return createButtonGroup(cfg);
     }
 
-    describe("Structure and creation", function() {
-        it("should extend Ext.Panel", function() {
+    describe("Structure and creation", function () {
+        it("should extend Ext.Panel", function () {
             expect(createButtonGroup() instanceof Ext.Panel).toBeTruthy();
         });
 
-        it("should allow instantiation via the 'buttongroup' xtype", function() {
+        it("should allow instantiation via the 'buttongroup' xtype", function () {
             var panel = new Ext.Panel({
                 items: [{
                     xtype: 'buttongroup'
                 }]
             });
             expect(panel.items.getAt(0) instanceof Ext.container.ButtonGroup).toBeTruthy();
-            
+
             panel.destroy();
         });
     });
 
 
-    describe("Layout", function() {
-        it("should default to table layout", function() {
+    describe("Layout", function () {
+        it("should default to table layout", function () {
             createButtonGroup();
             expect(group.getLayout() instanceof Ext.layout.container.Table).toBeTruthy();
         });
 
-        it("should allow overriding the layout", function() {
+        it("should allow overriding the layout", function () {
             createButtonGroup({
                 layout: {type: 'hbox'}
             });
             expect(group.getLayout() instanceof Ext.layout.container.HBox).toBeTruthy();
         });
-        
+
         // TODO: move this spec to a future TableLayout test suite
-        xit("should default to one table row", function() {
+        xit("should default to one table row", function () {
             createButtonGroup({
                 items: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
                 renderTo: Ext.getBody()
@@ -66,20 +66,20 @@ describe("Ext.container.ButtonGroup", function() {
             expect(group.el.select('tr').item(0).select('td').getCount()).toEqual(10);
         });
 
-        it("should honor a 'columns' config property", function() {
+        it("should honor a 'columns' config property", function () {
             createButtonGroup({
                 columns: 5,
                 items: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
                 renderTo: Ext.getBody()
             });
-            
+
             expect(group.getLayout().columns).toEqual(5);
         });
     });
 
 
-    describe("Children", function() {
-        it("should default child items to an xtype of 'button'", function() {
+    describe("Children", function () {
+        it("should default child items to an xtype of 'button'", function () {
             createButtonGroup({
                 items: [
                     {},
@@ -93,8 +93,8 @@ describe("Ext.container.ButtonGroup", function() {
     });
 
 
-    describe("Title", function() {
-        it("should have no title by default", function() {
+    describe("Title", function () {
+        it("should have no title by default", function () {
             createButtonGroup({
                 renderTo: Ext.getBody()
             });
@@ -103,7 +103,7 @@ describe("Ext.container.ButtonGroup", function() {
             expect(group.el.select('.x-btn-group-header').getCount()).toEqual(0);
         });
 
-        it("should allow configuring a title", function() {
+        it("should allow configuring a title", function () {
             createButtonGroup({
                 title: 'Group Title',
                 renderTo: Ext.getBody()
@@ -115,8 +115,8 @@ describe("Ext.container.ButtonGroup", function() {
     });
 
 
-    describe("Element classes", function() {
-        it("should have a className of 'x-btn-group-notitle' when no title is configured", function() {
+    describe("Element classes", function () {
+        it("should have a className of 'x-btn-group-notitle' when no title is configured", function () {
             createButtonGroup({
                 renderTo: Ext.getBody()
             });
@@ -124,7 +124,7 @@ describe("Ext.container.ButtonGroup", function() {
             expect(group.el).toHaveCls('x-btn-group-notitle');
         });
 
-        it("should not have a className of 'x-btn-group-notitle' when a title is configured", function() {
+        it("should not have a className of 'x-btn-group-notitle' when a title is configured", function () {
             createButtonGroup({
                 title: 'Group Title',
                 renderTo: Ext.getBody()
@@ -133,7 +133,7 @@ describe("Ext.container.ButtonGroup", function() {
             expect(group.el).not.toHaveCls('x-btn-group-notitle');
         });
 
-        it("should have a className of 'x-btn-group' by default", function() {
+        it("should have a className of 'x-btn-group' by default", function () {
             createButtonGroup({
                 renderTo: Ext.getBody()
             });
@@ -141,11 +141,11 @@ describe("Ext.container.ButtonGroup", function() {
             expect(group.el).toHaveCls('x-btn-group');
         });
 
-        it("should allow overriding the baseCls", function() {
+        it("should allow overriding the baseCls", function () {
             createButtonGroup({
                 baseCls: 'x-test',
                 // x-test doesn't support sass framing we must deactivate frame to do this test in IE
-                frame: false, 
+                frame: false,
                 renderTo: Ext.getBody()
             });
 
@@ -155,18 +155,18 @@ describe("Ext.container.ButtonGroup", function() {
     });
 
 
-    describe("Framing", function() {
-        it("should default to having a frame", function() {
+    describe("Framing", function () {
+        it("should default to having a frame", function () {
             createButtonGroup({
                 renderTo: Ext.getBody()
             });
 
             expect(group.frame).toBeTruthy();
-            
+
             expect(group.el).toHaveCls('x-btn-group-default-framed')
         });
 
-        it("should allow turning off the frame", function() {
+        it("should allow turning off the frame", function () {
             createButtonGroup({
                 frame: false,
                 renderTo: Ext.getBody()
@@ -176,92 +176,92 @@ describe("Ext.container.ButtonGroup", function() {
             expect(group.el).not.toHaveCls('x-btn-group-default-framed')
         });
     });
-    
-    describe("ARIA", function() {
+
+    describe("ARIA", function () {
         var expectAria = jasmine.expectAriaAttr,
             expectNoAria = jasmine.expectNoAriaAttr;
-        
-        describe("general", function() {
-            beforeEach(function() {
+
+        describe("general", function () {
+            beforeEach(function () {
                 makeGroup();
             });
-            
-            it("should be a FocusableContainer", function() {
+
+            it("should be a FocusableContainer", function () {
                 expect(group.enableFocusableContainer).toBe(true);
             });
-            
-            it("should have presentation role on main el", function() {
+
+            it("should have presentation role on main el", function () {
                 expectAria(group.el, 'role', 'presentation');
             });
-            
-            it("should have toolbar role on body el", function() {
+
+            it("should have toolbar role on body el", function () {
                 expectAria(group.body, 'role', 'toolbar');
             });
         });
-        
-        describe("labels", function() {
-            describe("with header", function() {
-                beforeEach(function() {
+
+        describe("labels", function () {
+            describe("with header", function () {
+                beforeEach(function () {
                     makeGroup({
                         title: 'frobbe'
                     });
                 });
-                
-                it("should have aria-labelledby", function() {
+
+                it("should have aria-labelledby", function () {
                     expectAria(group.body, 'aria-labelledby', group.header.titleCmp.textEl.id);
                 });
-                
-                it("should not have aria-label", function() {
+
+                it("should not have aria-label", function () {
                     expectNoAria(group.body, 'aria-label');
                 });
             });
-            
-            describe("with title but no header", function() {
-                beforeEach(function() {
+
+            describe("with title but no header", function () {
+                beforeEach(function () {
                     makeGroup({
                         title: 'bonzo',
                         header: false
                     });
                 });
-                
-                it("should have aria-label", function() {
+
+                it("should have aria-label", function () {
                     expectAria(group.body, 'aria-label', 'bonzo');
                 });
-                
-                it("should not have aria-labelledby", function() {
+
+                it("should not have aria-labelledby", function () {
                     expectNoAria(group.body, 'aria-labelledby');
                 });
             });
-            
-            describe("with title but header updated to none", function() {
-                beforeEach(function() {
+
+            describe("with title but header updated to none", function () {
+                beforeEach(function () {
                     makeGroup({
                         title: 'throbbe',
                         header: false
                     });
-                    
+
                     group.setIconCls('guzzard');
                 });
-                
-                it("should have aria-label", function() {
+
+                it("should have aria-label", function () {
                     expectAria(group.body, 'aria-label', 'throbbe');
                 });
-                
-                it("should not have aria-labelledby", function() {
+
+                it("should not have aria-labelledby", function () {
                     expectNoAria(group.body, 'aria-labelledby');
                 });
             });
-            
-            describe("no header no title", function() {
-                beforeEach(function() {
+
+            describe("no header no title", function () {
+                beforeEach(function () {
                     makeGroup();
                 });
-                
-                it("should not have aria-labelledby", function() {
+
+                it("should not have aria-labelledby", function () {
                     expectNoAria(group.body, 'aria-labelledby');
                 });
-                
-                it("should not have aria-label", function() {
+
+                it("should not have aria-label", function () {
                     expectNoAria(group.body, 'aria-label');
                 });
             });

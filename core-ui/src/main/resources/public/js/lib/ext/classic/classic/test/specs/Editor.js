@@ -1,4 +1,4 @@
-describe("Ext.Editor", function() {
+describe("Ext.Editor", function () {
 
     var editor, field, target;
 
@@ -14,7 +14,7 @@ describe("Ext.Editor", function() {
         }, cfg));
     }
 
-    afterEach(function() {
+    afterEach(function () {
         Ext.destroy(editor, target);
         target = field = editor = null;
     });
@@ -32,20 +32,20 @@ describe("Ext.Editor", function() {
         jasmine.fireKeyEvent(field.inputEl, 'keydown', key);
     }
 
-    describe("field creation", function() {
-        it("should create a text field by default", function() {
+    describe("field creation", function () {
+        it("should create a text field by default", function () {
             makeEditor();
             expect(field.$className).toBe('Ext.form.field.Text');
         });
 
-        it("should accept a string xtype", function() {
+        it("should accept a string xtype", function () {
             makeEditor({
                 field: 'datefield'
             });
             expect(field.$className).toBe('Ext.form.field.Date');
         });
 
-        it("should accept a config without xtype and default to a text field", function() {
+        it("should accept a config without xtype and default to a text field", function () {
             makeEditor({
                 field: {
                     maxLength: 10
@@ -55,7 +55,7 @@ describe("Ext.Editor", function() {
             expect(field.maxLength).toBe(10);
         });
 
-        it("should accept an object config including xtype", function() {
+        it("should accept an object config including xtype", function () {
             makeEditor({
                 field: {
                     xtype: 'numberfield',
@@ -67,15 +67,15 @@ describe("Ext.Editor", function() {
         });
     });
 
-    describe("getValue/setValue", function() {
-        it("should get the value from the underlying field", function() {
+    describe("getValue/setValue", function () {
+        it("should get the value from the underlying field", function () {
             makeEditor();
             startEditWithTarget();
             editor.field.setValue('asdf');
             expect(editor.getValue()).toBe('asdf');
         });
 
-        it("should set the value on the underlying field", function() {
+        it("should set the value on the underlying field", function () {
             makeEditor();
             startEditWithTarget();
             editor.setValue('foo');
@@ -83,33 +83,33 @@ describe("Ext.Editor", function() {
         });
     });
 
-    describe("startEdit", function() {
-        describe("basic functionality", function() {
-            it("should show the editor", function() {
+    describe("startEdit", function () {
+        describe("basic functionality", function () {
+            it("should show the editor", function () {
                 makeEditor();
                 startEditWithTarget();
                 expect(editor.isVisible()).toBe(true);
             });
 
-            it("should set the editing property to true", function() {
+            it("should set the editing property to true", function () {
                 makeEditor();
                 startEditWithTarget();
                 expect(editor.editing).toBe(true);
             });
 
             // Only Webkit focusing is reliable in the test runner
-            (Ext.isWebKit ? it : xit)("should focus the field", function() {
+            (Ext.isWebKit ? it : xit)("should focus the field", function () {
                 makeEditor();
                 startEditWithTarget();
-                waitsFor(function() {
+                waitsFor(function () {
                     return field.hasFocus;
                 }, "Field never focused");
-                runs(function() {
+                runs(function () {
                     expect(field.hasFocus).toBe(true);
                 });
             });
 
-            it("should complete an existing edit when starting", function() {
+            it("should complete an existing edit when starting", function () {
                 makeEditor({
                     updateEl: true
                 });
@@ -120,14 +120,14 @@ describe("Ext.Editor", function() {
             });
         });
 
-        describe("positioning", function() {
-            it("should align to c-c as the default", function() {
+        describe("positioning", function () {
+            it("should align to c-c as the default", function () {
                 makeEditor();
                 startEditWithTarget();
                 expect(editor.getXY()).toEqual([0, 0]);
             });
 
-            it("should use another alignment", function() {
+            it("should use another alignment", function () {
                 // Top left of the field aligns to the bottom right of the target
                 makeEditor({
                     alignment: 'tl-br'
@@ -137,7 +137,7 @@ describe("Ext.Editor", function() {
                 expect(editor.getXY()).toEqual([size.width, size.height]);
             });
 
-            it("should use offsets", function() {
+            it("should use offsets", function () {
                 makeEditor({
                     alignment: 'tl-tl',
                     offsets: [20, 30]
@@ -146,11 +146,11 @@ describe("Ext.Editor", function() {
                 expect(editor.getXY()).toEqual([20, 30]);
             });
 
-            it("should use a combination of alignment & offsets", function() {
+            it("should use a combination of alignment & offsets", function () {
                 // Top left of the field aligns to the bottom right of the target
                 makeEditor({
                     alignment: 'tl-br',
-                     offsets: [20, 30]
+                    offsets: [20, 30]
                 });
                 startEditWithTarget();
                 var size = target.getSize();
@@ -158,22 +158,22 @@ describe("Ext.Editor", function() {
             });
         });
 
-        describe("boundEl", function() {
-            it("should accept an Ext.dom.Element", function() {
+        describe("boundEl", function () {
+            it("should accept an Ext.dom.Element", function () {
                 makeEditor();
                 makeTarget();
                 editor.startEdit(target);
                 expect(field.getValue()).toBe('Sample Text');
             });
 
-            it("should accept an HtmlElement", function() {
+            it("should accept an HtmlElement", function () {
                 makeEditor();
                 makeTarget();
                 editor.startEdit(target.dom);
                 expect(field.getValue()).toBe('Sample Text');
             });
 
-            it("should accept an id", function() {
+            it("should accept an id", function () {
                 makeEditor();
                 makeTarget();
                 editor.startEdit(target.id);
@@ -181,20 +181,20 @@ describe("Ext.Editor", function() {
             });
         });
 
-        describe("value", function() {
-            it("should take the value from the element by default", function() {
+        describe("value", function () {
+            it("should take the value from the element by default", function () {
                 makeEditor();
                 startEditWithTarget();
                 expect(field.getValue()).toBe('Sample Text');
             });
 
-            it("should use the passed value", function() {
+            it("should use the passed value", function () {
                 makeEditor();
                 startEditWithTarget('Foo');
                 expect(field.getValue()).toBe('Foo');
             });
 
-            it("should retain the type of the passed value", function() {
+            it("should retain the type of the passed value", function () {
                 var d = new Date();
                 makeEditor({
                     field: 'datefield'
@@ -205,8 +205,8 @@ describe("Ext.Editor", function() {
             });
         });
 
-        describe("the field", function() {
-            it("should not fire the change event", function() {
+        describe("the field", function () {
+            it("should not fire the change event", function () {
                 makeEditor();
                 var spy = jasmine.createSpy();
                 field.on('change', spy);
@@ -214,15 +214,15 @@ describe("Ext.Editor", function() {
                 expect(spy).not.toHaveBeenCalled();
             });
 
-            it("should not be dirty", function() {
+            it("should not be dirty", function () {
                 makeEditor();
                 startEditWithTarget();
                 expect(field.isDirty()).toBe(false);
             });
         });
 
-        describe("hideEl", function() {
-            it("should hide the el with hideEl: true", function() {
+        describe("hideEl", function () {
+            it("should hide the el with hideEl: true", function () {
                 makeEditor({
                     hideEl: true
                 });
@@ -230,7 +230,7 @@ describe("Ext.Editor", function() {
                 expect(target.isVisible()).toBe(false);
             });
 
-            it("should not hide the el with hideEl: false", function() {
+            it("should not hide the el with hideEl: false", function () {
                 makeEditor({
                     hideEl: false
                 });
@@ -239,18 +239,18 @@ describe("Ext.Editor", function() {
             });
         });
 
-        describe("events", function() {
+        describe("events", function () {
             var spy;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 spy = jasmine.createSpy();
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 spy = null;
             });
 
-            it("should fire beforestartedit and pass the editor, boundEl & value", function() {
+            it("should fire beforestartedit and pass the editor, boundEl & value", function () {
                 makeEditor();
                 editor.on('beforestartedit', spy);
                 startEditWithTarget();
@@ -261,7 +261,7 @@ describe("Ext.Editor", function() {
                 expect(args[2]).toBe('Sample Text');
             });
 
-            it("should fire startedit and pass the editor, boundEl & value", function() {
+            it("should fire startedit and pass the editor, boundEl & value", function () {
                 makeEditor();
                 editor.on('startedit', spy);
                 startEditWithTarget();
@@ -272,7 +272,7 @@ describe("Ext.Editor", function() {
                 expect(args[2]).toBe('Sample Text');
             });
 
-            it("should not show or set to editing if it returns false", function() {
+            it("should not show or set to editing if it returns false", function () {
                 var editSpy = jasmine.createSpy();
                 makeEditor();
                 makeTarget();
@@ -286,15 +286,15 @@ describe("Ext.Editor", function() {
         });
     });
 
-    describe("completeEdit", function() {
-        it("should not cause an exception if not editing", function() {
+    describe("completeEdit", function () {
+        it("should not cause an exception if not editing", function () {
             makeEditor();
-            expect(function() {
+            expect(function () {
                 editor.completeEdit();
             }).not.toThrow();
         });
 
-        it("should hide the editor and set editing to false", function() {
+        it("should hide the editor and set editing to false", function () {
             makeEditor();
             startEditWithTarget();
             editor.completeEdit();
@@ -302,9 +302,9 @@ describe("Ext.Editor", function() {
             expect(editor.editing).toBe(false);
         })
 
-        describe("validity", function() {
-            describe("with revertInvalid: false", function() {
-                it("should not complete the edit if the field is not valid", function() {
+        describe("validity", function () {
+            describe("with revertInvalid: false", function () {
+                it("should not complete the edit if the field is not valid", function () {
                     makeEditor({
                         revertInvalid: false,
                         field: {
@@ -319,8 +319,8 @@ describe("Ext.Editor", function() {
                 });
             });
 
-            describe("with revertInvalid: true", function() {
-                it("should cancel the edit if the field is not valid", function() {
+            describe("with revertInvalid: true", function () {
+                it("should cancel the edit if the field is not valid", function () {
                     makeEditor({
                         revertInvalid: true,
                         field: {
@@ -337,8 +337,8 @@ describe("Ext.Editor", function() {
             });
         });
 
-        describe("hideEl", function() {
-            it("should not show the boundEl if complete is vetoed with revertInvalid: false", function() {
+        describe("hideEl", function () {
+            it("should not show the boundEl if complete is vetoed with revertInvalid: false", function () {
                 makeEditor({
                     revertInvalid: false,
                     field: {
@@ -350,7 +350,7 @@ describe("Ext.Editor", function() {
                 expect(target.isVisible()).toBe(false);
             });
 
-            it("should show the boundEl if complete is vetoed with revertInvalid: true", function() {
+            it("should show the boundEl if complete is vetoed with revertInvalid: true", function () {
                 makeEditor({
                     revertInvalid: true,
                     field: {
@@ -359,10 +359,10 @@ describe("Ext.Editor", function() {
                 });
                 startEditWithTarget('');
                 editor.completeEdit();
-                expect(target.isVisible()).toBe(true); 
+                expect(target.isVisible()).toBe(true);
             });
 
-            it("should show the boundEl if complete is successful", function() {
+            it("should show the boundEl if complete is successful", function () {
                 makeEditor({
                     revertInvalid: true,
                     field: {
@@ -371,12 +371,12 @@ describe("Ext.Editor", function() {
                 });
                 startEditWithTarget('Foo');
                 editor.completeEdit();
-                expect(target.isVisible()).toBe(true); 
+                expect(target.isVisible()).toBe(true);
             });
         });
 
-        describe("remainVisible", function() {
-            it("should leave the editor visible with remainVisible", function() {
+        describe("remainVisible", function () {
+            it("should leave the editor visible with remainVisible", function () {
                 makeEditor();
                 startEditWithTarget();
                 editor.completeEdit(true);
@@ -384,7 +384,7 @@ describe("Ext.Editor", function() {
                 expect(editor.editing).toBe(false);
             });
 
-            it("should leave the editor visible with remainVisible when the edit is cancelled for being invalid", function() {
+            it("should leave the editor visible with remainVisible when the edit is cancelled for being invalid", function () {
                 makeEditor({
                     revertInvalid: true,
                     field: {
@@ -398,8 +398,8 @@ describe("Ext.Editor", function() {
             });
         });
 
-        describe("updateEl", function() {
-            it("should set the html if the boundEl with updateEl: true", function() {
+        describe("updateEl", function () {
+            it("should set the html if the boundEl with updateEl: true", function () {
                 makeEditor({
                     updateEl: true
                 });
@@ -408,7 +408,7 @@ describe("Ext.Editor", function() {
                 expect(target.getHtml()).toBe('Foo');
             });
 
-            it("should not set the html if the boundEl with updateEl: false", function() {
+            it("should not set the html if the boundEl with updateEl: false", function () {
                 makeEditor({
                     updateEl: false
                 });
@@ -419,97 +419,97 @@ describe("Ext.Editor", function() {
         });
 
         // FF randomly errors out on focus test in the test runner
-        (Ext.isGecko ? xdescribe : describe)("allowBlur", function() {
-            it("should not complete on blur with allowBlur: false", function() {
+        (Ext.isGecko ? xdescribe : describe)("allowBlur", function () {
+            it("should not complete on blur with allowBlur: false", function () {
                 makeEditor({
                     allowBlur: false
                 });
                 startEditWithTarget();
                 spyOn(editor, 'completeEdit').andCallThrough();
-                waitsFor(function() {
+                waitsFor(function () {
                     return field.hasFocus;
                 }, "Field never focused");
-                runs(function() {
+                runs(function () {
                     // Programmatic blur fails on IEs. Focus then remove an input field
                     Ext.getBody().createChild({tag: 'input', type: 'text'}).focus().remove();
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return !field.hasFocus;
                 }, "Field never blurred");
-                runs(function() {
+                runs(function () {
                     expect(editor.completeEdit).not.toHaveBeenCalled();
                 });
             });
 
-            it("should complete on blur with allowBlur: true", function() {
+            it("should complete on blur with allowBlur: true", function () {
                 makeEditor({
                     allowBlur: true
                 });
                 startEditWithTarget();
                 spyOn(editor, 'completeEdit').andCallThrough();
-                waitsFor(function() {
+                waitsFor(function () {
                     return field.hasFocus;
                 }, "Field never focused");
-                runs(function() {
+                runs(function () {
                     // Programmatic blur fails on IEs. Focus then remove an input field
                     Ext.getBody().createChild({tag: 'input', type: 'text'}).focus().remove();
                 });
-                waitsFor(function() {
+                waitsFor(function () {
                     return !field.hasFocus;
                 }, "Field never blurred");
-                runs(function() {
+                runs(function () {
                     expect(editor.completeEdit).toHaveBeenCalled();
                 });
             });
         });
 
         // FF randomly errors out on focus test in the test runner
-        (Ext.isGecko ? xdescribe : describe)("completeOnEnter", function() {
-            it("should not complete on enter with completeOnEnter: false", function() {
+        (Ext.isGecko ? xdescribe : describe)("completeOnEnter", function () {
+            it("should not complete on enter with completeOnEnter: false", function () {
                 makeEditor({
                     completeOnEnter: false
                 });
                 editor.specialKeyDelay = 0;
                 startEditWithTarget();
                 spyOn(editor, 'completeEdit').andCallThrough();
-                waitsFor(function() {
+                waitsFor(function () {
                     return field.hasFocus;
                 }, "Field never focused");
-                runs(function() {
+                runs(function () {
                     fireKeyOnField(Ext.event.Event.ENTER);
                     expect(editor.completeEdit).not.toHaveBeenCalled();
                 });
             });
 
-            it("should complete on enter with completeOnEnter: true", function() {
+            it("should complete on enter with completeOnEnter: true", function () {
                 makeEditor({
                     completeOnEnter: true
                 });
                 editor.specialKeyDelay = 0;
                 startEditWithTarget();
                 spyOn(editor, 'completeEdit').andCallThrough();
-                waitsFor(function() {
+                waitsFor(function () {
                     return field.hasFocus;
                 }, "Field never focused");
-                runs(function() {
+                runs(function () {
                     fireKeyOnField(Ext.event.Event.ENTER);
                     expect(editor.completeEdit).toHaveBeenCalled();
                 });
             });
         });
 
-        describe("events", function() {
+        describe("events", function () {
             var spy;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 spy = jasmine.createSpy();
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 spy = null;
             });
 
-            it("should fire beforecomplete & pass the editor, value & start value", function() {
+            it("should fire beforecomplete & pass the editor, value & start value", function () {
                 makeEditor();
                 editor.on('beforecomplete', spy);
                 startEditWithTarget();
@@ -522,7 +522,7 @@ describe("Ext.Editor", function() {
                 expect(args[2]).toBe('Sample Text');
             });
 
-            it("should fire the complete event & pass the editor, value & start value", function() {
+            it("should fire the complete event & pass the editor, value & start value", function () {
                 makeEditor();
                 editor.on('complete', spy);
                 startEditWithTarget();
@@ -535,7 +535,7 @@ describe("Ext.Editor", function() {
                 expect(args[2]).toBe('Sample Text');
             });
 
-            it("should not fire beforecomplete/complete if not editing", function() {
+            it("should not fire beforecomplete/complete if not editing", function () {
                 makeEditor();
                 editor.on('beforecomplete', spy);
                 editor.on('complete', spy);
@@ -543,8 +543,8 @@ describe("Ext.Editor", function() {
                 expect(spy).not.toHaveBeenCalled();
             });
 
-            describe("vetoing beforecomplete", function() {
-                it("should not fire complete", function() {
+            describe("vetoing beforecomplete", function () {
+                it("should not fire complete", function () {
                     var completeSpy = jasmine.createSpy();
                     makeEditor();
                     editor.on('beforecomplete', spy.andReturn(false));
@@ -554,7 +554,7 @@ describe("Ext.Editor", function() {
                     expect(completeSpy).not.toHaveBeenCalled();
                 });
 
-                it("should not update the boundEl", function() {
+                it("should not update the boundEl", function () {
                     makeEditor();
                     editor.on('beforecomplete', spy.andReturn(false));
                     startEditWithTarget('Value');
@@ -563,8 +563,8 @@ describe("Ext.Editor", function() {
                 });
             });
 
-            describe("invalid values", function() {
-                it("should not fire beforecomplete/complete if the value is invalid with revertInvalid: false", function() {
+            describe("invalid values", function () {
+                it("should not fire beforecomplete/complete if the value is invalid with revertInvalid: false", function () {
                     makeEditor({
                         revertInvalid: false,
                         field: {
@@ -578,7 +578,7 @@ describe("Ext.Editor", function() {
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should not fire beforecomplete/complete if the value is invalid with revertInvalid: true", function() {
+                it("should not fire beforecomplete/complete if the value is invalid with revertInvalid: true", function () {
                     makeEditor({
                         revertInvalid: true,
                         field: {
@@ -593,8 +593,8 @@ describe("Ext.Editor", function() {
                 });
             });
 
-            describe("ignoreNoChange", function() {
-                it("should not fire beforecomplete/complete if the value did not change with ignoreNoChange: true", function() {
+            describe("ignoreNoChange", function () {
+                it("should not fire beforecomplete/complete if the value did not change with ignoreNoChange: true", function () {
                     makeEditor({
                         ignoreNoChange: true
                     });
@@ -605,7 +605,7 @@ describe("Ext.Editor", function() {
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should fire beforecomplete/complete if the value did not change with ignoreNoChange: true", function() {
+                it("should fire beforecomplete/complete if the value did not change with ignoreNoChange: true", function () {
                     var completeSpy = jasmine.createSpy();
                     makeEditor({
                         ignoreNoChange: false
@@ -621,15 +621,15 @@ describe("Ext.Editor", function() {
         });
     });
 
-    describe("cancelEdit", function() {
-        it("should not cause an error when not editing", function() {
+    describe("cancelEdit", function () {
+        it("should not cause an error when not editing", function () {
             makeEditor();
-            expect(function() {
+            expect(function () {
                 editor.cancelEdit();
             }).not.toThrow();
         });
 
-        it("should hide the editor & set editing to false", function() {
+        it("should hide the editor & set editing to false", function () {
             makeEditor();
             startEditWithTarget();
             editor.cancelEdit();
@@ -637,7 +637,7 @@ describe("Ext.Editor", function() {
             expect(editor.editing).toBe(false);
         });
 
-        it("should set the original value on the field and not fire the change event", function() {
+        it("should set the original value on the field and not fire the change event", function () {
             makeEditor();
             startEditWithTarget();
             editor.setValue('Foo');
@@ -648,8 +648,8 @@ describe("Ext.Editor", function() {
             expect(spy).not.toHaveBeenCalled();
         });
 
-        describe("with updateEl", function() {
-            it("should not update the boundEl", function() {
+        describe("with updateEl", function () {
+            it("should not update the boundEl", function () {
                 makeEditor();
                 startEditWithTarget();
                 editor.setValue('Foo')
@@ -659,42 +659,42 @@ describe("Ext.Editor", function() {
         });
 
         // FF randomly errors out on focus test in the test runner
-        (Ext.isGecko ? xdescribe : describe)("cancelOnEsc", function() {
-            it("should not cancel on esc key with cancelOnEsc: false", function() {
+        (Ext.isGecko ? xdescribe : describe)("cancelOnEsc", function () {
+            it("should not cancel on esc key with cancelOnEsc: false", function () {
                 makeEditor({
                     cancelOnEsc: false
                 });
                 editor.specialKeyDelay = 0;
                 startEditWithTarget();
                 spyOn(editor, 'cancelEdit').andCallThrough();
-                waitsFor(function() {
+                waitsFor(function () {
                     return field.hasFocus;
                 }, "Field never focused");
-                runs(function() {
+                runs(function () {
                     fireKeyOnField(Ext.event.Event.ESC);
                     expect(editor.cancelEdit).not.toHaveBeenCalled();
                 });
             });
 
-            it("should cancel on esc key with cancelOnEsc: true", function() {
+            it("should cancel on esc key with cancelOnEsc: true", function () {
                 makeEditor({
                     cancelOnEsc: true
                 });
                 editor.specialKeyDelay = 0;
                 startEditWithTarget();
                 spyOn(editor, 'cancelEdit').andCallThrough();
-                waitsFor(function() {
+                waitsFor(function () {
                     return field.hasFocus;
                 }, "Field never focused");
-                runs(function() {
+                runs(function () {
                     fireKeyOnField(Ext.event.Event.ESC);
                     expect(editor.cancelEdit).toHaveBeenCalled();
                 });
             });
         });
 
-        describe("hideEl", function() {
-            it("should show the boundEl", function() {
+        describe("hideEl", function () {
+            it("should show the boundEl", function () {
                 makeEditor();
                 startEditWithTarget();
                 editor.cancelEdit();
@@ -702,8 +702,8 @@ describe("Ext.Editor", function() {
             });
         });
 
-        describe("remainVisible", function() {
-            it("should leave the editor visible with remainVisible", function() {
+        describe("remainVisible", function () {
+            it("should leave the editor visible with remainVisible", function () {
                 makeEditor();
                 startEditWithTarget();
                 editor.cancelEdit(true);
@@ -711,8 +711,8 @@ describe("Ext.Editor", function() {
             });
         });
 
-        describe("events", function() {
-            it("should fire canceledit and pass the editor, current value & start value", function() {
+        describe("events", function () {
+            it("should fire canceledit and pass the editor, current value & start value", function () {
                 var spy = jasmine.createSpy();
                 makeEditor();
                 startEditWithTarget();
@@ -726,7 +726,7 @@ describe("Ext.Editor", function() {
                 expect(args[2]).toBe('Sample Text');
             });
 
-            it("should not fire canceledit if not editing", function() {
+            it("should not fire canceledit if not editing", function () {
                 var spy = jasmine.createSpy();
                 makeEditor();
                 editor.on('canceledit', spy);

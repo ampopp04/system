@@ -41,12 +41,12 @@
  *             } 
  *         }
  *     });
- * 
- * Showing Ext.Msg while it's already shown will cause the visible instance to be 
- * overwritten with the newly passed config.  While this may be the desired outcome, you 
- * can also create a new MessageBox that can exist alongside the Ext.Msg 
+ *
+ * Showing Ext.Msg while it's already shown will cause the visible instance to be
+ * overwritten with the newly passed config.  While this may be the desired outcome, you
+ * can also create a new MessageBox that can exist alongside the Ext.Msg
  * singleton instance.
- * 
+ *
  *     @example
  *     var myMsg = Ext.create('Ext.window.MessageBox', {
  *         // set closeAction to 'destroy' if this instance is not
@@ -56,7 +56,7 @@
  *         title: 'Custom MessageBox Instance',
  *         message: 'I can exist along with Ext.Msg'
  *     });
- *     
+ *
  *     Ext.Msg.alert('Overlapping', 'Ext.Msg instance');
  */
 Ext.define('Ext.window.MessageBox', {
@@ -78,57 +78,57 @@ Ext.define('Ext.window.MessageBox', {
      * @property
      * Button config that displays a single OK button
      */
-    OK : 1,
+    OK: 1,
     /**
      * @property
      * Button config that displays a single Yes button
      */
-    YES : 2,
+    YES: 2,
     /**
      * @property
      * Button config that displays a single No button
      */
-    NO : 4,
+    NO: 4,
     /**
      * @property
      * Button config that displays a single Cancel button
      */
-    CANCEL : 8,
+    CANCEL: 8,
     /**
      * @property
      * Button config that displays OK and Cancel buttons
      */
-    OKCANCEL : 9,
+    OKCANCEL: 9,
     /**
      * @property
      * Button config that displays Yes and No buttons
      */
-    YESNO : 6,
+    YESNO: 6,
     /**
      * @property
      * Button config that displays Yes, No and Cancel buttons
      */
-    YESNOCANCEL : 14,
+    YESNOCANCEL: 14,
     /**
      * @property
      * The CSS class that provides the INFO icon image
      */
-    INFO : Ext.baseCSSPrefix + 'message-box-info',
+    INFO: Ext.baseCSSPrefix + 'message-box-info',
     /**
      * @property
      * The CSS class that provides the WARNING icon image
      */
-    WARNING : Ext.baseCSSPrefix + 'message-box-warning',
+    WARNING: Ext.baseCSSPrefix + 'message-box-warning',
     /**
      * @property
      * The CSS class that provides the QUESTION icon image
      */
-    QUESTION : Ext.baseCSSPrefix + 'message-box-question',
+    QUESTION: Ext.baseCSSPrefix + 'message-box-question',
     /**
      * @property
      * The CSS class that provides the ERROR icon image
      */
-    ERROR : Ext.baseCSSPrefix + 'message-box-error',
+    ERROR: Ext.baseCSSPrefix + 'message-box-error',
 
     // hide it by offsets. Windows are hidden on render by default.
     hideMode: 'offsets',
@@ -141,7 +141,7 @@ Ext.define('Ext.window.MessageBox', {
     defaultMaxWidth: 600,
     defaultMinHeight: 110,
     defaultMaxHeight: 500,
-    
+
     // Forcibly set these to null on the prototype to override anything set higher in
     // the hierarchy
     minWidth: null,
@@ -164,13 +164,13 @@ Ext.define('Ext.window.MessageBox', {
      * @property
      * The default height in pixels of the message box's multiline textarea if displayed.
      */
-    defaultTextHeight : 75,
+    defaultTextHeight: 75,
     /**
      * @property
      * The minimum width in pixels of the message box if it is a progress-style dialog.  This is useful
      * for setting a different minimum width than text-only dialogs may need.
      */
-    minProgressWidth : 250,
+    minProgressWidth: 250,
     /**
      * @property
      * The minimum width in pixels of the message box if it is a prompt dialog.  This is useful
@@ -209,10 +209,10 @@ Ext.define('Ext.window.MessageBox', {
     //</locale>
 
     baseIconCls: Ext.baseCSSPrefix + 'message-box-icon',
-    
+
     ariaRole: 'alertdialog',
 
-    makeButton: function(btnIdx) {
+    makeButton: function (btnIdx) {
         var btnId = this.buttonIds[btnIdx];
         return new Ext.button.Button({
             handler: this.btnCallback,
@@ -223,7 +223,7 @@ Ext.define('Ext.window.MessageBox', {
         });
     },
 
-    btnCallback: function(btn, event) {
+    btnCallback: function (btn, event) {
         var me = this,
             value,
             field;
@@ -234,7 +234,7 @@ Ext.define('Ext.window.MessageBox', {
         // So defer callback handling until the upcoming keyup event.
         if (event && event.type === 'keydown' && !event.isSpecialKey()) {
             event.getTarget(null, null, true).on({
-                keyup: function(e) {
+                keyup: function (e) {
                     me.btnCallback(btn, e);
                 },
                 single: true
@@ -257,7 +257,7 @@ Ext.define('Ext.window.MessageBox', {
         me.userCallback(btn.itemId, value, me.cfg);
     },
 
-    hide: function() {
+    hide: function () {
         var me = this,
             cls = me.cfg ? me.cfg.cls : '';
 
@@ -271,7 +271,7 @@ Ext.define('Ext.window.MessageBox', {
     /**
      * @private
      */
-    constructor: function(cfg) {
+    constructor: function (cfg) {
         var me = this;
 
         me.callParent(arguments);
@@ -284,7 +284,7 @@ Ext.define('Ext.window.MessageBox', {
         me.maxHeight = me.defaultMaxHeight = (me.maxHeight || me.defaultMaxHeight);
     },
 
-    initComponent: function(cfg) {
+    initComponent: function (cfg) {
         var me = this,
             baseId = me.id,
             i, button;
@@ -364,9 +364,9 @@ Ext.define('Ext.window.MessageBox', {
         me.callParent();
     },
 
-    onClose: function(){
+    onClose: function () {
         var btn = this.header.child('[type=close]');
-        
+
         if (btn) {
             // Give a temporary itemId so it can act like the cancel button
             btn.itemId = 'cancel';
@@ -375,7 +375,7 @@ Ext.define('Ext.window.MessageBox', {
         }
     },
 
-    onPromptKey: function(textField, e) {
+    onPromptKey: function (textField, e) {
         var me = this;
 
         if (e.keyCode === e.RETURN || e.keyCode === 10) {
@@ -387,7 +387,7 @@ Ext.define('Ext.window.MessageBox', {
         }
     },
 
-    reconfigure: function(cfg) {
+    reconfigure: function (cfg) {
         var me = this,
             buttons = 0,
             hideToolbar = true,
@@ -488,7 +488,7 @@ Ext.define('Ext.window.MessageBox', {
 
         if (header) {
             tool = header.child('[type=close]');
-            
+
             if (tool) {
                 tool.setVisible(me.closable);
             }
@@ -505,7 +505,7 @@ Ext.define('Ext.window.MessageBox', {
         me.liveDrag = !cfg.proxyDrag;
 
         // wrap the user callback
-        me.userCallback = Ext.Function.bindCallback(cfg.callback ||cfg.fn || Ext.emptyFn,
+        me.userCallback = Ext.Function.bindCallback(cfg.callback || cfg.fn || Ext.emptyFn,
             cfg.scope || Ext.global);
 
         // Hide or show the icon Component
@@ -584,7 +584,7 @@ Ext.define('Ext.window.MessageBox', {
      * Set button text according to current buttonText property object
      * @return {Number} The buttons bitwise flag based upon the button IDs specified in the buttonText property.
      */
-    updateButtonText: function() {
+    updateButtonText: function () {
         var me = this,
             buttonText = me.buttonText,
             buttons = 0,
@@ -702,7 +702,7 @@ Ext.define('Ext.window.MessageBox', {
      *
      * @param {String} config.iconCls
      * The standard {@link Ext.window.Window#iconCls} to add an optional header icon (defaults to '')
-     * 
+     *
      * @param {String} config.defaultFocus
      * The button to focus when showing the dialog. If not specified, defaults to
      * the first visible button.
@@ -752,7 +752,7 @@ Ext.define('Ext.window.MessageBox', {
      *
      * @return {Ext.window.MessageBox} this
      */
-    show: function(cfg) {
+    show: function (cfg) {
         var me = this,
             visibleFocusables;
 
@@ -761,7 +761,7 @@ Ext.define('Ext.window.MessageBox', {
         // If called during global layout suspension, make the call after layout resumption
         if (Ext.Component.layoutSuspendCount) {
             Ext.on({
-                resumelayouts: function() {
+                resumelayouts: function () {
                     me.show(cfg);
                 },
                 single: true
@@ -786,12 +786,12 @@ Ext.define('Ext.window.MessageBox', {
         return me;
     },
 
-    onShow: function() {
+    onShow: function () {
         this.callParent(arguments);
         this.center();
     },
 
-    updateText: function(text) {
+    updateText: function (text) {
         this.msg.setHtml(text);
     },
 
@@ -811,7 +811,7 @@ Ext.define('Ext.window.MessageBox', {
      * @param {Number} [height] The height of the icon. If not specified, the default is used
      * @return {Ext.window.MessageBox} this
      */
-    setIcon : function(icon, width, height) {
+    setIcon: function (icon, width, height) {
         var me = this,
             iconCmp = me.iconComponent,
             cls = me.messageIconCls;
@@ -845,15 +845,15 @@ Ext.define('Ext.window.MessageBox', {
      * so that any existing body text will not get overwritten by default unless a new value is passed in)
      * @return {Ext.window.MessageBox} this
      */
-    updateProgress : function(value, progressText, message){
+    updateProgress: function (value, progressText, message) {
         this.progressBar.updateProgress(value, progressText);
-        if (message){
+        if (message) {
             this.updateText(message);
         }
         return this;
     },
 
-    onEsc: function() {
+    onEsc: function () {
         if (this.closable !== false) {
             this.callParent(arguments);
         }
@@ -872,7 +872,7 @@ Ext.define('Ext.window.MessageBox', {
      * @param {Object} [scope=window] The scope (`this` reference) in which the callback is executed.
      * @return {Ext.window.MessageBox} this
      */
-    confirm: function(cfg, message, fn, scope) {
+    confirm: function (cfg, message, fn, scope) {
         if (Ext.isString(cfg)) {
             cfg = {
                 title: cfg,
@@ -902,7 +902,7 @@ Ext.define('Ext.window.MessageBox', {
      * @param {String} [value=''] Default value of the text input element
      * @return {Ext.window.MessageBox} this
      */
-    prompt : function(title, message, fn, scope, multiline, value){
+    prompt: function (title, message, fn, scope, multiline, value) {
         if (Ext.isString(title)) {
             title = {
                 prompt: true,
@@ -929,11 +929,11 @@ Ext.define('Ext.window.MessageBox', {
      * @param {Object} [config] A {@link Ext.ProgressBar#wait} config object
      * @return {Ext.window.MessageBox} this
      */
-    wait : function(message, title, config){
+    wait: function (message, title, config) {
         if (Ext.isString(message)) {
             message = {
-                title : title,
-                message : message,
+                title: title,
+                message: message,
                 closable: false,
                 wait: true,
                 modal: true,
@@ -957,14 +957,14 @@ Ext.define('Ext.window.MessageBox', {
      * @param {Object} [scope=window] The scope (<code>this</code> reference) in which the callback is executed.
      * @return {Ext.window.MessageBox} this
      */
-    alert: function(title, message, fn, scope) {
+    alert: function (title, message, fn, scope) {
         if (Ext.isString(title)) {
             title = {
                 title: title,
                 message: message,
                 buttons: this.OK,
                 fn: fn,
-                scope : scope,
+                scope: scope,
                 minWidth: this.minWidth
             };
         }
@@ -982,7 +982,7 @@ Ext.define('Ext.window.MessageBox', {
      * @param {String} [progressText=''] The text to display inside the progress bar
      * @return {Ext.window.MessageBox} this
      */
-    progress : function(title, message, progressText){
+    progress: function (title, message, progressText) {
         if (Ext.isString(title)) {
             title = {
                 title: title,
@@ -993,7 +993,7 @@ Ext.define('Ext.window.MessageBox', {
         }
         return this.show(title);
     }
-}, function(MessageBox) {
+}, function (MessageBox) {
     /**
      * @class Ext.MessageBox
      * @alternateClassName Ext.Msg
@@ -1003,7 +1003,7 @@ Ext.define('Ext.window.MessageBox', {
      */
     // We want to defer creating Ext.MessageBox and Ext.Msg instances
     // until overrides have been applied.
-    Ext.onInternalReady(function() {
+    Ext.onInternalReady(function () {
         Ext.MessageBox = Ext.Msg = new MessageBox();
     });
 });

@@ -1,7 +1,7 @@
 Ext.define('Ext.rtl.form.field.FileButton', {
     override: 'Ext.form.field.FileButton',
 
-    createFileInput : function(isTemporary) {
+    createFileInput: function (isTemporary) {
         var me = this;
         me.fileInputEl = me.el.createChild({
             name: me.inputName,

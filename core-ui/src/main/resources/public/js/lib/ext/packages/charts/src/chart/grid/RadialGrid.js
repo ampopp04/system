@@ -1,7 +1,7 @@
 /**
  * @class Ext.chart.grid.RadialGrid
  * @extends Ext.draw.sprite.Path
- * 
+ *
  * Radial Grid sprite. Used by Radar chart to render a series of radial lines.
  * Represents the scale of the radar chart on the yField.
  */

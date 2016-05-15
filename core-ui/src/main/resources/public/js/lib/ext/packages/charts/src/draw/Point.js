@@ -339,7 +339,7 @@ Ext.define('Ext.draw.Point', {
             nx = 0;
             ny = length * Ext.Number.sign(y);
         } else {
-            tg = y/x;
+            tg = y / x;
             nx = length / Math.sqrt(1 + tg * tg);
             ny = nx * tg;
         }

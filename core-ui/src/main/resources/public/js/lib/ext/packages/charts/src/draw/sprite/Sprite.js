@@ -70,7 +70,7 @@ Ext.define('Ext.draw.sprite.Sprite', {
          * }
          *
          */
-        ,debug: false
+        , debug: false
         //</debug>
     },
 
@@ -239,7 +239,7 @@ Ext.define('Ext.draw.sprite.Sprite', {
                  * The central coordinate of the sprite's scale operation on the y-axis.
                  */
                 scalingCenterY: "number",
-                
+
                 constrainGradients: "bool"
             },
 
@@ -297,7 +297,7 @@ Ext.define('Ext.draw.sprite.Sprite', {
                 scalingY: 1,
                 scalingCenterX: null,
                 scalingCenterY: null,
-                
+
                 constrainGradients: false
             },
 
@@ -334,7 +334,7 @@ Ext.define('Ext.draw.sprite.Sprite', {
                 scalingY: "transform",
                 scalingCenterX: "transform",
                 scalingCenterY: "transform",
-                
+
                 constrainGradients: "canvas"
             },
 
@@ -406,10 +406,10 @@ Ext.define('Ext.draw.sprite.Sprite', {
         //</debug>
         var me = this,
             attributeDefinition = me.self.def,
-            // It is important to get defaults (make sure
-            // 'defaults' config applier of the AttributeDefinition is called,
-            // since it is initialized lazily) before the attributes
-            // are initialized ('initializeAttributes' call).
+        // It is important to get defaults (make sure
+        // 'defaults' config applier of the AttributeDefinition is called,
+        // since it is initialized lazily) before the attributes
+        // are initialized ('initializeAttributes' call).
             defaults = attributeDefinition.getDefaults(),
             modifiers;
 
@@ -418,7 +418,7 @@ Ext.define('Ext.draw.sprite.Sprite', {
         me.id = config.id || Ext.id(null, 'ext-sprite-');
         me.attr = {};
         me.mixins.observable.constructor.apply(me, arguments);
-        
+
         modifiers = Ext.Array.from(config.modifiers, true);
         me.prepareModifiers(modifiers);
         me.initializeAttributes();
@@ -1092,7 +1092,7 @@ Ext.define('Ext.draw.sprite.Sprite', {
                 y = point[1],
                 bbox = this.getBBox(),
                 isBBoxHit = bbox && x >= bbox.x && x <= (bbox.x + bbox.width) &&
-                                    y >= bbox.y && y <= (bbox.y + bbox.height);
+                    y >= bbox.y && y <= (bbox.y + bbox.height);
             if (isBBoxHit) {
                 return {
                     sprite: this

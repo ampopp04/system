@@ -33,12 +33,12 @@ Ext.define('Ext.dd.DDProxy', {
      * @param {String} sGroup the group of related DragDrop objects
      * @param {Object} config an object containing configurable attributes.
      * Valid properties for DDProxy in addition to those in DragDrop:
-     * 
+     *
      * - resizeFrame
      * - centerFrame
      * - dragElId
      */
-    constructor: function(id, sGroup, config) {
+    constructor: function (id, sGroup, config) {
         if (id) {
             this.init(id, sGroup, config);
             this.initFrame();
@@ -65,30 +65,32 @@ Ext.define('Ext.dd.DDProxy', {
     /**
      * Creates the proxy element if it does not yet exist
      */
-    createFrame: function() {
+    createFrame: function () {
         var self = this,
             body = document.body,
             div,
             s;
 
         if (!body || !body.firstChild) {
-            Ext.defer( function() { self.createFrame(); }, 50 );
+            Ext.defer(function () {
+                self.createFrame();
+            }, 50);
             return;
         }
 
         div = this.getDragEl();
 
         if (!div) {
-            div    = document.createElement("div");
+            div = document.createElement("div");
             div.id = this.dragElId;
             div.setAttribute('role', 'presentation');
-            s  = div.style;
+            s = div.style;
 
-            s.position   = "absolute";
+            s.position = "absolute";
             s.visibility = "hidden";
-            s.cursor     = "move";
-            s.border     = "2px solid #aaa";
-            s.zIndex     = 999;
+            s.cursor = "move";
+            s.border = "2px solid #aaa";
+            s.zIndex = 999;
 
             // appendChild can blow up IE if invoked prior to the window load event
             // while rendering a table.  It is possible there are other scenarios
@@ -101,11 +103,11 @@ Ext.define('Ext.dd.DDProxy', {
      * Initialization for the drag frame element.  Must be called in the
      * constructor of all subclasses
      */
-    initFrame: function() {
+    initFrame: function () {
         this.createFrame();
     },
 
-    applyConfig: function() {
+    applyConfig: function () {
         this.callParent();
 
         this.resizeFrame = (this.config.resizeFrame !== false);
@@ -120,7 +122,7 @@ Ext.define('Ext.dd.DDProxy', {
      * @param {Number} iPageY Y click position
      * @private
      */
-    showFrame: function(iPageX, iPageY) {
+    showFrame: function (iPageX, iPageY) {
         var me = this,
             dragEl = me.getDragEl(),
             s = dragEl.style;
@@ -128,8 +130,8 @@ Ext.define('Ext.dd.DDProxy', {
         me._resizeProxy();
 
         if (me.centerFrame) {
-            me.setDelta(Math.round(parseInt(s.width,  10)/2),
-                        Math.round(parseInt(s.height, 10)/2));
+            me.setDelta(Math.round(parseInt(s.width, 10) / 2),
+                Math.round(parseInt(s.height, 10) / 2));
         }
 
         me.setDragElPos(iPageX, iPageY);
@@ -142,7 +144,7 @@ Ext.define('Ext.dd.DDProxy', {
      * element when a drag is initiated, unless resizeFrame is set to false
      * @private
      */
-    _resizeProxy: function() {
+    _resizeProxy: function () {
         if (this.resizeFrame) {
             var el = this.getEl();
             Ext.fly(this.getDragEl()).setSize(el.offsetWidth, el.offsetHeight);
@@ -150,7 +152,7 @@ Ext.define('Ext.dd.DDProxy', {
     },
 
     // overrides Ext.dd.DragDrop
-    b4MouseDown: function(e) {
+    b4MouseDown: function (e) {
         var xy = e.getXY(),
             x = xy[0],
             y = xy[1];
@@ -160,20 +162,20 @@ Ext.define('Ext.dd.DDProxy', {
     },
 
     // overrides Ext.dd.DragDrop
-    b4StartDrag: function(x, y) {
+    b4StartDrag: function (x, y) {
         // show the drag frame
         this.showFrame(x, y);
     },
 
     // overrides Ext.dd.DragDrop
-    b4EndDrag: function(e) {
+    b4EndDrag: function (e) {
         Ext.fly(this.getDragEl()).hide();
     },
 
     // overrides Ext.dd.DragDrop
     // By default we try to move the element to the last location of the frame.
     // This is so that the default behavior mirrors that of Ext.dd.DD.
-    endDrag: function(e) {
+    endDrag: function (e) {
 
         var lel = this.getEl(),
             del = this.getDragEl();
@@ -192,15 +194,15 @@ Ext.define('Ext.dd.DDProxy', {
         this.afterDrag();
     },
 
-    beforeMove : function(){
+    beforeMove: function () {
 
     },
 
-    afterDrag : function(){
+    afterDrag: function () {
 
     },
 
-    toString: function() {
+    toString: function () {
         return ("DDProxy " + this.id);
     }
 

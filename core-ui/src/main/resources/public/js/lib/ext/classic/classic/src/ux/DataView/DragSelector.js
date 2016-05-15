@@ -7,7 +7,7 @@ Ext.define('Ext.ux.DataView.DragSelector', {
     /**
      * Initializes the plugin by setting up the drag tracker
      */
-    init: function(dataview) {
+    init: function (dataview) {
         /**
          * @property dataview
          * @type Ext.view.View
@@ -30,12 +30,12 @@ Ext.define('Ext.ux.DataView.DragSelector', {
      * Called when the attached DataView is rendered. This sets up the DragTracker instance that will be used
      * to created a dragged selection area
      */
-    onRender: function() {
+    onRender: function () {
         /**
          * @property tracker
          * @type Ext.dd.DragTracker
-         * The DragTracker attached to this instance. Note that the 4 on* functions are called in the scope of the 
-         * DragTracker ('this' refers to the DragTracker inside those functions), so we pass a reference to the 
+         * The DragTracker attached to this instance. Note that the 4 on* functions are called in the scope of the
+         * DragTracker ('this' refers to the DragTracker inside those functions), so we pass a reference to the
          * DragSelector so that we can call this class's functions.
          */
         this.tracker = Ext.create('Ext.dd.DragTracker', {
@@ -44,8 +44,8 @@ Ext.define('Ext.ux.DataView.DragSelector', {
             dragSelector: this,
             onBeforeStart: this.onBeforeStart,
             onStart: this.onStart,
-            onDrag : this.onDrag,
-            onEnd  : this.onEnd
+            onDrag: this.onDrag,
+            onEnd: this.onEnd
         });
 
         /**
@@ -62,7 +62,7 @@ Ext.define('Ext.ux.DataView.DragSelector', {
      * Listener attached to the DragTracker's onBeforeStart event. Returns false if the drag didn't start within the
      * DataView's el
      */
-    onBeforeStart: function(e) {
+    onBeforeStart: function (e) {
         return e.target == this.dataview.getEl().dom;
     },
 
@@ -72,9 +72,9 @@ Ext.define('Ext.ux.DataView.DragSelector', {
      * and sets the start co-ordinates of the Proxy element. Clears any existing DataView selection
      * @param {Ext.event.Event} e The click event
      */
-    onStart: function(e) {
+    onStart: function (e) {
         var dragSelector = this.dragSelector,
-            dataview     = this.dataview;
+            dataview = this.dataview;
 
         // Flag which controls whether the cancelClick method vetoes the processing of the DataView's containerclick event.
         // On IE (where else), this needs to remain set for a millisecond after mouseup because even though the mouse has
@@ -92,7 +92,7 @@ Ext.define('Ext.ux.DataView.DragSelector', {
      * Reusable handler that's used to cancel the container click event when dragging on the dataview. See onStart for
      * details
      */
-    cancelClick: function() {
+    cancelClick: function () {
         return !this.tracker.dragging;
     },
 
@@ -103,21 +103,21 @@ Ext.define('Ext.ux.DataView.DragSelector', {
      * if the drag region touches them
      * @param {Ext.event.Event} e The drag event
      */
-    onDrag: function(e) {
+    onDrag: function (e) {
         var dragSelector = this.dragSelector,
-            selModel     = dragSelector.dataview.getSelectionModel(),
-            dragRegion   = dragSelector.dragRegion,
-            bodyRegion   = dragSelector.bodyRegion,
-            proxy        = dragSelector.getProxy(),
-            regions      = dragSelector.regions,
-            length       = regions.length,
+            selModel = dragSelector.dataview.getSelectionModel(),
+            dragRegion = dragSelector.dragRegion,
+            bodyRegion = dragSelector.bodyRegion,
+            proxy = dragSelector.getProxy(),
+            regions = dragSelector.regions,
+            length = regions.length,
 
-            startXY   = this.startXY,
+            startXY = this.startXY,
             currentXY = this.getXY(),
-            minX      = Math.min(startXY[0], currentXY[0]),
-            minY      = Math.min(startXY[1], currentXY[1]),
-            width     = Math.abs(startXY[0] - currentXY[0]),
-            height    = Math.abs(startXY[1] - currentXY[1]),
+            minX = Math.min(startXY[0], currentXY[0]),
+            minY = Math.min(startXY[1], currentXY[1]),
+            width = Math.abs(startXY[0] - currentXY[0]),
+            height = Math.abs(startXY[1] - currentXY[1]),
             region, selected, i;
 
         Ext.apply(dragRegion, {
@@ -150,7 +150,7 @@ Ext.define('Ext.ux.DataView.DragSelector', {
      * the containerclick event which the mouseup event will trigger.
      * @param {Ext.event.Event} e The event object
      */
-    onEnd: Ext.Function.createDelayed(function(e) {
+    onEnd: Ext.Function.createDelayed(function (e) {
         var dataview = this.dataview,
             selModel = dataview.getSelectionModel(),
             dragSelector = this.dragSelector;
@@ -164,7 +164,7 @@ Ext.define('Ext.ux.DataView.DragSelector', {
      * Creates a Proxy element that will be used to highlight the drag selection region
      * @return {Ext.Element} The Proxy element
      */
-    getProxy: function() {
+    getProxy: function () {
         if (!this.proxy) {
             this.proxy = this.dataview.getEl().createChild({
                 tag: 'div',
@@ -179,11 +179,11 @@ Ext.define('Ext.ux.DataView.DragSelector', {
      * Gets the region taken up by each rendered node in the DataView. We use these regions to figure out which nodes
      * to select based on the selector region the user has dragged out
      */
-    fillRegions: function() {
+    fillRegions: function () {
         var dataview = this.dataview,
-            regions  = this.regions = [];
+            regions = this.regions = [];
 
-        dataview.all.each(function(node) {
+        dataview.all.each(function (node) {
             regions.push(node.getRegion());
         });
         this.bodyRegion = dataview.getEl().getRegion();

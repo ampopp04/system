@@ -16,11 +16,11 @@ Ext.define('Ext.draw.sprite.AttributeParser', {
     ],
 
     "default": Ext.identityFn,
-    
+
     string: function (n) {
         return String(n);
     },
-    
+
     number: function (n) {
         if (Ext.isNumber(+n)) {
             return n;
@@ -43,7 +43,7 @@ Ext.define('Ext.draw.sprite.AttributeParser', {
             return n;
         }
     },
-    
+
     data: function (n) {
         if (Ext.isArray(n)) {
             return n.slice();
@@ -51,11 +51,11 @@ Ext.define('Ext.draw.sprite.AttributeParser', {
             return new Float32Array(n);
         }
     },
-    
+
     bool: function (n) {
         return !!n;
     },
-    
+
     color: function (n) {
         if (n instanceof Ext.draw.Color) {
             return n.toString();
@@ -90,7 +90,7 @@ Ext.define('Ext.draw.sprite.AttributeParser', {
             return Ext.isNumber(n) ? Math.min(Math.max(n, low), hi) : undefined;
         };
     },
-    
+
     limited01: function (n) {
         n = +n;
         return Ext.isNumber(n) ? Math.min(Math.max(n, 0), 1) : undefined;

@@ -112,7 +112,7 @@
             head.next = head.prev = head;
 
             if (!me.evict.$nullFn) {
-                for ( ; entry !== head; entry = entry.next) {
+                for (; entry !== head; entry = entry.next) {
                     me.evict(entry.key, entry.value);
                 }
             }

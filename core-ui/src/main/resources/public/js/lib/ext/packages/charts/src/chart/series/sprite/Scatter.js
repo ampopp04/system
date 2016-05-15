@@ -1,7 +1,7 @@
 /**
  * @class Ext.chart.series.sprite.Scatter
  * @extends Ext.chart.series.sprite.Cartesian
- * 
+ *
  * Scatter series sprite.
  */
 Ext.define('Ext.chart.series.sprite.Scatter', {

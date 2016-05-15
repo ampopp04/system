@@ -6,12 +6,12 @@ Ext.define('Ext.device.notification.Cordova', {
     extend: 'Ext.device.notification.Abstract',
     requires: ['Ext.device.Communicator'],
 
-    show: function(config) {
+    show: function (config) {
         config = this.callParent(arguments);
         this.confirm(config);
     },
 
-    confirm: function(config) {
+    confirm: function (config) {
         config = this.callParent(arguments);
 
         var buttons = config.buttons,
@@ -27,7 +27,7 @@ Ext.define('Ext.device.notification.Cordova', {
             buttons = newButtons;
         }
 
-        var callback = function(index) {
+        var callback = function (index) {
             if (config.callback) {
                 config.callback.apply(config.scope, (buttons) ? [buttons[index - 1].toLowerCase()] : []);
             }
@@ -42,7 +42,7 @@ Ext.define('Ext.device.notification.Cordova', {
         );
     },
 
-    alert: function(config) {
+    alert: function (config) {
         navigator.notification.alert(
             config.message,
             config.callback,
@@ -51,7 +51,7 @@ Ext.define('Ext.device.notification.Cordova', {
         );
     },
 
-    prompt: function(config) {
+    prompt: function (config) {
         config = this.callParent(arguments);
         var buttons = config.buttons,
             ln = config.buttons.length;
@@ -66,7 +66,7 @@ Ext.define('Ext.device.notification.Cordova', {
             buttons = newButtons;
         }
 
-        var callback = function(result) {
+        var callback = function (result) {
             if (config.callback) {
                 config.callback.call(config.scope, (buttons) ? buttons[result.buttonIndex - 1].toLowerCase() : null, result.input1);
             }
@@ -80,11 +80,11 @@ Ext.define('Ext.device.notification.Cordova', {
         );
     },
 
-    vibrate: function(time) {
+    vibrate: function (time) {
         navigator.notification.vibrate(time);
     },
 
-    beep: function(times) {
+    beep: function (times) {
         navigator.notification.vibrate(times);
     }
 });

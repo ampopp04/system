@@ -7,7 +7,7 @@ Ext.define('Ext.view.BoundList', {
     alternateClassName: 'Ext.BoundList',
     requires: [
         'Ext.view.BoundListKeyNav',
-        'Ext.layout.component.BoundList', 
+        'Ext.layout.component.BoundList',
         'Ext.toolbar.Paging'
     ],
 
@@ -49,27 +49,27 @@ Ext.define('Ext.view.BoundList', {
     navigationModel: 'boundlist',
 
     scrollable: true,
-    
+
     ariaEl: 'listEl',
     tabIndex: -1,
 
     childEls: [
         'listWrap', 'listEl'
     ],
-    
+
     renderTpl: [
         '<div id="{id}-listWrap" data-ref="listWrap"',
-                ' class="{baseCls}-list-ct ', Ext.dom.Element.unselectableCls, '">',
-            '<ul id="{id}-listEl" data-ref="listEl" class="', Ext.baseCSSPrefix, 'list-plain"',
-                '<tpl foreach="ariaAttributes"> {$}="{.}"</tpl>',
-            '>',
-            '</ul>',
+        ' class="{baseCls}-list-ct ', Ext.dom.Element.unselectableCls, '">',
+        '<ul id="{id}-listEl" data-ref="listEl" class="', Ext.baseCSSPrefix, 'list-plain"',
+        '<tpl foreach="ariaAttributes"> {$}="{.}"</tpl>',
+        '>',
+        '</ul>',
         '</div>',
         '{%',
-            'var pagingToolbar=values.$comp.pagingToolbar;',
-            'if (pagingToolbar) {',
-                'Ext.DomHelper.generateMarkup(pagingToolbar.getRenderTree(), out);',
-            '}',
+        'var pagingToolbar=values.$comp.pagingToolbar;',
+        'if (pagingToolbar) {',
+        'Ext.DomHelper.generateMarkup(pagingToolbar.getRenderTree(), out);',
+        '}',
         '%}',
         {
             disableFormats: true
@@ -80,8 +80,8 @@ Ext.define('Ext.view.BoundList', {
      * @cfg {String/Ext.XTemplate} tpl
      * A String or Ext.XTemplate instance to apply to inner template.
      *
-     * {@link Ext.view.BoundList} is used for the dropdown list of 
-     * {@link Ext.form.field.ComboBox}. To customize the template you can set the tpl on 
+     * {@link Ext.view.BoundList} is used for the dropdown list of
+     * {@link Ext.form.field.ComboBox}. To customize the template you can set the tpl on
      * the combobox config object:
      *
      *     Ext.create('Ext.form.field.ComboBox', {
@@ -118,13 +118,13 @@ Ext.define('Ext.view.BoundList', {
      *
      */
 
-     // Override because on non-touch devices, the bound field
-     // retains focus so that typing may narrow the list.
-     // Only when the show is triggered by a touch does the BoundList
-     // get explicitly focused so that the keyboard does not appear.
+    // Override because on non-touch devices, the bound field
+    // retains focus so that typing may narrow the list.
+    // Only when the show is triggered by a touch does the BoundList
+    // get explicitly focused so that the keyboard does not appear.
     focusOnToFront: false,
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this,
             baseCls = me.baseCls,
             itemCls = me.itemCls;
@@ -145,7 +145,7 @@ Ext.define('Ext.view.BoundList', {
             // not filtered set
             me.tpl = new Ext.XTemplate(
                 '<tpl for=".">',
-                    '<li role="option" unselectable="on" class="' + itemCls + '">' + me.getInnerTpl(me.displayField) + '</li>',
+                '<li role="option" unselectable="on" class="' + itemCls + '">' + me.getInnerTpl(me.displayField) + '</li>',
                 '</tpl>'
             );
         } else if (!me.tpl.isTemplate) {
@@ -159,21 +159,21 @@ Ext.define('Ext.view.BoundList', {
         me.callParent();
     },
 
-    getRefOwner: function() {
+    getRefOwner: function () {
         return this.pickerField || this.callParent();
     },
 
-    getRefItems: function() {
+    getRefItems: function () {
         var result = this.callParent(),
             toolbar = this.pagingToolbar;
-        
+
         if (toolbar) {
             result.push(toolbar);
         }
         return result;
     },
 
-    createPagingToolbar: function() {
+    createPagingToolbar: function () {
         return Ext.widget('pagingtoolbar', {
             id: this.id + '-paging-toolbar',
             pageSize: this.pageSize,
@@ -184,11 +184,11 @@ Ext.define('Ext.view.BoundList', {
         });
     },
 
-    getNodeContainer: function() {
+    getNodeContainer: function () {
         return this.listEl;
     },
 
-    refresh: function(){
+    refresh: function () {
         var me = this,
             tpl = me.tpl;
 
@@ -196,13 +196,13 @@ Ext.define('Ext.view.BoundList', {
         tpl.field = me.pickerField;
         tpl.store = me.store;
         me.callParent();
-        tpl.field =  tpl.store = null;
+        tpl.field = tpl.store = null;
 
         // The view selectively removes item nodes, so the toolbar
         // will be preserved in the DOM
     },
 
-    bindStore : function(store, initial) {
+    bindStore: function (store, initial) {
         var toolbar = this.pagingToolbar;
 
         this.callParent(arguments);
@@ -228,11 +228,11 @@ Ext.define('Ext.view.BoundList', {
      * @param {String} displayField The {@link #displayField} for the BoundList.
      * @return {String} The inner template
      */
-    getInnerTpl: function(displayField) {
+    getInnerTpl: function (displayField) {
         return '{' + displayField + '}';
     },
-    
-    onShow: function() {
+
+    onShow: function () {
         var field = this.pickerField;
         this.callParent();
 
@@ -242,7 +242,7 @@ Ext.define('Ext.view.BoundList', {
         }
     },
 
-    afterComponentLayout: function(width, height, oldWidth, oldHeight) {
+    afterComponentLayout: function (width, height, oldWidth, oldHeight) {
         var field = this.pickerField;
 
         this.callParent([width, height, oldWidth, oldHeight]);
@@ -255,7 +255,7 @@ Ext.define('Ext.view.BoundList', {
     },
 
     // Clicking on an already selected item collapses the picker
-    onItemClick: function(record) {
+    onItemClick: function (record) {
         // The selection change events won't fire when clicking on the selected element. Detect it here.
         var me = this,
             field = me.pickerField,
@@ -277,7 +277,7 @@ Ext.define('Ext.view.BoundList', {
         }
     },
 
-    onContainerClick: function(e) {
+    onContainerClick: function (e) {
         var toolbar = this.pagingToolbar;
         // Ext.view.View template method
         // Do not continue to process the event as a container click if it is within the pagingToolbar
@@ -286,17 +286,17 @@ Ext.define('Ext.view.BoundList', {
         }
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         this.callParent();
         Ext.destroyMembers(this, 'pagingToolbar', 'listWrap', 'listEl');
     },
 
     privates: {
-        getTargetEl: function() {
+        getTargetEl: function () {
             return this.listEl;
         },
 
-        getOverflowEl: function() {
+        getOverflowEl: function () {
             return this.listWrap;
         },
 

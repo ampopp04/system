@@ -7,7 +7,7 @@ Ext.define('Ext.mixin.Queryable', {
     mixinId: 'queryable',
 
     isQueryable: true,
-    
+
     /**
      * Retrieves all descendant components which match the passed selector.
      * Executes an Ext.ComponentQuery.query using this container as its root.
@@ -15,11 +15,11 @@ Ext.define('Ext.mixin.Queryable', {
      * If no selector is specified all items will be returned.
      * @return {Ext.Component[]} Components which matched the selector
      */
-    query : function(selector) {
+    query: function (selector) {
         selector = selector || '*';
         return Ext.ComponentQuery.query(selector, this.getQueryRoot());
     },
-    
+
     /**
      * Retrieves all descendant components which match the passed function.
      * The function should return false for components that are to be
@@ -30,13 +30,13 @@ Ext.define('Ext.mixin.Queryable', {
      * it will default to the active component.
      * @return {Ext.Component[]} Components matched by the passed function
      */
-    queryBy: function(fn, scope) {
+    queryBy: function (fn, scope) {
         var out = [],
             items = this.getQueryRoot().getRefItems(true),
             i = 0,
             len = items.length,
             item;
-            
+
         for (; i < len; ++i) {
             item = items[i];
             if (fn.call(scope || item, item) !== false) {
@@ -45,14 +45,14 @@ Ext.define('Ext.mixin.Queryable', {
         }
         return out;
     },
-    
+
     /**
      * Finds a component at any level under this container matching the id/itemId.
      * This is a shorthand for calling ct.down('#' + id);
      * @param {String} id The id to find
      * @return {Ext.Component} The matching id, null if not found
      */
-    queryById: function(id){
+    queryById: function (id) {
         return this.down(Ext.makeIdSelector(id));
     },
 
@@ -81,7 +81,7 @@ Ext.define('Ext.mixin.Queryable', {
         }
         return null;
     },
-    
+
     /**
      * Retrieves the first descendant of this container which matches the passed selector.
      * The passed in selector must comply with an Ext.ComponentQuery selector, or it can be an actual Ext.Component.
@@ -97,7 +97,7 @@ Ext.define('Ext.mixin.Queryable', {
         selector = selector || '';
         return this.query(selector)[0] || null;
     },
-    
+
     /**
      * Traverses the tree rooted at this node in pre-order mode, calling the passed function on the nodes at each level.
      * That is the function is called upon each node **before** being called on its children).
@@ -115,7 +115,7 @@ Ext.define('Ext.mixin.Queryable', {
      * @param {Array} [extraArgs] A set of arguments to be appended to the function's argument list to pass down extra data known to the caller
      * **after** the node being visited.
      */
-    visitPreOrder: function(selector, fn, scope, extraArgs) {
+    visitPreOrder: function (selector, fn, scope, extraArgs) {
         Ext.ComponentQuery._visit(true, selector, this.getQueryRoot(), fn, scope, extraArgs);
     },
 
@@ -136,23 +136,23 @@ Ext.define('Ext.mixin.Queryable', {
      * @param {Array} [extraArgs] A set of arguments to be appended to the function's argument list to pass down extra data known to the caller
      * **after** the node being visited.
      */
-    visitPostOrder: function(selector, fn, scope, extraArgs) {
+    visitPostOrder: function (selector, fn, scope, extraArgs) {
         Ext.ComponentQuery._visit(false, selector, this.getQueryRoot(), fn, scope, extraArgs);
     },
 
-    getRefItems: function(){
+    getRefItems: function () {
         return [];
     },
-    
-    getQueryRoot: function() {
+
+    getQueryRoot: function () {
         return this;
     },
 
     privates: {
-        matchById: function(items, id) {
+        matchById: function (items, id) {
             var len = items.length,
                 i, item;
- 
+
             for (i = 0; i < len; ++i) {
                 item = items[i];
                 if (item.getItemId() === id) {
@@ -162,5 +162,5 @@ Ext.define('Ext.mixin.Queryable', {
             return null;
         }
     }
-        
+
 });

@@ -16,7 +16,7 @@ Ext.define('Ext.layout.component.field.FieldContainer', {
     waitForOuterHeightInDom: true,
     waitForOuterWidthInDom: true,
 
-    beginLayout: function(ownerContext) {
+    beginLayout: function (ownerContext) {
         var containerEl = this.owner.containerEl;
 
         this.callParent(arguments);

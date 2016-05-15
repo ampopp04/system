@@ -68,8 +68,8 @@ Ext.define("Ext.util.Sortable", {
          * @return {Function} a function, which when passed two comparable objects returns the result
          * of the whole sorter comparator functions.
          */
-        createComparator: function(sorters) {
-            return sorters && sorters.length ? function(r1, r2) {
+        createComparator: function (sorters) {
+            return sorters && sorters.length ? function (r1, r2) {
                 var result = sorters[0].sort(r1, r2),
                     length = sorters.length,
                     i = 1;
@@ -80,7 +80,7 @@ Ext.define("Ext.util.Sortable", {
                     result = sorters[i].sort.call(sorters[i], r1, r2);
                 }
                 return result;
-            }: function() {
+            } : function () {
                 return 0;
             };
         }
@@ -91,7 +91,7 @@ Ext.define("Ext.util.Sortable", {
      * The property in each item that contains the data to sort.
      */
 
-    applySorters: function(sorters) {
+    applySorters: function (sorters) {
         var me = this,
             sortersCollection = me.getSorters() || new Ext.util.MixedCollection(false, Ext.returnId);
 
@@ -152,7 +152,7 @@ Ext.define("Ext.util.Sortable", {
      * * `append` : This means that the new sorter becomes the last sorter.
      * @return {Ext.util.Sorter[]} The new sorters.
      */
-    sort: function(sorters, direction, insertionPosition, doSort) {
+    sort: function (sorters, direction, insertionPosition, doSort) {
         var me = this,
             sorter,
             overFlow,
@@ -177,7 +177,7 @@ Ext.define("Ext.util.Sortable", {
 
             if (!sorter) {
                 sorter = {
-                    property : sorters,
+                    property: sorters,
                     direction: direction
                 };
             }
@@ -223,7 +223,7 @@ Ext.define("Ext.util.Sortable", {
                 default:
                     //<debug>
                     Ext.raise('Sorter insertion point must be "multi", "prepend", "append" or "replace"');
-                    //</debug>
+                //</debug>
             }
         }
 
@@ -246,7 +246,7 @@ Ext.define("Ext.util.Sortable", {
      * May be overridden in subclasses. {@link Ext.data.Store Store} in particlar overrides
      * this because its groupers must contribute to the sorter count so that the sort method above executes doSort.
      */
-    getSorterCount: function( ){
+    getSorterCount: function () {
         return this.getSorters().items.length;
     },
 
@@ -257,12 +257,12 @@ Ext.define("Ext.util.Sortable", {
      * If there are no {@link #cfg-sorters} defined, it returns a function which returns `0` meaning
      * that no sorting will occur.
      */
-    generateComparator: function() {
+    generateComparator: function () {
         var sorters = this.getSorters().getRange();
         return sorters.length ? this.createComparator(sorters) : this.emptyComparator;
     },
 
-    emptyComparator: function(){
+    emptyComparator: function () {
         return 0;
     },
 
@@ -274,7 +274,7 @@ Ext.define("Ext.util.Sortable", {
      * @param {Object[]} sorters The sorters array
      * @return {Ext.util.Sorter[]} Array of Ext.util.Sorter objects
      */
-    decodeSorters: function(sorters) {
+    decodeSorters: function (sorters) {
         if (!Ext.isArray(sorters)) {
             if (sorters === undefined) {
                 sorters = [];
@@ -300,7 +300,7 @@ Ext.define("Ext.util.Sortable", {
                 }
 
                 Ext.applyIf(config, {
-                    root     : this.sortRoot,
+                    root: this.sortRoot,
                     direction: "ASC"
                 });
 
@@ -334,7 +334,7 @@ Ext.define("Ext.util.Sortable", {
      * @protected
      * @return {Ext.util.Sorter} The sorter, null if none exist
      */
-    getFirstSorter: function(){
+    getFirstSorter: function () {
         var sorters = this.getSorters().items,
             len = sorters.length,
             i = 0,
@@ -348,7 +348,7 @@ Ext.define("Ext.util.Sortable", {
         }
         return null;
     }
-}, function() {
+}, function () {
     // Reference the static implementation in prototype
     this.prototype.createComparator = this.createComparator;
 });

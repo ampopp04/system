@@ -58,7 +58,7 @@ Ext.define('Ext.chart.interactions.ItemHighlight', {
             }
 
             if (isMousePointer) {
-                if ( tipItem && (!item || tipItem.field !== item.field || tipItem.record !== item.record) ) {
+                if (tipItem && (!item || tipItem.field !== item.field || tipItem.record !== item.record)) {
                     tipItem.series.hideTooltip(tipItem);
                     me.tipItem = tipItem = null;
                 }

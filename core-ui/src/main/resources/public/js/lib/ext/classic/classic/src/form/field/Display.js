@@ -33,25 +33,25 @@
  *     });
  */
 Ext.define('Ext.form.field.Display', {
-    extend:'Ext.form.field.Base',
+    extend: 'Ext.form.field.Base',
     alias: 'widget.displayfield',
     requires: ['Ext.util.Format', 'Ext.XTemplate'],
     alternateClassName: ['Ext.form.DisplayField', 'Ext.form.Display'],
-    
+
     fieldSubTpl: [
         '<div id="{id}" data-ref="inputEl" tabindex="-1" role="textbox" aria-readonly="true"',
         ' aria-labelledby="{cmpId}-labelEl" {inputAttrTpl}',
-        '<tpl if="fieldStyle"> style="{fieldStyle}"</tpl>', 
+        '<tpl if="fieldStyle"> style="{fieldStyle}"</tpl>',
         ' class="{fieldCls} {fieldCls}-{ui}">{value}</div>',
         {
             compiled: true,
             disableFormats: true
         }
     ],
-    
+
     // We have the ARIA markup pre-rendered so we don't want it to be applied
     ariaRole: undefined,
-    
+
     focusable: false,
 
     /**
@@ -73,11 +73,11 @@ Ext.define('Ext.form.field.Display', {
      * True to escape HTML in text when rendering it.
      */
     htmlEncode: false,
-    
+
     /**
      * @cfg {Function} renderer
      * A function to transform the raw value for display in the field.
-     * 
+     *
      *     Ext.create('Ext.form.Panel', {
      *         renderTo: document.body,
      *         width: 175,
@@ -94,19 +94,19 @@ Ext.define('Ext.form.field.Display', {
      *             }
      *         }]
      *     });
-     * 
+     *
      * @param {Object} value The raw field {@link #value}
      * @param {Ext.form.field.Display} field The display field
      * @return {String} displayValue The HTML string to be rendered
      */
-    
+
     /**
      * @cfg {Object} scope
      * The scope to execute the {@link #renderer} function. Defaults to this.
      */
 
     noWrap: false,
-    
+
     /**
      * @cfg {Boolean} validateOnChange
      * @private
@@ -117,19 +117,19 @@ Ext.define('Ext.form.field.Display', {
 
     submitValue: false,
 
-    getValue: function() {
+    getValue: function () {
         return this.value;
     },
-    
-    valueToRaw: function(value) {
+
+    valueToRaw: function (value) {
         if (value || value === 0 || value === false) {
             return value;
         } else {
             return '';
         }
     },
-    
-    isDirty: function(){
+
+    isDirty: function () {
         return false;
     },
 
@@ -137,13 +137,13 @@ Ext.define('Ext.form.field.Display', {
 
     validate: Ext.returnTrue,
 
-    getRawValue: function() {
+    getRawValue: function () {
         return this.rawValue;
     },
 
-    setRawValue: function(value) {
+    setRawValue: function (value) {
         var me = this;
-            
+
         value = Ext.valueFrom(value, '');
         me.rawValue = value;
         if (me.rendered) {
@@ -157,19 +157,19 @@ Ext.define('Ext.form.field.Display', {
      * @private
      * Format the value to display.
      */
-    getDisplayValue: function() {
+    getDisplayValue: function () {
         var me = this,
             value = this.getRawValue(),
             display;
         if (me.renderer) {
-             display = me.renderer.call(me.scope || me, value, me);
+            display = me.renderer.call(me.scope || me, value, me);
         } else {
-             display = me.htmlEncode ? Ext.util.Format.htmlEncode(value) : value;
+            display = me.htmlEncode ? Ext.util.Format.htmlEncode(value) : value;
         }
         return display;
     },
-        
-    getSubTplData: function(fieldData) {
+
+    getSubTplData: function (fieldData) {
         var ret = this.callParent(arguments);
 
         ret.value = this.getDisplayValue();

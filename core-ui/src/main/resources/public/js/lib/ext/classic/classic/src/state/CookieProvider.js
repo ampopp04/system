@@ -48,10 +48,10 @@ Ext.define('Ext.state.CookieProvider', {
      * Creates a new CookieProvider.
      * @param {Object} [config] Config object.
      */
-    constructor : function(config){
+    constructor: function (config) {
         var me = this;
         me.path = "/";
-        me.expires = new Date(Ext.Date.now() + (1000*60*60*24*7)); //7 days
+        me.expires = new Date(Ext.Date.now() + (1000 * 60 * 60 * 24 * 7)); //7 days
         me.domain = null;
         me.secure = false;
         me.callParent(arguments);
@@ -61,7 +61,7 @@ Ext.define('Ext.state.CookieProvider', {
     /**
      * @private
      */
-    set : function(name, value){
+    set: function (name, value) {
         var me = this;
 
         if (typeof value === "undefined" || value === null) {
@@ -75,7 +75,7 @@ Ext.define('Ext.state.CookieProvider', {
     /**
      * @private
      */
-    clear : function(name){
+    clear: function (name) {
         this.clearCookie(name);
         this.callParent(arguments);
     },
@@ -83,7 +83,7 @@ Ext.define('Ext.state.CookieProvider', {
     /**
      * @private
      */
-    readCookies : function(){
+    readCookies: function () {
         var cookies = {},
             c = document.cookie + ";",
             re = /\s?(.*?)=(.*?);/g,
@@ -93,10 +93,10 @@ Ext.define('Ext.state.CookieProvider', {
             name,
             value;
 
-        while((matches = re.exec(c)) != null){
+        while ((matches = re.exec(c)) != null) {
             name = matches[1];
             value = matches[2];
-            if (name && name.substring(0, len) === prefix){
+            if (name && name.substring(0, len) === prefix) {
                 cookies[name.substr(len)] = this.decodeValue(value);
             }
         }
@@ -106,25 +106,25 @@ Ext.define('Ext.state.CookieProvider', {
     /**
      * @private
      */
-    setCookie : function(name, value){
+    setCookie: function (name, value) {
         var me = this;
 
         document.cookie = me.prefix + name + "=" + me.encodeValue(value) +
-           ((me.expires == null) ? "" : ("; expires=" + me.expires.toUTCString())) +
-           ((me.path == null) ? "" : ("; path=" + me.path)) +
-           ((me.domain == null) ? "" : ("; domain=" + me.domain)) +
-           (me.secure ? "; secure" : "");
+            ((me.expires == null) ? "" : ("; expires=" + me.expires.toUTCString())) +
+            ((me.path == null) ? "" : ("; path=" + me.path)) +
+            ((me.domain == null) ? "" : ("; domain=" + me.domain)) +
+            (me.secure ? "; secure" : "");
     },
 
     /**
      * @private
      */
-    clearCookie : function(name){
+    clearCookie: function (name) {
         var me = this;
 
         document.cookie = me.prefix + name + "=null; expires=Thu, 01-Jan-1970 00:00:01 GMT" +
-           ((me.path == null) ? "" : ("; path=" + me.path)) +
-           ((me.domain == null) ? "" : ("; domain=" + me.domain)) +
-           (me.secure ? "; secure" : "");
+            ((me.path == null) ? "" : ("; path=" + me.path)) +
+            ((me.domain == null) ? "" : ("; domain=" + me.domain)) +
+            (me.secure ? "; secure" : "");
     }
 });

@@ -46,7 +46,7 @@ Ext.define('Ext.grid.column.Number', {
      * @cfg {String} format
      * A formatting string as used by {@link Ext.util.Format#number} to format a numeric value for this Column.
      */
-    format : '0,000.00',
+    format: '0,000.00',
     //</locale>
 
     /**
@@ -65,11 +65,11 @@ Ext.define('Ext.grid.column.Number', {
      */
     producesHTML: false,
 
-    defaultRenderer: function(value) {
+    defaultRenderer: function (value) {
         return Ext.util.Format.number(value, this.format);
     },
 
-    updater: function(cell, value) {
+    updater: function (cell, value) {
         Ext.fly(cell).down(this.getView().innerSelector, true).innerHTML = Ext.grid.column.Number.prototype.defaultRenderer.call(this, value);
     }
 });

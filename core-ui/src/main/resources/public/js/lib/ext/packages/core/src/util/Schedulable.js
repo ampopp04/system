@@ -61,7 +61,7 @@ Ext.define('Ext.util.Schedulable', {
                 }
             }
         },
-        
+
         /**
          * Unschedules this item with the associated `Ext.util.Scheduler`.
          */
@@ -78,7 +78,7 @@ Ext.define('Ext.util.Schedulable', {
                 me.scheduled = false;
             }
         },
-        
+
         /**
          * @method sort
          * This method should be overridden by items that have dependencies to insert. The
@@ -90,7 +90,8 @@ Ext.define('Ext.util.Schedulable', {
          *
          * This example assumes the item has a "dependencies" array to pass to the scheduler.
          */
-         // Can't use Ext.emptyFn here to avoid setting $private: true on it
-        sort: function() {}
+        // Can't use Ext.emptyFn here to avoid setting $private: true on it
+        sort: function () {
+        }
     }
 });

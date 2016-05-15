@@ -85,7 +85,7 @@ describe('Ext.draw.sprite.Text', function () {
         });
 
         it('should be able to handle fontSize/lineHeight values ' +
-           'by extracting fontSize and discarding lineHeigh', function () {
+            'by extracting fontSize and discarding lineHeigh', function () {
             var sprite = new Ext.draw.sprite.Text();
             sprite.setAttributes({
                 font: 'x-large/110% "New Century Schoolbook", serif'

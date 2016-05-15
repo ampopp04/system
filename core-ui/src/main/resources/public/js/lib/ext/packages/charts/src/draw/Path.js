@@ -542,7 +542,7 @@ Ext.define('Ext.draw.Path', {
                 case 'C':
                     while (i < partLength && !paramCounts.hasOwnProperty(parts[i])) {
                         me.bezierCurveTo(
-                            +parts[i ], +parts[i + 1],
+                            +parts[i], +parts[i + 1],
                             lastControlX = +parts[i + 2], lastControlY = +parts[i + 3],
                             lastX = +parts[i + 4], lastY = +parts[i + 5]);
                         i += 6;

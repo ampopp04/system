@@ -8,14 +8,14 @@ describe('Ext.grid.filters.filter.Date', function () {
     function createGrid(listCfg, gridCfg, storeCfg) {
         synchronousLoad = false;
         store = new Ext.data.Store(Ext.apply({
-            fields:['name', 'email', 'phone', { name: 'dob', type: 'date'}],
+            fields: ['name', 'email', 'phone', {name: 'dob', type: 'date'}],
             data: [
                 {name: 'evan', dob: Ext.Date.parse('1992-12-12T12:30:01', 'c')},
                 {name: 'nige', dob: Ext.Date.parse('1992-12-11T11:30:01', 'c')},
                 {name: 'phil', dob: Ext.Date.parse('1992-12-10T10:30:01', 'c')},
-                {name: 'don',  dob: Ext.Date.parse('1992-12-09T09:30:01', 'c')},
+                {name: 'don', dob: Ext.Date.parse('1992-12-09T09:30:01', 'c')},
                 {name: 'alex', dob: Ext.Date.parse('1992-12-08T08:30:01', 'c')},
-                {name: 'ben',  dob: Ext.Date.parse('1992-12-08T07:30:01', 'c')}
+                {name: 'ben', dob: Ext.Date.parse('1992-12-08T07:30:01', 'c')}
             ],
             autoDestroy: true
         }, storeCfg));
@@ -24,8 +24,9 @@ describe('Ext.grid.filters.filter.Date', function () {
             store: store,
             autoLoad: true,
             columns: [
-                { dataIndex: 'name', width: 100 },
-                { dataIndex: 'dob', width: 100,
+                {dataIndex: 'name', width: 100},
+                {
+                    dataIndex: 'dob', width: 100,
                     filter: Ext.apply({
                         type: 'date',
                         updateBuffer: 0
@@ -87,9 +88,9 @@ describe('Ext.grid.filters.filter.Date', function () {
         return datepicker;
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -140,8 +141,8 @@ describe('Ext.grid.filters.filter.Date', function () {
         });
     });
 
-    describe("the filter", function() {
-        it("should serialize the filter according to the dateFormat", function() {
+    describe("the filter", function () {
+        it("should serialize the filter according to the dateFormat", function () {
             createGrid();
             columnFilter.setDateFormat('Y/m/d');
             columnFilter.createMenu();
@@ -152,7 +153,7 @@ describe('Ext.grid.filters.filter.Date', function () {
             expect(store.getFilters().first().serialize().value).toBe('2010/01/01');
         });
 
-        it("should only compare the date part when using the before filter", function() {
+        it("should only compare the date part when using the before filter", function () {
             createGrid(null, null, {
                 remoteFilter: false
             });
@@ -166,7 +167,7 @@ describe('Ext.grid.filters.filter.Date', function () {
             expect(store.getAt(1).get('name')).toBe('ben');
         });
 
-        it("should only compare the date part when using the after filter", function() {
+        it("should only compare the date part when using the after filter", function () {
             createGrid(null, null, {
                 remoteFilter: false
             });
@@ -181,7 +182,7 @@ describe('Ext.grid.filters.filter.Date', function () {
             expect(store.getAt(2).get('name')).toBe('phil');
         });
 
-        it("should only compare the date part when using the on filter", function() {
+        it("should only compare the date part when using the on filter", function () {
             createGrid(null, null, {
                 remoteFilter: false
             });
@@ -520,10 +521,10 @@ describe('Ext.grid.filters.filter.Date', function () {
                 // Making a selection on either the After or Before datepicker should disable and deactivate the On datepicker.
                 other = showPicker(which);
 
-                waitsFor(function() {
+                waitsFor(function () {
                     return !!datepicker.eventEl;
                 });
-                runs(function() {
+                runs(function () {
                     setPicker('8/8/1992');
                     expect(other.up('menuitem').checked).toBe(true);
                     expect(on.up('menuitem').checked).toBe(false);
@@ -536,10 +537,10 @@ describe('Ext.grid.filters.filter.Date', function () {
                 // Now select a date that would result in an empty result set.
                 on = showPicker('On');
 
-                waitsFor(function() {
+                waitsFor(function () {
                     return !!datepicker.eventEl;
                 });
-                runs(function() {
+                runs(function () {
                     setPicker('9/26/2009');
                     // We expect that the On selection will disable and deactivate the previous selection
                     // because we don't currently support OR operations.

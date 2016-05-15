@@ -7,12 +7,12 @@ describe('Ext.grid.filters.filter.Number', function () {
     function createGrid(listCfg, storeCfg, gridCfg) {
         synchronousLoad = false;
         store = new Ext.data.Store(Ext.apply({
-            fields:['name', 'email', 'phone'],
+            fields: ['name', 'email', 'phone'],
             data: [
-                { name: 'Lisa',  email: 'lisa@simpsons.com',  phone: '555-111-1224', age: 14  },
-                { name: 'Bart',  email: 'bart@simpsons.com',  phone: '555-222-1234', age: 12  },
-                { name: 'Homer', email: 'homer@simpsons.com', phone: '555-222-1244', age: 44  },
-                { name: 'Marge', email: 'marge@simpsons.com', phone: '555-222-1254', age: 42  }
+                {name: 'Lisa', email: 'lisa@simpsons.com', phone: '555-111-1224', age: 14},
+                {name: 'Bart', email: 'bart@simpsons.com', phone: '555-222-1234', age: 12},
+                {name: 'Homer', email: 'homer@simpsons.com', phone: '555-222-1244', age: 44},
+                {name: 'Marge', email: 'marge@simpsons.com', phone: '555-222-1254', age: 42}
             ]
         }, storeCfg));
 
@@ -73,9 +73,9 @@ describe('Ext.grid.filters.filter.Number', function () {
         menu = rootMenuItem.menu;
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -84,7 +84,7 @@ describe('Ext.grid.filters.filter.Number', function () {
         };
     });
 
-    afterEach(function() {
+    afterEach(function () {
         // Undo the overrides.
         Ext.data.ProxyStore.prototype.load = proxyStoreLoad;
 
@@ -110,13 +110,13 @@ describe('Ext.grid.filters.filter.Number', function () {
             expect(store.data.length).toBe(1);
         });
 
-        describe("0", function() {
-            beforeEach(function() {
+        describe("0", function () {
+            beforeEach(function () {
                 createGrid();
                 columnFilter.createMenu();
             });
 
-            it("should accept 0 for lt", function() {
+            it("should accept 0 for lt", function () {
                 columnFilter.setValue({
                     lt: 0
                 });
@@ -125,7 +125,7 @@ describe('Ext.grid.filters.filter.Number', function () {
                 expect(filter.getValue()).toBe(0);
             });
 
-            it("should accept 0 for eq", function() {
+            it("should accept 0 for eq", function () {
                 columnFilter.setValue({
                     eq: 0
                 });
@@ -134,7 +134,7 @@ describe('Ext.grid.filters.filter.Number', function () {
                 expect(filter.getValue()).toBe(0);
             });
 
-            it("should accept 0 for gt", function() {
+            it("should accept 0 for gt", function () {
                 columnFilter.setValue({
                     gt: 0
                 });
@@ -157,7 +157,7 @@ describe('Ext.grid.filters.filter.Number', function () {
                 field.setValue(5);
                 jasmine.fireKeyEvent(field.inputEl, 'keyup', 13);
 
-                waitsFor(function() {
+                waitsFor(function () {
                     return menu.hidden;
                 });
 

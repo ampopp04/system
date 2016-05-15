@@ -1,10 +1,10 @@
 /**
  * Simple class that can provide a shadow effect for any absolutely positioned {@link
- * Ext.dom.Element Element}.
- * 
- * Not meant to be used directly. To apply a shadow to an Element use the 
+    * Ext.dom.Element Element}.
+ *
+ * Not meant to be used directly. To apply a shadow to an Element use the
  * {@link Ext.dom.Element#enableShadow enableShadow} method.
- * 
+ *
  * @private
  */
 Ext.define('Ext.dom.Shadow', {
@@ -33,7 +33,7 @@ Ext.define('Ext.dom.Shadow', {
      * Creates new Shadow.
      * @param {Object} config (optional) Config object.
      */
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this,
             outerOffsets, offsets, offset, rad;
 
@@ -90,7 +90,7 @@ Ext.define('Ext.dom.Shadow', {
                 else {
                     offsets = {
                         x: 1 + rad - 2 * offset,
-                        y: - (1 + rad),
+                        y: -(1 + rad),
                         h: -1,
                         w: rad - 1
                     };
@@ -165,7 +165,7 @@ Ext.define('Ext.dom.Shadow', {
      * Returns the shadow size on each side of the element in standard CSS order: top, right, bottom, left;
      * @return {Number[]} Top, right, bottom and left shadow size.
      */
-    getShadowSize: function() {
+    getShadowSize: function () {
         var me = this,
             offset = me.el ? me.offset : 0,
             result = [offset, offset, offset, offset],
@@ -186,7 +186,7 @@ Ext.define('Ext.dom.Shadow', {
      * @private
      * CSS property used to set the box shadow.
      */
-    boxShadowProperty: (function() {
+    boxShadowProperty: (function () {
         var property = 'boxShadow',
             style = document.documentElement.style;
 
@@ -204,7 +204,7 @@ Ext.define('Ext.dom.Shadow', {
         return property;
     }()),
 
-    beforeShow: function() {
+    beforeShow: function () {
         var me = this,
             style = me.el.dom.style,
             shim = me.shim;
@@ -226,7 +226,7 @@ Ext.define('Ext.dom.Shadow', {
      * Sets the opacity of the shadow
      * @param {Number} opacity The opacity
      */
-    setOpacity: function(opacity){
+    setOpacity: function (opacity) {
         var el = this.el;
 
         if (el) {

@@ -1,7 +1,7 @@
 /**
  * This class manages ready detection and handling. Direct use of this class is not
  * recommended. Instead use `Ext.onReady`:
- * 
+ *
  *      Ext.onReady(function () {
  *          // DOM and Framework are ready...
  *      });
@@ -141,11 +141,11 @@ Ext.env.Ready = {
     /**
      * @property {Number} state
      * Holds the current ready state as managed by this class. The values possible are:
-     * 
+     *
      *   * 0 - Not ready.
      *   * 1 - Ready detected but listeners are not yet notified.
      *   * 2 - Ready detected and listeners are notified. See also `firing`.
-     *   
+     *
      * @private
      */
     state: 0,
@@ -212,7 +212,7 @@ Ext.env.Ready = {
                 // until all external resource requests finish.
                 // The first timeout clears the splash screen
                 // The second timeout allows inital HTML content to be displayed
-                me.timer = Ext.defer(function() {
+                me.timer = Ext.defer(function () {
                     me.timer = null;
                     me.handleReadySoon();
                 }, 1);
@@ -279,7 +279,7 @@ Ext.env.Ready = {
      * only be called when DOM ready is achieved. The remaining business of `blocks` is
      * handled here.
      */
-    invokeAll: function() {
+    invokeAll: function () {
         if (Ext.elevateFunction) {
             Ext.elevateFunction(this.doInvokeAll, this);
         } else {
@@ -448,7 +448,7 @@ Ext.env.Ready = {
         var me = this;
 
         if (me.blocks) {
-            if (! --me.blocks) {
+            if (!--me.blocks) {
                 if (me.state === 2 && !me.firing) {
                     // We have already finished handleReady (the DOM ready handler) so
                     // this trigger just needs to dispatch all the remaining listeners.
@@ -514,7 +514,7 @@ Ext.env.Ready = {
             /**
              * @private
              */
-            readyStatesRe  : /complete/i,
+            readyStatesRe: /complete/i,
 
             /**
              * This strategy has minimal benefits for Sencha solutions that build
@@ -526,12 +526,12 @@ Ext.env.Ready = {
              * initial document).
              * @private
              */
-            pollScroll : function() {
+            pollScroll: function () {
                 var scrollable = true;
 
                 try {
                     document.documentElement.doScroll('left');
-                } catch(e) {
+                } catch (e) {
                     scrollable = false;
                 }
 
@@ -542,9 +542,9 @@ Ext.env.Ready = {
                         type: 'doScroll'
                     });
                 } else {
-                     // Minimize thrashing --
-                     // adjusted for setTimeout's close-to-minimums (not too low),
-                     // as this method SHOULD always be called once initially
+                    // Minimize thrashing --
+                    // adjusted for setTimeout's close-to-minimums (not too low),
+                    // as this method SHOULD always be called once initially
                     Ready.scrollTimer = Ext.defer(Ready.pollScroll, 20);
                 }
 
@@ -562,7 +562,7 @@ Ext.env.Ready = {
                 // See if we are in an IFRAME? (doScroll ineffective here)
                 try {
                     topContext = window.frameElement === undefined;
-                } catch(e) {
+                } catch (e) {
                     // If we throw an exception, it means we're probably getting access
                     // denied, which means we're in an iframe cross domain.
                 }
@@ -574,7 +574,7 @@ Ext.env.Ready = {
                     return;
                 }
 
-                if (doc.readyState === 'complete')  {
+                if (doc.readyState === 'complete') {
                     // Loaded AFTER initial document write/load...
                     Ready.onReadyEvent({
                         type: 'already ' + (doc.readyState || 'body')
@@ -586,7 +586,7 @@ Ext.env.Ready = {
                 }
             },
 
-            unbind : function () {
+            unbind: function () {
                 document.detachEvent('onreadystatechange', Ready.onReadyStateChange);
                 window.detachEvent('onload', Ready.onReadyEvent);
 
@@ -600,7 +600,7 @@ Ext.env.Ready = {
              * This event handler is called when the readyState changes.
              * @private
              */
-            onReadyStateChange: function() {
+            onReadyStateChange: function () {
                 var state = document.readyState;
 
                 if (Ready.readyStatesRe.test(state)) {
@@ -678,7 +678,7 @@ Ext.env.Ready = {
     };
 
     // A shortcut method for onReady with a high priority
-    Ext.onInternalReady = function(fn, scope, options) {
+    Ext.onInternalReady = function (fn, scope, options) {
         Ready.on(fn, scope, Ext.apply({
             priority: 1000
         }, options));

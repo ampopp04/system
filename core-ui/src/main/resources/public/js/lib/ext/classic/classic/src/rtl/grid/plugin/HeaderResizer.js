@@ -1,7 +1,7 @@
 Ext.define('Ext.rtl.grid.plugin.HeaderResizer', {
     override: 'Ext.grid.plugin.HeaderResizer',
 
-    onBeforeStart : function(e) {
+    onBeforeStart: function (e) {
         var me = this;
 
         if (this.headerCt.isOppositeRootDirection()) {
@@ -24,31 +24,31 @@ Ext.define('Ext.rtl.grid.plugin.HeaderResizer', {
         }
     },
 
-    adjustColumnWidth: function(offsetX) {
+    adjustColumnWidth: function (offsetX) {
         if (this.headerCt.isOppositeRootDirection()) {
             offsetX = -offsetX;
         }
         this.callParent([offsetX]);
     },
 
-    adjustConstrainRegion: function(region, t, r, b, l) {
+    adjustConstrainRegion: function (region, t, r, b, l) {
         return this.headerCt.isOppositeRootDirection() ?
             region.adjust(t, -l, b, -r) : this.callParent(arguments);
     },
 
-    calculateDragX: function(gridSection) {
+    calculateDragX: function (gridSection) {
         var gridX = gridSection.getX(),
             mouseX = this.tracker.getXY('point')[0];
-        
+
         if (this.headerCt.isOppositeRootDirection()) {
-            return mouseX - gridX + this.xDelta;    
+            return mouseX - gridX + this.xDelta;
         } else {
             return this.callParent(arguments);
-        }   
+        }
 
     },
 
-    getMovingMarker: function(markerOwner){
+    getMovingMarker: function (markerOwner) {
         if (this.headerCt.isOppositeRootDirection()) {
             return markerOwner.getLhsMarker();
         } else {
@@ -56,7 +56,7 @@ Ext.define('Ext.rtl.grid.plugin.HeaderResizer', {
         }
     },
 
-    setMarkerX: function(marker, x) {
+    setMarkerX: function (marker, x) {
         var headerCt = this.headerCt;
         if (headerCt.getInherited().rtl && !headerCt.isOppositeRootDirection()) {
             marker.rtlSetLocalX(x);

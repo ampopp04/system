@@ -1,19 +1,19 @@
-describe("Ext.grid.column.Template", function() {
-    
+describe("Ext.grid.column.Template", function () {
+
     var grid, store, colRef;
-    
+
     function getCell(rowIdx, colIdx) {
         return grid.getView().getCellInclusive({
             row: rowIdx,
             column: colIdx
         });
     }
-    
+
     function getCellText(rowIdx, colIdx) {
         var cell = getCell(rowIdx, colIdx);
         return Ext.fly(cell).down(grid.getView().innerSelector).dom.innerHTML;
     }
-    
+
     function makeGrid(value) {
         store = new Ext.data.Store({
             model: spec.TestModel,
@@ -21,7 +21,7 @@ describe("Ext.grid.column.Template", function() {
                 field: value
             }]
         });
-        
+
         grid = new Ext.grid.Panel({
             store: store,
             columns: [{
@@ -29,7 +29,7 @@ describe("Ext.grid.column.Template", function() {
                 tpl: 'Hello {field}',
                 text: 'Col',
                 dataIndex: 'field',
-                flex: 1    
+                flex: 1
             }],
             width: 400,
             height: 100,
@@ -38,8 +38,8 @@ describe("Ext.grid.column.Template", function() {
         });
         colRef = grid.getColumnManager().getColumns();
     }
-    
-    beforeEach(function() {
+
+    beforeEach(function () {
         Ext.define('spec.TestModel', {
             extend: 'Ext.data.Model',
             fields: [{
@@ -48,24 +48,24 @@ describe("Ext.grid.column.Template", function() {
             }]
         });
     });
-    
-    afterEach(function(){
+
+    afterEach(function () {
         Ext.destroy(grid, store);
         colRef = store = grid = null;
         Ext.undefine('spec.TestModel');
         Ext.data.Model.schema.clear();
     });
-    
-    describe("renderer", function() {
-        it("should render render when the value is null", function() {
+
+    describe("renderer", function () {
+        it("should render render when the value is null", function () {
             makeGrid(null);
             expect(getCellText(0, 0)).toBe('Hello ');
         });
-        
-        it("should render the according to the template", function() {
+
+        it("should render the according to the template", function () {
             makeGrid('Foo');
             expect(getCellText(0, 0)).toBe('Hello Foo');
         });
     });
-    
+
 });

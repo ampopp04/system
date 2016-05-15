@@ -12,7 +12,7 @@ Ext.define('Ext.device.Capture', {
         'Ext.device.capture.Simulator'
     ],
 
-    constructor: function() {
+    constructor: function () {
         var browserEnv = Ext.browser.is;
 
         if (browserEnv.WebView && browserEnv.Cordova) {

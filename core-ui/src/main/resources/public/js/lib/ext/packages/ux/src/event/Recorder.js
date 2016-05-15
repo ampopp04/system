@@ -3,10 +3,10 @@
  * Event recorder.
  */
 Ext.define('Ext.ux.event.Recorder', function (Recorder) {
-    function apply () {
+    function apply() {
         var a = arguments,
             n = a.length,
-            obj = { kind: 'other' },
+            obj = {kind: 'other'},
             i;
 
         for (i = 0; i < n; ++i) {
@@ -19,41 +19,41 @@ Ext.define('Ext.ux.event.Recorder', function (Recorder) {
         return obj;
     }
 
-    function key (extra) {
+    function key(extra) {
         return apply({
-                kind: 'keyboard',
-                modKeys: true,
-                key: true
-            }, extra);
+            kind: 'keyboard',
+            modKeys: true,
+            key: true
+        }, extra);
     }
 
-    function mouse (extra) {
+    function mouse(extra) {
         return apply({
-                kind: 'mouse',
-                button: true,
-                modKeys: true,
-                xy: true
-            }, extra);
+            kind: 'mouse',
+            button: true,
+            modKeys: true,
+            xy: true
+        }, extra);
     }
 
     var eventsToRecord = {
-            keydown: key(),
-            keypress: key(),
-            keyup: key(),
+        keydown: key(),
+        keypress: key(),
+        keyup: key(),
 
-            dragmove: mouse({ alt: 'mousemove', pageCoords: true, whileDrag: true }),
-            mousemove: mouse({ pageCoords: true }),
-            mouseover: mouse(),
-            mouseout: mouse(),
-            click: mouse(),
-            wheel: mouse({ wheel: true }),
-            mousedown: mouse({ press: true }),
-            mouseup: mouse({ release: true }),
+        dragmove: mouse({alt: 'mousemove', pageCoords: true, whileDrag: true}),
+        mousemove: mouse({pageCoords: true}),
+        mouseover: mouse(),
+        mouseout: mouse(),
+        click: mouse(),
+        wheel: mouse({wheel: true}),
+        mousedown: mouse({press: true}),
+        mouseup: mouse({release: true}),
 
-            scroll: apply({ listen: false }),
-            focus: apply(),
-            blur: apply()
-        };
+        scroll: apply({listen: false}),
+        focus: apply(),
+        blur: apply()
+    };
 
     for (var key in eventsToRecord) {
         if (!eventsToRecord[key].event) {
@@ -93,7 +93,7 @@ Ext.define('Ext.ux.event.Recorder', function (Recorder) {
 
             if (events) {
                 me.eventsToRecord = Ext.apply(Ext.apply({}, me.eventsToRecord), // duplicate
-                                        events); // and merge
+                    events); // and merge
                 delete config.eventsToRecord; // don't smash
             }
 
@@ -144,9 +144,9 @@ Ext.define('Ext.ux.event.Recorder', function (Recorder) {
             var me = this,
                 events = me.eventsRecorded,
                 length = events.length,
-                tail = length && events[length-1],
-                tail2 = (length > 1) && events[length-2],
-                tail3 = (length > 2) && events[length-3];
+                tail = length && events[length - 1],
+                tail2 = (length > 1) && events[length - 2],
+                tail3 = (length > 2) && events[length - 3];
 
             if (!tail) {
                 return false;
@@ -155,14 +155,14 @@ Ext.define('Ext.ux.event.Recorder', function (Recorder) {
             if (rec.type === 'mousemove') {
                 if (tail.type === 'mousemove' && rec.ts - tail.ts < 200) {
                     rec.ts = tail.ts;
-                    events[length-1] = rec;
+                    events[length - 1] = rec;
                     return true;
                 }
             } else if (rec.type === 'click') {
                 if (tail2 && tail.type === 'mouseup' && tail2.type === 'mousedown') {
                     if (rec.button == tail.button && rec.button == tail2.button &&
-                            rec.target == tail.target && rec.target == tail2.target &&
-                            me.samePt(rec, tail) && me.samePt(rec, tail2) ) {
+                        rec.target == tail.target && rec.target == tail2.target &&
+                        me.samePt(rec, tail) && me.samePt(rec, tail2)) {
                         events.pop(); // remove mouseup
                         tail2.type = 'mduclick';
                         return true;
@@ -263,7 +263,7 @@ Ext.define('Ext.ux.event.Recorder', function (Recorder) {
                     break;
                 }
 
-                for (count = 1, sibling = t; !!(sibling = sibling.previousSibling); ) {
+                for (count = 1, sibling = t; !!(sibling = sibling.previousSibling);) {
                     if (sibling.tagName == t.tagName) {
                         ++count;
                     }
@@ -347,11 +347,11 @@ Ext.define('Ext.ux.event.Recorder', function (Recorder) {
                     rec.dy = ev.deltaY;
                 } else if (typeof ev.wheelDeltaX === 'number') {
                     // new WebKit has both X & Y
-                    rec.dx = -1/40 * ev.wheelDeltaX;
-                    rec.dy = -1/40 * ev.wheelDeltaY;
+                    rec.dx = -1 / 40 * ev.wheelDeltaX;
+                    rec.dy = -1 / 40 * ev.wheelDeltaY;
                 } else if (ev.wheelDelta) {
                     // old WebKit and IE
-                    rec.dy = -1/40 * ev.wheelDelta;
+                    rec.dy = -1 / 40 * ev.wheelDelta;
                 } else if (ev.detail) {
                     // Old Gecko
                     rec.dy = ev.detail;
@@ -392,7 +392,7 @@ Ext.define('Ext.ux.event.Recorder', function (Recorder) {
             // FireFox does not support the 'mousewheel' event but does support the
             // 'wheel' event instead.
             Recorder.prototype.eventsToRecord.wheel.event =
-                    ('onwheel' in me.attachTo.document) ? 'wheel' : 'mousewheel';
+                ('onwheel' in me.attachTo.document) ? 'wheel' : 'mousewheel';
 
             me.listeners = [];
             Ext.Object.each(me.eventsToRecord, function (name, value) {
@@ -472,7 +472,7 @@ Ext.define('Ext.ux.event.Recorder', function (Recorder) {
                         type: 'scroll',
                         target: me.getElementXPath(p),
                         ts: ts,
-                        pos: [ x, y ]
+                        pos: [x, y]
                     });
                     me.fireEvent('add', me, rec);
                 }

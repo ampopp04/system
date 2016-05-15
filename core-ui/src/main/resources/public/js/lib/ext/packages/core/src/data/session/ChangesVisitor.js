@@ -101,7 +101,7 @@ Ext.define('Ext.data.session.ChangesVisitor', {
         bucket.push(entry);
     },
 
-    setupOptions: function(options) {
+    setupOptions: function (options) {
         options.serialize = true;
     },
 

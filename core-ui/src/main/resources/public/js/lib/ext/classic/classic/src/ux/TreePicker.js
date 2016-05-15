@@ -4,7 +4,7 @@
 Ext.define('Ext.ux.TreePicker', {
     extend: 'Ext.form.field.Picker',
     xtype: 'treepicker',
-    
+
     uses: [
         'Ext.tree.Panel'
     ],
@@ -49,7 +49,7 @@ Ext.define('Ext.ux.TreePicker', {
          */
         minPickerHeight: 100
     },
-   
+
     editable: false,
 
     /**
@@ -59,7 +59,7 @@ Ext.define('Ext.ux.TreePicker', {
      * @param {Ext.data.Model} record           The selected record
      */
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
 
         me.callParent(arguments);
@@ -74,7 +74,7 @@ Ext.define('Ext.ux.TreePicker', {
     /**
      * Creates and returns the tree panel to be used as this field's picker.
      */
-    createPicker: function() {
+    createPicker: function () {
         var me = this,
             picker = new Ext.tree.Panel({
                 baseCls: Ext.baseCSSPrefix + 'boundlist',
@@ -112,7 +112,7 @@ Ext.define('Ext.ux.TreePicker', {
     /**
      * repaints the tree view
      */
-    repaintPickerView: function() {
+    repaintPickerView: function () {
         var style = this.picker.getView().getEl().dom.style;
 
         // can't use Element.repaint because it contains a setTimeout, which results in a flicker effect
@@ -128,7 +128,7 @@ Ext.define('Ext.ux.TreePicker', {
      * @param {Number} rowIndex
      * @param {Ext.event.Event} e
      */
-    onItemClick: function(view, record, node, rowIndex, e) {
+    onItemClick: function (view, record, node, rowIndex, e) {
         this.selectItem(record);
     },
 
@@ -138,7 +138,7 @@ Ext.define('Ext.ux.TreePicker', {
      * @param {Ext.event.Event} e
      * @param {HTMLElement} el
      */
-    onPickerKeyDown: function(treeView, record, item, index, e) {
+    onPickerKeyDown: function (treeView, record, item, index, e) {
         var key = e.getKey();
 
         if (key === e.ENTER || (key === e.TAB && this.selectOnTab)) {
@@ -151,7 +151,7 @@ Ext.define('Ext.ux.TreePicker', {
      * @private
      * @param {Ext.data.Model} record
      */
-    selectItem: function(record) {
+    selectItem: function (record) {
         var me = this;
         me.setValue(record.getId());
         me.fireEvent('select', me, record);
@@ -163,21 +163,21 @@ Ext.define('Ext.ux.TreePicker', {
      * and focuses the picker so that keyboard navigation will work.
      * @private
      */
-    onExpand: function() {
+    onExpand: function () {
         var picker = this.picker,
             store = picker.store,
             value = this.value,
             node;
 
-        
+
         if (value) {
             node = store.getNodeById(value);
         }
-        
+
         if (!node) {
             node = store.getRoot();
         }
-        
+
         picker.ensureVisible(node, {
             select: true,
             focus: true
@@ -189,7 +189,7 @@ Ext.define('Ext.ux.TreePicker', {
      * @param {Mixed} value
      * @return {Ext.ux.TreePicker} this
      */
-    setValue: function(value) {
+    setValue: function (value) {
         var me = this,
             record;
 
@@ -199,7 +199,7 @@ Ext.define('Ext.ux.TreePicker', {
             // Called while the Store is loading. Ensure it is processed by the onLoad method.
             return me;
         }
-            
+
         // try to find a record in the store that matches the value
         record = value ? me.store.getNodeById(value) : me.store.getRoot();
         if (value === undefined) {
@@ -214,16 +214,16 @@ Ext.define('Ext.ux.TreePicker', {
 
         return me;
     },
-    
-    getSubmitValue: function(){
-        return this.value;    
+
+    getSubmitValue: function () {
+        return this.value;
     },
 
     /**
      * Returns the current data value of the field (the idProperty of the record)
      * @return {Number}
      */
-    getValue: function() {
+    getValue: function () {
         return this.value;
     },
 
@@ -231,17 +231,17 @@ Ext.define('Ext.ux.TreePicker', {
      * Handles the store's load event.
      * @private
      */
-    onLoad: function() {
+    onLoad: function () {
         var value = this.value;
 
         if (value) {
             this.setValue(value);
         }
     },
-    
-    onUpdate: function(store, rec, type, modifiedFieldNames){
+
+    onUpdate: function (store, rec, type, modifiedFieldNames) {
         var display = this.displayField;
-        
+
         if (type === 'edit' && modifiedFieldNames && Ext.Array.contains(modifiedFieldNames, display) && this.value === rec.getId()) {
             this.setRawValue(rec.get(display));
         }

@@ -72,8 +72,4 @@ $grid-row-editor-error-tip-list-style: dynamic(disc);
 $grid-row-editor-error-tip-list-spacing: dynamic(15px);
 
 // private
-$grid-row-editor-field-padding:
-    top($grid-cell-field-padding)
-    max((right($grid-cell-field-padding) - ceil($grid-row-editor-field-spacing / 2)), 0)
-    bottom($grid-cell-field-padding)
-    max((left($grid-cell-field-padding) - floor($grid-row-editor-field-spacing / 2)), 0);
+$grid-row-editor-field-padding: top($grid-cell-field-padding) max((right($grid-cell-field-padding) - ceil($grid-row-editor-field-spacing / 2)), 0) bottom($grid-cell-field-padding) max((left($grid-cell-field-padding) - floor($grid-row-editor-field-spacing / 2)), 0);

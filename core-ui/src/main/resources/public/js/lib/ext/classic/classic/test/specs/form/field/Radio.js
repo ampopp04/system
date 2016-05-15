@@ -1,19 +1,19 @@
-describe("Ext.form.field.Radio", function() {
+describe("Ext.form.field.Radio", function () {
     var radios;
-    beforeEach(function() {
+    beforeEach(function () {
         radios = [];
     });
-    
-    afterEach(function(){
-            var i = 0,
-                len = radios.length;
-                
-            for (; i < len; ++i) {
-                radios[i].destroy();
-            }
+
+    afterEach(function () {
+        var i = 0,
+            len = radios.length;
+
+        for (; i < len; ++i) {
+            radios[i].destroy();
+        }
     });
 
-    it("should be registered with the 'radiofield' xtype", function() {
+    it("should be registered with the 'radiofield' xtype", function () {
         var component = Ext.create("Ext.form.field.Radio", {name: 'test'});
         expect(component instanceof Ext.form.field.Radio).toBe(true);
         expect(Ext.getClass(component).xtype).toBe("radiofield");
@@ -21,7 +21,7 @@ describe("Ext.form.field.Radio", function() {
     });
 
     // https://sencha.jira.com/browse/EXTJS-18309
-    xit("should render a button input with type='radio'", function(){
+    xit("should render a button input with type='radio'", function () {
         var component = new Ext.form.field.Radio({
             name: 'test',
             renderTo: Ext.getBody()
@@ -30,13 +30,13 @@ describe("Ext.form.field.Radio", function() {
         radios = [component];
     });
 
-    it("should respect the checked value", function(){
+    it("should respect the checked value", function () {
         var component = new Ext.form.field.Radio({
             checked: true,
             name: 'test',
             renderTo: Ext.getBody()
         });
-        
+
         expect(component.getValue()).toBeTruthy();
         component.destroy();
         component = new Ext.form.field.Radio({
@@ -46,11 +46,11 @@ describe("Ext.form.field.Radio", function() {
         expect(component.getValue()).toBeFalsy();
         radios = [component];
     });
-    
-    it("should get the correct group value", function(){
+
+    it("should get the correct group value", function () {
         var i = 0;
-            
-        for(i = 0; i < 5; ++i){
+
+        for (i = 0; i < 5; ++i) {
             radios.push(new Ext.form.field.Radio({
                 renderTo: Ext.getBody(),
                 name: 'test',
@@ -58,15 +58,15 @@ describe("Ext.form.field.Radio", function() {
                 checked: i + 1 == 3
             }));
         }
-        
+
         expect(radios[0].getGroupValue()).toEqual(3);
     });
 
-    describe("setValue", function() {
-        it("should unset the values when checking in a group", function(){
+    describe("setValue", function () {
+        it("should unset the values when checking in a group", function () {
             var i = 0;
 
-            for(i = 0; i < 3; ++i){
+            for (i = 0; i < 3; ++i) {
                 radios.push(new Ext.form.field.Radio({
                     renderTo: Ext.getBody(),
                     name: 'test',
@@ -87,10 +87,10 @@ describe("Ext.form.field.Radio", function() {
             expect(radios[2].getValue()).toBeTruthy();
         });
 
-        it("should check the sibling radio matching a passed string value", function(){
+        it("should check the sibling radio matching a passed string value", function () {
             var i = 0;
 
-            for(i = 0; i < 3; ++i){
+            for (i = 0; i < 3; ++i) {
                 radios.push(new Ext.form.field.Radio({
                     renderTo: Ext.getBody(),
                     name: 'test',
@@ -109,14 +109,15 @@ describe("Ext.form.field.Radio", function() {
             expect(radios[2].getValue()).toBeTruthy();
         });
 
-        it("should call handlers for all items in a group", function(){
+        it("should call handlers for all items in a group", function () {
             var handlers = [],
                 spies = [],
                 i = 0;
 
-            for(i = 0; i < 3; ++i){
+            for (i = 0; i < 3; ++i) {
                 handlers.push({
-                    fn: function(){}
+                    fn: function () {
+                    }
                 });
                 spies.push(spyOn(handlers[i], 'fn'));
                 radios.push(new Ext.form.field.Radio({
@@ -135,5 +136,5 @@ describe("Ext.form.field.Radio", function() {
             expect(handlers[1].fn).toHaveBeenCalledWith(radios[1], false);
         });
     });
-    
+
 });

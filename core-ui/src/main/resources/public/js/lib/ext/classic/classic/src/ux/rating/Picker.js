@@ -179,7 +179,7 @@ Ext.define('Ext.ux.rating.Picker', {
             children: [{
                 reference: 'valueEl',
                 cls: 'u' + Ext.baseCSSPrefix + 'rating-picker-value'
-            },{
+            }, {
                 reference: 'trackerEl',
                 cls: 'u' + Ext.baseCSSPrefix + 'rating-picker-tracker'
             }]
@@ -203,10 +203,10 @@ Ext.define('Ext.ux.rating.Picker', {
         if (typeof value === 'string') {
             //<debug>
             if (value.length !== 2) {
-                Ext.raise('Expected 2 characters for "glyphs" not "' + value +'".');
+                Ext.raise('Expected 2 characters for "glyphs" not "' + value + '".');
             }
             //</debug>
-            value = [ value.charAt(0), value.charAt(1) ];
+            value = [value.charAt(0), value.charAt(1)];
         }
         else if (typeof value[0] === 'number') {
             value = [
@@ -218,11 +218,11 @@ Ext.define('Ext.ux.rating.Picker', {
         return value;
     },
 
-    applyOverStyle: function(style) {
+    applyOverStyle: function (style) {
         this.trackerEl.applyStyles(style);
     },
 
-    applySelectedStyle: function(style) {
+    applySelectedStyle: function (style) {
         this.valueEl.applyStyles(style);
     },
 
@@ -345,8 +345,8 @@ Ext.define('Ext.ux.rating.Picker', {
         } else {
             valueEl.stopAnimation();
             valueEl.animate(Ext.merge({
-                from: { width: me.valueToPercent(oldValue) },
-                to:   { width: newWidth }
+                from: {width: me.valueToPercent(oldValue)},
+                to: {width: newWidth}
             }, animate));
         }
 
@@ -395,7 +395,7 @@ Ext.define('Ext.ux.rating.Picker', {
     initConfig: function (instanceConfig) {
         this.isConfiguring = true;
 
-        this.callParent([ instanceConfig ]);
+        this.callParent([instanceConfig]);
 
         // The firstInstance will already have refreshed the DOM (in afterCacheConfig)
         // but all instances beyond the first need to refresh if they have custom values
@@ -496,7 +496,7 @@ Ext.define('Ext.ux.rating.Picker', {
                 glyphs = me.getGlyphs();
                 limit = me.getLimit();
 
-                for (on = off = ''; limit--; ) {
+                for (on = off = ''; limit--;) {
                     off += glyphs[0];
                     on += glyphs[1];
                 }

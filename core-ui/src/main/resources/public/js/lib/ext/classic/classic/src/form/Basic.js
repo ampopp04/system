@@ -112,7 +112,7 @@ Ext.define('Ext.form.Basic', {
      * @param {Ext.form.Basic} this
      * @param {Boolean} dirty `true` if the form is now dirty, `false` if it is no longer dirty.
      */
-    
+
     /**
      * @event errorchange
      * Fires when the error of one (or more) of the fields in the form changes.
@@ -127,7 +127,7 @@ Ext.define('Ext.form.Basic', {
      * @param {Object} config Configuration options. These are normally specified in the config to the
      * {@link Ext.form.Panel} constructor, which passes them along to the BasicForm automatically.
      */
-    constructor: function(owner, config) {
+    constructor: function (owner, config) {
         var me = this,
             reader;
 
@@ -136,7 +136,7 @@ Ext.define('Ext.form.Basic', {
          * The container component to which this BasicForm is attached.
          */
         me.owner = owner;
-        
+
         me.fieldMonitors = {
             validitychange: me.checkValidityDelay,
             enable: me.checkValidityDelay,
@@ -149,7 +149,7 @@ Ext.define('Ext.form.Basic', {
         me.checkValidityTask = new Ext.util.DelayedTask(me.checkValidity, me);
         me.checkDirtyTask = new Ext.util.DelayedTask(me.checkDirty, me);
         me.checkErrorTask = new Ext.util.DelayedTask(me.checkError, me);
-        
+
         // We use the monitor here as opposed to event bubbling. The problem with bubbling is it doesn't
         // let us react to items being added/remove at different places in the hierarchy which may have an
         // impact on the dirty/valid state.
@@ -168,7 +168,7 @@ Ext.define('Ext.form.Basic', {
         if (Ext.isString(me.paramOrder)) {
             me.paramOrder = me.paramOrder.split(/[\s,|]/);
         }
-        
+
         reader = me.reader;
         if (reader && !reader.isReader) {
             if (typeof reader === 'string') {
@@ -178,7 +178,7 @@ Ext.define('Ext.form.Basic', {
             }
             me.reader = Ext.createByAlias('reader.' + reader.type, reader);
         }
-        
+
         reader = me.errorReader;
         if (reader && !reader.isReader) {
             if (typeof reader === 'string') {
@@ -196,7 +196,7 @@ Ext.define('Ext.form.Basic', {
      * Do any post layout initialization
      * @private
      */
-    initialize : function() {
+    initialize: function () {
         this.initialized = true;
         this.onValidityChange(!this.hasInvalidField());
     },
@@ -210,14 +210,14 @@ Ext.define('Ext.form.Basic', {
     /**
      * @cfg {Object/Ext.data.reader.Reader} reader
      * An Ext.data.reader.Reader (e.g. {@link Ext.data.reader.Xml}) instance or
-     * configuration to be used to read data when executing 'load' actions. This 
+     * configuration to be used to read data when executing 'load' actions. This
      * is optional as there is built-in support for processing JSON responses.
      */
 
     /**
      * @cfg {Object/Ext.data.reader.Reader} errorReader
      * An Ext.data.reader.Reader (e.g. {@link Ext.data.reader.Xml}) instance or
-     * configuration to be used to read field error messages returned from 'submit' actions. 
+     * configuration to be used to read field error messages returned from 'submit' actions.
      * This is optional as there is built-in support for processing JSON responses.
      *
      * The Records which provide messages for the invalid Fields must use the
@@ -294,7 +294,7 @@ Ext.define('Ext.form.Basic', {
      * configuration.
      */
     paramsAsHash: false,
-    
+
     /**
      * @cfg {Object/Array} [metadata]
      * Optional metadata to pass with the actions when Ext Direct {@link #api} is used.
@@ -345,10 +345,10 @@ Ext.define('Ext.form.Basic', {
     /**
      * Destroys this object.
      */
-    destroy: function() {
+    destroy: function () {
         var me = this,
             mon = me.monitor;
-        
+
         if (mon) {
             mon.unbind();
             me.monitor = null;
@@ -361,28 +361,28 @@ Ext.define('Ext.form.Basic', {
         me.checkValidityTask = me.checkDirtyTask = me.checkErrorTask = null;
         me.callParent();
     },
-    
-    onFieldAdd: function(field){
+
+    onFieldAdd: function (field) {
         field.on(this.fieldMonitors);
         this.onMonitorInvalidate();
     },
-    
-    onFieldRemove: function(field){
+
+    onFieldRemove: function (field) {
         field.un(this.fieldMonitors);
         this.onMonitorInvalidate();
     },
-    
-    onMonitorInvalidate: function() {
+
+    onMonitorInvalidate: function () {
         if (this.initialized) {
             this.checkValidityDelay();
         }
     },
-    
+
     /**
      * Return all the {@link Ext.form.field.Field} components in the owner container.
      * @return {Ext.util.MixedCollection} Collection of the Field objects
      */
-    getFields: function() {
+    getFields: function () {
         return this.monitor.getItems();
     },
 
@@ -391,14 +391,14 @@ Ext.define('Ext.form.Basic', {
      * Finds and returns the set of all items bound to fields inside this form
      * @return {Ext.util.MixedCollection} The set of all bound form field items
      */
-    getBoundItems: function() {
+    getBoundItems: function () {
         var boundItems = this._boundItems;
-        
+
         if (!boundItems || boundItems.getCount() === 0) {
             boundItems = this._boundItems = new Ext.util.MixedCollection();
             boundItems.addAll(this.owner.query('[formBind]'));
         }
-        
+
         return boundItems;
     },
 
@@ -406,8 +406,8 @@ Ext.define('Ext.form.Basic', {
      * Returns true if the form contains any invalid fields. No fields will be marked as invalid
      * as a result of calling this; to trigger marking of fields use {@link #isValid} instead.
      */
-    hasInvalidField: function() {
-        return !!this.getFields().findBy(function(field) {
+    hasInvalidField: function () {
+        return !!this.getFields().findBy(function (field) {
             var preventMark = field.preventMark,
                 isValid;
             field.preventMark = true;
@@ -423,11 +423,11 @@ Ext.define('Ext.form.Basic', {
      * use {@link #hasInvalidField} instead.
      * @return {Boolean}
      */
-    isValid: function() {
+    isValid: function () {
         var me = this,
             invalid;
         Ext.suspendLayouts();
-        invalid = me.getFields().filterBy(function(field) {
+        invalid = me.getFields().filterBy(function (field) {
             return !field.validate();
         });
         Ext.resumeLayouts(true);
@@ -439,14 +439,14 @@ Ext.define('Ext.form.Basic', {
      * if so fire the {@link #validitychange validitychange} event. This is automatically invoked
      * when an individual field's validity changes.
      */
-    checkValidity: function() {
+    checkValidity: function () {
         var me = this,
             valid;
-        
+
         if (me.destroyed) {
             return;
         }
-            
+
         valid = !me.hasInvalidField();
         if (valid !== me.wasValid) {
             me.onValidityChange(valid);
@@ -454,8 +454,8 @@ Ext.define('Ext.form.Basic', {
             me.wasValid = valid;
         }
     },
-    
-    checkValidityDelay: function(){
+
+    checkValidityDelay: function () {
         var timer = this.taskDelay;
         if (timer) {
             this.checkValidityTask.delay(timer);
@@ -464,7 +464,7 @@ Ext.define('Ext.form.Basic', {
         }
     },
 
-    checkError: function() {
+    checkError: function () {
         // Currently this event is private, we don't really care
         // about the summation of the change, rather that something has
         // changed so we may need to recalculate. In the future if this
@@ -472,7 +472,7 @@ Ext.define('Ext.form.Basic', {
         this.fireEvent('errorchange', this);
     },
 
-    checkErrorDelay: function() {
+    checkErrorDelay: function () {
         var timer = this.taskDelay;
         if (timer) {
             this.checkErrorTask.delay(timer);
@@ -487,13 +487,13 @@ Ext.define('Ext.form.Basic', {
      * `formBind=true` then they are enabled/disabled based on the new validity.
      * @param {Boolean} valid
      */
-    onValidityChange: function(valid) {
+    onValidityChange: function (valid) {
         var boundItems = this.getBoundItems(),
             items, i, iLen, cmp;
 
         if (boundItems) {
             items = boundItems.items;
-            iLen  = items.length;
+            iLen = items.length;
 
             for (i = 0; i < iLen; i++) {
                 cmp = items[i];
@@ -512,19 +512,19 @@ Ext.define('Ext.form.Basic', {
      * trackResetOnLoad} then the Fields' *original values* are updated when the values are
      * loaded by {@link Ext.form.Basic#setValues setValues} or {@link #loadRecord}. This means
      * that:
-     * 
+     *
      * - {@link #trackResetOnLoad}: `false` -> Will return `true` after calling this method.
      * - {@link #trackResetOnLoad}: `true` -> Will return `false` after calling this method.
      *
      * @return {Boolean}
      */
-    isDirty: function() {
-        return !!this.getFields().findBy(function(f) {
+    isDirty: function () {
+        return !!this.getFields().findBy(function (f) {
             return f.isDirty();
         });
     },
-    
-    checkDirtyDelay: function(){
+
+    checkDirtyDelay: function () {
         var timer = this.taskDelay;
         if (timer) {
             this.checkDirtyTask.delay(timer);
@@ -538,14 +538,14 @@ Ext.define('Ext.form.Basic', {
      * if so fire the {@link #dirtychange dirtychange} event. This is automatically invoked
      * when an individual field's `dirty` state changes.
      */
-    checkDirty: function() {
+    checkDirty: function () {
         var me = this,
             dirty;
-            
+
         if (me.destroyed) {
             return;
         }
-            
+
         dirty = this.isDirty();
         if (dirty !== this.wasDirty) {
             this.fireEvent('dirtychange', this, dirty);
@@ -580,8 +580,8 @@ Ext.define('Ext.form.Basic', {
      *
      * @return {Boolean}
      */
-    hasUpload: function() {
-        return !!this.getFields().findBy(function(f) {
+    hasUpload: function () {
+        return !!this.getFields().findBy(function (f) {
             return f.isFileUpload();
         });
     },
@@ -591,7 +591,7 @@ Ext.define('Ext.form.Basic', {
      * specific processing.
      *
      * @param {String/Ext.form.action.Action} action The name of the predefined action type, or instance of {@link
-     * Ext.form.action.Action} to perform.
+        * Ext.form.action.Action} to perform.
      *
      * @param {Object} [options] The options to pass to the {@link Ext.form.action.Action} that will get created,
      * if the action argument is a String.
@@ -641,12 +641,12 @@ Ext.define('Ext.form.Basic', {
      *
      * @param {Boolean} options.clientValidation
      * Submit Action only. Determines whether a Form's fields are validated in a final call to {@link
-     * Ext.form.Basic#isValid isValid} prior to submission. Set to false to prevent this. If undefined, pre-submission
+        * Ext.form.Basic#isValid isValid} prior to submission. Set to false to prevent this. If undefined, pre-submission
      * field validation is performed.
      *
      * @return {Ext.form.Basic} this
      */
-    doAction: function(action, options) {
+    doAction: function (action, options) {
         if (Ext.isString(action)) {
             action = Ext.ClassManager.instantiateByAlias('formaction.' + action, Ext.apply({}, options, {form: this}));
         }
@@ -705,17 +705,17 @@ Ext.define('Ext.form.Basic', {
      * @param {Object} options The options to pass to the action (see {@link #doAction} for details).
      * @return {Ext.form.Basic} this
      */
-    submit: function(options) {
+    submit: function (options) {
         options = options || {};
         var me = this,
             action;
-            
+
         if (options.standardSubmit || me.standardSubmit) {
             action = 'standardsubmit';
         } else {
             action = me.api ? 'directsubmit' : 'submit';
         }
-            
+
         return me.doAction(action, options);
     },
 
@@ -724,7 +724,7 @@ Ext.define('Ext.form.Basic', {
      * @param {Object} options The options to pass to the action (see {@link #doAction} for details)
      * @return {Ext.form.Basic} this
      */
-    load: function(options) {
+    load: function (options) {
         return this.doAction(this.api ? 'directload' : 'load', options);
     },
 
@@ -734,7 +734,7 @@ Ext.define('Ext.form.Basic', {
      * @param {Ext.data.Model} [record] The record to edit
      * @return {Ext.form.Basic} this
      */
-    updateRecord: function(record) {
+    updateRecord: function (record) {
         record = record || this._record;
         if (!record) {
             //<debug>
@@ -742,7 +742,7 @@ Ext.define('Ext.form.Basic', {
             //</debug>
             return this;
         }
-        
+
         var fields = record.self.fields,
             values = this.getFieldValues(),
             obj = {},
@@ -751,7 +751,7 @@ Ext.define('Ext.form.Basic', {
             name;
 
         for (; i < len; ++i) {
-            name  = fields[i].name;
+            name = fields[i].name;
 
             if (values.hasOwnProperty(name)) {
                 obj[name] = values[name];
@@ -767,13 +767,13 @@ Ext.define('Ext.form.Basic', {
 
     /**
      * Loads an {@link Ext.data.Model} into this form by calling {@link #setValues} with the
-     * {@link Ext.data.Model#getData record data}. The fields in the model are mapped to 
-     * fields in the form by matching either the {@link Ext.form.field.Base#name} or {@link Ext.Component#itemId}.  
-     * See also {@link #trackResetOnLoad}. 
+     * {@link Ext.data.Model#getData record data}. The fields in the model are mapped to
+     * fields in the form by matching either the {@link Ext.form.field.Base#name} or {@link Ext.Component#itemId}.
+     * See also {@link #trackResetOnLoad}.
      * @param {Ext.data.Model} record The record to load
      * @return {Ext.form.Basic} this
      */
-    loadRecord: function(record) {
+    loadRecord: function (record) {
         this._record = record;
         return this.setValues(record.getData());
     },
@@ -782,7 +782,7 @@ Ext.define('Ext.form.Basic', {
      * Returns the last Ext.data.Model instance that was loaded via {@link #loadRecord}
      * @return {Ext.data.Model} The record
      */
-    getRecord: function() {
+    getRecord: function () {
         return this._record;
     },
 
@@ -791,13 +791,13 @@ Ext.define('Ext.form.Basic', {
      * Called before an action is performed via {@link #doAction}.
      * @param {Ext.form.action.Action} action The Action instance that was invoked
      */
-    beforeAction: function(action) {
+    beforeAction: function (action) {
         var me = this,
             waitMsg = action.waitMsg,
             maskCls = Ext.baseCSSPrefix + 'mask-loading',
-            fields  = me.getFields().items,
+            fields = me.getFields().items,
             f,
-            fLen    = fields.length,
+            fLen = fields.length,
             field, waitMsgTarget;
 
         // Call HtmlEditor's syncValue before actions
@@ -841,7 +841,7 @@ Ext.define('Ext.form.Basic', {
      * @param {Ext.form.action.Action} action The Action instance that was invoked
      * @param {Boolean} success True if the action completed successfully, false, otherwise.
      */
-    afterAction: function(action, success) {
+    afterAction: function (action, success) {
         var me = this;
         if (action.waitMsg) {
             var messageBox = Ext.MessageBox,
@@ -885,9 +885,9 @@ Ext.define('Ext.form.Basic', {
 
 
     /**
-     * This method allows you to mark one or more fields in a form as invalid along with 
+     * This method allows you to mark one or more fields in a form as invalid along with
      * one or more invalid messages per field.
-     * 
+     *
      *     var formPanel = Ext.create('Ext.form.Panel', {
      *         title: 'Contact Info',
      *         width: 300,
@@ -917,45 +917,45 @@ Ext.define('Ext.form.Basic', {
      *             }
      *         }]
      *     });
-     * 
-     * **Note**: this method does not cause the Field's 
-     * {@link Ext.form.field.Field#validate} or {@link Ext.form.field.Base#isValid} 
-     * methods to return `false` if the value does _pass_ validation.  So simply marking 
-     * a Field as invalid will not prevent submission of forms submitted with the 
+     *
+     * **Note**: this method does not cause the Field's
+     * {@link Ext.form.field.Field#validate} or {@link Ext.form.field.Base#isValid}
+     * methods to return `false` if the value does _pass_ validation.  So simply marking
+     * a Field as invalid will not prevent submission of forms submitted with the
      * {@link Ext.form.action.Submit#clientValidation} option set.
-     * 
-     * For additional information on how the fields are marked invalid see field's 
+     *
+     * For additional information on how the fields are marked invalid see field's
      * {@link Ext.form.field.Base#markInvalid markInvalid} method.
-     * 
+     *
      * @param {Object/Object[]} errors
      * The errors param may be in one of two forms: Object[] or Object
-     * 
+     *
      * - **Array:** An array of Objects with the following keys:
-     *     - _field_ ({@link String}): The {@link Ext.form.field.Base#name name} or 
+     *     - _field_ ({@link String}): The {@link Ext.form.field.Base#name name} or
      * {@link Ext.form.field.Base#id id} of the form field to receive the error message
-     *     - _message_ ({@link String}/{@link String}[]): The error message or an array 
+     *     - _message_ ({@link String}/{@link String}[]): The error message or an array
      * of messages
-     * 
+     *
      * Example Array syntax:
-     * 
+     *
      *     form.markInvalid([{
      *         field: 'email', // the field name
      *         message: 'Error message'
      *     }]);
-     * 
-     * - **Object:** An Object hash with key/value pairs where the key is the field name 
+     *
+     * - **Object:** An Object hash with key/value pairs where the key is the field name
      * or field ID and the value is the message or array of messages to display.
-     * 
+     *
      * Example Object syntax:
-     * 
+     *
      *     form.markInvalid({
      *         name: 'Err. message',
      *         emailId: ['Error1', 'Error 2']
      *     });
-     * 
+     *
      * @return {Ext.form.Basic} basicForm The Ext.form.Basic instance
      */
-    markInvalid: function(errors) {
+    markInvalid: function (errors) {
         var me = this,
             e, eLen, error, value,
             key;
@@ -975,7 +975,7 @@ Ext.define('Ext.form.Basic', {
                 mark(error.id || error.field, error.msg || error.message);
             }
         } else if (errors instanceof Ext.data.ErrorCollection) {
-            eLen  = errors.items.length;
+            eLen = errors.items.length;
             for (e = 0; e < eLen; e++) {
                 error = errors.items[e];
 
@@ -1011,7 +1011,7 @@ Ext.define('Ext.form.Basic', {
      *
      * @return {Ext.form.Basic} this
      */
-    setValues: function(values) {
+    setValues: function (values) {
         var me = this,
             v, vLen, val;
 
@@ -1062,10 +1062,10 @@ Ext.define('Ext.form.Basic', {
      * method is used.
      * @return {String/Object}
      */
-    getValues: function(asString, dirtyOnly, includeEmptyText, useDataValues, isSubmitting) {
-        var values  = {},
-            fields  = this.getFields().items,
-            fLen    = fields.length,
+    getValues: function (asString, dirtyOnly, includeEmptyText, useDataValues, isSubmitting) {
+        var values = {},
+            fields = this.getFields().items,
+            fLen = fields.length,
             isArray = Ext.isArray,
             field, data, val, bucket, name, f;
 
@@ -1124,7 +1124,7 @@ Ext.define('Ext.form.Basic', {
      * @param {Boolean} [dirtyOnly=false] If true, only fields that are dirty will be included in the result.
      * @return {Object}
      */
-    getFieldValues: function(dirtyOnly) {
+    getFieldValues: function (dirtyOnly) {
         return this.getValues(false, dirtyOnly, false, true);
     },
 
@@ -1132,13 +1132,13 @@ Ext.define('Ext.form.Basic', {
      * Clears all invalid field messages in this form.
      * @return {Ext.form.Basic} this
      */
-    clearInvalid: function() {
+    clearInvalid: function () {
         Ext.suspendLayouts();
 
-        var me     = this,
+        var me = this,
             fields = me.getFields().items,
             f,
-            fLen   = fields.length;
+            fLen = fields.length;
 
         for (f = 0; f < fLen; f++) {
             fields[f].clearInvalid();
@@ -1155,20 +1155,20 @@ Ext.define('Ext.form.Basic', {
      * by {@link #loadRecord}
      * @return {Ext.form.Basic} this
      */
-    reset: function(resetRecord) {
+    reset: function (resetRecord) {
         Ext.suspendLayouts();
 
-        var me     = this,
+        var me = this,
             fields = me.getFields().items,
             f,
-            fLen   = fields.length;
+            fLen = fields.length;
 
         for (f = 0; f < fLen; f++) {
             fields[f].reset();
         }
 
         Ext.resumeLayouts(true);
-        
+
         if (resetRecord === true) {
             delete me._record;
         }
@@ -1180,10 +1180,10 @@ Ext.define('Ext.form.Basic', {
      * @param {Object} obj The object to be applied
      * @return {Ext.form.Basic} this
      */
-    applyToFields: function(obj) {
+    applyToFields: function (obj) {
         var fields = this.getFields().items,
             f,
-            fLen   = fields.length;
+            fLen = fields.length;
 
         for (f = 0; f < fLen; f++) {
             Ext.apply(fields[f], obj);
@@ -1197,10 +1197,10 @@ Ext.define('Ext.form.Basic', {
      * @param {Object} obj The object to be applied
      * @return {Ext.form.Basic} this
      */
-    applyIfToFields: function(obj) {
+    applyIfToFields: function (obj) {
         var fields = this.getFields().items,
             f,
-            fLen   = fields.length;
+            fLen = fields.length;
 
         for (f = 0; f < fLen; f++) {
             Ext.applyIf(fields[f], obj);

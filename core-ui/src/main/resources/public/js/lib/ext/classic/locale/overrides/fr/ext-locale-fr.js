@@ -5,12 +5,12 @@
  * updated by disizben (22 Sep 2008)
  * updated by Thylia (20 Apr 2010)
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.shortMonthNames = ["Janv", "Févr", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"];
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return Ext.Date.shortMonthNames[month];
         };
 
@@ -27,7 +27,7 @@ Ext.onReady(function() {
             "Mai": 4,
             "Juin": 5,
             "Juillet": 6,
-            "Juil": 6, 
+            "Juil": 6,
             "Août": 7,
             "Septembre": 8,
             "Sept": 8,
@@ -39,19 +39,19 @@ Ext.onReady(function() {
             "Déc": 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             return Ext.Date.monthNumbers[Ext.util.Format.capitalize(name)];
         };
 
         Ext.Date.dayNames = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day].substring(0, 3);
         };
 
         Ext.Date.parseCodes.S.s = "(?:er)";
 
-        Ext.Date.getSuffix = function() {
+        Ext.Date.getSuffix = function () {
             return (this.getDate() == 1) ? "er" : "";
         };
     }
@@ -147,12 +147,12 @@ Ext.define("Ext.locale.fr.form.field.Number", {
     minText: "La valeur minimum de ce champ doit être de {0}",
     maxText: "La valeur maximum de ce champ doit être de {0}",
     nanText: "{0} n'est pas un nombre valide",
-    negativeText: "La valeur de ce champ ne peut être négative"    
+    negativeText: "La valeur de ce champ ne peut être négative"
 });
 
-Ext.define("Ext.locale.fr.form.field.File", { 
-    override: "Ext.form.field.File", 
-    buttonText: "Parcourir..." 
+Ext.define("Ext.locale.fr.form.field.File", {
+    override: "Ext.form.field.File",
+    buttonText: "Parcourir..."
 });
 
 Ext.define("Ext.locale.fr.form.field.Date", {
@@ -169,7 +169,7 @@ Ext.define("Ext.locale.fr.form.field.Date", {
 Ext.define("Ext.locale.fr.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "En cours de chargement..."
     });
@@ -186,7 +186,7 @@ Ext.define("Ext.locale.fr.form.field.VTypes", {
 Ext.define("Ext.locale.fr.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: "Veuillez entrer l'URL pour ce lien:"
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -312,10 +312,10 @@ Ext.define("Ext.locale.fr.window.MessageBox", {
         cancel: "Annuler",
         yes: "Oui",
         no: "Non"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.fr.Component", {	
+Ext.define("Ext.locale.fr.Component", {
     override: "Ext.Component"
 });

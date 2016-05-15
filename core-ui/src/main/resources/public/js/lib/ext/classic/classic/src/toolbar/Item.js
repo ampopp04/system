@@ -9,9 +9,9 @@ Ext.define('Ext.toolbar.Item', {
     requires: ['Ext.toolbar.Toolbar'],
     alias: 'widget.tbitem',
     alternateClassName: 'Ext.Toolbar.Item',
-    enable:Ext.emptyFn,
-    disable:Ext.emptyFn,
-    focus:Ext.emptyFn
+    enable: Ext.emptyFn,
+    disable: Ext.emptyFn,
+    focus: Ext.emptyFn
     /**
      * @cfg {String} overflowText
      * Text to be used for the menu if the item is overflowed.

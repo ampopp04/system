@@ -71,7 +71,7 @@ Ext.define('Ext.fx.Anim', {
      * @cfg {Object} scope
      * The scope that the {@link #callback} function will be called with
      */
-    
+
     /**
      * @cfg {Boolean} remove
      * `true` to remove the target when the animation is complete, using the appropriate removal
@@ -190,7 +190,7 @@ Ext.define('Ext.fx.Anim', {
      * Number of times to execute the animation.
      */
     iterations: 1,
-    
+
     /**
      * @cfg {Boolean} autoEnd
      * `true` to immediately force this animation to its final state. This can be useful
@@ -270,27 +270,27 @@ Ext.define('Ext.fx.Anim', {
      * @param {Ext.fx.Anim} this
      */
 
-     /**
-      * @event afteranimate
-      * Fires when the animation is complete.
-      * @param {Ext.fx.Anim} this
-      * @param {Date} startTime
-      */
+    /**
+     * @event afteranimate
+     * Fires when the animation is complete.
+     * @param {Ext.fx.Anim} this
+     * @param {Date} startTime
+     */
 
-     /**
-      * @event lastframe
-      * Fires when the animation's last frame has been set.
-      * @param {Ext.fx.Anim} this
-      * @param {Date} startTime
-      */
+    /**
+     * @event lastframe
+     * Fires when the animation's last frame has been set.
+     * @param {Ext.fx.Anim} this
+     * @param {Date} startTime
+     */
 
     /**
      * @private
      */
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this,
             curve;
-            
+
         config = config || {};
         // If keyframes are passed, they really want an Animator instead.
         if (config.keyframes) {
@@ -328,7 +328,7 @@ Ext.define('Ext.fx.Anim', {
      * @private
      * Helper to the target
      */
-    setAttr: function(attr, value) {
+    setAttr: function (attr, value) {
         return Ext.fx.Manager.items.get(this.id).setAttr(this.target, attr, value);
     },
 
@@ -336,7 +336,7 @@ Ext.define('Ext.fx.Anim', {
      * @private
      * Set up the initial currentAttrs hash.
      */
-    initAttrs: function() {
+    initAttrs: function () {
         var me = this,
             from = me.from,
             to = me.to,
@@ -370,12 +370,12 @@ Ext.define('Ext.fx.Anim', {
      * @private
      * Fires beforeanimate and sets the running flag.
      */
-    start: function(startTime) {
+    start: function (startTime) {
         var me = this,
             delay = me.delay,
             delayStart = me.delayStart,
             delayDelta;
-        
+
         if (delay) {
             if (!delayStart) {
                 me.delayStart = startTime;
@@ -401,13 +401,13 @@ Ext.define('Ext.fx.Anim', {
             me.frameCount = 0;
         }
     },
-    
+
     /**
      * Immediately force this animation to its final state.
      */
-    jumpToEnd: function(){
+    jumpToEnd: function () {
         var me = this;
-        
+
         if (!me.endWasCalled) {
             if (!me.currentAttrs) {
                 me.initAttrs();
@@ -422,7 +422,7 @@ Ext.define('Ext.fx.Anim', {
      * Calculate attribute value at the passed timestamp.
      * @return a hash of the new attributes.
      */
-    runAnim: function(elapsedTime) {
+    runAnim: function (elapsedTime) {
         var me = this,
             attrs = me.currentAttrs,
             duration = me.duration,
@@ -447,7 +447,7 @@ Ext.define('Ext.fx.Anim', {
             }
         }
         me.frameCount++;
-            
+
         return ret;
     },
 
@@ -456,7 +456,7 @@ Ext.define('Ext.fx.Anim', {
      * Perform lastFrame cleanup and handle iterations
      * @return a hash of the new attributes.
      */
-    lastFrame: function() {
+    lastFrame: function () {
         var me = this,
             iter = me.iterations,
             iterCount = me.currentIteration;
@@ -485,12 +485,12 @@ Ext.define('Ext.fx.Anim', {
      * animation reaches its final frame, but can also be called manually to preemptively
      * stop and destroy the running animation.
      */
-    end: function() {
+    end: function () {
         var me = this;
         if (me.endWasCalled++) {
             return;
         }
-        
+
         me.startTime = 0;
         me.paused = false;
         me.running = false;
@@ -501,12 +501,12 @@ Ext.define('Ext.fx.Anim', {
             me.target.destroy();
         }
     },
-    
-    isReady: function() {
+
+    isReady: function () {
         return this.paused === false && this.running === false && this.iterations > 0;
     },
-    
-    isRunning: function() {
+
+    isRunning: function () {
         return this.paused === false && this.running === true && this.isAnimator !== true;
     }
 });

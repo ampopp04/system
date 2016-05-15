@@ -1,9 +1,9 @@
 .#{$prefix}column {
-    float: left;
+  float: left;
 }
 
 @if $include-rtl {
-    .#{$prefix}rtl > .#{$prefix}column {
-        float: right;
-    }
+  .#{$prefix}rtl > .#{$prefix}column {
+    float: right;
+  }
 }

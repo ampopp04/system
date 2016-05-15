@@ -11,14 +11,14 @@ Ext.define('Ext.grid.CellEditor', {
      * `true` in this class to identify an object as an instantiated CellEditor, or subclass thereof.
      */
     isCellEditor: true,
-    
+
     alignment: 'l-l!',
 
-    hideEl : false,
+    hideEl: false,
 
     cls: Ext.baseCSSPrefix + 'small-editor ' +
-        Ext.baseCSSPrefix + 'grid-editor ' +
-        Ext.baseCSSPrefix + 'grid-cell-editor',
+    Ext.baseCSSPrefix + 'grid-editor ' +
+    Ext.baseCSSPrefix + 'grid-cell-editor',
 
     treeNodeSelector: '.' + Ext.baseCSSPrefix + 'tree-node-text',
 
@@ -28,7 +28,7 @@ Ext.define('Ext.grid.CellEditor', {
 
     // Set the grid that owns this editor.
     // Called by CellEditing#getEditor
-    setGrid: function(grid) {
+    setGrid: function (grid) {
         var me = this,
             oldGrid = me.grid,
             viewListeners;
@@ -51,7 +51,7 @@ Ext.define('Ext.grid.CellEditor', {
         }
     },
 
-    beforeViewRefresh: function(view) {
+    beforeViewRefresh: function (view) {
         var me = this,
             dom = me.el && me.el.dom;
 
@@ -77,7 +77,7 @@ Ext.define('Ext.grid.CellEditor', {
         }
     },
 
-    onViewRefresh: function(view) {
+    onViewRefresh: function (view) {
         var me = this,
             dom = me.el && me.el.dom,
             cell,
@@ -111,7 +111,7 @@ Ext.define('Ext.grid.CellEditor', {
             // After which we reset it, and refocus the field.
             if (me.editing) {
                 if (Ext.isIE) {
-                    Ext.defer(function() {
+                    Ext.defer(function () {
                         // May have been destroyed immediately after refreshing!?
                         if (!me.destroyed) {
                             me.allowBlur = me.wasAllowBlur;
@@ -126,7 +126,7 @@ Ext.define('Ext.grid.CellEditor', {
         }
     },
 
-    beforeItemUpdate: function(record, recordIndex, oldItemDom, columnsToUpdate) {
+    beforeItemUpdate: function (record, recordIndex, oldItemDom, columnsToUpdate) {
         var me = this,
             context = me.context,
             l = columnsToUpdate.length,
@@ -147,7 +147,7 @@ Ext.define('Ext.grid.CellEditor', {
         }
     },
 
-    onItemUpdate: function(record, recordIndex, oldItemDom) {
+    onItemUpdate: function (record, recordIndex, oldItemDom) {
         var view = this.context.view;
 
         if (this.needsFixOnItemUpdate) {
@@ -159,7 +159,7 @@ Ext.define('Ext.grid.CellEditor', {
         }
     },
 
-    startEdit: function(boundEl, value, doFocus) {
+    startEdit: function (boundEl, value, doFocus) {
         this.context = this.editingPlugin.context;
         this.callParent([boundEl, value, doFocus]);
     },
@@ -169,7 +169,7 @@ Ext.define('Ext.grid.CellEditor', {
      * Shows the editor, end ensures that it is rendered into the correct view
      * Hides the grid cell inner element when a cell editor is shown.
      */
-    onShow: function() {
+    onShow: function () {
         var me = this,
             innerCell = me.boundEl.down(me.context.view.innerSelector);
 
@@ -183,10 +183,10 @@ Ext.define('Ext.grid.CellEditor', {
         me.callParent(arguments);
     },
 
-    onFocusEnter: function() {
+    onFocusEnter: function () {
         var context = this.context,
             view = context.view;
-        
+
         // Focus restoration after a refresh may require realignment and correction
         // of the context because it could have been due to a or filter operation and
         // the context may have changed position.
@@ -202,7 +202,7 @@ Ext.define('Ext.grid.CellEditor', {
         this.focusEnterEvent = null;
     },
 
-    onEditComplete: function(remainVisible) {
+    onEditComplete: function (remainVisible) {
         // When being asked to process edit completion, if we are not hiding, restore the cell now
         if (remainVisible) {
             this.restoreCell();
@@ -214,12 +214,12 @@ Ext.define('Ext.grid.CellEditor', {
      * @private
      * Shows the grid cell inner element when a cell editor is hidden
      */
-    onHide: function() {
+    onHide: function () {
         this.restoreCell();
         this.callParent(arguments);
     },
 
-    onSpecialKey: function(field, event) {
+    onSpecialKey: function (field, event) {
         var me = this,
             key = event.getKey(),
             complete = me.completeOnEnter && key === event.ENTER,
@@ -244,11 +244,11 @@ Ext.define('Ext.grid.CellEditor', {
         }
     },
 
-    getRefOwner: function() {
+    getRefOwner: function () {
         return this.column && this.column.getView();
     },
 
-    restoreCell: function() {
+    restoreCell: function () {
         var me = this,
             innerCell = me.boundEl.down(me.context.view.innerSelector);
 
@@ -257,14 +257,14 @@ Ext.define('Ext.grid.CellEditor', {
                 innerCell = innerCell.child(me.treeNodeSelector);
             }
             innerCell.show();
-        }        
+        }
     },
 
     /**
      * @private
      * Fix checkbox blur when it is clicked.
      */
-    afterRender: function() {
+    afterRender: function () {
         var me = this,
             field = me.field;
 
@@ -278,30 +278,30 @@ Ext.define('Ext.grid.CellEditor', {
             });
         }
     },
-    
+
     /**
      * @private
      * Because when checkbox is clicked it loses focus  completeEdit is bypassed.
      */
-    onCheckBoxMouseDown: function() {
+    onCheckBoxMouseDown: function () {
         this.completeEdit = Ext.emptyFn;
     },
-     
+
     /**
      * @private
      * Restore checkbox focus and completeEdit method.
      */
-    onCheckBoxClick: function() {
+    onCheckBoxClick: function () {
         delete this.completeEdit;
         this.field.focus(false, 10);
     },
-    
+
     /**
      * @private
      * Realigns the Editor to the grid cell, or to the text node in the grid inner cell
      * if the inner cell contains multiple child nodes.
      */
-    realign: function(autoSize) {
+    realign: function (autoSize) {
         var me = this,
             boundEl = me.boundEl,
             innerCell = boundEl.down(me.context.view.innerSelector),
@@ -312,7 +312,7 @@ Ext.define('Ext.grid.CellEditor', {
             xOffset,
             v = '',
 
-            // innerCell is empty if there are no children, or there is one text node, and it contains whitespace
+        // innerCell is empty if there are no children, or there is one text node, and it contains whitespace
             isEmpty = !innerCellTextNode || (innerCellTextNode.nodeType === 3 && !(Ext.String.trim(v = innerCellTextNode.data).length));
 
         if (me.isForTree) {
@@ -346,7 +346,7 @@ Ext.define('Ext.grid.CellEditor', {
         }
     },
 
-    getTreeNodeOffset: function(innerCell) {
+    getTreeNodeOffset: function (innerCell) {
         return innerCell.child(this.treeNodeSelector).getOffsetsTo(innerCell)[0];
     }
 });

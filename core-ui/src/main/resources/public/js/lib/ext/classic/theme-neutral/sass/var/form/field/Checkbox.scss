@@ -66,139 +66,139 @@
  * @member Ext.form.field.Checkbox
  */
 @mixin extjs-checkbox-ui(
-    $ui: null,
-    $ui-field-height: $form-field-height,
-    $ui-checkbox-size: $form-checkbox-size,
-    $ui-checkbox-background-image: $form-checkbox-background-image,
-    $ui-checkbox-glyph: $form-checkbox-glyph,
-    $ui-checkbox-checked-glyph: $form-checkbox-checked-glyph,
-    $ui-checkbox-glyph-color: $form-checkbox-glyph-color,
-    $ui-checkbox-glyph-focus-color: $form-checkbox-glyph-focus-color,
-    $ui-radio-background-image: $form-radio-background-image,
-    $ui-radio-glyph: $form-radio-glyph,
-    $ui-radio-checked-glyph: $form-radio-checked-glyph,
-    $ui-radio-glyph-color: $form-radio-glyph-color,
-    $ui-radio-glyph-focus-color: $form-radio-glyph-focus-color,
-    $ui-label-color: $form-checkbox-label-color,
-    $ui-label-font-weight: $form-checkbox-label-font-weight,
-    $ui-label-font-size: $form-checkbox-label-font-size,
-    $ui-label-font-family: $form-checkbox-label-font-family,
-    $ui-label-line-height: $form-checkbox-label-line-height,
-    $ui-label-spacing: $form-checkbox-label-spacing
+  $ui: null,
+  $ui-field-height: $form-field-height,
+  $ui-checkbox-size: $form-checkbox-size,
+  $ui-checkbox-background-image: $form-checkbox-background-image,
+  $ui-checkbox-glyph: $form-checkbox-glyph,
+  $ui-checkbox-checked-glyph: $form-checkbox-checked-glyph,
+  $ui-checkbox-glyph-color: $form-checkbox-glyph-color,
+  $ui-checkbox-glyph-focus-color: $form-checkbox-glyph-focus-color,
+  $ui-radio-background-image: $form-radio-background-image,
+  $ui-radio-glyph: $form-radio-glyph,
+  $ui-radio-checked-glyph: $form-radio-checked-glyph,
+  $ui-radio-glyph-color: $form-radio-glyph-color,
+  $ui-radio-glyph-focus-color: $form-radio-glyph-focus-color,
+  $ui-label-color: $form-checkbox-label-color,
+  $ui-label-font-weight: $form-checkbox-label-font-weight,
+  $ui-label-font-size: $form-checkbox-label-font-size,
+  $ui-label-font-family: $form-checkbox-label-font-family,
+  $ui-label-line-height: $form-checkbox-label-line-height,
+  $ui-label-spacing: $form-checkbox-label-spacing
 ) {
-    .#{$prefix}form-cb-wrap-#{$ui} {
-        height: $ui-field-height;
-        // The checkbox field's body element must be at least the width of the checkbox.
-        // This min-width prevents the width from collapsing to 0 when there is no boxLabel
-        // since the checkbox-containing element itself is absolutely positioned.
-        // See EXTJS-18430
-        min-width: $ui-checkbox-size;
+  .#{$prefix}form-cb-wrap-#{$ui} {
+    height: $ui-field-height;
+    // The checkbox field's body element must be at least the width of the checkbox.
+    // This min-width prevents the width from collapsing to 0 when there is no boxLabel
+    // since the checkbox-containing element itself is absolutely positioned.
+    // See EXTJS-18430
+    min-width: $ui-checkbox-size;
+  }
+
+  .#{$prefix}form-cb-#{$ui} {
+    // vertically center the checkbox
+    margin-top: round(($ui-field-height - $ui-checkbox-size) / 2);
+  }
+
+  .#{$prefix}form-checkbox-#{$ui},
+  .#{$prefix}form-radio-#{$ui} {
+    width: $ui-checkbox-size;
+    height: $ui-checkbox-size;
+  }
+
+  .#{$prefix}form-radio-#{$ui} {
+    @if $enable-font-icons and ($ui-radio-glyph != null) {
+      @include font-icon($ui-radio-glyph);
+      color: $ui-radio-glyph-color;
+
+      .#{$prefix}form-cb-checked & {
+        @include font-icon($ui-radio-checked-glyph);
+      }
+    } @else {
+      background: theme-background-image($ui-radio-background-image) no-repeat;
+
+      .#{$prefix}form-cb-checked & {
+        background-position: 0 (0 - $ui-checkbox-size);
+      }
+    }
+  }
+
+  .#{$prefix}form-checkbox-#{$ui} {
+    @if $enable-font-icons and ($ui-checkbox-glyph != null) {
+      @include font-icon($ui-checkbox-glyph);
+      color: $ui-checkbox-glyph-color;
+
+      .#{$prefix}form-cb-checked & {
+        @include font-icon($ui-checkbox-checked-glyph);
+      }
+    } @else {
+      background: theme-background-image($ui-checkbox-background-image) no-repeat;
+
+      .#{$prefix}form-cb-checked & {
+        background-position: 0 (0 - $ui-checkbox-size);
+      }
+    }
+  }
+
+  .#{$prefix}form-checkbox-focus {
+    &.#{$prefix}form-radio-#{$ui} {
+      @if $enable-font-icons and ($ui-radio-glyph != null) {
+        color: $ui-radio-glyph-focus-color;
+      } @else {
+        background-position: (0 - $ui-checkbox-size) 0;
+
+        .#{$prefix}form-cb-checked & {
+          background-position: (0 - $ui-checkbox-size) (0 - $ui-checkbox-size);
+        }
+      }
     }
 
-    .#{$prefix}form-cb-#{$ui} {
-        // vertically center the checkbox
-        margin-top: round(($ui-field-height - $ui-checkbox-size) / 2);
+    &.#{$prefix}form-checkbox-#{$ui} {
+      @if $enable-font-icons and ($ui-checkbox-glyph != null) {
+        color: $ui-checkbox-glyph-focus-color;
+      } @else {
+        background-position: (0 - $ui-checkbox-size) 0;
+
+        .#{$prefix}form-cb-checked & {
+          background-position: (0 - $ui-checkbox-size) (0 - $ui-checkbox-size);
+        }
+      }
+    }
+  }
+
+  .#{$prefix}form-cb-label-#{$ui} {
+    margin-top: round(($ui-field-height - $ui-label-line-height) / 2);
+    font: $ui-label-font-weight #{$ui-label-font-size}/#{$ui-label-line-height} $ui-label-font-family;
+
+    &.#{$prefix}form-cb-label-before {
+      padding-right: $ui-label-spacing + $ui-checkbox-size;
+
+      @if $include-rtl {
+        &.#{$prefix}rtl {
+          padding-right: 0;
+          padding-left: $ui-label-spacing + $ui-checkbox-size;
+        }
+      }
     }
 
-    .#{$prefix}form-checkbox-#{$ui},
-    .#{$prefix}form-radio-#{$ui} {
-        width: $ui-checkbox-size;
-        height: $ui-checkbox-size;
+    &.#{$prefix}form-cb-label-after {
+      padding-left: $ui-label-spacing + $ui-checkbox-size;
     }
 
-    .#{$prefix}form-radio-#{$ui} {
-        @if $enable-font-icons and ($ui-radio-glyph != null) {
-            @include font-icon($ui-radio-glyph);
-            color: $ui-radio-glyph-color;
-
-            .#{$prefix}form-cb-checked & {
-                @include font-icon($ui-radio-checked-glyph);
-            }
-        } @else {
-            background: theme-background-image($ui-radio-background-image) no-repeat;
-
-            .#{$prefix}form-cb-checked & {
-                background-position: 0 (0 - $ui-checkbox-size);
-            }
-        }
+    @if $include-rtl {
+      &.#{$prefix}rtl {
+        padding-left: 0;
+        padding-right: $ui-label-spacing + $ui-checkbox-size;
+      }
     }
+  }
 
-    .#{$prefix}form-checkbox-#{$ui} {
-        @if $enable-font-icons and ($ui-checkbox-glyph != null) {
-            @include font-icon($ui-checkbox-glyph);
-            color: $ui-checkbox-glyph-color;
-
-            .#{$prefix}form-cb-checked & {
-                @include font-icon($ui-checkbox-checked-glyph);
-            }
-        } @else {
-            background: theme-background-image($ui-checkbox-background-image) no-repeat;
-
-            .#{$prefix}form-cb-checked & {
-                background-position: 0 (0 - $ui-checkbox-size);
-            }
-        }
+  // Checkbox field or subclass inside cell - calculate top/bottom padding to keep row height correct
+  @if $include-ext-grid-column-widget or $include-ext-grid-plugin-editing {
+    .#{$prefix}checkbox-#{$ui}-cell > .#{$prefix}grid-cell-inner {
+      padding-top: max(ceil(($grid-row-height - $ui-field-height) / 2), 0);
+      padding-bottom: max(floor(($grid-row-height - $ui-field-height) / 2), 0);
     }
-
-    .#{$prefix}form-checkbox-focus {
-        &.#{$prefix}form-radio-#{$ui} {
-            @if $enable-font-icons and ($ui-radio-glyph != null) {
-                color: $ui-radio-glyph-focus-color;
-            } @else {
-                background-position: (0 - $ui-checkbox-size) 0;
-
-                .#{$prefix}form-cb-checked & {
-                    background-position: (0 - $ui-checkbox-size) (0 - $ui-checkbox-size);
-                }
-            }
-        }
-
-        &.#{$prefix}form-checkbox-#{$ui} {
-            @if $enable-font-icons and ($ui-checkbox-glyph != null) {
-                color: $ui-checkbox-glyph-focus-color;
-            } @else {
-                background-position: (0 - $ui-checkbox-size) 0;
-
-                .#{$prefix}form-cb-checked & {
-                    background-position: (0 - $ui-checkbox-size) (0 - $ui-checkbox-size);
-                }
-            }
-        }
-    }
-
-    .#{$prefix}form-cb-label-#{$ui} {
-        margin-top: round(($ui-field-height - $ui-label-line-height) / 2);
-        font: $ui-label-font-weight #{$ui-label-font-size}/#{$ui-label-line-height} $ui-label-font-family;
-
-        &.#{$prefix}form-cb-label-before {
-            padding-right: $ui-label-spacing + $ui-checkbox-size;
-
-            @if $include-rtl {
-                &.#{$prefix}rtl {
-                    padding-right: 0;
-                    padding-left: $ui-label-spacing + $ui-checkbox-size;
-                }
-            }
-        }
-
-        &.#{$prefix}form-cb-label-after {
-            padding-left: $ui-label-spacing + $ui-checkbox-size;
-        }
-
-        @if $include-rtl {
-            &.#{$prefix}rtl {
-                padding-left: 0;
-                padding-right: $ui-label-spacing + $ui-checkbox-size;
-            }
-        }
-    }
-
-    // Checkbox field or subclass inside cell - calculate top/bottom padding to keep row height correct
-    @if $include-ext-grid-column-widget or $include-ext-grid-plugin-editing {
-        .#{$prefix}checkbox-#{$ui}-cell > .#{$prefix}grid-cell-inner {
-            padding-top:    max(ceil(($grid-row-height - $ui-field-height) / 2), 0);
-            padding-bottom: max(floor(($grid-row-height - $ui-field-height) / 2), 0);
-        }
-    }
+  }
 }
 

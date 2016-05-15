@@ -1,4 +1,4 @@
-describe("Ext.slider.Widget", function() {
+describe("Ext.slider.Widget", function () {
     var panel, slider;
 
     afterEach(function () {
@@ -17,10 +17,10 @@ describe("Ext.slider.Widget", function() {
             data = viewModel.getData();
         });
 
-        function makeSlider (config) {
+        function makeSlider(config) {
             panel = Ext.create({
                 xtype: 'panel',
-                renderTo:  Ext.getBody(),
+                renderTo: Ext.getBody(),
                 items: slider = Ext.create(Ext.apply({
                     xtype: 'sliderwidget',
                     bind: '{val}',
@@ -34,7 +34,7 @@ describe("Ext.slider.Widget", function() {
             notify();
         }
 
-        function notify () {
+        function notify() {
             viewModel.getScheduler().notify();
         }
 

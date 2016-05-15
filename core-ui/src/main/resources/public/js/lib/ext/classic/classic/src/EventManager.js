@@ -1,12 +1,12 @@
 /**
  * @class Ext.EventManager
  * Registers event handlers on DOM elements.
- * 
+ *
  * This class is deprecated.  Please use the Ext.dom.Element api to attach listeners to
  * DOM Elements.  For example:
- * 
+ *
  *     var element = Ext.get('myId');
- *     
+ *
  *     element.on('click', function(e) {
  *         // event handling logic here
  *     });
@@ -63,7 +63,7 @@ Ext.define('Ext.EventManager', {
      * Normal events start with the target element and propagate upward to ancestor elements, whereas captured events propagate from the top of the DOM
      * downward to descendant elements. This option is the same as the useCapture parameter in the javascript addEventListener method.
      */
-    addListener: function(element, eventName, fn, scope, options) {
+    addListener: function (element, eventName, fn, scope, options) {
         //<debug>
         Ext.log.warn("Ext.EventManager is deprecated. " +
             "Use Ext.dom.Element#addListener to attach an event listener.");
@@ -79,7 +79,7 @@ Ext.define('Ext.EventManager', {
      * @param {Boolean}  [options] Options object as passed to {@link Ext.dom.Element#addListener}
      * @deprecated 5.0.0 Use {@link Ext#method-on Ext.on}('resize', fn) to attach a window resize listener.
      */
-    onWindowResize: function(fn, scope, options) {
+    onWindowResize: function (fn, scope, options) {
         //<debug>
         Ext.log.warn("Ext.EventManager is deprecated. " +
             "Use Ext.on('resize', fn) to attach a window resize listener.");
@@ -94,7 +94,7 @@ Ext.define('Ext.EventManager', {
      * @param {Boolean}  options Options object as passed to {@link Ext.dom.Element#addListener}
      * @deprecated 5.0.0
      */
-    onWindowUnload: function(fn, scope, options) {
+    onWindowUnload: function (fn, scope, options) {
         //<debug>
         Ext.log.warn("Ext.EventManager is deprecated. " +
             "Use Ext.getWin().on('unload', fn) to attach a window unload listener.");
@@ -111,7 +111,7 @@ Ext.define('Ext.EventManager', {
      * @param {String} eventName (optional) The name of the event.
      * @deprecated 5.0.0
      */
-    purgeElement: function(element, eventName) {
+    purgeElement: function (element, eventName) {
         //<debug>
         Ext.log.warn("Ext.EventManager is deprecated. " +
             "Call clearListeners() on a Ext.dom.Element to remove all listeners.");
@@ -121,12 +121,12 @@ Ext.define('Ext.EventManager', {
 
     /**
      * Removes all event handers from an element.  Typically you will use {@link
-     * Ext.dom.Element#clearListeners} directly on an Element in favor of calling this method.
+        * Ext.dom.Element#clearListeners} directly on an Element in favor of calling this method.
      * @param {String/Ext.dom.Element/HTMLElement/Window} el The id or html element from which
      * to remove all event handlers.
      * @deprecated 5.0.0
      */
-    removeAll: function(element) {
+    removeAll: function (element) {
         //<debug>
         Ext.log.warn("Ext.EventManager is deprecated. " +
             "Call clearListeners() on a Ext.dom.Element to remove all listeners.");
@@ -147,7 +147,7 @@ Ext.define('Ext.EventManager', {
      * @param {Object} scope If a scope (`this` reference) was specified when the listener was added,
      * then this must refer to the same object.
      */
-    removeListener: function(element, eventName, fn, scope, options) {
+    removeListener: function (element, eventName, fn, scope, options) {
         //<debug>
         Ext.log.warn("Ext.EventManager is deprecated. " +
             "Use Ext.dom.Element#removeListener to remove an event listener.");
@@ -161,7 +161,7 @@ Ext.define('Ext.EventManager', {
      * @param {Object}   scope    The scope of handler
      * @deprecated 5.0.0
      */
-    removeResizeListener: function(fn, scope) {
+    removeResizeListener: function (fn, scope) {
         //<debug>
         Ext.log.warn("Ext.EventManager is deprecated. " +
             "Use Ext.on('resize', fn) to detach a window resize listener.");
@@ -175,7 +175,7 @@ Ext.define('Ext.EventManager', {
      * @param {Object}   scope    The scope of handler
      * @deprecated 5.0.0
      */
-    removeUnloadListener: function(fn, scope) {
+    removeUnloadListener: function (fn, scope) {
         //<debug>
         Ext.log.warn("Ext.EventManager is deprecated. " +
             "Use Ext.getWin().un('unload', fn) to detach a window unload listener.");
@@ -188,7 +188,7 @@ Ext.define('Ext.EventManager', {
      * @param {Event} event The event to stop
      * @deprecated 5.0.0
      */
-    stopEvent: function(event) {
+    stopEvent: function (event) {
         //<debug>
         Ext.log.warn("Ext.EventManager.stopEvent() is deprecated. " +
             "Call stopEvent() directly on the Ext.event.Event instance instead.");
@@ -202,7 +202,7 @@ Ext.define('Ext.EventManager', {
      * @param {Event} event The event to stop bubbling.
      * @deprecated 5.0.0
      */
-    stopPropagation: function(event) {
+    stopPropagation: function (event) {
         //<debug>
         Ext.log.warn("Ext.EventManager.stopPropagation() is deprecated. " +
             "Call stopPropagation() directly on the Ext.event.Event instance instead.");
@@ -220,7 +220,7 @@ Ext.define('Ext.EventManager', {
      * @param {Event} event The event to prevent the default
      * @deprecated 5.0.0
      */
-    preventDefault: function(event) {
+    preventDefault: function (event) {
         //<debug>
         Ext.log.warn("Ext.EventManager.preventDefault() is deprecated. " +
             "Call preventDefault() directly on the Ext.event.Event instance instead.");
@@ -232,10 +232,10 @@ Ext.define('Ext.EventManager', {
             event.returnValue = false;
             // Some keys events require setting the keyCode to -1 to be prevented
             try {
-              // all ctrl + X and F1 -> F12
-              if (event.ctrlKey || event.keyCode > 111 && event.keyCode < 124) {
-                  event.keyCode = -1;
-              }
+                // all ctrl + X and F1 -> F12
+                if (event.ctrlKey || event.keyCode > 111 && event.keyCode < 124) {
+                    event.keyCode = -1;
+                }
             } catch (e) {
                 // see this outdated document http://support.microsoft.com/kb/934364/en-us for more info
             }
@@ -248,7 +248,7 @@ Ext.define('Ext.EventManager', {
      * @return {String} id
      * @deprecated 5.0.0
      */
-    getId: function(element) {
+    getId: function (element) {
         //<debug>
         Ext.log.warn("Ext.EventManager.getId() is deprecated. " +
             "Call Ext.get() to assign ids to elements.");
@@ -263,7 +263,7 @@ Ext.define('Ext.EventManager', {
      * @return {HTMLElement} The related target.
      * @deprecated 5.0.0
      */
-    getRelatedTarget: function(event) {
+    getRelatedTarget: function (event) {
         //<debug>
         Ext.log.warn("Ext.EventManager.getRelatedTarget() is deprecated. " +
             "Call getRelatedTarget() directly on the Ext.event.Event instance instead.");
@@ -286,7 +286,7 @@ Ext.define('Ext.EventManager', {
      * @return {Number} The x coordinate
      * @deprecated 5.0.0
      */
-    getPageX: function(event) {
+    getPageX: function (event) {
         //<debug>
         Ext.log.warn("Ext.EventManager.getPageX() is deprecated. " +
             "Call getX() directly on the Ext.event.Event instance instead.");
@@ -300,7 +300,7 @@ Ext.define('Ext.EventManager', {
      * @return {Number[]} The x/y coordinate
      * @deprecated 5.0.0
      */
-    getPageXY: function(event) {
+    getPageXY: function (event) {
         //<debug>
         Ext.log.warn("Ext.EventManager.getPageXY() is deprecated. " +
             "Call getXY() directly on the Ext.event.Event instance instead.");
@@ -314,7 +314,7 @@ Ext.define('Ext.EventManager', {
         // pageX/pageY not available (undefined, not null), use clientX/clientY instead
         if (!x && x !== 0) {
             x = event.clientX + (docEl && docEl.scrollLeft || body && body.scrollLeft || 0) - (docEl && docEl.clientLeft || body && body.clientLeft || 0);
-            y = event.clientY + (docEl && docEl.scrollTop  || body && body.scrollTop  || 0) - (docEl && docEl.clientTop  || body && body.clientTop  || 0);
+            y = event.clientY + (docEl && docEl.scrollTop || body && body.scrollTop || 0) - (docEl && docEl.clientTop || body && body.clientTop || 0);
         }
         return [x, y];
     },
@@ -325,7 +325,7 @@ Ext.define('Ext.EventManager', {
      * @return {Number} The y coordinate
      * @deprecated 5.0.0
      */
-    getPageY: function(event) {
+    getPageY: function (event) {
         //<debug>
         Ext.log.warn("Ext.EventManager.getPageY() is deprecated. " +
             "Call getY() directly on the Ext.event.Event instance instead.");
@@ -339,7 +339,7 @@ Ext.define('Ext.EventManager', {
      * @return {HTMLElement} target
      * @deprecated 5.0.0
      */
-    getTarget: function(event) {
+    getTarget: function (event) {
         //<debug>
         Ext.log.warn("Ext.EventManager.getTarget() is deprecated. " +
             "Call getTarget() directly on the Ext.event.Event instance instead.");
@@ -360,20 +360,20 @@ Ext.define('Ext.EventManager', {
      * @deprecated 5.0.0
      */
     resolveTextNode: Ext.isGecko ?
-        function(node) {
+        function (node) {
             if (node) {
                 // work around firefox bug, https://bugzilla.mozilla.org/show_bug.cgi?id=101197
                 var s = HTMLElement.prototype.toString.call(node);
                 if (s !== '[xpconnect wrapped native prototype]' && s !== '[object XULElement]') {
-                    return node.nodeType === 3 ? node.parentNode: node;
+                    return node.nodeType === 3 ? node.parentNode : node;
                 }
             }
         }
         :
-        function(node) {
-            return node && node.nodeType === 3 ? node.parentNode: node;
+        function (node) {
+            return node && node.nodeType === 3 ? node.parentNode : node;
         }
-}, function(EventManager) {
+}, function (EventManager) {
     /**
      * @member Ext.EventManager
      * @method on

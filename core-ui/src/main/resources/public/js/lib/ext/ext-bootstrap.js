@@ -10,7 +10,7 @@
  * If none of the above is true or the `nodebug` query string parameter is present (http://foo/test.html?nodebug),
  * ext-all.js will be loaded.
  */
-(function() {
+(function () {
     var scripts = document.getElementsByTagName('script'),
         localhostTests = [
             /^localhost$/,

@@ -5,7 +5,7 @@ $button-default-base-color: dynamic(#f8f8f8);
 $button-default-base-color-over: dynamic(#f3f3f3);
 $button-default-base-color-focus: dynamic($button-default-base-color-over);
 $button-default-base-color-pressed: dynamic(#d6d6d6);
-$button-default-base-color-disabled: dynamic(adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%));  //F7F7F7
+$button-default-base-color-disabled: dynamic(adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%)); //F7F7F7
 
 $button-default-border-color: dynamic(#bbbbbb);
 $button-default-border-color-over: dynamic(#9d9d9d);

@@ -2,7 +2,7 @@ describe("Ext.util.Cache", function () {
     var evicted = [],
         cache;
 
-    function dump () {
+    function dump() {
         var a = [],
             i = 0;
 
@@ -81,7 +81,7 @@ describe("Ext.util.Cache", function () {
 
         var d = cache.get('d');
 
-        expect(evicted).toEqual([ 'evict:a={a}' ]);
+        expect(evicted).toEqual(['evict:a={a}']);
         expect(d).toBe('{d}');
         expect(cache.count).toBe(3);
         expect(dump()).toBe('3,d={d},c={c},b={b}');
@@ -110,7 +110,7 @@ describe("Ext.util.Cache", function () {
 
         cache.clear();
         expect(evicted.length).toBe(3);
-        expect(evicted).toEqual([ 'evict:c={c}', 'evict:b={b}', 'evict:a={a}' ]);
+        expect(evicted).toEqual(['evict:c={c}', 'evict:b={b}', 'evict:a={a}']);
     });
 
     it('should evict everything on destroy', function () {
@@ -126,6 +126,6 @@ describe("Ext.util.Cache", function () {
         expect(dump()).toBe('0');
 
         expect(evicted.length).toBe(3);
-        expect(evicted).toEqual([ 'evict:c={c}', 'evict:b={b}', 'evict:a={a}' ]);
+        expect(evicted).toEqual(['evict:c={c}', 'evict:b={b}', 'evict:a={a}']);
     });
 });

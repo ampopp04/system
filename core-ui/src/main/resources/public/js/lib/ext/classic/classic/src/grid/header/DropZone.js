@@ -6,7 +6,7 @@ Ext.define('Ext.grid.header.DropZone', {
     colHeaderCls: Ext.baseCSSPrefix + 'column-header',
     proxyOffsets: [-4, -9],
 
-    constructor: function(headerCt) {
+    constructor: function (headerCt) {
         var me = this;
 
         me.headerCt = headerCt;
@@ -20,15 +20,15 @@ Ext.define('Ext.grid.header.DropZone', {
         Ext.destroy(this.topIndicator, this.bottomIndicator);
     },
 
-    getDDGroup: function() {
+    getDDGroup: function () {
         return 'header-dd-zone-' + this.headerCt.up('[scrollerOwner]').id;
     },
 
-    getTargetFromEvent : function(e){
+    getTargetFromEvent: function (e) {
         return e.getTarget('.' + this.colHeaderCls);
     },
 
-    getTopIndicator: function() {
+    getTopIndicator: function () {
         if (!this.topIndicator) {
             this.topIndicator = Ext.getBody().createChild({
                 role: 'presentation',
@@ -44,7 +44,7 @@ Ext.define('Ext.grid.header.DropZone', {
         return this.topIndicator;
     },
 
-    getBottomIndicator: function() {
+    getBottomIndicator: function () {
         if (!this.bottomIndicator) {
             this.bottomIndicator = Ext.getBody().createChild({
                 role: 'presentation',
@@ -59,8 +59,8 @@ Ext.define('Ext.grid.header.DropZone', {
         return this.bottomIndicator;
     },
 
-    getLocation: function(e, t) {
-        var x      = e.getXY()[0],
+    getLocation: function (e, t) {
+        var x = e.getXY()[0],
             region = Ext.fly(t).getRegion(),
             pos;
 
@@ -76,12 +76,12 @@ Ext.define('Ext.grid.header.DropZone', {
         };
     },
 
-    positionIndicator: function(data, node, e){
+    positionIndicator: function (data, node, e) {
         var me = this,
-            dragHeader   = data.header,
+            dragHeader = data.header,
             dropLocation = me.getLocation(e, node),
             targetHeader = dropLocation.header,
-            pos          = dropLocation.pos,
+            pos = dropLocation.pos,
             nextHd,
             prevHd,
             topIndicator, bottomIndicator, topAnchor, bottomAnchor,
@@ -92,8 +92,8 @@ Ext.define('Ext.grid.header.DropZone', {
         if (targetHeader === me.lastTargetHeader && pos === me.lastDropPos) {
             return;
         }
-        nextHd       = dragHeader.nextSibling('gridcolumn:not([hidden])');
-        prevHd       = dragHeader.previousSibling('gridcolumn:not([hidden])');
+        nextHd = dragHeader.nextSibling('gridcolumn:not([hidden])');
+        prevHd = dragHeader.previousSibling('gridcolumn:not([hidden])');
         me.lastTargetHeader = targetHeader;
         me.lastDropPos = pos;
 
@@ -106,15 +106,14 @@ Ext.define('Ext.grid.header.DropZone', {
 
         if ((dragHeader !== targetHeader) &&
             ((pos === "before" && nextHd !== targetHeader) ||
-            (pos === "after" && prevHd !== targetHeader)) &&
-            !targetHeader.isDescendantOf(dragHeader)) {
+            (pos === "after" && prevHd !== targetHeader)) && !targetHeader.isDescendantOf(dragHeader)) {
 
             // As we move in between different DropZones that are in the same
             // group (such as the case when in a locked grid), invalidateDrop
             // on the other dropZones.
             allDropZones = Ext.dd.DragDropManager.getRelated(me);
             ln = allDropZones.length;
-            i  = 0;
+            i = 0;
 
             for (; i < ln; i++) {
                 dropZone = allDropZones[i];
@@ -152,18 +151,18 @@ Ext.define('Ext.grid.header.DropZone', {
             topIndicator.show();
             bottomIndicator.show();
 
-        // invalidate drop operation and hide indicators
+            // invalidate drop operation and hide indicators
         } else {
             me.invalidateDrop();
         }
     },
 
-    invalidateDrop: function() {
+    invalidateDrop: function () {
         this.valid = false;
         this.hideIndicators();
     },
 
-    onNodeOver: function(node, dragZone, e, data) {
+    onNodeOver: function (node, dragZone, e, data) {
         var me = this,
             from = data.header,
             doPosition,
@@ -190,7 +189,7 @@ Ext.define('Ext.grid.header.DropZone', {
                     data.crossPanel = true;
 
                     // If it's a lock operation, check that it's allowable.
-                    data.isLock   = toPanel.isLocked && !fromPanel.isLocked;
+                    data.isLock = toPanel.isLocked && !fromPanel.isLocked;
                     data.isUnlock = !toPanel.isLocked && fromPanel.isLocked;
                     if ((data.isUnlock && from.lockable === false) || (data.isLock && !from.isLockable())) {
                         doPosition = false;
@@ -207,7 +206,7 @@ Ext.define('Ext.grid.header.DropZone', {
         return me.valid ? me.dropAllowed : me.dropNotAllowed;
     },
 
-    hideIndicators: function() {
+    hideIndicators: function () {
         var me = this;
 
         me.getTopIndicator().hide();
@@ -215,7 +214,7 @@ Ext.define('Ext.grid.header.DropZone', {
         me.lastTargetHeader = me.lastDropPos = null;
     },
 
-    onNodeOut: function() {
+    onNodeOut: function () {
         this.hideIndicators();
     },
 
@@ -235,7 +234,7 @@ Ext.define('Ext.grid.header.DropZone', {
         return header;
     },
 
-    onNodeDrop: function(node, dragZone, e, data) {
+    onNodeDrop: function (node, dragZone, e, data) {
         // Do not process the upcoming click after this mouseup. It's not a click gesture
         this.headerCt.blockNextEvent();
 
@@ -243,17 +242,17 @@ Ext.define('Ext.grid.header.DropZone', {
         if (!this.valid) {
             return;
         }
-        
+
         var me = this,
             dragHeader = data.header,
             dropLocation = data.dropLocation,
             dropPosition = dropLocation.pos,
             targetHeader = dropLocation.header,
             fromCt = dragHeader.ownerCt,
-            fromCtRoot =  fromCt.getRootHeaderCt(),
+            fromCtRoot = fromCt.getRootHeaderCt(),
             toCt = targetHeader.ownerCt,
-            // Use the full column manager here, the indices we want are for moving the actual items in the container.
-            // The HeaderContainer translates this to visible columns for informing the view and firing events.
+        // Use the full column manager here, the indices we want are for moving the actual items in the container.
+        // The HeaderContainer translates this to visible columns for informing the view and firing events.
             visibleColumnManager = me.headerCt.visibleColumnManager,
             visibleFromIdx = visibleColumnManager.getHeaderIndex(dragHeader),
             visibleToIdx, colsToMove, moveMethod, scrollerOwner, savedWidth;
@@ -284,7 +283,7 @@ Ext.define('Ext.grid.header.DropZone', {
             // of all the headers.
             visibleToIdx = dropPosition === 'after' ?
                 // Get the last header in the most deeply-nested header group and add one.
-                visibleColumnManager.getHeaderIndex(me.getNestedHeader(targetHeader, 1)) + 1 :
+            visibleColumnManager.getHeaderIndex(me.getNestedHeader(targetHeader, 1)) + 1 :
                 // Get the first header in the most deeply-nested header group.
                 visibleColumnManager.getHeaderIndex(me.getNestedHeader(targetHeader, 0));
 
@@ -345,10 +344,8 @@ Ext.define('Ext.grid.header.DropZone', {
             // NOTE that targetHeader can be destroyed by this point if it was a group header
             // and we just dragged the last column out of it; in that case header's items collection
             // will be nulled.
-            if (visibleToIdx >= 0 && 
-                !(targetHeader.isGroupHeader && (!targetHeader.items || !targetHeader.items.length)) &&
-                visibleFromIdx !== visibleToIdx)
-            {
+            if (visibleToIdx >= 0 && !(targetHeader.isGroupHeader && (!targetHeader.items || !targetHeader.items.length)) &&
+                visibleFromIdx !== visibleToIdx) {
                 colsToMove = dragHeader.isGroupHeader ?
                     dragHeader.query(':not([hidden]):not([isGroupHeader])').length :
                     1;

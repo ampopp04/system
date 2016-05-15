@@ -1,27 +1,27 @@
-describe("Ext.app.EventBus", function() {
+describe("Ext.app.EventBus", function () {
     var eventbus = Ext.app.EventBus;
-    
-    it("should be a singleton", function() {
+
+    it("should be a singleton", function () {
         expect(Ext.app.EventBus.isInstance).toBeTruthy();
     });
-    
-    describe("register/unregister", function() {
+
+    describe("register/unregister", function () {
         var cmpDomain = Ext.app.domain.Component,
             ctrlDomain = Ext.app.domain.Controller,
-            ctrl = new Ext.app.Controller({ id: 'ctrl' }),
+            ctrl = new Ext.app.Controller({id: 'ctrl'}),
             handler = jasmine.createSpy('handler');
-        
-        it("should register controllers with control()", function() {
+
+        it("should register controllers with control()", function () {
             eventbus.control({
                 componentBar: {
                     eventBaz: handler
                 }
             }, ctrl);
-            
+
             expect(cmpDomain.bus.eventbaz.componentBar.ctrl).toBeDefined();
         });
-    
-        it("should register controllers with listen()", function() {
+
+        it("should register controllers with listen()", function () {
             eventbus.listen({
                 controller: {
                     '#controllerQux': {
@@ -29,13 +29,13 @@ describe("Ext.app.EventBus", function() {
                     }
                 }
             }, ctrl);
-            
+
             expect(ctrlDomain.bus.eventfred['#controllerQux'].ctrl).toBeDefined();
         });
-        
-        it("should unregister controllers with unlisten()", function() {
+
+        it("should unregister controllers with unlisten()", function () {
             eventbus.unlisten('ctrl');
-            
+
             expect(cmpDomain.bus.eventbaz.componentBar.ctrl).toBeUndefined();
             // AND
             expect(ctrlDomain.bus.eventfred['#controllerQux'].ctrl).toBeUndefined();

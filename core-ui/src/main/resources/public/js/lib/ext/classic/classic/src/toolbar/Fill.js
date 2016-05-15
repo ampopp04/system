@@ -22,13 +22,13 @@ Ext.define('Ext.toolbar.Fill', {
     requires: ['Ext.toolbar.Toolbar'],
     alias: 'widget.tbfill',
     alternateClassName: 'Ext.Toolbar.Fill',
-    
+
     ariaRole: 'presentation',
-    
+
     /**
      * @property {Boolean} isFill
      * `true` in this class to identify an object as an instantiated Fill, or subclass thereof.
      */
-    isFill : true,
+    isFill: true,
     flex: 1
 });

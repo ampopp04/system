@@ -46,7 +46,7 @@ Ext.define('Ext.device.Accelerometer', {
         'Ext.device.accelerometer.Simulator'
     ],
 
-    constructor: function() {
+    constructor: function () {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView && browserEnv.Cordova) {
             return Ext.create('Ext.device.accelerometer.Cordova');

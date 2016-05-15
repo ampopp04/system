@@ -1,23 +1,23 @@
 .#{$prefix}group-hd-container {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .#{$prefix}grid-group-hd {
-    white-space: nowrap;
-    outline: none;
+  white-space: nowrap;
+  outline: none;
 }
 
 .#{$prefix}grid-group-title {
-    position: relative;
+  position: relative;
 
-    @if $enable-font-icons {
-        &:before {
-            position: absolute;
-            left: 0;
-        }
+  @if $enable-font-icons {
+    &:before {
+      position: absolute;
+      left: 0;
     }
+  }
 }
 
 .#{$prefix}grid-row-body-hidden, .#{$prefix}grid-group-collapsed {
-    display: none;
+  display: none;
 }

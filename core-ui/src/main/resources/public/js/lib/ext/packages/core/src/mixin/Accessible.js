@@ -6,18 +6,18 @@
  */
 Ext.define('Ext.mixin.Accessible', {
     extend: 'Ext.Mixin',
-    
+
     mixinConfig: {
         id: 'accessible'
     },
-    
+
     /**
      * @cfg {String} [ariaLabel] ARIA label for this Component. It is best to use
      * {@link #ariaLabelledBy} option instead, because screen readers prefer
      * `aria-labelledby` attribute to `aria-label`. {@link #ariaLabel} and
      * {@link #ariaLabelledBy} config options are mutually exclusive.
      */
-    
+
     /**
      * @cfg {String} [ariaLabelledBy] DOM selector for a child element that is to be used
      * as label for this Component, set in `aria-labelledby` attribute.
@@ -27,13 +27,13 @@ Ext.define('Ext.mixin.Accessible', {
      * {@link #ariaLabelledBy} and {@link #ariaLabel} config options are
      * mutually exclusive, and `ariaLabelledBy` has the higher precedence.
      */
-    
+
     /**
      * @cfg {String} [ariaDescribedBy] DOM selector for a child element that is to be used
      * as description for this Component, set in `aria-describedby` attribute.
      * The selector works the same way as {@link #ariaLabelledBy}.
      */
-    
+
     config: {
         /**
          * @cfg {Object} ariaAttributes An object containing ARIA attributes to be set
@@ -48,14 +48,14 @@ Ext.define('Ext.mixin.Accessible', {
             lazy: true
         }
     },
-    
+
     /**
      * @property {String} [ariaRole] ARIA role for this Component, defaults to no role.
      * With no role, no other ARIA attributes are set.
      *
      * @readonly
      */
-    
+
     /**
      * @property {Object} [ariaRenderAttributes] **Instance specific** ARIA attributes
      * to render into Component's ariaEl. This object is only used during rendering,
@@ -63,7 +63,7 @@ Ext.define('Ext.mixin.Accessible', {
      *
      * @private
      */
-    
+
     privates: {
         /**
          * Find component(s) that label or describe this component,
@@ -77,10 +77,10 @@ Ext.define('Ext.mixin.Accessible', {
          * @return {Ext.Element} Element id string, or null
          * @private
          */
-        getAriaLabelEl: function(selector) {
+        getAriaLabelEl: function (selector) {
             var ids = [],
                 refHolder, i, len, cmp, result;
-            
+
             if (selector) {
                 if (Ext.isFunction(selector)) {
                     return selector.call(this);
@@ -89,13 +89,13 @@ Ext.define('Ext.mixin.Accessible', {
                     if (!Ext.isArray(selector)) {
                         selector = [selector];
                     }
-                    
+
                     refHolder = this.lookupReferenceHolder();
-                    
+
                     if (refHolder) {
                         for (i = 0, len = selector.length; i < len; i++) {
                             cmp = refHolder.lookupReference(selector[i]);
-                            
+
                             if (cmp) {
                                 ids.push(cmp.ariaEl.id);
                             }
@@ -103,7 +103,7 @@ Ext.define('Ext.mixin.Accessible', {
                     }
                 }
             }
-        
+
             return ids.length ? ids.join(' ') : null;
         }
     }

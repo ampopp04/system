@@ -15,7 +15,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
             n = i + 1;
 
             data.push({
-                field1: variableRowHeight ? ('<div style="height:' + Ext.Number.randomInt(20, 40)+ 'px">' + n + '</div>') : asymmetricRowHeight ? 40 : n,
+                field1: variableRowHeight ? ('<div style="height:' + Ext.Number.randomInt(20, 40) + 'px">' + n + '</div>') : asymmetricRowHeight ? 40 : n,
                 field2: n,
                 field3: n,
                 field4: n,
@@ -99,8 +99,9 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
 
         grid = new Ext.grid.Panel(Ext.apply({
             columns: [
-                {header: 'Name',  dataIndex: 'name', editor: 'textfield'},
-                {header: 'Email', dataIndex: 'email', flex:1,
+                {header: 'Name', dataIndex: 'name', editor: 'textfield'},
+                {
+                    header: 'Email', dataIndex: 'email', flex: 1,
                     editor: {
                         xtype: 'textfield',
                         allowBlank: false
@@ -181,14 +182,14 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
 
     beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
             }
             return this;
         };
-        loadTreeStore = Ext.data.TreeStore.prototype.load = function() {
+        loadTreeStore = Ext.data.TreeStore.prototype.load = function () {
             treeStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -217,8 +218,8 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
         store = grid = tree = view = plugin = null;
     });
 
-    describe('updateing scroller when changing width', function() {
-        it('should update the horizontal scroll range', function() {
+    describe('updateing scroller when changing width', function () {
+        it('should update the horizontal scroll range', function () {
             makeGrid();
             var scroller = view.getScrollable(),
                 maxX = scroller.getMaxPosition().x;
@@ -264,7 +265,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                             makeGrid({
                                 bufferedRenderer: useBR,
                                 columns: [
-                                    {header: 'Name',  dataIndex: 'name', editor: 'textfield'},
+                                    {header: 'Name', dataIndex: 'name', editor: 'textfield'},
                                     {header: 'Phone', dataIndex: 'phone', editor: 'textfield', locked: true},
                                     {header: 'Age', dataIndex: 'age', editor: 'textfield'}
                                 ]
@@ -294,8 +295,9 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 beforeEach(function () {
                     makeGrid({
                         columns: [
-                            {header: 'Name',  dataIndex: 'name', editor: 'textfield', locked: true},
-                            {header: 'Email', dataIndex: 'email', flex:1,
+                            {header: 'Name', dataIndex: 'name', editor: 'textfield', locked: true},
+                            {
+                                header: 'Email', dataIndex: 'email', flex: 1,
                                 editor: {
                                     xtype: 'textfield',
                                     allowBlank: false
@@ -361,7 +363,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                     Ext.grid.plugin.BufferedRenderer.prototype.scrollToLoadBuffer = 10000;
                     makeGrid({
                         columns: [
-                            {header: 'Name',  dataIndex: 'name', editor: 'textfield'},
+                            {header: 'Name', dataIndex: 'name', editor: 'textfield'},
                             {header: 'Phone', dataIndex: 'phone', editor: 'textfield', locked: true},
                             {header: 'Age', dataIndex: 'age', editor: 'textfield'}
                         ]
@@ -395,15 +397,15 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                         data: makeData(100, 301)
                     });
                 });
-                afterEach(function() {
+                afterEach(function () {
                     Ext.grid.plugin.BufferedRenderer.prototype.scrollToLoadBuffer = scrollToLoadBufferValue;
                 });
-                it('should not have time between scroll events to fire off any requests', function() {
+                it('should not have time between scroll events to fire off any requests', function () {
                     spyOn(plugin, 'doAttemptLoad');
-                    
+
                     // Scroll to close enough to the end in a slow manner, 50ms between each scroll.
                     // The doAttemptLoad timer should not timeout and fire off a page request between each scroll.
-                    waitsFor(function() {
+                    waitsFor(function () {
                         if (plugin.getLastVisibleRowIndex() <= 995) {
                             if (!scrollTimer) {
                                 scrollTimer = setTimeout(scrollTheGrid, 50);
@@ -414,7 +416,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                     }, 'grid to scroll to end', Ext.isIE ? 40000 : 20000);
 
                     // The atteptLoad timer must never have fired during the scroll.
-                    runs(function() {
+                    runs(function () {
                         expect(plugin.doAttemptLoad.callCount).toBe(0);
                     });
                 });
@@ -422,8 +424,8 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
         });
     });
 
-    describe("Less data than the computed view size", function() {
-        it("should add new rows at top while scrolled to bottom", function() {
+    describe("Less data than the computed view size", function () {
+        it("should add new rows at top while scrolled to bottom", function () {
             var Person = Ext.define(null, {
                 extend: 'Ext.data.Model',
                 fields: ['name'],
@@ -448,7 +450,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 deferRowRender: false,
                 columns: [{
                     dataIndex: 'id',
-                    renderer: function(v) {
+                    renderer: function (v) {
                         return '<span style="line-height:25px">' + v + '</span>';
                     },
                     producesHTML: true
@@ -461,7 +463,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
 
             // Wait until known correct condition is met.
             // Timeout === test failure.
-            waitsFor(function() {
+            waitsFor(function () {
                 if (view.all.endIndex === store.getCount() - 1) {
                     return true;
                 }
@@ -471,23 +473,23 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 }
             }, 'view is scrolled to the last record');
 
-            runs(function() {
+            runs(function () {
                 store.insert(0, {id: 666, name: 'Old Nick'});
                 view.scrollTo(0, 0);
-                
+
                 var r0 = view.all.item(0, true);
 
                 // Must have been rendered
                 expect(r0).not.toBeNull();
 
                 // The new row zero must have been rendered.
-                expect((r0.innerText || r0.textContent).replace(/\n/g,'').replace(/\r/g,'')).toBe("666Old Nick");
+                expect((r0.innerText || r0.textContent).replace(/\n/g, '').replace(/\r/g, '')).toBe("666Old Nick");
             });
         });
     });
 
-    describe("basic functionality with a buffered store", function() {
-        it("should render rows in order", function() {
+    describe("basic functionality with a buffered store", function () {
+        it("should render rows in order", function () {
             var Person = Ext.define(null, {
                 extend: 'Ext.data.Model',
                 fields: ['name'],
@@ -540,7 +542,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
 
             // Wait until known correct condition is met.
             // Timeout === test failure.
-            waitsFor(function() {
+            waitsFor(function () {
                 if (rows.startIndex <= 100 && rows.endIndex >= 100) {
                     return true;
                 }
@@ -550,7 +552,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 }
             }, 'View to scroll record id 100 into the rendered block', 20000);
 
-            runs(function() {
+            runs(function () {
                 var nodes = view.getNodes(),
                     len = nodes.length,
                     offset = rows.startIndex + 1,
@@ -566,21 +568,21 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
         });
 
         // EXTJS-16140
-        it("should scroll to the bottom of a locking grid with no error", function() {
+        it("should scroll to the bottom of a locking grid with no error", function () {
             var Person = Ext.define(null, {
-                extend: 'Ext.data.Model',
-                fields: ['name'],
-                proxy: {
-                    type: 'ajax',
-                    url: '/foo',
-                    reader: {
-                        rootProperty: 'data'
+                    extend: 'Ext.data.Model',
+                    fields: ['name'],
+                    proxy: {
+                        type: 'ajax',
+                        url: '/foo',
+                        reader: {
+                            rootProperty: 'data'
+                        }
                     }
-                }
-            }),
-            lockedView,
-            normalView,
-            maxScroll;
+                }),
+                lockedView,
+                normalView,
+                maxScroll;
 
             store = new Ext.data.BufferedStore({
                 model: Person,
@@ -619,18 +621,18 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
 
             // Important: Simulate Ajax delay before returning data
             waits(100);
-            runs(function() {
+            runs(function () {
                 satisfyRequests();
             });
-            
+
             // Both views must render up to the last row with no error thrown
-            waitsFor(function() {
+            waitsFor(function () {
                 return lockedView.all.endIndex === 4999 && normalView.all.endIndex === 4999;
             });
         });
 
         // EXTJS-17053
-        it('should maintain synchronization when scrolling locked, variable row height grid with keyboard', function() {
+        it('should maintain synchronization when scrolling locked, variable row height grid with keyboard', function () {
             store = Ext.create('Ext.data.Store', {
                 idProperty: 'index',
                 fields: ['index', 'name', 'email', 'phone', 'isActive', 'eyeColor', 'company', 'gender'],
@@ -1635,15 +1637,15 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 lockedRows = lockedView.all,
                 navModel = normalView.getNavigationModel();
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return normalView.all.getCount();
             });
 
-            runs(function() {
+            runs(function () {
                 navModel.setPosition(new Ext.grid.CellContext(lockedView).setPosition(0, 0));
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 var a = Ext.Element.getActiveElement(),
                     p = navModel.getPosition();
 
@@ -1658,7 +1660,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 }
             }, 'down arrow to scroll to the last row. 20 seconds expired', 20000);
 
-            runs(function() {
+            runs(function () {
                 var i;
 
                 // Row count must be in sync
@@ -1679,35 +1681,35 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
         describe('locking grid', function () {
             function doIt(reconfigure) {
                 var columns = [{
-                    text: 'Col 1',
-                    dataIndex: 'field1',
-                    width: 100,
-                    locked: true
-                }, {
-                    text: 'Col 2',
-                    dataIndex: 'field2',
-                    width: 100
-                }, {
-                    text: 'Col 3',
-                    dataIndex: 'field3',
-                    width: 100
-                }, {
-                    text: 'Col 4',
-                    dataIndex: 'field4',
-                    width: 100
-                }, {
-                    text: 'Col 5',
-                    dataIndex: 'field5',
-                    height: 25,
-                    width: 150,
-                    xtype: 'widgetcolumn',
-                    widget: {
-                        xtype: 'progressbarwidget',
+                        text: 'Col 1',
+                        dataIndex: 'field1',
+                        width: 100,
+                        locked: true
+                    }, {
+                        text: 'Col 2',
+                        dataIndex: 'field2',
+                        width: 100
+                    }, {
+                        text: 'Col 3',
+                        dataIndex: 'field3',
+                        width: 100
+                    }, {
+                        text: 'Col 4',
+                        dataIndex: 'field4',
+                        width: 100
+                    }, {
+                        text: 'Col 5',
+                        dataIndex: 'field5',
                         height: 25,
-                        textTpl: ['{percent:number("0")}% capacity']
-                    }
-                }],
-                nodeCache;
+                        width: 150,
+                        xtype: 'widgetcolumn',
+                        widget: {
+                            xtype: 'progressbarwidget',
+                            height: 25,
+                            textTpl: ['{percent:number("0")}% capacity']
+                        }
+                    }],
+                    nodeCache;
 
                 makeGrid({
                     columns: columns
@@ -1748,58 +1750,58 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
         });
 
         describe('locking grid with variableRowHeight', function () {
-            itIE10p('should keep the row heights on both sides synchronized', function() {
+            itIE10p('should keep the row heights on both sides synchronized', function () {
                 var columns = [{
-                    text: 'Col 1',
-                    dataIndex: 'field1',
-                    width: 100,
-                    locked: true,
-                    variableRowHeight: true
-                }, {
-                    text: 'Col 2',
-                    dataIndex: 'field2',
-                    width: 100
-                }, {
-                    text: 'Col 3',
-                    dataIndex: 'field3',
-                    width: 100
-                }, {
-                    text: 'Col 4',
-                    dataIndex: 'field4',
-                    width: 100
-                }, {
-                    text: 'Col 5',
-                    dataIndex: 'field5',
-                    height: 25,
-                    width: 150,
-                    xtype: 'widgetcolumn',
-                    widget: {
-                        xtype: 'progressbarwidget',
+                        text: 'Col 1',
+                        dataIndex: 'field1',
+                        width: 100,
+                        locked: true,
+                        variableRowHeight: true
+                    }, {
+                        text: 'Col 2',
+                        dataIndex: 'field2',
+                        width: 100
+                    }, {
+                        text: 'Col 3',
+                        dataIndex: 'field3',
+                        width: 100
+                    }, {
+                        text: 'Col 4',
+                        dataIndex: 'field4',
+                        width: 100
+                    }, {
+                        text: 'Col 5',
+                        dataIndex: 'field5',
                         height: 25,
-                        textTpl: ['{percent:number("0")}% capacity']
-                    }
-                }],
-                nodeCache,
-                lockedView,
-                bufferedRendererInvocationCount = 0,
-                onSyncHeights = function() {
-                    var lockedItems = lockedView.all.slice(),
-                        normalItems = nodeCache.slice(),
-                        lockedSize = lockedItems.length,
-                        normalSize = normalItems.length,
-                        i,
-                        allEqual = true;
+                        width: 150,
+                        xtype: 'widgetcolumn',
+                        widget: {
+                            xtype: 'progressbarwidget',
+                            height: 25,
+                            textTpl: ['{percent:number("0")}% capacity']
+                        }
+                    }],
+                    nodeCache,
+                    lockedView,
+                    bufferedRendererInvocationCount = 0,
+                    onSyncHeights = function () {
+                        var lockedItems = lockedView.all.slice(),
+                            normalItems = nodeCache.slice(),
+                            lockedSize = lockedItems.length,
+                            normalSize = normalItems.length,
+                            i,
+                            allEqual = true;
 
-                    // must be same number of rows
-                    expect(lockedSize).toBe(normalSize);
+                        // must be same number of rows
+                        expect(lockedSize).toBe(normalSize);
 
-                    for (i = 0; allEqual && i < lockedSize; i++) {
-                        allEqual = allEqual && normalItems[i].offsetHeight === lockedItems[i].offsetHeight;
-                    }
-                    // All rows must be same size
-                    expect(allEqual).toBe(true);
-                    bufferedRendererInvocationCount++;
-                };
+                        for (i = 0; allEqual && i < lockedSize; i++) {
+                            allEqual = allEqual && normalItems[i].offsetHeight === lockedItems[i].offsetHeight;
+                        }
+                        // All rows must be same size
+                        expect(allEqual).toBe(true);
+                        bufferedRendererInvocationCount++;
+                    };
 
                 // Make grid with small buffer zones.
                 makeGrid({
@@ -1851,11 +1853,11 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                         view.scrollBy(null, 1000);
                     }
                 }, 'row 990 to scroll into view', 30000, 100);
-                
+
                 // Scrolling is too fast for IE8, need to repaint the grid
                 // so that measurements below will yield correct values
                 if (Ext.isIE8) {
-                    runs(function() {
+                    runs(function () {
                         grid.hide();
                         grid.show();
                     });
@@ -1864,10 +1866,10 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 // Must have invoked the row syncher and the two body heights must be the same
                 runs(function () {
                     expect(bufferedRendererInvocationCount).toBeGreaterThan(0);
-                    
+
                     var mainHeight = view.el.down('.x-grid-item-container').getHeight(),
                         partnerHeight = view.lockingPartner.el.down('.x-grid-item-container').getHeight();
-                    
+
                     expect(partnerHeight).toBe(mainHeight);
                     bufferedRendererInvocationCount = 0;
                 });
@@ -1875,60 +1877,60 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
         });
 
         describe('locking grid with asymmetricRowHeight', function () {
-            it('should keep the row heights on both sides synchronized', function() {
+            it('should keep the row heights on both sides synchronized', function () {
                 // Note that we do NOT set variableRowHeight. All row heights are the same
                 // even if one side drives the row height, and the sides need syncing.
                 // This means BufferedRenderer can use simple arithmetic to find first/last visible row index.
                 var columns = [{
-                    text: 'Col 1',
-                    dataIndex: 'field1',
-                    width: 100,
-                    locked: true
-                }, {
-                    text: 'Col 2',
-                    dataIndex: 'field2',
-                    width: 100
-                }, {
-                    text: 'Col 3',
-                    dataIndex: 'field3',
-                    width: 100
-                }, {
-                    text: 'Col 4',
-                    dataIndex: 'field4',
-                    width: 100
-                }, {
-                    text: 'Col 5',
-                    dataIndex: 'field5',
-                    height: 25,
-                    width: 150,
-                    xtype: 'widgetcolumn',
-                    widget: {
-                        xtype: 'progressbarwidget',
+                        text: 'Col 1',
+                        dataIndex: 'field1',
+                        width: 100,
+                        locked: true
+                    }, {
+                        text: 'Col 2',
+                        dataIndex: 'field2',
+                        width: 100
+                    }, {
+                        text: 'Col 3',
+                        dataIndex: 'field3',
+                        width: 100
+                    }, {
+                        text: 'Col 4',
+                        dataIndex: 'field4',
+                        width: 100
+                    }, {
+                        text: 'Col 5',
+                        dataIndex: 'field5',
                         height: 25,
-                        textTpl: ['{percent:number("0")}% capacity']
-                    }
-                }],
-                nodeCache,
-                lockedView,
-                bufferedRendererInvocationCount = 0,
-                onSyncHeights = function() {
-                    var lockedItems = lockedView.all.slice(),
-                        normalItems = nodeCache.slice(),
-                        lockedSize = lockedItems.length,
-                        normalSize = normalItems.length,
-                        i,
-                        allEqual = true;
+                        width: 150,
+                        xtype: 'widgetcolumn',
+                        widget: {
+                            xtype: 'progressbarwidget',
+                            height: 25,
+                            textTpl: ['{percent:number("0")}% capacity']
+                        }
+                    }],
+                    nodeCache,
+                    lockedView,
+                    bufferedRendererInvocationCount = 0,
+                    onSyncHeights = function () {
+                        var lockedItems = lockedView.all.slice(),
+                            normalItems = nodeCache.slice(),
+                            lockedSize = lockedItems.length,
+                            normalSize = normalItems.length,
+                            i,
+                            allEqual = true;
 
-                    // must be same number of rows
-                    expect(lockedSize).toBe(normalSize);
+                        // must be same number of rows
+                        expect(lockedSize).toBe(normalSize);
 
-                    for (i = 0; allEqual && i < lockedSize; i++) {
-                        allEqual = allEqual && normalItems[i].offsetHeight === lockedItems[i].offsetHeight;
-                    }
-                    // All rows must be same size
-                    expect(allEqual).toBe(true);
-                    bufferedRendererInvocationCount++;
-                };
+                        for (i = 0; allEqual && i < lockedSize; i++) {
+                            allEqual = allEqual && normalItems[i].offsetHeight === lockedItems[i].offsetHeight;
+                        }
+                        // All rows must be same size
+                        expect(allEqual).toBe(true);
+                        bufferedRendererInvocationCount++;
+                    };
 
                 // Make grid with small buffer zones.
                 makeGrid({
@@ -1983,11 +1985,11 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                         view.scrollBy(null, 1000);
                     }
                 }, 'row 990 to scroll into view', 30000, 100);
-                
+
                 // Scrolling is too fast for IE8, need to repaint the grid
                 // so that measurements below will yield correct values
                 if (Ext.isIE8) {
-                    runs(function() {
+                    runs(function () {
                         grid.hide();
                         grid.show();
                     });
@@ -1996,10 +1998,10 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 // Must have invoked the row syncher and the two body heights must be the same
                 runs(function () {
                     expect(bufferedRendererInvocationCount).toBeGreaterThan(0);
-                    
+
                     var mainHeight = view.el.down('.x-grid-item-container').getHeight(),
                         partnerHeight = view.lockingPartner.el.down('.x-grid-item-container').getHeight();
-                    
+
                     expect(partnerHeight).toBe(mainHeight);
                     bufferedRendererInvocationCount = 0;
                 });
@@ -2015,29 +2017,29 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 // course, will throw an exception when the rows are attempted to be created by the template in
                 // AbstractView.refresh(). See EXTJS-12633.
                 var successData = {
-                    success: true,
-                    totally: 1000,
-                    data: [{
-                        first: 'First',
-                        last: 'Last'
-                    }, {
-                        first: 'First',
-                        last: 'Last'
-                    }],
-                    metaData: {
-                        root: 'data',
-                        totalProperty: 'totally',
-                        fields: ['first', 'last'],
-                        columns: [{
-                            text: 'First',
-                            dataIndex: 'first'
+                        success: true,
+                        totally: 1000,
+                        data: [{
+                            first: 'First',
+                            last: 'Last'
                         }, {
-                            text: 'Last',
-                            dataIndex: 'last'
-                        }]
-                    }
-                },
-                wasCalled = false;
+                            first: 'First',
+                            last: 'Last'
+                        }],
+                        metaData: {
+                            root: 'data',
+                            totalProperty: 'totally',
+                            fields: ['first', 'last'],
+                            columns: [{
+                                text: 'First',
+                                dataIndex: 'first'
+                            }, {
+                                text: 'Last',
+                                dataIndex: 'last'
+                            }]
+                        }
+                    },
+                    wasCalled = false;
 
                 makeGrid(null, {
                     data: null,
@@ -2244,12 +2246,17 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
             });
         });
 
-        describe('Measuring row height', function() {
-            it('should measure row height', function() {
+        describe('Measuring row height', function () {
+            it('should measure row height', function () {
                 makeGrid(null, {
                     groupField: null,
                     data: [
-                        {'name': '<div style="height:30px">Lisa</div>', 'email': 'lisa@simpsons.com', 'phone': '555-111-1224', 'age': 14},
+                        {
+                            'name': '<div style="height:30px">Lisa</div>',
+                            'email': 'lisa@simpsons.com',
+                            'phone': '555-111-1224',
+                            'age': 14
+                        },
                         {'name': 'Lisa', 'email': 'aunt_lisa@simpsons.com', 'phone': '555-111-1274', 'age': 34},
                         {'name': 'Bart', 'email': 'bart@simpsons.com', 'phone': '555-222-1234', 'age': 12},
                         {'name': 'Homer', 'email': 'homer@simpsons.com', 'phone': '555-222-1244', 'age': 44},
@@ -2261,13 +2268,13 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 // EXTJS-15942 - did not measure, stayed at classic default of 21
                 var row = view.all.first(),
                     rowHeight = row.getHeight();
-                
+
                 // In IE8 we're adding a bottom border on the rows and shifting the row up
                 // at -border-width to compensate for that
                 if (Ext.isIE8) {
                     rowHeight -= row.getBorderWidth('b');
                 }
-                
+
                 expect(plugin.rowHeight).toBe(rowHeight);
             });
         });
@@ -2276,7 +2283,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
     describe('filtering the store', function () {
         var Hobbit, store;
 
-        afterEach(function() {
+        afterEach(function () {
             Ext.destroy(Hobbit, store);
         });
 
@@ -2389,11 +2396,11 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
             selModel = grid.selModel;
 
             // Wait for first block to be rendered
-            waitsFor(function() {
+            waitsFor(function () {
                 return view.all.startIndex === 0 && view.all.getCount();
             });
 
-            runs(function() {
+            runs(function () {
 
                 // Only show the first 2500
                 store.addFilter({
@@ -2418,7 +2425,10 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
 
             runs(function () {
                 // Click to select from start to end.
-                jasmine.fireMouseEvent(view.getCellByPosition({row: 2499, column: 0}, true), 'click', null, null, null, true);
+                jasmine.fireMouseEvent(view.getCellByPosition({
+                    row: 2499,
+                    column: 0
+                }, true), 'click', null, null, null, true);
                 expect(view.selModel.getSelection().length).toBe(2500);
 
                 store.remove(selModel.getSelection());
@@ -2429,7 +2439,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 // Should have gone to top
                 expect(view.all.getCount()).toBe(0);
                 expect(view.getScrollY()).toBe(0);
-                
+
                 // Unfortunately, we're testing private properties here :(
                 expect(plugin.bodyTop).toBe(0);
                 expect(plugin.position).toBe(0);
@@ -2446,9 +2456,9 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
         });
     });
 
-    describe("reloading store", function() {
-        describe("from having items to not having items", function() {
-            it("should not cause an error when reloading", function() {
+    describe("reloading store", function () {
+        describe("from having items to not having items", function () {
+            it("should not cause an error when reloading", function () {
                 var store = new Ext.data.BufferedStore({
                     fields: ['id'],
                     autoDestroy: true,
@@ -2481,7 +2491,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 expect(view.getNodes()).toEqual([]);
             });
 
-            it("should show emptyText if specified", function() {
+            it("should show emptyText if specified", function () {
                 var store = new Ext.data.BufferedStore({
                     fields: ['id'],
                     autoDestroy: true,
@@ -2569,14 +2579,14 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
         });
     });
 
-    describe('Expanding view size', function() {
+    describe('Expanding view size', function () {
         var window;
 
-        afterEach(function() {
+        afterEach(function () {
             window.destroy();
         });
 
-        it('should scroll to top when view size expands to encapsulate whole dataset', function() {
+        it('should scroll to top when view size expands to encapsulate whole dataset', function () {
             var Person = Ext.define(null, {
                 extend: 'Ext.data.Model',
                 fields: ['name'],
@@ -2657,37 +2667,38 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 return view.all.endIndex === view.store.getCount() - 1;
             }, 'scroll to end', 10000);
 
-            runs(function() {
+            runs(function () {
                 view.scrollBy(null, 100);
 
                 tabPanel.setActiveTab(1);
 
                 // inserting at top
-                grid.store.insert(0,{'title': 'hi',replycount:5});
-                grid.store.insert(0,{'title': 'hi2',replycount:5});
+                grid.store.insert(0, {'title': 'hi', replycount: 5});
+                grid.store.insert(0, {'title': 'hi2', replycount: 5});
 
-                grid1.store.insert(0,{'title': 'hi',replycount:5});
-                grid1.store.insert(0,{'title': 'hi2',replycount:5});
+                grid1.store.insert(0, {'title': 'hi', replycount: 5});
+                grid1.store.insert(0, {'title': 'hi2', replycount: 5});
 
                 tabPanel.setActiveTab(0);
 
                 window.setHeight(940);
             });
-            
+
             // Scroll all the way to the start
             waitsFor(function () {
                 view.scrollBy(null, -100);
-                return view.getScrollY() === 0;;
+                return view.getScrollY() === 0;
+                ;
             }, 'scroll to top', 10000);
 
-            runs(function() {
+            runs(function () {
                 expect(view.bufferedRenderer.bodyTop).toBe(0);
             });
         });
     });
 
-    describe('ensureVisible', function() {
-        it('should work in a viewready listener', function() {
+    describe('ensureVisible', function () {
+        it('should work in a viewready listener', function () {
             var done,
                 columns = [{
                     text: 'Col 1',
@@ -2706,13 +2717,13 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                     dataIndex: 'field4',
                     width: 100
                 }];
-            
+
             makeGrid({
                 columns: columns,
-                listeners : {
-                    viewready : function(grid) {
+                listeners: {
+                    viewready: function (grid) {
                         grid.ensureVisible(grid.getStore().last(), {
-                            callback: function() {
+                            callback: function () {
                                 done = true;
                             }
                         });
@@ -2723,7 +2734,7 @@ describe('Ext.grid.plugin.BufferedRenderer', function () {
                 data: createData(1000)
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 return done;
             });
 

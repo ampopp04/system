@@ -169,8 +169,8 @@ Ext.define('Ext.chart.series.Pie3D', {
     getStyleByIndex: function (i) {
         var indexStyle = this.callParent([i]),
             style = this.getStyle(),
-            // 'fill' and 'color' are 'fillStyle' aliases
-            // (see Ext.draw.sprite.Sprite.inheritableStatics.def.aliases)
+        // 'fill' and 'color' are 'fillStyle' aliases
+        // (see Ext.draw.sprite.Sprite.inheritableStatics.def.aliases)
             fillStyle = indexStyle.fillStyle || indexStyle.fill || indexStyle.color,
             strokeStyle = style.strokeStyle || style.stroke;
 
@@ -220,8 +220,8 @@ Ext.define('Ext.chart.series.Pie3D', {
             spritesPerSlice = me.spritesPerSlice,
             lastAngle = 0,
             twoPi = Math.PI * 2,
-            // To avoid adjacent start/end part blinking (z-index jitter)
-            // when rotating a translucent pie chart.
+        // To avoid adjacent start/end part blinking (z-index jitter)
+        // when rotating a translucent pie chart.
             delta = 1e-10,
             i, j;
 
@@ -463,7 +463,7 @@ Ext.define('Ext.chart.series.Pie3D', {
                 style = me.getStyleByIndex(i);
                 color = style.baseColor;
                 target.push({
-                    name: labelField ? String(items[i].get(labelField))  : field + ' ' + i,
+                    name: labelField ? String(items[i].get(labelField)) : field + ' ' + i,
                     mark: color || 'black',
                     disabled: hidden[i],
                     series: me.getId(),

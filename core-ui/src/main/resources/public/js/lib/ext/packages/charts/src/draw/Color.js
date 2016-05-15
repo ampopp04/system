@@ -100,7 +100,7 @@ Ext.define('Ext.draw.Color', {
      * Get the equivalent HSV components of the color.
      * @return {Number[]}
      */
-    getHSV: function() {
+    getHSV: function () {
         var me = this,
             r = me.r / 255,
             g = me.g / 255,
@@ -269,9 +269,9 @@ Ext.define('Ext.draw.Color', {
     },
 
     /**
-     * toString() returns a color in hex format ('#rrggbb') if the alpha is 1. If the 
+     * toString() returns a color in hex format ('#rrggbb') if the alpha is 1. If the
      * alpha is less than one, toString() returns the color in RGBA format ('rgba(255,0,0,0.3)').
-     * 
+     *
      * @return {String}
      */
     toString: function () {
@@ -288,11 +288,11 @@ Ext.define('Ext.draw.Color', {
             return ['#', r, g, b].join('');
         } else {
             return 'rgba(' + [
-                round(me.r),
-                round(me.g),
-                round(me.b),
-                me.a === 0 ? 0 : me.a.toFixed(15)
-            ].join(', ') + ')';
+                    round(me.r),
+                    round(me.g),
+                    round(me.b),
+                    me.a === 0 ? 0 : me.a.toFixed(15)
+                ].join(', ') + ')';
             // Even though things like 'rgba(0,0,0,0)' will probably get converted to
             // 'rgba(0, 0, 0, 0)' when assigned to ctx.fillStyle or ctx.strokeStyle,
             // we can't be sure this is the case for every browser, so for consistency
@@ -335,8 +335,8 @@ Ext.define('Ext.draw.Color', {
     /**
      * Parse the string and set the current color.
      *
-     * Supported formats: 
-     * 
+     * Supported formats:
+     *
      * + '#rrggbb'
      * + '#rgb', 'rgb(r,g,b)'
      * + 'rgba(r,g,b,a)'
@@ -597,8 +597,8 @@ Ext.define('Ext.draw.Color', {
         /**
          * Parse the string and create a new color.
          *
-         * Supported formats: 
-         * 
+         * Supported formats:
+         *
          * + '#rrggbb'
          * + '#rgb', 'rgb(r,g,b)'
          * + 'rgba(r,g,b,a)'

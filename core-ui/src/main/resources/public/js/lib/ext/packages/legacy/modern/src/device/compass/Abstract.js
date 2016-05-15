@@ -9,7 +9,7 @@ Ext.define('Ext.device.compass.Abstract', {
         frequency: 100
     },
 
-    getHeadingAvailable: function(config) {
+    getHeadingAvailable: function (config) {
         // <debug>
         if (!config.callback) {
             Ext.Logger.warn('You need to specify a `callback` function for #getHeadingAvailable');
@@ -19,7 +19,7 @@ Ext.define('Ext.device.compass.Abstract', {
         return config;
     },
 
-    getCurrentHeading: function(config) {
+    getCurrentHeading: function (config) {
         // <debug>
         if (!config.success) {
             Ext.Logger.warn('You need to specify a `success` function for #getCurrentHeading');
@@ -29,7 +29,7 @@ Ext.define('Ext.device.compass.Abstract', {
         return config;
     },
 
-    watchHeading: function(config) {
+    watchHeading: function (config) {
         var defaultConfig = Ext.device.compass.Abstract.prototype.config;
 
         config = Ext.applyIf(config, {

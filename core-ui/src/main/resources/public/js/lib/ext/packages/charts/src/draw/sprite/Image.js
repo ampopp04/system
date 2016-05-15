@@ -1,7 +1,7 @@
 /**
  * @class Ext.draw.sprite.Image
  * @extends Ext.draw.sprite.Rect
- * 
+ *
  * A sprite that represents an image.
  */
 Ext.define('Ext.draw.sprite.Image', {
@@ -58,8 +58,8 @@ Ext.define('Ext.draw.sprite.Image', {
             mat.toContext(ctx);
             image = loadingStub.image;
             ctx.drawImage(image, x, y,
-                    width || (image.naturalWidth || image.width) / surface.devicePixelRatio,
-                    height || (image.naturalHeight || image.height) / surface.devicePixelRatio);
+                width || (image.naturalWidth || image.width) / surface.devicePixelRatio,
+                height || (image.naturalHeight || image.height) / surface.devicePixelRatio);
         } else if (!loadingStub) {
             imageLoader = new Image();
             loadingStub = Ext.draw.sprite.Image.imageLoaders[src] = {

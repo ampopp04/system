@@ -4,7 +4,7 @@
  */
 Ext.define('Ext.util.GroupCollection', {
     extend: 'Ext.util.Collection',
-    
+
     requires: [
         'Ext.util.Group',
 
@@ -242,8 +242,8 @@ Ext.define('Ext.util.GroupCollection', {
             me.splice(0, removeGroups);
         }
     },
-    
-    createGroup: function(source, key) {
+
+    createGroup: function (source, key) {
         var group = new Ext.util.Group({
             groupKey: key,
             rootProperty: this.getItemRoot(),
@@ -251,8 +251,8 @@ Ext.define('Ext.util.GroupCollection', {
         });
         return group;
     },
-    
-    getKey: function(item) {
+
+    getKey: function (item) {
         return item.getGroupKey();
     },
 
@@ -273,20 +273,20 @@ Ext.define('Ext.util.GroupCollection', {
         };
     },
 
-    updateGrouper: function(grouper) {
+    updateGrouper: function (grouper) {
         var me = this;
         me.grouped = !!(grouper && me.$groupable.getAutoGroup());
         me.onSorterChange();
         me.onEndUpdateSorters(me.getSorters());
     },
 
-    destroy: function() {
+    destroy: function () {
         this.$groupable = null;
         this.callParent();
     },
 
     privates: {
-        findGroupForItem: function(item) {
+        findGroupForItem: function (item) {
             var items = this.items,
                 len = items.length,
                 i, group;

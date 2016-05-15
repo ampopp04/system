@@ -23,10 +23,7 @@ $grid-cell-field-height: dynamic(if($grid-row-height < $form-field-height, $grid
  * The padding of grid fields.
  */
 $grid-cell-field-padding: dynamic(
-    top($form-field-padding)
-    right($grid-cell-inner-padding) - $form-field-border-width
-    bottom($form-field-padding)
-    left($grid-cell-inner-padding) - $form-field-border-width
+                top($form-field-padding) right($grid-cell-inner-padding) - $form-field-border-width bottom($form-field-padding) left($grid-cell-inner-padding) - $form-field-border-width
 );
 
 /**

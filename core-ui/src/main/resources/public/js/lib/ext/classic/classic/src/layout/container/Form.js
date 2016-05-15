@@ -76,19 +76,18 @@ Ext.define('Ext.layout.container.Form', {
 
     childEls: ['formWrap', 'labelColumn'],
 
-    beforeBodyTpl:
-        '<div id="{ownerId}-formWrap" data-ref="formWrap" class="{formWrapCls}"' +
-            '<tpl if="itemSpacing"> style="border-spacing:{itemSpacing}px"</tpl>>' +
-            '<div class="{formColGroupCls}">' +
-                '<div id="{ownerId}-labelColumn" data-ref="labelColumn" class="{formColumnCls} {formLabelColumnCls}"' +
-                    '<tpl if="labelWidth"> style="width:{labelWidth}"</tpl>>' +
-                '</div>' +
-                '<div class="{formColumnCls}"></div>' +
-            '</div>',
+    beforeBodyTpl: '<div id="{ownerId}-formWrap" data-ref="formWrap" class="{formWrapCls}"' +
+    '<tpl if="itemSpacing"> style="border-spacing:{itemSpacing}px"</tpl>>' +
+    '<div class="{formColGroupCls}">' +
+    '<div id="{ownerId}-labelColumn" data-ref="labelColumn" class="{formColumnCls} {formLabelColumnCls}"' +
+    '<tpl if="labelWidth"> style="width:{labelWidth}"</tpl>>' +
+    '</div>' +
+    '<div class="{formColumnCls}"></div>' +
+    '</div>',
 
     afterBodyTpl: '</div>',
 
-    getRenderData: function() {
+    getRenderData: function () {
         var me = this,
             labelWidth = me.labelWidth,
             formWrapCls = me.formWrapCls,
@@ -112,7 +111,7 @@ Ext.define('Ext.layout.container.Form', {
         return data;
     },
 
-    getRenderTarget: function() {
+    getRenderTarget: function () {
         return this.formWrap;
     }
 });

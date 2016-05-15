@@ -353,7 +353,7 @@ $datepicker-item-selected-font-weight: dynamic($font-weight-bold);
  * @var {color}
  * The text color of the items in the previous and next months
  */
-$datepicker-item-prev-next-color: dynamic(lighten($datepicker-item-color,  75%));
+$datepicker-item-prev-next-color: dynamic(lighten($datepicker-item-color, 75%));
 
 /**
  * @var {string}
@@ -365,7 +365,7 @@ $datepicker-item-disabled-cursor: dynamic(default);
  * @var {color}
  * The text color of disabled Date Picker items
  */
-$datepicker-item-disabled-color: dynamic(lighten($datepicker-item-color,  50%));
+$datepicker-item-disabled-color: dynamic(lighten($datepicker-item-color, 50%));
 
 /**
  * @var {color}

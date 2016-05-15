@@ -86,7 +86,7 @@
  *     });
  */
 Ext.define('Ext.form.field.Number', {
-    extend:'Ext.form.field.Spinner',
+    extend: 'Ext.form.field.Spinner',
     alias: 'widget.numberfield',
     alternateClassName: ['Ext.form.NumberField', 'Ext.form.Number'],
 
@@ -98,7 +98,7 @@ Ext.define('Ext.form.field.Number', {
      * @cfg {RegExp} maskRe
      * @private
      */
-     
+
     /**
      * @cfg {Boolean} [allowExponential=true]
      * Set to `false` to disallow Exponential number notation
@@ -109,16 +109,16 @@ Ext.define('Ext.form.field.Number', {
      * @cfg {Boolean} [allowDecimals=true]
      * False to disallow decimal values
      */
-    allowDecimals : true,
+    allowDecimals: true,
 
     //<locale>
     /**
      * @cfg {String} decimalSeparator
      * Character(s) to allow as the decimal separator. Defaults to {@link Ext.util.Format#decimalSeparator decimalSeparator}.
      */
-    decimalSeparator : null,
+    decimalSeparator: null,
     //</locale>
-    
+
     //<locale>
     /**
      * @cfg {Boolean} [submitLocaleSeparator=true]
@@ -134,7 +134,7 @@ Ext.define('Ext.form.field.Number', {
      * @cfg {Number} decimalPrecision
      * The maximum precision to display after the decimal separator
      */
-    decimalPrecision : 2,
+    decimalPrecision: 2,
     //</locale>
 
     /**
@@ -167,7 +167,7 @@ Ext.define('Ext.form.field.Number', {
      * @cfg {String} minText
      * Error text to display if the minimum value validation fails.
      */
-    minText : 'The minimum value for this field is {0}',
+    minText: 'The minimum value for this field is {0}',
     //</locale>
 
     //<locale>
@@ -175,7 +175,7 @@ Ext.define('Ext.form.field.Number', {
      * @cfg {String} maxText
      * Error text to display if the maximum value validation fails.
      */
-    maxText : 'The maximum value for this field is {0}',
+    maxText: 'The maximum value for this field is {0}',
     //</locale>
 
     //<locale>
@@ -184,7 +184,7 @@ Ext.define('Ext.form.field.Number', {
      * Error text to display if the value is not a valid number. For example, this can happen if a valid character like
      * '.' or '-' is left in the field with no number.
      */
-    nanText : '{0} is not a valid number',
+    nanText: '{0} is not a valid number',
     //</locale>
 
     //<locale>
@@ -193,14 +193,14 @@ Ext.define('Ext.form.field.Number', {
      * Error text to display if the value is negative and {@link #minValue} is set to 0. This is used instead of the
      * {@link #minText} in that circumstance only.
      */
-    negativeText : 'The value cannot be negative',
+    negativeText: 'The value cannot be negative',
     //</locale>
 
     /**
      * @cfg {String} baseChars
      * The base set of characters to evaluate as valid numbers.
      */
-    baseChars : '0123456789',
+    baseChars: '0123456789',
 
     /**
      * @cfg {Boolean} autoStripChars
@@ -208,7 +208,7 @@ Ext.define('Ext.form.field.Number', {
      */
     autoStripChars: false,
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         if (me.decimalSeparator === null) {
             me.decimalSeparator = Ext.util.Format.decimalSeparator;
@@ -218,17 +218,17 @@ Ext.define('Ext.form.field.Number', {
         me.setMinValue(me.minValue);
         me.setMaxValue(me.maxValue);
     },
-    
-    getSubTplData: function(fieldData) {
+
+    getSubTplData: function (fieldData) {
         var me = this,
             min = me.minValue,
             max = me.maxValue,
             data, inputElAttr, value;
-        
+
         data = me.callParent([fieldData]);
-        
+
         inputElAttr = data.inputElAriaAttributes;
-        
+
         if (inputElAttr) {
             // The checks are to skip the default min and max values,
             // in which case we don't want to set corresponding ARIA
@@ -236,22 +236,22 @@ Ext.define('Ext.form.field.Number', {
             if (min > Number.NEGATIVE_INFINITY) {
                 inputElAttr['aria-valuemin'] = min;
             }
-            
+
             if (max < Number.MAX_VALUE) {
                 inputElAttr['aria-valuemax'] = max;
             }
-            
+
             value = me.getValue();
-            
+
             if (value != null && value >= min && value <= max) {
                 inputElAttr['aria-valuenow'] = value;
             }
         }
-        
+
         return data;
     },
 
-    setValue: function(value) {
+    setValue: function (value) {
         var me = this,
             bind, valueBind;
 
@@ -279,7 +279,7 @@ Ext.define('Ext.form.field.Number', {
      * @param {Object} [value] The value to get errors for (defaults to the current field value)
      * @return {String[]} All validation errors for this field
      */
-    getErrors: function(value) {
+    getErrors: function (value) {
         value = arguments.length > 0 ? value : this.processRawValue(this.getRawValue());
 
         var me = this,
@@ -288,12 +288,12 @@ Ext.define('Ext.form.field.Number', {
             num;
 
         if (value.length < 1) { // if it's blank and textfield didn't flag it then it's valid
-             return errors;
+            return errors;
         }
 
         value = String(value).replace(me.decimalSeparator, '.');
 
-        if(isNaN(value)){
+        if (isNaN(value)) {
             errors.push(format(me.nanText, value));
         }
 
@@ -314,15 +314,15 @@ Ext.define('Ext.form.field.Number', {
         return errors;
     },
 
-    rawToValue: function(rawValue) {
+    rawToValue: function (rawValue) {
         var value = this.fixPrecision(this.parseValue(rawValue));
         if (value === null) {
             value = rawValue || null;
         }
-        return  value;
+        return value;
     },
 
-    valueToRaw: function(value) {
+    valueToRaw: function (value) {
         var me = this,
             decimalSeparator = me.decimalSeparator;
         value = me.parseValue(value);
@@ -331,23 +331,23 @@ Ext.define('Ext.form.field.Number', {
         value = isNaN(value) ? '' : String(value).replace('.', decimalSeparator);
         return value;
     },
-    
-    getSubmitValue: function() {
+
+    getSubmitValue: function () {
         var me = this,
             value = me.callParent();
-            
+
         if (!me.submitLocaleSeparator) {
             value = value.replace(me.decimalSeparator, '.');
-        }  
+        }
         return value;
     },
 
-    onChange: function(newValue) {
+    onChange: function (newValue) {
         var ariaDom = this.ariaEl.dom;
-        
+
         this.toggleSpinners();
         this.callParent(arguments);
-        
+
         if (ariaDom) {
             if (Ext.isNumber(newValue) && isFinite(newValue)) {
                 ariaDom.setAttribute('aria-valuenow', newValue);
@@ -357,21 +357,21 @@ Ext.define('Ext.form.field.Number', {
             }
         }
     },
-    
-    toggleSpinners: function(){
+
+    toggleSpinners: function () {
         var me = this,
             value = me.getValue(),
             valueIsNull = value === null,
             enabled;
-        
+
         // If it's disabled, only allow it to be re-enabled if we are
         // the ones who are disabling it.
         if (me.spinUpEnabled || me.spinUpDisabledByToggle) {
             enabled = valueIsNull || value < me.maxValue;
             me.setSpinUpEnabled(enabled, true);
         }
-        
-        
+
+
         if (me.spinDownEnabled || me.spinDownDisabledByToggle) {
             enabled = valueIsNull || value > me.minValue;
             me.setSpinDownEnabled(enabled, true);
@@ -382,14 +382,14 @@ Ext.define('Ext.form.field.Number', {
      * Replaces any existing {@link #minValue} with the new value.
      * @param {Number} value The minimum value
      */
-    setMinValue: function(value) {
+    setMinValue: function (value) {
         var me = this,
             ariaDom = me.ariaEl.dom,
             minValue, allowed, ariaDom;
-        
+
         me.minValue = minValue = Ext.Number.from(value, Number.NEGATIVE_INFINITY);
         me.toggleSpinners();
-        
+
         // May not be rendered yet
         if (ariaDom) {
             if (minValue > Number.NEGATIVE_INFINITY) {
@@ -399,11 +399,11 @@ Ext.define('Ext.form.field.Number', {
                 ariaDom.removeAttribute('aria-valuemin');
             }
         }
-        
+
         // Build regexes for masking and stripping based on the configured options
         if (me.disableKeyFilter !== true) {
             allowed = me.baseChars + '';
-            
+
             if (me.allowExponential) {
                 allowed += me.decimalSeparator + 'e+-';
             }
@@ -415,7 +415,7 @@ Ext.define('Ext.form.field.Number', {
                     allowed += '-';
                 }
             }
-            
+
             allowed = Ext.String.escapeRegex(allowed);
             me.maskRe = new RegExp('[' + allowed + ']');
             if (me.autoStripChars) {
@@ -428,12 +428,12 @@ Ext.define('Ext.form.field.Number', {
      * Replaces any existing {@link #maxValue} with the new value.
      * @param {Number} value The maximum value
      */
-    setMaxValue: function(value) {
+    setMaxValue: function (value) {
         var ariaDom = this.ariaEl.dom,
             maxValue;
-        
+
         this.maxValue = maxValue = Ext.Number.from(value, Number.MAX_VALUE);
-        
+
         // May not be rendered yet
         if (ariaDom) {
             if (maxValue < Number.MAX_VALUE) {
@@ -443,14 +443,14 @@ Ext.define('Ext.form.field.Number', {
                 ariaDom.removeAttribute('aria-valuemax');
             }
         }
-        
+
         this.toggleSpinners();
     },
 
     /**
      * @private
      */
-    parseValue : function(value) {
+    parseValue: function (value) {
         value = parseFloat(String(value).replace(this.decimalSeparator, '.'));
         return isNaN(value) ? null : value;
     },
@@ -458,7 +458,7 @@ Ext.define('Ext.form.field.Number', {
     /**
      * @private
      */
-    fixPrecision : function(value) {
+    fixPrecision: function (value) {
         var me = this,
             nan = isNaN(value),
             precision = me.decimalPrecision;
@@ -472,7 +472,7 @@ Ext.define('Ext.form.field.Number', {
         return parseFloat(Ext.Number.toFixed(parseFloat(value), precision));
     },
 
-    onBlur : function(e) {
+    onBlur: function (e) {
         var me = this,
             v = me.rawToValue(me.getRawValue());
 
@@ -481,8 +481,8 @@ Ext.define('Ext.form.field.Number', {
         }
         me.callParent([e]);
     },
-    
-    setSpinUpEnabled: function(enabled, /* private */ internal){
+
+    setSpinUpEnabled: function (enabled, /* private */ internal) {
         this.callParent(arguments);
         if (!internal) {
             delete this.spinUpDisabledByToggle;
@@ -491,34 +491,34 @@ Ext.define('Ext.form.field.Number', {
         }
     },
 
-    onSpinUp: function() {
+    onSpinUp: function () {
         var me = this;
-            
+
         if (!me.readOnly) {
             me.setSpinValue(Ext.Number.constrain(me.getValue() + me.step, me.minValue, me.maxValue));
         }
     },
-    
-    setSpinDownEnabled: function(enabled, /* private */ internal){
+
+    setSpinDownEnabled: function (enabled, /* private */ internal) {
         this.callParent(arguments);
         if (!internal) {
             delete this.spinDownDisabledByToggle;
         } else {
             this.spinDownDisabledByToggle = !enabled;
-        }   
+        }
     },
 
-    onSpinDown: function() {
+    onSpinDown: function () {
         var me = this;
-        
+
         if (!me.readOnly) {
             me.setSpinValue(Ext.Number.constrain(me.getValue() - me.step, me.minValue, me.maxValue));
         }
     },
-    
-    setSpinValue: function(value) {
+
+    setSpinValue: function (value) {
         var me = this;
-            
+
         if (me.enforceMaxLength) {
             // We need to round the value here, otherwise we could end up with a
             // very long number (think 0.1 + 0.2)

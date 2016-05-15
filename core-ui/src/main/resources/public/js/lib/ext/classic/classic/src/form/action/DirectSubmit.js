@@ -55,48 +55,48 @@ Ext.define('Ext.form.action.DirectSubmit', {
     extend: 'Ext.form.action.Submit',
     alternateClassName: 'Ext.form.Action.DirectSubmit',
     alias: 'formaction.directsubmit',
-    
+
     requires: [
         'Ext.direct.Manager'
     ],
-    
+
     mixins: [
         'Ext.form.action.DirectAction'
     ],
 
     type: 'directsubmit',
 
-    doSubmit: function() {
+    doSubmit: function () {
         var me = this,
             form = me.form,
             metadata = me.metadata || form.metadata,
             timeout = me.timeout || form.timeout,
             fn, formInfo, args;
-        
-        fn       = me.resolveMethod('submit');
+
+        fn = me.resolveMethod('submit');
         formInfo = me.buildForm();
-        
+
         args = fn.directCfg.method.getArgs({
             params: formInfo.formEl,
-            options: timeout != null ? { timeout: timeout * 1000 } : null,
+            options: timeout != null ? {timeout: timeout * 1000} : null,
             metadata: metadata,
             callback: me.onComplete,
             scope: me
         });
-        
+
         fn.apply(window, args);
-        
+
         me.cleanup(formInfo);
     },
 
     // Direct actions have already been processed and therefore
     // we can directly set the result; Direct Actions do not have
     // a this.response property.
-    processResponse: function(result) {
+    processResponse: function (result) {
         return (this.result = result);
     },
-    
-    onComplete: function(data){
+
+    onComplete: function (data) {
         if (data) {
             this.onSuccess(data);
         } else {

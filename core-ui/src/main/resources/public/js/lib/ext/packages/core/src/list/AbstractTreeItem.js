@@ -11,42 +11,42 @@ Ext.define('Ext.list.AbstractTreeItem', {
      * @method setExpandable
      * @ignore
      */
-    
+
     /**
      * @method setExpanded
      * @ignore
      */
-    
+
     /**
      * @method setIconCls
      * @ignore
      */
-    
+
     /**
      * @method setLeaf
      * @ignore
      */
-    
+
     /**
      * @method setOwner
      * @ignore
      */
-    
+
     /**
      * @method setLoading
      * @ignore
      */
-    
+
     /**
      * @method setNode
      * @ignore
      */
-    
+
     /**
      * @method setParentItem
      * @ignore
      */
-    
+
     /**
      * @method setText
      * @ignore
@@ -143,7 +143,7 @@ Ext.define('Ext.list.AbstractTreeItem', {
 
         /**
          * @cfg {Ext.list.AbstractTreeItem} parentItem
-         * The parent item for this item. 
+         * The parent item for this item.
          */
         parentItem: null,
 
@@ -189,7 +189,7 @@ Ext.define('Ext.list.AbstractTreeItem', {
         }
     },
 
-    updateSelected: function(selected) {
+    updateSelected: function (selected) {
         if (!this.isConfiguring) {
             var parent = this.getParentItem();
             while (parent && !parent.isRootListItem) {
@@ -215,7 +215,7 @@ Ext.define('Ext.list.AbstractTreeItem', {
 
     /**
      * @method
-     * Gets the element to be used for the tree when it is in 
+     * Gets the element to be used for the tree when it is in
      * {@link Ext.list.Tree#micro micro} mode.
      * @return {Ext.dom.Element} The element.
      *
@@ -260,7 +260,7 @@ Ext.define('Ext.list.AbstractTreeItem', {
      * Checks whether the event is an event that should toggle the expand/collapse state.
      * @param {Ext.event.Event} e The event object.
      * @return {Boolean} `true` if the event should toggle the expand/collapsed state.
-     * 
+     *
      * @protected
      * @template
      */
@@ -401,7 +401,7 @@ Ext.define('Ext.list.AbstractTreeItem', {
 
     /**
      * Handle this node having fields changed.
-     * 
+     *
      * @param {Ext.data.TreeModel} node The node.
      * @param {String[]} modifiedFieldNames The modified field names, if known.
      *
@@ -572,7 +572,7 @@ Ext.define('Ext.list.AbstractTreeItem', {
             }
         },
 
-        toggleExpanded: function() {
+        toggleExpanded: function () {
             if (this.isExpanded()) {
                 this.collapse();
             } else {

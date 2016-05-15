@@ -17,7 +17,7 @@ Ext.define('Ext.grid.selection.Columns', {
     //-------------------------------------------------------------------------
     // Base Selection API
 
-    clone: function() {
+    clone: function () {
         var me = this,
             result = new me.self(me.view),
             columns = me.selectedColumns;
@@ -67,7 +67,7 @@ Ext.define('Ext.grid.selection.Columns', {
             len = columns.length;
 
             // Use Store#each instead of copying the entire dataset into an array and iterating that.
-            view.dataSource.each(function(record) {
+            view.dataSource.each(function (record) {
                 context.setRow(record);
                 for (i = 0; i < len; i++) {
                     context.setColumn(columns[i]);
@@ -87,7 +87,7 @@ Ext.define('Ext.grid.selection.Columns', {
      * @param {Ext.grid.column.Column} column The column to test.
      * @return {Boolean} `true` if the passed {@link Ext.grid.column.Column column} is selected.
      */
-    contains: function(column) {
+    contains: function (column) {
         var selectedColumns = this.selectedColumns;
 
         if (column && column.isColumn && selectedColumns && selectedColumns.length) {
@@ -101,7 +101,7 @@ Ext.define('Ext.grid.selection.Columns', {
      * Returns the number of columns selected.
      * @return {Number} The number of columns selected.
      */
-    getCount: function() {
+    getCount: function () {
         var selectedColumns = this.selectedColumns;
         return selectedColumns ? selectedColumns.length : 0;
     },
@@ -110,7 +110,7 @@ Ext.define('Ext.grid.selection.Columns', {
      * Returns the columns selected.
      * @return {Ext.grid.column.Column[]} The columns selected.
      */
-    getColumns: function() {
+    getColumns: function () {
         return this.selectedColumns || [];
     },
 
@@ -122,7 +122,7 @@ Ext.define('Ext.grid.selection.Columns', {
          * @param {Ext.grid.column.Column} column
          * @private
          */
-        add: function(column) {
+        add: function (column) {
             //<debug>
             if (!column.isColumn) {
                 Ext.raise('Column selection must be passed a grid Column header object');
@@ -136,7 +136,7 @@ Ext.define('Ext.grid.selection.Columns', {
         /**
          * @private
          */
-        clear: function() {
+        clear: function () {
             var me = this,
                 prevSelection = me.selectedColumns;
 
@@ -150,7 +150,7 @@ Ext.define('Ext.grid.selection.Columns', {
          * @return {Boolean}
          * @private
          */
-        isAllSelected: function() {
+        isAllSelected: function () {
             var selectedColumns = this.selectedColumns;
 
             // All selected means all columns, across both views if we are in a locking assembly.
@@ -160,7 +160,7 @@ Ext.define('Ext.grid.selection.Columns', {
         /**
          * @private
          */
-        refreshColumns: function(column) {
+        refreshColumns: function (column) {
             var me = this,
                 view = me.view,
                 rows = view.all,
@@ -196,7 +196,7 @@ Ext.define('Ext.grid.selection.Columns', {
          * @param {Ext.grid.column.Column} column
          * @private
          */
-        remove: function(column) {
+        remove: function (column) {
             //<debug>
             if (!column.isColumn) {
                 Ext.raise('Column selection must be passed a grid Column header object');
@@ -226,17 +226,17 @@ Ext.define('Ext.grid.selection.Columns', {
             me.refreshColumns.apply(me, me.selectedColumns);
         },
 
-        extendRange: function(extensionVector) {
+        extendRange: function (extensionVector) {
             var me = this,
                 columns = me.view.getVisibleColumnManager().getColumns(),
                 i;
 
-            for (i = extensionVector.start.colIdx; i <=  extensionVector.end.colIdx; i++) {
+            for (i = extensionVector.start.colIdx; i <= extensionVector.end.colIdx; i++) {
                 me.add(columns[i]);
             }
         },
 
-        onSelectionFinish: function() {
+        onSelectionFinish: function () {
             var me = this,
                 range = me.getContiguousSelection();
 
@@ -254,8 +254,8 @@ Ext.define('Ext.grid.selection.Columns', {
          * The SelectionReplicator is only enabled if there is a contiguous block.
          * @private
          */
-        getContiguousSelection: function() {
-            var selection = Ext.Array.sort(this.selectedColumns, function(c1, c2) {
+        getContiguousSelection: function () {
+            var selection = Ext.Array.sort(this.selectedColumns, function (c1, c2) {
                     // Use index *in ownerGrid* so that a locking assembly can order columns correctly
                     return c1.getView().ownerGrid.getVisibleColumnManager().indexOf(c1) - c2.getView().ownerGrid.getVisibleColumnManager().indexOf(c2);
                 }),

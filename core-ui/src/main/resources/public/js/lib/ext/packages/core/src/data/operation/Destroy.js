@@ -8,7 +8,7 @@
 Ext.define('Ext.data.operation.Destroy', {
     extend: 'Ext.data.operation.Operation',
     alias: 'data.operation.destroy',
-    
+
     action: 'destroy',
 
     isDestroyOperation: true,
@@ -17,17 +17,17 @@ Ext.define('Ext.data.operation.Destroy', {
 
     foreignKeyDirection: -1,
 
-    doProcess: function(/* resultSet, request, response */) {
-        var clientRecords = this.getRecords(), 
+    doProcess: function (/* resultSet, request, response */) {
+        var clientRecords = this.getRecords(),
             clientLen = clientRecords.length,
             i;
-        
+
         for (i = 0; i < clientLen; ++i) {
             clientRecords[i].setErased();
         }
     },
-    
-    doExecute: function() {
+
+    doExecute: function () {
         return this.getProxy().erase(this);
     },
 

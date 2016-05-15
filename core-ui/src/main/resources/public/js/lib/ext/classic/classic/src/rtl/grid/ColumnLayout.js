@@ -5,7 +5,7 @@ Ext.define('Ext.rtl.grid.ColumnLayout', {
         var me = this,
             view = me.owner.grid.view;
 
-        me.callParent([ ownerContext ]);
+        me.callParent([ownerContext]);
 
         if (view.getInherited().rtl) {
             // Chrome has an RTL bug where overflow only caused by the imposition of the
@@ -37,16 +37,16 @@ Ext.define('Ext.rtl.grid.ColumnLayout', {
             // scrollbarAdjustment value for this layout is zero.
 
             if (view.bufferedRenderer && Ext.supports.xOriginBug) {
-                me.scrollbarWidth = - Math.abs(me.scrollbarWidth);
+                me.scrollbarWidth = -Math.abs(me.scrollbarWidth);
             }
             else if (Ext.supports.rtlVertScrollbarOverflowBug ||
-                     Ext.supports.rtlVertScrollbarOnRight) {
+                Ext.supports.rtlVertScrollbarOnRight) {
                 me.scrollbarWidth = 0;
             }
         }
     },
 
-    calculateParallel: function(ownerContext, names, plan) {
+    calculateParallel: function (ownerContext, names, plan) {
         var me = this,
             owner = me.owner;
 
@@ -56,7 +56,7 @@ Ext.define('Ext.rtl.grid.ColumnLayout', {
             // which must stay in horizontal sync (like the HeaderContainer) needs the first item to have some "before" margin.
             // The layout system caches the margin because it is assumed to be static, so we have to clear this cache.
             if ((Ext.supports.rtlVertScrollbarOnRight && owner.ownerCt.view.getInherited().rtl) ||
-                       (owner.grid.view.bufferedRenderer && Ext.supports.xOriginBug)) {
+                (owner.grid.view.bufferedRenderer && Ext.supports.xOriginBug)) {
                 me.padding.right = me.scrollbarWidth;
             }
         }

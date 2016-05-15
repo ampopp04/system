@@ -78,10 +78,10 @@ Ext.define('Ext.list.Tree', {
 
         /**
          * @cfg {Ext.data.TreeModel} selection
-         * 
+         *
          * The current selected node.
          */
-        selection: null, 
+        selection: null,
 
         /**
          * @cfg {Boolean} selectOnExpander
@@ -114,7 +114,7 @@ Ext.define('Ext.list.Tree', {
 
     defaultBindProperty: 'store',
 
-    constructor: function(config) {
+    constructor: function (config) {
         this.callParent([config]);
         // Important to publish the value here, so the vm can
         // will know our intial state.
@@ -131,7 +131,7 @@ Ext.define('Ext.list.Tree', {
 
         me.destroying = true;  // normally set in callParent
 
-        me.unfloatAll(); 
+        me.unfloatAll();
         me.activeFloater = null;
         me.setSelection(null);
         me.setStore(null);
@@ -171,7 +171,7 @@ Ext.define('Ext.list.Tree', {
         }
     },
 
-    applySelection: function(selection, oldSelection) {
+    applySelection: function (selection, oldSelection) {
         var store = this.getStore();
         if (!store) {
             selection = null;
@@ -182,7 +182,7 @@ Ext.define('Ext.list.Tree', {
         return selection;
     },
 
-    updateSelection: function(selection, oldSelection) {
+    updateSelection: function (selection, oldSelection) {
         var me = this,
             item;
 
@@ -232,7 +232,7 @@ Ext.define('Ext.list.Tree', {
                 rootchange: me.onRootChange,
                 update: me.onNodeUpdate
             });
-        
+
             root = store.getRoot();
             if (root) {
                 me.createRootItem(root);
@@ -324,7 +324,7 @@ Ext.define('Ext.list.Tree', {
     },
 
     privates: {
-        checkForOutsideClick: function(e) {
+        checkForOutsideClick: function (e) {
             var floater = this.activeFloater;
             if (!floater.element.contains(e.target)) {
                 this.unfloatAll();
@@ -379,7 +379,7 @@ Ext.define('Ext.list.Tree', {
             me.itemMap[root.internalId] = item;
         },
 
-        floatItem: function(item, byHover) {
+        floatItem: function (item, byHover) {
             var me = this,
                 floater;
 
@@ -542,7 +542,7 @@ Ext.define('Ext.list.Tree', {
                     item.nodeRemove(node);
                 }
             }
-        },  
+        },
 
         /**
          * Handles when a node updates.
@@ -583,7 +583,7 @@ Ext.define('Ext.list.Tree', {
          *
          * @private
          */
-        removeItem: function (node)  {
+        removeItem: function (node) {
             var map = this.itemMap;
 
             if (map) {
@@ -607,7 +607,7 @@ Ext.define('Ext.list.Tree', {
          *
          * @private
          */
-        onToolStripClick: function(e) {
+        onToolStripClick: function (e) {
             var item = e.getTarget('[data-recordId]'),
                 id;
 
@@ -630,7 +630,7 @@ Ext.define('Ext.list.Tree', {
          *
          * @private
          */
-        onToolStripMouseOver: function(e) {
+        onToolStripMouseOver: function (e) {
             var item = e.getTarget('[data-recordId]'),
                 id;
 
@@ -643,10 +643,10 @@ Ext.define('Ext.list.Tree', {
             }
         },
 
-        syncIconSize: function() {
+        syncIconSize: function () {
             var me = this,
                 size = me.iconSize ||
-                      (me.iconSize = parseInt(me.element.getStyle('background-position'), 10));
+                    (me.iconSize = parseInt(me.element.getStyle('background-position'), 10));
 
             me.setIconSize(size);
         },

@@ -1,19 +1,19 @@
-describe("Ext.grid.column.Number", function() {
-    
+describe("Ext.grid.column.Number", function () {
+
     var grid, store, colRef;
-    
+
     function getCell(rowIdx, colIdx) {
         return grid.getView().getCellInclusive({
             row: rowIdx,
             column: colIdx
         });
     }
-    
+
     function getCellText(rowIdx, colIdx) {
         var cell = getCell(rowIdx, colIdx);
         return Ext.fly(cell).down(grid.getView().innerSelector).dom.innerHTML;
     }
-    
+
     function makeGrid(value) {
         store = new Ext.data.Store({
             model: spec.TestModel,
@@ -21,7 +21,7 @@ describe("Ext.grid.column.Number", function() {
                 field: value
             }]
         });
-        
+
         grid = new Ext.grid.Panel({
             store: store,
             columns: [{
@@ -29,7 +29,7 @@ describe("Ext.grid.column.Number", function() {
                 format: '0,000',
                 text: 'Col',
                 dataIndex: 'field',
-                flex: 1    
+                flex: 1
             }],
             width: 400,
             height: 100,
@@ -38,8 +38,8 @@ describe("Ext.grid.column.Number", function() {
         });
         colRef = grid.getColumnManager().getColumns();
     }
-    
-    beforeEach(function() {
+
+    beforeEach(function () {
         Ext.define('spec.TestModel', {
             extend: 'Ext.data.Model',
             fields: [{
@@ -48,16 +48,16 @@ describe("Ext.grid.column.Number", function() {
             }]
         });
     });
-    
-    afterEach(function(){
+
+    afterEach(function () {
         Ext.destroy(grid, store);
         colRef = store = grid = null;
         Ext.undefine('spec.TestModel');
         Ext.data.Model.schema.clear();
     });
-    
-    describe("renderer", function() {
-        it("should render render non-number values", function() {
+
+    describe("renderer", function () {
+        it("should render render non-number values", function () {
             makeGrid(null);
             var text = getCellText(0, 0);
             if (text === '&nbsp;') {
@@ -65,11 +65,11 @@ describe("Ext.grid.column.Number", function() {
             }
             expect(text).toBe('&#160;');
         });
-        
-        it("should render the date according to the format", function() {
+
+        it("should render the date according to the format", function () {
             makeGrid(1234);
             expect(getCellText(0, 0)).toBe('1,234');
         });
     });
-    
+
 });

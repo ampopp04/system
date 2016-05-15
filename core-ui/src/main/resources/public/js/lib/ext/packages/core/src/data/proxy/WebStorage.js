@@ -1,6 +1,6 @@
 /**
  * WebStorageProxy is simply a superclass for the {@link Ext.data.proxy.LocalStorage LocalStorage} and {@link
- * Ext.data.proxy.SessionStorage SessionStorage} proxies. It uses the new HTML5 key/value client-side storage objects to
+    * Ext.data.proxy.SessionStorage SessionStorage} proxies. It uses the new HTML5 key/value client-side storage objects to
  * save {@link Ext.data.Model model instances} for offline use.
  * @private
  */
@@ -13,9 +13,9 @@ Ext.define('Ext.data.proxy.WebStorage', {
 
     config: {
         /**
-        * @cfg {String} id
-        * The unique ID used as the key in which all record data are stored in the local storage object.
-        */
+         * @cfg {String} id
+         * The unique ID used as the key in which all record data are stored in the local storage object.
+         */
         id: undefined
     },
 
@@ -35,7 +35,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * Creates the proxy, throws an error if local storage is not supported in the current browser.
      * @param {Object} config (optional) Config object.
      */
-    constructor: function(config) {
+    constructor: function (config) {
         this.callParent(arguments);
 
         /**
@@ -62,7 +62,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
     /**
      * @inheritdoc
      */
-    create: function(operation) {
+    create: function (operation) {
         var me = this,
             records = operation.getRecords(),
             length = records.length,
@@ -73,7 +73,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
             // if the storage object does not yet contain any data, this is the first point at which we can determine whether or not this proxy deals with hierarchical data.
             // it cannot be determined during initialization because the Model is not decorated with NodeInterface until it is used in a TreeStore
             me.isHierarchical = !!records[0].isNode;
-            if(me.isHierarchical) {
+            if (me.isHierarchical) {
                 me.getStorageObject().setItem(me.getTreeKey(), true);
             }
         }
@@ -106,7 +106,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
     /**
      * @inheritdoc
      */
-    read: function(operation) {
+    read: function (operation) {
         var me = this,
             allRecords,
             records = [],
@@ -179,8 +179,8 @@ Ext.define('Ext.data.proxy.WebStorage', {
         if (success) {
             operation.setResultSet(new Ext.data.ResultSet({
                 records: records,
-                total  : records.length,
-                loaded : true
+                total: records.length,
+                loaded: true
             }));
             operation.setSuccessful(true);
         } else {
@@ -191,10 +191,10 @@ Ext.define('Ext.data.proxy.WebStorage', {
     /**
      * @inheritdoc
      */
-    update: function(operation) {
+    update: function (operation) {
         var records = operation.getRecords(),
-            length  = records.length,
-            ids     = this.getIds(),
+            length = records.length,
+            ids = this.getIds(),
             record, id, i;
 
         for (i = 0; i < length; i++) {
@@ -216,7 +216,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
     /**
      * @inheritdoc
      */
-    erase: function(operation) {
+    erase: function (operation) {
         var me = this,
             records = operation.getRecords(),
             ids = me.getIds(),
@@ -230,9 +230,9 @@ Ext.define('Ext.data.proxy.WebStorage', {
             Ext.apply(removedHash, me.removeRecord(records[i]));
         }
 
-        for(i = 0; i < idLength; i++) {
+        for (i = 0; i < idLength; i++) {
             id = ids[i];
-            if(!removedHash[id]) {
+            if (!removedHash[id]) {
                 newIds.push(id);
             }
         }
@@ -247,12 +247,12 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * @param {String} id The record's unique ID
      * @return {Object} The record data
      */
-    getRecord: function(id) {
+    getRecord: function (id) {
         var me = this,
             cache = me.cache,
             data = !cache[id] ? Ext.decode(me.getStorageObject().getItem(me.getRecordKey(id))) : cache[id];
 
-        if(!data) {
+        if (!data) {
             return null;
         }
 
@@ -269,7 +269,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * @param {Ext.data.Model} record The model instance
      * @param {String} [id] The id to save the record under (defaults to the value of the record's getId() function)
      */
-    setRecord: function(record, id) {
+    setRecord: function (record, id) {
         if (id) {
             record.set('id', id, {
                 commit: true
@@ -280,18 +280,18 @@ Ext.define('Ext.data.proxy.WebStorage', {
 
         var me = this,
             rawData = record.getData(),
-            data    = {},
-            model   = me.getModel(),
-            fields  = model.getFields(),
-            length  = fields.length,
+            data = {},
+            model = me.getModel(),
+            fields = model.getFields(),
+            length = fields.length,
             i = 0,
             field, name, obj, key;
 
         for (; i < length; i++) {
             field = fields[i];
-            name  = field.name;
+            name = field.name;
 
-            if(field.persist) {
+            if (field.persist) {
                 data[name] = rawData[name];
             }
         }
@@ -300,7 +300,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
         delete data[model.prototype.idProperty];
 
         // if the record is a tree node and it's a direct child of the root node, do not store the parentId
-        if(record.isNode && record.get('depth') === 1) {
+        if (record.isNode && record.get('depth') === 1) {
             delete data.parentId;
         }
 
@@ -321,7 +321,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * @param {Ext.data.Model} record The record to remove
      * @return {Object} a hash with the ids of the records that were removed as keys and the records that were removed as values
      */
-    removeRecord: function(record) {
+    removeRecord: function (record) {
         var me = this,
             id = record.getId(),
             records = {},
@@ -331,9 +331,9 @@ Ext.define('Ext.data.proxy.WebStorage', {
         me.getStorageObject().removeItem(me.getRecordKey(id));
         delete me.cache[id];
 
-        if(record.childNodes) {
+        if (record.childNodes) {
             childNodes = record.childNodes;
-            for(i = childNodes.length; i--;) {
+            for (i = childNodes.length; i--;) {
                 Ext.apply(records, me.removeRecord(childNodes[i]));
             }
         }
@@ -348,7 +348,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * @param {String/Number/Ext.data.Model} id The record id, or a Model instance
      * @return {String} The unique key for this record
      */
-    getRecordKey: function(id) {
+    getRecordKey: function (id) {
         if (id.isModel) {
             id = id.getId();
         }
@@ -362,7 +362,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * realizing models (creating them when they used to be phantoms), in order to give each model instance a unique id.
      * @return {String} The counter key
      */
-    getRecordCounterKey: function() {
+    getRecordCounterKey: function () {
         return Ext.String.format("{0}-counter", this.getId());
     },
 
@@ -371,7 +371,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * Returns the unique key used to store the tree indicator. This is used internally to determine if the stored data is hierarchical
      * @return {String} The counter key
      */
-    getTreeKey: function() {
+    getTreeKey: function () {
         return Ext.String.format("{0}-tree", this.getId());
     },
 
@@ -380,7 +380,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * Returns the array of record IDs stored in this Proxy
      * @return {Number[]} The record IDs. Each is cast as a Number
      */
-    getIds: function() {
+    getIds: function () {
         var me = this,
             ids = (me.getStorageObject().getItem(me.getId()) || "").split(","),
             length = ids.length,
@@ -397,8 +397,8 @@ Ext.define('Ext.data.proxy.WebStorage', {
 
         return ids;
     },
-    
-    getIdField: function() {
+
+    getIdField: function () {
         return this.getModel().prototype.idField;
     },
 
@@ -407,7 +407,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * Saves the array of ids representing the set of all records in the Proxy
      * @param {Number[]} ids The ids to set
      */
-    setIds: function(ids) {
+    setIds: function (ids) {
         var obj = this.getStorageObject(),
             str = ids.join(","),
             id = this.getId();
@@ -425,7 +425,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * Increments the counter.
      * @return {Number} The id
      */
-    getNextId: function() {
+    getNextId: function () {
         var me = this,
             obj = me.getStorageObject(),
             key = me.getRecordCounterKey(),
@@ -436,7 +436,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
 
         obj.setItem(key, id);
 
-        if(isString) {
+        if (isString) {
             id = id + '';
         }
 
@@ -448,7 +448,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * @private
      * @return {Ext.data.NodeInterface[]}
      */
-    getTreeData: function() {
+    getTreeData: function () {
         var me = this,
             ids = me.getIds(),
             length = ids.length,
@@ -460,7 +460,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
             idProperty = Model.prototype.idProperty,
             rootLength, record, parent, parentId, children, id;
 
-        for(; i < length; i++) {
+        for (; i < length; i++) {
             id = ids[i];
             // get the record for each id
             record = me.getRecord(id);
@@ -468,7 +468,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
             records.push(record);
             // add the record to the record hash so it can be easily retrieved by id later
             recordHash[id] = record;
-            if(!record.parentId) {
+            if (!record.parentId) {
                 // push records that are at the root level (those with no parent id) into the "root" array
                 root.push(record);
             }
@@ -480,10 +480,10 @@ Ext.define('Ext.data.proxy.WebStorage', {
         Ext.Array.sort(records, me.sortByParentId);
 
         // append each record to its parent, starting after the root node(s), since root nodes do not need to be attached to a parent
-        for(i = rootLength; i < length; i++) {
+        for (i = rootLength; i < length; i++) {
             record = records[i];
             parentId = record.parentId;
-            if(!parent || parent[idProperty] !== parentId) {
+            if (!parent || parent[idProperty] !== parentId) {
                 // if this record has a different parent id from the previous record, we need to look up the parent by id.
                 parent = recordHash[parentId];
                 parent.children = children = [];
@@ -493,7 +493,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
             children.push(record);
         }
 
-        for(i = length; i--;) {
+        for (i = length; i--;) {
             record = records[i];
             if (!record.children && !record.leaf) {
                 // set non-leaf nodes with no children to loaded so the proxy won't try to dynamically load their contents when they are expanded
@@ -502,7 +502,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
         }
 
         // Create model instances out of all the "root-level" nodes.
-        for(i = rootLength; i--;) {
+        for (i = rootLength; i--;) {
             record = root[i];
             root[i] = new Model(record);
         }
@@ -517,7 +517,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * @param {Object} node2
      * @return {Number}
      */
-    sortByParentId: function(node1, node2) {
+    sortByParentId: function (node1, node2) {
         return (node1.parentId || 0) - (node2.parentId || 0);
     },
 
@@ -526,14 +526,14 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * Sets up the Proxy by claiming the key in the storage object that corresponds to the unique id of this Proxy. Called
      * automatically by the constructor, this should not need to be called again unless {@link #clear} has been called.
      */
-    initialize: function() {
+    initialize: function () {
         var me = this,
             storageObject = me.getStorageObject(),
             lastId = +storageObject.getItem(me.getRecordCounterKey()),
             id = me.getId();
 
         storageObject.setItem(id, storageObject.getItem(id) || "");
-        if(storageObject.getItem(me.getTreeKey())) {
+        if (storageObject.getItem(me.getTreeKey())) {
             me.isHierarchical = true;
         }
 
@@ -546,7 +546,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * Destroys all records stored in the proxy and removes all keys and values used to support the proxy from the
      * storage object.
      */
-    clear: function() {
+    clear: function () {
         var me = this,
             obj = me.getStorageObject(),
             ids = me.getIds(),
@@ -573,7 +573,7 @@ Ext.define('Ext.data.proxy.WebStorage', {
      * in each subclass.
      * @return {Object} The storage object
      */
-    getStorageObject: function() {
+    getStorageObject: function () {
         //<debug>
         Ext.raise("The getStorageObject function has not been defined in your Ext.data.proxy.WebStorage subclass");
         //</debug>

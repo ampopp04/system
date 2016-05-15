@@ -6,7 +6,7 @@
 Ext.define('Ext.data.ChainedStore', {
     extend: 'Ext.data.AbstractStore',
     alias: 'store.chained',
-    
+
     config: {
         /**
          * @cfg {Ext.data.Store/String} source
@@ -29,53 +29,53 @@ Ext.define('Ext.data.ChainedStore', {
     mixins: [
         'Ext.data.LocalStore'
     ],
-    
-    constructor: function() {
+
+    constructor: function () {
         this.callParent(arguments);
         this.getData().addObserver(this);
     },
 
     //<debug>
-    updateRemoteFilter: function(remoteFilter, oldRemoteFilter) {
+    updateRemoteFilter: function (remoteFilter, oldRemoteFilter) {
         if (remoteFilter) {
             Ext.raise('Remote filtering cannot be used with chained stores.');
         }
         this.callParent([remoteFilter, oldRemoteFilter]);
     },
 
-    updateRemoteSort: function(remoteSort, oldRemoteSort) {
+    updateRemoteSort: function (remoteSort, oldRemoteSort) {
         if (remoteSort) {
             Ext.raise('Remote sorting cannot be used with chained stores.');
         }
         this.callParent([remoteSort, oldRemoteSort]);
     },
     //</debug>
-    
-    remove: function() {
+
+    remove: function () {
         var source = this.getSource();
         return source.remove.apply(source, arguments);
     },
 
-    removeAll: function() {
+    removeAll: function () {
         var source = this.getSource();
         return source.removeAll();
     },
-    
-    getData: function() {
+
+    getData: function () {
         var me = this,
             data = me.data;
-        
+
         if (!data) {
             me.data = data = me.constructDataCollection();
         }
         return data;
     },
 
-    getSession: function() {
+    getSession: function () {
         return this.getSource().getSession();
     },
 
-    applySource: function(source) {
+    applySource: function (source) {
         if (source) {
             //<debug>
             var original = source,
@@ -92,15 +92,15 @@ Ext.define('Ext.data.ChainedStore', {
         }
         return source;
     },
-    
-    updateSource: function(source, oldSource) {
+
+    updateSource: function (source, oldSource) {
         var me = this,
             data;
-        
+
         if (oldSource) {
             oldSource.removeObserver(me);
         }
-        
+
         if (source) {
             data = me.getData();
             data.setSource(source.getData());
@@ -111,28 +111,28 @@ Ext.define('Ext.data.ChainedStore', {
             source.addObserver(me);
         }
     },
-    
+
     /**
      * Get the model used for this store.
      * @return {Ext.data.Model} The model
      */
-    getModel: function() {
+    getModel: function () {
         return this.getSource().getModel();
     },
 
-    getProxy: function() {
+    getProxy: function () {
         return null;
     },
-    
-    onCollectionAdd: function(collection, info) {
+
+    onCollectionAdd: function (collection, info) {
         var me = this,
             records = info.items,
             lastChunk = !info.next;
-        
+
         if (me.ignoreCollectionAdd) {
             return;
         }
-        
+
         me.fireEvent('add', me, records, info.at);
         // If there is a next property, that means there is another range that needs
         // to be removed after this. Wait until everything is gone before firign datachanged
@@ -143,7 +143,7 @@ Ext.define('Ext.data.ChainedStore', {
     },
 
     // Our collection tells us that an item has changed
-    onCollectionItemChange: function(collection, info) {
+    onCollectionItemChange: function (collection, info) {
         var me = this,
             record = info.item,
             modifiedFieldNames = info.modified || null,
@@ -158,15 +158,15 @@ Ext.define('Ext.data.ChainedStore', {
 
     onUpdate: Ext.emptyFn,
 
-    onCollectionRemove: function(collection, info) {
+    onCollectionRemove: function (collection, info) {
         var me = this,
             records = info.items,
             lastChunk = !info.next;
-        
+
         if (me.ignoreCollectionRemove) {
             return;
         }
-        
+
         me.fireEvent('remove', me, records, info.at, false);
         // If there is a next property, that means there is another range that needs
         // to be removed after this. Wait until everything is gone before firign datachanged
@@ -176,48 +176,48 @@ Ext.define('Ext.data.ChainedStore', {
         }
     },
 
-    onSourceBeforeLoad: function(source, operation) {
+    onSourceBeforeLoad: function (source, operation) {
         this.fireEvent('beforeload', this, operation);
     },
 
-    onSourceAfterLoad: function(source, records, successful, operation) {
+    onSourceAfterLoad: function (source, records, successful, operation) {
         this.fireEvent('load', this, records, successful, operation);
     },
 
-    onFilterEndUpdate: function() {
+    onFilterEndUpdate: function () {
         this.callParent(arguments);
         this.callObservers('Filter');
     },
-    
-    onSourceBeforePopulate: function() {
+
+    onSourceBeforePopulate: function () {
         this.ignoreCollectionAdd = true;
         this.callObservers('BeforePopulate');
     },
-    
-    onSourceAfterPopulate: function() {
+
+    onSourceAfterPopulate: function () {
         var me = this;
         me.ignoreCollectionAdd = false;
         me.fireEvent('datachanged', me);
         me.fireEvent('refresh', me);
         this.callObservers('AfterPopulate');
     },
-    
-    onSourceBeforeClear: function() {
+
+    onSourceBeforeClear: function () {
         this.ignoreCollectionRemove = true;
         this.callObservers('BeforeClear');
     },
-    
-    onSourceAfterClear: function() {
+
+    onSourceAfterClear: function () {
         this.ignoreCollectionRemove = false;
         this.callObservers('AfterClear');
     },
-    
-    onSourceBeforeRemoveAll: function() {
+
+    onSourceBeforeRemoveAll: function () {
         this.ignoreCollectionRemove = true;
         this.callObservers('BeforeRemoveAll');
     },
-    
-    onSourceAfterRemoveAll: function(source, silent) {
+
+    onSourceAfterRemoveAll: function (source, silent) {
         var me = this;
         me.ignoreCollectionRemove = false;
         if (!silent) {
@@ -227,25 +227,25 @@ Ext.define('Ext.data.ChainedStore', {
         this.callObservers('AfterRemoveAll', [silent]);
     },
 
-    onSourceFilter: function() {
+    onSourceFilter: function () {
         var me = this;
         me.fireEvent('refresh', me);
         me.fireEvent('datachanged', me);
     },
-    
-    hasPendingLoad: function() {
+
+    hasPendingLoad: function () {
         return this.getSource().hasPendingLoad();
     },
-    
-    isLoaded: function() {
+
+    isLoaded: function () {
         return this.getSource().isLoaded();
     },
 
-    isLoading: function() {
+    isLoading: function () {
         return this.getSource().isLoading();
     },
 
-    onDestroy: function() {
+    onDestroy: function () {
         var me = this;
 
         me.observers = null;
@@ -260,13 +260,13 @@ Ext.define('Ext.data.ChainedStore', {
             return source.isMoving ? source.isMoving.apply(source, arguments) : false;
         },
 
-        loadsSynchronously: function() {
+        loadsSynchronously: function () {
             return this.getSource().loadsSynchronously();
         }
     }
 
     // Provides docs from the mixin
-    
+
     /**
      * @method add
      * @inheritdoc Ext.data.LocalStore#add
@@ -301,7 +301,7 @@ Ext.define('Ext.data.ChainedStore', {
      * @method indexOfId
      * @inheritdoc Ext.data.LocalStore#indexOfId
      */
-    
+
     /**
      * @method insert
      * @inheritdoc Ext.data.LocalStore#insert

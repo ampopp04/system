@@ -12,7 +12,7 @@ Ext.define('Ext.layout.Layout', {
         'Ext.layout.SizeModel'
     ],
 
-    uses: [ 'Ext.layout.Context' ],
+    uses: ['Ext.layout.Context'],
 
     factoryConfig: {
         type: 'layout'
@@ -58,7 +58,7 @@ Ext.define('Ext.layout.Layout', {
     $configPrefixed: false,
     $configStrict: false,
 
-    constructor : function(config) {
+    constructor: function (config) {
         var me = this;
 
         me.id = Ext.id(null, me.type + '-');
@@ -79,10 +79,10 @@ Ext.define('Ext.layout.Layout', {
 
     /**
      * Called before any calculation cycles to prepare for layout.
-     * 
+     *
      * This is a write phase and DOM reads should be strictly avoided when overridding
      * this method.
-     * 
+     *
      * @param {Ext.layout.ContextItem} ownerContext The context item for the layout's owner
      * component.
      * @method beginLayout
@@ -91,10 +91,10 @@ Ext.define('Ext.layout.Layout', {
 
     /**
      * Called before any calculation cycles to reset DOM values and prepare for calculation.
-     * 
+     *
      * This is a write phase and DOM reads should be strictly avoided when overridding
      * this method.
-     * 
+     *
      * @param {Ext.layout.ContextItem} ownerContext The context item for the layout's owner
      * component.
      * @method beginLayoutCycle
@@ -130,11 +130,11 @@ Ext.define('Ext.layout.Layout', {
      * least once and may be called repeatedly if the {@link #done} property is cleared
      * before return to indicate that this layout is not yet done. The {@link #done} property
      * is always set to `true` before entering this method.
-     * 
+     *
      * This is a read phase and DOM writes should be strictly avoided in derived classes.
      * Instead, DOM writes need to be written to {@link Ext.layout.ContextItem} objects to
      *  be flushed at the next opportunity.
-     * 
+     *
      * @param {Ext.layout.ContextItem} ownerContext The context item for the layout's owner
      * component.
      * @method calculate
@@ -148,14 +148,14 @@ Ext.define('Ext.layout.Layout', {
      * in which case, this method will not be called. It is also possible for this method to
      * be called and then later the layout becomes invalidated. This will result in
      * {@link #calculate} being called again, followed by another call to this method.
-     * 
+     *
      * This is a read phase and DOM writes should be strictly avoided in derived classes.
      * Instead, DOM writes need to be written to {@link Ext.layout.ContextItem} objects to
      * be flushed at the next opportunity.
-     * 
+     *
      * This method need not be implemented by derived classes and, in fact, should only be
      * implemented when needed.
-     * 
+     *
      * @param {Ext.layout.ContextItem} ownerContext The context item for the layout's owner
      * component.
      * @method completeLayout
@@ -169,14 +169,14 @@ Ext.define('Ext.layout.Layout', {
      * is best to avoid invalidating layouts at this point whenever possible. Even so, this
      * method can be used to perform final checks that may require all other layouts to be
      * complete and then invalidate some results.
-     * 
+     *
      * This is a read phase and DOM writes should be strictly avoided in derived classes.
      * Instead, DOM writes need to be written to {@link Ext.layout.ContextItem} objects to
      * be flushed at the next opportunity.
-     * 
+     *
      * This method need not be implemented by derived classes and, in fact, should only be
      * implemented when needed.
-     * 
+     *
      * @param {Ext.layout.ContextItem} ownerContext The context item for the layout's owner
      * component.
      * @method finalizeLayout
@@ -186,13 +186,13 @@ Ext.define('Ext.layout.Layout', {
      * This method is called after all layouts are complete and their calculations flushed
      * to the DOM. No further layouts will be run and this method is only called once per
      * layout run. The base component layout caches `lastComponentSize`.
-     * 
+     *
      * This is a write phase and DOM reads should be avoided if possible when overridding
      * this method.
-     * 
+     *
      * This method need not be implemented by derived classes and, in fact, should only be
      * implemented when needed.
-     * 
+     *
      * @param {Ext.layout.ContextItem} ownerContext The context item for the layout's owner
      * component.
      */
@@ -201,26 +201,26 @@ Ext.define('Ext.layout.Layout', {
         this.lastHeightModel = ownerContext.heightModel;
         this.ownerContext = null;
     },
-    
+
     /**
      * This method (if implemented) is called after all layouts are finished, and all have
      * a `lastComponentSize` cached. No further layouts will be run and this method is only
      * called once per layout run. It is the bookend to {@link #beginLayout}.
-     * 
+     *
      * This is a write phase and DOM reads should be avoided if possible when overridding
      * this method. This is the catch-all tail method to a layout and so the rules are more
      * relaxed. Even so, for performance reasons, it is best to avoid reading the DOM. If
      * a read is necessary, consider implementing a {@link #finalizeLayout} method to do the
      * required reads.
-     * 
+     *
      * This method need not be implemented by derived classes and, in fact, should only be
      * implemented when needed.
-     * 
+     *
      * @param {Ext.layout.ContextItem} ownerContext The context item for the layout's owner
      * component.
      * @method notifyOwner
      */
-    
+
     redoLayout: Ext.emptyFn,
     undoLayout: Ext.emptyFn,
 
@@ -234,7 +234,7 @@ Ext.define('Ext.layout.Layout', {
      * @since 4.1.0
      */
 
-    getAnimatePolicy: function() {
+    getAnimatePolicy: function () {
         return this.animatePolicy;
     },
 
@@ -379,7 +379,7 @@ Ext.define('Ext.layout.Layout', {
      * also determines if the items are in the proper place in the dom.
      * @protected
      */
-    renderItems : function(items, target) {
+    renderItems: function (items, target) {
         var me = this,
             ln = items.length,
             i = 0,
@@ -406,7 +406,7 @@ Ext.define('Ext.layout.Layout', {
      * Validates item is in the proper place in the dom.
      * @protected
      */
-    isValidParent : function(item, target, position) {
+    isValidParent: function (item, target, position) {
         var targetDom = (target && target.dom) || target,
             itemDom = this.getItemLayoutEl(item);
 
@@ -430,7 +430,7 @@ Ext.define('Ext.layout.Layout', {
      * @param {Ext.Component} item
      * @return {HTMLElement}
      */
-    getItemLayoutEl: function(item) {
+    getItemLayoutEl: function (item) {
         var dom = item.el ? item.el.dom : Ext.getDom(item),
             parentNode = dom.parentNode,
             className;
@@ -444,8 +444,8 @@ Ext.define('Ext.layout.Layout', {
 
         return dom;
     },
-    
-    getPositionOffset: function(position){
+
+    getPositionOffset: function (position) {
         return position;
     },
 
@@ -454,7 +454,7 @@ Ext.define('Ext.layout.Layout', {
      * @param {Ext.Component} item The item to be configured
      * @protected
      */
-    configureItem: function(item) {
+    configureItem: function (item) {
         item.ownerLayout = this;
     },
 
@@ -465,7 +465,7 @@ Ext.define('Ext.layout.Layout', {
      * @param {Number} position The position within the target to render the item to
      * @private
      */
-    renderItem : function(item, target, position) {
+    renderItem: function (item, target, position) {
         var me = this;
 
         if (!item.rendered) {
@@ -479,7 +479,7 @@ Ext.define('Ext.layout.Layout', {
      * Moves Component to the provided target instead.
      * @private
      */
-    moveItem : function(item, target, position) {
+    moveItem: function (item, target, position) {
         target = target.dom || target;
         if (typeof position === 'number') {
             position = target.childNodes[position];
@@ -492,7 +492,7 @@ Ext.define('Ext.layout.Layout', {
     /**
      * This method is called when a child item changes in some way. By default this calls
      * {@link Ext.Component#updateLayout} on this layout's owner.
-     * 
+     *
      * @param {Ext.Component} child The child item that has changed.
      * @return {Boolean} True if this layout has handled the content change.
      */
@@ -505,7 +505,7 @@ Ext.define('Ext.layout.Layout', {
      * A one-time initialization method called just before rendering.
      * @protected
      */
-    initLayout : function() {
+    initLayout: function () {
         this.initialized = true;
     },
 
@@ -513,7 +513,7 @@ Ext.define('Ext.layout.Layout', {
      * @private
      * Sets the layout owner
      */
-    setOwner : function(owner) {
+    setOwner: function (owner) {
         this.owner = owner;
     },
 
@@ -521,7 +521,7 @@ Ext.define('Ext.layout.Layout', {
      * Returns the set of items to layout (empty by default).
      * @protected
      */
-    getLayoutItems : function() {
+    getLayoutItems: function () {
         return [];
     },
 
@@ -529,15 +529,15 @@ Ext.define('Ext.layout.Layout', {
         item.ownerLayout = this;
     },
 
-    onRemove : Ext.emptyFn,
-    onDestroy : Ext.emptyFn,
+    onRemove: Ext.emptyFn,
+    onDestroy: Ext.emptyFn,
 
     /**
      * Removes layout's itemCls and owning Container's itemCls.
      * Clears the managed dimensions flags
      * @protected
      */
-    afterRemove: function(item) {
+    afterRemove: function (item) {
         var me = this,
             el = item.el,
             owner = me.owner,
@@ -560,7 +560,7 @@ Ext.define('Ext.layout.Layout', {
      * @private
      * Called by an owning Panel after the Panel finishes its collapse process.
      */
-    afterCollapse: function(owner, animated) {
+    afterCollapse: function (owner, animated) {
         if (animated) {
             this.onContentChange(owner);
         }
@@ -570,7 +570,7 @@ Ext.define('Ext.layout.Layout', {
      * @private
      * Called by an owning Panel after the Panel finishes its expand process.
      */
-    afterExpand: function(owner, animated) {
+    afterExpand: function (owner, animated) {
         if (animated) {
             this.onContentChange(owner);
         }
@@ -579,17 +579,17 @@ Ext.define('Ext.layout.Layout', {
     /**
      * Destroys this layout. This method removes a `targetCls` from the `target`
      * element and calls `onDestroy`.
-     * 
+     *
      * A derived class can override either this method or `onDestroy` but in all
      * cases must call the base class versions of these methods to allow the base class to
      * perform its cleanup.
-     * 
+     *
      * This method (or `onDestroy`) are overridden by subclasses most often to purge
      * event handlers or remove unmanged DOM nodes.
      *
      * @protected
      */
-    destroy: function() {
+    destroy: function () {
         var me = this,
             target;
 

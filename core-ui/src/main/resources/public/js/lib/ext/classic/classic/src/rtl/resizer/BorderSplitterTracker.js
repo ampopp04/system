@@ -8,7 +8,7 @@ Ext.define('Ext.rtl.resizer.BorderSplitterTracker', {
         left: 'right'
     },
 
-    getCollapseDirection: function() {
+    getCollapseDirection: function () {
         var direction = this.splitter.getCollapseDirection();
         if (!this.splitter.getInherited().rtl !== !Ext.rootInheritedState.rtl) { // jshint ignore:line
             direction = this.rtlDirections[direction];

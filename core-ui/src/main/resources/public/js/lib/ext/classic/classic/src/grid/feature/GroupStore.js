@@ -22,7 +22,7 @@ Ext.define('Ext.grid.feature.GroupStore', {
 
     badGrouperKey: '[object Object]',
 
-    constructor: function(groupingFeature, store) {
+    constructor: function (groupingFeature, store) {
         var me = this;
 
         me.callParent();
@@ -35,7 +35,7 @@ Ext.define('Ext.grid.feature.GroupStore', {
         }
     },
 
-    bindStore: function(store) {
+    bindStore: function (store) {
         var me = this;
 
         if (!store || me.store !== store) {
@@ -81,8 +81,8 @@ Ext.define('Ext.grid.feature.GroupStore', {
             groups = store.getGroups(),
             groupCount = groups ? groups.length : 0,
             groupField = store.getGroupField(),
-            // We need to know all of the possible unique group names. The only way to know this is to check itemGroupKeys, which will keep a
-            // list of all potential group names. It's not enough to get the key of the existing groups since the collection may be filtered.
+        // We need to know all of the possible unique group names. The only way to know this is to check itemGroupKeys, which will keep a
+        // list of all potential group names. It's not enough to get the key of the existing groups since the collection may be filtered.
             groupNames = groups && ExtArray.unique(Ext.Object.getValues(groups.itemGroupKeys)),
             isCollapsed = false,
             oldMetaGroupCache = groupingFeature.getCache(),
@@ -179,32 +179,32 @@ Ext.define('Ext.grid.feature.GroupStore', {
         }
     },
 
-    isCollapsed: function(name) {
+    isCollapsed: function (name) {
         return this.groupingFeature.getCache()[name].isCollapsed;
     },
 
-    isLoading: function() {
+    isLoading: function () {
         return false;
     },
 
-    getData: function() {
+    getData: function () {
         return this.data;
     },
 
-    getCount: function() {
+    getCount: function () {
         return this.data.getCount();
     },
 
-    getTotalCount: function() {
+    getTotalCount: function () {
         return this.data.getCount();
     },
 
     // This class is only created for fully loaded, non-buffered stores
-    rangeCached: function(start, end) {
+    rangeCached: function (start, end) {
         return end < this.getCount();
     },
 
-    getRange: function(start, end, options) {
+    getRange: function (start, end, options) {
         // Collection's getRange is exclusive. Do NOT mutate the value: it is passed to the callback.
         var result = this.data.getRange(start, Ext.isNumber(end) ? end + 1 : end);
 
@@ -214,7 +214,7 @@ Ext.define('Ext.grid.feature.GroupStore', {
         return result;
     },
 
-    getAt: function(index) {
+    getAt: function (index) {
         return this.data.getAt(index);
     },
 
@@ -227,7 +227,7 @@ Ext.define('Ext.grid.feature.GroupStore', {
      * @param {Mixed} id The id of the Record to find.
      * @return {Ext.data.Model} The Record with the passed id. Returns null if not found.
      */
-    getById: function(id) {
+    getById: function (id) {
         return this.store.getById(id);
     },
 
@@ -247,7 +247,7 @@ Ext.define('Ext.grid.feature.GroupStore', {
         return this.store.getByInternalId(internalId) || this.data.byInternalId.get(internalId);
     },
 
-    expandGroup: function(group) {
+    expandGroup: function (group) {
         var me = this,
             groupingFeature = me.groupingFeature,
             metaGroup, placeholder, startIdx, items;
@@ -281,7 +281,7 @@ Ext.define('Ext.grid.feature.GroupStore', {
         }
     },
 
-    collapseGroup: function(group) {
+    collapseGroup: function (group) {
         var me = this,
             groupingFeature = me.groupingFeature,
             startIdx,
@@ -316,7 +316,7 @@ Ext.define('Ext.grid.feature.GroupStore', {
         }
     },
 
-    getGroupPlaceholder: function(group) {
+    getGroupPlaceholder: function (group) {
         var metaGroup = this.groupingFeature.getMetaGroup(group);
 
         if (!metaGroup.placeholder) {
@@ -342,7 +342,7 @@ Ext.define('Ext.grid.feature.GroupStore', {
 
     // Find index of record in group store.
     // If it's in a collapsed group, then it's -1, not present
-    indexOf: function(record) {
+    indexOf: function (record) {
         var ret = -1;
         if (!record.isCollapsedPlaceholder) {
             ret = this.data.indexOf(record);
@@ -350,11 +350,11 @@ Ext.define('Ext.grid.feature.GroupStore', {
         return ret;
     },
 
-    contains: function(record) {
+    contains: function (record) {
         return this.indexOf(record) > -1;
     },
 
-    indexOfPlaceholder: function(record) {
+    indexOfPlaceholder: function (record) {
         return this.data.indexOf(record);
     },
 
@@ -366,7 +366,7 @@ Ext.define('Ext.grid.feature.GroupStore', {
      * @param {String} id The id of the Record to find.
      * @return {Number} The index of the Record. Returns -1 if not found.
      */
-    indexOfId: function(id) {
+    indexOfId: function (id) {
         return this.data.indexOfKey(id);
     },
 
@@ -378,11 +378,11 @@ Ext.define('Ext.grid.feature.GroupStore', {
      * @param {Ext.data.Model} record The Ext.data.Model object to find.
      * @return {Number} The index of the passed Record. Returns -1 if not found.
      */
-    indexOfTotal: function(record) {
+    indexOfTotal: function (record) {
         return this.store.indexOf(record);
     },
 
-    onAdd: function(store) {
+    onAdd: function (store) {
         var me = this;
 
         me.processStore(me.store);
@@ -392,23 +392,23 @@ Ext.define('Ext.grid.feature.GroupStore', {
         return false;
     },
 
-    onClear: function(store, records, startIndex) {
+    onClear: function (store, records, startIndex) {
         var me = this;
 
         me.processStore(me.store);
         me.fireEvent('clear', me);
     },
 
-    onIdChanged: function(store, rec, oldId, newId) {
+    onIdChanged: function (store, rec, oldId, newId) {
         this.data.updateKey(rec, oldId);
     },
 
-    onRefresh: function() {
+    onRefresh: function () {
         this.processStore(this.store);
         this.fireEvent('refresh', this);
     },
 
-    onRemove: function() {
+    onRemove: function () {
         var me = this;
 
         me.processStore(me.store);
@@ -418,7 +418,7 @@ Ext.define('Ext.grid.feature.GroupStore', {
         return false;
     },
 
-    onUpdate: function(store, record, operation, modifiedFieldNames) {
+    onUpdate: function (store, record, operation, modifiedFieldNames) {
         var me = this,
             groupingFeature = me.groupingFeature,
             group, metaGroup, firstRec, lastRec, items;
@@ -483,14 +483,14 @@ Ext.define('Ext.grid.feature.GroupStore', {
     },
 
     // Relay the groupchange event
-    onGroupChange: function(store, grouper) {
+    onGroupChange: function (store, grouper) {
         if (!grouper) {
             this.processStore(store);
         }
         this.fireEvent('groupchange', store, grouper);
     },
 
-    destroy: function() {
+    destroy: function () {
         var me = this;
 
         me.bindStore(null);

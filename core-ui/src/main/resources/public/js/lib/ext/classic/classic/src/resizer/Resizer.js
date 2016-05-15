@@ -41,10 +41,10 @@ Ext.define('Ext.resizer.Resizer', {
 
     alternateClassName: 'Ext.Resizable',
 
-    handleCls:  Ext.baseCSSPrefix + 'resizable-handle',
-    overCls:  Ext.baseCSSPrefix + 'resizable-handle-over',
-    pinnedCls:  Ext.baseCSSPrefix + 'resizable-pinned',
-    wrapCls:    Ext.baseCSSPrefix + 'resizable-wrap',
+    handleCls: Ext.baseCSSPrefix + 'resizable-handle',
+    overCls: Ext.baseCSSPrefix + 'resizable-handle-over',
+    pinnedCls: Ext.baseCSSPrefix + 'resizable-pinned',
+    wrapCls: Ext.baseCSSPrefix + 'resizable-wrap',
     wrappedCls: Ext.baseCSSPrefix + 'resizable-wrapped',
     delimiterRe: /(?:\s*[,;]\s*)|\s+/,
 
@@ -71,49 +71,49 @@ Ext.define('Ext.resizer.Resizer', {
      * @cfg {Number} height
      * Optional. The height to set target to in pixels
      */
-    height : null,
+    height: null,
 
     /**
      * @cfg {Number} width
      * Optional. The width to set the target to in pixels
      */
-    width : null,
+    width: null,
 
     /**
      * @cfg {Number} heightIncrement
      * The increment to snap the height resize in pixels.
      */
-    heightIncrement : 0,
+    heightIncrement: 0,
 
     /**
      * @cfg {Number} widthIncrement
      * The increment to snap the width resize in pixels.
      */
-    widthIncrement : 0,
+    widthIncrement: 0,
 
     /**
      * @cfg {Number} minHeight
      * The minimum height for the element
      */
-    minHeight : 20,
+    minHeight: 20,
 
     /**
      * @cfg {Number} minWidth
      * The minimum width for the element
      */
-    minWidth : 20,
+    minWidth: 20,
 
     /**
      * @cfg {Number} maxHeight
      * The maximum height for the element
      */
-    maxHeight : 10000,
+    maxHeight: 10000,
 
     /**
      * @cfg {Number} maxWidth
      * The maximum width for the element
      */
-    maxWidth : 10000,
+    maxWidth: 10000,
 
     /**
      * @cfg {Boolean} pinned
@@ -139,10 +139,10 @@ Ext.define('Ext.resizer.Resizer', {
      */
 
     possiblePositions: {
-        n:  'north',
-        s:  'south',
-        e:  'east',
-        w:  'west',
+        n: 'north',
+        s: 'south',
+        e: 'east',
+        w: 'west',
         se: 'southeast',
         sw: 'southwest',
         nw: 'northwest',
@@ -188,15 +188,15 @@ Ext.define('Ext.resizer.Resizer', {
      * @param {Ext.event.Event} e The mouseup event
      */
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this,
             handles = me.handles,
             unselectableCls = Ext.dom.Element.unselectableCls,
             handleEls = [],
             resizeTarget, handleCls, possibles, tag,
-            len, i, pos, el, box, 
+            len, i, pos, el, box,
             wrapTarget, positioning, targetBaseCls;
-            
+
 
         if (Ext.isString(config) || Ext.isElement(config) || config.dom) {
             resizeTarget = config;
@@ -294,7 +294,7 @@ Ext.define('Ext.resizer.Resizer', {
 
             box = wrapTarget.getBox();
 
-            if (positioning.position !== 'absolute'){
+            if (positioning.position !== 'absolute') {
                 //reset coordinates
                 box.x = 0;
                 box.y = 0;
@@ -368,14 +368,14 @@ Ext.define('Ext.resizer.Resizer', {
             }
         }
 
-        for (i = 0; i < len; i++){
+        for (i = 0; i < len; i++) {
             // if specified and possible, create
             if (handles[i] && possibles[handles[i]]) {
                 pos = possibles[handles[i]];
 
                 handleEls.push(
                     '<div id="', me.el.id, '-', pos, '-handle" class="', Ext.String.format(handleCls, pos), ' ', unselectableCls,
-                        '" unselectable="on" role="presentation"',
+                    '" unselectable="on" role="presentation"',
                     '></div>'
                 );
             }
@@ -386,7 +386,7 @@ Ext.define('Ext.resizer.Resizer', {
         handleEls.length = 0;
 
         // store a reference to each handle element in this.east, this.west, etc
-        for (i = 0; i < len; i++){
+        for (i = 0; i < len; i++) {
             // if specified and possible, create
             if (handles[i] && possibles[handles[i]]) {
                 pos = possibles[handles[i]];
@@ -403,11 +403,11 @@ Ext.define('Ext.resizer.Resizer', {
         me.resizeTracker.handleEls = handleEls;
     },
 
-    disable: function() {
+    disable: function () {
         this.resizeTracker.disable();
     },
 
-    enable: function() {
+    enable: function () {
         this.resizeTracker.enable();
     },
 
@@ -417,7 +417,7 @@ Ext.define('Ext.resizer.Resizer', {
      * @param {Ext.resizer.ResizeTracker} tracker
      * @param {Ext.event.Event} e The event
      */
-    onBeforeResize: function(tracker, e) {
+    onBeforeResize: function (tracker, e) {
         return this.fireResizeEvent('beforeresize', tracker, e);
     },
 
@@ -427,7 +427,7 @@ Ext.define('Ext.resizer.Resizer', {
      * @param {Ext.resizer.ResizeTracker} tracker
      * @param {Ext.event.Event} e The event
      */
-    onResize: function(tracker, e) {
+    onResize: function (tracker, e) {
         return this.fireResizeEvent('resizedrag', tracker, e);
     },
 
@@ -437,7 +437,7 @@ Ext.define('Ext.resizer.Resizer', {
      * @param {Ext.resizer.ResizeTracker} tracker
      * @param {Ext.event.Event} e The event
      */
-    onResizeEnd: function(tracker, e) {
+    onResizeEnd: function (tracker, e) {
         return this.fireResizeEvent('resize', tracker, e);
     },
 
@@ -448,7 +448,7 @@ Ext.define('Ext.resizer.Resizer', {
      * @param {Ext.resizer.ResizeTracker} tracker
      * @param {Ext.event.Event} e The event
      */
-    fireResizeEvent: function(name, tracker, e) {
+    fireResizeEvent: function (name, tracker, e) {
         var me = this,
             box;
 
@@ -463,7 +463,7 @@ Ext.define('Ext.resizer.Resizer', {
      * @param {Number} width
      * @param {Number} height
      */
-    resizeTo : function(width, height) {
+    resizeTo: function (width, height) {
         var me = this;
         me.target.setSize(width, height);
         me.fireEvent('resize', me, width, height, null);
@@ -477,7 +477,7 @@ Ext.define('Ext.resizer.Resizer', {
      * nodes. The original element can be accessed through the originalTarget property.
      * @return {Ext.dom.Element} element
      */
-    getEl : function() {
+    getEl: function () {
         return this.el;
     },
 
@@ -488,11 +488,11 @@ Ext.define('Ext.resizer.Resizer', {
      * nodes. The original element can be accessed through the originalTarget property.
      * @return {Ext.dom.Element/Ext.Component}
      */
-    getTarget: function() {
+    getTarget: function () {
         return this.target;
     },
 
-    destroy: function() {
+    destroy: function () {
         var me = this,
             i,
             handles = me.handles,

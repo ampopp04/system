@@ -8,20 +8,20 @@ Ext.define('Ext.ux.PreviewPlugin', {
     extend: 'Ext.plugin.Abstract',
     alias: 'plugin.preview',
     requires: ['Ext.grid.feature.RowBody'],
-    
+
     /**
      * @private
      * css class to use to hide the body
      */
     hideBodyCls: 'x-grid-row-body-hidden',
-    
+
     /**
      * @cfg {String} bodyField
      * Field to display in the preview. Must be a field within the Model definition
      * that the store is using.
      */
     bodyField: '',
-    
+
     /**
      * @cfg {Boolean} previewExpanded
      */
@@ -31,17 +31,17 @@ Ext.define('Ext.ux.PreviewPlugin', {
      * Plugin may be safely declared on either a panel.Grid or a Grid View/viewConfig
      * @param {Ext.grid.Panel/Ext.view.View} target
      */
-    setCmp: function(target) {
+    setCmp: function (target) {
         this.callParent(arguments);
 
         // Resolve grid from view as necessary
         var me = this,
-            grid        = me.cmp = target.isXType('gridview') ? target.grid : target,
-            bodyField   = me.bodyField,
+            grid = me.cmp = target.isXType('gridview') ? target.grid : target,
+            bodyField = me.bodyField,
             hideBodyCls = me.hideBodyCls,
-            feature     = Ext.create('Ext.grid.feature.RowBody', {
-                grid : grid,
-                getAdditionalData: function(data, idx, model, rowValues) {
+            feature = Ext.create('Ext.grid.feature.RowBody', {
+                grid: grid,
+                getAdditionalData: function (data, idx, model, rowValues) {
 
                     var getAdditionalData = Ext.grid.feature.RowBody.prototype.getAdditionalData,
                         additionalData = {
@@ -56,7 +56,7 @@ Ext.define('Ext.ux.PreviewPlugin', {
                     return additionalData;
                 }
             }),
-            initFeature = function(grid, view) {
+            initFeature = function (grid, view) {
                 view.previewExpanded = me.previewExpanded;
 
                 // By this point, existing features are already in place, so this must be initialized and added
@@ -84,13 +84,13 @@ Ext.define('Ext.ux.PreviewPlugin', {
      * Toggle between the preview being expanded/hidden on all rows
      * @param {Boolean} expanded Pass true to expand the record and false to not show the preview.
      */
-    toggleExpanded: function(expanded) {
+    toggleExpanded: function (expanded) {
         var grid = this.getCmp(),
             view = grid && grid.getView(),
             bufferedRenderer = view.bufferedRenderer,
             scrollManager = view.scrollManager;
 
-        if (grid && view && expanded !== view.previewExpanded ) {
+        if (grid && view && expanded !== view.previewExpanded) {
             this.previewExpanded = view.previewExpanded = !!expanded;
             view.refreshView();
 

@@ -1,12 +1,12 @@
-describe("grid-general", function() {
+describe("grid-general", function () {
     var grid, store,
         synchronousLoad = true,
         proxyStoreLoad = Ext.data.ProxyStore.prototype.load,
         loadStore;
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -15,7 +15,7 @@ describe("grid-general", function() {
         };
     });
 
-    afterEach(function() {
+    afterEach(function () {
         // Undo the overrides.
         Ext.data.ProxyStore.prototype.load = proxyStoreLoad;
 
@@ -25,40 +25,40 @@ describe("grid-general", function() {
     var scrollbarWidth = Ext.getScrollbarSize().width,
         transformStyleName = 'webkitTransform' in document.documentElement.style ? 'webkitTransform' : 'transform',
         scrollbarsTakeSpace = !!scrollbarWidth,
-        // Some tests should only be run if the UI shows space-taking scrollbars.
-        // Specifically, those tests which test that the presence or not of a scrollbar in one dimension
-        // affects the presence of a scrollbar in the other dimension.
+    // Some tests should only be run if the UI shows space-taking scrollbars.
+    // Specifically, those tests which test that the presence or not of a scrollbar in one dimension
+    // affects the presence of a scrollbar in the other dimension.
         visibleScrollbarsIt = scrollbarsTakeSpace ? it : xit;
 
-        function getViewTop(el) {
-            var dom = Ext.getDom(el),
-                transform;
+    function getViewTop(el) {
+        var dom = Ext.getDom(el),
+            transform;
 
-            if (Ext.supports.CssTransforms && !Ext.isIE9m) {
-                transform = dom.style[transformStyleName];
-                return transform ? parseInt(transform.split(',')[1], 10) : 0;
-            } else {
-                return parseInt(dom.style.top || '0', 10);
-            }
+        if (Ext.supports.CssTransforms && !Ext.isIE9m) {
+            transform = dom.style[transformStyleName];
+            return transform ? parseInt(transform.split(',')[1], 10) : 0;
+        } else {
+            return parseInt(dom.style.top || '0', 10);
         }
+    }
 
     function createSuite(buffered) {
-        describe(buffered ? "with buffered rendering" : "without buffered rendering", function() {
+        describe(buffered ? "with buffered rendering" : "without buffered rendering", function () {
             var GridModel = Ext.define(null, {
-                    extend: 'Ext.data.Model',
-                    fields: [
-                        'field1',
-                        'field2',
-                        'field3',
-                        'field4',
-                        'field5',
-                        'field6',
-                        'field7',
-                        'field8',
-                        'field9',
-                        'field10'
-                    ]
-                }), view, colRef;
+                extend: 'Ext.data.Model',
+                fields: [
+                    'field1',
+                    'field2',
+                    'field3',
+                    'field4',
+                    'field5',
+                    'field6',
+                    'field7',
+                    'field8',
+                    'field9',
+                    'field10'
+                ]
+            }), view, colRef;
 
             function makeStore(data) {
                 if (!data && data !== null) {
@@ -157,21 +157,21 @@ describe("grid-general", function() {
                 return cell.down(selectorView.innerSelector).dom.innerHTML;
             }
 
-            describe("misc tests", function() {
+            describe("misc tests", function () {
                 // EXTJS-16436
-                it('should not throw an exception when scrollable:false', function() {
+                it('should not throw an exception when scrollable:false', function () {
                     // Spec will fail if an error is thrown
                     makeGrid(null, undefined, {
                         scrollable: false
                     });
                 });
-                
+
                 // EXTJS-14858
-                it("should not throw an exception when hiding a column in a locked grid during initComponent", function() {
+                it("should not throw an exception when hiding a column in a locked grid during initComponent", function () {
                     var Plug = Ext.define(null, {
                         extend: 'Ext.AbstractPlugin',
 
-                        init: function(cmp) {
+                        init: function (cmp) {
                             cmp.hide();
                         }
                     });
@@ -179,12 +179,10 @@ describe("grid-general", function() {
                     makeGrid([{
                         plugins: [new Plug()],
                         locked: true
-                    }, {
-
-                    }]);
+                    }, {}]);
                 });
                 // https://sencha.jira.com/browse/EXTJS-14879
-                it('should invalidate cached element data when grid DOM is updated', function() {
+                it('should invalidate cached element data when grid DOM is updated', function () {
                     makeGrid();
                     grid.columns[0].hasCustomRenderer = true;
                     Ext.fly(grid.view.all.item(0, true)).addCls('foo-bar');
@@ -195,20 +193,20 @@ describe("grid-general", function() {
                     expect(Ext.fly(grid.view.all.item(0, true)).hasCls('foo-bar')).toBe(false);
                 });
 
-                it("should not throw an error when the store is loaded in the afterrender of an earlier sibling", function() {
+                it("should not throw an error when the store is loaded in the afterrender of an earlier sibling", function () {
                     makeGrid(null, undefined, {
                         renderTo: null
                     });
 
                     var ct;
-                    expect(function() {
+                    expect(function () {
                         ct = new Ext.container.Container({
                             renderTo: Ext.getBody(),
                             items: [{
                                 xtype: 'component',
                                 html: 'Foo',
                                 listeners: {
-                                    afterrender: function() {
+                                    afterrender: function () {
                                         var proxy = new Ext.data.proxy.Ajax({
                                             url: 'foo'
                                         });
@@ -225,17 +223,17 @@ describe("grid-general", function() {
                     Ext.destroy(ct);
                 });
 
-                it("should not throw an error when the store is loaded in the afterrender event", function() {
+                it("should not throw an error when the store is loaded in the afterrender event", function () {
                     makeGrid(null, [], {
                         listeners: {
-                            afterrender: function() {
+                            afterrender: function () {
                                 var proxy = new Ext.data.proxy.Ajax({
-                                        url: 'foo'
-                                    });
+                                    url: 'foo'
+                                });
 
                                 spyOn(proxy, 'read').andReturn();
                                 store.setProxy(proxy);
-                                expect(function() {
+                                expect(function () {
                                     store.load();
                                 }).not.toThrow();
                             }
@@ -244,14 +242,14 @@ describe("grid-general", function() {
                 });
             });
 
-            describe("autoSizeColumn", function() {
+            describe("autoSizeColumn", function () {
                 function getPadding() {
                     var cell = grid.getView().getEl().down(colRef[0].getCellInnerSelector()),
                         right = Ext.supports.ScrollWidthInlinePaddingBug ? parseInt(cell.getStyle('padding-right'), 10) : 0;
                     return parseInt(cell.getStyle('padding-left'), 10) + right;
                 }
 
-                it("should size the column when passed a header", function() {
+                it("should size the column when passed a header", function () {
                     makeGrid(null, [{
                         field1: '<div style="width: 125px;>a</div>'
                     }, {
@@ -263,7 +261,7 @@ describe("grid-general", function() {
                     expect(colRef[0].getWidth()).toBe(451 + getPadding());
                 });
 
-                it("should size the column when passed a header index", function() {
+                it("should size the column when passed a header index", function () {
                     makeGrid(null, [{
                         field1: '<div style="width: 125px;>a</div>'
                     }, {
@@ -276,8 +274,8 @@ describe("grid-general", function() {
                 });
             });
 
-            describe("sizing", function() {
-                it("should allow for a minHeight on the view with a shrink wrapped grid", function() {
+            describe("sizing", function () {
+                it("should allow for a minHeight on the view with a shrink wrapped grid", function () {
                     makeGrid(null, undefined, {
                         height: undefined,
                         viewConfig: {
@@ -289,21 +287,21 @@ describe("grid-general", function() {
                 });
             });
 
-            describe("getRowClass", function() {
+            describe("getRowClass", function () {
                 var spy;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     spy = jasmine.createSpy();
                     makeGrid(null, 3, {
                         viewConfig: {
-                            getRowClass: spy.andCallFake(function(rec) {
+                            getRowClass: spy.andCallFake(function (rec) {
                                 return 'customCls' + store.indexOf(rec) + ' testCls';
                             })
                         }
                     });
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     spy = null;
                 });
 
@@ -312,7 +310,7 @@ describe("grid-general", function() {
                     return Ext.fly(node).down(view.rowSelector);
                 }
 
-                it("should be called for each rendered row", function() {
+                it("should be called for each rendered row", function () {
                     expect(spy.callCount).toBe(3);
                     expect(spy.calls[0].args[0]).toBe(store.getAt(0));
                     expect(spy.calls[0].args[1]).toBe(0);
@@ -322,7 +320,7 @@ describe("grid-general", function() {
                     expect(spy.calls[2].args[1]).toBe(2);
                 });
 
-                it("should be called when refreshing the view", function() {
+                it("should be called when refreshing the view", function () {
                     spy.reset();
                     view.refresh();
                     expect(spy.calls[0].args[0]).toBe(store.getAt(0));
@@ -333,7 +331,7 @@ describe("grid-general", function() {
                     expect(spy.calls[2].args[1]).toBe(2);
                 });
 
-                it("should be called when adding a new record", function() {
+                it("should be called when adding a new record", function () {
                     spy.reset();
                     store.add({});
                     expect(spy.callCount).toBe(1);
@@ -341,7 +339,7 @@ describe("grid-general", function() {
                     expect(spy.mostRecentCall.args[1]).toBe(3);
                 });
 
-                it("should be called when inserting a new record", function() {
+                it("should be called when inserting a new record", function () {
                     spy.reset();
                     store.insert(0, {});
                     expect(spy.callCount).toBe(1);
@@ -349,7 +347,7 @@ describe("grid-general", function() {
                     expect(spy.mostRecentCall.args[1]).toBe(0);
                 });
 
-                it("should be called when the row is updating", function() {
+                it("should be called when the row is updating", function () {
                     spy.reset();
                     store.getAt(0).set('field1', 'new value');
                     expect(spy.callCount).toBe(1);
@@ -357,13 +355,13 @@ describe("grid-general", function() {
                     expect(spy.mostRecentCall.args[1]).toBe(0);
                 });
 
-                it("should add the class to the row element", function() {
+                it("should add the class to the row element", function () {
                     expect(getRow(0).hasCls('customCls0')).toBe(true);
                     expect(getRow(1).hasCls('customCls1')).toBe(true);
                     expect(getRow(2).hasCls('customCls2')).toBe(true);
                 });
 
-                it("should be able to add multiple class names", function() {
+                it("should be able to add multiple class names", function () {
                     expect(getRow(0).hasCls('customCls0')).toBe(true);
                     expect(getRow(0).hasCls('testCls')).toBe(true);
                     expect(getRow(1).hasCls('customCls1')).toBe(true);
@@ -373,14 +371,14 @@ describe("grid-general", function() {
                 });
             });
 
-            describe("emptyText", function() {
+            describe("emptyText", function () {
 
                 function getEmpty() {
                     return grid.getEl().down('.' + grid.emptyCls) || null;
                 }
 
-                describe("when to display", function() {
-                    it("should display on first refresh with deferEmptyText: false", function() {
+                describe("when to display", function () {
+                    it("should display on first refresh with deferEmptyText: false", function () {
                         makeGrid(null, null, {
                             viewConfig: {
                                 emptyText: 'Foo',
@@ -390,7 +388,7 @@ describe("grid-general", function() {
                         expect(getEmpty()).not.toBeNull();
                     });
 
-                    it("should not display on first refresh with deferEmptyText: true", function() {
+                    it("should not display on first refresh with deferEmptyText: true", function () {
                         makeGrid(null, null, {
                             viewConfig: {
                                 emptyText: 'Foo',
@@ -400,7 +398,7 @@ describe("grid-general", function() {
                         expect(getEmpty()).toBeNull();
                     });
 
-                    it("should display on subsequent refreshes with deferEmptyText: true", function() {
+                    it("should display on subsequent refreshes with deferEmptyText: true", function () {
                         makeGrid(null, null, {
                             viewConfig: {
                                 emptyText: 'Foo',
@@ -411,7 +409,7 @@ describe("grid-general", function() {
                         expect(getEmpty()).not.toBeNull();
                     });
 
-                    it("should display when removing the last record", function() {
+                    it("should display when removing the last record", function () {
                         makeGrid(null, 1, {
                             viewConfig: {
                                 emptyText: 'Foo',
@@ -422,7 +420,7 @@ describe("grid-general", function() {
                         expect(getEmpty()).not.toBeNull();
                     });
 
-                    it("should display when removing all records", function() {
+                    it("should display when removing all records", function () {
                         makeGrid(null, 5, {
                             viewConfig: {
                                 emptyText: 'Foo',
@@ -434,9 +432,9 @@ describe("grid-general", function() {
                     });
                 });
 
-                describe("config", function() {
-                    describe("emptyCls", function() {
-                        it("should use the passed emptyCls", function() {
+                describe("config", function () {
+                    describe("emptyCls", function () {
+                        it("should use the passed emptyCls", function () {
                             makeGrid(null, null, {
                                 emptyCls: 'foo',
                                 viewConfig: {
@@ -448,8 +446,8 @@ describe("grid-general", function() {
                         });
                     });
 
-                    describe("emptyText", function() {
-                        it("should use the passed emptyText", function() {
+                    describe("emptyText", function () {
+                        it("should use the passed emptyText", function () {
                             makeGrid(null, null, {
                                 viewConfig: {
                                     emptyText: 'Foo',
@@ -461,8 +459,8 @@ describe("grid-general", function() {
                     });
                 });
 
-                describe("size", function() {
-                    it("should set the grid height correctly based on the emptyText when auto heighting", function() {
+                describe("size", function () {
+                    it("should set the grid height correctly based on the emptyText when auto heighting", function () {
                         makeGrid(null, null, {
                             height: null,
                             hideHeaders: true,
@@ -476,8 +474,8 @@ describe("grid-general", function() {
                     });
                 });
 
-                describe("scrolling", function() {
-                    it("should keep a horizontal scrollbar if columns are larger than the grid width", function() {
+                describe("scrolling", function () {
+                    it("should keep a horizontal scrollbar if columns are larger than the grid width", function () {
                         makeGrid([{
                             width: 800
                         }, {
@@ -493,17 +491,17 @@ describe("grid-general", function() {
                 });
             });
 
-            describe("stripeRows", function() {
+            describe("stripeRows", function () {
                 var stripeCls = Ext.view.Table.prototype.altRowCls;
 
-                describe("with stripeRows: false", function() {
+                describe("with stripeRows: false", function () {
                     function expectNotStriped() {
-                        Ext.Array.forEach(grid.getView().getNodes(), function(node) {
+                        Ext.Array.forEach(grid.getView().getNodes(), function (node) {
                             expect(Ext.fly(node).hasCls(stripeCls)).toBe(false);
                         });
                     }
 
-                    beforeEach(function() {
+                    beforeEach(function () {
                         makeGrid(null, 11, {
                             viewConfig: {
                                 stripeRows: false
@@ -511,33 +509,33 @@ describe("grid-general", function() {
                         });
                     });
 
-                    it("should not stripe rows on initial render", function() {
+                    it("should not stripe rows on initial render", function () {
                         expectNotStriped();
                     });
 
-                    it("should not stripe rows when adding records", function() {
+                    it("should not stripe rows when adding records", function () {
                         store.add([{}, {}, {}, {}, {}]);
                         expectNotStriped();
                     });
 
-                    it("should not stripe rows when removing records", function() {
+                    it("should not stripe rows when removing records", function () {
                         store.removeAt(0);
                         expectNotStriped();
                     });
 
-                    it("should not stripe rows when updating records", function() {
+                    it("should not stripe rows when updating records", function () {
                         store.getAt(0).set('field1', 'foo');
                         expectNotStriped();
                     });
 
-                    it("should not stripe rows on refresh", function() {
+                    it("should not stripe rows on refresh", function () {
                         grid.getView().refresh();
                         expectNotStriped();
                     });
                 });
 
-                describe("with stripeRows: true", function() {
-                    beforeEach(function() {
+                describe("with stripeRows: true", function () {
+                    beforeEach(function () {
                         makeGrid(null, 11, {
                             viewConfig: {
                                 stripeRows: true
@@ -546,7 +544,7 @@ describe("grid-general", function() {
                     });
 
                     function expectStriped() {
-                        Ext.Array.forEach(grid.getView().getNodes(), function(node, index) {
+                        Ext.Array.forEach(grid.getView().getNodes(), function (node, index) {
                             if (index % 2 === 1) {
                                 expect(Ext.fly(node).hasCls(stripeCls)).toBe(true);
                             } else {
@@ -555,41 +553,41 @@ describe("grid-general", function() {
                         });
                     }
 
-                    it("should stripe rows on initial render", function() {
+                    it("should stripe rows on initial render", function () {
                         expectStriped();
                     });
 
-                    it("should stripe rows when appending records", function() {
+                    it("should stripe rows when appending records", function () {
                         store.add([{}, {}, {}, {}, {}]);
                         expectStriped();
                     });
 
-                    it("should stripe rows when inserting records", function() {
+                    it("should stripe rows when inserting records", function () {
                         store.insert(0, {});
                         expectStriped();
-                    }); 
+                    });
 
-                    it("should stripe when removing records", function() {
+                    it("should stripe when removing records", function () {
                         store.removeAt(0);
                         expectStriped();
                     });
 
-                    it("should retain the stripe class when updating records", function() {
+                    it("should retain the stripe class when updating records", function () {
                         store.getAt(1).set('field1', 'foo');
                         expectStriped();
                     });
 
-                    it("should stripe when a record update causes the position to change", function() {
+                    it("should stripe when a record update causes the position to change", function () {
                         store.sort('field1');
                         store.getAt(0).set('field1', '999999999');
                         expectStriped();
                     });
 
-                    it("should stripe on refresh", function() {
+                    it("should stripe on refresh", function () {
                         store.suspendEvents();
                         var numbers = [70, 72, 75, 27, 82, 70, 53, 42, 87, 19, 23];
 
-                        store.each(function(rec, index) {
+                        store.each(function (rec, index) {
                             rec.set('field1', numbers[index]);
                         });
                         store.sort('field1');
@@ -600,9 +598,9 @@ describe("grid-general", function() {
                 });
             });
 
-            describe("forceFit", function() {
-                var data; 
-                beforeEach(function() {
+            describe("forceFit", function () {
+                var data;
+                beforeEach(function () {
                     data = [];
 
                     for (var i = 0; i < 50; i++) {
@@ -621,12 +619,12 @@ describe("grid-general", function() {
                     }
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     data = null;
                 });
 
-                describe("starting with no overflow", function() {
-                    beforeEach(function() {
+                describe("starting with no overflow", function () {
+                    beforeEach(function () {
                         makeGrid(null, undefined, {
                             forceFit: true,
                             width: 400,
@@ -634,7 +632,7 @@ describe("grid-general", function() {
                         });
                     });
 
-                    it('should size the columns to fit within the grid body', function() {
+                    it('should size the columns to fit within the grid body', function () {
                         var emptyStore = new Ext.data.Store({
                             autoDestroy: false,
                             model: GridModel,
@@ -664,8 +662,8 @@ describe("grid-general", function() {
                     });
                 });
 
-                describe("with overflow", function() {
-                    beforeEach(function() {
+                describe("with overflow", function () {
+                    beforeEach(function () {
                         makeGrid(null, data, {
                             forceFit: true,
                             width: 400,
@@ -673,25 +671,25 @@ describe("grid-general", function() {
                         });
                     });
 
-                    it('should size the columns to fit within the grid body, inside the scrollbar', function() {
+                    it('should size the columns to fit within the grid body, inside the scrollbar', function () {
                         expect(grid.headerCt.getTableWidth()).toBe(grid.body.getWidth() - grid.body.getBorderWidth('lr') - Ext.getScrollbarSize().width);
                     });
                 });
             });
 
-            describe("basic settings", function() {
-                describe("columns", function() {
-                    describe("without locking", function() {
-                        it("should be able to configure without columns", function() {
-                            expect(function() {
+            describe("basic settings", function () {
+                describe("columns", function () {
+                    describe("without locking", function () {
+                        it("should be able to configure without columns", function () {
+                            expect(function () {
                                 makeGrid(null, undefined, null, {preventColumnCreate: true});
                             }).not.toThrow();
                         });
                     });
 
-                    describe("with locking", function() {
-                        it("should be able to configure without columns", function() {
-                            expect(function() {
+                    describe("with locking", function () {
+                        it("should be able to configure without columns", function () {
+                            expect(function () {
                                 makeGrid(null, undefined, {enableLocking: true}, {preventColumnCreate: true});
                             }).not.toThrow();
                         });
@@ -718,13 +716,13 @@ describe("grid-general", function() {
                     });
                 });
 
-                describe("css classes", function() {
-                    it("should add the x-grid cls", function() {
+                describe("css classes", function () {
+                    it("should add the x-grid cls", function () {
                         makeGrid();
                         expect(grid.el.hasCls('x-grid')).toBe(true);
                     });
 
-                    it("should add the x-grid cls when specifying a custom cls", function() {
+                    it("should add the x-grid cls when specifying a custom cls", function () {
                         makeGrid(undefined, undefined, {
                             cls: 'foo'
                         });
@@ -733,7 +731,7 @@ describe("grid-general", function() {
                     });
                 });
 
-                describe("markDirty", function() {
+                describe("markDirty", function () {
                     var dirtyCls;
 
                     function makeDirtyGrid(markDirty, preventRender, columns) {
@@ -747,7 +745,7 @@ describe("grid-general", function() {
                         dirtyCls = grid.getView().dirtyCls;
                     }
 
-                    afterEach(function() {
+                    afterEach(function () {
                         dirtyCls = null;
                     });
 
@@ -755,8 +753,8 @@ describe("grid-general", function() {
                         return grid.getView().getCell(record, column);
                     }
 
-                    describe("with markDirty: false", function() {
-                        it("should not render a cell with the dirtyCls initially", function() {
+                    describe("with markDirty: false", function () {
+                        it("should not render a cell with the dirtyCls initially", function () {
                             makeDirtyGrid(false, true);
                             store.first().set('field1', 'bleh');
                             grid.render(Ext.getBody());
@@ -764,16 +762,16 @@ describe("grid-general", function() {
                             expect(grid.getEl().select('.' + dirtyCls).getCount()).toBe(0);
                         });
 
-                        it("should not add the dirtyCls when updated with a simple cell updater", function() {
+                        it("should not add the dirtyCls when updated with a simple cell updater", function () {
                             makeDirtyGrid(false);
                             store.first().set('field1', 'bleh');
                             expect(grid.getEl().select('.' + dirtyCls).getCount()).toBe(0);
                         });
 
-                        it("should not add the dirtyCls when updated with a renderer", function() {
+                        it("should not add the dirtyCls when updated with a renderer", function () {
                             makeDirtyGrid(false, false, [{
                                 dataIndex: '',
-                                renderer: function(v, meta, rec) {
+                                renderer: function (v, meta, rec) {
                                     return rec.get('field1') + rec.get('field2');
                                 }
                             }]);
@@ -782,22 +780,22 @@ describe("grid-general", function() {
                         });
                     });
 
-                    describe("with markDirty: true", function() {
-                        it("should not render a cell with the dirtyCls initially if not dirty", function() {
+                    describe("with markDirty: true", function () {
+                        it("should not render a cell with the dirtyCls initially if not dirty", function () {
                             makeDirtyGrid(true, true);
                             grid.render(Ext.getBody());
-                            
+
                             var rec = store.first();
                             for (var i = 0; i < colRef.length; ++i) {
                                 expect(getCell(rec, colRef[i])).not.toHaveCls(dirtyCls);
                             }
                         });
 
-                        it("should render a cell with the dirtyCls initially if the cell is dirty", function() {
+                        it("should render a cell with the dirtyCls initially if the cell is dirty", function () {
                             makeDirtyGrid(true, true);
                             store.first().set('field1', 'bleh');
                             grid.render(Ext.getBody());
-                            
+
                             var rec = store.first();
                             expect(getCell(rec, colRef[0])).toHaveCls(dirtyCls);
                             for (var i = 1; i < colRef.length; ++i) {
@@ -805,7 +803,7 @@ describe("grid-general", function() {
                             }
                         });
 
-                        it("should add the dirtyCls to updated cells", function() {
+                        it("should add the dirtyCls to updated cells", function () {
                             makeDirtyGrid(true);
                             var rec = store.first();
                             rec.set('field1', 'bleh');
@@ -814,7 +812,7 @@ describe("grid-general", function() {
                             expect(getCell(rec, colRef[3])).toHaveCls(dirtyCls);
                         });
 
-                        it("should remove the dirtyCls when the cell is no longer dirty", function() {
+                        it("should remove the dirtyCls when the cell is no longer dirty", function () {
                             makeDirtyGrid(true);
                             var rec = store.first(),
                                 val = rec.get('field1');
@@ -825,7 +823,7 @@ describe("grid-general", function() {
                             expect(getCell(rec, colRef[0])).not.toHaveCls(dirtyCls);
                         });
 
-                        it("should remove the dirtyCls on commit", function() {
+                        it("should remove the dirtyCls on commit", function () {
                             makeDirtyGrid(true);
                             var rec = store.first();
 
@@ -844,7 +842,7 @@ describe("grid-general", function() {
                             expect(getCell(rec, colRef[2])).not.toHaveCls(dirtyCls);
                         });
 
-                        it("should remove the dirtyCls on reject", function() {
+                        it("should remove the dirtyCls on reject", function () {
                             makeDirtyGrid(true);
                             var rec = store.first();
 
@@ -866,11 +864,11 @@ describe("grid-general", function() {
                 });
             });
 
-            describe("selection", function() {
+            describe("selection", function () {
                 function describeSelectionSuite(withLocking) {
-                    describe(withLocking ? "with locking" : "without locking", function() {
+                    describe(withLocking ? "with locking" : "without locking", function () {
                         var sm;
-                        beforeEach(function() {
+                        beforeEach(function () {
                             sm = new Ext.selection.RowModel();
                             makeGrid([{
                                 dataIndex: 'field1',
@@ -882,15 +880,15 @@ describe("grid-general", function() {
                             });
                         });
 
-                        afterEach(function() {
+                        afterEach(function () {
                             sm = null;
                         });
 
-                        it("should bind the store to the selection model", function() {
+                        it("should bind the store to the selection model", function () {
                             expect(sm.getStore()).toBe(grid.getStore());
                         });
 
-                        it("should add the selectedItemCls when selected", function() {
+                        it("should add the selectedItemCls when selected", function () {
                             var cls;
                             sm.select(0);
                             if (withLocking) {
@@ -907,7 +905,7 @@ describe("grid-general", function() {
                             }
                         });
 
-                        it("should remove the selectedItemCls when deselected", function() {
+                        it("should remove the selectedItemCls when deselected", function () {
                             var cls;
                             sm.select(0);
                             sm.deselect(0);
@@ -926,7 +924,7 @@ describe("grid-general", function() {
                             }
                         });
 
-                        it("should retain the selectedItemCls when updating a row", function() {
+                        it("should retain the selectedItemCls when updating a row", function () {
                             var cls;
                             sm.select(0);
                             store.first().commit();
@@ -949,124 +947,124 @@ describe("grid-general", function() {
                 describeSelectionSuite(false);
                 describeSelectionSuite(true);
             });
-            
-            describe("renderers", function(){
-                describe("scope", function() {
-                    it("should use the grid as the default scope", function(){
+
+            describe("renderers", function () {
+                describe("scope", function () {
+                    it("should use the grid as the default scope", function () {
                         var scope;
                         makeGrid([{
                             dataIndex: 'field1',
                             text: 'Field1',
-                            renderer: function(){
+                            renderer: function () {
                                 scope = this;
-                            }    
-                        }]);    
+                            }
+                        }]);
                         expect(scope).toBe(grid);
                     });
-                    
-                    it("should use the passed scope", function(){
+
+                    it("should use the passed scope", function () {
                         var o = {},
                             scope;
-                            
+
                         makeGrid([{
                             dataIndex: 'field1',
                             text: 'Field1',
                             scope: o,
-                            renderer: function(){
+                            renderer: function () {
                                 scope = this;
-                            }    
-                        }]);    
+                            }
+                        }]);
                         expect(scope).toBe(o);
                     });
                 });
-                
-                describe("params", function(){
+
+                describe("params", function () {
                     var args;
-                    beforeEach(function(){
+                    beforeEach(function () {
                         makeGrid([{
                             dataIndex: 'field1',
-                            renderer: function(){
+                            renderer: function () {
                                 args = Array.prototype.slice.call(arguments, 0, arguments.length);
-                            }    
+                            }
                         }]);
                     });
-                    
-                    it("should pass the value as the first param", function(){
+
+                    it("should pass the value as the first param", function () {
                         expect(args[0]).toBe(1);
                     });
-                    
-                    it("should pass a meta object as the second param", function(){
+
+                    it("should pass a meta object as the second param", function () {
                         expect(Ext.isObject(args[1])).toBe(true);
                     });
-                    
-                    it("should pass the record as the third param", function(){
+
+                    it("should pass the record as the third param", function () {
                         expect(args[2]).toBe(store.getAt(0));
                     });
-                    
-                    it("should pass the recordIndex as the fourth param", function(){
+
+                    it("should pass the recordIndex as the fourth param", function () {
                         expect(args[3]).toBe(0);
                     });
-                    
-                    it("should pass the cellIndex as the fifth param", function(){
+
+                    it("should pass the cellIndex as the fifth param", function () {
                         expect(args[4]).toBe(0);
                     });
-                    
-                    it("should pass the store as the sixth param", function(){
+
+                    it("should pass the store as the sixth param", function () {
                         expect(args[5]).toBe(store);
                     });
-                    
-                    it("should pass the view as the seventh param", function(){
+
+                    it("should pass the view as the seventh param", function () {
                         expect(args[6]).toBe(grid.getView());
                     });
                 });
-                
-                describe("cellIndex", function(){
-                    it("should pass the local index when dealing with locked columns", function(){
+
+                describe("cellIndex", function () {
+                    it("should pass the local index when dealing with locked columns", function () {
                         var indexes = [],
-                            fn = function(){
+                            fn = function () {
                                 indexes.push(arguments[4]);
                             };
-                            
+
                         makeGrid([{
                             locked: true,
                             dataIndex: 'field1',
-                            renderer: fn    
+                            renderer: fn
                         }, {
                             locked: true,
                             dataIndex: 'field2',
-                            renderer: fn    
+                            renderer: fn
                         }, {
                             dataIndex: 'field3',
-                            renderer: fn   
+                            renderer: fn
                         }, {
                             dataIndex: 'field4',
-                            renderer: fn   
+                            renderer: fn
                         }]);
                         expect(indexes).toEqual([0, 1, 0, 1]);
                     });
-                    
-                    it("should take into account hidden columns when passing cellIdx", function(){
+
+                    it("should take into account hidden columns when passing cellIdx", function () {
                         var values = [],
                             indexes = [],
-                            fn = function(v){
+                            fn = function (v) {
                                 values.push(v);
                                 indexes.push(arguments[4]);
                             };
-                            
+
                         makeGrid([{
                             dataIndex: 'field1',
-                            renderer: fn    
+                            renderer: fn
                         }, {
                             hidden: true,
                             dataIndex: 'field2',
-                            renderer: fn    
+                            renderer: fn
                         }, {
                             dataIndex: 'field3',
-                            renderer: fn   
+                            renderer: fn
                         }, {
                             hidden: true,
                             dataIndex: 'field4',
-                            renderer: fn   
+                            renderer: fn
                         }, {
                             dataIndex: 'field5',
                             renderer: fn
@@ -1075,13 +1073,13 @@ describe("grid-general", function() {
                         expect(values).toEqual([1, 3, 5]);
                     });
                 });
-                
-                it("should accept a string formatter that maps to Ext.util.Format", function() {
+
+                it("should accept a string formatter that maps to Ext.util.Format", function () {
                     var oldFormat = Ext.util.Format.capitalize,
                         called;
-                        
+
                     Ext.util.Format.capitalize = function () {
-                        called = true;    
+                        called = true;
                     };
 
                     makeGrid([{
@@ -1094,7 +1092,7 @@ describe("grid-general", function() {
                     Ext.util.Format.capitalize = oldFormat;
                 });
 
-                it("should accept a scoped formatter", function() {
+                it("should accept a scoped formatter", function () {
                     var called = 0;
 
                     var formatter = function (v, a1) {
@@ -1112,26 +1110,26 @@ describe("grid-general", function() {
                     expect(called).toBe(3);
                 });
 
-                it("should treat dynamic renderers as needed to run in all cases", function() {
+                it("should treat dynamic renderers as needed to run in all cases", function () {
                     var x = 0;
 
                     var VC = Ext.define(null, {
                         extend: 'Ext.app.ViewController',
-                        doRender: function() {
+                        doRender: function () {
                             return 'x' + ++x;
                         }
                     });
 
                     makeGrid([{
-                        dataIndex: 'field1'
-                    }, {
-                        renderer: 'doRender'
-                    }],
-                    1, // ONE row of data, so that the first call of the custom renderer
-                       // increments x to one, and the second call renders 2.
-                    {
-                        controller: new VC()
-                    });
+                            dataIndex: 'field1'
+                        }, {
+                            renderer: 'doRender'
+                        }],
+                        1, // ONE row of data, so that the first call of the custom renderer
+                        // increments x to one, and the second call renders 2.
+                        {
+                            controller: new VC()
+                        });
 
                     var rec = store.getAt(0);
                     expect(getCellText(0, 1)).toBe('x1');
@@ -1139,10 +1137,10 @@ describe("grid-general", function() {
                     expect(getCellText(0, 1)).toBe('x2');
                 });
             });
-            
-            describe("model operations", function() {
-                describe("destroy", function() {
-                    it("should remove the model when destroy is called", function() {
+
+            describe("model operations", function () {
+                describe("destroy", function () {
+                    it("should remove the model when destroy is called", function () {
                         makeGrid([{
                             dataIndex: 'field1'
                         }], [{
@@ -1154,11 +1152,11 @@ describe("grid-general", function() {
                         }]);
                         store.first().erase();
                         expect(grid.getView().getNodes().length).toBe(2);
-                    });  
-                });  
+                    });
+                });
             });
-            
-            describe("reconfigure", function() {
+
+            describe("reconfigure", function () {
                 function makeReconfigureSuite(beforeRender) {
                     function makeReconfigureGrid(columns, data, cfg, options, locked) {
                         cfg = cfg || {};
@@ -1175,54 +1173,54 @@ describe("grid-general", function() {
                         }
                     }
 
-                    describe(beforeRender ? "before render" : "after render", function() {
-                        describe("store only", function() {
-                            describe("without locking", function() {
+                    describe(beforeRender ? "before render" : "after render", function () {
+                        describe("store only", function () {
+                            describe("without locking", function () {
                                 function expectNodeLength(n) {
                                     expect(view.getNodes().length).toBe(n);
                                 }
 
-                                describe("with no store", function() {
-                                    beforeEach(function() {
+                                describe("with no store", function () {
+                                    beforeEach(function () {
                                         makeReconfigureGrid([{
                                             dataIndex: 'field1'
                                         }], undefined, null, {preventStoreCreate: true});
                                         reconfigure(makeStore());
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field1', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
                                 });
 
-                                describe("with an existing store", function() {
+                                describe("with an existing store", function () {
                                     var oldStore;
 
-                                    beforeEach(function() {
+                                    beforeEach(function () {
                                         makeReconfigureGrid([{
                                             dataIndex: 'field1'
                                         }], 20);
@@ -1230,43 +1228,43 @@ describe("grid-general", function() {
                                         reconfigure(makeStore());
                                     });
 
-                                    afterEach(function() {
+                                    afterEach(function () {
                                         oldStore = Ext.destroy(oldStore);
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field1', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind the new store to the loadMask", function() {
+                                    it("should bind the new store to the loadMask", function () {
                                         expect(grid.getView().loadMask.store).toBe(store);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
 
-                                    it("should not react to the old store", function() {
+                                    it("should not react to the old store", function () {
                                         oldStore.add([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(1);
                                         oldStore.removeAt(0);
@@ -1279,14 +1277,14 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("with locking", function() {
+                            describe("with locking", function () {
                                 function expectNodeLength(n) {
                                     expect(grid.lockedGrid.getView().getNodes().length).toBe(n);
                                     expect(grid.normalGrid.getView().getNodes().length).toBe(n);
                                 }
 
-                                describe("with no store", function() {
-                                    beforeEach(function() {
+                                describe("with no store", function () {
+                                    beforeEach(function () {
                                         makeReconfigureGrid([{
                                             locked: true,
                                             dataIndex: 'field1'
@@ -1296,39 +1294,39 @@ describe("grid-general", function() {
                                         reconfigure(makeStore());
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field1', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
                                 });
 
-                                describe("with an existing store", function() {
+                                describe("with an existing store", function () {
                                     var oldStore;
 
-                                    beforeEach(function() {
+                                    beforeEach(function () {
                                         makeReconfigureGrid([{
                                             locked: true,
                                             dataIndex: 'field1'
@@ -1339,43 +1337,43 @@ describe("grid-general", function() {
                                         reconfigure(makeStore());
                                     });
 
-                                    afterEach(function() {
+                                    afterEach(function () {
                                         oldStore = Ext.destroy(oldStore);
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field1', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind the new store to the loadMask", function() {
+                                    it("should bind the new store to the loadMask", function () {
                                         expect(grid.getView().loadMask.store).toBe(store);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
 
-                                    it("should not react to the old store", function() {
+                                    it("should not react to the old store", function () {
                                         oldStore.add([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(1);
                                         oldStore.removeAt(0);
@@ -1389,16 +1387,16 @@ describe("grid-general", function() {
                             });
                         });
 
-                        describe("columns only", function() {
+                        describe("columns only", function () {
                             var oldCols;
 
-                            afterEach(function() {
+                            afterEach(function () {
                                 oldCols = null;
                             });
 
-                            describe("without locking", function() {
-                                describe("with no columns", function() {
-                                    beforeEach(function() {
+                            describe("without locking", function () {
+                                describe("with no columns", function () {
+                                    beforeEach(function () {
                                         makeReconfigureGrid(null, undefined, null, {preventColumnCreate: true});
                                         oldCols = colRef;
                                         reconfigure(null, [{
@@ -1409,15 +1407,15 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
                                 });
 
-                                describe("with existing columns", function() {
-                                    beforeEach(function() {
+                                describe("with existing columns", function () {
+                                    beforeEach(function () {
                                         makeReconfigureGrid([{
                                             dataIndex: 'field1'
                                         }]);
@@ -1430,25 +1428,25 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
 
-                                    it("should destroy old columns", function() {
+                                    it("should destroy old columns", function () {
                                         expect(oldCols[0].destroyed).toBe(true);
                                     });
                                 });
 
-                                it("should only refresh after the columns have been rendered", function() {
+                                it("should only refresh after the columns have been rendered", function () {
                                     var spy = jasmine.createSpy(),
                                         renderCount, refreshCounter, view;
 
                                     makeReconfigureGrid();
                                     view = grid.getView();
                                     refreshCounter = view.refreshCounter || 0;
-                                    view.on('refresh', function() {
+                                    view.on('refresh', function () {
                                         renderCount = spy.callCount;
                                     });
 
@@ -1468,9 +1466,9 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("with locking", function() {
-                                describe("with no columns", function() {
-                                    beforeEach(function() {
+                            describe("with locking", function () {
+                                describe("with no columns", function () {
+                                    beforeEach(function () {
                                         makeReconfigureGrid(null, undefined, {enableLocking: true}, {preventColumnCreate: true});
                                         oldCols = colRef;
                                         reconfigure(null, [{
@@ -1482,20 +1480,20 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
 
-                                    it("should process locked/unlocked columns", function() {
+                                    it("should process locked/unlocked columns", function () {
                                         expect(grid.lockedGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                         expect(grid.normalGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                     });
                                 });
 
-                                describe("with existing columns", function() {
-                                    beforeEach(function() {
+                                describe("with existing columns", function () {
+                                    beforeEach(function () {
                                         makeReconfigureGrid([{
                                             locked: true,
                                             dataIndex: 'field1'
@@ -1512,24 +1510,24 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
 
-                                    it("should process locked/unlocked columns", function() {
+                                    it("should process locked/unlocked columns", function () {
                                         expect(grid.lockedGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                         expect(grid.normalGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                     });
 
-                                    it("should destroy old columns", function() {
+                                    it("should destroy old columns", function () {
                                         expect(oldCols[0].destroyed).toBe(true);
                                         expect(oldCols[1].destroyed).toBe(true);
                                     });
                                 });
 
-                                it("should only refresh after the columns have been rendered", function() {
+                                it("should only refresh after the columns have been rendered", function () {
                                     var spy = jasmine.createSpy(),
                                         renderCount, refreshCounter, view;
 
@@ -1543,7 +1541,7 @@ describe("grid-general", function() {
                                     view = grid.lockedGrid.getView();
                                     refreshCounter = view.refreshCounter || 0;
 
-                                    view.on('refresh', function() {
+                                    view.on('refresh', function () {
                                         renderCount = spy.callCount;
                                     });
 
@@ -1566,22 +1564,25 @@ describe("grid-general", function() {
                             });
                         });
 
-                        describe("store & columns", function() {
+                        describe("store & columns", function () {
                             var oldCols, oldStore;
 
-                            afterEach(function() {
+                            afterEach(function () {
                                 Ext.destroy(oldStore);
                                 oldStore = oldCols = null;
                             });
 
-                            describe("without locking", function() {
+                            describe("without locking", function () {
                                 function expectNodeLength(n) {
                                     expect(view.getNodes().length).toBe(n);
                                 }
 
-                                describe("with no store and no columns", function() {
-                                    beforeEach(function() {
-                                        makeReconfigureGrid(null,  undefined, null, {preventStoreCreate: true, preventColumnCreate: true});
+                                describe("with no store and no columns", function () {
+                                    beforeEach(function () {
+                                        makeReconfigureGrid(null, undefined, null, {
+                                            preventStoreCreate: true,
+                                            preventColumnCreate: true
+                                        });
                                         oldCols = colRef;
                                         oldStore = store;
                                         reconfigure(makeStore(), [{
@@ -1592,44 +1593,44 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field2', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
                                 });
 
-                                describe("with an existing store and no columns", function() {
-                                    beforeEach(function() {
-                                        makeReconfigureGrid(null,  undefined, null, {preventColumnCreate: true});
+                                describe("with an existing store and no columns", function () {
+                                    beforeEach(function () {
+                                        makeReconfigureGrid(null, undefined, null, {preventColumnCreate: true});
                                         oldCols = colRef;
                                         oldStore = store;
                                         reconfigure(makeStore(), [{
@@ -1640,35 +1641,35 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field2', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
 
-                                    it("should not react to the old store", function() {
+                                    it("should not react to the old store", function () {
                                         oldStore.add([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(1);
                                         oldStore.removeAt(0);
@@ -1679,18 +1680,18 @@ describe("grid-general", function() {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
                                 });
 
-                                describe("with no store and existing columns", function() {
-                                    beforeEach(function() {
+                                describe("with no store and existing columns", function () {
+                                    beforeEach(function () {
                                         makeReconfigureGrid([{
                                             dataIndex: 'field1'
-                                        }],  undefined, null, {preventStoreCreate: true});
+                                        }], undefined, null, {preventStoreCreate: true});
                                         oldCols = colRef;
                                         oldStore = store;
                                         reconfigure(makeStore(), [{
@@ -1701,47 +1702,47 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field2', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
 
-                                    it("should destroy old columns", function() {
+                                    it("should destroy old columns", function () {
                                         expect(oldCols[0].destroyed).toBe(true);
                                     });
                                 });
 
-                                describe("with an existing store and existing columns", function() {
-                                    beforeEach(function() {
+                                describe("with an existing store and existing columns", function () {
+                                    beforeEach(function () {
                                         makeReconfigureGrid([{
                                             dataIndex: 'field1'
                                         }]);
@@ -1755,35 +1756,35 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field2', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
 
-                                    it("should not react to the old store", function() {
+                                    it("should not react to the old store", function () {
                                         oldStore.add([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(1);
                                         oldStore.removeAt(0);
@@ -1794,18 +1795,18 @@ describe("grid-general", function() {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
 
-                                    it("should destroy old columns", function() {
+                                    it("should destroy old columns", function () {
                                         expect(oldCols[0].destroyed).toBe(true);
                                     });
                                 });
 
-                                it("should only refresh after the columns have been rendered", function() {
+                                it("should only refresh after the columns have been rendered", function () {
                                     var spy = jasmine.createSpy(),
                                         renderCount, refreshCounter, view;
 
@@ -1815,10 +1816,10 @@ describe("grid-general", function() {
                                     view = grid.getView();
                                     refreshCounter = view.refreshCounter || 0;
 
-                                    view.on('refresh', function() {
+                                    view.on('refresh', function () {
                                         renderCount = spy.callCount;
                                     });
-          
+
                                     reconfigure(store, [{
                                         dataIndex: 'field2',
                                         listeners: {
@@ -1835,15 +1836,18 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("with locking", function() {
+                            describe("with locking", function () {
                                 function expectNodeLength(n) {
                                     expect(grid.lockedGrid.getView().getNodes().length).toBe(n);
                                     expect(grid.normalGrid.getView().getNodes().length).toBe(n);
                                 }
 
-                                describe("with no store and no columns", function() {
-                                    beforeEach(function() {
-                                        makeReconfigureGrid(null,  undefined, {enableLocking: true}, {preventStoreCreate: true, preventColumnCreate: true});
+                                describe("with no store and no columns", function () {
+                                    beforeEach(function () {
+                                        makeReconfigureGrid(null, undefined, {enableLocking: true}, {
+                                            preventStoreCreate: true,
+                                            preventColumnCreate: true
+                                        });
                                         oldCols = colRef;
                                         oldStore = store;
                                         reconfigure(makeStore(), [{
@@ -1855,49 +1859,49 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field2', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
 
-                                    it("should process locked/unlocked columns", function() {
+                                    it("should process locked/unlocked columns", function () {
                                         expect(grid.lockedGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                         expect(grid.normalGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                     });
                                 });
 
-                                describe("with an existing store and no columns", function() {
-                                    beforeEach(function() {
-                                        makeReconfigureGrid(null,  undefined, {enableLocking: true}, {preventColumnCreate: true});
+                                describe("with an existing store and no columns", function () {
+                                    beforeEach(function () {
+                                        makeReconfigureGrid(null, undefined, {enableLocking: true}, {preventColumnCreate: true});
                                         oldCols = colRef;
                                         oldStore = store;
                                         reconfigure(makeStore(), [{
@@ -1909,35 +1913,35 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field2', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
 
-                                    it("should not react to the old store", function() {
+                                    it("should not react to the old store", function () {
                                         oldStore.add([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(1);
                                         oldStore.removeAt(0);
@@ -1948,26 +1952,26 @@ describe("grid-general", function() {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
 
-                                    it("should process locked/unlocked columns", function() {
+                                    it("should process locked/unlocked columns", function () {
                                         expect(grid.lockedGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                         expect(grid.normalGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                     });
                                 });
 
-                                describe("with no store and existing columns", function() {
-                                    beforeEach(function() {
+                                describe("with no store and existing columns", function () {
+                                    beforeEach(function () {
                                         makeReconfigureGrid([{
                                             locked: true,
                                             dataIndex: 'field1'
                                         }, {
                                             dataIndex: 'field3'
-                                        }],  undefined, null, {preventStoreCreate: true});
+                                        }], undefined, null, {preventStoreCreate: true});
                                         oldCols = colRef;
                                         oldStore = store;
                                         reconfigure(makeStore(), [{
@@ -1979,53 +1983,53 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field2', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
 
-                                    it("should process locked/unlocked columns", function() {
+                                    it("should process locked/unlocked columns", function () {
                                         expect(grid.lockedGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                         expect(grid.normalGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                     });
 
-                                    it("should destroy old columns", function() {
+                                    it("should destroy old columns", function () {
                                         expect(oldCols[0].destroyed).toBe(true);
                                         expect(oldCols[1].destroyed).toBe(true);
                                     });
                                 });
 
-                                describe("with an existing store and existing columns", function() {
-                                    beforeEach(function() {
+                                describe("with an existing store and existing columns", function () {
+                                    beforeEach(function () {
                                         makeReconfigureGrid([{
                                             locked: true,
                                             dataIndex: 'field1'
@@ -2043,35 +2047,35 @@ describe("grid-general", function() {
                                         colRef = grid.getVisibleColumnManager().getColumns();
                                     });
 
-                                    it("should render data from the new store", function() {
+                                    it("should render data from the new store", function () {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should react to store", function() {
+                                    it("should react to store", function () {
                                         store.add({});
                                         expectNodeLength(2);
                                     });
 
-                                    it("should react to store remove", function() {
+                                    it("should react to store remove", function () {
                                         store.removeAt(0);
                                         expectNodeLength(0);
                                     });
 
-                                    it("should react to store update", function() {
+                                    it("should react to store update", function () {
                                         store.getAt(0).set('field2', 'Foo');
                                         expect(getCellText(0, 0)).toBe('Foo');
                                     });
 
-                                    it("should react to store load", function() {
+                                    it("should react to store load", function () {
                                         store.loadData([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(6);
                                     });
 
-                                    it("should bind to the selection model", function() {
+                                    it("should bind to the selection model", function () {
                                         expect(grid.getView().getSelectionModel().getStore()).toBe(store);
                                     });
 
-                                    it("should not react to the old store", function() {
+                                    it("should not react to the old store", function () {
                                         oldStore.add([{}, {}, {}, {}, {}, {}]);
                                         expectNodeLength(1);
                                         oldStore.removeAt(0);
@@ -2082,24 +2086,24 @@ describe("grid-general", function() {
                                         expectNodeLength(1);
                                     });
 
-                                    it("should add the new columns and render the contents", function() {
+                                    it("should add the new columns and render the contents", function () {
                                         expect(colRef.length).toBe(2);
                                         expect(getCellText(0, 0)).toBe('2');
                                         expect(getCellText(0, 1)).toBe('7');
                                     });
 
-                                    it("should process locked/unlocked columns", function() {
+                                    it("should process locked/unlocked columns", function () {
                                         expect(grid.lockedGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                         expect(grid.normalGrid.getVisibleColumnManager().getColumns().length).toBe(1);
                                     });
 
-                                    it("should destroy old columns", function() {
+                                    it("should destroy old columns", function () {
                                         expect(oldCols[0].destroyed).toBe(true);
                                         expect(oldCols[1].destroyed).toBe(true);
                                     });
                                 });
 
-                                it("should only refresh after the columns have been rendered", function() {
+                                it("should only refresh after the columns have been rendered", function () {
                                     var spy = jasmine.createSpy(),
                                         renderCount, refreshCounter, view;
 
@@ -2114,10 +2118,10 @@ describe("grid-general", function() {
                                     view = grid.lockedGrid.getView();
                                     refreshCounter = view.refreshCounter || 0;
 
-                                    view.on('refresh', function() {
+                                    view.on('refresh', function () {
                                         renderCount = spy.callCount;
                                     });
-          
+
                                     reconfigure(makeStore(), [{
                                         locked: true,
                                         dataIndex: 'field2',
@@ -2141,12 +2145,12 @@ describe("grid-general", function() {
                 makeReconfigureSuite(false);
                 makeReconfigureSuite(true);
 
-                it("should only refresh the view once", function() {
+                it("should only refresh the view once", function () {
                     var count = 0;
                     makeGrid([{
                         dataIndex: 'field1'
                     }]);
-                    grid.getView().on('refresh', function() {
+                    grid.getView().on('refresh', function () {
                         ++count;
                     });
                     grid.reconfigure(null, [{
@@ -2167,7 +2171,7 @@ describe("grid-general", function() {
             });
 
             if (buffered) {
-                describe('buffered row rendering', function() {
+                describe('buffered row rendering', function () {
                     var view,
                         rows,
                         bufferedRenderer,
@@ -2176,7 +2180,7 @@ describe("grid-general", function() {
                         viewSize,
                         rowHeight;
 
-                    beforeEach(function() {
+                    beforeEach(function () {
 
                         // Important
                         // The scrollHeight matching must allow a 1px deviation.
@@ -2212,7 +2216,7 @@ describe("grid-general", function() {
                         viewSize = bufferedRenderer.viewSize;
                     });
 
-                    it('should handle removing range above the rendered view', function() {
+                    it('should handle removing range above the rendered view', function () {
                         var oldRowStartIndex;
 
                         rowHeight = bufferedRenderer.rowHeight;
@@ -2244,7 +2248,7 @@ describe("grid-general", function() {
                         expect(getViewTop(view.body)).toBe(rows.startIndex * rowHeight - view.body.getBorderWidth('t'));
                     });
 
-                    it('should handle removing range which intersects the top of the rendered view', function() {
+                    it('should handle removing range which intersects the top of the rendered view', function () {
                         rowHeight = bufferedRenderer.rowHeight;
 
                         // Constant row height, so we know the scroll range
@@ -2268,7 +2272,7 @@ describe("grid-general", function() {
                         expect(getViewTop(view.body)).toBe(rows.startIndex * rowHeight - view.body.getBorderWidth('t'));
                     });
 
-                    it('should handle removing range wholly within the rendered view', function() {
+                    it('should handle removing range wholly within the rendered view', function () {
                         rowHeight = bufferedRenderer.rowHeight;
 
                         // Constant row height, so we know the scroll range
@@ -2292,7 +2296,7 @@ describe("grid-general", function() {
                         expect(getViewTop(view.body)).toBe(rows.startIndex * rowHeight - view.body.getBorderWidth('t'));
                     });
 
-                    it('should handle removing range which intersects the bottom of the rendered view', function() {
+                    it('should handle removing range which intersects the bottom of the rendered view', function () {
                         rowHeight = bufferedRenderer.rowHeight;
 
                         // Constant row height, so we know the scroll range
@@ -2316,7 +2320,7 @@ describe("grid-general", function() {
                         expect(getViewTop(view.body)).toBe(rows.startIndex * rowHeight - view.body.getBorderWidth('t'));
                     });
 
-                    it('should handle removing range which removes everything from halfway down rendered view', function() {
+                    it('should handle removing range which removes everything from halfway down rendered view', function () {
                         rowHeight = bufferedRenderer.rowHeight;
 
                         // Constant row height, so we know the scroll range
@@ -2340,7 +2344,7 @@ describe("grid-general", function() {
                     });
 
 
-                    it('should handle removing range which removes from top to halfway down rendered view', function() {
+                    it('should handle removing range which removes from top to halfway down rendered view', function () {
                         rowHeight = bufferedRenderer.rowHeight;
 
                         // Constant row height, so we know the scroll range
@@ -2369,7 +2373,7 @@ describe("grid-general", function() {
                         expect(getViewTop(view.body)).toBe(0);
                     });
 
-                    it('should handle removing range below the rendered view', function() {
+                    it('should handle removing range below the rendered view', function () {
                         rowHeight = bufferedRenderer.rowHeight;
 
                         // Constant row height, so we know the scroll range
@@ -2393,7 +2397,7 @@ describe("grid-general", function() {
                         expect(getViewTop(view.body)).toBe(rows.startIndex * rowHeight - view.body.getBorderWidth('t'));
                     });
 
-                    it('should handle removing range which encompasses the rendered view and leaves less than view size rows remaining', function() {
+                    it('should handle removing range which encompasses the rendered view and leaves less than view size rows remaining', function () {
                         rowHeight = bufferedRenderer.rowHeight;
 
                         // Constant row height, so we know the scroll range
@@ -2417,7 +2421,7 @@ describe("grid-general", function() {
                         expect(getViewTop(view.body)).toBe(0);
                     });
 
-                    it('should handle removing range which encompasses the rendered view', function() {
+                    it('should handle removing range which encompasses the rendered view', function () {
                         rowHeight = bufferedRenderer.rowHeight;
 
                         // Constant row height, so we know the scroll range
@@ -2441,7 +2445,7 @@ describe("grid-general", function() {
                         expect(getViewTop(view.body)).toBe(Math.max(rows.startIndex * rowHeight, 0));
                     });
 
-                    it('should handle removing range which leaves less than the viewSize rows in store', function() {
+                    it('should handle removing range which leaves less than the viewSize rows in store', function () {
                         rowHeight = bufferedRenderer.rowHeight;
 
                         // Constant row height, so we know the scroll range
@@ -2464,15 +2468,15 @@ describe("grid-general", function() {
                         // The table should be at top
                         expect(getViewTop(view.body)).toBe(0);
                     });
-                    
-                    it('Should prepend to the rendered block when inserting at position 0', function() {
+
+                    it('Should prepend to the rendered block when inserting at position 0', function () {
                         var cell00;
                         scrollTop = view.getScrollY();
-                        
+
                         store.insert(0, {
                             field1: 'Test'
                         });
-                        
+
                         cell00 = Ext.getDom(view.getCellByPosition({
                             row: 0,
                             column: 0
@@ -2488,7 +2492,7 @@ describe("grid-general", function() {
                         expect(getViewTop(view.body)).toBe(0);
                     });
 
-                    it('should handle adding range above the rendered view', function() {
+                    it('should handle adding range above the rendered view', function () {
                         var oldRowStartIndex;
 
                         rowHeight = bufferedRenderer.rowHeight;
@@ -2523,7 +2527,7 @@ describe("grid-general", function() {
                         expect(getViewTop(view.body)).toBe(rows.startIndex * rowHeight - view.body.getBorderWidth('t'));
                     });
 
-                    it('should render rows when buffered block is less than the view size', function() {
+                    it('should render rows when buffered block is less than the view size', function () {
                         var v = viewSize,
                             targetViewSize = v - 10;
 
@@ -2535,9 +2539,9 @@ describe("grid-general", function() {
                         expect(rows.getCount()).toBe(targetViewSize);
                         expect(bufferedRenderer.scrollTop).toBe(0);
                         expect(bufferedRenderer.position).toBe(0);
-                        
+
                         store.add({});
-                        
+
                         // Must has added a row
                         expect(rows.getCount()).toBe(targetViewSize + 1);
                         expect(bufferedRenderer.scrollTop).toBe(0);
@@ -2545,14 +2549,14 @@ describe("grid-general", function() {
                     });
                 });
 
-                describe('initial correction of viewSize', function() {
-                    describe('when rowHeight is smaller than expected and viewSize has to grow', function() {
+                describe('initial correction of viewSize', function () {
+                    describe('when rowHeight is smaller than expected and viewSize has to grow', function () {
                         var i,
                             data,
                             columns,
                             empty = new String(); // Truthy empty string so that renderer does not insert &nbsp;
 
-                        beforeEach(function() {
+                        beforeEach(function () {
                             data = [];
                             // We need a lot of rows so that we get to add more than the original default viewSize
                             for (i = 0; i < 200; i++) {
@@ -2567,13 +2571,13 @@ describe("grid-general", function() {
                                 width: 90,
 
                                 // Empty cell. Should only be paddingTop+paddingBottom high
-                                renderer: function() {
+                                renderer: function () {
                                     return empty;
                                 }
                             }];
                         });
-                        
-                        it('should append new rows to the view', function() {
+
+                        it('should append new rows to the view', function () {
                             // Make like mobile dev, and only overhang 1 row each side
                             // Make it tall enough so that the default viewSize of 100 will leave
                             // the view short, and BufferedRenderer will have to add rows.
@@ -2596,7 +2600,7 @@ describe("grid-general", function() {
 
                             // The rendered row count should have been bumped up to the calculated viewSize
                             expect(view.all.getCount()).toBe(view.bufferedRenderer.viewSize);
-                            
+
                             // Two calls to Store#getRange should have been made...
                             expect(getRangeSpy.callCount).toBe(2);
 
@@ -2609,12 +2613,12 @@ describe("grid-general", function() {
                         });
                     });
 
-                    describe('when rowHeight is larger than expected and viewSize has to shrink', function() {
+                    describe('when rowHeight is larger than expected and viewSize has to shrink', function () {
                         var i,
                             data,
                             columns;
 
-                        beforeEach(function() {
+                        beforeEach(function () {
                             data = [];
                             // We need a lot of rows so that we get to add more than the original default viewSize
                             for (i = 0; i < 200; i++) {
@@ -2629,13 +2633,13 @@ describe("grid-general", function() {
                                 width: 90,
 
                                 // Extra tall cell to make the initially rendered view too large.
-                                renderer: function() {
+                                renderer: function () {
                                     return '<div style="height:30px"></div>';
                                 }
                             }];
                         });
-                        
-                        it('should append new rows to the view', function() {
+
+                        it('should append new rows to the view', function () {
                             // Make like mobile dev, and only overhang 1 row each side
                             // Make it tall enough so that the default viewSize of 100 will leave
                             // the view short, and BufferedRenderer will have to add rows.
@@ -2659,7 +2663,7 @@ describe("grid-general", function() {
 
                             // The rendered row count should have been shrunk to the calculated viewSize
                             expect(view.all.getCount()).toBe(view.bufferedRenderer.viewSize);
-                            
+
                             // One calls to Store#getRange should have been made...
                             expect(getRangeSpy.callCount).toBe(1);
 
@@ -2674,10 +2678,10 @@ describe("grid-general", function() {
                 });
             }
 
-            describe('shrinkwrap height', function() {
+            describe('shrinkwrap height', function () {
                 var data, columns;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     var i, j,
                         row;
 
@@ -2689,7 +2693,7 @@ describe("grid-general", function() {
                         }
                         data.push(row);
                     }
-                    
+
                     columns = [];
                     for (i = 1; i < 11; i++) {
                         columns.push({
@@ -2701,12 +2705,12 @@ describe("grid-general", function() {
                     columns[0].flex = 1;
                 });
 
-                it('should allow unconstrained height grids to expand to accommodate content', function() {
+                it('should allow unconstrained height grids to expand to accommodate content', function () {
                     makeGrid(columns, data, {
                         height: undefined,
                         border: false
                     });
-                    
+
                     // View and Grid should be stretched vertically to accommodate content.
                     // Flexed column should mean that the horizontal content fits exactly.
                     // All widths should be equal since we configured NO BORDERS.
@@ -2716,12 +2720,12 @@ describe("grid-general", function() {
                     expect(view.el.dom.clientHeight).toBe(view.getHeight());
                 });
 
-                it('should reduce height if shrinkwrap height violates height constraint', function() {
+                it('should reduce height if shrinkwrap height violates height constraint', function () {
                     makeGrid(columns, data, {
                         maxHeight: 100,
                         border: false
                     });
-                    
+
                     // The width of the View still fits because of the flexed column
                     expect(view.getWidth()).toBe(grid.getWidth());
 
@@ -2736,27 +2740,27 @@ describe("grid-general", function() {
                 });
             });
 
-            describe("locking columns", function(){
-                it("should synchronize horizontal scrollbar presence between locked and normal side.", function(){
+            describe("locking columns", function () {
+                it("should synchronize horizontal scrollbar presence between locked and normal side.", function () {
                     var indexes = [],
-                        fn = function(){
+                        fn = function () {
                             indexes.push(arguments[4]);
                         };
 
                     makeGrid([{
                         locked: true,
                         dataIndex: 'field1',
-                        renderer: fn    
+                        renderer: fn
                     }, {
                         locked: true,
                         dataIndex: 'field2',
-                        renderer: fn    
+                        renderer: fn
                     }, {
                         dataIndex: 'field3',
-                        renderer: fn   
+                        renderer: fn
                     }, {
                         dataIndex: 'field4',
-                        renderer: fn   
+                        renderer: fn
                     }], undefined, {
                         width: 600,
                         height: 200
@@ -2783,7 +2787,7 @@ describe("grid-general", function() {
                     }
                 });
 
-                it('should unbind locking view from its store', function() {
+                it('should unbind locking view from its store', function () {
                     makeGrid([{
                         locked: true,
                         dataIndex: 'field1'
@@ -2819,16 +2823,16 @@ describe("grid-general", function() {
                         }
                     }
 
-                    describe('Proxy throws exception during load', function() {
-                        beforeEach(function() {
+                    describe('Proxy throws exception during load', function () {
+                        beforeEach(function () {
                             MockAjaxManager.addMethods();
                         });
 
-                        afterEach(function() {
+                        afterEach(function () {
                             MockAjaxManager.removeMethods();
                         });
 
-                        it('should hide the load mask if the load fails with an exception', function() {
+                        it('should hide the load mask if the load fails with an exception', function () {
                             makeGrid(null, undefined, {
                                 store: {
                                     proxy: {
@@ -2984,7 +2988,7 @@ describe("grid-general", function() {
                             }, {
                                 dataIndex: 'field3'
                             }]);
-                        
+
                             var borderWidth = grid.lockedGrid.el.getBorderWidth('lr');
 
                             // First, verify that the width of the lockedGrid is the width of the checkbox
@@ -3003,10 +3007,10 @@ describe("grid-general", function() {
                     });
                 });
 
-                describe('variable row height', function() {
+                describe('variable row height', function () {
                     var normalRows, lockedRows, i;
 
-                    it("should match the row heights between locked sides", function() {
+                    it("should match the row heights between locked sides", function () {
                         makeGrid([{
                             dataIndex: 'name',
                             locked: true,
@@ -3046,13 +3050,13 @@ describe("grid-general", function() {
                             grid.normalGrid.getVisibleColumnManager().getColumns()[0].hide();
 
                             // Now that the only variableRowHeight column is hidden, the buffered renderer should know about that.
-                            expect(grid.normalGrid.view.bufferedRenderer.variableRowHeight).toBe(false);            
+                            expect(grid.normalGrid.view.bufferedRenderer.variableRowHeight).toBe(false);
                         }
                     });
                 });
             });
 
-            describe('ensureVisible', function() {
+            describe('ensureVisible', function () {
                 var success,
                     record,
                     htmlEl,
@@ -3061,15 +3065,15 @@ describe("grid-general", function() {
                     rec400;
 
                 // Each test uses a grid with 500 rows
-                beforeEach(function() {
+                beforeEach(function () {
                     success = false;
                     makeGrid(null, 500);
                     rec100 = store.getAt(100);
                     rec400 = store.getAt(400);
                 });
-                it('should scroll into view when using record ID', function() {
+                it('should scroll into view when using record ID', function () {
                     grid.ensureVisible('rec400', {
-                        callback: function(passedSuccess, passedRecord, passedHtmlEl) {
+                        callback: function (passedSuccess, passedRecord, passedHtmlEl) {
                             success = passedSuccess;
                             record = passedRecord;
                             htmlEl = passedHtmlEl;
@@ -3077,10 +3081,10 @@ describe("grid-general", function() {
                         },
                         select: true
                     });
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return success;
                     });
-                    runs(function() {
+                    runs(function () {
                         // Default scope is the grid
                         expect(detectedScope).toBe(grid);
 
@@ -3096,18 +3100,18 @@ describe("grid-general", function() {
                         expect(Ext.fly(htmlEl).getBox().bottom).toBeLessThanOrEqual(view.getBox().bottom);
 
                         grid.ensureVisible('rec100', {
-                            callback: function(passedSuccess, passedRecord, passedHtmlEl) {
+                            callback: function (passedSuccess, passedRecord, passedHtmlEl) {
                                 success = passedSuccess;
                                 record = passedRecord;
                                 htmlEl = passedHtmlEl;
                                 detectedScope = this;
                             }
                         });
-                        waitsFor(function() {
+                        waitsFor(function () {
                             return success;
                         });
 
-                        runs(function() {
+                        runs(function () {
                             // Default scope is the grid
                             expect(detectedScope).toBe(grid);
 
@@ -3121,11 +3125,11 @@ describe("grid-general", function() {
                         });
                     });
                 });
-                it('should scroll into view when using record', function() {
+                it('should scroll into view when using record', function () {
                     var o = {};
 
                     grid.ensureVisible(rec400, {
-                        callback: function(passedSuccess, passedRecord, passedHtmlEl) {
+                        callback: function (passedSuccess, passedRecord, passedHtmlEl) {
                             success = passedSuccess;
                             record = passedRecord;
                             htmlEl = passedHtmlEl;
@@ -3133,10 +3137,10 @@ describe("grid-general", function() {
                         },
                         scope: o
                     });
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return success;
                     });
-                    runs(function() {
+                    runs(function () {
                         // Use passed scope
                         expect(detectedScope).toBe(o);
 
@@ -3149,7 +3153,7 @@ describe("grid-general", function() {
                         expect(Ext.fly(htmlEl).getBox().bottom).toBeLessThanOrEqual(view.getBox().bottom);
 
                         grid.ensureVisible(rec100, {
-                            callback: function(passedSuccess, passedRecord, passedHtmlEl) {
+                            callback: function (passedSuccess, passedRecord, passedHtmlEl) {
                                 success = passedSuccess;
                                 record = passedRecord;
                                 htmlEl = passedHtmlEl;
@@ -3157,11 +3161,11 @@ describe("grid-general", function() {
                             },
                             scope: o
                         });
-                        waitsFor(function() {
+                        waitsFor(function () {
                             return success;
                         });
-                        
-                        runs(function() {
+
+                        runs(function () {
                             // Use passed scope
                             expect(detectedScope).toBe(o);
 
@@ -3175,18 +3179,18 @@ describe("grid-general", function() {
                         });
                     });
                 });
-                it('should scroll into view when using record index', function() {
+                it('should scroll into view when using record index', function () {
                     grid.ensureVisible(400, {
-                        callback: function(passedSuccess, passedRecord, passedHtmlEl) {
+                        callback: function (passedSuccess, passedRecord, passedHtmlEl) {
                             success = passedSuccess;
                             record = passedRecord;
                             htmlEl = passedHtmlEl;
                         }
                     });
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return success;
                     });
-                    runs(function() {
+                    runs(function () {
                         expect(record).toBe(rec400);
 
                         // Table row scrolled to must be correct
@@ -3196,18 +3200,18 @@ describe("grid-general", function() {
                         expect(Ext.fly(htmlEl).getBox().bottom).toBeLessThanOrEqual(view.getBox().bottom);
 
                         grid.ensureVisible(100, {
-                            callback: function(passedSuccess, passedRecord, passedHtmlEl) {
+                            callback: function (passedSuccess, passedRecord, passedHtmlEl) {
                                 success = passedSuccess;
                                 record = passedRecord;
                                 htmlEl = passedHtmlEl;
                                 detectedScope = this;
                             }
                         });
-                        waitsFor(function() {
+                        waitsFor(function () {
                             return success;
                         });
-                        
-                        runs(function() {
+
+                        runs(function () {
                             expect(record).toBe(rec100);
 
                             // Table row scrolled to must be correct
@@ -3220,9 +3224,9 @@ describe("grid-general", function() {
                 });
             });
 
-            describe("scrollbars", function() {
+            describe("scrollbars", function () {
                 function makeScrollSuite(withLocking) {
-                    describe(withLocking ? "with locking" : "without locking", function() {
+                    describe(withLocking ? "with locking" : "without locking", function () {
                         var gridRef,
                             originalScrollBarSize,
                             singleRowHeight,
@@ -3233,7 +3237,7 @@ describe("grid-general", function() {
                             lockedIsVariable,
                             maxRowsBeforeScrollWithHorizontalScrollBar;
 
-                        beforeEach(function() {
+                        beforeEach(function () {
                             lockedIsVariable = false;
                             originalScrollBarSize = Ext.grid.ColumnLayout.prototype.scrollbarWidth;
                             // Create nice round numbers for calculations so that we can hardcode expected flexed widths
@@ -3254,7 +3258,7 @@ describe("grid-general", function() {
                                     measureNode = Ext.fly(measureView.getNode(0));
 
                                 singleRowHeight = measureNode.getHeight();
-                                
+
                                 // In IE8 we're adding bottom border on all the rows to work around
                                 // the lack of :last-child selector, and we compensate that by setting
                                 // a negative top margin that equals the border width, so that top and
@@ -3267,12 +3271,12 @@ describe("grid-general", function() {
                                 if (Ext.isIE8) {
                                     singleRowHeight -= measureNode.getBorderWidth('b');
                                 }
-                                
+
                                 maxRowsBeforeScroll = Math.floor(viewHeight / singleRowHeight);
                                 viewHeight -= Ext.getScrollbarSize().width;
                                 maxRowsBeforeScrollWithHorizontalScrollBar = Math.floor(viewHeight / singleRowHeight);
                                 scrollRowSize = maxRowsBeforeScroll + 100;
-                        
+
                                 if (withLocking) {
                                     borderWidth = parseInt(grid.lockedGrid.getEl().getStyle('border-right-width'), 10);
                                 }
@@ -3283,7 +3287,7 @@ describe("grid-general", function() {
                             }
                         });
 
-                        afterEach(function() {
+                        afterEach(function () {
                             Ext.grid.ColumnLayout.prototype.scrollbarWidth = originalScrollBarSize;
                             gridRef = colRef = null;
                             lockedIsVariable = false;
@@ -3295,7 +3299,7 @@ describe("grid-general", function() {
                             if (Ext.isNumber(data)) {
                                 data = makeRows(data);
                             }
-                            Ext.Array.forEach(columns, function(column, i) {
+                            Ext.Array.forEach(columns, function (column, i) {
                                 if (!column.dataIndex) {
                                     column.dataIndex = 'field' + (i + 1);
                                 }
@@ -3389,9 +3393,9 @@ describe("grid-general", function() {
                             return '<div style="height:' + (singleRowHeight * times) + 'px;">x</div>';
                         }
 
-                        describe("basic initial rendering functionality", function() {
-                            describe("fixed width columns", function() {
-                                it("should not show scrollbars if neither dimensions overflows", function() {
+                        describe("basic initial rendering functionality", function () {
+                            describe("fixed width columns", function () {
+                                it("should not show scrollbars if neither dimensions overflows", function () {
                                     makeScrollGrid([{
                                         width: 100
                                     }, {
@@ -3401,7 +3405,7 @@ describe("grid-general", function() {
                                     expectColumnWidths([100, 300]);
                                 });
 
-                                it("should show a vertical scrollbar if y overflows", function() {
+                                it("should show a vertical scrollbar if y overflows", function () {
                                     makeScrollGrid([{
                                         width: 100
                                     }, {
@@ -3411,7 +3415,7 @@ describe("grid-general", function() {
                                     expectColumnWidths([100, 300]);
                                 });
 
-                                it("should show a horizontal scrollbar if x overflows", function() {
+                                it("should show a horizontal scrollbar if x overflows", function () {
                                     makeScrollGrid([{
                                         width: 600
                                     }, {
@@ -3421,7 +3425,7 @@ describe("grid-general", function() {
                                     expectColumnWidths([600, 600]);
                                 });
 
-                                it("should show both scrollbars if x & y overflow", function() {
+                                it("should show both scrollbars if x & y overflow", function () {
                                     makeScrollGrid([{
                                         width: 600
                                     }, {
@@ -3431,7 +3435,7 @@ describe("grid-general", function() {
                                     expectColumnWidths([600, 600]);
                                 });
 
-                                visibleScrollbarsIt("should show a vertical scrollbar if triggered by a horizontal scrollbar", function() {
+                                visibleScrollbarsIt("should show a vertical scrollbar if triggered by a horizontal scrollbar", function () {
                                     makeScrollGrid([{
                                         width: 600
                                     }, {
@@ -3441,7 +3445,7 @@ describe("grid-general", function() {
                                     expectColumnWidths([600, 600]);
                                 });
 
-                                visibleScrollbarsIt("should show a horizontal scrollbar if triggered by a vertical scrollbar", function() {
+                                visibleScrollbarsIt("should show a horizontal scrollbar if triggered by a vertical scrollbar", function () {
                                     makeScrollGrid([{
                                         width: 499
                                     }, {
@@ -3452,8 +3456,8 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("flexed columns", function() {
-                                it("should not show scrollbars if neither dimension overflows", function() {
+                            describe("flexed columns", function () {
+                                it("should not show scrollbars if neither dimension overflows", function () {
                                     makeScrollGrid([{
                                         flex: 1
                                     }, {
@@ -3463,7 +3467,7 @@ describe("grid-general", function() {
                                     expectColumnWidths([500, 500]);
                                 });
 
-                                it("should not show scrollbars if neither dimension overflows with hideHeaders: true and border: true", function() {
+                                it("should not show scrollbars if neither dimension overflows with hideHeaders: true and border: true", function () {
                                     makeScrollGrid([{
                                         flex: 1
                                     }, {
@@ -3478,7 +3482,7 @@ describe("grid-general", function() {
                                     expectColumnWidths([499, 499]);
                                 });
 
-                                it("should show a vertical scrollbar if y overflows", function() {
+                                it("should show a vertical scrollbar if y overflows", function () {
                                     makeScrollGrid([{
                                         flex: 1
                                     }, {
@@ -3488,7 +3492,7 @@ describe("grid-general", function() {
                                     expectColumnWidths(scrollbarsTakeSpace ? [490, 490] : [500, 500]);
                                 });
 
-                                it("should show a vertical scrollbar if y overflows with hideHeaders: true and border: true", function() {
+                                it("should show a vertical scrollbar if y overflows with hideHeaders: true and border: true", function () {
                                     makeScrollGrid([{
                                         flex: 1
                                     }, {
@@ -3501,12 +3505,12 @@ describe("grid-general", function() {
                                     expectColumnWidths(scrollbarsTakeSpace ? [489, 489] : [499, 499]);
                                 });
 
-                                describe("min width constraint", function() {
+                                describe("min width constraint", function () {
                                     // This is essentially the same as combined width + flex, since hitting
                                     // a min width is essentially the same as setting a fixed size, but
                                     // may hit different parts of the code.
-                                    
-                                    it("should show a horizontal scrollbar if x overflows", function() {
+
+                                    it("should show a horizontal scrollbar if x overflows", function () {
                                         makeScrollGrid([{
                                             flex: 1,
                                             minWidth: 600
@@ -3518,7 +3522,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([600, 600]);
                                     });
 
-                                    it("should show both scrollbars if x & y overflow", function() {
+                                    it("should show both scrollbars if x & y overflow", function () {
                                         makeScrollGrid([{
                                             flex: 1,
                                             minWidth: 600
@@ -3530,7 +3534,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([600, 600]);
                                     });
 
-                                    visibleScrollbarsIt("should show a vertical scrollbar if triggered by a horizontal scrollbar", function() {
+                                    visibleScrollbarsIt("should show a vertical scrollbar if triggered by a horizontal scrollbar", function () {
                                         makeScrollGrid([{
                                             flex: 1,
                                             minWidth: 600
@@ -3542,7 +3546,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([600, 600]);
                                     });
 
-                                    visibleScrollbarsIt("should show a horizontal scrollbar if triggered by a vertical scrollbar", function() {
+                                    visibleScrollbarsIt("should show a horizontal scrollbar if triggered by a vertical scrollbar", function () {
                                         makeScrollGrid([{
                                             flex: 1,
                                             minWidth: 499
@@ -3556,8 +3560,8 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("fixed width + flexed columns", function() {
-                                it("should not show scrollbars if neither dimensions overflows", function() {
+                            describe("fixed width + flexed columns", function () {
+                                it("should not show scrollbars if neither dimensions overflows", function () {
                                     makeScrollGrid([{
                                         width: 100
                                     }, {
@@ -3567,7 +3571,7 @@ describe("grid-general", function() {
                                     expectColumnWidths([100, 900]);
                                 });
 
-                                it("should show a vertical scrollbar if y overflows", function() {
+                                it("should show a vertical scrollbar if y overflows", function () {
                                     makeScrollGrid([{
                                         width: 100
                                     }, {
@@ -3577,7 +3581,7 @@ describe("grid-general", function() {
                                     expectColumnWidths(scrollbarsTakeSpace ? [100, 880] : [100, 900]);
                                 });
 
-                                it("should adjust the width of all flex columns if a scrollbar shows", function() {
+                                it("should adjust the width of all flex columns if a scrollbar shows", function () {
                                     makeScrollGrid([{
                                         width: 200
                                     }, {
@@ -3588,12 +3592,12 @@ describe("grid-general", function() {
                                         flex: 1
                                     }], scrollRowSize);
                                     expectScroll(true, false);
-                                    expectColumnWidths(scrollbarsTakeSpace ? [200, 260, 260, 260]: [200, 267, 267, 266]);
+                                    expectColumnWidths(scrollbarsTakeSpace ? [200, 260, 260, 260] : [200, 267, 267, 266]);
                                 });
                             });
                         });
 
-                        describe("resizing the grid", function() {
+                        describe("resizing the grid", function () {
                             function changeHeight(numRows) {
                                 grid.setHeight(grid.getHeight() + numRows * singleRowHeight);
                             }
@@ -3602,9 +3606,9 @@ describe("grid-general", function() {
                                 grid.setWidth(grid.getWidth() + width);
                             }
 
-                            describe("fixed width columns", function() {
-                                describe("vertically", function() {
-                                    it("should not show a vertical scrollbar if resize does not cause overflow", function() {
+                            describe("fixed width columns", function () {
+                                describe("vertically", function () {
+                                    it("should not show a vertical scrollbar if resize does not cause overflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -3615,7 +3619,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should retain a vertical scrollbar if resize does not cause underflow", function() {
+                                    it("should retain a vertical scrollbar if resize does not cause underflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -3626,7 +3630,7 @@ describe("grid-general", function() {
                                         expectScroll(true, false);
                                     });
 
-                                    it("should show a vertical scrollbar if y overflows", function() {
+                                    it("should show a vertical scrollbar if y overflows", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -3637,7 +3641,7 @@ describe("grid-general", function() {
                                         expectScroll(true, false);
                                     });
 
-                                    it("should not show a vertical scrollbar if y underflows", function() {
+                                    it("should not show a vertical scrollbar if y underflows", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -3648,7 +3652,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    visibleScrollbarsIt("should show a horizontal scrollbar if triggered by a vertical scrollbar", function() {
+                                    visibleScrollbarsIt("should show a horizontal scrollbar if triggered by a vertical scrollbar", function () {
                                         makeScrollGrid([{
                                             width: 495
                                         }, {
@@ -3660,7 +3664,7 @@ describe("grid-general", function() {
                                     });
 
                                     // // EXTJS-15789
-                                    xit("should not show a horizontal scrollbar if triggered by a vertical scrollbar", function() {
+                                    xit("should not show a horizontal scrollbar if triggered by a vertical scrollbar", function () {
                                         makeScrollGrid([{
                                             width: 495
                                         }, {
@@ -3673,8 +3677,8 @@ describe("grid-general", function() {
                                     });
                                 });
 
-                                describe("horizontally", function() {
-                                    it("should not show a horizontal scrollbar if resize does not cause overflow", function() {
+                                describe("horizontally", function () {
+                                    it("should not show a horizontal scrollbar if resize does not cause overflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -3685,7 +3689,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should retain a horizontal scrollbar if resize does not cause underflow", function() {
+                                    it("should retain a horizontal scrollbar if resize does not cause underflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -3696,7 +3700,7 @@ describe("grid-general", function() {
                                         expectScroll(false, true);
                                     });
 
-                                    it("should show a horizontal scrollbar if x overflows", function() {
+                                    it("should show a horizontal scrollbar if x overflows", function () {
                                         makeScrollGrid([{
                                             width: 400
                                         }, {
@@ -3707,7 +3711,7 @@ describe("grid-general", function() {
                                         expectScroll(false, true);
                                     });
 
-                                    it("should not show a horizontal scrollbar if x underflows", function() {
+                                    it("should not show a horizontal scrollbar if x underflows", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -3718,7 +3722,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    visibleScrollbarsIt("should show a vertical scrollbar if triggered by a horizontal scrollbar", function() {
+                                    visibleScrollbarsIt("should show a vertical scrollbar if triggered by a horizontal scrollbar", function () {
                                         makeScrollGrid([{
                                             width: 495
                                         }, {
@@ -3729,7 +3733,7 @@ describe("grid-general", function() {
                                         expectScroll(true, true);
                                     });
 
-                                    visibleScrollbarsIt("should not show a vertical scrollbar if triggered by a horizontal scrollbar", function() {
+                                    visibleScrollbarsIt("should not show a vertical scrollbar if triggered by a horizontal scrollbar", function () {
                                         // C reate a grid with horizontal scrollbar which has no vertical scrollbar.
                                         makeScrollGrid([{
                                             width: 505
@@ -3751,7 +3755,7 @@ describe("grid-general", function() {
                                         waits(1);
 
                                         // Allow the reflow before showing and then measuring.
-                                        runs(function() {
+                                        runs(function () {
                                             view.el.setDisplayed(true);
                                             expectScroll(false, false);
                                         });
@@ -3759,9 +3763,9 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("flexed columns", function() {
-                                describe("vertically", function() {
-                                    it("should not show a vertical scrollbar if resize does not cause overflow", function() {
+                            describe("flexed columns", function () {
+                                describe("vertically", function () {
+                                    it("should not show a vertical scrollbar if resize does not cause overflow", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -3774,7 +3778,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([500, 500]);
                                     });
 
-                                    it("should retain a vertical scrollbar if resize does not cause underflow", function() {
+                                    it("should retain a vertical scrollbar if resize does not cause underflow", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -3787,7 +3791,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [490, 490] : [500, 500]);
                                     });
 
-                                    it("should show a vertical scrollbar if y overflows", function() {
+                                    it("should show a vertical scrollbar if y overflows", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -3800,7 +3804,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [490, 490] : [500, 500]);
                                     });
 
-                                    it("should not show a vertical scrollbar if y underflows", function() {
+                                    it("should not show a vertical scrollbar if y underflows", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -3816,9 +3820,9 @@ describe("grid-general", function() {
                                 // Horizontally omitted
                             });
 
-                            describe("fixed width + flexed columns", function() {
-                                describe("vertically", function() {
-                                    it("should not show a vertical scrollbar if resize does not cause overflow", function() {
+                            describe("fixed width + flexed columns", function () {
+                                describe("vertically", function () {
+                                    it("should not show a vertical scrollbar if resize does not cause overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -3831,7 +3835,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, 700]);
                                     });
 
-                                    it("should retain a vertical scrollbar if resize does not cause underflow", function() {
+                                    it("should retain a vertical scrollbar if resize does not cause underflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -3844,7 +3848,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [300, 680] : [300, 700]);
                                     });
 
-                                    it("should show a vertical scrollbar if y overflows", function() {
+                                    it("should show a vertical scrollbar if y overflows", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -3857,7 +3861,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [300, 680] : [300, 700]);
                                     });
 
-                                    it("should not show a vertical scrollbar if y underflows", function() {
+                                    it("should not show a vertical scrollbar if y underflows", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -3874,12 +3878,12 @@ describe("grid-general", function() {
                             });
                         });
 
-                        describe("column operations", function() {
+                        describe("column operations", function () {
                             var minColWidth = Ext.grid.plugin.HeaderResizer.prototype.minColWidth;
 
-                            describe("resizing", function() {
-                                describe("fixed width columns", function() {
-                                    it("should show a horizontal scrollbar if resizing causes overflow", function() {
+                            describe("resizing", function () {
+                                describe("fixed width columns", function () {
+                                    it("should show a horizontal scrollbar if resizing causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -3890,7 +3894,7 @@ describe("grid-general", function() {
                                         expectScroll(false, true);
                                     });
 
-                                    it("should not show a horizontal scrollbar if resizing causes underflow", function() {
+                                    it("should not show a horizontal scrollbar if resizing causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -3901,7 +3905,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should show a vertical scrollbar if resizing causes overflow", function() {
+                                    it("should show a vertical scrollbar if resizing causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -3912,7 +3916,7 @@ describe("grid-general", function() {
                                         expectScroll(scrollbarsTakeSpace, true);
                                     });
 
-                                    it("should not show a vertical scrollbar if resizing causes underflow", function() {
+                                    it("should not show a vertical scrollbar if resizing causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -3926,8 +3930,8 @@ describe("grid-general", function() {
 
                                 // Intentionally leaving out flex only
 
-                                describe("fixed width + flexed columns", function() {
-                                    it("should show a horizontal scrollbar if resizing causes overflow", function() {
+                                describe("fixed width + flexed columns", function () {
+                                    it("should show a horizontal scrollbar if resizing causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -3940,7 +3944,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([1200, minColWidth]);
                                     });
 
-                                    it("should not show a horizontal scrollbar if resizing causes underflow", function() {
+                                    it("should not show a horizontal scrollbar if resizing causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -3955,7 +3959,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([200, 600, 200]);
                                     });
 
-                                    it("should show a vertical scrollbar if resizing causes overflow", function() {
+                                    it("should show a vertical scrollbar if resizing causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -3968,7 +3972,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([1200, minColWidth]);
                                     });
 
-                                    it("should not show a vertical scrollbar if resizing causes underflow", function() {
+                                    it("should not show a vertical scrollbar if resizing causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -3986,7 +3990,7 @@ describe("grid-general", function() {
                                         waits(1);
 
                                         // Allow the reflow before showing and then measuring.
-                                        runs(function() {
+                                        runs(function () {
                                             view.el.setDisplayed(true);
                                             expectScroll(!scrollbarsTakeSpace, false);
                                             expectColumnWidths([200, 600, 200]);
@@ -3995,12 +3999,13 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("adding", function() {
+                            describe("adding", function () {
                                 function addCol(col) {
                                     gridRef.headerCt.add(col);
                                 }
-                                describe("fixed width columns", function() {
-                                    it("should show a horizontal scrollbar if adding causes overflow", function() {
+
+                                describe("fixed width columns", function () {
+                                    it("should show a horizontal scrollbar if adding causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4013,7 +4018,7 @@ describe("grid-general", function() {
                                         expectScroll(false, true);
                                     });
 
-                                    it("should not show a horizontal scrollbar if adding does not cause overflow", function() {
+                                    it("should not show a horizontal scrollbar if adding does not cause overflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4026,7 +4031,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should show a vertical scrollbar if adding causes overflow", function() {
+                                    it("should show a vertical scrollbar if adding causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -4039,8 +4044,8 @@ describe("grid-general", function() {
                                         expectScroll(scrollbarsTakeSpace, true);
                                     });
 
-                                    describe("with variableRowHeight", function() {
-                                        visibleScrollbarsIt("should show a vertical scrollbar if adding causes overflow", function() {
+                                    describe("with variableRowHeight", function () {
+                                        visibleScrollbarsIt("should show a vertical scrollbar if adding causes overflow", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4057,7 +4062,7 @@ describe("grid-general", function() {
                                             expectScroll(true, false);
                                         });
 
-                                        visibleScrollbarsIt("should show a horizontal scrollbar if adding triggered a vertical scrollbar", function() {
+                                        visibleScrollbarsIt("should show a horizontal scrollbar if adding triggered a vertical scrollbar", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4077,9 +4082,9 @@ describe("grid-general", function() {
                                 });
 
                                 // Intentionally leaving out flex only
-                                
-                                describe("fixed width + flexed columns", function() {
-                                    it("should show a horizontal scrollbar if adding causes overflow", function() {
+
+                                describe("fixed width + flexed columns", function () {
+                                    it("should show a horizontal scrollbar if adding causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4094,7 +4099,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, minColWidth, 800]);
                                     });
 
-                                    it("should not show a horizontal scrollbar if adding does not cause overflow", function() {
+                                    it("should not show a horizontal scrollbar if adding does not cause overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4109,7 +4114,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, 400, 300]);
                                     });
 
-                                    it("should show a vertical scrollbar if adding causes overflow", function() {
+                                    it("should show a vertical scrollbar if adding causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4124,8 +4129,8 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, minColWidth, 800]);
                                     });
 
-                                    describe("with variableRowHeight", function() {
-                                        it("should show a vertical scrollbar if adding causes overflow", function() {
+                                    describe("with variableRowHeight", function () {
+                                        it("should show a vertical scrollbar if adding causes overflow", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4147,9 +4152,9 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("showing", function() {
-                                describe("fixed width columns", function() {
-                                    it("should show a horizontal scrollbar if adding causes overflow", function() {
+                            describe("showing", function () {
+                                describe("fixed width columns", function () {
+                                    it("should show a horizontal scrollbar if adding causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4163,7 +4168,7 @@ describe("grid-general", function() {
                                         expectScroll(false, true);
                                     });
 
-                                    it("should not show a horizontal scrollbar if adding does not cause overflow", function() {
+                                    it("should not show a horizontal scrollbar if adding does not cause overflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4177,7 +4182,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should show a vertical scrollbar if adding causes overflow", function() {
+                                    it("should show a vertical scrollbar if adding causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -4191,8 +4196,8 @@ describe("grid-general", function() {
                                         expectScroll(scrollbarsTakeSpace, true);
                                     });
 
-                                    describe("with variableRowHeight", function() {
-                                        visibleScrollbarsIt("should show a vertical scrollbar if showing causes overflow", function() {
+                                    describe("with variableRowHeight", function () {
+                                        visibleScrollbarsIt("should show a vertical scrollbar if showing causes overflow", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4209,7 +4214,7 @@ describe("grid-general", function() {
                                             expectScroll(true, false);
                                         });
 
-                                        visibleScrollbarsIt("should show a horizontal scrollbar if showing triggered a vertical scrollbar", function() {
+                                        visibleScrollbarsIt("should show a horizontal scrollbar if showing triggered a vertical scrollbar", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4229,9 +4234,9 @@ describe("grid-general", function() {
                                 });
 
                                 // Intentionally leaving out flex only
-                                
-                                describe("fixed width + flexed columns", function() {
-                                    it("should show a horizontal scrollbar if adding causes overflow", function() {
+
+                                describe("fixed width + flexed columns", function () {
+                                    it("should show a horizontal scrollbar if adding causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4247,7 +4252,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, 800, minColWidth]);
                                     });
 
-                                    it("should not show a horizontal scrollbar if adding does not cause overflow", function() {
+                                    it("should not show a horizontal scrollbar if adding does not cause overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4263,7 +4268,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, 300, 400]);
                                     });
 
-                                    it("should show a vertical scrollbar if adding causes overflow", function() {
+                                    it("should show a vertical scrollbar if adding causes overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4279,8 +4284,8 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, 800, minColWidth]);
                                     });
 
-                                    describe("with variableRowHeight", function() {
-                                        it("should show a vertical scrollbar if showing causes overflow", function() {
+                                    describe("with variableRowHeight", function () {
+                                        it("should show a vertical scrollbar if showing causes overflow", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4302,9 +4307,9 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("removing", function() {
-                                describe("fixed width columns", function() {
-                                    it("should not show a horizontal scrollbar if removing causes underflow", function() {
+                            describe("removing", function () {
+                                describe("fixed width columns", function () {
+                                    it("should not show a horizontal scrollbar if removing causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4317,7 +4322,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should retain a horizontal scrollbar if removing does not cause underflow", function() {
+                                    it("should retain a horizontal scrollbar if removing does not cause underflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -4330,7 +4335,7 @@ describe("grid-general", function() {
                                         expectScroll(false, true);
                                     });
 
-                                    it("should not show a vertical scrollbar if removing causes underflow", function() {
+                                    it("should not show a vertical scrollbar if removing causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -4343,8 +4348,8 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    describe("with variableRowHeight", function() {
-                                        it("should not show a vertical scrollbar if removing causes underflow", function() {
+                                    describe("with variableRowHeight", function () {
+                                        it("should not show a vertical scrollbar if removing causes underflow", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4360,7 +4365,7 @@ describe("grid-general", function() {
                                             expectScroll(false, false);
                                         });
 
-                                        visibleScrollbarsIt("should not show a horizontal scrollbar if removing triggered a vertical scrollbar removal", function() {
+                                        visibleScrollbarsIt("should not show a horizontal scrollbar if removing triggered a vertical scrollbar removal", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4379,9 +4384,9 @@ describe("grid-general", function() {
                                 });
 
                                 // Intentionally leaving out flex only
-                                
-                                describe("fixed width + flexed columns", function() {
-                                    it("should not show a horizontal scrollbar if removing causes underflow", function() {
+
+                                describe("fixed width + flexed columns", function () {
+                                    it("should not show a horizontal scrollbar if removing causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4396,7 +4401,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, 700]);
                                     });
 
-                                    it("should show a horizontal scrollbar if removing does not cause underflow", function() {
+                                    it("should show a horizontal scrollbar if removing does not cause underflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -4413,7 +4418,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([600, 600, minColWidth]);
                                     });
 
-                                    it("should not show a vertical scrollbar if removing causes underflow", function() {
+                                    it("should not show a vertical scrollbar if removing causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4428,15 +4433,15 @@ describe("grid-general", function() {
                                         waits(1);
 
                                         // Allow the reflow before showing and then measuring.
-                                        runs(function() {
+                                        runs(function () {
                                             view.el.setDisplayed(true);
                                             expectScroll(false, false);
                                             expectColumnWidths([300, 700]);
                                         });
                                     });
 
-                                    describe("with variableRowHeight", function() {
-                                        it("should not show a vertical scrollbar if removing causes underflow", function() {
+                                    describe("with variableRowHeight", function () {
+                                        it("should not show a vertical scrollbar if removing causes underflow", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4457,9 +4462,9 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("hiding", function() {
-                                describe("fixed width columns", function() {
-                                    it("should not show a horizontal scrollbar if hiding causes underflow", function() {
+                            describe("hiding", function () {
+                                describe("fixed width columns", function () {
+                                    it("should not show a horizontal scrollbar if hiding causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4472,7 +4477,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should retain a horizontal scrollbar if hiding does not cause underflow", function() {
+                                    it("should retain a horizontal scrollbar if hiding does not cause underflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -4485,7 +4490,7 @@ describe("grid-general", function() {
                                         expectScroll(false, true);
                                     });
 
-                                    it("should not show a vertical scrollbar if hiding causes underflow", function() {
+                                    it("should not show a vertical scrollbar if hiding causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -4499,14 +4504,14 @@ describe("grid-general", function() {
                                         waits(1);
 
                                         // Allow the reflow before showing and then measuring.
-                                        runs(function() {
+                                        runs(function () {
                                             view.el.setDisplayed(true);
                                             expectScroll(false, false);
                                         });
                                     });
 
-                                    describe("with variableRowHeight", function() {
-                                        it("should not show a vertical scrollbar if hiding causes underflow", function() {
+                                    describe("with variableRowHeight", function () {
+                                        it("should not show a vertical scrollbar if hiding causes underflow", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4523,13 +4528,13 @@ describe("grid-general", function() {
                                             waits(1);
 
                                             // Allow the reflow before showing and then measuring.
-                                            runs(function() {
+                                            runs(function () {
                                                 view.el.setDisplayed(true);
                                                 expectScroll(false, false);
                                             });
                                         });
 
-                                        visibleScrollbarsIt("should not show a horizontal scrollbar if hiding triggered a vertical scrollbar removal", function() {
+                                        visibleScrollbarsIt("should not show a horizontal scrollbar if hiding triggered a vertical scrollbar removal", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4548,9 +4553,9 @@ describe("grid-general", function() {
                                 });
 
                                 // Intentionally leaving out flex only
-                                
-                                describe("fixed width + flexed columns", function() {
-                                    it("should not show a horizontal scrollbar if hiding causes underflow", function() {
+
+                                describe("fixed width + flexed columns", function () {
+                                    it("should not show a horizontal scrollbar if hiding causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4565,7 +4570,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, 700]);
                                     });
 
-                                    it("should show a horizontal scrollbar if hiding does not cause underflow", function() {
+                                    it("should show a horizontal scrollbar if hiding does not cause underflow", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -4582,7 +4587,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([600, 600, minColWidth]);
                                     });
 
-                                    it("should not show a vertical scrollbar if hiding causes underflow", function() {
+                                    it("should not show a vertical scrollbar if hiding causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4597,15 +4602,15 @@ describe("grid-general", function() {
                                         waits(1);
 
                                         // Allow the reflow before showing and then measuring.
-                                        runs(function() {
+                                        runs(function () {
                                             view.el.setDisplayed(true);
                                             expectScroll(false, false);
                                             expectColumnWidths([300, 700]);
                                         });
                                     });
 
-                                    describe("with variableRowHeight", function() {
-                                        it("should not show a vertical scrollbar if hiding causes underflow", function() {
+                                    describe("with variableRowHeight", function () {
+                                        it("should not show a vertical scrollbar if hiding causes underflow", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field3 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -4623,7 +4628,7 @@ describe("grid-general", function() {
                                             waits(1);
 
                                             // Allow the reflow before showing and then measuring.
-                                            runs(function() {
+                                            runs(function () {
                                                 view.el.setDisplayed(true);
                                                 expectScroll(false, false);
                                                 expectColumnWidths([300, 700]);
@@ -4634,10 +4639,10 @@ describe("grid-general", function() {
                             });
                         });
 
-                        describe("store operations", function() {
-                            describe("adding records", function() {
-                                describe("fixed width columns", function() {
-                                    it("should not show a vertical scrollbar if adding does not cause overflow", function() {
+                        describe("store operations", function () {
+                            describe("adding records", function () {
+                                describe("fixed width columns", function () {
+                                    it("should not show a vertical scrollbar if adding does not cause overflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4648,7 +4653,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4659,7 +4664,7 @@ describe("grid-general", function() {
                                         expectScroll(true, false);
                                     });
 
-                                    it("should show a vertical scrollbar if adding causes an overflow", function() {
+                                    it("should show a vertical scrollbar if adding causes an overflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4670,7 +4675,7 @@ describe("grid-general", function() {
                                         expectScroll(true, false);
                                     });
 
-                                    visibleScrollbarsIt("should show a vertical scrollbar if triggered by a horizontal scrollbar", function() {
+                                    visibleScrollbarsIt("should show a vertical scrollbar if triggered by a horizontal scrollbar", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -4685,7 +4690,7 @@ describe("grid-general", function() {
                                         expectScroll(true, true);
                                     });
 
-                                    visibleScrollbarsIt("should show a horizontal scrollbar if triggered by a vertical scrollbar", function() {
+                                    visibleScrollbarsIt("should show a horizontal scrollbar if triggered by a vertical scrollbar", function () {
                                         makeScrollGrid([{
                                             width: 495
                                         }, {
@@ -4697,8 +4702,8 @@ describe("grid-general", function() {
                                     });
                                 });
 
-                                describe("flexed columns", function() {
-                                    it("should not show a vertical scrollbar if adding does not cause overflow", function() {
+                                describe("flexed columns", function () {
+                                    it("should not show a vertical scrollbar if adding does not cause overflow", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -4711,7 +4716,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([500, 500]);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -4724,7 +4729,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [490, 490] : [500, 500]);
                                     });
 
-                                    it("should show a vertical scrollbar if adding causes an overflow", function() {
+                                    it("should show a vertical scrollbar if adding causes an overflow", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -4738,8 +4743,8 @@ describe("grid-general", function() {
                                     });
                                 });
 
-                                describe("fixed width + flexed columns", function() {
-                                    it("should not show a vertical scrollbar if adding does not cause overflow", function() {
+                                describe("fixed width + flexed columns", function () {
+                                    it("should not show a vertical scrollbar if adding does not cause overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4752,7 +4757,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, 700]);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4765,7 +4770,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [300, 680] : [300, 700]);
                                     });
 
-                                    it("should show a vertical scrollbar if adding causes an overflow", function() {
+                                    it("should show a vertical scrollbar if adding causes an overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4780,9 +4785,9 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("removing records", function() {
-                                describe("fixed width columns", function() {
-                                    it("should not show a vertical scrollbar if there is no overflow", function() {
+                            describe("removing records", function () {
+                                describe("fixed width columns", function () {
+                                    it("should not show a vertical scrollbar if there is no overflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4793,7 +4798,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4804,7 +4809,7 @@ describe("grid-general", function() {
                                         expectScroll(true, false);
                                     });
 
-                                    it("should not show a vertical scrollbar if removing causes underflow", function() {
+                                    it("should not show a vertical scrollbar if removing causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -4815,7 +4820,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    visibleScrollbarsIt("should not show a vertical scrollbar if triggered by a horizontal scrollbar", function() {
+                                    visibleScrollbarsIt("should not show a vertical scrollbar if triggered by a horizontal scrollbar", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -4830,14 +4835,14 @@ describe("grid-general", function() {
                                         waits(1);
 
                                         // Allow the reflow before showing and then measuring.
-                                        runs(function() {
+                                        runs(function () {
                                             view.el.setDisplayed(true);
                                             expectScroll(false, true);
                                         });
                                     });
 
                                     // EXTJS-1578
-                                    xit("should not show a horizontal scrollbar if triggered by a vertical scrollbar", function() {
+                                    xit("should not show a horizontal scrollbar if triggered by a vertical scrollbar", function () {
                                         makeScrollGrid([{
                                             width: 495
                                         }, {
@@ -4849,8 +4854,8 @@ describe("grid-general", function() {
                                     });
                                 });
 
-                                describe("flexed columns", function() {
-                                    it("should not show a vertical scrollbar if there is no overflow", function() {
+                                describe("flexed columns", function () {
+                                    it("should not show a vertical scrollbar if there is no overflow", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -4863,7 +4868,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([500, 500]);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -4876,7 +4881,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [490, 490] : [500, 500]);
                                     });
 
-                                    it("should not show a vertical scrollbar if removing causes underflow", function() {
+                                    it("should not show a vertical scrollbar if removing causes underflow", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -4892,15 +4897,15 @@ describe("grid-general", function() {
 
                                         // Layout resulting from remove which recalculates column widths runs on idle, so allow that to happen
                                         waits(1);
-                                        runs(function() {
+                                        runs(function () {
                                             expectScroll(false, false);
                                             expectColumnWidths([500, 500]);
                                         });
                                     });
                                 });
 
-                                describe("fixed width + flexed columns", function() {
-                                    it("should not show a vertical scrollbar if there is no overflow", function() {
+                                describe("fixed width + flexed columns", function () {
+                                    it("should not show a vertical scrollbar if there is no overflow", function () {
                                         makeScrollGrid([{
                                             width: 400
                                         }, {
@@ -4913,7 +4918,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([400, 600]);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             width: 400
                                         }, {
@@ -4926,7 +4931,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [400, 580] : [400, 600]);
                                     });
 
-                                    it("should not show a vertical scrollbar if removing causes underflow", function() {
+                                    it("should not show a vertical scrollbar if removing causes underflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -4945,9 +4950,9 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("updating records with variableRowHeight", function() {
-                                describe("fixed width columns", function() {
-                                    it("should not show a vertical scrollbar if there is no overflow", function() {
+                            describe("updating records with variableRowHeight", function () {
+                                describe("fixed width columns", function () {
+                                    it("should not show a vertical scrollbar if there is no overflow", function () {
                                         makeScrollGrid([{
                                             width: 100,
                                             variableRowHeight: true
@@ -4959,7 +4964,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             width: 100,
                                             variableRowHeight: true
@@ -4971,8 +4976,8 @@ describe("grid-general", function() {
                                         expectScroll(true, false);
                                     });
 
-                                    describe("making content larger", function() {
-                                        it("should show a vertical scrollbar if the update causes an overflow", function() {
+                                    describe("making content larger", function () {
+                                        it("should show a vertical scrollbar if the update causes an overflow", function () {
                                             makeScrollGrid([{
                                                 width: 100,
                                                 variableRowHeight: true
@@ -4984,7 +4989,7 @@ describe("grid-general", function() {
                                             expectScroll(true, false);
                                         });
 
-                                        visibleScrollbarsIt("should show a vertical scrollbar if triggered by a horizontal scrollbar", function() {
+                                        visibleScrollbarsIt("should show a vertical scrollbar if triggered by a horizontal scrollbar", function () {
                                             makeScrollGrid([{
                                                 width: 600,
                                                 variableRowHeight: true
@@ -5000,7 +5005,7 @@ describe("grid-general", function() {
                                             expectScroll(true, true);
                                         });
 
-                                        visibleScrollbarsIt("should show a horizontal scrollbar if triggered by a vertical scrollbar", function() {
+                                        visibleScrollbarsIt("should show a horizontal scrollbar if triggered by a vertical scrollbar", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5012,8 +5017,8 @@ describe("grid-general", function() {
                                         });
                                     });
 
-                                    describe("making content smaller", function() {
-                                        it("should not show a vertical scrollbar if the update causes an underflow", function() {
+                                    describe("making content smaller", function () {
+                                        it("should not show a vertical scrollbar if the update causes an underflow", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field1 = makeRowDiv(3);
                                             makeScrollGrid([{
@@ -5027,7 +5032,7 @@ describe("grid-general", function() {
                                             expectScroll(false, false);
                                         });
 
-                                        visibleScrollbarsIt("should not show a vertical scrollbar if triggered by a horizontal scrollbar", function() {
+                                        visibleScrollbarsIt("should not show a vertical scrollbar if triggered by a horizontal scrollbar", function () {
                                             makeScrollGrid([{
                                                 width: 600,
                                                 variableRowHeight: true
@@ -5044,7 +5049,7 @@ describe("grid-general", function() {
                                             expectScroll(false, true);
                                         });
 
-                                        visibleScrollbarsIt("should not show a horizontal scrollbar if triggered by a vertical scrollbar", function() {
+                                        visibleScrollbarsIt("should not show a horizontal scrollbar if triggered by a vertical scrollbar", function () {
                                             var data = makeRows(maxRowsBeforeScrollWithHorizontalScrollBar);
                                             data[0].field1 = makeRowDiv(3);
                                             makeScrollGrid([{
@@ -5062,7 +5067,7 @@ describe("grid-general", function() {
                                             waits(1);
 
                                             // Allow the reflow before showing and then measuring.
-                                            runs(function() {
+                                            runs(function () {
                                                 view.el.setDisplayed(true);
                                                 expectScroll(false, false);
                                             });
@@ -5070,8 +5075,8 @@ describe("grid-general", function() {
                                     });
                                 });
 
-                                describe("flexed columns", function() {
-                                    it("should not show a vertical scrollbar if there is no overflow", function() {
+                                describe("flexed columns", function () {
+                                    it("should not show a vertical scrollbar if there is no overflow", function () {
                                         makeScrollGrid([{
                                             flex: 1,
                                             variableRowHeight: true
@@ -5084,7 +5089,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             flex: 1,
                                             variableRowHeight: true
@@ -5098,7 +5103,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [490, 490] : [500, 500]);
                                     });
 
-                                    it("should show a vertical scrollbar if the update causes an overflow", function() {
+                                    it("should show a vertical scrollbar if the update causes an overflow", function () {
                                         makeScrollGrid([{
                                             flex: 1,
                                             variableRowHeight: true
@@ -5115,7 +5120,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [490, 490] : [500, 500]);
                                     });
 
-                                    it("should not show a vertical scrollbar if the update causes an underflow", function() {
+                                    it("should not show a vertical scrollbar if the update causes an underflow", function () {
                                         makeScrollGrid([{
                                             flex: 1,
                                             variableRowHeight: true
@@ -5134,8 +5139,8 @@ describe("grid-general", function() {
                                     });
                                 });
 
-                                describe("fixed width + flexed columns", function() {
-                                    it("should not show a vertical scrollbar if there is no overflow", function() {
+                                describe("fixed width + flexed columns", function () {
+                                    it("should not show a vertical scrollbar if there is no overflow", function () {
                                         makeScrollGrid([{
                                             width: 300,
                                             variableRowHeight: true
@@ -5148,7 +5153,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             width: 300,
                                             variableRowHeight: true
@@ -5162,7 +5167,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [300, 680] : [300, 700]);
                                     });
 
-                                    it("should show a vertical scrollbar if the update causes an overflow", function() {
+                                    it("should show a vertical scrollbar if the update causes an overflow", function () {
                                         makeScrollGrid([{
                                             width: 300,
                                             variableRowHeight: true
@@ -5179,7 +5184,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [300, 680] : [300, 700]);
                                     });
 
-                                    it("should not show a vertical scrollbar if the update causes an underflow", function() {
+                                    it("should not show a vertical scrollbar if the update causes an underflow", function () {
                                         makeScrollGrid([{
                                             width: 300,
                                             variableRowHeight: true
@@ -5199,9 +5204,9 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("loading new content", function() {
-                                describe("fixed width columns", function() {
-                                    it("should not show a vertical scrollbar if there is no overflow", function() {
+                            describe("loading new content", function () {
+                                describe("fixed width columns", function () {
+                                    it("should not show a vertical scrollbar if there is no overflow", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -5212,7 +5217,7 @@ describe("grid-general", function() {
                                         expect(false, false);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -5223,7 +5228,7 @@ describe("grid-general", function() {
                                         expect(true, false);
                                     });
 
-                                    it("should not show a vertical scrollbar if the new content does not require it", function() {
+                                    it("should not show a vertical scrollbar if the new content does not require it", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -5234,7 +5239,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should not show a horizontal and vertical scrollbar if the new content does not require it", function() {
+                                    it("should not show a horizontal and vertical scrollbar if the new content does not require it", function () {
                                         makeScrollGrid([{
                                             width: 495
                                         }, {
@@ -5245,7 +5250,7 @@ describe("grid-general", function() {
                                         expectScroll(false, false);
                                     });
 
-                                    it("should show a vertical scrollbar if the old content did not require it", function() {
+                                    it("should show a vertical scrollbar if the old content did not require it", function () {
                                         makeScrollGrid([{
                                             width: 100
                                         }, {
@@ -5256,7 +5261,7 @@ describe("grid-general", function() {
                                         expectScroll(true, false);
                                     });
 
-                                    it("should show a horizontal and vertical scrollbar if the old content did not require it", function() {
+                                    it("should show a horizontal and vertical scrollbar if the old content did not require it", function () {
                                         makeScrollGrid([{
                                             width: 495
                                         }, {
@@ -5269,8 +5274,8 @@ describe("grid-general", function() {
                                     });
                                 });
 
-                                describe("flexed columns", function() {
-                                    it("should not show a vertical scrollbar if there is no overflow", function() {
+                                describe("flexed columns", function () {
+                                    it("should not show a vertical scrollbar if there is no overflow", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -5283,7 +5288,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([500, 500]);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -5296,7 +5301,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [490, 490] : [500, 500]);
                                     });
 
-                                    it("should not show a vertical scrollbar if the new content does not require it", function() {
+                                    it("should not show a vertical scrollbar if the new content does not require it", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -5309,7 +5314,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([500, 500]);
                                     });
 
-                                    it("should show a vertical scrollbar if the old content did not require it", function() {
+                                    it("should show a vertical scrollbar if the old content did not require it", function () {
                                         makeScrollGrid([{
                                             flex: 1
                                         }, {
@@ -5323,8 +5328,8 @@ describe("grid-general", function() {
                                     });
                                 });
 
-                                describe("fixed width + flexed columns", function() {
-                                    it("should not show a vertical scrollbar if there is no overflow", function() {
+                                describe("fixed width + flexed columns", function () {
+                                    it("should not show a vertical scrollbar if there is no overflow", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -5337,7 +5342,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, 700]);
                                     });
 
-                                    it("should retain a vertical scrollbar if overflow exists", function() {
+                                    it("should retain a vertical scrollbar if overflow exists", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -5350,7 +5355,7 @@ describe("grid-general", function() {
                                         expectColumnWidths(scrollbarsTakeSpace ? [300, 680] : [300, 700]);
                                     });
 
-                                    it("should not show a vertical scrollbar if the new content does not require it", function() {
+                                    it("should not show a vertical scrollbar if the new content does not require it", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -5363,7 +5368,7 @@ describe("grid-general", function() {
                                         expectColumnWidths([300, 700]);
                                     });
 
-                                    it("should show a vertical scrollbar if the old content did not require it", function() {
+                                    it("should show a vertical scrollbar if the old content did not require it", function () {
                                         makeScrollGrid([{
                                             width: 300
                                         }, {
@@ -5379,13 +5384,13 @@ describe("grid-general", function() {
                             });
                         });
 
-                        describe("header sizing", function() {
+                        describe("header sizing", function () {
                             function expectHeaderWidth(width) {
                                 expect(gridRef.headerCt.getLayout().innerCt.getWidth()).toBe(width);
                             }
 
-                            describe("with no vertical and no horizontal scroll", function() {
-                                visibleScrollbarsIt("should stretch to the grid size", function() {
+                            describe("with no vertical and no horizontal scroll", function () {
+                                visibleScrollbarsIt("should stretch to the grid size", function () {
                                     makeScrollGrid([{
                                         width: 300
                                     }], 1);
@@ -5393,8 +5398,8 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("with no vertical and horizontal scroll", function() {
-                                visibleScrollbarsIt("it should stretch to the full column size", function() {
+                            describe("with no vertical and horizontal scroll", function () {
+                                visibleScrollbarsIt("it should stretch to the full column size", function () {
                                     makeScrollGrid([{
                                         width: 600
                                     }, {
@@ -5404,8 +5409,8 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("with vertical and no horizontal scroll", function() {
-                                visibleScrollbarsIt("should stretch to the grid size", function() {
+                            describe("with vertical and no horizontal scroll", function () {
+                                visibleScrollbarsIt("should stretch to the grid size", function () {
                                     makeScrollGrid([{
                                         width: 300
                                     }], 100);
@@ -5413,8 +5418,8 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("with vertical and horizontal scroll", function() {
-                                visibleScrollbarsIt("should account for the vertical scrollbar", function() {
+                            describe("with vertical and horizontal scroll", function () {
+                                visibleScrollbarsIt("should account for the vertical scrollbar", function () {
                                     makeScrollGrid([{
                                         width: 600
                                     }, {
@@ -5424,8 +5429,8 @@ describe("grid-general", function() {
                                 });
 
                                 // EXTJS-15789
-                                xdescribe("when the vertical scroll is caused by a horizontal scrollbar", function() {
-                                    visibleScrollbarsIt("should account for the vertical scrollbar", function() {
+                                xdescribe("when the vertical scroll is caused by a horizontal scrollbar", function () {
+                                    visibleScrollbarsIt("should account for the vertical scrollbar", function () {
                                         makeScrollGrid([{
                                             width: 600
                                         }, {
@@ -5435,8 +5440,8 @@ describe("grid-general", function() {
                                     });
                                 });
 
-                                describe("when the horizontal scroll is caused by a vertical scrollbar", function() {
-                                    visibleScrollbarsIt("should account for the vertical scrollbar", function() {
+                                describe("when the horizontal scroll is caused by a vertical scrollbar", function () {
+                                    visibleScrollbarsIt("should account for the vertical scrollbar", function () {
                                         makeScrollGrid([{
                                             width: 495
                                         }, {
@@ -5449,14 +5454,14 @@ describe("grid-general", function() {
                         });
 
                         if (withLocking) {
-                            describe("locked side horizontal scroll place holder", function() {
+                            describe("locked side horizontal scroll place holder", function () {
                                 function expectLockedScroll(scroll) {
                                     var overflowX = grid.lockedGrid.getView().getScrollable().getX();
 
                                     expect(overflowX).toBe(scroll ? 'scroll' : true);
                                 }
 
-                                it("should show the placeholder when the normal side overflows", function() {
+                                it("should show the placeholder when the normal side overflows", function () {
                                     makeScrollGrid([{
                                         width: 600
                                     }, {
@@ -5466,7 +5471,7 @@ describe("grid-general", function() {
                                     expectLockedScroll(scrollbarsTakeSpace);
                                 });
 
-                                it("should not show the placeholder when the normal side does not overflow", function() {
+                                it("should not show the placeholder when the normal side does not overflow", function () {
                                     makeScrollGrid([{
                                         width: 100
                                     }, {
@@ -5475,7 +5480,7 @@ describe("grid-general", function() {
                                     expectLockedScroll(false);
                                 });
 
-                                it("should show the placeholder when a resize causes an overflow", function() {
+                                it("should show the placeholder when a resize causes an overflow", function () {
                                     makeScrollGrid([{
                                         width: 400
                                     }, {
@@ -5487,7 +5492,7 @@ describe("grid-general", function() {
                                     expectLockedScroll(scrollbarsTakeSpace);
                                 });
 
-                                it("should not show the placeholder when a resize causes an underflow", function() {
+                                it("should not show the placeholder when a resize causes an underflow", function () {
                                     makeScrollGrid([{
                                         width: 600
                                     }, {
@@ -5499,8 +5504,8 @@ describe("grid-general", function() {
                                     expectLockedScroll(false);
                                 });
 
-                                describe("column operations", function() {
-                                    it("should show the placeholder when an add causes an overflow", function() {
+                                describe("column operations", function () {
+                                    it("should show the placeholder when an add causes an overflow", function () {
                                         makeScrollGrid([{
                                             width: 400
                                         }, {
@@ -5515,7 +5520,7 @@ describe("grid-general", function() {
                                         expectLockedScroll(scrollbarsTakeSpace);
                                     });
 
-                                    it("should show the placeholder when a show causes an overflow", function() {
+                                    it("should show the placeholder when a show causes an overflow", function () {
                                         makeScrollGrid([{
                                             width: 400
                                         }, {
@@ -5530,7 +5535,7 @@ describe("grid-general", function() {
                                         expectLockedScroll(scrollbarsTakeSpace);
                                     });
 
-                                    it("should not show the placeholder when a remove causes an underflow", function() {
+                                    it("should not show the placeholder when a remove causes an underflow", function () {
                                         makeScrollGrid([{
                                             width: 400
                                         }, {
@@ -5544,7 +5549,7 @@ describe("grid-general", function() {
                                         expectLockedScroll(false);
                                     });
 
-                                    it("should show the placeholder when a hide causes an underflow", function() {
+                                    it("should show the placeholder when a hide causes an underflow", function () {
                                         makeScrollGrid([{
                                             width: 400
                                         }, {
@@ -5559,9 +5564,9 @@ describe("grid-general", function() {
                                     });
                                 });
 
-                                describe("store operation", function() {
-                                    describe("adding", function() {
-                                        it("should not show the placeholder when the add does not trigger an overflow", function() {
+                                describe("store operation", function () {
+                                    describe("adding", function () {
+                                        it("should not show the placeholder when the add does not trigger an overflow", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5572,7 +5577,7 @@ describe("grid-general", function() {
                                             expectLockedScroll(false);
                                         });
 
-                                        it("should retain the placeholder when the add does not trigger an underflow", function() {
+                                        it("should retain the placeholder when the add does not trigger an underflow", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5585,7 +5590,7 @@ describe("grid-general", function() {
                                             expectLockedScroll(scrollbarsTakeSpace);
                                         });
 
-                                        it("should show the placeholder when an add causes an overflow via a vertical scrollbar", function() {
+                                        it("should show the placeholder when an add causes an overflow via a vertical scrollbar", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5598,8 +5603,8 @@ describe("grid-general", function() {
                                         });
                                     });
 
-                                    describe("removing", function() {
-                                        it("should not show the placeholder when there is no overflow", function() {
+                                    describe("removing", function () {
+                                        it("should not show the placeholder when there is no overflow", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5610,7 +5615,7 @@ describe("grid-general", function() {
                                             expectLockedScroll(false);
                                         });
 
-                                        it("should retain the placeholder when the remove does not trigger an underflow", function() {
+                                        it("should retain the placeholder when the remove does not trigger an underflow", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5623,7 +5628,7 @@ describe("grid-general", function() {
                                             expectLockedScroll(scrollbarsTakeSpace);
                                         });
 
-                                        it("should not show the placeholder when a remove causes an underflow via a vertical scrollbar", function() {
+                                        it("should not show the placeholder when a remove causes an underflow via a vertical scrollbar", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5636,8 +5641,8 @@ describe("grid-general", function() {
                                         });
                                     });
 
-                                    describe("update via variableRowHeight", function() {
-                                        it("should not show the placeholder when there is no overflow", function() {
+                                    describe("update via variableRowHeight", function () {
+                                        it("should not show the placeholder when there is no overflow", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5648,7 +5653,7 @@ describe("grid-general", function() {
                                             expectLockedScroll(false);
                                         });
 
-                                        it("should retain the placeholder when the update does not cause an overflow", function() {
+                                        it("should retain the placeholder when the update does not cause an overflow", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5667,7 +5672,7 @@ describe("grid-general", function() {
                                             expectLockedScroll(false);
                                         });
 
-                                        it("should show the placeholder when an update causes an overflow via a vertical scrollbar", function() {
+                                        it("should show the placeholder when an update causes an overflow via a vertical scrollbar", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5685,7 +5690,7 @@ describe("grid-general", function() {
                                             expectLockedScroll(scrollbarsTakeSpace);
                                         });
 
-                                        it("should not show the placeholder when an update causes an underflow via a vertical scrollbar", function() {
+                                        it("should not show the placeholder when an update causes an underflow via a vertical scrollbar", function () {
                                             var data = makeRows(maxRowsBeforeScroll);
                                             data[0].field1 = makeRowDiv(2);
                                             makeScrollGrid([{
@@ -5707,8 +5712,8 @@ describe("grid-general", function() {
                                         });
                                     });
 
-                                    describe("loading new content", function() {
-                                        it("should not show the placeholder if there is no overflow", function() {
+                                    describe("loading new content", function () {
+                                        it("should not show the placeholder if there is no overflow", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5719,7 +5724,7 @@ describe("grid-general", function() {
                                             expectLockedScroll(false);
                                         });
 
-                                        it("should retain the placeholder if there is no underflow", function() {
+                                        it("should retain the placeholder if there is no underflow", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5732,7 +5737,7 @@ describe("grid-general", function() {
                                             expectLockedScroll(scrollbarsTakeSpace);
                                         });
 
-                                        it("should not show the placeholder when load causes an underflow", function() {
+                                        it("should not show the placeholder when load causes an underflow", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5744,7 +5749,7 @@ describe("grid-general", function() {
                                             expectLockedScroll(false);
                                         });
 
-                                        it("should show the placeholder when load causes an overflow", function() {
+                                        it("should show the placeholder when load causes an overflow", function () {
                                             makeScrollGrid([{
                                                 width: 495
                                             }, {
@@ -5759,12 +5764,12 @@ describe("grid-general", function() {
                                 });
                             });
 
-                            describe("scrollbars caused by height synchronization", function() {
-                                beforeEach(function() {
+                            describe("scrollbars caused by height synchronization", function () {
+                                beforeEach(function () {
                                     lockedIsVariable = true;
                                 });
 
-                                it("should show a vertical scrollbar if the locked content cause overflow", function() {
+                                it("should show a vertical scrollbar if the locked content cause overflow", function () {
                                     var data = makeRows(maxRowsBeforeScroll);
                                     data[0].field10 = makeRowDiv(2);
                                     makeScrollGrid([{
@@ -5775,7 +5780,7 @@ describe("grid-general", function() {
                                     expectScroll(true, false);
                                 });
 
-                                it("should show a vertical scrollbar if adding causes overflow", function() {
+                                it("should show a vertical scrollbar if adding causes overflow", function () {
                                     makeScrollGrid([{
                                         width: 100
                                     }, {
@@ -5788,7 +5793,7 @@ describe("grid-general", function() {
                                     expectScroll(true, false);
                                 });
 
-                                it("should not show a vertical scrollbar if remving causes underflow", function() {
+                                it("should not show a vertical scrollbar if remving causes underflow", function () {
                                     var data = makeRows(maxRowsBeforeScroll);
                                     data[0].field10 = makeRowDiv(2);
                                     makeScrollGrid([{
@@ -5801,7 +5806,7 @@ describe("grid-general", function() {
                                     expectScroll(false, false);
                                 });
 
-                                it("should show a vertical scrollbar if update causes an overflow", function() {
+                                it("should show a vertical scrollbar if update causes an overflow", function () {
                                     makeScrollGrid([{
                                         width: 100
                                     }, {
@@ -5812,7 +5817,7 @@ describe("grid-general", function() {
                                     expectScroll(true, false);
                                 });
 
-                                it("should not show a vertical scrollbar if update causes an underflow", function() {
+                                it("should not show a vertical scrollbar if update causes an underflow", function () {
                                     var data = makeRows(maxRowsBeforeScroll);
                                     data[0].field10 = makeRowDiv(2);
                                     makeScrollGrid([{
@@ -5828,12 +5833,13 @@ describe("grid-general", function() {
                         }
                     });
                 }
+
                 makeScrollSuite(false);
                 makeScrollSuite(true);
             });
 
-            describe('disable/enable grids', function() {
-                it('should disable single grids', function() {
+            describe('disable/enable grids', function () {
+                it('should disable single grids', function () {
                     makeGrid();
                     grid.disable();
 
@@ -5841,15 +5847,15 @@ describe("grid-general", function() {
                     expect(grid.headerCt.disabled).toBe(true);
                     expect(grid.headerCt.isMasked()).toBeFalsy();
                     expect(grid.headerCt.el.dom.getAttribute('tabIndex')).toBe('-1');
-                    
+
                     grid.enable();
                     expect(grid.isMasked()).toBeFalsy();
                     expect(grid.headerCt.disabled).toBe(false);
                     expect(grid.headerCt.isMasked()).toBeFalsy();
                     expect(grid.headerCt.el.dom.getAttribute('tabIndex')).toBe('0');
                 });
-                
-                it('should disable locking grids', function() {
+
+                it('should disable locking grids', function () {
                     makeGrid(null, undefined, null, null, true);
                     grid.disable();
 
@@ -5867,7 +5873,7 @@ describe("grid-general", function() {
                     expect(grid.normalGrid.headerCt.disabled).toBe(true);
                     expect(grid.normalGrid.headerCt.isMasked()).toBeFalsy();
                     expect(grid.normalGrid.headerCt.el.dom.getAttribute('tabIndex')).toBe('-1');
-                    
+
                     grid.enable();
 
                     // Outermost grid should not be masked
@@ -5887,8 +5893,8 @@ describe("grid-general", function() {
                 });
             });
 
-            describe('disable/enable grid views', function() {
-                it('should only disable the view when view.disable is called', function() {
+            describe('disable/enable grid views', function () {
+                it('should only disable the view when view.disable is called', function () {
                     makeGrid();
                     grid.view.disable();
 
@@ -5905,10 +5911,10 @@ describe("grid-general", function() {
                     expect(grid.view.isMasked()).toBeFalsy();
                 });
 
-                it('should disable both views in a locking grid when view.disable is alled on a locking grid', function() {
+                it('should disable both views in a locking grid when view.disable is alled on a locking grid', function () {
                     makeGrid(null, undefined, null, null, true);
                     grid.view.disable();
-                    
+
                     expect(grid.disabled).toBe(false);
                     expect(grid.isMasked()).toBeFalsy();
 
@@ -5921,14 +5927,14 @@ describe("grid-general", function() {
                     expect(grid.lockedGrid.isMasked()).toBeFalsy();
                     expect(grid.lockedGrid.headerCt.disabled).toBe(false);
                     expect(grid.lockedGrid.headerCt.isMasked()).toBeFalsy();
-                    
+
                     expect(grid.normalGrid.view.disabled).toBe(true);
                     expect(grid.normalGrid.view.isMasked()).toBeTruthy();
                     expect(grid.lockedGrid.view.disabled).toBe(true);
                     expect(grid.lockedGrid.view.isMasked()).toBeTruthy();
 
                     grid.view.enable();
-                    
+
                     expect(grid.disabled).toBe(false);
                     expect(grid.isMasked()).toBeFalsy();
 
@@ -5941,7 +5947,7 @@ describe("grid-general", function() {
                     expect(grid.lockedGrid.isMasked()).toBeFalsy();
                     expect(grid.lockedGrid.headerCt.disabled).toBe(false);
                     expect(grid.lockedGrid.headerCt.isMasked()).toBeFalsy();
-                    
+
                     expect(grid.normalGrid.view.disabled).toBe(false);
                     expect(grid.normalGrid.view.isMasked()).toBeFalsy();
                     expect(grid.lockedGrid.view.disabled).toBe(false);
@@ -5949,9 +5955,9 @@ describe("grid-general", function() {
                 });
             });
         });
-        
+
         if (buffered) {
-            describe('cellWrap: true column width changing halfway down buffer rendered large dataset', function() {
+            describe('cellWrap: true column width changing halfway down buffer rendered large dataset', function () {
                 var i,
                     data = [],
                     lorem = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
@@ -5966,11 +5972,11 @@ describe("grid-general", function() {
                 for (i = 0; i < 500; i++) {
                     data.push(['Row ' + (i + 1), lorem.substr(0, Ext.Number.randomInt(minLen, loremLen))]);
                 }
-                afterEach(function() {
+                afterEach(function () {
                     Ext.destroy(store, grid);
                 });
 
-                it('should adjust view body position if column width change causes body to move out of view', function() {
+                it('should adjust view body position if column width change causes body to move out of view', function () {
                     store = new Ext.data.ArrayStore({
                         data: data,
                         fields: ['row', 'lorem']
@@ -6022,8 +6028,8 @@ describe("grid-general", function() {
                     // Should move the rendered range to top if the viewSize >= storeCount
                     expect(bufferedRenderer.bodyTop).toBe(0);
                 });
-                
-                it("should not refresh if the rendered view is positioned at the start", function() {
+
+                it("should not refresh if the rendered view is positioned at the start", function () {
                     store = new Ext.data.ArrayStore({
                         data: data,
                         fields: ['row', 'lorem']
@@ -6062,6 +6068,7 @@ describe("grid-general", function() {
             });
         }
     }
+
     createSuite(false);
     createSuite(true);
 
@@ -6090,9 +6097,9 @@ describe("grid-general", function() {
         beforeEach(function () {
             store = new Ext.data.ArrayStore({
                 data: [
-                    [ 1, 'Lorem'],
-                    [ 2, 'Ipsum'],
-                    [ 3, 'Dolor']
+                    [1, 'Lorem'],
+                    [2, 'Ipsum'],
+                    [3, 'Dolor']
                 ],
                 fields: ['row', 'lorem']
             })
@@ -6218,7 +6225,7 @@ describe("grid-general", function() {
         });
     });
 
-    describe('BufferedStore asynchronous loading timing with rendering and preserveScrollOnReload: true', function() {
+    describe('BufferedStore asynchronous loading timing with rendering and preserveScrollOnReload: true', function () {
         var view,
             bufferedRenderer,
             scroller,
@@ -6285,7 +6292,7 @@ describe("grid-general", function() {
             for (i = 0, len = requests.length; i < len; i++) {
                 request = requests[i];
                 params = request.options.params;
-                
+
                 if (Ext.Array.contains(pages, params.page)) {
                     data = getData(params.start, params.limit);
 
@@ -6300,7 +6307,7 @@ describe("grid-general", function() {
             }
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             MockAjaxManager.addMethods();
 
             store = new Ext.data.BufferedStore({
@@ -6334,7 +6341,7 @@ describe("grid-general", function() {
                     preserveScrollOnReload: true,
                     mouseOverOutBuffer: 0,
                     listeners: {
-                        scroll: function() {
+                        scroll: function () {
                             scrollEventCount++;
                         }
                     }
@@ -6351,15 +6358,15 @@ describe("grid-general", function() {
 
             // Load inline in the scroll event
             bufferedRenderer.scrollToLoadBuffer = 0;
-            
+
             scrollRequestCount = 0;
         });
 
-        afterEach(function() {
+        afterEach(function () {
             MockAjaxManager.removeMethods();
         });
 
-        it('should render maintain selection when returning to a page with a previously selected record in it', function() {
+        it('should render maintain selection when returning to a page with a previously selected record in it', function () {
 
             // Select record 0.
             // We plan to evict this page, but maintain that record as selected.
@@ -6371,7 +6378,7 @@ describe("grid-general", function() {
             // Scroll to new areas of dataset.
             // Satisfy page requests as they arrive so that
             // old pages are evicted.
-            waitsFor(function() {
+            waitsFor(function () {
                 satisfyRequests();
 
                 if (scrollEventCount === scrollRequestCount) {
@@ -6384,15 +6391,15 @@ describe("grid-general", function() {
                 }
             }, 'Page one to have been purged from the PageCache', 20000);
 
-            runs(function() {
+            runs(function () {
                 scrollEventCount = 0;
                 scroller.scrollTo(0, 0);
             });
-            
-            waitsFor(function() {
+
+            waitsFor(function () {
                 return scrollEventCount === 1;
             }, 'A scroll event to fire', 20000);
-            runs(function() {
+            runs(function () {
                 satisfyRequests();
 
                 // First record still selected
@@ -6400,10 +6407,10 @@ describe("grid-general", function() {
             });
         });
 
-        it('should render page 1, and page 1 should still be in the page cache when returning to page 1 after scrolling down', function() {
+        it('should render page 1, and page 1 should still be in the page cache when returning to page 1 after scrolling down', function () {
             // Scroll to new areas of dataset.
             // Will queue a lot of page requests which we will satisfy in a while
-            waitsFor(function() {
+            waitsFor(function () {
                 //  Scroll until we have 20 page requests outstanding
                 if (Ext.Ajax.mockGetAllRequests().length > 20) {
                     return true;
@@ -6415,15 +6422,15 @@ describe("grid-general", function() {
                 }
             });
 
-            runs(function() {
+            runs(function () {
                 scrollEventCount = 0;
                 scroller.scrollTo(0, 0);
             });
-            
-            waitsFor(function() {
+
+            waitsFor(function () {
                 return scrollEventCount === 1;
             });
-            runs(function() {
+            runs(function () {
                 satisfyRequests();
 
                 // Page 1 should be rendered at position zero since we scrolled back to the top
@@ -6435,10 +6442,10 @@ describe("grid-general", function() {
             });
         });
 
-        it('Page 1 should still be rendered, and page 1 should still be in the page cache when returning to page 1 after scrolling down with only buffer zone pages loaded into store during scroll', function() {
+        it('Page 1 should still be rendered, and page 1 should still be in the page cache when returning to page 1 after scrolling down with only buffer zone pages loaded into store during scroll', function () {
             // Scroll to new areas of dataset.
             // Will queue a lot of page requests which we will satisfy in a while
-            waitsFor(function() {
+            waitsFor(function () {
                 //  Scroll until we have 20 page requests outstanding
                 if (Ext.Ajax.mockGetAllRequests().length > 20) {
                     return true;
@@ -6450,15 +6457,15 @@ describe("grid-general", function() {
                 }
             });
 
-            runs(function() {
+            runs(function () {
                 scrollEventCount = 0;
                 scroller.scrollTo(0, 0);
             });
-            
-            waitsFor(function() {
+
+            waitsFor(function () {
                 return scrollEventCount === 1;
             });
-            runs(function() {
+            runs(function () {
                 // Only satisfy requests for non-rendered buffer zone pages so that no rendering is done and
                 // page 1 is left undisturbed in the rendered block.
                 satisfyRequestsForPages([3, 6, 7, 10, 11, 13, 14, 17, 18, 21, 22, 25]);
@@ -6472,7 +6479,7 @@ describe("grid-general", function() {
             });
         });
 
-        it('should refresh the same rendered block on buffered store reload with preserveScrollOnReload: true', function() {
+        it('should refresh the same rendered block on buffered store reload with preserveScrollOnReload: true', function () {
             var scrollDone,
                 refreshed,
                 startRow, endRow;
@@ -6482,21 +6489,21 @@ describe("grid-general", function() {
             bufferedRenderer.scrollTo(1000, {
                 select: true,
                 focus: true,
-                callback: function() {
+                callback: function () {
                     scrollDone = true;
                 }
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 satisfyRequests();
                 return scrollDone;
             }, 'scroll to finish');
 
-            runs(function() {
+            runs(function () {
                 startRow = view.all.startIndex;
                 endRow = view.all.endIndex;
                 store.on({
-                    refresh: function() {
+                    refresh: function () {
                         refreshed = true;
                     },
                     single: true
@@ -6504,12 +6511,12 @@ describe("grid-general", function() {
                 store.reload();
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 satisfyRequests();
                 return refreshed;
             }, 'store to reload');
 
-            runs(function() {
+            runs(function () {
                 expect(view.refreshCounter).toBe(2);
                 expect(view.all.startIndex).toBe(startRow);
                 expect(view.all.endIndex).toBe(endRow);
@@ -6517,7 +6524,7 @@ describe("grid-general", function() {
         });
     });
 
-    describe('BufferedStore asynchronous loading timing with rendering and preserveScrollOnReload: false', function() {
+    describe('BufferedStore asynchronous loading timing with rendering and preserveScrollOnReload: false', function () {
         var view,
             bufferedRenderer,
             scroller,
@@ -6584,7 +6591,7 @@ describe("grid-general", function() {
             for (i = 0, len = requests.length; i < len; i++) {
                 request = requests[i];
                 params = request.options.params;
-                
+
                 if (Ext.Array.contains(pages, params.page)) {
                     data = getData(params.start, params.limit);
 
@@ -6599,7 +6606,7 @@ describe("grid-general", function() {
             }
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             MockAjaxManager.addMethods();
 
             store = new Ext.data.BufferedStore({
@@ -6633,7 +6640,7 @@ describe("grid-general", function() {
                     preserveScrollOnReload: false,
                     mouseOverOutBuffer: 0,
                     listeners: {
-                        scroll: function() {
+                        scroll: function () {
                             scrollEventCount++;
                         }
                     }
@@ -6650,15 +6657,15 @@ describe("grid-general", function() {
 
             // Load inline in the scroll event
             bufferedRenderer.scrollToLoadBuffer = 0;
-            
+
             scrollRequestCount = 0;
         });
 
-        afterEach(function() {
+        afterEach(function () {
             MockAjaxManager.removeMethods();
         });
 
-        it('should refresh from page 1 on buffered store reload with preserveScrollOnReload: false', function() {
+        it('should refresh from page 1 on buffered store reload with preserveScrollOnReload: false', function () {
             var scrollDone,
                 refreshed,
                 startRow, endRow;
@@ -6668,21 +6675,21 @@ describe("grid-general", function() {
             bufferedRenderer.scrollTo(1000, {
                 select: true,
                 focus: true,
-                callback: function() {
+                callback: function () {
                     scrollDone = true;
                 }
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 satisfyRequests();
                 return scrollDone;
             }, 'scroll to finish');
 
-            runs(function() {
+            runs(function () {
                 startRow = view.all.startIndex;
                 endRow = view.all.endIndex;
                 store.on({
-                    refresh: function() {
+                    refresh: function () {
                         refreshed = true;
                     },
                     single: true
@@ -6690,12 +6697,12 @@ describe("grid-general", function() {
                 store.reload();
             });
 
-            waitsFor(function() {
+            waitsFor(function () {
                 satisfyRequests();
                 return refreshed;
             }, 'store to reload');
 
-            runs(function() {
+            runs(function () {
                 expect(view.refreshCounter).toBe(2);
                 expect(view.all.startIndex).toBe(0);
                 expect(view.all.endIndex).toBe(bufferedRenderer.viewSize - 1);
@@ -6703,17 +6710,17 @@ describe("grid-general", function() {
         });
     });
 
-    describe('paging grid with buffered renderer', function() {
+    describe('paging grid with buffered renderer', function () {
         var grid;
 
-        afterEach(function() {
+        afterEach(function () {
             grid.destroy();
         });
 
-        it('should refresh the view on each page change', function() {
+        it('should refresh the view on each page change', function () {
             var store, ptoolbar;
-            
-            runs(function() {
+
+            runs(function () {
                 function getRandomDate() {
                     var from = new Date(1900, 0, 1).getTime();
                     var to = new Date().getTime();
@@ -6721,15 +6728,15 @@ describe("grid-general", function() {
                 }
 
                 function createFakeData(count) {
-                    var firstNames   = ['Ed', 'Tommy', 'Aaron', 'Abe'];
-                    var lastNames    = ['Spencer', 'Maintz', 'Conran', 'Elias'];
+                    var firstNames = ['Ed', 'Tommy', 'Aaron', 'Abe'];
+                    var lastNames = ['Spencer', 'Maintz', 'Conran', 'Elias'];
 
                     var data = [];
-                    for (var i = 0; i < count ; i++) {
-                        var dob = getRandomDate();           
+                    for (var i = 0; i < count; i++) {
+                        var dob = getRandomDate();
                         var firstNameId = Math.floor(Math.random() * firstNames.length);
-                        var lastNameId  = Math.floor(Math.random() * lastNames.length);
-                        var name        = Ext.String.format("{0} {1}", firstNames[firstNameId], lastNames[lastNameId]);
+                        var lastNameId = Math.floor(Math.random() * lastNames.length);
+                        var name = Ext.String.format("{0} {1}", firstNames[firstNameId], lastNames[lastNameId]);
 
                         data.push([name, dob]);
                     }
@@ -6756,9 +6763,9 @@ describe("grid-general", function() {
                 grid = Ext.create('Ext.grid.Panel', {
                     store: store,
                     columns: [
-                        {text: "Name", width:120, dataIndex: 'Name'},
+                        {text: "Name", width: 120, dataIndex: 'Name'},
                         {text: "dob", flex: 1, dataIndex: 'dob'}
-                    ],                    
+                    ],
                     dockedItems: [
                         ptoolbar = Ext.create('Ext.toolbar.Paging', {
                             dock: 'bottom',
@@ -6775,21 +6782,21 @@ describe("grid-general", function() {
             });
 
             // Wait for first refresh.
-            waitsFor(function() {
+            waitsFor(function () {
                 return grid.view.all.getCount() === 20;
             });
-            
-            runs(function() {
+
+            runs(function () {
                 var refreshCount = grid.view.refreshCounter;
 
-                grid.view.scrollTo(0,100);
+                grid.view.scrollTo(0, 100);
 
                 // Wait for the scroll event to get into the BufferedRenderer                
-                waitsFor(function() {
+                waitsFor(function () {
                     return grid.view.bufferedRenderer.scrollTop === 100;
                 });
 
-                runs(function() {
+                runs(function () {
                     jasmine.fireMouseEvent(ptoolbar.down('#next').el, 'click');
 
                     // Should be one more page refresh
@@ -6805,8 +6812,8 @@ describe("grid-general", function() {
         });
     });
 
-    describe('Locking a column when grid configured with enableLocking, but no locked columns', function() {
-        it('should not throw an error, and should maintain scroll position', function() {
+    describe('Locking a column when grid configured with enableLocking, but no locked columns', function () {
+        it('should not throw an error, and should maintain scroll position', function () {
             var scrollY;
 
             grid = new Ext.grid.Panel({
@@ -6832,7 +6839,7 @@ describe("grid-general", function() {
                         name: 'age',
                         type: 'int'
                     }],
-                    data: (function() {
+                    data: (function () {
                         var data = [];
                         var len = 44; // <-- 43 records does not trigger error
                         while (len--) {

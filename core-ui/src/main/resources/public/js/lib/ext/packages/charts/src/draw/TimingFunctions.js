@@ -1,7 +1,7 @@
 /**
  * @class Ext.draw.TimingFunctions
  * @singleton
- * 
+ *
  * Singleton that provides easing functions for use in sprite animations.
  */
 Ext.define('Ext.draw.TimingFunctions', function () {
@@ -57,7 +57,7 @@ Ext.define('Ext.draw.TimingFunctions', function () {
     }
 
     function addEasing(name, easing) {
-        easingsMap[name + 'In'] = function(pos) {
+        easingsMap[name + 'In'] = function (pos) {
             return easing(pos);
         };
 
@@ -92,6 +92,6 @@ Ext.define('Ext.draw.TimingFunctions', function () {
         easingMap: easingsMap
     };
 
-}, function(Cls) {
+}, function (Cls) {
     Ext.apply(Cls, Cls.easingMap);
 });

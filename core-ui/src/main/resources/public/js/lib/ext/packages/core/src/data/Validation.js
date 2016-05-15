@@ -80,7 +80,7 @@ Ext.define('Ext.data.Validation', {
             recordData = record.data,
             sep = record.validationSeparator,
             values = null,
-            defaultMessage, currentValue, error, field, 
+            defaultMessage, currentValue, error, field,
             item, i, j, jLen, len, msg, val, name;
 
         if (force || me.syncGeneration !== generation) {

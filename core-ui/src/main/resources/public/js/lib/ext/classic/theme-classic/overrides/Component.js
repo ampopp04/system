@@ -1,6 +1,6 @@
 Ext.define('Ext.theme.classic.Component', {
     override: 'Ext.Component'
-}, function() {
+}, function () {
     Ext.namespace('Ext.theme.is').Classic = true;
     Ext.theme.name = 'Classic';
 });

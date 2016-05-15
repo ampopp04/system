@@ -1,7 +1,7 @@
 Ext.define('Ext.draw.ContainerBase', {
     extend: 'Ext.Container',
 
-    constructor: function(config) {
+    constructor: function (config) {
         this.callParent([config]);
         this.initAnimator();
     },
@@ -24,12 +24,12 @@ Ext.define('Ext.draw.ContainerBase', {
         };
     },
 
-    addElementListener: function() {
+    addElementListener: function () {
         var el = this.element;
         el.on.apply(el, arguments);
     },
 
-    removeElementListener: function() {
+    removeElementListener: function () {
         var el = this.element;
         el.un.apply(el, arguments);
     },

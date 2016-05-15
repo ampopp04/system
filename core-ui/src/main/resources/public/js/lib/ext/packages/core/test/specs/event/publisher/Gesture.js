@@ -1,11 +1,11 @@
-describe("Ext.event.publisher.Gesture", function() {
-    describe("removing the target el before a gesture is complete", function() {
+describe("Ext.event.publisher.Gesture", function () {
+    describe("removing the target el before a gesture is complete", function () {
         var GC = Ext.dom.GarbageCollector,
             helper = Ext.testHelper,
             interval = GC.interval,
             targetEl;
 
-        beforeEach(function() {
+        beforeEach(function () {
             targetEl = Ext.getBody().createChild({
                 id: 'gesture-target'
             });
@@ -15,11 +15,11 @@ describe("Ext.event.publisher.Gesture", function() {
             GC.resume();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             if (targetEl && !targetEl.destroyed) {
                 targetEl.destroy();
             }
-            
+
             GC.interval = interval;
             GC.pause();
             GC.resume();
@@ -39,30 +39,30 @@ describe("Ext.event.publisher.Gesture", function() {
             }
         }
 
-        (Ext.toolkit === 'classic' ? it : xit)("should not garbage collect the target element until the current gesture is complete", function() {
-            runs(function() {
-                helper.touchStart(targetEl, { id: 1, x: 10, y: 10 });
-                helper.touchMove(targetEl, { id: 1, x: 15, y: 15 });
+        (Ext.toolkit === 'classic' ? it : xit)("should not garbage collect the target element until the current gesture is complete", function () {
+            runs(function () {
+                helper.touchStart(targetEl, {id: 1, x: 10, y: 10});
+                helper.touchMove(targetEl, {id: 1, x: 15, y: 15});
                 removeTarget();
             });
 
             waits(90);
 
-            runs(function() {
+            runs(function () {
                 expectCollected(false);
-                helper.touchEnd(Ext.supports.TouchEvents ? targetEl : document.body, { id: 1, x: 15, y: 15 });
+                helper.touchEnd(Ext.supports.TouchEvents ? targetEl : document.body, {id: 1, x: 15, y: 15});
             });
 
             waits(90);
 
-            runs(function() {
+            runs(function () {
                 expectCollected(true);
             })
         });
     });
 
-    describe("order of recognizers", function() {
-        it("should invoke the recognizers in priority order when an event is fired", function() {
+    describe("order of recognizers", function () {
+        it("should invoke the recognizers in priority order when an event is fired", function () {
             var gesture = Ext.event.gesture,
                 Drag = gesture.Drag.instance,
                 Tap = gesture.Tap.instance,
@@ -75,7 +75,7 @@ describe("Ext.event.publisher.Gesture", function() {
                 result = [];
 
             Drag.onStart = Tap.onStart = DoubleTap.onStart = LongPress.onStart = Swipe.onStart =
-                Pinch.onStart = Rotate.onStart = EdgeSwipe.onStart = function() {
+                Pinch.onStart = Rotate.onStart = EdgeSwipe.onStart = function () {
                     result.push([this.$className, this.priority]);
                 };
 

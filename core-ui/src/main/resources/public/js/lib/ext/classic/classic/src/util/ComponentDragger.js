@@ -32,13 +32,13 @@ Ext.define('Ext.util.ComponentDragger', {
      * @cfg {Boolean} constrainDelegate
      * Specify as `true` to constrain the drag handles within the {@link #constrainTo} region.
      */
-    
+
     /**
      * @cfg {Boolean} [liveDrag=false]
      * @member Ext.Component
      * True to drag the component itself.  Else a lightweight version of the component
      * will be shown (_using the component's ghost() method_).
-     * 
+     *
      * **Note:** This config is only relevant when used with dragging implemented via
      * {@link Ext.util.ComponentDragger}.
      */
@@ -50,13 +50,13 @@ Ext.define('Ext.util.ComponentDragger', {
      * @param {Object} comp The Component to provide dragging for.
      * @param {Object} [config] Config object
      */
-    constructor: function(comp, config) {
+    constructor: function (comp, config) {
         this.comp = comp;
         this.initialConstrainTo = config.constrainTo;
-        this.callParent([ config ]);
+        this.callParent([config]);
     },
 
-    onStart: function(e) {
+    onStart: function (e) {
         var me = this,
             comp = me.comp;
 
@@ -66,8 +66,8 @@ Ext.define('Ext.util.ComponentDragger', {
         // If client Component has a ghost method to show a lightweight version of itself
         // then use that as a drag proxy unless configured to liveDrag.
         if (comp.ghost && !comp.liveDrag) {
-             me.proxy = comp.ghost();
-             me.dragTarget = me.proxy.header.el;
+            me.proxy = comp.ghost();
+            me.dragTarget = me.proxy.header.el;
         }
 
         // Set the constrainTo Region before we start dragging.
@@ -84,7 +84,7 @@ Ext.define('Ext.util.ComponentDragger', {
         }
     },
 
-    calculateConstrainRegion: function() {
+    calculateConstrainRegion: function () {
         var me = this,
             comp = me.comp,
             constrainTo = me.initialConstrainTo,
@@ -136,7 +136,7 @@ Ext.define('Ext.util.ComponentDragger', {
     },
 
     // Move either the ghost Component or the target Component to its new position on drag
-    onDrag: function(e) {
+    onDrag: function (e) {
         var me = this,
             comp = (me.proxy && !me.comp.liveDrag) ? me.proxy : me.comp,
             offset = me.getOffset(me.constrain || me.constrainDelegate ? 'dragTarget' : null);
@@ -144,12 +144,12 @@ Ext.define('Ext.util.ComponentDragger', {
         comp.setPagePosition(me.startPosition[0] + offset[0], me.startPosition[1] + offset[1]);
     },
 
-    onEnd: function(e) {
+    onEnd: function (e) {
         var comp = this.comp;
         if (comp.destroyed || comp.destroying) {
             return;
         }
-        
+
         if (this.proxy && !comp.liveDrag) {
             comp.unghost();
         }

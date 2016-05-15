@@ -1,9 +1,9 @@
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return Ext.Date.monthNames[month].substring(0, 3);
         };
 
@@ -22,7 +22,7 @@ Ext.onReady(function() {
             "Aralık": 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1, 3).toLowerCase()];
         };
 
@@ -30,7 +30,7 @@ Ext.onReady(function() {
 
         Ext.Date.shortDayNames = ["Paz", "Pzt", "Sal", "Çrş", "Prş", "Cum", "Cmt"];
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.shortDayNames[day];
         };
     }
@@ -136,7 +136,7 @@ Ext.define("Ext.locale.tr.form.field.Date", {
 Ext.define("Ext.locale.tr.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Yükleniyor ..."
     });
@@ -153,7 +153,7 @@ Ext.define("Ext.locale.tr.form.field.VTypes", {
 Ext.define("Ext.locale.tr.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Lütfen bu bağlantı için gerekli URL adresini giriniz:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -260,10 +260,10 @@ Ext.define("Ext.locale.tr.window.MessageBox", {
         cancel: "İptal",
         yes: "Evet",
         no: "Hayır"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.tr.Component", {	
+Ext.define("Ext.locale.tr.Component", {
     override: "Ext.Component"
 });

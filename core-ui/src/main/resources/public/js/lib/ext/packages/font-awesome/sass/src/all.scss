@@ -18,7 +18,7 @@
 // of "fa".  The "fa" class sets some properties that may collide
 // with theme properties, whereas "x-fa" sets only the font-family.
 .#{$prefix}fa:before {
-    font-family: FontAwesome !important;
+  font-family: FontAwesome !important;
 }
 
 // NOTE: _variables.scss is imported much earlier by ext/sass/etc/font-awesome-variables.scss

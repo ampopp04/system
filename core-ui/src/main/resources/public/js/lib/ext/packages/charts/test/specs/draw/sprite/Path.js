@@ -37,5 +37,5 @@ describe("Ext.draw.sprite.Path", function () {
         });
 
     });
-    
+
 });

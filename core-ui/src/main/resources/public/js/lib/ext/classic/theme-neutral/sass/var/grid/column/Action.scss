@@ -38,10 +38,5 @@ $grid-actioncolumn-icon-glyph-color: dynamic(gray);
  */
 $grid-actioncolumn-horizontal-padding: dynamic(2px);
 
-
 //private
-$grid-actioncolumn-cell-padding:
-    max(ceil(($grid-row-height - $grid-actioncolumn-icon-height) / 2), 0)
-    $grid-actioncolumn-horizontal-padding
-    max(floor(($grid-row-height - $grid-actioncolumn-icon-height) / 2), 0)
-    $grid-actioncolumn-horizontal-padding
+$grid-actioncolumn-cell-padding: max(ceil(($grid-row-height - $grid-actioncolumn-icon-height) / 2), 0) $grid-actioncolumn-horizontal-padding max(floor(($grid-row-height - $grid-actioncolumn-icon-height) / 2), 0) $grid-actioncolumn-horizontal-padding

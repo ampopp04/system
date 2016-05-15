@@ -28,13 +28,13 @@ Ext.define('Ext.event.gesture.SingleTouch', {
         EVENT_CANCELED: "Event Canceled"
     },
 
-    onTouchStart: function(e) {
+    onTouchStart: function (e) {
         if (e.touches.length > 1) {
             return this.fail(this.self.NOT_SINGLE_TOUCH);
         }
     },
 
-    onTouchCancel: function() {
+    onTouchCancel: function () {
         return false;
     }
 });

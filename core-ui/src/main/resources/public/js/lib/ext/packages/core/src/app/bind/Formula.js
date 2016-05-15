@@ -155,7 +155,7 @@ Ext.define('Ext.app.bind.Formula', {
     ],
 
     statics: {
-        getFormulaParser: function(name) {
+        getFormulaParser: function (name) {
             var cache = this.formulaCache,
                 parser, s;
 
@@ -287,7 +287,7 @@ Ext.define('Ext.app.bind.Formula', {
 
     getFullName: function () {
         return this.fullName ||
-              (this.fullName = this.stub.getFullName() + '=' + this.callParent() + ')');
+            (this.fullName = this.stub.getFullName() + '=' + this.callParent() + ')');
     },
 
     getRawValue: function () {
@@ -346,7 +346,7 @@ Ext.define('Ext.app.bind.Formula', {
         }
     },
 
-    setValue: function(value) {
+    setValue: function (value) {
         this.set.call(this.stub.owner, value);
     },
 
@@ -355,7 +355,7 @@ Ext.define('Ext.app.bind.Formula', {
             var owner = this.owner;
             return owner && owner.getScheduler();
         },
-        
+
         sort: function () {
             var me = this,
                 binding = me.binding;

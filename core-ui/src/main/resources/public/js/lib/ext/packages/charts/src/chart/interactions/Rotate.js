@@ -84,7 +84,7 @@ Ext.define('Ext.chart.interactions.Rotate', {
 
     oldRotations: null,
 
-    getAngle: function(e) {
+    getAngle: function (e) {
         var me = this,
             chart = me.getChart(),
             xy = chart.getEventXY(e),
@@ -100,7 +100,7 @@ Ext.define('Ext.chart.interactions.Rotate', {
         return this.getChart().getRadius();
     },
 
-    getEventRadius: function(e) {
+    getEventRadius: function (e) {
         var me = this,
             chart = me.getChart(),
             xy = chart.getEventXY(e),
@@ -111,7 +111,7 @@ Ext.define('Ext.chart.interactions.Rotate', {
         return Math.sqrt(dx * dx + dy * dy);
     },
 
-    onGestureStart: function(e) {
+    onGestureStart: function (e) {
         var me = this,
             radius = me.getRadius(e),
             eventRadius = me.getEventRadius(e);
@@ -124,7 +124,7 @@ Ext.define('Ext.chart.interactions.Rotate', {
         }
     },
 
-    onGesture: function(e) {
+    onGesture: function (e) {
         var me = this,
             angle = me.getAngle(e) - me.angle;
 
@@ -137,7 +137,7 @@ Ext.define('Ext.chart.interactions.Rotate', {
     /**
      * @private
      */
-    doRotateTo: function(angle, relative, animate) {
+    doRotateTo: function (angle, relative, animate) {
         var me = this,
             chart = me.getChart(),
             axes = chart.getAxes(),
@@ -153,13 +153,13 @@ Ext.define('Ext.chart.interactions.Rotate', {
         for (i = 0, ln = axes.length; i < ln; i++) {
             axis = axes[i];
             oldRotation = oldRotations[axis.getId()] || (oldRotations[axis.getId()] = axis.getRotation());
-            axis.setRotation( angle + (relative ? oldRotation : 0) );
+            axis.setRotation(angle + (relative ? oldRotation : 0));
         }
 
         for (i = 0, ln = series.length; i < ln; i++) {
             seriesItem = series[i];
             oldRotation = oldRotations[seriesItem.getId()] || (oldRotations[seriesItem.getId()] = seriesItem.getRotation());
-            seriesItem.setRotation( angle + (relative ? oldRotation : 0) );
+            seriesItem.setRotation(angle + (relative ? oldRotation : 0));
         }
 
         me.setRotation(angle + (relative ? oldRotation : 0));
@@ -183,7 +183,7 @@ Ext.define('Ext.chart.interactions.Rotate', {
         this.oldRotations = {};
     },
 
-    onGestureEnd: function(e) {
+    onGestureEnd: function (e) {
         var me = this;
         if (me.getLocks().drag === me) {
             me.onGesture(e);
@@ -195,7 +195,7 @@ Ext.define('Ext.chart.interactions.Rotate', {
         }
     },
 
-    onRotate: function(e) {
+    onRotate: function (e) {
 
     }
 });

@@ -39,19 +39,18 @@ Ext.define('Ext.form.trigger.Spinner', {
      */
     vertical: true,
 
-    bodyTpl:
-        '<tpl if="vertical">' +
-            '<div class="{spinnerCls} {spinnerCls}-{ui} {spinnerUpCls} {spinnerUpCls}-{ui}' +
-                ' {childElCls} {upDisabledCls}"></div>' +
-        '</tpl>' +
-        '<div class="{spinnerCls} {spinnerCls}-{ui} {spinnerDownCls} {spinnerDownCls}-{ui}' +
-                ' {childElCls} {downDisabledCls}"></div>' +
-        '<tpl if="!vertical">' +
-            '<div class="{spinnerCls} {spinnerCls}-{ui} {spinnerUpCls} {spinnerUpCls}-{ui}' +
-                ' {childElCls} {upDisabledCls}"></div>' +
-        '</tpl>',
+    bodyTpl: '<tpl if="vertical">' +
+    '<div class="{spinnerCls} {spinnerCls}-{ui} {spinnerUpCls} {spinnerUpCls}-{ui}' +
+    ' {childElCls} {upDisabledCls}"></div>' +
+    '</tpl>' +
+    '<div class="{spinnerCls} {spinnerCls}-{ui} {spinnerDownCls} {spinnerDownCls}-{ui}' +
+    ' {childElCls} {downDisabledCls}"></div>' +
+    '<tpl if="!vertical">' +
+    '<div class="{spinnerCls} {spinnerCls}-{ui} {spinnerUpCls} {spinnerUpCls}-{ui}' +
+    ' {childElCls} {upDisabledCls}"></div>' +
+    '</tpl>',
 
-    destroy: function() {
+    destroy: function () {
         var me = this;
 
         if (me.spinnerEl) {
@@ -62,7 +61,7 @@ Ext.define('Ext.form.trigger.Spinner', {
         me.callParent();
     },
 
-    getBodyRenderData: function() {
+    getBodyRenderData: function () {
         var me = this;
 
         return {
@@ -75,7 +74,7 @@ Ext.define('Ext.form.trigger.Spinner', {
         };
     },
 
-    getStateEl: function() {
+    getStateEl: function () {
         return this.spinnerEl;
     },
 
@@ -96,7 +95,7 @@ Ext.define('Ext.form.trigger.Spinner', {
         field.inputEl.focus();
     },
 
-    onFieldRender: function() {
+    onFieldRender: function () {
         var me = this,
             vertical = me.vertical,
             spinnerEl, elements;
@@ -118,14 +117,14 @@ Ext.define('Ext.form.trigger.Spinner', {
     /**
      * @private
      */
-    setUpEnabled: function(enabled) {
+    setUpEnabled: function (enabled) {
         this.upEl[enabled ? 'removeCls' : 'addCls'](this.spinnerUpCls + '-disabled');
     },
 
     /**
      * @private
      */
-    setDownEnabled: function(enabled) {
+    setDownEnabled: function (enabled) {
         this.downEl[enabled ? 'removeCls' : 'addCls'](this.spinnerDownCls + '-disabled');
     }
 

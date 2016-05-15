@@ -3,7 +3,7 @@
  * By hata1234
  * 09 April 2007
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
     var parseCodes;
 
     if (Ext.Date) {
@@ -17,8 +17,8 @@ Ext.onReady(function() {
         parseCodes = {
             g: 1,
             c: "if (/(上午)/i.test(results[{0}])) {\n"
-                + "if (!h || h == 12) { h = 0; }\n"
-                + "} else { if (!h || h < 12) { h = (h || 0) + 12; }}",
+            + "if (!h || h == 12) { h = 0; }\n"
+            + "} else { if (!h || h < 12) { h = (h || 0) + 12; }}",
             s: "(上午|下午)",
             calcAtEnd: true
         };
@@ -132,7 +132,7 @@ Ext.define("Ext.locale.zh_TW.form.field.Date", {
 Ext.define("Ext.locale.zh_TW.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "讀取中 ..."
     });
@@ -169,10 +169,10 @@ Ext.define("Ext.locale.zh_TW.window.MessageBox", {
         cancel: "取消",
         yes: "是",
         no: "否"
-    }    
+    }
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.zh_TW.Component", {	
+Ext.define("Ext.locale.zh_TW.Component", {
     override: "Ext.Component"
 });

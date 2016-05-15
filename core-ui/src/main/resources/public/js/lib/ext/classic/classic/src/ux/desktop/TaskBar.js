@@ -34,7 +34,7 @@ Ext.define('Ext.ux.desktop.TaskBar', {
 
     initComponent: function () {
         var me = this;
-        
+
         me.startMenu = new Ext.ux.desktop.StartMenu(me.startConfig);
 
         me.quickStart = new Ext.toolbar.Toolbar(me.getQuickStart());
@@ -87,7 +87,7 @@ Ext.define('Ext.ux.desktop.TaskBar', {
 
         Ext.each(this.quickStart, function (item) {
             ret.items.push({
-                tooltip: { text: item.name, align: 'bl-tl' },
+                tooltip: {text: item.name, align: 'bl-tl'},
                 //tooltip: item.name,
                 overflowText: item.name,
                 iconCls: item.iconCls,
@@ -117,8 +117,8 @@ Ext.define('Ext.ux.desktop.TaskBar', {
         return {
             flex: 1,
             cls: 'ux-desktop-windowbar',
-            items: [ '&#160;' ],
-            layout: { overflowHandler: 'Scroller' }
+            items: ['&#160;'],
+            layout: {overflowHandler: 'Scroller'}
         };
     },
 
@@ -136,7 +136,7 @@ Ext.define('Ext.ux.desktop.TaskBar', {
             window.show();
         }
     },
-    
+
     onButtonContextMenu: function (e) {
         var me = this, t = e.getTarget(), btn = me.getWindowBtnFromEl(t);
         if (btn) {
@@ -151,12 +151,12 @@ Ext.define('Ext.ux.desktop.TaskBar', {
 
         if (win.minimized || win.hidden) {
             btn.disable();
-            win.show(null, function() {
+            win.show(null, function () {
                 btn.enable();
             });
         } else if (win.active) {
             btn.disable();
-            win.on('hide', function() {
+            win.on('hide', function () {
                 btn.enable();
             }, null, {single: true});
             win.minimize();
@@ -165,7 +165,7 @@ Ext.define('Ext.ux.desktop.TaskBar', {
         }
     },
 
-    addTaskButton: function(win) {
+    addTaskButton: function (win) {
         var config = {
             iconCls: win.iconCls,
             enableToggle: true,
@@ -199,7 +199,7 @@ Ext.define('Ext.ux.desktop.TaskBar', {
         return found;
     },
 
-    setActiveButton: function(btn) {
+    setActiveButton: function (btn) {
         if (btn) {
             btn.toggle(true);
         } else {
@@ -259,7 +259,7 @@ Ext.define('Ext.ux.desktop.TrayClock', {
 
     updateTime: function () {
         var me = this, time = Ext.Date.format(new Date(), me.timeFormat),
-            text = me.tpl.apply({ time: time });
+            text = me.tpl.apply({time: time});
         if (me.lastText != text) {
             me.setText(text);
             me.lastText = text;

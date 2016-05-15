@@ -6,7 +6,7 @@
 Ext.define('Ext.event.publisher.MouseEnterLeave', {
     extend: 'Ext.event.publisher.Dom',
     type: 'mouseEnterLeave'
-}, function(MouseEnterLeave) {
+}, function (MouseEnterLeave) {
     var eventMap = {
         mouseover: 'mouseenter',
         mouseout: 'mouseleave'
@@ -17,7 +17,7 @@ Ext.define('Ext.event.publisher.MouseEnterLeave', {
             handledDomEvents: ['mouseover', 'mouseout'],
             handledEvents: ['mouseenter', 'mouseleave'],
 
-            doDelegatedEvent: function(e) {
+            doDelegatedEvent: function (e) {
                 var target, relatedTarget, id, el, type, event;
 
                 // call parent to dispatch the native browser event first (mouseover, mouseout)

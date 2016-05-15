@@ -47,7 +47,7 @@ Ext.define('Ext.device.Connection', {
      * @inheritdoc Ext.device.connection.Sencha#onlinechange
      */
 
-    constructor: function() {
+    constructor: function () {
         var browserEnv = Ext.browser.is;
 
         if (browserEnv.WebView) {

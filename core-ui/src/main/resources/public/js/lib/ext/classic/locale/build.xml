@@ -38,23 +38,24 @@
     <target name="build" depends="init,build-all"/>
 
     <target name="build-all" depends="init,-build-all,pkg"/>
-    
+
     <target name="-build-all">
-        
+
         <for param="build.locale.dir">
             <dirset dir="${package.dir}/overrides" includes="*"/>
             <sequential>
                 <local name="build.locale"/>
-                
-                <basename file="@{build.locale.dir}" 
+
+                <basename file="@{build.locale.dir}"
                           property="build.locale"/>
-                
+
                 <echo>Building locale ${build.locale}</echo>
 
-                <concat encoding="UTF-8" outputencoding="UTF-8" destfile="${build.dir}/${package.name}-${build.locale}-debug.js">
+                <concat encoding="UTF-8" outputencoding="UTF-8"
+                        destfile="${build.dir}/${package.name}-${build.locale}-debug.js">
                     <fileset dir="@{build.locale.dir}" includes="**/*.js"/>
                     <filterchain>
-                        <deletecharacters chars="&#xFEFF;" />
+                        <deletecharacters chars="&#xFEFF;"/>
                     </filterchain>
                 </concat>
 

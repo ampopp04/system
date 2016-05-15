@@ -38,7 +38,7 @@ Ext.define('Ext.ux.dashboard.GoogleRssPart', {
 
         Ext.Msg.prompt(title, me.formLabel, function (btn, text) {
             if (btn === 'ok') {
-                callback.call(scope || me, { feedUrl: text });
+                callback.call(scope || me, {feedUrl: text});
             }
         }, me, false, suggestion);
     }

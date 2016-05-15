@@ -42,7 +42,7 @@ Ext.define('Ext.device.Notification', {
         'Ext.device.notification.Simulator'
     ],
 
-    constructor: function() {
+    constructor: function () {
         var browserEnv = Ext.browser.is;
 
         if (browserEnv.WebView) {

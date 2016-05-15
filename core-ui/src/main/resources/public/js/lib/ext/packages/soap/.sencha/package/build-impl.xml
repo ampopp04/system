@@ -15,7 +15,7 @@ versions of Cmd so it is not recommended but it will be easier to manage than ed
 this file in most cases.
 -->
 <project name="x-pkg-build-impl">
-    
+
     <!--
     ===============================================================
     Find Cmd
@@ -24,7 +24,7 @@ this file in most cases.
     ===============================================================
     -->
     <import file="${basedir}/.sencha/package/find-cmd-impl.xml"/>
-    <target name="init-cmd" 
+    <target name="init-cmd"
             depends="find-cmd-in-path,
                      find-cmd-in-environment,
                      find-cmd-in-shell">
@@ -45,10 +45,10 @@ this file in most cases.
         'inheritrefs' to true, may be used in place of antcall in 
         build process customizations.
         -->
-        <taskdef resource="com/sencha/ant/antlib.xml" 
+        <taskdef resource="com/sencha/ant/antlib.xml"
                  classpath="${cmd.dir}/sencha.jar"
                  loaderref="senchaloader"/>
-        
+
         <!-- 
         Some operations require sencha.jar in the current java classpath, 
         so this will extend the java.lang.Thread#contextClassLoader with the 
@@ -115,7 +115,7 @@ this file in most cases.
         <delete dir="${package.output.base}"/>
         <delete dir="${build.temp.dir}"/>
     </target>
-    <target name="clean" 
+    <target name="clean"
             depends="init"
             description="Removes all build output produced by the 'build' target">
         <x-ant-call>
@@ -126,7 +126,7 @@ this file in most cases.
             <target name="-after-clean"/>
         </x-ant-call>
     </target>
-    
+
     <!--
     ===============================================================
     JS
@@ -135,7 +135,7 @@ this file in most cases.
     ===============================================================
     -->
     <import file="${basedir}/.sencha/package/js-impl.xml"/>
-    <target name="js" 
+    <target name="js"
             depends="init"
             description="Builds the JS files">
         <x-ant-call unless="skip.js">
@@ -154,8 +154,8 @@ this file in most cases.
     -->
     <import file="${basedir}/.sencha/package/resources-impl.xml"/>
 
-    <target name="inherit-resources" 
-            depends="init" 
+    <target name="inherit-resources"
+            depends="init"
             description="Performs the resource folder inheritance from base theme(s)">
         <x-ant-call unless="skip.inherit">
             <target name="-before-inherit-resources"/>
@@ -163,9 +163,9 @@ this file in most cases.
             <target name="-after-inherit-resources"/>
         </x-ant-call>
     </target>
-    
-    <target name="copy-resources" 
-            depends="init" 
+
+    <target name="copy-resources"
+            depends="init"
             description="Copy theme resources to folder">
         <x-ant-call unless="skip.resources">
             <target name="-before-copy-resources"/>
@@ -173,7 +173,7 @@ this file in most cases.
             <target name="-after-copy-resources"/>
         </x-ant-call>
     </target>
-    
+
     <!--
     ===============================================================
     Sass
@@ -182,7 +182,7 @@ this file in most cases.
     ===============================================================
     -->
     <import file="${basedir}/.sencha/package/sass-impl.xml"/>
-    <target name="sass" 
+    <target name="sass"
             depends="init"
             description="Builds the SASS files using Compass">
         <x-ant-call unless="skip.sass">
@@ -191,7 +191,7 @@ this file in most cases.
             <target name="-after-sass"/>
         </x-ant-call>
     </target>
-    
+
     <!--
     ===============================================================
     Slice
@@ -201,8 +201,8 @@ this file in most cases.
     ===============================================================
     -->
     <import file="${basedir}/.sencha/package/slice-impl.xml"/>
-    <target name="slice" 
-            depends="init" 
+    <target name="slice"
+            depends="init"
             description="Slices CSS3 theme to produce non-CSS3 images and sprites">
         <x-ant-call unless="skip.slice">
             <target name="-before-slice"/>
@@ -222,11 +222,11 @@ this file in most cases.
     ===============================================================
     -->
     <import file="sub-builds.xml"/>
-    
+
     <!--
     sub packages
     -->
-    <target name="subpkgs" 
+    <target name="subpkgs"
             depends="init"
             description="Builds all sub-packages">
         <x-ant-call unless="skip.subpkgs">
@@ -236,7 +236,7 @@ this file in most cases.
         </x-ant-call>
     </target>
 
-    <target name="clean-subpkgs" 
+    <target name="clean-subpkgs"
             depends="init"
             description="Cleans all sub-packages">
         <x-ant-call unless="skip.clean.subpkgs">
@@ -246,7 +246,7 @@ this file in most cases.
         </x-ant-call>
     </target>
 
-    <target name="upgrade-subpkgs" 
+    <target name="upgrade-subpkgs"
             depends="init"
             description="Upgrades all sub-packages">
         <x-ant-call unless="skip.upgrade.subpkgs">
@@ -255,11 +255,11 @@ this file in most cases.
             <target name="-after-upgrade-subpkgs"/>
         </x-ant-call>
     </target>
-                
+
     <!--
     example applications
     -->
-    <target name="examples" 
+    <target name="examples"
             depends="init"
             description="Builds all examples">
         <x-ant-call unless="skip.examples">
@@ -269,7 +269,7 @@ this file in most cases.
         </x-ant-call>
     </target>
 
-    <target name="clean-examples" 
+    <target name="clean-examples"
             depends="init"
             description="Upgrades all examples">
         <x-ant-call unless="skip.clean.examples">
@@ -279,7 +279,7 @@ this file in most cases.
         </x-ant-call>
     </target>
 
-    <target name="upgrade-examples" 
+    <target name="upgrade-examples"
             depends="init"
             description="Upgrades all examples">
         <x-ant-call unless="skip.upgrade.examples">
@@ -300,10 +300,10 @@ this file in most cases.
                     pkg="${pkg.build.dir}/${pkg.file.name}"
                     temp="${build.temp.dir}"/>
     </target>
-    <target name="pkg" 
+    <target name="pkg"
             depends="init"
             description="Builds the PKG file">
-        <x-ant-call  unless="skip.pkg">
+        <x-ant-call unless="skip.pkg">
             <target name="-before-pkg"/>
             <target name="-pkg"/>
             <target name="-after-pkg"/>

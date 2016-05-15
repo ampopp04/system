@@ -1,11 +1,11 @@
 .#{$prefix}btn-group {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .#{$prefix}btn-group-body {
-    position: relative;
-    .#{$prefix}table-layout-cell {
-        vertical-align: top;
-    }
+  position: relative;
+  .#{$prefix}table-layout-cell {
+    vertical-align: top;
+  }
 }

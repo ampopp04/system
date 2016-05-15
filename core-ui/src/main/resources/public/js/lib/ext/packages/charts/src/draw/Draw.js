@@ -239,10 +239,10 @@ Ext.define('Ext.draw.Draw', {
                     break;
                 }
             }
-            curX = dataX[i+1];
-            curY = dataY[i+1];
-            nextX = dataX[i+2];
-            nextY = dataY[i+2];
+            curX = dataX[i + 1];
+            curY = dataY[i + 1];
+            nextX = dataX[i + 2];
+            nextY = dataY[i + 2];
             if (!Ext.isNumber(nextX + nextY)) {
                 smoothX.push(x, curX, curX);
                 smoothY.push(y, curY, curY);
@@ -275,7 +275,7 @@ Ext.define('Ext.draw.Draw', {
         });
     } : Ext.emptyFn,
 
-    endUpdateIOS: function() {
+    endUpdateIOS: function () {
         this.iosUpdateEl = Ext.destroy(this.iosUpdateEl);
     }
 });

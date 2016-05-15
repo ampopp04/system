@@ -19,7 +19,7 @@ try {
 }
 
 if (format === 'pdf') {
-    page.paperSize = pdfOptions || { format: 'Letter', orientation: 'portrait', border: '1cm' };
+    page.paperSize = pdfOptions || {format: 'Letter', orientation: 'portrait', border: '1cm'};
 }
 
 page.content = '<img id="chart" src="' + data + '" style="-webkit-transform-origin: left top">';
@@ -46,8 +46,8 @@ function adjustSize() {
 
     if (width && height) {
         if (width !== naturalSize.width || height !== naturalSize.height) {
-            page.viewportSize = { width: width, height: height };
-            page.clipRect = { left: 0, top: 0, width: width, height: height };
+            page.viewportSize = {width: width, height: height};
+            page.clipRect = {left: 0, top: 0, width: width, height: height};
         }
     }
 
@@ -65,6 +65,6 @@ function adjustSize() {
 }
 
 function render() {
-    page.render('#{filename}', { format: format, quality: jpegOptions && jpegOptions.quality || 80 });
+    page.render('#{filename}', {format: format, quality: jpegOptions && jpegOptions.quality || 80});
     phantom.exit();
 }

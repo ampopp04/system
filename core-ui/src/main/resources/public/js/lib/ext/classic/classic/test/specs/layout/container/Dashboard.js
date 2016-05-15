@@ -1,21 +1,21 @@
-describe("Ext.layout.container.Dashboard", function() {
+describe("Ext.layout.container.Dashboard", function () {
     var panel;
 
-    function makeItem (itemConfig) {
+    function makeItem(itemConfig) {
         return Ext.apply({
             xtype: 'component',
             style: 'margin: 4px;'
         }, itemConfig);
     }
 
-    function makePanel (parentConfig, childConfig) {
+    function makePanel(parentConfig, childConfig) {
         var items = [];
 
         if (!Ext.isArray(childConfig)) {
             childConfig = [childConfig];
         }
 
-        Ext.each(childConfig, function(config) {
+        Ext.each(childConfig, function (config) {
             items.push(makeItem(config));
         });
 
@@ -33,94 +33,94 @@ describe("Ext.layout.container.Dashboard", function() {
         }, parentConfig));
     }
 
-    afterEach(function() {
+    afterEach(function () {
         panel.destroy();
     });
 
-    describe("splitters", function() {
+    describe("splitters", function () {
         var parentConfig = {
-            height:100,
+            height: 100,
             width: 1000
         };
 
-        it("should put splitters between each", function() {
+        it("should put splitters between each", function () {
             makePanel(parentConfig, [
-                { height: 80, columnWidth: .25 },
-                { height: 80, columnWidth: .25 },
-                { height: 80, columnWidth: .5 }
+                {height: 80, columnWidth: .25},
+                {height: 80, columnWidth: .25},
+                {height: 80, columnWidth: .5}
             ]);
 
             var items = panel.items.items;
 
             expect(items.length).toBe(5);
 
-            expect(! items[0].isSplitter).toBe(true);
+            expect(!items[0].isSplitter).toBe(true);
             expect(items[1].isSplitter).toBe(true);
-            expect(! items[2].isSplitter).toBe(true);
+            expect(!items[2].isSplitter).toBe(true);
             expect(items[3].isSplitter).toBe(true);
-            expect(! items[4].isSplitter).toBe(true);
+            expect(!items[4].isSplitter).toBe(true);
         });
 
-        it("should hide orphan splitter", function() {
+        it("should hide orphan splitter", function () {
             makePanel(parentConfig, [
-                { height: 80, columnWidth: .25 },
-                { height: 80, columnWidth: .50 },
-                { height: 80, columnWidth: .50 },
-                { height: 80, columnWidth: .50 }
+                {height: 80, columnWidth: .25},
+                {height: 80, columnWidth: .50},
+                {height: 80, columnWidth: .50},
+                {height: 80, columnWidth: .50}
             ]);
 
             var items = panel.items.items;
 
             expect(items.length).toBe(7);
 
-            expect(! items[0].isSplitter).toBe(true);
+            expect(!items[0].isSplitter).toBe(true);
             expect(items[1].isSplitter).toBe(true);
-            expect(! items[2].isSplitter).toBe(true);
+            expect(!items[2].isSplitter).toBe(true);
 
             expect(items[3].isSplitter).toBe(true);
             expect(items[3].el.getHeight()).toBe(0); // orphaned so hidden w/height=0
 
-            expect(! items[4].isSplitter).toBe(true);
+            expect(!items[4].isSplitter).toBe(true);
             expect(items[5].isSplitter).toBe(true);
-            expect(! items[6].isSplitter).toBe(true);
+            expect(!items[6].isSplitter).toBe(true);
         });
 
-        it("should update splitters on add", function() {
+        it("should update splitters on add", function () {
             makePanel(parentConfig, [
-                { height: 80, columnWidth: .25 },
+                {height: 80, columnWidth: .25},
                 // splitter
-                { height: 80, columnWidth: .50 },
+                {height: 80, columnWidth: .50},
                 // splitter
-                { height: 80, columnWidth: .25 }
+                {height: 80, columnWidth: .25}
             ]);
 
-            panel.insert(2, makeItem({ height: 80, columnWidth: .50 }));
+            panel.insert(2, makeItem({height: 80, columnWidth: .50}));
 
             var items = panel.items.items;
 
             expect(items.length).toBe(7);
 
-            expect(! items[0].isSplitter).toBe(true);
+            expect(!items[0].isSplitter).toBe(true);
             expect(items[1].isSplitter).toBe(true);
-            expect(! items[2].isSplitter).toBe(true);
+            expect(!items[2].isSplitter).toBe(true);
 
             expect(items[3].isSplitter).toBe(true);
             expect(items[3].el.getHeight()).toBe(0); // orphaned so hidden w/height=0
 
-            expect(! items[4].isSplitter).toBe(true);
+            expect(!items[4].isSplitter).toBe(true);
             expect(items[5].isSplitter).toBe(true);
-            expect(! items[6].isSplitter).toBe(true);
+            expect(!items[6].isSplitter).toBe(true);
         });
 
-        it("should update splitters on add", function() {
+        it("should update splitters on add", function () {
             makePanel(parentConfig, [
-                { height: 80, columnWidth: .25 },
+                {height: 80, columnWidth: .25},
                 // splitter
-                { height: 80, columnWidth: .50 },
+                {height: 80, columnWidth: .50},
                 // splitter
-                { height: 80, columnWidth: .50 },
+                {height: 80, columnWidth: .50},
                 // splitter
-                { height: 80, columnWidth: .50 }
+                {height: 80, columnWidth: .50}
             ]);
 
             panel.remove(2);
@@ -129,14 +129,14 @@ describe("Ext.layout.container.Dashboard", function() {
 
             expect(items.length).toBe(5);
 
-            expect(! items[0].isSplitter).toBe(true);
+            expect(!items[0].isSplitter).toBe(true);
             expect(items[1].isSplitter).toBe(true);
-            expect(! items[2].isSplitter).toBe(true);
+            expect(!items[2].isSplitter).toBe(true);
 
             expect(items[3].isSplitter).toBe(true);
             expect(items[3].el.getHeight()).toBe(0); // orphaned so hidden w/height=0
 
-            expect(! items[4].isSplitter).toBe(true);
+            expect(!items[4].isSplitter).toBe(true);
         });
     });
 });

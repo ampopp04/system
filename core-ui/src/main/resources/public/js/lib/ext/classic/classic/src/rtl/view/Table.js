@@ -3,7 +3,7 @@ Ext.define('Ext.rtl.view.Table', {
 
     rtlCellTpl: [
         '<td class="' + Ext.baseCSSPrefix + 'rtl {tdCls}" {tdAttr} {[Ext.aria ? "id=\\"" + Ext.id() + "\\"" : ""]} style="width:{column.cellWidth}px;<tpl if="tdStyle">{tdStyle}</tpl>" tabindex="-1" {ariaCellAttr} data-columnid="{[values.column.getItemId()]}">',
-            '<div {unselectableAttr} class="' + Ext.baseCSSPrefix + 'rtl ' + Ext.baseCSSPrefix + 'grid-cell-inner {innerCls}" ',
+        '<div {unselectableAttr} class="' + Ext.baseCSSPrefix + 'rtl ' + Ext.baseCSSPrefix + 'grid-cell-inner {innerCls}" ',
         'style="text-align:{[this.getAlign(values.align)]};<tpl if="style">{style}</tpl>" {ariaCellInnerAttr}>{value}</div>',
         '</td>', {
             priority: 0,
@@ -12,13 +12,13 @@ Ext.define('Ext.rtl.view.Table', {
                 left: 'right',
                 center: 'center'
             },
-            getAlign: function(align) {
+            getAlign: function (align) {
                 return this.rtlAlign[align];
             }
         }
     ],
 
-    beforeRender: function() {
+    beforeRender: function () {
         var me = this;
 
         me.callParent();
@@ -27,7 +27,7 @@ Ext.define('Ext.rtl.view.Table', {
         }
     },
 
-    getCellPaddingAfter: function(cell) {
+    getCellPaddingAfter: function (cell) {
         return Ext.fly(cell).getPadding(this.getInherited().rtl ? 'l' : 'r');
     }
 });

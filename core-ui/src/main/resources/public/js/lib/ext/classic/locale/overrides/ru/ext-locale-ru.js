@@ -3,14 +3,14 @@
  * By ZooKeeper (utf-8 encoding)
  * 6 November 2007
  */
-Ext.onReady(function() {
+Ext.onReady(function () {
 
     if (Ext.Date) {
         Ext.Date.monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
         Ext.Date.shortMonthNames = ["Янв", "Февр", "Март", "Апр", "Май", "Июнь", "Июль", "Авг", "Сент", "Окт", "Нояб", "Дек"];
 
-        Ext.Date.getShortMonthName = function(month) {
+        Ext.Date.getShortMonthName = function (month) {
             return Ext.Date.shortMonthNames[month];
         };
 
@@ -29,13 +29,13 @@ Ext.onReady(function() {
             'Дек': 11
         };
 
-        Ext.Date.getMonthNumber = function(name) {
+        Ext.Date.getMonthNumber = function (name) {
             return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1, 3).toLowerCase()];
         };
 
         Ext.Date.dayNames = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
 
-        Ext.Date.getShortDayName = function(day) {
+        Ext.Date.getShortDayName = function (day) {
             return Ext.Date.dayNames[day].substring(0, 3);
         };
     }
@@ -142,7 +142,7 @@ Ext.define("Ext.locale.ru.form.field.Date", {
 Ext.define("Ext.locale.ru.form.field.ComboBox", {
     override: "Ext.form.field.ComboBox",
     valueNotFoundText: undefined
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.ComboBox.prototype.defaultListConfig, {
         loadingText: "Загрузка..."
     });
@@ -159,7 +159,7 @@ Ext.define("Ext.locale.ru.form.field.VTypes", {
 Ext.define("Ext.locale.ru.form.field.HtmlEditor", {
     override: "Ext.form.field.HtmlEditor",
     createLinkText: 'Пожалуйста, введите адрес:'
-}, function() {
+}, function () {
     Ext.apply(Ext.form.field.HtmlEditor.prototype, {
         buttonTips: {
             bold: {
@@ -271,7 +271,7 @@ Ext.define("Ext.locale.ru.window.MessageBox", {
         cancel: "Отмена",
         yes: "Да",
         no: "Нет"
-    }    
+    }
 });
 
 Ext.define("Ext.locale.ru.form.field.File", {
@@ -280,6 +280,6 @@ Ext.define("Ext.locale.ru.form.field.File", {
 });
 
 // This is needed until we can refactor all of the locales into individual files
-Ext.define("Ext.locale.ru.Component", {	
+Ext.define("Ext.locale.ru.Component", {
     override: "Ext.Component"
 });

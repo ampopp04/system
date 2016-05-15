@@ -15,7 +15,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-    
+
     /* End Definitions */
 
     /**
@@ -62,7 +62,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * @param {Boolean/Object} animate If animating or not. If true, it will be a animation configuration, else it will be false
      */
 
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this;
 
         me.mixins.observable.constructor.call(me, config);
@@ -71,7 +71,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
         me.scrollSize = 0;
     },
 
-    getPrefixConfig: function() {
+    getPrefixConfig: function () {
         return {
             role: 'presentation',
             id: this.layout.owner.id + this.beforeSuffix,
@@ -80,16 +80,16 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
         };
     },
 
-    getSuffixConfig: function() {
+    getSuffixConfig: function () {
         return {
             role: 'presentation',
-            id : this.layout.owner.id + this.afterSuffix,
+            id: this.layout.owner.id + this.afterSuffix,
             cls: this.createScrollerCls('afterX'),
             style: 'display:none'
         };
     },
 
-    createScrollerCls: function(xName) {
+    createScrollerCls: function (xName) {
         var me = this,
             layout = me.layout,
             owner = layout.owner,
@@ -109,7 +109,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
         return cls;
     },
 
-    getOverflowCls: function(direction) {
+    getOverflowCls: function (direction) {
         return this.scrollerCls + '-body-' + direction;
     },
 
@@ -119,7 +119,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
         this.callParent(arguments);
     },
 
-    finishedLayout: function(ownerContext) {
+    finishedLayout: function (ownerContext) {
         var me = this,
             plan = ownerContext.state.boxPlan,
             layout = me.layout,
@@ -142,7 +142,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
         me.callParent([ownerContext]);
     },
 
-    handleOverflow: function(ownerContext) {
+    handleOverflow: function (ownerContext) {
         var me = this,
             names = me.layout.names,
             getWidth = names.getWidth,
@@ -153,12 +153,12 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
 
         beforeScroller = me.getBeforeScroller();
         afterScroller = me.getAfterScroller();
-        
+
         scrollerWidth = beforeScroller[getWidth]() + afterScroller[getWidth]() +
             beforeScroller.getMargin(parallelMargins) + afterScroller.getMargin(parallelMargins);
-        
+
         targetPaddingWidth = ownerContext.targetContext.getPaddingInfo()[names.width];
-        
+
         return {
             reservedSpace: Math.max(scrollerWidth - targetPaddingWidth, 0)
         };
@@ -169,11 +169,11 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * Returns a reference to the "before" scroller element.  Creates click handlers on
      * the first call.
      */
-    getBeforeScroller: function() {
+    getBeforeScroller: function () {
         var me = this;
 
-        return  me._beforeScroller || (me._beforeScroller =
-            me.createScroller(me.beforeSuffix, 'beforeRepeater', 'scrollLeft'));
+        return me._beforeScroller || (me._beforeScroller =
+                me.createScroller(me.beforeSuffix, 'beforeRepeater', 'scrollLeft'));
     },
 
     /**
@@ -181,14 +181,14 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * Returns a reference to the "after" scroller element.  Creates click handlers on
      * the first call.
      */
-    getAfterScroller: function() {
+    getAfterScroller: function () {
         var me = this;
 
         return me._afterScroller || (me._afterScroller =
-            me.createScroller(me.afterSuffix, 'afterRepeater', 'scrollRight'));
+                me.createScroller(me.afterSuffix, 'afterRepeater', 'scrollRight'));
     },
 
-    createScroller: function(suffix, repeaterName, scrollHandler) {
+    createScroller: function (suffix, repeaterName, scrollHandler) {
         var me = this,
             owner = me.layout.owner,
             scrollerCls = me.scrollerCls,
@@ -214,12 +214,12 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * @private
      * Sets up an listener to scroll on the layout's innerCt mousewheel event
      */
-    createWheelListener: function() {
+    createWheelListener: function () {
         var me = this;
         me.wheelListener = me.layout.innerCt.on('mousewheel', me.onMouseWheel, me, {destroyable: true});
     },
 
-    onMouseWheel: function(e) {
+    onMouseWheel: function (e) {
         e.stopEvent();
         this.scrollBy(this.getWheelDelta(e) * this.wheelIncrement * -1, false);
     },
@@ -239,7 +239,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * @private
      * Shows the scroller elements. Creates the scrollers first if they are not already present.
      */
-    showScrollers: function() {
+    showScrollers: function () {
         var me = this;
 
         if (!me.wheelListener) {
@@ -255,7 +255,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * @private
      * Hides the scroller elements.
      */
-    hideScrollers: function() {
+    hideScrollers: function () {
         var me = this,
             beforeScroller = me.getBeforeScroller(),
             afterScroller = me.getAfterScroller();
@@ -268,7 +268,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
         }
     },
 
-    destroy: function() {
+    destroy: function () {
         Ext.destroyMembers(this, 'beforeRepeater', 'afterRepeater', '_beforeScroller', '_afterScroller', 'wheelListener');
         this.callParent();
     },
@@ -278,7 +278,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * Scrolls left or right by the number of pixels specified
      * @param {Number} delta Number of pixels to scroll to the right by. Use a negative number to scroll left
      */
-    scrollBy: function(delta, animate) {
+    scrollBy: function (delta, animate) {
         this.scrollTo(this.getScrollPosition() + delta, animate);
     },
 
@@ -286,11 +286,11 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * @private
      * @return {Object} Object passed to scrollTo when scrolling
      */
-    getScrollAnim: function() {
+    getScrollAnim: function () {
         return {
-            duration: this.scrollDuration, 
-            callback: this.updateScrollButtons, 
-            scope   : this
+            duration: this.scrollDuration,
+            callback: this.updateScrollButtons,
+            scope: this
         };
     },
 
@@ -298,7 +298,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * @private
      * Enables or disables each scroller button based on the current scroll position
      */
-    updateScrollButtons: function() {
+    updateScrollButtons: function () {
         var me = this,
             beforeScroller = me.getBeforeScroller(),
             afterScroller = me.getAfterScroller(),
@@ -310,7 +310,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
 
         disabledCls = me.scrollerCls + '-disabled';
 
-        beforeScroller[me.atExtremeBefore()  ? 'addCls' : 'removeCls'](disabledCls);
+        beforeScroller[me.atExtremeBefore() ? 'addCls' : 'removeCls'](disabledCls);
         afterScroller[me.atExtremeAfter() ? 'addCls' : 'removeCls'](disabledCls);
         me.scrolling = false;
     },
@@ -319,7 +319,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * @private
      * Scrolls to the left by the configured amount
      */
-    scrollLeft: function() {
+    scrollLeft: function () {
         this.scrollBy(-this.scrollIncrement, false);
     },
 
@@ -327,7 +327,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * @private
      * Scrolls to the right by the configured amount
      */
-    scrollRight: function() {
+    scrollRight: function () {
         this.scrollBy(this.scrollIncrement, false);
     },
 
@@ -335,7 +335,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * Returns the current scroll position of the innerCt element
      * @return {Number} The current scroll position
      */
-    getScrollPosition: function(){
+    getScrollPosition: function () {
         var me = this,
             layout = me.layout,
             result;
@@ -355,7 +355,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * Returns the maximum value we can scrollTo
      * @return {Number} The max scroll value
      */
-    getMaxScrollPosition: function() {
+    getMaxScrollPosition: function () {
         var me = this,
             layout = me.layout,
             maxScrollPos = me.scrollSize - layout.innerCt.lastBox[layout.names.width];
@@ -368,7 +368,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * Returns true if the innerCt scroll is already at its left-most point
      * @return {Boolean} True if already at furthest left point
      */
-    atExtremeBefore: function() {
+    atExtremeBefore: function () {
         return !this.getScrollPosition();
     },
 
@@ -377,14 +377,14 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * Returns true if the innerCt scroll is already at its right-most point
      * @return {Boolean} True if already at furthest right point
      */
-    atExtremeAfter: function() {
+    atExtremeAfter: function () {
         return this.getScrollPosition() >= this.getMaxScrollPosition();
     },
 
     /**
      * @private
      */
-    setVertical: function() {
+    setVertical: function () {
         var me = this,
             beforeScroller = me.getBeforeScroller(),
             afterScroller = me.getAfterScroller(),
@@ -406,7 +406,7 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * @param {Number} position The position to scroll to. This is constrained.
      * @param {Boolean} animate True to animate. If undefined, falls back to value of this.animateScroll
      */
-    scrollTo: function(position, animate) {
+    scrollTo: function (position, animate) {
         var me = this,
             layout = me.layout,
             names = layout.names,
@@ -431,11 +431,11 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
 
     /**
      * Scrolls to the given component.
-     * @param {String/Number/Ext.Component} item The item to scroll to. Can be a numerical index, component id 
+     * @param {String/Number/Ext.Component} item The item to scroll to. Can be a numerical index, component id
      * or a reference to the component itself.
      * @param {Boolean} animate True to animate the scrolling
      */
-    scrollToItem: function(item, animate) {
+    scrollToItem: function (item, animate) {
         var me = this,
             layout = me.layout,
             owner = layout.owner,
@@ -474,19 +474,19 @@ Ext.define('Ext.layout.container.boxOverflow.Scroller', {
      * @param {Ext.Component} item The item
      * @return {Object} Values for fullyVisible, hiddenStart and hiddenEnd
      */
-    getItemVisibility: function(item) {
-        var me          = this,
-            box         = me.getItem(item).getBox(true, true),
-            layout      = me.layout,
-            names       = layout.names,
-            itemStart   = box[names.x],
-            itemEnd     = itemStart + box[names.width],
+    getItemVisibility: function (item) {
+        var me = this,
+            box = me.getItem(item).getBox(true, true),
+            layout = me.layout,
+            names = layout.names,
+            itemStart = box[names.x],
+            itemEnd = itemStart + box[names.width],
             scrollStart = me.getScrollPosition(),
-            scrollEnd   = scrollStart + layout.innerCt[names.getWidth]();
+            scrollEnd = scrollStart + layout.innerCt[names.getWidth]();
 
         return {
-            hiddenStart : itemStart < scrollStart,
-            hiddenEnd   : itemEnd > scrollEnd,
+            hiddenStart: itemStart < scrollStart,
+            hiddenEnd: itemEnd > scrollEnd,
             fullyVisible: itemStart >= scrollStart && itemEnd <= scrollEnd
         };
     }

@@ -35,14 +35,14 @@
  * The `callback` config was added in Ext JS 4.2.1 as an alternative to {@link #handler}
  * to provide a more convenient list of arguments. In Ext JS 4.2.1 it is also possible to
  * pass a method name instead of a direct function:
- * 
+ *
  *      tools: [{
  *          type: 'help',
  *          callback: 'onHelp',
  *          scope: this
  *      },
  *      ...
- * 
+ *
  * The `callback` (or `handler`) name is looked up on the `scope` which will also be the
  * `this` reference when the method is called.
  */
@@ -56,10 +56,10 @@ Ext.define('Ext.panel.Tool', {
      * `true` in this class to identify an object as an instantiated Tool, or subclass thereof.
      */
     isTool: true,
-    
+
     baseCls: Ext.baseCSSPrefix + 'tool',
     disabledCls: Ext.baseCSSPrefix + 'tool-disabled',
-    
+
     /**
      * @cfg
      * @private
@@ -77,7 +77,7 @@ Ext.define('Ext.panel.Tool', {
 
     renderTpl: [
         '<div id="{id}-toolEl" data-ref="toolEl" class="{baseCls}-img {baseCls}-{type}' +
-            '{childElCls}" role="presentation"></div>'
+        '{childElCls}" role="presentation"></div>'
     ],
 
     /**
@@ -124,7 +124,7 @@ Ext.define('Ext.panel.Tool', {
      *
      * ##Classic Theme
      * (_desaturated images of the same type used in the gray theme_)
-     * 
+     *
      * - <img style="vertical-align:sub;margin-right:4px;" width="15" height="15" title="" alt="" src="data:image/gif;base64,R0lGODlhDwAPALMAAP///5m76J+y49ns/yZDkO/9/8/k+9Hm/OHz/+b2/9To/tbq/+r5/wAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDMTgzMjYwNDlBQTAxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpDMTgzMjYwMzlBQTAxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6NTg1ZWVlOWMtZTMwNy0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1IiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6NTg1ZWVlOWMtZTMwNy0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAAA8ADwAABE8QgECrDXLmvTHm4IQVhUCeZiECjEAITOzCa5LM92uvSD+/PcTKQDTMiobVYfkTLA8rhWI2fUlXi9liq10NBoKvODxYFcTor8oT6mQucEkEADs=" /> close
      * - <img style="vertical-align:sub;margin-right:4px;" width="15" height="15" title="" alt="" src="data:image/gif;base64,R0lGODlhDwAPALMAAP///5m76Nns/5+y4+/9/+r5/8/k++Hz/+b2/yZDkNHm/Nbq/9To/gAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDMTgzMjYwODlBQTAxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpDMTgzMjYwNzlBQTAxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6OGNjYTgyOGYtZTMwNy0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1IiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6OGNjYTgyOGYtZTMwNy0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAAA8ADwAABEcQgECrDXLmvTHm4IQRZGkSIlCsbFukSCzPSHrceH6kRu//hpRCMSgaB8MUg5FoOhPL1GJxNE5Tgqx2K0gRuFuUJ9TJXM6SCAA7" /> minimize
      * - <img style="vertical-align:sub;margin-right:4px;" width="15" height="15" title="" alt="" src="data:image/gif;base64,R0lGODlhDwAPALMAAP///5m76DJVstns/+/9/8/k+9Hm/OHz/9To/tbq/+b2/+r5/wAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4RjRENjg0OTlBQTExMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4RjRENjg0ODlBQTExMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6OWNkZTA1ZDktZTMwNy0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1IiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6OWNkZTA1ZDktZTMwNy0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAAA8ADwAABEoQgECrDXLmvTHm4IQRZGkSIrAIbNsuqeLOSnoIR67fR1oIhaDwV0gZBIak8mhIIQSIqPSJSCVmrkRqwO16BynC14vyhDqZi1oSAQA7" /> maximize
@@ -148,7 +148,7 @@ Ext.define('Ext.panel.Tool', {
      * - <img style="vertical-align:sub;margin-right:4px;" width="15" height="15" title="" alt="" src="data:image/gif;base64,R0lGODlhDwAPANUAAP///5m76Nns/1F/w+/9/7TS/32j3ur5/+Hz/+b2/9bq/9Hm/GyN3M/k+9To/nCP4YS/VHuh3Hmf22yLzVWDxoGn4m6K14Gn4Vd+u0Rtq1SBxHee2T5qq22L2miL05nJcXOa1ERwsOjz6pjJb4S/UTppqgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGNEU0NDAyRjlBQTExMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGNEU0NDAyRTlBQTExMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6OWJjNzc2YmUtZTMwOS0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1IiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6OWJjNzc2YmUtZTMwOS0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAAA8ADwAABm5AACBALBoDwmFyuUQimdAhkkAYWAcGKlUKOBwGSaz3wE0kwEID1sxFINBhN7cRqFwMEckGhGlwFxpQASELXA4DIiQjHxAFASUOXAoUBZWWARwKXAIGHg8MHRYTGQwCXAQCqaqqBEpPUUKvR7NCQQA7" /> print
      * - <img style="vertical-align:sub;margin-right:4px;" width="15" height="15" title="" alt="" src="data:image/gif;base64,R0lGODlhDwAPALMAAHGg3c/k+9To/ub2/1F/w////7TS/9ns/+/9/+r5/9Hm/OHz/9bq/wAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDowRDYwMjk1MDlBQTIxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGNEU0NDAzMjlBQTExMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YWY2NmEwNWUtZTMwOS0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1IiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YWY2NmEwNWUtZTMwOS0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAAA8ADwAABE2wFECrBXKGzXvAQJCN4xcSQ6qqiBkQ8ADHQ+KiqaEb6r3+i9uMIBhuKAFBUSnYGRQuJZFJjRZhVyLDRGXuBAcX4kAul1sgjxojubglEQA7" /> expand
      * - <img style="vertical-align:sub;margin-right:4px;" width="15" height="15" title="" alt="" src="data:image/gif;base64,R0lGODlhDwAPALMAAHGg3c/k++b2/////9Hm/FF/w9ns/+/9/9To/tbq/+Hz/+r5/wAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDowRDYwMjk1NDlBQTIxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDowRDYwMjk1MzlBQTIxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YzFhMDM4NmMtZTMwOS0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1IiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YzFhMDM4NmMtZTMwOS0xMTc3LTk0N2ItYmI5ZTVlNjcwMDI1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAAA8ADwAABEVwDECrBXKGzXvAQJCN4xcWQqqqhxkU6EUtLrre9b0qdUHIoRqB4NkQKa+hcono/S6EhAmhLBIMroNhy+W2QEUPRgK0SCIAOw==" /> collapse
-     * 
+     *
      * ##Neptune Theme
      * - <img style="vertical-align:sub;margin-right:4px;" width="16" height="16" title="" alt="" src="data:image/gif;base64,R0lGODlhEAAQAMQfAGZmZqamptbW1nNzc9nZ2eXl5ampqfv7+2pqanR0dNjY2H5+fnh4eGdnZ2xsbG5ubtfX129vb2hoaObm5qWlpaqqqvr6+qSkpI+Pj21tbY6OjoCAgH19fWlpaX9/f////yH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpDRTk3OUEzMjlBQTQxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDRTk3OUEzMzlBQTQxMUU0OEVCNUNFMTgyMDM3Mzc3MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkNFOTc5QTMwOUFBNDExRTQ4RUI1Q0UxODIwMzczNzcxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkNFOTc5QTMxOUFBNDExRTQ4RUI1Q0UxODIwMzczNzcxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAAHwAsAAAAABAAEAAABYLgJ35TtSCIV03jeAQNIM/NZbnYrM/aIQYARyChSwQcgMCnIAFQPoSBbED4UACSgkHGqCoiEQWUITMsZgPIRyD4QKSyk+7RXj90qHldcJ9lzlNqbG5wABtbAF0fX2FjZUxJUHBUH0BZlUFDRUeRHwc5Ozo9LjChNTctSwYcHRmHBS0hADs=" /> close
      * - <img style="vertical-align:sub;margin-right:4px;" width="16" height="16" title="" alt="" src="data:image/gif;base64,R0lGODlhEAAQAMQUAGZmZqampqmpqfv7++Xl5Wpqan5+fmdnZ2hoaObm5o+Pj21tbaSkpI6Ojqqqqvr6+oCAgGlpaX19fX9/f////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0Qzg2QTQzQjlBQTUxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo0Qzg2QTQzQzlBQTUxMUU0OEVCNUNFMTgyMDM3Mzc3MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkNFOTc5QTM0OUFBNDExRTQ4RUI1Q0UxODIwMzczNzcxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjRDODZBNDNBOUFBNTExRTQ4RUI1Q0UxODIwMzczNzcxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAAFAAsAAAAABAAEAAABVAgJVKJYxTF5CTjOAQHIM8H87jKrM/NIAa7ICBAISCEOwRBgAwKDM3dSdaqUmQoqnUkW0CjMwgTLBMYyUoKEEykDHLNngsWrN2qS0lkISa0QgA7" /> minimize
@@ -173,7 +173,7 @@ Ext.define('Ext.panel.Tool', {
      * - <img style="vertical-align:sub;margin-right:4px;" width="16" height="14" title="" alt="" src="data:image/gif;base64,R0lGODlhEAAOAKIFAGZmZnV1ddPT03R0dHZ2dv///wAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozNTFFNEY3QzlBQTYxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozNTFFNEY3RDlBQTYxMUU0OEVCNUNFMTgyMDM3Mzc3MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjBFMTg1NTREOUFBNjExRTQ4RUI1Q0UxODIwMzczNzcxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjBFMTg1NTRFOUFBNjExRTQ4RUI1Q0UxODIwMzczNzcxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAABQAsAAAAABAADgAAAyxYCtyusLgJor1RBEqD5twGjhW2TBKXPmVUUSvaiNL1AoMw3DBACC6bCRRJAAA7" /> print
      * - <img style="vertical-align:sub;margin-right:4px;" width="16" height="16" title="" alt="" src="data:image/gif;base64,R0lGODlhEAAQAIABAGZmZv///yH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozNTFFNEY4MDlBQTYxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozNTFFNEY4MTlBQTYxMUU0OEVCNUNFMTgyMDM3Mzc3MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM1MUU0RjdFOUFBNjExRTQ4RUI1Q0UxODIwMzczNzcxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjM1MUU0RjdGOUFBNjExRTQ4RUI1Q0UxODIwMzczNzcxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAAAQAsAAAAABAAEAAAAh+EHakbh8wcgNHRJW/UvDcPQlNIflTGodP6SaOGwk4BADs=" /> expand
      * - <img style="vertical-align:sub;margin-right:4px;" width="16" height="14" title="" alt="" src="data:image/gif;base64,R0lGODlhEAAOAIABAGZmZv///yH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozNTFFNEY4NDlBQTYxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozNTFFNEY4NTlBQTYxMUU0OEVCNUNFMTgyMDM3Mzc3MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM1MUU0RjgyOUFBNjExRTQ4RUI1Q0UxODIwMzczNzcxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjM1MUU0RjgzOUFBNjExRTQ4RUI1Q0UxODIwMzczNzcxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAAAQAsAAAAABAADgAAAhyEHakbh8wcAq1SSeGSuvsPhmLkgNyHWWqKll8BADs=" /> collapse
-     * 
+     *
      * ##Crisp Theme
      * - <img style="vertical-align:sub;margin-right:4px;" width="16" height="16" title="" alt="" src="data:image/gif;base64,R0lGODlhEAAQAMQWANXl9eLt9YCw1PH3+iZ4tvT4+8zg7pe/3EuPwleXxpi/3H+w1MDY6mOg3GGf29fn9tHj9YO041iZ2d3q92ukzd7r9////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpERUFFRTEwRDlBQTkxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpERUFFRTEwRTlBQTkxMUU0OEVCNUNFMTgyMDM3Mzc3MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM1MUU0Rjg2OUFBNjExRTQ4RUI1Q0UxODIwMzczNzcxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkRFQUVFMTBDOUFBOTExRTQ4RUI1Q0UxODIwMzczNzcxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAAFgAsAAAAABAAEAAABX+gJVrMghAEsjDjGAiJYgyDoSRC4FJH0YqFA0VnERx+v4OAlPBFAC1AxFJIlBQiSOMhejQgIoXJMAI4KhUHVGQ4DVoTiWTSGqDeo/i8niKLzGhqI20LWBZaXBZeYBZiDE0WT1FTVSxGSC1KIgE8Pj9BQy4wMjQ2OEQtJScpKy0hADs=" /> close
      * - <img style="vertical-align:sub;margin-right:4px;" width="16" height="16" title="" alt="" src="data:image/gif;base64,R0lGODlhEAAQAMQUAMzg7pe/3H+w1OLt9Zi/3ICw1EuPwsDY6iZ4tvH3+leXxvT4+4y42M7h7mukzcfc7M/h74242Hyu04e11////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpERUFFRTExMTlBQTkxMUU0OEVCNUNFMTgyMDM3Mzc3MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpERUFFRTExMjlBQTkxMUU0OEVCNUNFMTgyMDM3Mzc3MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkRFQUVFMTBGOUFBOTExRTQ4RUI1Q0UxODIwMzczNzcxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkRFQUVFMTEwOUFBOTExRTQ4RUI1Q0UxODIwMzczNzcxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAAFAAsAAAAABAAEAAABWkgJVKHYCCIIRzjOBQKASQJQCjF4DrB0oqLgENHKQR+v0CBpPAhRwtFifD8EUyAagtwSlAkjLCYMYlQEijvo8FuNwCQcyqrFXEF1DrlemjWoyxGdUoiAzxOLUFDLjAyNDY4RC0lJykrLSEAOw==" /> minimize
@@ -206,7 +206,7 @@ Ext.define('Ext.panel.Tool', {
      * object
      */
 
-     /**
+    /**
      * @cfg {String} tooltipType
      * The type of tooltip to use. Either 'qtip' (default) for QuickTips or 'title' for title attribute.
      */
@@ -217,11 +217,11 @@ Ext.define('Ext.panel.Tool', {
      * Specify as false to allow click event to propagate.
      */
     stopEvent: true,
-    
+
     ariaRole: 'button',
     focusable: true,
     tabIndex: 0,
-    
+
     keyHandlers: {
         SPACE: 'onClick',
         ENTER: 'onClick'
@@ -232,35 +232,35 @@ Ext.define('Ext.panel.Tool', {
 
     //<debug>
     _toolTypes: {
-        close:1,
-        collapse:1,
-        down:1,
-        expand:1,
-        gear:1,
-        help:1,
-        left:1,
-        maximize:1,
-        minimize:1,
-        minus:1,
+        close: 1,
+        collapse: 1,
+        down: 1,
+        expand: 1,
+        gear: 1,
+        help: 1,
+        left: 1,
+        maximize: 1,
+        minimize: 1,
+        minus: 1,
         //move:1,
-        next:1,
-        pin:1,
-        plus:1,
-        prev:1,
-        print:1,
-        refresh:1,
+        next: 1,
+        pin: 1,
+        plus: 1,
+        prev: 1,
+        print: 1,
+        refresh: 1,
         //resize:1,
-        restore:1,
-        right:1,
-        save:1,
-        search:1,
-        toggle:1,
-        unpin:1,
-        up:1
+        restore: 1,
+        right: 1,
+        save: 1,
+        search: 1,
+        toggle: 1,
+        unpin: 1,
+        up: 1
     },
     //</debug>
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
 
         //<debug>
@@ -281,7 +281,7 @@ Ext.define('Ext.panel.Tool', {
         me.callParent();
     },
 
-    afterRender: function() {
+    afterRender: function () {
         var me = this,
             tip;
 
@@ -336,7 +336,7 @@ Ext.define('Ext.panel.Tool', {
                 attr = me.tipAttrs[type || oldType] || 'title';
                 el.dom.setAttribute(attr, tooltip);
             }
-            
+
             if (attr !== 'title' && me.ariaRole && me.ariaRole !== 'presentation') {
                 if (el) {
                     el.dom.setAttribute('aria-label', tooltip);
@@ -354,7 +354,7 @@ Ext.define('Ext.panel.Tool', {
      * @param {String} type The new type. See the {@link #type} config.
      * @return {Ext.panel.Tool} this
      */
-    setType: function(type) {
+    setType: function (type) {
         var me = this,
             oldType = me.type;
 
@@ -370,7 +370,7 @@ Ext.define('Ext.panel.Tool', {
         return me;
     },
 
-    onDestroy: function(){
+    onDestroy: function () {
         var me = this,
             keyMap = me.keyMap;
 
@@ -388,7 +388,7 @@ Ext.define('Ext.panel.Tool', {
          * @param {Ext.event.Event} e
          * @param {HTMLElement} target The target element
          */
-        onClick: function(e, target) {
+        onClick: function (e, target) {
             var me = this;
 
             if (me.disabled) {
@@ -403,7 +403,7 @@ Ext.define('Ext.panel.Tool', {
             if (me.stopEvent !== false) {
                 e.stopEvent();
             }
-            
+
             if (me.handler) {
                 Ext.callback(me.handler, me.scope, [e, target, me.ownerCt, me], 0, me);
             } else if (me.callback) {
@@ -430,12 +430,12 @@ Ext.define('Ext.panel.Tool', {
          * Adds the press class ({@link #toolPressedCls})
          * @private
          */
-        onMouseDown: function(e) {
+        onMouseDown: function (e) {
             // We prevent default action on mousedown to avoid focusing the tool.
             // This is consistent with tool behavior in versions prior to 5.5 where
             // tools were pointer-interactive only.
             e.preventDefault();
-            
+
             if (this.disabled) {
                 return false;
             }
@@ -448,7 +448,7 @@ Ext.define('Ext.panel.Tool', {
          * Adds the over class ({@link #toolOverCls})
          * @private
          */
-        onMouseOver: function() {
+        onMouseOver: function () {
             if (this.disabled) {
                 return false;
             }
@@ -460,7 +460,7 @@ Ext.define('Ext.panel.Tool', {
          * Removes the over class ({@link #toolOverCls})
          * @private
          */
-        onMouseOut: function() {
+        onMouseOut: function () {
             this.el.removeCls(this.toolOverCls);
         }
     }

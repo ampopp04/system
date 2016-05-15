@@ -1,9 +1,9 @@
-describe('Ext.ux.PreviewPlugin', function() {
-    it('should not throw an error', function() {
+describe('Ext.ux.PreviewPlugin', function () {
+    it('should not throw an error', function () {
         // See EXTJSIV-12783.
         var grid;
 
-        expect(function() {
+        expect(function () {
             grid = new Ext.grid.Panel({
                 renderTo: Ext.getBody(),
                 height: 400,
@@ -11,7 +11,7 @@ describe('Ext.ux.PreviewPlugin', function() {
                 title: 'Preview Test',
                 store: {
                     data: [
-                        {name: 'foo', description: 'foo description' }
+                        {name: 'foo', description: 'foo description'}
                     ],
                     fields: ['name', 'description']
                 },

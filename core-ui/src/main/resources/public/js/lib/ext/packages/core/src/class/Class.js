@@ -3,10 +3,10 @@
  *
  * This is a low level factory that is used by {@link Ext#define Ext.define} and should not be used
  * directly in application code.
- * 
+ *
  * The configs of this class are intended to be used in `Ext.define` calls to describe the class you
  * are declaring. For example:
- * 
+ *
  *     Ext.define('App.util.Thing', {
  *         extend: 'App.util.Other',
  * 
@@ -20,7 +20,7 @@
  * Ext.Class is the factory and **not** the superclass of everything. For the base class that **all**
  * classes inherit from, see {@link Ext.Base}.
  */
-(function() {
+(function () {
 // @tag class
 // @define Ext.Class
 // @require Ext.Base
@@ -35,12 +35,13 @@
         };
 
     // Creates a constructor that has nothing extra in its scope chain.
-    function makeCtor (className) {
-        function constructor () {
+    function makeCtor(className) {
+        function constructor() {
             // Opera has some problems returning from a constructor when Dragonfly isn't running. The || null seems to
             // be sufficient to stop it misbehaving. Known to be required against 10.53, 11.51 and 11.61.
             return this.constructor.apply(this, arguments) || null;
         }
+
         //<debug>
         if (className) {
             constructor.name = className;
@@ -59,7 +60,7 @@
      *
      * @return {Ext.Base} The newly created class
      */
-    Ext.Class = ExtClass = function(Class, data, onCreated) {
+    Ext.Class = ExtClass = function (Class, data, onCreated) {
         if (typeof Class != 'function') {
             onCreated = data;
             data = Class;
@@ -78,17 +79,17 @@
     };
 
     Ext.apply(ExtClass, {
-        
+
         makeCtor: makeCtor,
-        
+
         /**
          * @private
          */
-        onBeforeCreated: function(Class, data, hooks) {
+        onBeforeCreated: function (Class, data, hooks) {
             //<debug>
             Ext.classSystemMonitor && Ext.classSystemMonitor(Class, '>> Ext.Class#onBeforeCreated', arguments);
             //</debug>
-        
+
             Class.addMembers(data);
 
             hooks.onCreated.call(Class, Class);
@@ -124,7 +125,7 @@
         /**
          * @private
          */
-        process: function(Class, data, onCreated) {
+        process: function (Class, data, onCreated) {
             var preprocessorStack = data.preprocessors || ExtClass.defaultPreprocessors,
                 registeredPreprocessors = this.preprocessors,
                 hooks = {
@@ -137,7 +138,7 @@
             delete data.preprocessors;
             Class._classHooks = hooks;
 
-            for (i = 0,ln = preprocessorStack.length; i < ln; i++) {
+            for (i = 0, ln = preprocessorStack.length; i < ln; i++) {
                 preprocessor = preprocessorStack[i];
 
                 if (typeof preprocessor == 'string') {
@@ -148,7 +149,7 @@
                         preprocessors.push(preprocessor.fn);
                     }
                     else if (preprocessorsProperties) {
-                        for (j = 0,subLn = preprocessorsProperties.length; j < subLn; j++) {
+                        for (j = 0, subLn = preprocessorsProperties.length; j < subLn; j++) {
                             preprocessorProperty = preprocessorsProperties[j];
 
                             if (data.hasOwnProperty(preprocessorProperty)) {
@@ -168,14 +169,14 @@
 
             this.doProcess(Class, data, hooks);
         },
-        
-        doProcess: function(Class, data, hooks) {
+
+        doProcess: function (Class, data, hooks) {
             var me = this,
                 preprocessors = hooks.preprocessors,
                 preprocessor = preprocessors.shift(),
                 doProcess = me.doProcess;
 
-            for ( ; preprocessor ; preprocessor = preprocessors.shift()) {
+            for (; preprocessor; preprocessor = preprocessors.shift()) {
                 // Returning false signifies an asynchronous preprocessor - it will call doProcess when we can continue
                 if (preprocessor.call(me, Class, data, hooks, doProcess) === false) {
                     return;
@@ -213,7 +214,7 @@
          * @private
          * @static
          */
-        registerPreprocessor: function(name, fn, properties, position, relativeTo) {
+        registerPreprocessor: function (name, fn, properties, position, relativeTo) {
             if (!position) {
                 position = 'last';
             }
@@ -241,14 +242,14 @@
          * @private
          * @static
          */
-        getPreprocessor: function(name) {
+        getPreprocessor: function (name) {
             return this.preprocessors[name];
         },
 
         /**
          * @private
          */
-        getPreprocessors: function() {
+        getPreprocessors: function () {
             return this.preprocessors;
         },
 
@@ -263,7 +264,7 @@
          * @private
          * @static
          */
-        getDefaultPreprocessors: function() {
+        getDefaultPreprocessors: function () {
             return this.defaultPreprocessors;
         },
 
@@ -275,7 +276,7 @@
          * @return {Ext.Class} this
          * @static
          */
-        setDefaultPreprocessors: function(preprocessors) {
+        setDefaultPreprocessors: function (preprocessors) {
             this.defaultPreprocessors = Ext.Array.from(preprocessors);
 
             return this;
@@ -302,7 +303,7 @@
          * @return {Ext.Class} this
          * @static
          */
-        setDefaultPreprocessorPosition: function(name, offset, relativeName) {
+        setDefaultPreprocessorPosition: function (name, offset, relativeName) {
             var defaultPreprocessors = this.defaultPreprocessors,
                 index;
 
@@ -344,11 +345,11 @@
      *         say: function(text) { this.callParent(["print "+text]); }
      *     });
      */
-    ExtClass.registerPreprocessor('extend', function(Class, data, hooks) {
+    ExtClass.registerPreprocessor('extend', function (Class, data, hooks) {
         //<debug>
         Ext.classSystemMonitor && Ext.classSystemMonitor(Class, 'Ext.Class#extendPreProcessor', arguments);
         //</debug>
-        
+
         var Base = Ext.Base,
             basePrototype = Base.prototype,
             extend = data.extend,
@@ -386,8 +387,8 @@
 
     /**
      * @cfg {Object} privates
-     * The `privates` config is a list of methods intended to be used internally by the 
-     * framework.  Methods are placed in a `privates` block to prevent developers from 
+     * The `privates` config is a list of methods intended to be used internally by the
+     * framework.  Methods are placed in a `privates` block to prevent developers from
      * accidentally overriding framework methods in custom classes.
      *
      *     Ext.define('Computer', {
@@ -400,10 +401,10 @@
      *     
      *         factory: function (brand) {}
      *     });
-     * 
-     * In order to override a method from a `privates` block, the overridden method must 
+     *
+     * In order to override a method from a `privates` block, the overridden method must
      * also be placed in a `privates` block within the override class.
-     * 
+     *
      *     Ext.define('Override.Computer', {
      *         override: 'Computer',
      *         privates: {
@@ -413,7 +414,7 @@
      *         }
      *     });
      */
-    ExtClass.registerPreprocessor('privates', function(Class, data) {
+    ExtClass.registerPreprocessor('privates', function (Class, data) {
         //<debug>
         Ext.classSystemMonitor && Ext.classSystemMonitor(Class, 'Ext.Class#privatePreprocessor', arguments);
         //</debug>
@@ -452,11 +453,11 @@
      *
      *     var dellComputer = Computer.factory('Dell');
      */
-    ExtClass.registerPreprocessor('statics', function(Class, data) {
+    ExtClass.registerPreprocessor('statics', function (Class, data) {
         //<debug>
         Ext.classSystemMonitor && Ext.classSystemMonitor(Class, 'Ext.Class#staticsPreprocessor', arguments);
         //</debug>
-        
+
         Class.addStatics(data.statics);
 
         delete data.statics;
@@ -469,11 +470,11 @@
      * List of inheritable static methods for this class.
      * Otherwise just like {@link #statics} but subclasses inherit these methods.
      */
-    ExtClass.registerPreprocessor('inheritableStatics', function(Class, data) {
+    ExtClass.registerPreprocessor('inheritableStatics', function (Class, data) {
         //<debug>
         Ext.classSystemMonitor && Ext.classSystemMonitor(Class, 'Ext.Class#inheritableStaticsPreprocessor', arguments);
         //</debug>
-        
+
         Class.addInheritableStatics(data.inheritableStatics);
 
         delete data.inheritableStatics;
@@ -572,7 +573,7 @@
      *
      * To adjust configs based on dynamic conditions, see `{@link Ext.mixin.Responsive}`.
      */
-    ExtClass.registerPreprocessor('platformConfig', function(Class, data, hooks) {
+    ExtClass.registerPreprocessor('platformConfig', function (Class, data, hooks) {
         var platformConfigs = data.platformConfig,
             config = data.config,
             added, classConfigs, configs, configurator, hoisted, keys, name, value,
@@ -580,7 +581,7 @@
 
         delete data.platformConfig;
 
-        
+
         //<debug>
         if (platformConfigs instanceof Array) {
             throw new Error('platformConfigs must be specified as an object.');
@@ -752,7 +753,7 @@
      * When it comes to inheritance, the default config of the parent class is automatically, recursively merged with
      * the child's default config. The same applies for mixins.
      */
-    ExtClass.registerPreprocessor('config', function(Class, data) {
+    ExtClass.registerPreprocessor('config', function (Class, data) {
         // Need to copy to the prototype here because that happens after preprocessors
         if (data.hasOwnProperty('$configPrefixed')) {
             Class.prototype.$configPrefixed = data.$configPrefixed;
@@ -765,21 +766,21 @@
         delete data.config;
     });
     //</feature>
-    
+
     //<feature classSystem.cachedConfig>
     /**
      * @cfg {Object} cachedConfig
-     * 
+     *
      * This configuration works in a very similar manner to the {@link #config} option.
      * The difference is that the configurations are only ever processed when the first instance
      * of that class is created. The processed value is then stored on the class prototype and
      * will not be processed on subsequent instances of the class. Getters/setters will be generated
      * in exactly the same way as {@link #config}.
-     * 
-     * This option is useful for expensive objects that can be shared across class instances. 
+     *
+     * This option is useful for expensive objects that can be shared across class instances.
      * The class itself ensures that the creation only occurs once.
      */
-    ExtClass.registerPreprocessor('cachedConfig', function(Class, data) {
+    ExtClass.registerPreprocessor('cachedConfig', function (Class, data) {
         // Need to copy to the prototype here because that happens after preprocessors
         if (data.hasOwnProperty('$configPrefixed')) {
             Class.prototype.$configPrefixed = data.$configPrefixed;
@@ -827,17 +828,17 @@
      * mixed in `sing` method. But you can access the original mixed in method
      * through special `mixins` property.
      */
-    ExtClass.registerPreprocessor('mixins', function(Class, data, hooks) {
+    ExtClass.registerPreprocessor('mixins', function (Class, data, hooks) {
         //<debug>
         Ext.classSystemMonitor && Ext.classSystemMonitor(Class, 'Ext.Class#mixinsPreprocessor', arguments);
         //</debug>
-        
+
         var mixins = data.mixins,
             onCreated = hooks.onCreated;
 
         delete data.mixins;
 
-        hooks.onCreated = function() {
+        hooks.onCreated = function () {
             //<debug>
             Ext.classSystemMonitor && Ext.classSystemMonitor(Class, 'Ext.Class#mixinsPreprocessor#beforeCreated', arguments);
             //</debug>
@@ -858,11 +859,11 @@
 
     //<feature classSystem.backwardsCompatible>
     // Backwards compatible
-    Ext.extend = function(Class, Parent, members) {
+    Ext.extend = function (Class, Parent, members) {
         //<debug>
         Ext.classSystemMonitor && Ext.classSystemMonitor(Class, 'Ext.Class#extend-backwards-compatible', arguments);
         //</debug>
-            
+
         if (arguments.length === 2 && Ext.isObject(Parent)) {
             members = Parent;
             Parent = Class;
@@ -879,19 +880,19 @@
         members.preprocessors = [
             'extend'
             //<feature classSystem.statics>
-            ,'statics'
+            , 'statics'
             //</feature>
             //<feature classSystem.inheritableStatics>
-            ,'inheritableStatics'
+            , 'inheritableStatics'
             //</feature>
             //<feature classSystem.mixins>
-            ,'mixins'
+            , 'mixins'
             //</feature>
             //<feature classSystem.platformConfig>
-            ,'platformConfig'
+            , 'platformConfig'
             //</feature>
             //<feature classSystem.config>
-            ,'config'
+            , 'config'
             //</feature>
         ];
 
@@ -903,7 +904,7 @@
             cls = new ExtClass(members);
         }
 
-        cls.prototype.override = function(o) {
+        cls.prototype.override = function (o) {
             for (var m in o) {
                 if (o.hasOwnProperty(m)) {
                     this[m] = o[m];

@@ -34,7 +34,7 @@ Ext.define('Ext.device.notification.Abstract', {
      *
      * @param {Object} config.scope The scope of the callback function
      */
-    show: function(config) {
+    show: function (config) {
         if (!config.message) {
             throw('[Ext.device.Notification#show] You passed no message');
         }
@@ -54,7 +54,7 @@ Ext.define('Ext.device.notification.Abstract', {
         return config;
     },
 
-    alert: function(config) {
+    alert: function (config) {
         if (!config.message) {
             throw('[Ext.device.Notification#alert] You passed no message');
         }
@@ -66,7 +66,7 @@ Ext.define('Ext.device.notification.Abstract', {
         return config;
     },
 
-    confirm: function(config) {
+    confirm: function (config) {
         if (!config.message) {
             throw('[Ext.device.Notification#confirm] You passed no message');
         }
@@ -85,7 +85,7 @@ Ext.define('Ext.device.notification.Abstract', {
 
         return config;
     },
-    prompt: function(config) {
+    prompt: function (config) {
         if (!config.message) {
             throw('[Ext.device.Notification#prompt] You passed no message');
         }

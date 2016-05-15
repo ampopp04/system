@@ -59,50 +59,48 @@ Ext.define('Ext.ux.dashboard.GoogleRssView', {
     // closed arrows
     //prevGlyph: '8678@', nextGlyph: '8680@',
 
-    detailTpl:
-        '<tpl for="entries[currentEntry]">' +
-            '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-detail-header">' +
-                '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-detail-nav">' +
-                    '<tpl if="parent.hasPrev">' +
-                        '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-prev ' +
-                                Ext.baseCSSPrefix + 'dashboard-googlerss-glyph">'+
-                            '{parent.prevGlyph}' +
-                        '</span> '+
-                    '</tpl>' +
-                    ' {[parent.currentEntry+1]}/{parent.numEntries} ' +
-                    '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-next ' +
-                                Ext.baseCSSPrefix + 'dashboard-googlerss-glyph"' +
-                        '<tpl if="!parent.hasNext">' +
-                            ' style="visibility:hidden"'+
-                        '</tpl>' +
-                        '> {parent.nextGlyph}' +
-                    '</span> '+
-                    '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-close ' +
-                                Ext.baseCSSPrefix + 'dashboard-googlerss-glyph"> ' +
-                        '{parent.closeGlyph}' +
-                    '</span> '+
-                '</div>' +
-                '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-title">'+
-                    '<a href="{link}" target=_blank>{title}</a>'+
-                '</div>'+
-                '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-author">By {author} - {publishedDate:this.date}</div>' +
-            '</div>' +
-            '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-detail">' +
-                '{content}' +
-            '</div>' +
-        '</tpl>',
+    detailTpl: '<tpl for="entries[currentEntry]">' +
+    '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-detail-header">' +
+    '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-detail-nav">' +
+    '<tpl if="parent.hasPrev">' +
+    '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-prev ' +
+    Ext.baseCSSPrefix + 'dashboard-googlerss-glyph">' +
+    '{parent.prevGlyph}' +
+    '</span> ' +
+    '</tpl>' +
+    ' {[parent.currentEntry+1]}/{parent.numEntries} ' +
+    '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-next ' +
+    Ext.baseCSSPrefix + 'dashboard-googlerss-glyph"' +
+    '<tpl if="!parent.hasNext">' +
+    ' style="visibility:hidden"' +
+    '</tpl>' +
+    '> {parent.nextGlyph}' +
+    '</span> ' +
+    '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-close ' +
+    Ext.baseCSSPrefix + 'dashboard-googlerss-glyph"> ' +
+    '{parent.closeGlyph}' +
+    '</span> ' +
+    '</div>' +
+    '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-title">' +
+    '<a href="{link}" target=_blank>{title}</a>' +
+    '</div>' +
+    '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-author">By {author} - {publishedDate:this.date}</div>' +
+    '</div>' +
+    '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-detail">' +
+    '{content}' +
+    '</div>' +
+    '</tpl>',
 
-    summaryTpl:
-        '<tpl for="entries">' +
-            '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss">' +
-                '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-title">'+
-                    '<a href="{link}" target=_blank>{title}</a>'+
-                '</span> '+
-                '<img src="'+Ext.BLANK_IMAGE_URL+'" data-index="{#}" class="'+Ext.baseCSSPrefix+'dashboard-googlerss-preview"><br>' +
-                '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-author">By {author} - {publishedDate:this.date}</span><br>' +
-                '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-snippet">{contentSnippet}</span><br>' +
-            '</div>' +
-        '</tpl>',
+    summaryTpl: '<tpl for="entries">' +
+    '<div class="' + Ext.baseCSSPrefix + 'dashboard-googlerss">' +
+    '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-title">' +
+    '<a href="{link}" target=_blank>{title}</a>' +
+    '</span> ' +
+    '<img src="' + Ext.BLANK_IMAGE_URL + '" data-index="{#}" class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-preview"><br>' +
+    '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-author">By {author} - {publishedDate:this.date}</span><br>' +
+    '<span class="' + Ext.baseCSSPrefix + 'dashboard-googlerss-snippet">{contentSnippet}</span><br>' +
+    '</div>' +
+    '</tpl>',
 
 
     initComponent: function () {
@@ -192,9 +190,9 @@ Ext.define('Ext.ux.dashboard.GoogleRssView', {
             target = Ext.fly(e.getTarget());
 
         if (target.hasCls(me.nextCls)) {
-            me.setCurrentEntry(entry+1);
+            me.setCurrentEntry(entry + 1);
         } else if (target.hasCls(me.prevCls)) {
-            me.setCurrentEntry(entry-1);
+            me.setCurrentEntry(entry - 1);
         } else if (target.hasCls(me.closeDetailsCls)) {
             me.setMode('summary');
         } else if (target.hasCls(me.previewCls)) {
@@ -250,7 +248,7 @@ Ext.define('Ext.ux.dashboard.GoogleRssView', {
         me.mode = mode;
 
         data.currentEntry = current;
-        data.hasNext = current+1 < data.numEntries;
+        data.hasNext = current + 1 < data.numEntries;
         data.hasPrev = current > 0;
 
         me.update(data);

@@ -39,11 +39,11 @@ describe('Ext.grid.filters.Filters', function () {
         grid = new Ext.grid.Panel(Ext.apply({
             store: store,
             columns: [
-                { header: 'Name',  dataIndex: 'name', width: 100 },
-                { header: 'Email', dataIndex: 'email', width: 100 },
-                { header: 'Phone', dataIndex: 'phone', width: 100 },
-                { header: 'Age', dataIndex: 'age', width: 100 },
-                { header: 'DOB', dataIndex: 'dob', width: 100, type: 'date', dateFormat: 'm/d/Y' }
+                {header: 'Name', dataIndex: 'name', width: 100},
+                {header: 'Email', dataIndex: 'email', width: 100},
+                {header: 'Phone', dataIndex: 'phone', width: 100},
+                {header: 'Age', dataIndex: 'age', width: 100},
+                {header: 'DOB', dataIndex: 'dob', width: 100, type: 'date', dateFormat: 'm/d/Y'}
             ],
             autoLoad: true,
             plugins: filtersPlugin,
@@ -106,11 +106,11 @@ describe('Ext.grid.filters.Filters', function () {
         }, treeCfg));
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         storeFlushLoad = Ext.data.Store.prototype.flushLoad;
         storeLoad = Ext.data.Store.prototype.load;
         Ext.data.Store.override({
-            load: function() {
+            load: function () {
                 this.callParent(arguments);
                 if (synchronousLoad) {
                     this.flushLoad.apply(this, arguments);
@@ -118,7 +118,7 @@ describe('Ext.grid.filters.Filters', function () {
                 return this;
             },
 
-            flushLoad: function() {
+            flushLoad: function () {
                 if (!this.destroyed) {
                     this.flushCallCount = (this.flushCallCount || 0) + 1;
                     this.callParent();
@@ -128,14 +128,50 @@ describe('Ext.grid.filters.Filters', function () {
 
         MockAjaxManager.addMethods();
         data = [
-            { name: 'Jimmy Page', email: 'jimmy@page.com', phone: '555-111-1224', age: 69, dob: new Date('1/22/1944')},
-            { name: 'Stevie Ray Vaughan', email: 'stevieray@vaughan.com', phone: '555-222-1234', age: 35, dob: new Date('1/22/1955')},
-            { name: 'John Scofield', email: 'john@scofield.com', phone: '555-222-1234', age: 59, dob: new Date('1/22/1954')},
-            { name: 'Robben Ford', email: 'robben@ford.com', phone: '555-222-1244', age: 60, dob: new Date('1/22/1953')},
-            { name: 'Wes Montgomery', email: 'wes@montgomery.com', phone: '555-222-1244', age: 45, dob: new Date('1/22/1923')},
-            { name: 'Jimmy Herring', email: 'jimmy@herring.com', phone: '555-222-1254', age: 50, dob: new Date('1/22/1962')},
-            { name: 'Alex Lifeson', email: 'alex@lifeson.com', phone: '555-222-1254', age: 60, dob: new Date('1/22/1953')},
-            { name: 'Kenny Burrell', email: 'kenny@burrell.com', phone: '555-222-1254', age: 82, dob: new Date('1/22/1930')}
+            {name: 'Jimmy Page', email: 'jimmy@page.com', phone: '555-111-1224', age: 69, dob: new Date('1/22/1944')},
+            {
+                name: 'Stevie Ray Vaughan',
+                email: 'stevieray@vaughan.com',
+                phone: '555-222-1234',
+                age: 35,
+                dob: new Date('1/22/1955')
+            },
+            {
+                name: 'John Scofield',
+                email: 'john@scofield.com',
+                phone: '555-222-1234',
+                age: 59,
+                dob: new Date('1/22/1954')
+            },
+            {name: 'Robben Ford', email: 'robben@ford.com', phone: '555-222-1244', age: 60, dob: new Date('1/22/1953')},
+            {
+                name: 'Wes Montgomery',
+                email: 'wes@montgomery.com',
+                phone: '555-222-1244',
+                age: 45,
+                dob: new Date('1/22/1923')
+            },
+            {
+                name: 'Jimmy Herring',
+                email: 'jimmy@herring.com',
+                phone: '555-222-1254',
+                age: 50,
+                dob: new Date('1/22/1962')
+            },
+            {
+                name: 'Alex Lifeson',
+                email: 'alex@lifeson.com',
+                phone: '555-222-1254',
+                age: 60,
+                dob: new Date('1/22/1953')
+            },
+            {
+                name: 'Kenny Burrell',
+                email: 'kenny@burrell.com',
+                phone: '555-222-1254',
+                age: 82,
+                dob: new Date('1/22/1930')
+            }
         ];
     });
 
@@ -170,8 +206,9 @@ describe('Ext.grid.filters.Filters', function () {
             beforeEach(function () {
                 createGrid({}, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100, filter: true },
-                        { header: 'Email',  dataIndex: 'email', width: 100,
+                        {header: 'Name', dataIndex: 'name', width: 100, filter: true},
+                        {
+                            header: 'Email', dataIndex: 'email', width: 100,
                             filter: {
                                 value: 'stevie'
                             }
@@ -203,12 +240,14 @@ describe('Ext.grid.filters.Filters', function () {
             it('should be the type it was configured with', function () {
                 createGrid({}, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100,
+                        {
+                            header: 'Name', dataIndex: 'name', width: 100,
                             filter: {
                                 type: 'list'
                             }
                         },
-                        { header: 'DOB', dataIndex: 'dob', width: 100,
+                        {
+                            header: 'DOB', dataIndex: 'dob', width: 100,
                             filter: {
                                 type: 'date'
                             }
@@ -222,7 +261,7 @@ describe('Ext.grid.filters.Filters', function () {
             it('should be inactive if not filtered (no "value" property)', function () {
                 createGrid({}, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100, filter: true }
+                        {header: 'Name', dataIndex: 'name', width: 100, filter: true}
                     ]
                 });
 
@@ -232,7 +271,8 @@ describe('Ext.grid.filters.Filters', function () {
             it('should be active if filtered (has a "value" property)', function () {
                 createGrid({}, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100,
+                        {
+                            header: 'Name', dataIndex: 'name', width: 100,
                             filter: {
                                 value: 'kenny'
                             }
@@ -249,8 +289,8 @@ describe('Ext.grid.filters.Filters', function () {
                 beforeEach(function () {
                     createGrid({}, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', filter: true },
-                            { header: 'DOB',  dataIndex: 'dob', filter: true }
+                            {header: 'Name', dataIndex: 'name', filter: true},
+                            {header: 'DOB', dataIndex: 'dob', filter: true}
                         ]
                     });
 
@@ -325,7 +365,7 @@ describe('Ext.grid.filters.Filters', function () {
                     columns: [{
                         dataIndex: 'name',
                         filter: true
-                     }, {
+                    }, {
                         columns: [{
                             dataIndex: 'age',
                             filter: {
@@ -398,7 +438,7 @@ describe('Ext.grid.filters.Filters', function () {
                 expect(cols[1].getEl()).toHaveCls(filterCls);
             });
 
-            it("should remove the cls for columns when clearing a value", function() {
+            it("should remove the cls for columns when clearing a value", function () {
                 createGrid(null, {
                     columns: [{
                         dataIndex: 'name',
@@ -481,7 +521,7 @@ describe('Ext.grid.filters.Filters', function () {
                 });
             }
 
-            it('should not throw an error when removing a non-header filter', function() {
+            it('should not throw an error when removing a non-header filter', function () {
                 makeStoreFilterGrid(true);
 
                 var f = new Ext.util.Filter({
@@ -492,13 +532,13 @@ describe('Ext.grid.filters.Filters', function () {
                 store.getFilters().add(f);
                 expect(store.getCount()).toBe(0);
 
-                expect(function() {
+                expect(function () {
                     store.getFilters().remove(f);
                 }).not.toThrow();
                 expect(store.getCount()).toBe(current);
             });
 
-            it('should not throw an error when removing a filter for a grid column that does not have a filter UI', function() {
+            it('should not throw an error when removing a filter for a grid column that does not have a filter UI', function () {
                 makeStoreFilterGrid(false);
 
                 var f = new Ext.util.Filter({
@@ -509,7 +549,7 @@ describe('Ext.grid.filters.Filters', function () {
                 store.getFilters().add(f);
                 expect(store.getCount()).toBe(0);
 
-                expect(function() {
+                expect(function () {
                     store.getFilters().remove(f);
                 }).not.toThrow();
                 expect(store.getCount()).toBe(current);
@@ -529,14 +569,16 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
@@ -563,14 +605,16 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
@@ -591,19 +635,22 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100,
+                            {
+                                header: 'Email', dataIndex: 'email', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'robben'
                                 }
                             },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
@@ -625,13 +672,15 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
@@ -657,14 +706,16 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'kenny'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
@@ -707,14 +758,16 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
@@ -722,7 +775,7 @@ describe('Ext.grid.filters.Filters', function () {
                         ]
                     });
 
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return store.flushCallCount > 0;
                     })
 
@@ -745,19 +798,22 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100,
+                            {
+                                header: 'Email', dataIndex: 'email', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'robben'
                                 }
                             },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
@@ -765,7 +821,7 @@ describe('Ext.grid.filters.Filters', function () {
                         ]
                     });
 
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return store.flushCallCount > 0;
                     });
 
@@ -789,13 +845,15 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
@@ -803,7 +861,7 @@ describe('Ext.grid.filters.Filters', function () {
                         ]
                     });
 
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return store.flushCallCount > 0;
                     });
 
@@ -814,7 +872,7 @@ describe('Ext.grid.filters.Filters', function () {
             });
 
             // See EXTJS-15348.
-            describe("if false", function() {
+            describe("if false", function () {
                 it('should not cause the store to load', function () {
                     var proto = Ext.data.ProxyStore.prototype;
 
@@ -830,14 +888,16 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
@@ -868,14 +928,16 @@ describe('Ext.grid.filters.Filters', function () {
                         stateful: true,
                         stateId: 'yobe',
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: '555'
@@ -901,14 +963,16 @@ describe('Ext.grid.filters.Filters', function () {
                         stateful: true,
                         stateId: 'yobe',
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: '555'
@@ -937,14 +1001,16 @@ describe('Ext.grid.filters.Filters', function () {
                         stateful: true,
                         stateId: 'yobe',
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', locked: true, width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
+                            {header: 'Email', dataIndex: 'email', locked: true, width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
                                 filter: {
                                     type: 'string',
                                     value: '555'
@@ -970,14 +1036,16 @@ describe('Ext.grid.filters.Filters', function () {
                         stateful: true,
                         stateId: 'yobe',
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', locked: true, width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
+                            {header: 'Email', dataIndex: 'email', locked: true, width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
                                 filter: {
                                     type: 'string',
                                     value: '555'
@@ -1011,14 +1079,16 @@ describe('Ext.grid.filters.Filters', function () {
                     }
                 }, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100,
+                        {
+                            header: 'Name', dataIndex: 'name', width: 100,
                             filter: {
                                 type: 'string',
                                 value: 'stevie ray'
                             }
                         },
-                        { header: 'Email', dataIndex: 'email', width: 100 },
-                        { header: 'Phone', dataIndex: 'phone', width: 100,
+                        {header: 'Email', dataIndex: 'email', width: 100},
+                        {
+                            header: 'Phone', dataIndex: 'phone', width: 100,
                             filter: {
                                 type: 'string'
                             }
@@ -1026,10 +1096,10 @@ describe('Ext.grid.filters.Filters', function () {
                     ]
                 });
 
-                waitsFor(function() {
+                waitsFor(function () {
                     return store.flushCallCount > 0;
                 });
-                runs(function() {
+                runs(function () {
                     expect(store.flushCallCount).toBe(1);
                 });
             });
@@ -1050,14 +1120,16 @@ describe('Ext.grid.filters.Filters', function () {
                         stateful: true,
                         stateId: 'yobe',
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: '555'
@@ -1084,14 +1156,16 @@ describe('Ext.grid.filters.Filters', function () {
                         stateful: true,
                         stateId: 'yobe',
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100,
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', width: 100,
                                 filter: {
                                     type: 'string'
                                 }
@@ -1102,7 +1176,7 @@ describe('Ext.grid.filters.Filters', function () {
                     waitsFor(function () {
                         return store.flushCallCount > 0;
                     });
-                    runs(function() {
+                    runs(function () {
                         expect(store.flushCallCount).toBe(1);
                     });
                 });
@@ -1124,14 +1198,16 @@ describe('Ext.grid.filters.Filters', function () {
                         stateful: true,
                         stateId: 'yobe',
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', locked: true, width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
+                            {header: 'Email', dataIndex: 'email', locked: true, width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
                                 filter: {
                                     type: 'string',
                                     value: '555'
@@ -1158,14 +1234,16 @@ describe('Ext.grid.filters.Filters', function () {
                         stateful: true,
                         stateId: 'yobe',
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     type: 'string',
                                     value: 'stevie ray'
                                 }
                             },
-                            { header: 'Email', dataIndex: 'email', locked: true, width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
+                            {header: 'Email', dataIndex: 'email', locked: true, width: 100},
+                            {
+                                header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
                                 filter: {
                                     type: 'string',
                                     value: '555'
@@ -1233,7 +1311,7 @@ describe('Ext.grid.filters.Filters', function () {
                 beforeEach(function () {
                     createGrid(null, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', filter: { value: 'jimmy' }, width: 100 }
+                            {header: 'Name', dataIndex: 'name', filter: {value: 'jimmy'}, width: 100}
                         ]
                     });
                 });
@@ -1355,7 +1433,7 @@ describe('Ext.grid.filters.Filters', function () {
                 it('should send a network request when adding an active filter config', function () {
                     filtersPlugin.addFilter({dataIndex: 'email', value: 'albuquerque@newmexico.com'});
 
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return store.flushCallCount === 2;
                     });
 
@@ -1498,8 +1576,8 @@ describe('Ext.grid.filters.Filters', function () {
 
                 createGrid(null, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', filter: { value: 'jimmy' }, width: 100 },
-                        { header: 'Email',  dataIndex: 'email', filter: { value: 'jimmy@' }, width: 100 }
+                        {header: 'Name', dataIndex: 'name', filter: {value: 'jimmy'}, width: 100},
+                        {header: 'Email', dataIndex: 'email', filter: {value: 'jimmy@'}, width: 100}
                     ]
                 });
 
@@ -1548,9 +1626,12 @@ describe('Ext.grid.filters.Filters', function () {
                 });
 
                 it('should send a network request when adding at least one active filter config', function () {
-                    filtersPlugin.addFilters([{dataIndex: 'name'}, {dataIndex: 'email', value: 'jack'}, {dataIndex: 'phone'}]);
+                    filtersPlugin.addFilters([{dataIndex: 'name'}, {
+                        dataIndex: 'email',
+                        value: 'jack'
+                    }, {dataIndex: 'phone'}]);
 
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return store.flushCallCount === 2;
                     });
 
@@ -1560,9 +1641,12 @@ describe('Ext.grid.filters.Filters', function () {
                 });
 
                 it('should send only one network request no matter how many active filters configs are added', function () {
-                    filtersPlugin.addFilters([{dataIndex: 'name', value: 'ginger'}, {dataIndex: 'email', value: 'suzy'}, {dataIndex: 'phone', value: '717'}]);
+                    filtersPlugin.addFilters([{dataIndex: 'name', value: 'ginger'}, {
+                        dataIndex: 'email',
+                        value: 'suzy'
+                    }, {dataIndex: 'phone', value: '717'}]);
 
-                    waitsFor(function() {
+                    waitsFor(function () {
                         return store.flushCallCount === 2;
                     });
 
@@ -1596,19 +1680,22 @@ describe('Ext.grid.filters.Filters', function () {
             beforeEach(function () {
                 createGrid({}, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100,
+                        {
+                            header: 'Name', dataIndex: 'name', width: 100,
                             filter: {
                                 type: 'string',
                                 value: 'jimmy'
                             }
                         },
-                        { header: 'Email', dataIndex: 'email', width: 100,
+                        {
+                            header: 'Email', dataIndex: 'email', width: 100,
                             filter: {
                                 type: 'string',
                                 value: 'ben@sencha.com'
                             }
                         },
-                        { header: 'Phone', dataIndex: 'phone', width: 100,
+                        {
+                            header: 'Phone', dataIndex: 'phone', width: 100,
                             filter: {
                                 type: 'string',
                                 value: '717-555-1212'
@@ -1690,9 +1777,9 @@ describe('Ext.grid.filters.Filters', function () {
                     }
                 }, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100 },
-                        { header: 'Email', dataIndex: 'email', width: 100 },
-                        { header: 'Phone', dataIndex: 'phone', width: 100 }
+                        {header: 'Name', dataIndex: 'name', width: 100},
+                        {header: 'Email', dataIndex: 'email', width: 100},
+                        {header: 'Phone', dataIndex: 'phone', width: 100}
                     ]
                 });
                 completeWithData();
@@ -1721,8 +1808,8 @@ describe('Ext.grid.filters.Filters', function () {
                 beforeEach(function () {
                     createGrid({}, {
                         columns: [
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', locked: true, width: 100 }
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {header: 'Phone', dataIndex: 'phone', locked: true, width: 100}
                         ]
                     });
                 });
@@ -1817,9 +1904,9 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name', dataIndex: 'name', locked: true, width: 100 },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100 }
+                            {header: 'Name', dataIndex: 'name', locked: true, width: 100},
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {header: 'Phone', dataIndex: 'phone', width: 100}
                         ]
                     });
                 });
@@ -2001,14 +2088,16 @@ describe('Ext.grid.filters.Filters', function () {
                     }
                 }, {
                     columns: [
-                        { header: 'Name', dataIndex: 'name', locked: true,
+                        {
+                            header: 'Name', dataIndex: 'name', locked: true,
                             filter: {
                                 value: 'alex'
                             },
-                        width: 100 },
-                        { header: 'Email', dataIndex: 'email', width: 100 },
-                        { header: 'Phone', dataIndex: 'phone', width: 100 },
-                        { header: 'Age', dataIndex: 'age', width: 100 }
+                            width: 100
+                        },
+                        {header: 'Email', dataIndex: 'email', width: 100},
+                        {header: 'Phone', dataIndex: 'phone', width: 100},
+                        {header: 'Age', dataIndex: 'age', width: 100}
                     ]
                 });
                 completeWithData();
@@ -2068,14 +2157,16 @@ describe('Ext.grid.filters.Filters', function () {
         it('should get the specified filter', function () {
             createGrid({}, {
                 columns: [
-                    { header: 'Name',  dataIndex: 'name', filter: true, width: 100 },
-                    { header: 'Email', dataIndex: 'email', width: 100,
+                    {header: 'Name', dataIndex: 'name', filter: true, width: 100},
+                    {
+                        header: 'Email', dataIndex: 'email', width: 100,
                         filter: {
                             type: 'string',
                             value: 'ben@sencha.com'
                         }
                     },
-                    { header: 'Phone', dataIndex: 'phone', width: 100,
+                    {
+                        header: 'Phone', dataIndex: 'phone', width: 100,
                         filter: {
                             type: 'string',
                             value: '717-555-1212'
@@ -2091,19 +2182,22 @@ describe('Ext.grid.filters.Filters', function () {
             beforeEach(function () {
                 createGrid({}, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100,
+                        {
+                            header: 'Name', dataIndex: 'name', width: 100,
                             filter: {
                                 type: 'string',
                                 value: 'ben@sencha.com'
                             }
                         },
-                        { header: 'Email', dataIndex: 'email', locked: true, width: 100,
+                        {
+                            header: 'Email', dataIndex: 'email', locked: true, width: 100,
                             filter: {
                                 type: 'string',
                                 value: 'ben@sencha.com'
                             }
                         },
-                        { header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
+                        {
+                            header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
                             filter: {
                                 type: 'string',
                                 value: '717-555-1212'
@@ -2129,7 +2223,7 @@ describe('Ext.grid.filters.Filters', function () {
         describe('initialization', function () {
             it('should create an "isLocked" property', function () {
                 createGrid({}, {
-                    columns: [{ header: 'Name',  dataIndex: 'name', locked: true, width: 100 }]
+                    columns: [{header: 'Name', dataIndex: 'name', locked: true, width: 100}]
                 });
 
                 expect(filtersPlugin.isLocked).toBe(true);
@@ -2139,7 +2233,7 @@ describe('Ext.grid.filters.Filters', function () {
         describe('the store', function () {
             it('should bind the grid store to the feature', function () {
                 createGrid({}, {
-                    columns: [{ header: 'Name',  dataIndex: 'name', locked: true, width: 100 }]
+                    columns: [{header: 'Name', dataIndex: 'name', locked: true, width: 100}]
                 });
 
                 expect(filtersPlugin.store).toBe(store);
@@ -2148,19 +2242,22 @@ describe('Ext.grid.filters.Filters', function () {
             it('should add each filter to the store', function () {
                 createGrid({}, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100,
+                        {
+                            header: 'Name', dataIndex: 'name', width: 100,
                             filter: {
                                 type: 'string',
                                 value: 'stevie ray'
                             }
                         },
-                        { header: 'Email', dataIndex: 'email', locked: true, width: 100,
+                        {
+                            header: 'Email', dataIndex: 'email', locked: true, width: 100,
                             filter: {
                                 type: 'string',
                                 value: 'ben@sencha.com'
                             }
                         },
-                        { header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
+                        {
+                            header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
                             filter: {
                                 type: 'string',
                                 value: '717-555-1212'
@@ -2177,9 +2274,9 @@ describe('Ext.grid.filters.Filters', function () {
             beforeEach(function () {
                 createGrid({}, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', locked: true, width: 100 },
-                        { header: 'Email', dataIndex: 'email', width: 100 },
-                        { header: 'Phone', dataIndex: 'phone', width: 100 }
+                        {header: 'Name', dataIndex: 'name', locked: true, width: 100},
+                        {header: 'Email', dataIndex: 'email', width: 100},
+                        {header: 'Phone', dataIndex: 'phone', width: 100}
                     ]
                 }, {});
             });
@@ -2220,13 +2317,19 @@ describe('Ext.grid.filters.Filters', function () {
                 });
 
                 it('should add the filters to their store if configured with a "value" property', function () {
-                    filtersPlugin.addFilters([{dataIndex: 'name', value: 'john'}, {dataIndex: 'email', value: 'utley'}, {dataIndex: 'phone', value: '717-555-1212'}]);
+                    filtersPlugin.addFilters([{dataIndex: 'name', value: 'john'}, {
+                        dataIndex: 'email',
+                        value: 'utley'
+                    }, {dataIndex: 'phone', value: '717-555-1212'}]);
 
                     expect(filtersPlugin.store.getFilters().getCount()).toBe(3);
                 });
 
                 it('should not add any filters to their store that do not map to a column', function () {
-                    filtersPlugin.addFilters([{dataIndex: 'ledzeppelin', value: 'john'}, {dataIndex: 'rush', value: 'utley'}, {dataIndex: 'phone', value: '717-555-1212'}]);
+                    filtersPlugin.addFilters([{dataIndex: 'ledzeppelin', value: 'john'}, {
+                        dataIndex: 'rush',
+                        value: 'utley'
+                    }, {dataIndex: 'phone', value: '717-555-1212'}]);
 
                     expect(filtersPlugin.store.getFilters().getCount()).toBe(1);
                 });
@@ -2244,7 +2347,13 @@ describe('Ext.grid.filters.Filters', function () {
                 describe('when setting active to `false`', function () {
                     it('should filter the store, locked grid', function () {
                         createGrid({}, {
-                            columns: [{ header: 'Name', filter: { value: 'ford' }, dataIndex: 'name', locked: true, width: 100 }]
+                            columns: [{
+                                header: 'Name',
+                                filter: {value: 'ford'},
+                                dataIndex: 'name',
+                                locked: true,
+                                width: 100
+                            }]
                         });
 
                         storeFilters = store.getFilters();
@@ -2264,9 +2373,9 @@ describe('Ext.grid.filters.Filters', function () {
                         // Start out with it filtered and toggle.
                         createGrid({}, {
                             columns: [
-                                { header: 'Name',  dataIndex: 'name', filter: { value: 'sco' }, locked: true, width: 100 },
-                                { header: 'Email', dataIndex: 'email', width: 100 },
-                                { header: 'Phone', dataIndex: 'phone', width: 100 }
+                                {header: 'Name', dataIndex: 'name', filter: {value: 'sco'}, locked: true, width: 100},
+                                {header: 'Email', dataIndex: 'email', width: 100},
+                                {header: 'Phone', dataIndex: 'phone', width: 100}
                             ]
                         });
 
@@ -2300,13 +2409,15 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', locked: true,
+                            {
+                                header: 'Name', dataIndex: 'name', locked: true,
                                 filter: {
                                     value: 'john'
                                 },
-                            width: 100 },
-                            { header: 'Email', dataIndex: 'email', width: 100 },
-                            { header: 'Phone', dataIndex: 'phone', width: 100 }
+                                width: 100
+                            },
+                            {header: 'Email', dataIndex: 'email', width: 100},
+                            {header: 'Phone', dataIndex: 'phone', width: 100}
                         ]
                     });
                     completeWithData();
@@ -2342,14 +2453,16 @@ describe('Ext.grid.filters.Filters', function () {
                     }
                 }, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100,
+                        {
+                            header: 'Name', dataIndex: 'name', width: 100,
                             filter: {
                                 type: 'string',
                                 value: 'stevie ray'
                             }
                         },
-                        { header: 'Email', dataIndex: 'email', width: 100 },
-                        { header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
+                        {header: 'Email', dataIndex: 'email', width: 100},
+                        {
+                            header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
                             filter: {
                                 type: 'string',
                                 value: '717-555-8879'
@@ -2377,14 +2490,16 @@ describe('Ext.grid.filters.Filters', function () {
                     }
                 }, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100,
+                        {
+                            header: 'Name', dataIndex: 'name', width: 100,
                             filter: {
                                 type: 'string',
                                 value: 'stevie ray'
                             }
                         },
-                        { header: 'Email', dataIndex: 'email', width: 100 },
-                        { header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
+                        {header: 'Email', dataIndex: 'email', width: 100},
+                        {
+                            header: 'Phone', dataIndex: 'phone', locked: true, width: 100,
                             filter: {
                                 type: 'string',
                                 value: '717-555-8879'
@@ -2432,7 +2547,8 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     value: 'jimmy'
                                 }
@@ -2456,7 +2572,8 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     value: 'jimmy'
                                 }
@@ -2485,7 +2602,8 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     value: 'jimmy'
                                 }
@@ -2508,7 +2626,8 @@ describe('Ext.grid.filters.Filters', function () {
                         }
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     value: 'jimmy'
                                 }
@@ -2536,7 +2655,8 @@ describe('Ext.grid.filters.Filters', function () {
                         remoteFilter: false
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     value: 'jimmy'
                                 }
@@ -2557,7 +2677,8 @@ describe('Ext.grid.filters.Filters', function () {
                         remoteFilter: false
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     value: 'jimmy'
                                 }
@@ -2584,7 +2705,8 @@ describe('Ext.grid.filters.Filters', function () {
                         asynchronousLoad: true
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     value: 'jimmy'
                                 }
@@ -2605,7 +2727,8 @@ describe('Ext.grid.filters.Filters', function () {
                         remoteFilter: false
                     }, {
                         columns: [
-                            { header: 'Name',  dataIndex: 'name', width: 100,
+                            {
+                                header: 'Name', dataIndex: 'name', width: 100,
                                 filter: {
                                     value: 'jimmy'
                                 }
@@ -2632,13 +2755,15 @@ describe('Ext.grid.filters.Filters', function () {
 
                 createGrid({}, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', width: 100,
+                        {
+                            header: 'Name', dataIndex: 'name', width: 100,
                             filter: {
                                 value: 'jimmy'
                             }
                         },
-                        { header: 'Email', dataIndex: 'email', width: 100 },
-                        { header: 'Phone', dataIndex: 'phone', width: 100,
+                        {header: 'Email', dataIndex: 'email', width: 100},
+                        {
+                            header: 'Phone', dataIndex: 'phone', width: 100,
                             filter: {
                                 type: 'string'
                             }
@@ -2655,12 +2780,13 @@ describe('Ext.grid.filters.Filters', function () {
 
             it('should replace any existing values when setting value', function () {
                 var columns = [
-                        { header: 'Name',  dataIndex: 'name', width: 100,
-                            filter: {
-                                value: 'lifeson'
-                            }
+                    {
+                        header: 'Name', dataIndex: 'name', width: 100,
+                        filter: {
+                            value: 'lifeson'
                         }
-                    ];
+                    }
+                ];
 
                 createGrid({}, {
                     columns: columns,
@@ -2700,9 +2826,9 @@ describe('Ext.grid.filters.Filters', function () {
         describe('changing filter values', function () {
             it('should retain proper filtering when setting active', function () {
                 var columns = [
-                    { header: 'Name',  dataIndex: 'name', filter: true, width: 100 },
-                    { header: 'Email', dataIndex: 'email', width: 100 },
-                    { header: 'Phone', dataIndex: 'phone', width: 100 }
+                    {header: 'Name', dataIndex: 'name', filter: true, width: 100},
+                    {header: 'Email', dataIndex: 'email', width: 100},
+                    {header: 'Phone', dataIndex: 'phone', width: 100}
                 ];
 
                 createGrid({}, {
@@ -2747,9 +2873,9 @@ describe('Ext.grid.filters.Filters', function () {
 
             it('should update state information when setting active', function () {
                 var columns = [
-                    { header: 'Name',  dataIndex: 'name', filter: true, width: 100 },
-                    { header: 'Email', dataIndex: 'email', width: 100 },
-                    { header: 'Phone', dataIndex: 'phone', width: 100 }
+                    {header: 'Name', dataIndex: 'name', filter: true, width: 100},
+                    {header: 'Email', dataIndex: 'email', width: 100},
+                    {header: 'Phone', dataIndex: 'phone', width: 100}
                 ];
 
                 createGrid({}, {
@@ -2793,13 +2919,14 @@ describe('Ext.grid.filters.Filters', function () {
 
             it('should retain proper filtering when setting inactive', function () {
                 var columns = [
-                    { header: 'Name',  dataIndex: 'name', width: 100,
+                    {
+                        header: 'Name', dataIndex: 'name', width: 100,
                         filter: {
                             value: 'jimmy'
                         }
                     },
-                    { header: 'Email', dataIndex: 'email', width: 100 },
-                    { header: 'Phone', dataIndex: 'phone', width: 100 }
+                    {header: 'Email', dataIndex: 'email', width: 100},
+                    {header: 'Phone', dataIndex: 'phone', width: 100}
                 ];
 
                 createGrid({}, {
@@ -2837,14 +2964,15 @@ describe('Ext.grid.filters.Filters', function () {
 
             it('should update state information when setting inactive', function () {
                 var columns = [
-                    { header: 'Name',  dataIndex: 'name', width: 100,
+                    {
+                        header: 'Name', dataIndex: 'name', width: 100,
                         filter: {
                             value: 'herring',
                             type: 'string'
                         }
                     },
-                    { header: 'Email', dataIndex: 'email', width: 100 },
-                    { header: 'Phone', dataIndex: 'phone', width: 100 }
+                    {header: 'Email', dataIndex: 'email', width: 100},
+                    {header: 'Phone', dataIndex: 'phone', width: 100}
                 ];
 
                 createGrid({}, {
@@ -2881,17 +3009,18 @@ describe('Ext.grid.filters.Filters', function () {
 
             it('should keep track of state information when changing values', function () {
                 var columns = [
-                    { header: 'Name',  dataIndex: 'name', filter: true, width: 100 },
-                    { header: 'DOB', dataIndex: 'dob', width: 100,
-                        filter: {
-                            type: 'date',
-                            value: {
-                                before: new Date('8/8/1992')
+                        {header: 'Name', dataIndex: 'name', filter: true, width: 100},
+                        {
+                            header: 'DOB', dataIndex: 'dob', width: 100,
+                            filter: {
+                                type: 'date',
+                                value: {
+                                    before: new Date('8/8/1992')
+                                }
                             }
                         }
-                    }
-                ],
-                date = new Date('1/22/1962');
+                    ],
+                    date = new Date('1/22/1962');
 
                 createGrid({}, {
                     columns: columns,
@@ -2934,13 +3063,14 @@ describe('Ext.grid.filters.Filters', function () {
         beforeEach(function () {
             createGrid({}, {
                 columns: [
-                    { header: 'Name',  dataIndex: 'name', width: 100,
+                    {
+                        header: 'Name', dataIndex: 'name', width: 100,
                         filter: {
                             type: 'string',
                             value: 'ben'
                         }
                     },
-                    { header: 'Email',  dataIndex: 'email', width: 100 }
+                    {header: 'Email', dataIndex: 'email', width: 100}
                 ]
             });
 
@@ -2967,13 +3097,14 @@ describe('Ext.grid.filters.Filters', function () {
         it('should return true if there are active filters', function () {
             createGrid({}, {
                 columns: [
-                    { header: 'Name',  dataIndex: 'name', width: 100,
+                    {
+                        header: 'Name', dataIndex: 'name', width: 100,
                         filter: {
                             type: 'string',
                             value: 'ben'
                         }
                     },
-                    { header: 'Email',  dataIndex: 'email', width: 100 }
+                    {header: 'Email', dataIndex: 'email', width: 100}
                 ]
             });
 
@@ -2984,8 +3115,8 @@ describe('Ext.grid.filters.Filters', function () {
             it('should return false if there are no active filters', function () {
                 createGrid({}, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', locked: true, width: 100 },
-                        { header: 'Email',  dataIndex: 'email', width: 100 }
+                        {header: 'Name', dataIndex: 'name', locked: true, width: 100},
+                        {header: 'Email', dataIndex: 'email', width: 100}
                     ]
                 });
 
@@ -2995,13 +3126,14 @@ describe('Ext.grid.filters.Filters', function () {
             it('should return true if there are active filters', function () {
                 createGrid({}, {
                     columns: [
-                        { header: 'Name',  dataIndex: 'name', locked: true, width: 100,
+                        {
+                            header: 'Name', dataIndex: 'name', locked: true, width: 100,
                             filter: {
                                 type: 'string',
                                 value: 'ben'
                             }
                         },
-                        { header: 'Email',  dataIndex: 'email', width: 100 }
+                        {header: 'Email', dataIndex: 'email', width: 100}
                     ]
                 });
 
@@ -3156,7 +3288,8 @@ describe('Ext.grid.filters.Filters', function () {
                             expect(store.isFiltered()).toBe(false);
 
                             grid.reconfigure(newStore, [
-                                { header: 'Name', dataIndex: 'name',
+                                {
+                                    header: 'Name', dataIndex: 'name',
                                     locked: locked,
                                     filter: {
                                         type: 'string',
@@ -3184,14 +3317,16 @@ describe('Ext.grid.filters.Filters', function () {
                             expect(store.isFiltered()).toBe(false);
 
                             grid.reconfigure(null, [
-                                { header: 'Name', dataIndex: 'name',
+                                {
+                                    header: 'Name', dataIndex: 'name',
                                     locked: locked,
                                     filter: {
                                         type: 'string',
                                         value: 'Jimmy'
                                     }
                                 },
-                                { header: 'Email', dataIndex: 'email', width: 100,
+                                {
+                                    header: 'Email', dataIndex: 'email', width: 100,
                                     filter: {
                                         type: 'string',
                                         value: 'jimmy@page.com'
@@ -3216,7 +3351,7 @@ describe('Ext.grid.filters.Filters', function () {
 
                             grid.columnManager.getHeaderByDataIndex('name').filter.setValue('Jimmy');
                             counter = store.getCount();
-                            grid.reconfigure(null, [{ header: 'Name', dataIndex: 'name', locked: locked, filter: true }]);
+                            grid.reconfigure(null, [{header: 'Name', dataIndex: 'name', locked: locked, filter: true}]);
 
                             expect(store.getCount()).toBe(counter);
                         });
@@ -3229,8 +3364,8 @@ describe('Ext.grid.filters.Filters', function () {
         });
     });
 
-    describe("destroy", function() {
-        it("should not destroy the store when the plugin is destroyed with autoDestroy: false", function() {
+    describe("destroy", function () {
+        it("should not destroy the store when the plugin is destroyed with autoDestroy: false", function () {
             createGrid({
                 autoDestroy: false
             });
@@ -3277,8 +3412,8 @@ describe('Ext.grid.filters.Filters', function () {
                     it('should not throw, locking = ' + locked, function () {
                         createGrid(null, {
                             columns: [
-                                { header: 'Name',  dataIndex: 'name', locked: locked, filter: true, width: 100 },
-                                { header: 'Email', dataIndex: 'email', filter: true, width: 100 }
+                                {header: 'Name', dataIndex: 'name', locked: locked, filter: true, width: 100},
+                                {header: 'Email', dataIndex: 'email', filter: true, width: 100}
                             ]
                         });
 

@@ -4,7 +4,7 @@
 Ext.define('Ext.data.Types', {
     singleton: true,
     requires: ['Ext.data.SortTypes']
-}, function(Types) {
+}, function (Types) {
     var SortTypes = Ext.data.SortTypes;
 
     Ext.apply(Types, {
@@ -29,7 +29,7 @@ Ext.define('Ext.data.Types', {
          * This data type means that the raw data is converted into a String before it is placed into a Record.
          */
         STRING: {
-            convert: function(v) {
+            convert: function (v) {
                 var defaultValue = this.getAllowNull() ? null : '';
                 return (v === undefined || v === null) ? defaultValue : String(v);
             },
@@ -44,7 +44,7 @@ Ext.define('Ext.data.Types', {
          * The synonym `INTEGER` is equivalent.
          */
         INT: {
-            convert: function(v) {
+            convert: function (v) {
                 // Handle values which are already numbers.
                 // Value truncation behaviour of parseInt is historic and must be maintained.
                 // parseInt(35.9)  and parseInt("35.9") returns 35
@@ -65,7 +65,7 @@ Ext.define('Ext.data.Types', {
          * The synonym `NUMBER` is equivalent.
          */
         FLOAT: {
-            convert: function(v) {
+            convert: function (v) {
                 if (typeof v === 'number') {
                     return v;
                 }
@@ -84,7 +84,7 @@ Ext.define('Ext.data.Types', {
          * The synonym `BOOLEAN` is equivalent.
          */
         BOOL: {
-            convert: function(v) {
+            convert: function (v) {
                 if (typeof v === 'boolean') {
                     return v;
                 }
@@ -104,7 +104,7 @@ Ext.define('Ext.data.Types', {
          * being applied.
          */
         DATE: {
-            convert: function(v) {
+            convert: function (v) {
                 var df = this.getDateReadFormat() || this.getDateFormat(),
                     parsed;
 

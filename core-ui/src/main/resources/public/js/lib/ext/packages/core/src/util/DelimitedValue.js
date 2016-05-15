@@ -64,7 +64,7 @@ Ext.define('Ext.util.DelimitedValue', {
      * or `{@link #lineBreak}` characters.
      */
     quote: '"',
-    
+
     parseREs: {},
     quoteREs: {},
 
@@ -103,8 +103,8 @@ Ext.define('Ext.util.DelimitedValue', {
      */
     decode: function (input, delimiter) {
         var me = this,
-            // Check to see if the column delimiter is defined. If not,
-            // then default to comma.
+        // Check to see if the column delimiter is defined. If not,
+        // then default to comma.
             delim = (delimiter || me.delimiter),
             row = [],
             result = [row],
@@ -112,8 +112,8 @@ Ext.define('Ext.util.DelimitedValue', {
             quoteREs = me.quoteREs,
             parseREs = me.parseREs,
 
-            // Create a regular expression to parse the CSV values unless we already have
-            // one for this delimiter.
+        // Create a regular expression to parse the CSV values unless we already have
+        // one for this delimiter.
             parseRE = parseREs[delim] ||
                 (parseREs[delim] = new RegExp(
                     // Delimiters.
@@ -121,11 +121,11 @@ Ext.define('Ext.util.DelimitedValue', {
 
                     // Quoted fields.
                     "(?:\\" + quote + "([^\\" + quote + "]*(?:\\" + quote + "\\" + quote +
-                            "[^\\" + quote + "]*)*)\\" + quote + "|" +
+                    "[^\\" + quote + "]*)*)\\" + quote + "|" +
 
                     // Standard fields.
                     "([^\"\\" + delim + "\\r\\n]*))",
-                "gi")),
+                    "gi")),
 
             dblQuoteRE = quoteREs[quote] ||
                 (quoteREs[quote] = new RegExp('\\' + quote + '\\' + quote, 'g')),

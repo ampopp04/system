@@ -1,4 +1,4 @@
-describe("Ext.view.MultiSelector", function(){
+describe("Ext.view.MultiSelector", function () {
     var Employee,
         panel,
         multiSelector,
@@ -38,9 +38,9 @@ describe("Ext.view.MultiSelector", function(){
         }
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -59,14 +59,14 @@ describe("Ext.view.MultiSelector", function(){
                 name: 'surname'
             }, {
                 name: 'name',
-                convert: function(v, rec) {
+                convert: function (v, rec) {
                     return rec.editing ? v : rec.get('forename') + ' ' + rec.get('surname');
                 }
             }]
         });
     });
 
-    afterEach(function() {
+    afterEach(function () {
         // Undo the overrides.
         Ext.data.ProxyStore.prototype.load = proxyStoreLoad;
 
@@ -76,9 +76,9 @@ describe("Ext.view.MultiSelector", function(){
         panel.destroy();
     });
 
-    it('should select the records in the searcher which match by ID the records in the selector', function() {
+    it('should select the records in the searcher which match by ID the records in the selector', function () {
         var searchStore;
-        
+
         panel = new Ext.panel.Panel({
             renderTo: document.body,
             width: 400,
@@ -99,8 +99,8 @@ describe("Ext.view.MultiSelector", function(){
                 fieldName: 'name',
 
                 viewConfig: {
-                   deferEmptyText: false,
-                   emptyText: 'No employees selected'
+                    deferEmptyText: false,
+                    emptyText: 'No employees selected'
                 },
 
                 search: {
@@ -116,7 +116,7 @@ describe("Ext.view.MultiSelector", function(){
                 }
             }]
         }),
-        multiSelector = panel.child('multiselector');
+            multiSelector = panel.child('multiselector');
 
         // Load the multiSelector's store
         multiSelector.store.load();
@@ -128,25 +128,25 @@ describe("Ext.view.MultiSelector", function(){
         multiSelector.onShowSearch();
 
         // Wait for search grid's store to kick off a load
-        waitsFor(function() {
+        waitsFor(function () {
             searchStore = multiSelector.searchPopup.child('gridpanel').store;
 
             return (searchStore instanceof Ext.data.Store) && searchStore.isLoading();
         }, 'searchStore to kick off a load');
-        
-        runs(function() {
+
+        runs(function () {
             Ext.Ajax.mockComplete({
                 status: 200,
                 responseText: Ext.JSON.encode(data)
             });
         });
-        
-        waitsFor(function() {
+
+        waitsFor(function () {
             return searchStore.getCount();
         }, 'searchStore to complete load');
 
         // Employee 0 must be selected in the search grid
-        runs(function() {
+        runs(function () {
             expect(multiSelector.down('gridpanel').selModel.getSelection()[0].get('name')).toBe(multiSelector.store.getAt(0).get('name'));
         });
     });

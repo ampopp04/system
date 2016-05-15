@@ -128,7 +128,7 @@ Ext.define('Ext.mixin.Container', {
             }
         },
 
-        containerOnAdded: function(component, instanced) {
+        containerOnAdded: function (component, instanced) {
             // We have been added to a container, we may have child references
             // or be a reference ourself. At this point we have no way of knowing if 
             // our references are correct, so trigger a fix.
@@ -137,9 +137,9 @@ Ext.define('Ext.mixin.Container', {
             }
         },
 
-        containerOnRemoved: function(destroying) {
+        containerOnRemoved: function (destroying) {
             var refHolder;
-        
+
             // If we're destroying this will get cleaned up anyway
             if (!destroying) {
                 refHolder = this.lookupReferenceHolder();
@@ -148,12 +148,12 @@ Ext.define('Ext.mixin.Container', {
                     // next call to lookupReference after being marked dirty.
                     // It's easier to wipe & re-establish them than attempt to 
                     // track what changed and prune the collection
-                    
+
                     Ext.ComponentManager.markReferencesDirty();
                     refHolder.clearReferences();
                 }
             }
-        },  
+        },
 
         /**
          * Invalidates the references collection. Typically called when
@@ -166,16 +166,15 @@ Ext.define('Ext.mixin.Container', {
             this.refs = null;
         },
 
-        initContainerInheritedState: function(inheritedState, inheritedStateInner) {
+        initContainerInheritedState: function (inheritedState, inheritedStateInner) {
             var me = this,
                 controller = me.getController(),
                 session = me.getSession(),
-                // Don't instantiate it here, we just want to know whether we
-                // were configured with a VM
+            // Don't instantiate it here, we just want to know whether we
+            // were configured with a VM
                 viewModel = me.getConfig('viewModel', true),
                 reference = me.getReference(),
                 referenceHolder = me.getReferenceHolder();
-
 
 
             if (controller) {
@@ -201,8 +200,8 @@ Ext.define('Ext.mixin.Container', {
                 inheritedState.viewModelPath = me.viewModelKey + '.';
             }
         },
-        
-        setupReference: function(reference) {
+
+        setupReference: function (reference) {
             var len;
 
             if (reference && reference.charAt(len = reference.length - 1) === '>') {

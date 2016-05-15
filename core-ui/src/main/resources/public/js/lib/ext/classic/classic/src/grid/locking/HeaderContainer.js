@@ -54,7 +54,7 @@ Ext.define('Ext.grid.locking.HeaderContainer', {
         "beforestaterestore"
     ],
 
-    constructor: function(lockable) {
+    constructor: function (lockable) {
         var me = this,
             lockedGrid = lockable.lockedGrid,
             normalGrid = lockable.normalGrid;
@@ -65,35 +65,35 @@ Ext.define('Ext.grid.locking.HeaderContainer', {
         // Create the unified column manager for the lockable grid assembly
         lockedGrid.visibleColumnManager.rootColumns =
             normalGrid.visibleColumnManager.rootColumns =
-            lockable.visibleColumnManager =
-            me.visibleColumnManager = new Ext.grid.ColumnManager(true, lockedGrid.headerCt, normalGrid.headerCt);
-            
+                lockable.visibleColumnManager =
+                    me.visibleColumnManager = new Ext.grid.ColumnManager(true, lockedGrid.headerCt, normalGrid.headerCt);
+
         lockedGrid.columnManager.rootColumns =
             normalGrid.columnManager.rootColumns =
-            lockable.columnManager =
-            me.columnManager = new Ext.grid.ColumnManager(false, lockedGrid.headerCt, normalGrid.headerCt);
+                lockable.columnManager =
+                    me.columnManager = new Ext.grid.ColumnManager(false, lockedGrid.headerCt, normalGrid.headerCt);
 
         // Relay *all* events from the two HeaderContainers
         me.lockedEventRelayers = me.relayEvents(lockedGrid.headerCt, me.headerCtRelayEvents);
         me.normalEventRelayers = me.relayEvents(normalGrid.headerCt, me.headerCtRelayEvents);
     },
-    
-    destroy: function() {
+
+    destroy: function () {
         var me = this;
-        
+
         Ext.destroy(me.lockedEventRelayers, me.normalEventRelayers);
         me.lockedEventRelayers = me.normalEventRelayers = null;
-        
+
         me.callParent();
     },
 
-    getRefItems: function() {
+    getRefItems: function () {
         return this.lockable.lockedGrid.headerCt.getRefItems().concat(this.lockable.normalGrid.headerCt.getRefItems());
     },
 
     // This is the function which all other column access methods are based upon
     // Return the full column set for the whole Lockable assembly
-    getGridColumns: function() {
+    getGridColumns: function () {
         return this.lockable.lockedGrid.headerCt.getGridColumns().concat(this.lockable.normalGrid.headerCt.getGridColumns());
     },
 
@@ -108,16 +108,16 @@ Ext.define('Ext.grid.locking.HeaderContainer', {
 
     // Lockable uses its headerCt to apply column state
     applyColumnsState: function (columns, storeState) {
-        var me             = this,
-            lockedGrid     = me.lockable.lockedGrid,
+        var me = this,
+            lockedGrid = me.lockable.lockedGrid,
             lockedHeaderCt = lockedGrid.headerCt,
             normalHeaderCt = me.lockable.normalGrid.headerCt,
-            lockedCols     = Ext.Array.toValueMap(lockedHeaderCt.items.items, 'stateId'),
-            normalCols     = Ext.Array.toValueMap(normalHeaderCt.items.items, 'stateId'),
-            locked         = [],
-            normal         = [],
-            lockedWidth    = 1,
-            length         = columns.length,
+            lockedCols = Ext.Array.toValueMap(lockedHeaderCt.items.items, 'stateId'),
+            normalCols = Ext.Array.toValueMap(normalHeaderCt.items.items, 'stateId'),
+            locked = [],
+            normal = [],
+            lockedWidth = 1,
+            length = columns.length,
             i, existing,
             lockedDefault,
             col;
@@ -158,14 +158,14 @@ Ext.define('Ext.grid.locking.HeaderContainer', {
         }
     },
 
-    disable: function() {
+    disable: function () {
         var topGrid = this.lockable;
 
         topGrid.lockedGrid.headerCt.disable();
         topGrid.normalGrid.headerCt.disable();
     },
 
-    enable: function() {
+    enable: function () {
         var topGrid = this.lockable;
 
         topGrid.lockedGrid.headerCt.enable();

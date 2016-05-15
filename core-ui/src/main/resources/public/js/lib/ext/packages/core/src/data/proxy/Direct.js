@@ -49,42 +49,42 @@ Ext.define('Ext.data.proxy.Direct', {
 
     config: {
         /**
-        * @cfg {String/String[]} paramOrder
-        * Defaults to undefined. A list of params to be executed server side.  Specify the params in the order in
-        * which they must be executed on the server-side as either (1) an Array of String values, or (2) a String
-        * of params delimited by either whitespace, comma, or pipe. For example, any of the following would be
-        * acceptable:
-        *
-        *     paramOrder: ['param1','param2','param3']
-        *     paramOrder: 'param1 param2 param3'
-        *     paramOrder: 'param1,param2,param3'
-        *     paramOrder: 'param1|param2|param'
-        */
+         * @cfg {String/String[]} paramOrder
+         * Defaults to undefined. A list of params to be executed server side.  Specify the params in the order in
+         * which they must be executed on the server-side as either (1) an Array of String values, or (2) a String
+         * of params delimited by either whitespace, comma, or pipe. For example, any of the following would be
+         * acceptable:
+         *
+         *     paramOrder: ['param1','param2','param3']
+         *     paramOrder: 'param1 param2 param3'
+         *     paramOrder: 'param1,param2,param3'
+         *     paramOrder: 'param1|param2|param'
+         */
         paramOrder: undefined,
 
         /**
-        * @cfg {Boolean} paramsAsHash
-        * Send parameters as a collection of named arguments.
-        * Providing a {@link #paramOrder} nullifies this configuration.
-        */
+         * @cfg {Boolean} paramsAsHash
+         * Send parameters as a collection of named arguments.
+         * Providing a {@link #paramOrder} nullifies this configuration.
+         */
         paramsAsHash: true,
 
         /**
-        * @cfg {Function/String} directFn
-        * Function to call when executing a request. directFn is a simple alternative to defining the api configuration-parameter
-        * for Store's which will not implement a full CRUD api. The directFn may also be a string reference to the fully qualified
-        * name of the function, for example: 'MyApp.company.GetProfile'. This can be useful when using dynamic loading. The string 
-        * will be looked up when the proxy is created.
-        */
-        directFn : undefined,
+         * @cfg {Function/String} directFn
+         * Function to call when executing a request. directFn is a simple alternative to defining the api configuration-parameter
+         * for Store's which will not implement a full CRUD api. The directFn may also be a string reference to the fully qualified
+         * name of the function, for example: 'MyApp.company.GetProfile'. This can be useful when using dynamic loading. The string
+         * will be looked up when the proxy is created.
+         */
+        directFn: undefined,
 
         /**
-        * @cfg {Object} api
-        * The same as {@link Ext.data.proxy.Server#api}, however instead of providing urls, you should provide a direct
-        * function call. See {@link #directFn}.
-        */
+         * @cfg {Object} api
+         * The same as {@link Ext.data.proxy.Server#api}, however instead of providing urls, you should provide a direct
+         * function call. See {@link #directFn}.
+         */
         api: undefined,
-        
+
         /**
          * @cfg {Object/Array} [metadata]
          * Optional set of fixed parameters to send with every Proxy request, similar to
@@ -100,83 +100,83 @@ Ext.define('Ext.data.proxy.Direct', {
      * @private
      */
     paramOrderRe: /[\s,|]/,
-    
-    applyParamOrder: function(paramOrder) {
+
+    applyParamOrder: function (paramOrder) {
         if (Ext.isString(paramOrder)) {
             paramOrder = paramOrder.split(this.paramOrderRe);
         }
         return paramOrder;
     },
 
-    updateApi: function() {
+    updateApi: function () {
         this.methodsResolved = false;
     },
 
-    updateDirectFn: function() {
+    updateDirectFn: function () {
         this.methodsResolved = false;
     },
-    
-    resolveMethods: function() {
+
+    resolveMethods: function () {
         var me = this,
             fn = me.getDirectFn(),
             api = me.getApi(),
             Manager = Ext.direct.Manager,
             method;
-        
+
         if (fn) {
             me.setDirectFn(method = Manager.parseMethod(fn));
-            
+
             if (!Ext.isFunction(method)) {
                 Ext.raise('Cannot resolve directFn ' + fn);
             }
         }
-        
+
         if (api) {
             for (fn in api) {
                 if (api.hasOwnProperty(fn)) {
                     method = api[fn];
                     api[fn] = Manager.parseMethod(method);
-                    
+
                     if (!Ext.isFunction(api[fn])) {
                         Ext.raise('Cannot resolve Direct api ' + fn + ' method ' + method);
                     }
                 }
             }
         }
-        
+
         me.methodsResolved = true;
     },
 
-    doRequest: function(operation) {
+    doRequest: function (operation) {
         var me = this,
             writer, request, action, params, args, api, fn, callback;
-        
+
         if (!me.methodsResolved) {
             me.resolveMethods();
         }
-        
+
         request = me.buildRequest(operation);
-        action  = request.getAction();
-        api     = me.getApi();
+        action = request.getAction();
+        api = me.getApi();
 
         if (api) {
             fn = api[action];
         }
-        
+
         fn = fn || me.getDirectFn();
-        
+
         //<debug>
         if (!fn) {
             Ext.raise('No Ext Direct function specified for this proxy');
         }
         //</debug>
-        
+
         writer = me.getWriter();
 
         if (writer && operation.allowWrite()) {
             request = writer.write(request);
         }
-        
+
         // The weird construct below is due to historical way of handling extraParams;
         // they were mixed in with request data in ServerProxy.buildRequest() and were
         // inseparable after that point. This does not work well with CUD operations
@@ -191,7 +191,7 @@ Ext.define('Ext.data.proxy.Direct', {
         else {
             params = request.getJsonData();
         }
-        
+
         args = fn.directCfg.method.getArgs({
             params: params,
             paramOrder: me.getParamOrder(),
@@ -200,14 +200,14 @@ Ext.define('Ext.data.proxy.Direct', {
             callback: me.createRequestCallback(request, operation),
             scope: me
         });
-        
+
         request.setConfig({
             args: args,
             directFn: fn
         });
-        
+
         fn.apply(window, args);
-        
+
         // Store expects us to return something to indicate that the request
         // is pending; not doing so will make a buffered Store repeat the
         // requests over and over. See https://sencha.jira.com/browse/EXTJSIV-11757
@@ -220,10 +220,10 @@ Ext.define('Ext.data.proxy.Direct', {
      */
     applyEncoding: Ext.identityFn,
 
-    createRequestCallback: function(request, operation){
+    createRequestCallback: function (request, operation) {
         var me = this;
 
-        return function(data, event){
+        return function (data, event) {
             me.processResponse(event.status, operation, request, event);
         };
     },
@@ -232,7 +232,7 @@ Ext.define('Ext.data.proxy.Direct', {
      * @method
      * @inheritdoc
      */
-    extractResponseData: function(response){
+    extractResponseData: function (response) {
         return Ext.isDefined(response.result) ? response.result : response.data;
     },
 
@@ -240,7 +240,7 @@ Ext.define('Ext.data.proxy.Direct', {
      * @method
      * @inheritdoc
      */
-    setException: function(operation, response) {
+    setException: function (operation, response) {
         operation.setException(response.message);
     },
 
@@ -248,7 +248,7 @@ Ext.define('Ext.data.proxy.Direct', {
      * @method
      * @inheritdoc
      */
-    buildUrl: function(){
+    buildUrl: function () {
         return '';
     }
 });

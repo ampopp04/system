@@ -19,7 +19,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
     /**
      * @cfg {Boolean} [hideNavIcons=false] True to hide the navigation icons
      */
-    hideNavIcons:false,
+    hideNavIcons: false,
 
     /**
      * @cfg {Array} buttons Defines the set of buttons that should be displayed in between the ItemSelector
@@ -46,16 +46,16 @@ Ext.define('Ext.ux.form.ItemSelector', {
         type: 'hbox',
         align: 'stretch'
     },
-    
+
     ariaRole: 'group',
 
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
 
         me.ddGroup = me.id + '-dd';
         me.ariaRenderAttributes = me.ariaRenderAttributes || {};
         me.ariaRenderAttributes['aria-labelledby'] = me.id + '-labelEl';
-        
+
         me.callParent();
 
         // bindStore must be called after the fromField has been created because
@@ -63,7 +63,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         me.bindStore(me.store);
     },
 
-    createList: function(title){
+    createList: function (title) {
         var me = this;
 
         return Ext.create('Ext.ux.form.MultiSelect', {
@@ -71,11 +71,11 @@ Ext.define('Ext.ux.form.ItemSelector', {
             // so override these methods to prevent them from including
             // any of their values
             submitValue: false,
-            getSubmitData: function(){
+            getSubmitData: function () {
                 return null;
             },
-            getModelData: function(){
-                return null;    
+            getModelData: function () {
+                return null;
             },
             flex: 1,
             dragGroup: me.ddGroup,
@@ -98,7 +98,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         });
     },
 
-    setupItems: function() {
+    setupItems: function () {
         var me = this;
 
         me.fromField = me.createList(me.fromTitle);
@@ -120,12 +120,12 @@ Ext.define('Ext.ux.form.ItemSelector', {
         ];
     },
 
-    createButtons: function() {
+    createButtons: function () {
         var me = this,
             buttons = [];
 
         if (!me.hideNavIcons) {
-            Ext.Array.forEach(me.buttons, function(name) {
+            Ext.Array.forEach(me.buttons, function (name) {
                 buttons.push({
                     xtype: 'button',
                     ui: 'default',
@@ -145,16 +145,16 @@ Ext.define('Ext.ux.form.ItemSelector', {
 
     /**
      * Get the selected records from the specified list.
-     * 
+     *
      * Records will be returned *in store order*, not in order of selection.
      * @param {Ext.view.BoundList} list The list to read selections from.
      * @return {Ext.data.Model[]} The selected records in store order.
-     * 
+     *
      */
-    getSelections: function(list) {
+    getSelections: function (list) {
         var store = list.getStore();
 
-        return Ext.Array.sort(list.getSelectionModel().getSelection(), function(a, b) {
+        return Ext.Array.sort(list.getSelectionModel().getSelection(), function (a, b) {
             a = store.indexOf(a);
             b = store.indexOf(b);
 
@@ -167,7 +167,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         });
     },
 
-    onTopBtnClick : function() {
+    onTopBtnClick: function () {
         var list = this.toField.boundList,
             store = list.getStore(),
             selected = this.getSelections(list);
@@ -177,11 +177,11 @@ Ext.define('Ext.ux.form.ItemSelector', {
         store.insert(0, selected);
         store.resumeEvents();
         list.refresh();
-        this.syncValue(); 
+        this.syncValue();
         list.getSelectionModel().select(selected);
     },
 
-    onBottomBtnClick : function() {
+    onBottomBtnClick: function () {
         var list = this.toField.boundList,
             store = list.getStore(),
             selected = this.getSelections(list);
@@ -195,7 +195,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         list.getSelectionModel().select(selected);
     },
 
-    onUpBtnClick : function() {
+    onUpBtnClick: function () {
         var list = this.toField.boundList,
             store = list.getStore(),
             selected = this.getSelections(list),
@@ -218,7 +218,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         list.getSelectionModel().select(selected);
     },
 
-    onDownBtnClick : function() {
+    onDownBtnClick: function () {
         var list = this.toField.boundList,
             store = list.getStore(),
             selected = this.getSelections(list),
@@ -240,7 +240,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         list.getSelectionModel().select(selected);
     },
 
-    onAddBtnClick : function() {
+    onAddBtnClick: function () {
         var me = this,
             selected = me.getSelections(me.fromField.boundList);
 
@@ -248,7 +248,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         me.toField.boundList.getSelectionModel().select(selected);
     },
 
-    onRemoveBtnClick : function() {
+    onRemoveBtnClick: function () {
         var me = this,
             selected = me.getSelections(me.toField.boundList);
 
@@ -256,12 +256,12 @@ Ext.define('Ext.ux.form.ItemSelector', {
         me.fromField.boundList.getSelectionModel().select(selected);
     },
 
-    moveRec: function(add, recs) {
+    moveRec: function (add, recs) {
         var me = this,
             fromField = me.fromField,
-            toField   = me.toField,
+            toField = me.toField,
             fromStore = add ? fromField.store : toField.store,
-            toStore   = add ? toField.store   : fromField.store;
+            toStore = add ? toField.store : fromField.store;
 
         fromStore.suspendEvents();
         toStore.suspendEvents();
@@ -269,7 +269,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         toStore.add(recs);
         fromStore.resumeEvents();
         toStore.resumeEvents();
-        
+
         // If the list item was focused when moved (e.g. via double-click)
         // then removing it will cause the focus to be thrown back to the
         // document body. Which might disrupt things if ItemSelector is
@@ -286,16 +286,16 @@ Ext.define('Ext.ux.form.ItemSelector', {
     },
 
     // Synchronizes the submit value with the current state of the toStore
-    syncValue: function() {
-        var me = this; 
+    syncValue: function () {
+        var me = this;
         me.mixins.field.setValue.call(me, me.setupValue(me.toField.store.getRange()));
     },
 
-    onItemDblClick: function(view, rec) {
+    onItemDblClick: function (view, rec) {
         this.moveRec(view === this.fromField.boundList, rec);
     },
 
-    setValue: function(value) {
+    setValue: function (value) {
         var me = this,
             fromField = me.fromField,
             toField = me.toField,
@@ -328,7 +328,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         me.populateFromStore(me.store);
 
         // Copy selection across to toStore
-        Ext.Array.forEach(selected, function(rec){
+        Ext.Array.forEach(selected, function (rec) {
             // In the from store, move it over
             if (fromStore.indexOf(rec) > -1) {
                 fromStore.remove(rec);
@@ -344,10 +344,10 @@ Ext.define('Ext.ux.form.ItemSelector', {
         Ext.suspendLayouts();
         fromField.boundList.refresh();
         toField.boundList.refresh();
-        Ext.resumeLayouts(true);        
+        Ext.resumeLayouts(true);
     },
 
-    onBindStore: function(store, initial) {
+    onBindStore: function (store, initial) {
         var me = this;
 
         if (me.fromField) {
@@ -363,7 +363,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         }
     },
 
-    populateFromStore: function(store) {
+    populateFromStore: function (store) {
         var fromStore = this.fromField.store;
 
         // Flag set when the fromStore has been loaded
@@ -375,31 +375,31 @@ Ext.define('Ext.ux.form.ItemSelector', {
         fromStore.fireEvent('load', fromStore);
     },
 
-    onEnable: function(){
+    onEnable: function () {
         var me = this;
 
         me.callParent();
         me.fromField.enable();
         me.toField.enable();
 
-        Ext.Array.forEach(me.query('[navBtn]'), function(btn){
+        Ext.Array.forEach(me.query('[navBtn]'), function (btn) {
             btn.enable();
         });
     },
 
-    onDisable: function(){
+    onDisable: function () {
         var me = this;
 
         me.callParent();
         me.fromField.disable();
         me.toField.disable();
 
-        Ext.Array.forEach(me.query('[navBtn]'), function(btn){
+        Ext.Array.forEach(me.query('[navBtn]'), function (btn) {
             btn.disable();
         });
     },
 
-    onDestroy: function(){
+    onDestroy: function () {
         this.bindStore(null);
         this.callParent();
     }

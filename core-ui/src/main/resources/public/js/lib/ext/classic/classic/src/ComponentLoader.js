@@ -1,5 +1,5 @@
 /**
- * This class is used to load content via Ajax into a {@link Ext.Component}. In general 
+ * This class is used to load content via Ajax into a {@link Ext.Component}. In general
  * this class will not be instanced directly, rather a loader configuration will be passed to the
  * constructor of the {@link Ext.Component}.
  *
@@ -56,7 +56,7 @@ Ext.define('Ext.ComponentLoader', {
 
     statics: {
         Renderer: {
-            Data: function(loader, response, active){
+            Data: function (loader, response, active) {
                 var success = true;
                 try {
                     loader.getTarget().update(Ext.decode(response.responseText));
@@ -66,7 +66,7 @@ Ext.define('Ext.ComponentLoader', {
                 return success;
             },
 
-            Component: function(loader, response, active){
+            Component: function (loader, response, active) {
                 var success = true,
                     target = loader.getTarget(),
                     items = [];
@@ -135,21 +135,21 @@ Ext.define('Ext.ComponentLoader', {
     /**
      * @cfg {String/Function} renderer
 
-The type of content that is to be loaded into, which can be one of 3 types:
+     The type of content that is to be loaded into, which can be one of 3 types:
 
-+ **html** : Loads raw html content, see {@link Ext.Component#html}
-+ **data** : Loads raw html content, see {@link Ext.Component#data}
-+ **component** : Loads child {Ext.Component} instances. This option is only valid when used with a Container.
+     + **html** : Loads raw html content, see {@link Ext.Component#html}
+     + **data** : Loads raw html content, see {@link Ext.Component#data}
+     + **component** : Loads child {Ext.Component} instances. This option is only valid when used with a Container.
 
-Alternatively, you can pass a function which is called with the following parameters.
+     Alternatively, you can pass a function which is called with the following parameters.
 
-+ loader - Loader instance
-+ response - The server response
-+ active - The active request
+     + loader - Loader instance
+     + response - The server response
+     + active - The active request
 
-The function must return false is loading is not successful. Below is a sample of using a custom renderer:
+     The function must return false is loading is not successful. Below is a sample of using a custom renderer:
 
-    new Ext.Component({
+     new Ext.Component({
         loader: {
             url: 'myPage.php',
             renderer: function(loader, response, active) {
@@ -168,7 +168,7 @@ The function must return false is loading is not successful. Below is a sample o
      * @param {String/Ext.Component} target The component to be the target of this loader. If a string is passed
      * it will be looked up via its id.
      */
-    setTarget: function(target) {
+    setTarget: function (target) {
         var me = this;
 
         if (Ext.isString(target)) {
@@ -188,12 +188,12 @@ The function must return false is loading is not successful. Below is a sample o
         }
     },
 
-    doLoadOnRender: function() {
+    doLoadOnRender: function () {
         var loadOnRender = this.loadOnRender;
         this.load(Ext.isObject(loadOnRender) ? loadOnRender : null);
     },
 
-    removeMask: function(){
+    removeMask: function () {
         this.target.setLoading(false);
     },
 
@@ -202,12 +202,12 @@ The function must return false is loading is not successful. Below is a sample o
      * @private
      * @param {Boolean/Object} mask The mask configuration
      */
-    addMask: function(mask){
+    addMask: function (mask) {
         this.target.setLoading(mask);
     },
 
 
-    setOptions: function(active, options){
+    setOptions: function (active, options) {
         active.removeAll = Ext.isDefined(options.removeAll) ? options.removeAll : this.removeAll;
         active.rendererScope = options.rendererScope || this.rendererScope || this.target;
     },
@@ -218,7 +218,7 @@ The function must return false is loading is not successful. Below is a sample o
      * @param {String/Function} renderer The renderer to use
      * @return {Function} A rendering function to use.
      */
-    getRenderer: function(renderer){
+    getRenderer: function (renderer) {
         if (Ext.isFunction(renderer)) {
             return renderer;
         }

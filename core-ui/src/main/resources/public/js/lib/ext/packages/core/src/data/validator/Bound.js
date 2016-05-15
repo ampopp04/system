@@ -5,42 +5,42 @@
 Ext.define('Ext.data.validator.Bound', {
     extend: 'Ext.data.validator.Validator',
     alias: 'data.validator.bound',
-    
+
     type: 'bound',
-    
+
     config: {
         /**
          * @cfg {Number} min
          * The minimum length value.
          */
         min: undefined,
-        
+
         /**
          * @cfg {Number} max
          * The maximum length value.
          */
         max: undefined,
-        
+
         /**
          * @cfg {String} emptyMessage
          * The error message to return when the value is empty.
          */
         emptyMessage: 'Must be present',
-        
+
         /**
          * @cfg {String} minOnlyMessage
          * The error message to return when the value is less than the minimum
          * and only a minimum is specified.
          */
         minOnlyMessage: null,
-        
+
         /**
          * @cfg {String} maxOnlyMessage
          * The error message to return when the value is more than the maximum
          * and only a maximum is specified.
          */
         maxOnlyMessage: null,
-        
+
         /**
          * @cfg {String} bothMessage
          * The error message to return when the value is not in the specified range
@@ -48,70 +48,70 @@ Ext.define('Ext.data.validator.Bound', {
          */
         bothOnlyMessage: null
     },
-    
-    constructor: function() {
+
+    constructor: function () {
         var me = this;
-        
+
         me.preventConfigure = true;
         me.callParent(arguments);
         delete me.preventConfigure;
         me.configure();
     },
-    
-    setConfig: function() {
+
+    setConfig: function () {
         var me = this;
-        
-        me.preventConfigure = true;   
+
+        me.preventConfigure = true;
         me.callParent(arguments);
         delete me.preventConfigure;
         me.configure();
     },
-    
-    configure: function() {
+
+    configure: function () {
         var me = this,
             hasMin, hasMax,
             min, max;
-            
+
         if (me.preventConfigure) {
             return;
         }
-            
+
         min = me.getMin();
         max = me.getMax();
-            
+
         hasMin = me.hasMin = min !== undefined;
         hasMax = me.hasMax = max !== undefined;
-        
+
         if (hasMin && hasMax) {
-            me._bothMsg = Ext.String.format(me.getBothMessage(), min, max); 
+            me._bothMsg = Ext.String.format(me.getBothMessage(), min, max);
         } else if (hasMin) {
             me._minMsg = Ext.String.format(me.getMinOnlyMessage(), min);
         } else if (hasMax) {
             me._maxMsg = Ext.String.format(me.getMaxOnlyMessage(), max);
-        }     
+        }
     },
-    
-    updateMin: function() {
-        this.configure();    
+
+    updateMin: function () {
+        this.configure();
     },
-    
-    updateMax: function() {
-        this.configure();    
+
+    updateMax: function () {
+        this.configure();
     },
-    
-    updateMinOnlyMessage: function(v) {
-        this.configure();    
+
+    updateMinOnlyMessage: function (v) {
+        this.configure();
     },
-    
-    updateMaxOnlyMessage: function() {
-        this.configure();  
+
+    updateMaxOnlyMessage: function () {
+        this.configure();
     },
-    
-    updateBothMessage: function() {
-        this.configure();  
+
+    updateBothMessage: function () {
+        this.configure();
     },
-    
-    validate: function(value) {
+
+    validate: function (value) {
         var me = this,
             hasMin = me.hasMin,
             hasMax = me.hasMax,
@@ -123,7 +123,7 @@ Ext.define('Ext.data.validator.Bound', {
         if (msg !== true) {
             return msg;
         }
-        
+
         value = me.getValue(value);
         if (hasMin && hasMax) {
             if (value < min || value > max) {
@@ -136,18 +136,18 @@ Ext.define('Ext.data.validator.Bound', {
         } else if (hasMax) {
             if (value > max) {
                 msg = me._maxMsg;
-            }    
+            }
         }
-        
+
         return msg;
     },
 
-    validateValue: function(value) {
+    validateValue: function (value) {
         if (value === undefined || value === null) {
             return this.getEmptyMessage();
         }
         return true;
     },
-    
+
     getValue: Ext.identityFn
 });

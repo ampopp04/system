@@ -1,4 +1,4 @@
-describe("Ext.list.Tree", function() {
+describe("Ext.list.Tree", function () {
 
     var root, list, store, sampleData;
 
@@ -29,7 +29,7 @@ describe("Ext.list.Tree", function() {
         }
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         sampleData = [{
             id: 'i1',
             text: 'Item 1',
@@ -68,7 +68,7 @@ describe("Ext.list.Tree", function() {
         }];
     });
 
-    afterEach(function() {
+    afterEach(function () {
         root = sampleData = store = list = Ext.destroy(list, store);
     });
 
@@ -80,7 +80,7 @@ describe("Ext.list.Tree", function() {
         return list.getItem(byId(id));
     }
 
-    describe("store", function() {
+    describe("store", function () {
         function getListeners() {
             var listeners = {},
                 hasListeners = store.hasListeners,
@@ -94,8 +94,8 @@ describe("Ext.list.Tree", function() {
             return listeners;
         }
 
-        describe("configuration", function() {
-            it("should accept a store id", function() {
+        describe("configuration", function () {
+            it("should accept a store id", function () {
                 store = new Ext.data.TreeStore({
                     id: 'storeWithId',
                     model: Model
@@ -107,7 +107,7 @@ describe("Ext.list.Tree", function() {
                 expect(list.getStore()).toBe(store);
             });
 
-            it("should accept a store config and default the type to Ext.data.TreeStore", function() {
+            it("should accept a store config and default the type to Ext.data.TreeStore", function () {
                 makeList({
                     store: {
                         storeId: 'storeWithId',
@@ -118,7 +118,7 @@ describe("Ext.list.Tree", function() {
                 expect(list.getStore().getStoreId()).toBe('storeWithId');
             });
 
-            it("should accept a store config with a type", function() {
+            it("should accept a store config with a type", function () {
                 Ext.define('spec.CustomTreeStore', {
                     extend: 'Ext.data.TreeStore',
                     alias: 'store.customtree'
@@ -137,7 +137,7 @@ describe("Ext.list.Tree", function() {
                 Ext.undefine('spec.CustomTreeStore');
             });
 
-            it("should accept a store instance", function() {
+            it("should accept a store instance", function () {
                 store = new Ext.data.TreeStore({
                     model: Model
                 });
@@ -149,13 +149,13 @@ describe("Ext.list.Tree", function() {
             });
         });
 
-        describe("setting after creation", function() {
-            describe("with no existing store", function() {
-                beforeEach(function() {
+        describe("setting after creation", function () {
+            describe("with no existing store", function () {
+                beforeEach(function () {
                     makeList(null, true);
                 });
 
-                it("should accept a store id", function() {
+                it("should accept a store id", function () {
                     store = new Ext.data.TreeStore({
                         id: 'storeWithId',
                         model: Model
@@ -164,7 +164,7 @@ describe("Ext.list.Tree", function() {
                     expect(list.getStore()).toBe(store);
                 });
 
-                it("should accept a store config and default the type to Ext.data.TreeStore", function() {
+                it("should accept a store config and default the type to Ext.data.TreeStore", function () {
                     list.setStore({
                         storeId: 'storeWithId',
                         model: Model
@@ -173,7 +173,7 @@ describe("Ext.list.Tree", function() {
                     expect(list.getStore().getStoreId()).toBe('storeWithId');
                 });
 
-                it("should accept a store config with a type", function() {
+                it("should accept a store config with a type", function () {
                     Ext.define('spec.CustomTreeStore', {
                         extend: 'Ext.data.TreeStore',
                         alias: 'store.customtree'
@@ -190,7 +190,7 @@ describe("Ext.list.Tree", function() {
                     Ext.undefine('spec.CustomTreeStore');
                 });
 
-                it("should accept a store instance", function() {
+                it("should accept a store instance", function () {
                     store = new Ext.data.TreeStore({
                         model: Model
                     });
@@ -199,10 +199,10 @@ describe("Ext.list.Tree", function() {
                 });
             });
 
-            describe("with an existing store", function() {
+            describe("with an existing store", function () {
                 var listeners;
 
-                beforeEach(function() {
+                beforeEach(function () {
                     store = new Ext.data.TreeStore({
                         model: Model
                     });
@@ -210,11 +210,11 @@ describe("Ext.list.Tree", function() {
                     makeList();
                 });
 
-                afterEach(function() {
+                afterEach(function () {
                     listeners = null;
                 });
 
-                it("should accept a store id and unbind old store listeners", function() {
+                it("should accept a store id and unbind old store listeners", function () {
                     var newStore = new Ext.data.TreeStore({
                         id: 'storeWithId',
                         model: Model
@@ -226,7 +226,7 @@ describe("Ext.list.Tree", function() {
                     newStore.destroy();
                 });
 
-                it("should accept a store config and default the type to Ext.data.TreeStore and unbind old store listeners", function() {
+                it("should accept a store config and default the type to Ext.data.TreeStore and unbind old store listeners", function () {
                     list.setStore({
                         storeId: 'storeWithId',
                         model: Model
@@ -236,7 +236,7 @@ describe("Ext.list.Tree", function() {
                     expect(getListeners()).toEqual(listeners);
                 });
 
-                it("should accept a store config with a type and unbind old store listeners", function() {
+                it("should accept a store config with a type and unbind old store listeners", function () {
                     Ext.define('spec.CustomTreeStore', {
                         extend: 'Ext.data.TreeStore',
                         alias: 'store.customtree'
@@ -254,7 +254,7 @@ describe("Ext.list.Tree", function() {
                     Ext.undefine('spec.CustomTreeStore');
                 });
 
-                it("should accept a store instance and unbind old store listeners", function() {
+                it("should accept a store instance and unbind old store listeners", function () {
                     var newStore = new Ext.data.TreeStore({
                         model: Model
                     });
@@ -264,12 +264,12 @@ describe("Ext.list.Tree", function() {
                     newStore.destroy();
                 });
 
-                it("should not destroy the old store with autoDestroy: false", function() {
+                it("should not destroy the old store with autoDestroy: false", function () {
                     list.setStore(null);
                     expect(store.destroyed).toBe(false);
                 });
 
-                it("should destroy the old store with autoDestroy: true", function() {
+                it("should destroy the old store with autoDestroy: true", function () {
                     store.setAutoDestroy(true);
                     list.setStore(null);
                     expect(store.destroyed).toBe(true);
@@ -277,33 +277,33 @@ describe("Ext.list.Tree", function() {
             });
         });
 
-        describe("destruction", function() {
-            beforeEach(function() {
+        describe("destruction", function () {
+            beforeEach(function () {
                 store = new Ext.data.TreeStore({
                     model: Model
                 });
             });
 
-            it("should set the store to null", function() {
+            it("should set the store to null", function () {
                 makeList();
                 list.destroy();
                 expect(list.getStore()).toBeNull();
             });
 
-            it("should unbind any listeners", function() {
+            it("should unbind any listeners", function () {
                 var listeners = getListeners();
                 makeList();
                 list.destroy();
                 expect(getListeners()).toEqual(listeners);
             });
 
-            it("should not destroy the store if autoDestroy: false", function() {
+            it("should not destroy the store if autoDestroy: false", function () {
                 makeList();
                 list.destroy();
                 expect(store.destroyed).toBe(false);
             });
 
-            it("should destroy the store if autoDestroy: true", function() {
+            it("should destroy the store if autoDestroy: true", function () {
                 store.setAutoDestroy(true);
                 makeList();
                 list.destroy();
@@ -315,7 +315,7 @@ describe("Ext.list.Tree", function() {
     // The purpose for these tests is to test the API between the list and the item.
     // Because the item class is expected to be subclassed, there's not much point testing
     // the UI portion default class here. This is why these tests seem a little abstract.
-    describe("items", function() {
+    describe("items", function () {
         var insertSpy, removeSpy, expandSpy, collapseSpy, hasFirst;
 
         function makeCustomList(cfg, noStore) {
@@ -333,7 +333,7 @@ describe("Ext.list.Tree", function() {
             });
         }
 
-        beforeEach(function() {
+        beforeEach(function () {
             insertSpy = jasmine.createSpy();
             removeSpy = jasmine.createSpy();
             expandSpy = jasmine.createSpy();
@@ -351,7 +351,7 @@ describe("Ext.list.Tree", function() {
                         testConfig: null
                     },
 
-                    constructor: function(config) {
+                    constructor: function (config) {
                         this.logs = {
                             expandable: [],
                             expanded: [],
@@ -372,60 +372,60 @@ describe("Ext.list.Tree", function() {
                         this.callParent([config]);
                     },
 
-                    insertItem: function(item, refItem) {
+                    insertItem: function (item, refItem) {
                         this.logs.insertItem.push([item, refItem]);
-                    },  
+                    },
 
-                    removeItem: function(item) {
+                    removeItem: function (item) {
                         this.logs.removeItem.push(item);
                     },
 
-                    nodeCollapse: function(node) {
+                    nodeCollapse: function (node) {
                         this.logs.onNodeCollapse.push(node);
                         this.callParent(arguments);
                     },
 
-                    nodeExpand: function(node) {
+                    nodeExpand: function (node) {
                         this.logs.onNodeExpand.push(node);
                         this.callParent(arguments);
                     },
 
-                    nodeInsert: function(node, refNode) {
+                    nodeInsert: function (node, refNode) {
                         this.logs.onNodeInsert.push([node, refNode]);
                         this.callParent(arguments);
                     },
 
-                    nodeRemove: function(node) {
+                    nodeRemove: function (node) {
                         this.logs.onNodeRemove.push(node);
                         this.callParent(arguments);
                     },
 
-                    nodeUpdate: function(node, modifiedFieldNames) {
+                    nodeUpdate: function (node, modifiedFieldNames) {
                         this.logs.onNodeUpdate.push([node, modifiedFieldNames]);
                         this.callParent(arguments);
                     },
 
-                    updateExpandable: function(expandable) {
+                    updateExpandable: function (expandable) {
                         this.logs.expandable.push(expandable);
                     },
 
-                    updateExpanded: function(expanded) {
+                    updateExpanded: function (expanded) {
                         this.logs.expanded.push(expanded);
                     },
 
-                    updateIconCls: function(iconCls) {
+                    updateIconCls: function (iconCls) {
                         this.logs.iconCls.push(iconCls);
                     },
 
-                    updateLeaf: function(leaf) {
+                    updateLeaf: function (leaf) {
                         this.logs.leaf.push(leaf);
                     },
 
-                    updateLoading: function(loading) {
+                    updateLoading: function (loading) {
                         this.logs.loading.push(loading);
                     },
 
-                    updateText: function(text) {
+                    updateText: function (text) {
                         this.logs.text.push(text);
                     }
                 });
@@ -435,57 +435,57 @@ describe("Ext.list.Tree", function() {
             }
         });
 
-        afterEach(function() {
+        afterEach(function () {
             insertSpy = removeSpy = expandSpy = collapseSpy = null;
         });
 
-        describe("configuration of items", function() {
-            it("should use the default item type", function() {
+        describe("configuration of items", function () {
+            it("should use the default item type", function () {
                 makeList();
 
-                list.getStore().each(function(node) {
+                list.getStore().each(function (node) {
                     expect(list.getItem(node).xtype).toBe(list.getDefaults().xtype);
                 });
             });
 
-            it("should use a specified type", function() {
+            it("should use a specified type", function () {
                 makeList({
                     defaults: {
                         xtype: 'spec_treelist_customitem'
                     }
                 });
 
-                list.getStore().each(function(node) {
+                list.getStore().each(function (node) {
                     expect(list.getItem(node).xtype).toBe('spec_treelist_customitem');
                 });
             });
         });
 
-        describe("at creation", function() {
-            describe("top level nodes", function() {
-                describe("expanded: false, with children", function() {
-                    it("should set expanded", function() {
+        describe("at creation", function () {
+            describe("top level nodes", function () {
+                describe("expanded: false, with children", function () {
+                    it("should set expanded", function () {
                         makeCustomList();
                         var item = getItem('i1');
                         expect(item.logs.expanded).toEqual([]);
                         expect(item.getExpanded()).toBe(false);
                     });
 
-                    it("should set expandable", function() {
+                    it("should set expandable", function () {
                         makeCustomList();
                         var item = getItem('i1');
                         expect(item.logs.expandable).toEqual([true]);
                         expect(item.getExpandable()).toBe(true);
                     });
 
-                    it("should set leaf", function() {
+                    it("should set leaf", function () {
                         makeCustomList();
                         var item = getItem('i1');
                         expect(item.logs.leaf).toEqual([false]);
                         expect(item.getLeaf()).toBe(false);
                     });
 
-                    it("should set the icon if iconClsProperty is specified", function() {
+                    it("should set the icon if iconClsProperty is specified", function () {
                         sampleData[0].iconCls = 'iconA';
                         makeCustomList();
                         var item = getItem('i1');
@@ -493,7 +493,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.getIconCls()).toBe('iconA');
                     });
 
-                    it("should not set the icon if an iconClsProperty is not specified", function() {
+                    it("should not set the icon if an iconClsProperty is not specified", function () {
                         sampleData[0].iconCls = 'iconA';
                         makeCustomList({
                             defaults: {
@@ -505,14 +505,14 @@ describe("Ext.list.Tree", function() {
                         expect(item.getIconCls()).toBe('');
                     });
 
-                    it("should set the text if a textProperty is specified", function() {
+                    it("should set the text if a textProperty is specified", function () {
                         makeCustomList();
                         var item = getItem('i1');
                         expect(item.logs.text).toEqual(['Item 1']);
                         expect(item.getText()).toBe('Item 1');
                     });
 
-                    it("should not set the text if an textProperty is not specified", function() {
+                    it("should not set the text if an textProperty is not specified", function () {
                         makeCustomList({
                             defaults: {
                                 textProperty: ''
@@ -523,7 +523,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.getText()).toBe('');
                     });
 
-                    it("should insert the child nodes", function() {
+                    it("should insert the child nodes", function () {
                         makeCustomList();
                         var item = getItem('i1');
                         expect(item.logs.insertItem).toEqual([
@@ -532,7 +532,7 @@ describe("Ext.list.Tree", function() {
                         ]);
                     });
 
-                    it("should not call any template methods", function() {
+                    it("should not call any template methods", function () {
                         makeCustomList();
                         var item = getItem('i1');
                         expect(item.logs.onNodeCollapse).toEqual([]);
@@ -542,14 +542,14 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.onNodeUpdate).toEqual([]);
                     });
 
-                    it("should not fire events", function() {
+                    it("should not fire events", function () {
                         expect(insertSpy).not.toHaveBeenCalled();
                         expect(removeSpy).not.toHaveBeenCalled();
                         expect(expandSpy).not.toHaveBeenCalled();
                         expect(collapseSpy).not.toHaveBeenCalled();
                     });
 
-                    it("should have the node, list and parent set", function() {
+                    it("should have the node, list and parent set", function () {
                         makeCustomList();
                         var item = getItem('i1');
                         expect(item.getNode()).toBe(byId('i1'));
@@ -557,7 +557,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.getOwner()).toBe(list);
                     });
 
-                    it("should have the itemConfig set", function() {
+                    it("should have the itemConfig set", function () {
                         makeCustomList({
                             defaults: {
                                 testConfig: 12
@@ -568,29 +568,29 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("expandable: false, no children", function() {
-                    it("should set expanded", function() {
+                describe("expandable: false, no children", function () {
+                    it("should set expanded", function () {
                         makeCustomList();
                         var item = getItem('i2');
                         expect(item.logs.expanded).toEqual([]);
                         expect(item.getExpanded()).toBe(false);
                     });
 
-                    it("should set expandable", function() {
+                    it("should set expandable", function () {
                         makeCustomList();
                         var item = getItem('i2');
-                        expect(item.logs.expandable).toEqual([]); 
+                        expect(item.logs.expandable).toEqual([]);
                         expect(item.getExpandable()).toBe(false);
                     });
 
-                    it("should set leaf", function() {
+                    it("should set leaf", function () {
                         makeCustomList();
                         var item = getItem('i2');
                         expect(item.logs.leaf).toEqual([false]);
                         expect(item.getLeaf()).toBe(false);
                     });
 
-                    it("should set the icon if iconClsProperty is specified", function() {
+                    it("should set the icon if iconClsProperty is specified", function () {
                         sampleData[1].iconCls = 'iconA';
                         makeCustomList();
                         var item = getItem('i2');
@@ -598,7 +598,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.getIconCls()).toBe('iconA');
                     });
 
-                    it("should not set the icon if an iconClsProperty is not specified", function() {
+                    it("should not set the icon if an iconClsProperty is not specified", function () {
                         sampleData[1].iconCls = 'iconA';
                         makeCustomList({
                             defaults: {
@@ -610,14 +610,14 @@ describe("Ext.list.Tree", function() {
                         expect(item.getIconCls()).toBe('');
                     });
 
-                    it("should set the text if a textProperty is specified", function() {
+                    it("should set the text if a textProperty is specified", function () {
                         makeCustomList();
                         var item = getItem('i2');
                         expect(item.logs.text).toEqual(['Item 2']);
                         expect(item.getText()).toBe('Item 2');
                     });
 
-                    it("should not set the text if an textProperty is not specified", function() {
+                    it("should not set the text if an textProperty is not specified", function () {
                         makeCustomList({
                             defaults: {
                                 textProperty: ''
@@ -628,13 +628,13 @@ describe("Ext.list.Tree", function() {
                         expect(item.getText()).toBe('');
                     });
 
-                    it("should not insert child nodes", function() {
+                    it("should not insert child nodes", function () {
                         makeCustomList();
                         var item = getItem('i2');
                         expect(item.logs.insertItem).toEqual([]);
                     });
 
-                    it("should not call any template methods", function() {
+                    it("should not call any template methods", function () {
                         makeCustomList();
                         var item = getItem('i2');
                         expect(item.logs.onNodeCollapse).toEqual([]);
@@ -644,14 +644,14 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.onNodeUpdate).toEqual([]);
                     });
 
-                    it("should not fire events", function() {
+                    it("should not fire events", function () {
                         expect(insertSpy).not.toHaveBeenCalled();
                         expect(removeSpy).not.toHaveBeenCalled();
                         expect(expandSpy).not.toHaveBeenCalled();
                         expect(collapseSpy).not.toHaveBeenCalled();
                     });
 
-                    it("should have the node, list and parent set", function() {
+                    it("should have the node, list and parent set", function () {
                         makeCustomList();
                         var item = getItem('i2');
                         expect(item.getNode()).toBe(byId('i2'));
@@ -659,7 +659,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.getOwner()).toBe(list);
                     });
 
-                    it("should have the itemConfig set", function() {
+                    it("should have the itemConfig set", function () {
                         makeCustomList({
                             defaults: {
                                 testConfig: 12
@@ -670,33 +670,33 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("leaf: true", function() {
-                    beforeEach(function() {
+                describe("leaf: true", function () {
+                    beforeEach(function () {
                         sampleData[2].leaf = true;
                     });
 
-                    it("should set expanded", function() {
+                    it("should set expanded", function () {
                         makeCustomList();
                         var item = getItem('i3');
                         expect(item.logs.expanded).toEqual([]);
                         expect(item.getExpanded()).toBe(false);
                     });
 
-                    it("should set expandable", function() {
+                    it("should set expandable", function () {
                         makeCustomList();
                         var item = getItem('i3');
-                        expect(item.logs.expandable).toEqual([]); 
+                        expect(item.logs.expandable).toEqual([]);
                         expect(item.getExpandable()).toBe(false);
                     });
 
-                    it("should set leaf", function() {
+                    it("should set leaf", function () {
                         makeCustomList();
                         var item = getItem('i3');
                         expect(item.logs.leaf).toEqual([]);
                         expect(item.getLeaf()).toBe(true);
                     });
 
-                    it("should set the icon if iconClsProperty is specified", function() {
+                    it("should set the icon if iconClsProperty is specified", function () {
                         sampleData[2].iconCls = 'iconA';
                         makeCustomList();
                         var item = getItem('i3');
@@ -704,7 +704,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.getIconCls()).toBe('iconA');
                     });
 
-                    it("should not set the icon if an iconClsProperty is not specified", function() {
+                    it("should not set the icon if an iconClsProperty is not specified", function () {
                         sampleData[2].iconCls = 'iconA';
                         makeCustomList({
                             defaults: {
@@ -716,14 +716,14 @@ describe("Ext.list.Tree", function() {
                         expect(item.getIconCls()).toBe('');
                     });
 
-                    it("should set the text if a textProperty is specified", function() {
+                    it("should set the text if a textProperty is specified", function () {
                         makeCustomList();
                         var item = getItem('i3');
                         expect(item.logs.text).toEqual(['Item 3']);
                         expect(item.getText()).toBe('Item 3');
                     });
 
-                    it("should not set the text if an textProperty is not specified", function() {
+                    it("should not set the text if an textProperty is not specified", function () {
                         makeCustomList({
                             defaults: {
                                 textProperty: ''
@@ -734,13 +734,13 @@ describe("Ext.list.Tree", function() {
                         expect(item.getText()).toBe('');
                     });
 
-                    it("should not insert child nodes", function() {
+                    it("should not insert child nodes", function () {
                         makeCustomList();
                         var item = getItem('i3');
                         expect(item.logs.insertItem).toEqual([]);
                     });
 
-                    it("should not call any template methods", function() {
+                    it("should not call any template methods", function () {
                         makeCustomList();
                         var item = getItem('i3');
                         expect(item.logs.onNodeCollapse).toEqual([]);
@@ -750,14 +750,14 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.onNodeUpdate).toEqual([]);
                     });
 
-                    it("should not fire events", function() {
+                    it("should not fire events", function () {
                         expect(insertSpy).not.toHaveBeenCalled();
                         expect(removeSpy).not.toHaveBeenCalled();
                         expect(expandSpy).not.toHaveBeenCalled();
                         expect(collapseSpy).not.toHaveBeenCalled();
                     });
 
-                    it("should have the node, list and parent set", function() {
+                    it("should have the node, list and parent set", function () {
                         makeCustomList();
                         var item = getItem('i3');
                         expect(item.getNode()).toBe(byId('i3'));
@@ -765,7 +765,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.getOwner()).toBe(list);
                     });
 
-                    it("should have the itemConfig set", function() {
+                    it("should have the itemConfig set", function () {
                         makeCustomList({
                             defaults: {
                                 testConfig: 12
@@ -776,29 +776,29 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("expanded: true, with children", function() {
-                    it("should set expanded", function() {
+                describe("expanded: true, with children", function () {
+                    it("should set expanded", function () {
                         makeCustomList();
                         var item = getItem('i4');
                         expect(item.logs.expanded).toEqual([true]);
                         expect(item.getExpanded()).toBe(true);
                     });
 
-                    it("should set expandable", function() {
+                    it("should set expandable", function () {
                         makeCustomList();
                         var item = getItem('i4');
-                        expect(item.logs.expandable).toEqual([true]); 
+                        expect(item.logs.expandable).toEqual([true]);
                         expect(item.getExpandable()).toBe(true);
                     });
 
-                    it("should set leaf", function() {
+                    it("should set leaf", function () {
                         makeCustomList();
                         var item = getItem('i4');
-                        expect(item.logs.leaf).toEqual([false]); 
+                        expect(item.logs.leaf).toEqual([false]);
                         expect(item.getLeaf()).toBe(false);
                     });
 
-                    it("should set the icon if iconClsProperty is specified", function() {
+                    it("should set the icon if iconClsProperty is specified", function () {
                         sampleData[3].iconCls = 'iconA';
                         makeCustomList();
                         var item = getItem('i4');
@@ -806,7 +806,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.getIconCls()).toBe('iconA');
                     });
 
-                    it("should not set the icon if an iconClsProperty is not specified", function() {
+                    it("should not set the icon if an iconClsProperty is not specified", function () {
                         sampleData[3].iconCls = 'iconA';
                         makeCustomList({
                             defaults: {
@@ -818,14 +818,14 @@ describe("Ext.list.Tree", function() {
                         expect(item.getIconCls()).toBe('');
                     });
 
-                    it("should set the text if a textProperty is specified", function() {
+                    it("should set the text if a textProperty is specified", function () {
                         makeCustomList();
                         var item = getItem('i4');
                         expect(item.logs.text).toEqual(['Item 4']);
                         expect(item.getText()).toBe('Item 4');
                     });
 
-                    it("should not set the text if an textProperty is not specified", function() {
+                    it("should not set the text if an textProperty is not specified", function () {
                         makeCustomList({
                             defaults: {
                                 textProperty: ''
@@ -836,7 +836,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.getText()).toBe('');
                     });
 
-                    it("should insert the child nodes", function() {
+                    it("should insert the child nodes", function () {
                         makeCustomList();
                         var item = getItem('i4');
                         expect(item.logs.insertItem).toEqual([
@@ -846,7 +846,7 @@ describe("Ext.list.Tree", function() {
                         ]);
                     });
 
-                    it("should not call any template methods", function() {
+                    it("should not call any template methods", function () {
                         makeCustomList();
                         var item = getItem('i4');
                         expect(item.logs.onNodeCollapse).toEqual([]);
@@ -856,14 +856,14 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.onNodeUpdate).toEqual([]);
                     });
 
-                    it("should not fire events", function() {
+                    it("should not fire events", function () {
                         expect(insertSpy).not.toHaveBeenCalled();
                         expect(removeSpy).not.toHaveBeenCalled();
                         expect(expandSpy).not.toHaveBeenCalled();
                         expect(collapseSpy).not.toHaveBeenCalled();
                     });
 
-                    it("should have the node, list and parent set", function() {
+                    it("should have the node, list and parent set", function () {
                         makeCustomList();
                         var item = getItem('i4');
                         expect(item.getNode()).toBe(byId('i4'));
@@ -871,7 +871,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.getOwner()).toBe(list);
                     });
 
-                    it("should have the itemConfig set", function() {
+                    it("should have the itemConfig set", function () {
                         makeCustomList({
                             defaults: {
                                 testConfig: 12
@@ -882,10 +882,10 @@ describe("Ext.list.Tree", function() {
                     });
                 });
             });
-            
-            describe("child level nodes", function() {
-                describe("parent expanded: false", function() {
-                    it("should set expanded", function() {
+
+            describe("child level nodes", function () {
+                describe("parent expanded: false", function () {
+                    it("should set expanded", function () {
                         makeCustomList();
                         var item1 = getItem('i11'),
                             item2 = getItem('i12');
@@ -897,7 +897,7 @@ describe("Ext.list.Tree", function() {
                         expect(item2.getExpanded()).toBe(false);
                     });
 
-                    it("should set expandable", function() {
+                    it("should set expandable", function () {
                         makeCustomList();
                         var item1 = getItem('i11'),
                             item2 = getItem('i12');
@@ -909,7 +909,7 @@ describe("Ext.list.Tree", function() {
                         expect(item2.getExpanded()).toBe(false);
                     });
 
-                    it("should set leaf", function() {
+                    it("should set leaf", function () {
                         makeCustomList();
                         var item1 = getItem('i11'),
                             item2 = getItem('i12');
@@ -921,7 +921,7 @@ describe("Ext.list.Tree", function() {
                         expect(item2.getLeaf()).toBe(true);
                     });
 
-                    it("should set the icon if iconClsProperty is specified", function() {
+                    it("should set the icon if iconClsProperty is specified", function () {
                         sampleData[0].children[0].iconCls = 'iconA';
                         sampleData[0].children[1].iconCls = 'iconB';
                         makeCustomList();
@@ -935,7 +935,7 @@ describe("Ext.list.Tree", function() {
                         expect(item2.getIconCls()).toBe('iconB');
                     });
 
-                    it("should not set the icon if an iconClsProperty is not specified", function() {
+                    it("should not set the icon if an iconClsProperty is not specified", function () {
                         sampleData[0].children[0].iconCls = 'iconA';
                         sampleData[0].children[1].iconCls = 'iconB';
                         makeCustomList({
@@ -953,7 +953,7 @@ describe("Ext.list.Tree", function() {
                         expect(item2.getIconCls()).toBe('');
                     });
 
-                    it("should set the text if a textProperty is specified", function() {
+                    it("should set the text if a textProperty is specified", function () {
                         makeCustomList();
                         var item1 = getItem('i11'),
                             item2 = getItem('i12');
@@ -965,7 +965,7 @@ describe("Ext.list.Tree", function() {
                         expect(item2.getText()).toBe('Item 1.2');
                     });
 
-                    it("should not set the text if an textProperty is not specified", function() {
+                    it("should not set the text if an textProperty is not specified", function () {
                         makeCustomList({
                             defaults: {
                                 textProperty: ''
@@ -981,7 +981,7 @@ describe("Ext.list.Tree", function() {
                         expect(item2.getText()).toBe('');
                     });
 
-                    it("should not call any template methods", function() {
+                    it("should not call any template methods", function () {
                         makeCustomList();
                         var item1 = getItem('i11'),
                             item2 = getItem('i12');
@@ -999,14 +999,14 @@ describe("Ext.list.Tree", function() {
                         expect(item2.logs.onNodeUpdate).toEqual([]);
                     });
 
-                    it("should not fire events", function() {
+                    it("should not fire events", function () {
                         expect(insertSpy).not.toHaveBeenCalled();
                         expect(removeSpy).not.toHaveBeenCalled();
                         expect(expandSpy).not.toHaveBeenCalled();
                         expect(collapseSpy).not.toHaveBeenCalled();
                     });
 
-                    it("should have the node, list and parent set", function() {
+                    it("should have the node, list and parent set", function () {
                         makeCustomList();
                         var item1 = getItem('i11'),
                             item2 = getItem('i12');
@@ -1020,7 +1020,7 @@ describe("Ext.list.Tree", function() {
                         expect(item2.getOwner()).toBe(list);
                     });
 
-                    it("should have the itemConfig set", function() {
+                    it("should have the itemConfig set", function () {
                         makeCustomList({
                             defaults: {
                                 testConfig: 12
@@ -1034,8 +1034,8 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("parent expanded: true", function() {
-                    it("should set expanded", function() {
+                describe("parent expanded: true", function () {
+                    it("should set expanded", function () {
                         makeCustomList();
                         var item1 = getItem('i41'),
                             item2 = getItem('i42'),
@@ -1050,7 +1050,7 @@ describe("Ext.list.Tree", function() {
                         expect(item3.getExpanded()).toBe(false);
                     });
 
-                    it("should set expandable", function() {
+                    it("should set expandable", function () {
                         makeCustomList();
                         var item1 = getItem('i41'),
                             item2 = getItem('i42'),
@@ -1065,7 +1065,7 @@ describe("Ext.list.Tree", function() {
                         expect(item3.getExpandable()).toBe(false);
                     });
 
-                    it("should set leaf", function() {
+                    it("should set leaf", function () {
                         makeCustomList();
                         var item1 = getItem('i41'),
                             item2 = getItem('i42'),
@@ -1080,7 +1080,7 @@ describe("Ext.list.Tree", function() {
                         expect(item3.getLeaf()).toBe(true);
                     });
 
-                    it("should set the icon if iconClsProperty is specified", function() {
+                    it("should set the icon if iconClsProperty is specified", function () {
                         sampleData[3].children[0].iconCls = 'iconA';
                         sampleData[3].children[1].iconCls = 'iconB';
                         sampleData[3].children[2].iconCls = 'iconC';
@@ -1098,7 +1098,7 @@ describe("Ext.list.Tree", function() {
                         expect(item3.getIconCls()).toBe('iconC');
                     });
 
-                    it("should not set the icon if an iconClsProperty is not specified", function() {
+                    it("should not set the icon if an iconClsProperty is not specified", function () {
                         sampleData[3].children[0].iconCls = 'iconA';
                         sampleData[3].children[1].iconCls = 'iconB';
                         sampleData[3].children[2].iconCls = 'iconC';
@@ -1120,7 +1120,7 @@ describe("Ext.list.Tree", function() {
                         expect(item3.getIconCls()).toBe('');
                     });
 
-                    it("should set the text if a textProperty is specified", function() {
+                    it("should set the text if a textProperty is specified", function () {
                         makeCustomList();
                         var item1 = getItem('i41'),
                             item2 = getItem('i42'),
@@ -1135,7 +1135,7 @@ describe("Ext.list.Tree", function() {
                         expect(item3.getText()).toBe('Item 4.3');
                     });
 
-                    it("should not set the text if an textProperty is not specified", function() {
+                    it("should not set the text if an textProperty is not specified", function () {
                         makeCustomList({
                             defaults: {
                                 textProperty: ''
@@ -1154,7 +1154,7 @@ describe("Ext.list.Tree", function() {
                         expect(item3.getText()).toBe('');
                     });
 
-                    it("should not call any template methods", function() {
+                    it("should not call any template methods", function () {
                         makeCustomList();
                         var item1 = getItem('i41'),
                             item2 = getItem('i42'),
@@ -1179,14 +1179,14 @@ describe("Ext.list.Tree", function() {
                         expect(item3.logs.onNodeUpdate).toEqual([]);
                     });
 
-                    it("should not fire events", function() {
+                    it("should not fire events", function () {
                         expect(insertSpy).not.toHaveBeenCalled();
                         expect(removeSpy).not.toHaveBeenCalled();
                         expect(expandSpy).not.toHaveBeenCalled();
                         expect(collapseSpy).not.toHaveBeenCalled();
                     });
 
-                    it("should have the node, list and parent set", function() {
+                    it("should have the node, list and parent set", function () {
                         makeCustomList();
                         var item1 = getItem('i41'),
                             item2 = getItem('i42'),
@@ -1205,7 +1205,7 @@ describe("Ext.list.Tree", function() {
                         expect(item3.getOwner()).toBe(list);
                     });
 
-                    it("should have the itemConfig set", function() {
+                    it("should have the itemConfig set", function () {
                         makeCustomList({
                             defaults: {
                                 testConfig: 12
@@ -1223,13 +1223,13 @@ describe("Ext.list.Tree", function() {
             });
         });
 
-        describe("dynamic store modifications", function() {
-            describe("adding nodes", function() {
-                describe("via insert", function() {
-                    describe("to the root", function() {
+        describe("dynamic store modifications", function () {
+            describe("adding nodes", function () {
+                describe("via insert", function () {
+                    describe("to the root", function () {
                         var node;
 
-                        beforeEach(function() {
+                        beforeEach(function () {
                             makeCustomList({
                                 defaults: {
                                     testConfig: 200
@@ -1241,21 +1241,21 @@ describe("Ext.list.Tree", function() {
                             }, byId('i1'));
                         });
 
-                        afterEach(function() {
+                        afterEach(function () {
                             node = null;
                         });
 
-                        it("should create the item type", function() {
+                        it("should create the item type", function () {
                             var item = getItem('i9');
                             expect(item.xtype).toBe('spec_treelist_customitem');
                         });
 
-                        it("should set the itemConfig", function() {
+                        it("should set the itemConfig", function () {
                             var item = getItem('i9');
                             expect(item.getTestConfig()).toBe(200);
                         });
 
-                        it("should have the node, list and parent set", function() {
+                        it("should have the node, list and parent set", function () {
                             var item = getItem('i9');
                             expect(item.getNode()).toBe(node);
                             expect(item.getParentItem()).toBeNull();
@@ -1263,13 +1263,13 @@ describe("Ext.list.Tree", function() {
                         });
 
                         // We can test the DOM here because root is a special subclass
-                        it("should insert the item before the passed item", function() {
+                        it("should insert the item before the passed item", function () {
                             var item = getItem('i9');
                             expect(item.el.next()).toBe(getItem('i1').el);
                         });
 
-                        describe("events", function() {
-                            it("should fire iteminsert", function() {
+                        describe("events", function () {
+                            it("should fire iteminsert", function () {
                                 expect(insertSpy.callCount).toBe(1);
                                 expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                 expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('root'));
@@ -1278,10 +1278,10 @@ describe("Ext.list.Tree", function() {
                             });
                         });
 
-                        describe("child nodes", function() {
+                        describe("child nodes", function () {
                             var item, item1, item2;
 
-                            beforeEach(function() {
+                            beforeEach(function () {
                                 node = new Model({
                                     id: 'i8'
                                 });
@@ -1300,11 +1300,11 @@ describe("Ext.list.Tree", function() {
                                 item2 = getItem('i82');
                             });
 
-                            afterEach(function() {
+                            afterEach(function () {
                                 item = item1 = item2 = null;
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 expect(item1.getNode()).toBe(node.childNodes[0]);
                                 expect(item1.getParentItem()).toBe(item);
                                 expect(item1.getOwner()).toBe(list);
@@ -1314,19 +1314,19 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getOwner()).toBe(list);
                             });
 
-                            it("should call insertItem", function() {
+                            it("should call insertItem", function () {
                                 expect(item.logs.insertItem).toEqual([
                                     [item1, null],
                                     [item2, null]
                                 ]);
                             });
 
-                            it("should not call onNodeInsert", function() {
+                            it("should not call onNodeInsert", function () {
                                 expect(item.logs.onNodeInsert).toEqual([]);
                             });
 
-                            describe("events", function() {
-                                it("should fire iteminsert for the top level item only", function() {
+                            describe("events", function () {
+                                it("should fire iteminsert for the top level item only", function () {
                                     expect(insertSpy.callCount).toBe(1);
                                     expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                     expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('root'));
@@ -1337,11 +1337,11 @@ describe("Ext.list.Tree", function() {
                         });
                     });
 
-                    describe("non-root node", function() {
-                        describe("node that is collapsed", function() {
+                    describe("non-root node", function () {
+                        describe("node that is collapsed", function () {
                             var node;
 
-                            beforeEach(function() {
+                            beforeEach(function () {
                                 makeCustomList({
                                     defaults: {
                                         testConfig: 200
@@ -1354,45 +1354,45 @@ describe("Ext.list.Tree", function() {
                                 }, byId('i12'));
                             });
 
-                            afterEach(function() {
+                            afterEach(function () {
                                 node = null;
                             });
 
-                            it("should create the item type", function() {
+                            it("should create the item type", function () {
                                 var item = getItem('i9');
                                 expect(item.xtype).toBe('spec_treelist_customitem');
                             });
 
-                            it("should set the itemConfig", function() {
+                            it("should set the itemConfig", function () {
                                 var item = getItem('i9');
                                 expect(item.getTestConfig()).toBe(200);
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 var item = getItem('i9');
                                 expect(item.getNode()).toBe(node);
                                 expect(item.getParentItem()).toBe(getItem('i1'));
                                 expect(item.getOwner()).toBe(list);
                             });
 
-                            it("should leave the parent as collapsed", function() {
+                            it("should leave the parent as collapsed", function () {
                                 expect(getItem('i1').isExpanded()).toBe(false);
                             });
 
-                            describe("template methods", function() {
-                                it("should call insertItem", function() {
+                            describe("template methods", function () {
+                                it("should call insertItem", function () {
                                     var item = getItem('i1');
                                     expect(item.logs.insertItem).toEqual([[getItem('i9'), getItem('i12')]]);
                                 });
 
-                                it("should call onNodeInsert", function() {
+                                it("should call onNodeInsert", function () {
                                     var item = getItem('i1');
                                     expect(item.logs.onNodeInsert).toEqual([[byId('i9'), byId('i12')]]);
                                 });
                             });
 
-                            describe("events", function() {
-                                it("should fire iteminsert", function() {
+                            describe("events", function () {
+                                it("should fire iteminsert", function () {
                                     expect(insertSpy.callCount).toBe(1);
                                     expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                     expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i1'));
@@ -1401,10 +1401,10 @@ describe("Ext.list.Tree", function() {
                                 });
                             });
 
-                            describe("child nodes", function() {
+                            describe("child nodes", function () {
                                 var item, item1, item2;
 
-                                beforeEach(function() {
+                                beforeEach(function () {
                                     node = new Model({
                                         id: 'i8'
                                     });
@@ -1423,11 +1423,11 @@ describe("Ext.list.Tree", function() {
                                     item2 = getItem('i82');
                                 });
 
-                                afterEach(function() {
+                                afterEach(function () {
                                     item = item1 = item2 = null;
                                 });
 
-                                it("should have the node, list and parent set", function() {
+                                it("should have the node, list and parent set", function () {
                                     expect(item1.getNode()).toBe(node.childNodes[0]);
                                     expect(item1.getParentItem()).toBe(item);
                                     expect(item1.getOwner()).toBe(list);
@@ -1437,19 +1437,19 @@ describe("Ext.list.Tree", function() {
                                     expect(item2.getOwner()).toBe(list);
                                 });
 
-                                it("should call insertItem", function() {
+                                it("should call insertItem", function () {
                                     expect(item.logs.insertItem).toEqual([
                                         [item1, null],
                                         [item2, null]
                                     ]);
                                 });
 
-                                it("should not call onNodeInsert", function() {
+                                it("should not call onNodeInsert", function () {
                                     expect(item.logs.onNodeInsert).toEqual([]);
                                 });
 
-                                describe("events", function() {
-                                    it("should fire iteminsert for the top level item only", function() {
+                                describe("events", function () {
+                                    it("should fire iteminsert for the top level item only", function () {
                                         expect(insertSpy.callCount).toBe(1);
                                         expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                         expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i1'));
@@ -1460,10 +1460,10 @@ describe("Ext.list.Tree", function() {
                             });
                         });
 
-                        describe("node that is expanded", function() {
+                        describe("node that is expanded", function () {
                             var node;
 
-                            beforeEach(function() {
+                            beforeEach(function () {
                                 makeCustomList({
                                     defaults: {
                                         testConfig: 200
@@ -1476,45 +1476,45 @@ describe("Ext.list.Tree", function() {
                                 }, byId('i43'));
                             });
 
-                            afterEach(function() {
+                            afterEach(function () {
                                 node = null;
                             });
 
-                            it("should create the item type", function() {
+                            it("should create the item type", function () {
                                 var item = getItem('i9');
                                 expect(item.xtype).toBe('spec_treelist_customitem');
                             });
 
-                            it("should set the itemConfig", function() {
+                            it("should set the itemConfig", function () {
                                 var item = getItem('i9');
                                 expect(item.getTestConfig()).toBe(200);
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 var item = getItem('i9');
                                 expect(item.getNode()).toBe(node);
                                 expect(item.getParentItem()).toBe(getItem('i4'));
                                 expect(item.getOwner()).toBe(list);
                             });
 
-                            it("should leave the parent as expanded", function() {
+                            it("should leave the parent as expanded", function () {
                                 expect(getItem('i4').isExpanded()).toBe(true);
                             });
 
-                            describe("template methods", function() {
-                                it("should call insertItem", function() {
+                            describe("template methods", function () {
+                                it("should call insertItem", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.insertItem).toEqual([[getItem('i9'), getItem('i43')]]);
                                 });
 
-                                it("should call onNodeInsert", function() {
+                                it("should call onNodeInsert", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.onNodeInsert).toEqual([[byId('i9'), byId('i43')]]);
                                 });
                             });
 
-                            describe("events", function() {
-                                it("should fire iteminsert", function() {
+                            describe("events", function () {
+                                it("should fire iteminsert", function () {
                                     expect(insertSpy.callCount).toBe(1);
                                     expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                     expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i4'));
@@ -1523,10 +1523,10 @@ describe("Ext.list.Tree", function() {
                                 });
                             });
 
-                            describe("child nodes", function() {
+                            describe("child nodes", function () {
                                 var item, item1, item2;
 
-                                beforeEach(function() {
+                                beforeEach(function () {
                                     node = new Model({
                                         id: 'i8'
                                     });
@@ -1545,11 +1545,11 @@ describe("Ext.list.Tree", function() {
                                     item2 = getItem('i82');
                                 });
 
-                                afterEach(function() {
+                                afterEach(function () {
                                     item = item1 = item2 = null;
                                 });
 
-                                it("should have the node, list and parent set", function() {
+                                it("should have the node, list and parent set", function () {
                                     expect(item1.getNode()).toBe(node.childNodes[0]);
                                     expect(item1.getParentItem()).toBe(item);
                                     expect(item1.getOwner()).toBe(list);
@@ -1559,19 +1559,19 @@ describe("Ext.list.Tree", function() {
                                     expect(item2.getOwner()).toBe(list);
                                 });
 
-                                it("should call insertItem", function() {
+                                it("should call insertItem", function () {
                                     expect(item.logs.insertItem).toEqual([
                                         [item1, null],
                                         [item2, null]
                                     ]);
                                 });
 
-                                it("should not call onNodeInsert", function() {
+                                it("should not call onNodeInsert", function () {
                                     expect(item.logs.onNodeInsert).toEqual([]);
                                 });
 
-                                describe("events", function() {
-                                    it("should fire iteminsert for the top level item only", function() {
+                                describe("events", function () {
+                                    it("should fire iteminsert for the top level item only", function () {
                                         expect(insertSpy.callCount).toBe(1);
                                         expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                         expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i4'));
@@ -1583,7 +1583,7 @@ describe("Ext.list.Tree", function() {
                         });
                     });
 
-                    it("should update the expandable state when adding the first node", function() {
+                    it("should update the expandable state when adding the first node", function () {
                         sampleData[2].children = [];
                         makeCustomList();
                         var item = getItem('i3');
@@ -1595,57 +1595,57 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.expandable).toEqual([true]);
                     });
 
-                    describe("existing nodes", function() {
+                    describe("existing nodes", function () {
                         var existing;
 
-                        afterEach(function() {
+                        afterEach(function () {
                             existing = null;
                         });
 
-                        describe("in the same container", function() {
-                            beforeEach(function() {
+                        describe("in the same container", function () {
+                            beforeEach(function () {
                                 makeCustomList();
                                 existing = getItem('i43');
                                 getItem('i4').logs.insertItem = [];
                                 byId('i4').insertBefore(byId('i43'), byId('i41'));
                             });
 
-                            it("should use the same item", function() {
+                            it("should use the same item", function () {
                                 expect(getItem('i43')).toBe(existing);
                             });
 
-                            it("should use the same el", function() {
+                            it("should use the same el", function () {
                                 expect(getItem('i43').el).toBe(existing.el);
                             });
 
-                            it("should set the parent", function() {
+                            it("should set the parent", function () {
                                 expect(getItem('i43').getParentItem()).toBe(getItem('i4'));
                             });
 
-                            describe("template methods", function() {
-                                it("should call onNodeInsert", function() {
+                            describe("template methods", function () {
+                                it("should call onNodeInsert", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.onNodeInsert).toEqual([[byId('i43'), byId('i41')]]);
                                 });
 
-                                it("should call insertItem", function() {
+                                it("should call insertItem", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.insertItem).toEqual([[getItem('i43'), getItem('i41')]]);
                                 });
 
-                                it("should call removeItem", function() {
+                                it("should call removeItem", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.removeItem).toEqual([getItem('i43')]);
                                 });
 
-                                it("should not call onNodeRemove", function() {
+                                it("should not call onNodeRemove", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.onNodeRemove).toEqual([]);
                                 });
                             });
 
-                            describe("events", function() {
-                                it("should fire iteminsert", function() {
+                            describe("events", function () {
+                                it("should fire iteminsert", function () {
                                     expect(insertSpy.callCount).toBe(1);
                                     expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                     expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i4'));
@@ -1653,14 +1653,14 @@ describe("Ext.list.Tree", function() {
                                     expect(insertSpy.mostRecentCall.args[3]).toBe(getItem('i41'));
                                 });
 
-                                it("should not fire itemremove", function() {
+                                it("should not fire itemremove", function () {
                                     expect(removeSpy).not.toHaveBeenCalled();
                                 });
                             });
                         });
 
-                        describe("from a different container", function() {
-                            beforeEach(function() {
+                        describe("from a different container", function () {
+                            beforeEach(function () {
                                 sampleData[2].children = [];
                                 makeCustomList();
                                 existing = getItem('i43');
@@ -1668,19 +1668,19 @@ describe("Ext.list.Tree", function() {
                                 byId('i1').insertBefore(byId('i43'), byId('i11'));
                             });
 
-                            it("should use the same item", function() {
+                            it("should use the same item", function () {
                                 expect(getItem('i43')).toBe(existing);
                             });
 
-                            it("should use the same el", function() {
+                            it("should use the same el", function () {
                                 expect(getItem('i43').el).toBe(existing.el);
                             });
 
-                            it("should set the parent", function() {
+                            it("should set the parent", function () {
                                 expect(getItem('i43').getParentItem()).toBe(getItem('i1'));
                             });
 
-                            it("should update the expandable state when adding the first node and moving the last", function() {
+                            it("should update the expandable state when adding the first node and moving the last", function () {
                                 var item1 = getItem('i1'),
                                     item3 = getItem('i3');
 
@@ -1695,30 +1695,30 @@ describe("Ext.list.Tree", function() {
                                 expect(item3.logs.expandable).toEqual([true]);
                             });
 
-                            describe("template methods", function() {
-                                it("should call onNodeInsert", function() {
+                            describe("template methods", function () {
+                                it("should call onNodeInsert", function () {
                                     var item = getItem('i1');
                                     expect(item.logs.onNodeInsert).toEqual([[byId('i43'), byId('i11')]]);
                                 });
 
-                                it("should call insertItem", function() {
+                                it("should call insertItem", function () {
                                     var item = getItem('i1');
                                     expect(item.logs.insertItem).toEqual([[getItem('i43'), getItem('i11')]]);
                                 });
 
-                                it("should call removeItem", function() {
+                                it("should call removeItem", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.removeItem).toEqual([getItem('i43')]);
                                 });
 
-                                it("should not call onNodeRemove", function() {
+                                it("should not call onNodeRemove", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.onNodeRemove).toEqual([]);
                                 });
                             });
 
-                            describe("events", function() {
-                                it("should fire iteminsert", function() {
+                            describe("events", function () {
+                                it("should fire iteminsert", function () {
                                     expect(insertSpy.callCount).toBe(1);
                                     expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                     expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i1'));
@@ -1726,7 +1726,7 @@ describe("Ext.list.Tree", function() {
                                     expect(insertSpy.mostRecentCall.args[3]).toBe(getItem('i11'));
                                 });
 
-                                it("should not fire itemremove", function() {
+                                it("should not fire itemremove", function () {
                                     expect(removeSpy).not.toHaveBeenCalled();
                                 });
                             });
@@ -1734,11 +1734,11 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("via append", function() {
-                    describe("to the root", function() {
+                describe("via append", function () {
+                    describe("to the root", function () {
                         var node;
 
-                        beforeEach(function() {
+                        beforeEach(function () {
                             makeCustomList({
                                 defaults: {
                                     testConfig: 200
@@ -1750,21 +1750,21 @@ describe("Ext.list.Tree", function() {
                             });
                         });
 
-                        afterEach(function() {
+                        afterEach(function () {
                             node = null;
                         });
 
-                        it("should create the item type", function() {
+                        it("should create the item type", function () {
                             var item = getItem('i9');
                             expect(item.xtype).toBe('spec_treelist_customitem');
                         });
 
-                        it("should set the itemConfig", function() {
+                        it("should set the itemConfig", function () {
                             var item = getItem('i9');
                             expect(item.getTestConfig()).toBe(200);
                         });
 
-                        it("should have the node, list and parent set", function() {
+                        it("should have the node, list and parent set", function () {
                             var item = getItem('i9');
                             expect(item.getNode()).toBe(node);
                             expect(item.getParentItem()).toBeNull();
@@ -1772,13 +1772,13 @@ describe("Ext.list.Tree", function() {
                         });
 
                         // We can test the DOM here because root is a special subclass
-                        it("should insert the item at the end", function() {
+                        it("should insert the item at the end", function () {
                             var item = getItem('i9');
                             expect(item.el.prev()).toBe(getItem('i4').el);
                         });
 
-                        describe("events", function() {
-                            it("should fire iteminsert", function() {
+                        describe("events", function () {
+                            it("should fire iteminsert", function () {
                                 expect(insertSpy.callCount).toBe(1);
                                 expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                 expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('root'));
@@ -1787,10 +1787,10 @@ describe("Ext.list.Tree", function() {
                             });
                         });
 
-                        describe("child nodes", function() {
+                        describe("child nodes", function () {
                             var item, item1, item2;
 
-                            beforeEach(function() {
+                            beforeEach(function () {
                                 node = new Model({
                                     id: 'i8'
                                 });
@@ -1809,11 +1809,11 @@ describe("Ext.list.Tree", function() {
                                 item2 = getItem('i82');
                             });
 
-                            afterEach(function() {
+                            afterEach(function () {
                                 item = item1 = item2 = null;
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 expect(item1.getNode()).toBe(node.childNodes[0]);
                                 expect(item1.getParentItem()).toBe(item);
                                 expect(item1.getOwner()).toBe(list);
@@ -1823,19 +1823,19 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getOwner()).toBe(list);
                             });
 
-                            it("should call insertItem", function() {
+                            it("should call insertItem", function () {
                                 expect(item.logs.insertItem).toEqual([
                                     [item1, null],
                                     [item2, null]
                                 ]);
                             });
 
-                            it("should not call onNodeInsert", function() {
+                            it("should not call onNodeInsert", function () {
                                 expect(item.logs.onNodeInsert).toEqual([]);
                             });
 
-                            describe("events", function() {
-                                it("should fire iteminsert for the top level item only", function() {
+                            describe("events", function () {
+                                it("should fire iteminsert for the top level item only", function () {
                                     expect(insertSpy.callCount).toBe(1);
                                     expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                     expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('root'));
@@ -1846,11 +1846,11 @@ describe("Ext.list.Tree", function() {
                         });
                     });
 
-                    describe("non-root node", function() {
-                        describe("node that is collapsed", function() {
+                    describe("non-root node", function () {
+                        describe("node that is collapsed", function () {
                             var node;
 
-                            beforeEach(function() {
+                            beforeEach(function () {
                                 makeCustomList({
                                     defaults: {
                                         testConfig: 200
@@ -1863,45 +1863,45 @@ describe("Ext.list.Tree", function() {
                                 });
                             });
 
-                            afterEach(function() {
+                            afterEach(function () {
                                 node = null;
                             });
 
-                            it("should create the item type", function() {
+                            it("should create the item type", function () {
                                 var item = getItem('i9');
                                 expect(item.xtype).toBe('spec_treelist_customitem');
                             });
 
-                            it("should set the itemConfig", function() {
+                            it("should set the itemConfig", function () {
                                 var item = getItem('i9');
                                 expect(item.getTestConfig()).toBe(200);
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 var item = getItem('i9');
                                 expect(item.getNode()).toBe(node);
                                 expect(item.getParentItem()).toBe(getItem('i1'));
                                 expect(item.getOwner()).toBe(list);
                             });
 
-                            it("should leave the parent as collapsed", function() {
+                            it("should leave the parent as collapsed", function () {
                                 expect(getItem('i1').isExpanded()).toBe(false);
                             });
 
-                            describe("template methods", function() {
-                                it("should call insertItem", function() {
+                            describe("template methods", function () {
+                                it("should call insertItem", function () {
                                     var item = getItem('i1');
-                                    expect(item.logs.insertItem).toEqual([[getItem('i9'),null]]);
+                                    expect(item.logs.insertItem).toEqual([[getItem('i9'), null]]);
                                 });
 
-                                it("should call onNodeInsert", function() {
+                                it("should call onNodeInsert", function () {
                                     var item = getItem('i1');
                                     expect(item.logs.onNodeInsert).toEqual([[byId('i9'), null]]);
                                 });
                             });
 
-                            describe("events", function() {
-                                it("should fire iteminsert", function() {
+                            describe("events", function () {
+                                it("should fire iteminsert", function () {
                                     expect(insertSpy.callCount).toBe(1);
                                     expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                     expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i1'));
@@ -1910,10 +1910,10 @@ describe("Ext.list.Tree", function() {
                                 });
                             });
 
-                            describe("child nodes", function() {
+                            describe("child nodes", function () {
                                 var item, item1, item2;
 
-                                beforeEach(function() {
+                                beforeEach(function () {
                                     node = new Model({
                                         id: 'i8'
                                     });
@@ -1932,11 +1932,11 @@ describe("Ext.list.Tree", function() {
                                     item2 = getItem('i82');
                                 });
 
-                                afterEach(function() {
+                                afterEach(function () {
                                     item = item1 = item2 = null;
                                 });
 
-                                it("should have the node, list and parent set", function() {
+                                it("should have the node, list and parent set", function () {
                                     expect(item1.getNode()).toBe(node.childNodes[0]);
                                     expect(item1.getParentItem()).toBe(item);
                                     expect(item1.getOwner()).toBe(list);
@@ -1946,19 +1946,19 @@ describe("Ext.list.Tree", function() {
                                     expect(item2.getOwner()).toBe(list);
                                 });
 
-                                it("should call insertItem", function() {
+                                it("should call insertItem", function () {
                                     expect(item.logs.insertItem).toEqual([
                                         [item1, null],
                                         [item2, null]
                                     ]);
                                 });
 
-                                it("should not call onNodeInsert", function() {
+                                it("should not call onNodeInsert", function () {
                                     expect(item.logs.onNodeInsert).toEqual([]);
                                 });
 
-                                describe("events", function() {
-                                    it("should fire iteminsert for the top level item only", function() {
+                                describe("events", function () {
+                                    it("should fire iteminsert for the top level item only", function () {
                                         expect(insertSpy.callCount).toBe(1);
                                         expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                         expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i1'));
@@ -1969,10 +1969,10 @@ describe("Ext.list.Tree", function() {
                             });
                         });
 
-                        describe("node that is expanded", function() {
+                        describe("node that is expanded", function () {
                             var node;
 
-                            beforeEach(function() {
+                            beforeEach(function () {
                                 makeCustomList({
                                     defaults: {
                                         testConfig: 200
@@ -1985,45 +1985,45 @@ describe("Ext.list.Tree", function() {
                                 });
                             });
 
-                            afterEach(function() {
+                            afterEach(function () {
                                 node = null;
                             });
 
-                            it("should create the item type", function() {
+                            it("should create the item type", function () {
                                 var item = getItem('i9');
                                 expect(item.xtype).toBe('spec_treelist_customitem');
                             });
 
-                            it("should set the itemConfig", function() {
+                            it("should set the itemConfig", function () {
                                 var item = getItem('i9');
                                 expect(item.getTestConfig()).toBe(200);
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 var item = getItem('i9');
                                 expect(item.getNode()).toBe(node);
                                 expect(item.getParentItem()).toBe(getItem('i4'));
                                 expect(item.getOwner()).toBe(list);
                             });
 
-                            it("should leave the parent as expanded", function() {
+                            it("should leave the parent as expanded", function () {
                                 expect(getItem('i4').isExpanded()).toBe(true);
                             });
 
-                            describe("template methods", function() {
-                                it("should call insertItem", function() {
+                            describe("template methods", function () {
+                                it("should call insertItem", function () {
                                     var item = getItem('i4');
-                                    expect(item.logs.insertItem).toEqual([[getItem('i9'),null]]);
+                                    expect(item.logs.insertItem).toEqual([[getItem('i9'), null]]);
                                 });
 
-                                it("should call onNodeInsert", function() {
+                                it("should call onNodeInsert", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.onNodeInsert).toEqual([[byId('i9'), null]]);
                                 });
                             });
 
-                            describe("events", function() {
-                                it("should fire iteminsert", function() {
+                            describe("events", function () {
+                                it("should fire iteminsert", function () {
                                     expect(insertSpy.callCount).toBe(1);
                                     expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                     expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i4'));
@@ -2032,10 +2032,10 @@ describe("Ext.list.Tree", function() {
                                 });
                             });
 
-                            describe("child nodes", function() {
+                            describe("child nodes", function () {
                                 var item, item1, item2;
 
-                                beforeEach(function() {
+                                beforeEach(function () {
                                     node = new Model({
                                         id: 'i8'
                                     });
@@ -2054,11 +2054,11 @@ describe("Ext.list.Tree", function() {
                                     item2 = getItem('i82');
                                 });
 
-                                afterEach(function() {
+                                afterEach(function () {
                                     item = item1 = item2 = null;
                                 });
 
-                                it("should have the node, list and parent set", function() {
+                                it("should have the node, list and parent set", function () {
                                     expect(item1.getNode()).toBe(node.childNodes[0]);
                                     expect(item1.getParentItem()).toBe(item);
                                     expect(item1.getOwner()).toBe(list);
@@ -2068,19 +2068,19 @@ describe("Ext.list.Tree", function() {
                                     expect(item2.getOwner()).toBe(list);
                                 });
 
-                                it("should call insertItem", function() {
+                                it("should call insertItem", function () {
                                     expect(item.logs.insertItem).toEqual([
                                         [item1, null],
                                         [item2, null]
                                     ]);
                                 });
 
-                                it("should not call onNodeInsert", function() {
+                                it("should not call onNodeInsert", function () {
                                     expect(item.logs.onNodeInsert).toEqual([]);
                                 });
 
-                                describe("events", function() {
-                                    it("should fire iteminsert for the top level item only", function() {
+                                describe("events", function () {
+                                    it("should fire iteminsert for the top level item only", function () {
                                         expect(insertSpy.callCount).toBe(1);
                                         expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                         expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i4'));
@@ -2092,7 +2092,7 @@ describe("Ext.list.Tree", function() {
                         });
                     });
 
-                    it("should update the expandable state when adding the first node", function() {
+                    it("should update the expandable state when adding the first node", function () {
                         sampleData[2].children = [];
                         makeCustomList();
                         var item = getItem('i3');
@@ -2104,57 +2104,57 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.expandable).toEqual([true]);
                     });
 
-                    describe("existing nodes", function() {
+                    describe("existing nodes", function () {
                         var existing;
 
-                        afterEach(function() {
+                        afterEach(function () {
                             existing = null;
                         });
 
-                        describe("in the same container", function() {
-                            beforeEach(function() {
+                        describe("in the same container", function () {
+                            beforeEach(function () {
                                 makeCustomList();
                                 existing = getItem('i41');
                                 getItem('i4').logs.insertItem = [];
                                 byId('i4').appendChild(byId('i41'));
                             });
 
-                            it("should use the same item", function() {
+                            it("should use the same item", function () {
                                 expect(getItem('i41')).toBe(existing);
                             });
 
-                            it("should use the same el", function() {
+                            it("should use the same el", function () {
                                 expect(getItem('i41').el).toBe(existing.el);
                             });
 
-                            it("should set the parent", function() {
+                            it("should set the parent", function () {
                                 expect(getItem('i41').getParentItem()).toBe(getItem('i4'));
                             });
 
-                            describe("template methods", function() {
-                                it("should call onNodeInsert", function() {
+                            describe("template methods", function () {
+                                it("should call onNodeInsert", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.onNodeInsert).toEqual([[byId('i41'), null]]);
                                 });
 
-                                it("should call insertItem", function() {
+                                it("should call insertItem", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.insertItem).toEqual([[getItem('i41'), null]]);
                                 });
 
-                                it("should call removeItem", function() {
+                                it("should call removeItem", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.removeItem).toEqual([getItem('i41')]);
                                 });
 
-                                it("should not call onNodeRemove", function() {
+                                it("should not call onNodeRemove", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.onNodeRemove).toEqual([]);
                                 });
                             });
 
-                            describe("events", function() {
-                                it("should fire iteminsert", function() {
+                            describe("events", function () {
+                                it("should fire iteminsert", function () {
                                     expect(insertSpy.callCount).toBe(1);
                                     expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                     expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i4'));
@@ -2162,14 +2162,14 @@ describe("Ext.list.Tree", function() {
                                     expect(insertSpy.mostRecentCall.args[3]).toBeNull();
                                 });
 
-                                it("should not fire itemremove", function() {
+                                it("should not fire itemremove", function () {
                                     expect(removeSpy).not.toHaveBeenCalled();
                                 });
                             });
                         });
 
-                        describe("from a different container", function() {
-                            beforeEach(function() {
+                        describe("from a different container", function () {
+                            beforeEach(function () {
                                 sampleData[2].children = [];
                                 makeCustomList();
                                 existing = getItem('i43');
@@ -2177,19 +2177,19 @@ describe("Ext.list.Tree", function() {
                                 byId('i1').appendChild(byId('i43'));
                             });
 
-                            it("should use the same item", function() {
+                            it("should use the same item", function () {
                                 expect(getItem('i43')).toBe(existing);
                             });
 
-                            it("should use the same el", function() {
+                            it("should use the same el", function () {
                                 expect(getItem('i43').el).toBe(existing.el);
                             });
 
-                            it("should set the parent", function() {
+                            it("should set the parent", function () {
                                 expect(getItem('i43').getParentItem()).toBe(getItem('i1'));
                             });
 
-                            it("should update the expandable state when adding the first node and moving the last", function() {
+                            it("should update the expandable state when adding the first node and moving the last", function () {
                                 var item1 = getItem('i1'),
                                     item3 = getItem('i3');
 
@@ -2204,30 +2204,30 @@ describe("Ext.list.Tree", function() {
                                 expect(item3.logs.expandable).toEqual([true]);
                             });
 
-                            describe("template methods", function() {
-                                it("should call onNodeInsert", function() {
+                            describe("template methods", function () {
+                                it("should call onNodeInsert", function () {
                                     var item = getItem('i1');
                                     expect(item.logs.onNodeInsert).toEqual([[byId('i43'), null]]);
                                 });
 
-                                it("should call insertItem", function() {
+                                it("should call insertItem", function () {
                                     var item = getItem('i1');
                                     expect(item.logs.insertItem).toEqual([[getItem('i43'), null]]);
                                 });
 
-                                it("should call removeItem", function() {
+                                it("should call removeItem", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.removeItem).toEqual([getItem('i43')]);
                                 });
 
-                                it("should not call onNodeRemove", function() {
+                                it("should not call onNodeRemove", function () {
                                     var item = getItem('i4');
                                     expect(item.logs.onNodeRemove).toEqual([]);
                                 });
                             });
 
-                            describe("events", function() {
-                                it("should fire iteminsert", function() {
+                            describe("events", function () {
+                                it("should fire iteminsert", function () {
                                     expect(insertSpy.callCount).toBe(1);
                                     expect(insertSpy.mostRecentCall.args[0]).toBe(list);
                                     expect(insertSpy.mostRecentCall.args[1]).toBe(getItem('i1'));
@@ -2235,7 +2235,7 @@ describe("Ext.list.Tree", function() {
                                     expect(insertSpy.mostRecentCall.args[3]).toBeNull();
                                 });
 
-                                it("should not fire itemremove", function() {
+                                it("should not fire itemremove", function () {
                                     expect(removeSpy).not.toHaveBeenCalled();
                                 });
                             });
@@ -2244,24 +2244,24 @@ describe("Ext.list.Tree", function() {
                 });
             });
 
-            describe("removing nodes", function() {
-                beforeEach(function() {
+            describe("removing nodes", function () {
+                beforeEach(function () {
                     makeCustomList();
                 });
 
-                it("should destroy the item", function() {
+                it("should destroy the item", function () {
                     var item = getItem('i3');
                     root.removeChild(byId('i3'));
                     expect(item.destroyed).toBe(true);
                 });
 
-                it("should not be accessible via getItem", function() {
+                it("should not be accessible via getItem", function () {
                     var node = byId('i3');
                     root.removeChild(node);
                     expect(list.getItem(node)).toBeNull();
                 });
 
-                it("should destroy nested items", function() {
+                it("should destroy nested items", function () {
                     var item1 = getItem('i41'),
                         item2 = getItem('i42'),
                         item3 = getItem('i43');
@@ -2272,7 +2272,7 @@ describe("Ext.list.Tree", function() {
                     expect(item3.destroyed).toBe(true);
                 });
 
-                it("should call setExpandable: false if removing the last child item", function() {
+                it("should call setExpandable: false if removing the last child item", function () {
                     var item = getItem('i4');
                     byId('i4').removeChild(byId('i41'));
                     expect(item.logs.expandable).toEqual([true]);
@@ -2282,8 +2282,8 @@ describe("Ext.list.Tree", function() {
                     expect(item.logs.expandable).toEqual([true, false]);
                 });
 
-                describe("template methods", function() {
-                    it("should call removeItem", function() {
+                describe("template methods", function () {
+                    it("should call removeItem", function () {
                         var item = getItem('i4'),
                             oldItem = getItem('i41');
 
@@ -2291,7 +2291,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.removeItem).toEqual([oldItem]);
                     });
 
-                    it("should call onNodeRemove", function() {
+                    it("should call onNodeRemove", function () {
                         var item = getItem('i4'),
                             node = byId('i41');
 
@@ -2299,7 +2299,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.onNodeRemove).toEqual([node]);
                     });
 
-                    it("should not call template methods for nested children", function() {
+                    it("should not call template methods for nested children", function () {
                         var item = getItem('i4');
                         root.removeChild(byId('i4'));
 
@@ -2308,8 +2308,8 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("events", function() {
-                    it("should fire the remove event", function() {
+                describe("events", function () {
+                    it("should fire the remove event", function () {
                         var item = getItem('i41');
                         byId('i4').removeChild(item.getNode());
                         expect(removeSpy.callCount).toBe(1);
@@ -2318,7 +2318,7 @@ describe("Ext.list.Tree", function() {
                         expect(removeSpy.mostRecentCall.args[2]).toBe(item);
                     });
 
-                    it("should only for the remove event for the top level item", function() {
+                    it("should only for the remove event for the top level item", function () {
                         var item = getItem('i4');
                         root.removeChild(item.getNode());
                         expect(removeSpy.callCount).toBe(1);
@@ -2329,13 +2329,13 @@ describe("Ext.list.Tree", function() {
                 });
             });
 
-            describe("collapse", function() {
-                beforeEach(function() {
+            describe("collapse", function () {
+                beforeEach(function () {
                     makeCustomList();
                 });
 
-                describe("when expanded", function() {
-                    it("should call onNodeCollapsed", function() {
+                describe("when expanded", function () {
+                    it("should call onNodeCollapsed", function () {
                         var item = getItem('i4'),
                             node = byId('i4');
 
@@ -2344,7 +2344,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.onNodeCollapse).toEqual([node]);
                     });
 
-                    it("should call setExpanded(false)", function() {
+                    it("should call setExpanded(false)", function () {
                         var item = getItem('i4'),
                             node = byId('i4');
 
@@ -2353,7 +2353,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.expanded).toEqual([true, false]);
                     });
 
-                    it("should fire the itemcollapse event", function() {
+                    it("should fire the itemcollapse event", function () {
                         var item = getItem('i4'),
                             node = byId('i4');
 
@@ -2364,8 +2364,8 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("when collapsed", function() {
-                    it("should not call onNodeCollapse", function() {
+                describe("when collapsed", function () {
+                    it("should not call onNodeCollapse", function () {
                         var item = getItem('i1'),
                             node = byId('i1');
 
@@ -2374,7 +2374,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.onNodeCollapse).toEqual([]);
                     });
 
-                    it("should not call setExpanded(false)", function() {
+                    it("should not call setExpanded(false)", function () {
                         var item = getItem('i1'),
                             node = byId('i1');
 
@@ -2383,7 +2383,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.expanded).toEqual([]);
                     });
 
-                    it("should not fire the itemcollapse event", function() {
+                    it("should not fire the itemcollapse event", function () {
                         var item = getItem('i1'),
                             node = byId('i1');
 
@@ -2393,13 +2393,13 @@ describe("Ext.list.Tree", function() {
                 });
             });
 
-            describe("expand", function() {
-                beforeEach(function() {
+            describe("expand", function () {
+                beforeEach(function () {
                     makeCustomList();
                 });
 
-                describe("when collapsed", function() {
-                    it("should call onNodeExpand", function() {
+                describe("when collapsed", function () {
+                    it("should call onNodeExpand", function () {
                         var item = getItem('i1'),
                             node = byId('i1');
 
@@ -2408,7 +2408,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.onNodeExpand).toEqual([node]);
                     });
 
-                    it("should call setExpanded(true)", function() {
+                    it("should call setExpanded(true)", function () {
                         var item = getItem('i1'),
                             node = byId('i1');
 
@@ -2417,7 +2417,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.expanded).toEqual([true]);
                     });
 
-                    it("should fire the itemexpand event", function() {
+                    it("should fire the itemexpand event", function () {
                         var item = getItem('i1'),
                             node = byId('i1');
 
@@ -2427,12 +2427,12 @@ describe("Ext.list.Tree", function() {
                         expect(expandSpy.mostRecentCall.args[1]).toBe(item);
                     });
 
-                    describe("loading", function() {
-                        beforeEach(function() {
+                    describe("loading", function () {
+                        beforeEach(function () {
                             MockAjaxManager.addMethods();
                         });
 
-                        afterEach(function() {
+                        afterEach(function () {
                             MockAjaxManager.removeMethods();
                         });
 
@@ -2443,7 +2443,7 @@ describe("Ext.list.Tree", function() {
                             });
                         }
 
-                        it("should set loaded when the node is expanding", function() {
+                        it("should set loaded when the node is expanding", function () {
                             var item = getItem('i3');
                             expect(item.logs.loading).toEqual([]);
                             expect(item.getLoading()).toBe(false);
@@ -2459,7 +2459,7 @@ describe("Ext.list.Tree", function() {
                             expect(item.getLoading()).toBe(false);
                         });
 
-                        it("should not fire the itemexpand event until loading completes", function() {
+                        it("should not fire the itemexpand event until loading completes", function () {
                             var item = getItem('i3');
                             expect(expandSpy).not.toHaveBeenCalled();
                             byId('i3').expand();
@@ -2472,8 +2472,8 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("when expanded", function() {
-                    it("should not call onNodeExpand", function() {
+                describe("when expanded", function () {
+                    it("should not call onNodeExpand", function () {
                         var item = getItem('i4'),
                             node = byId('i4');
 
@@ -2482,7 +2482,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.onNodeExpand).toEqual([]);
                     });
 
-                    it("should not call setExpanded(true)", function() {
+                    it("should not call setExpanded(true)", function () {
                         var item = getItem('i4'),
                             node = byId('i4');
 
@@ -2491,7 +2491,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.expanded).toEqual([true]);
                     });
 
-                    it("should not fire the itemexpand event", function() {
+                    it("should not fire the itemexpand event", function () {
                         var item = getItem('i4'),
                             node = byId('i4');
 
@@ -2501,9 +2501,9 @@ describe("Ext.list.Tree", function() {
                 });
             });
 
-            describe("updating node fields", function() {
-                describe("text", function() {
-                    it("should call setText when updating the text with a textProperty", function() {
+            describe("updating node fields", function () {
+                describe("text", function () {
+                    it("should call setText when updating the text with a textProperty", function () {
                         makeCustomList();
                         var item = getItem('i2');
                         expect(item.logs.text).toEqual(['Item 2']);
@@ -2511,7 +2511,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.text).toEqual(['Item 2', 'Foo']);
                     });
 
-                    it("should not call setText with no textProperty", function() {
+                    it("should not call setText with no textProperty", function () {
                         makeCustomList({
                             defaults: {
                                 textProperty: ''
@@ -2523,7 +2523,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.text).toEqual([]);
                     });
 
-                    it("should call onNodeUpdate", function() {
+                    it("should call onNodeUpdate", function () {
                         makeCustomList();
                         var item = getItem('i2'),
                             node = byId('i2');
@@ -2534,8 +2534,8 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("iconCls", function() {
-                    it("should call setIconCls when updating the iconCls with an iconClsProperty", function() {
+                describe("iconCls", function () {
+                    it("should call setIconCls when updating the iconCls with an iconClsProperty", function () {
                         makeCustomList();
                         var item = getItem('i2');
                         expect(item.logs.iconCls).toEqual([]);
@@ -2543,7 +2543,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.iconCls).toEqual(['foo']);
                     });
 
-                    it("should not call setIconCls with no iconClsProperty", function() {
+                    it("should not call setIconCls with no iconClsProperty", function () {
                         makeCustomList({
                             defaults: {
                                 iconClsProperty: ''
@@ -2555,7 +2555,7 @@ describe("Ext.list.Tree", function() {
                         expect(item.logs.iconCls).toEqual([]);
                     });
 
-                    it("should call onNodeUpdate", function() {
+                    it("should call onNodeUpdate", function () {
                         makeCustomList();
                         var item = getItem('i2'),
                             node = byId('i2');
@@ -2566,9 +2566,9 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("expandable", function() {
-                    describe("expandable: false", function() {
-                        it("should call setExpandable(false)", function() {
+                describe("expandable", function () {
+                    describe("expandable: false", function () {
+                        it("should call setExpandable(false)", function () {
                             makeCustomList();
                             var item = getItem('i4');
                             expect(item.logs.expandable).toEqual([true]);
@@ -2576,7 +2576,7 @@ describe("Ext.list.Tree", function() {
                             expect(item.logs.expandable).toEqual([true, false]);
                         });
 
-                        it("should call onNodeUpdate", function() {
+                        it("should call onNodeUpdate", function () {
                             makeCustomList();
                             var item = getItem('i4'),
                                 node = byId('i4');
@@ -2586,8 +2586,8 @@ describe("Ext.list.Tree", function() {
                         });
                     });
 
-                    describe("expandable: true", function() {
-                        it("should call setExpandable(true)", function() {
+                    describe("expandable: true", function () {
+                        it("should call setExpandable(true)", function () {
                             sampleData[0].expandable = false;
                             makeCustomList();
                             var item = getItem('i1');
@@ -2596,7 +2596,7 @@ describe("Ext.list.Tree", function() {
                             expect(item.logs.expandable).toEqual([true]);
                         });
 
-                        it("should call onNodeUpdate", function() {
+                        it("should call onNodeUpdate", function () {
                             sampleData[0].expandable = false;
                             makeCustomList();
                             var item = getItem('i1'),
@@ -2608,8 +2608,8 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("other fields", function() {
-                    it("should call onNodeUpdate", function() {
+                describe("other fields", function () {
+                    it("should call onNodeUpdate", function () {
                         makeCustomList();
                         var item = getItem('i1'),
                             node = byId('i1');
@@ -2619,7 +2619,7 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                it("should call onNodeUpdate when setting multiple fields", function() {
+                it("should call onNodeUpdate when setting multiple fields", function () {
                     makeCustomList();
                     var item = getItem('i1'),
                         node = byId('i1');
@@ -2633,9 +2633,9 @@ describe("Ext.list.Tree", function() {
             });
 
             // This is essentially the same as setting a new store
-            describe("changing the root node", function() {
-                describe("cleanup", function() {
-                    it("should destroy the old items", function() {
+            describe("changing the root node", function () {
+                describe("cleanup", function () {
+                    it("should destroy the old items", function () {
                         sampleData = [{
                             id: 'i1',
                             text: 'Item 1',
@@ -2668,7 +2668,7 @@ describe("Ext.list.Tree", function() {
                             children: []
                         });
 
-                        Ext.Array.forEach(items, function(item) {
+                        Ext.Array.forEach(items, function (item) {
                             expect(item.destroyed).toBe(true);
                         });
 
@@ -2680,10 +2680,10 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("adding new items", function() {
+                describe("adding new items", function () {
                     var newData;
 
-                    beforeEach(function() {
+                    beforeEach(function () {
                         newData = [{
                             id: 'j1',
                             text: 'XItem 1',
@@ -2708,7 +2708,7 @@ describe("Ext.list.Tree", function() {
                         }]
                     });
 
-                    afterEach(function() {
+                    afterEach(function () {
                         newData = null;
                     });
 
@@ -2720,30 +2720,30 @@ describe("Ext.list.Tree", function() {
                         });
                     }
 
-                    describe("top level nodes", function() {
-                        describe("expanded: false, with children", function() {
-                            it("should set expanded", function() {
+                    describe("top level nodes", function () {
+                        describe("expanded: false, with children", function () {
+                            it("should set expanded", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j1');
                                 expect(item.logs.expanded).toEqual([]);
                                 expect(item.getExpanded()).toBe(false);
                             });
 
-                            it("should set expandable", function() {
+                            it("should set expandable", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j1');
-                                expect(item.logs.expandable).toEqual([true]); 
+                                expect(item.logs.expandable).toEqual([true]);
                                 expect(item.getExpandable()).toBe(true);
                             });
 
-                            it("should set leaf", function() {
+                            it("should set leaf", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j1');
-                                expect(item.logs.leaf).toEqual([false]); 
+                                expect(item.logs.leaf).toEqual([false]);
                                 expect(item.getLeaf()).toBe(false);
                             });
 
-                            it("should set the icon if iconClsProperty is specified", function() {
+                            it("should set the icon if iconClsProperty is specified", function () {
                                 newData[0].iconCls = 'iconA';
                                 makeAndSetRoot();
                                 var item = getItem('j1');
@@ -2751,7 +2751,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('iconA');
                             });
 
-                            it("should not set the icon if an iconClsProperty is not specified", function() {
+                            it("should not set the icon if an iconClsProperty is not specified", function () {
                                 newData[0].iconCls = 'iconA';
                                 makeAndSetRoot({
                                     defaults: {
@@ -2763,14 +2763,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('');
                             });
 
-                            it("should set the text if a textProperty is specified", function() {
+                            it("should set the text if a textProperty is specified", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j1');
                                 expect(item.logs.text).toEqual(['XItem 1']);
                                 expect(item.getText()).toBe('XItem 1');
                             });
 
-                            it("should not set the text if an textProperty is not specified", function() {
+                            it("should not set the text if an textProperty is not specified", function () {
                                 makeAndSetRoot({
                                     defaults: {
                                         textProperty: ''
@@ -2781,7 +2781,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getText()).toBe('');
                             });
 
-                            it("should insert the child nodes", function() {
+                            it("should insert the child nodes", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j1');
                                 expect(item.logs.insertItem).toEqual([
@@ -2789,7 +2789,7 @@ describe("Ext.list.Tree", function() {
                                 ]);
                             });
 
-                            it("should not call any template methods", function() {
+                            it("should not call any template methods", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j1');
                                 expect(item.logs.onNodeCollapse).toEqual([]);
@@ -2799,14 +2799,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item.logs.onNodeUpdate).toEqual([]);
                             });
 
-                            it("should not fire events", function() {
+                            it("should not fire events", function () {
                                 expect(insertSpy).not.toHaveBeenCalled();
                                 expect(removeSpy).not.toHaveBeenCalled();
                                 expect(expandSpy).not.toHaveBeenCalled();
                                 expect(collapseSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j1');
                                 expect(item.getNode()).toBe(byId('j1'));
@@ -2814,7 +2814,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getOwner()).toBe(list);
                             });
 
-                            it("should have the itemConfig set", function() {
+                            it("should have the itemConfig set", function () {
                                 makeAndSetRoot({
                                     defaults: {
                                         testConfig: 12
@@ -2825,29 +2825,29 @@ describe("Ext.list.Tree", function() {
                             });
                         });
 
-                        describe("expanded: true, with children", function() {
-                            it("should set expanded", function() {
+                        describe("expanded: true, with children", function () {
+                            it("should set expanded", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j2');
                                 expect(item.logs.expanded).toEqual([true]);
                                 expect(item.getExpanded()).toBe(true);
                             });
 
-                            it("should set expandable", function() {
+                            it("should set expandable", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j2');
-                                expect(item.logs.expandable).toEqual([true]); 
+                                expect(item.logs.expandable).toEqual([true]);
                                 expect(item.getExpandable()).toBe(true);
                             });
 
-                            it("should set leaf", function() {
+                            it("should set leaf", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j2');
-                                expect(item.logs.leaf).toEqual([false]); 
+                                expect(item.logs.leaf).toEqual([false]);
                                 expect(item.getLeaf()).toBe(false);
                             });
 
-                            it("should set the icon if iconClsProperty is specified", function() {
+                            it("should set the icon if iconClsProperty is specified", function () {
                                 newData[1].iconCls = 'iconA';
                                 makeAndSetRoot();
                                 var item = getItem('j2');
@@ -2855,7 +2855,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('iconA');
                             });
 
-                            it("should not set the icon if an iconClsProperty is not specified", function() {
+                            it("should not set the icon if an iconClsProperty is not specified", function () {
                                 newData[1].iconCls = 'iconA';
                                 makeAndSetRoot({
                                     defaults: {
@@ -2867,14 +2867,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('');
                             });
 
-                            it("should set the text if a textProperty is specified", function() {
+                            it("should set the text if a textProperty is specified", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j2');
                                 expect(item.logs.text).toEqual(['XItem 2']);
                                 expect(item.getText()).toBe('XItem 2');
                             });
 
-                            it("should not set the text if an textProperty is not specified", function() {
+                            it("should not set the text if an textProperty is not specified", function () {
                                 makeAndSetRoot({
                                     defaults: {
                                         textProperty: ''
@@ -2885,7 +2885,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getText()).toBe('');
                             });
 
-                            it("should insert the child nodes", function() {
+                            it("should insert the child nodes", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j2');
                                 expect(item.logs.insertItem).toEqual([
@@ -2894,7 +2894,7 @@ describe("Ext.list.Tree", function() {
                                 ]);
                             });
 
-                            it("should not call any template methods", function() {
+                            it("should not call any template methods", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j2');
                                 expect(item.logs.onNodeCollapse).toEqual([]);
@@ -2904,14 +2904,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item.logs.onNodeUpdate).toEqual([]);
                             });
 
-                            it("should not fire events", function() {
+                            it("should not fire events", function () {
                                 expect(insertSpy).not.toHaveBeenCalled();
                                 expect(removeSpy).not.toHaveBeenCalled();
                                 expect(expandSpy).not.toHaveBeenCalled();
                                 expect(collapseSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j2');
                                 expect(item.getNode()).toBe(byId('j2'));
@@ -2919,7 +2919,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getOwner()).toBe(list);
                             });
 
-                            it("should have the itemConfig set", function() {
+                            it("should have the itemConfig set", function () {
                                 makeAndSetRoot({
                                     defaults: {
                                         testConfig: 12
@@ -2931,30 +2931,30 @@ describe("Ext.list.Tree", function() {
                         });
                     });
 
-                    describe("child level nodes", function() {
-                        describe("parent expanded: false", function() {
-                            it("should set expanded", function() {
+                    describe("child level nodes", function () {
+                        describe("parent expanded: false", function () {
+                            it("should set expanded", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j11');
                                 expect(item.logs.expanded).toEqual([]);
                                 expect(item.getExpanded()).toBe(false);
                             });
 
-                            it("should set expandable", function() {
+                            it("should set expandable", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j11');
-                                expect(item.logs.expandable).toEqual([]); 
+                                expect(item.logs.expandable).toEqual([]);
                                 expect(item.getExpandable()).toBe(false);
                             });
 
-                            it("should set leaf", function() {
+                            it("should set leaf", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j11');
-                                expect(item.logs.leaf).toEqual([]); 
+                                expect(item.logs.leaf).toEqual([]);
                                 expect(item.getLeaf()).toBe(true);
                             });
 
-                            it("should set the icon if iconClsProperty is specified", function() {
+                            it("should set the icon if iconClsProperty is specified", function () {
                                 newData[0].children[0].iconCls = 'iconB';
                                 makeAndSetRoot();
                                 var item = getItem('j11');
@@ -2963,7 +2963,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('iconB');
                             });
 
-                            it("should not set the icon if an iconClsProperty is not specified", function() {
+                            it("should not set the icon if an iconClsProperty is not specified", function () {
                                 newData[0].children[0].iconCls = 'iconB';
                                 makeAndSetRoot({
                                     defaults: {
@@ -2976,7 +2976,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('');
                             });
 
-                            it("should set the text if a textProperty is specified", function() {
+                            it("should set the text if a textProperty is specified", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j11');
 
@@ -2984,7 +2984,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getText()).toBe('XItem 1.1');
                             });
 
-                            it("should not set the text if an textProperty is not specified", function() {
+                            it("should not set the text if an textProperty is not specified", function () {
                                 makeAndSetRoot({
                                     defaults: {
                                         textProperty: ''
@@ -2996,7 +2996,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getText()).toBe('');
                             });
 
-                            it("should not call any template methods", function() {
+                            it("should not call any template methods", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j11');
 
@@ -3007,14 +3007,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item.logs.onNodeUpdate).toEqual([]);
                             });
 
-                            it("should not fire events", function() {
+                            it("should not fire events", function () {
                                 expect(insertSpy).not.toHaveBeenCalled();
                                 expect(removeSpy).not.toHaveBeenCalled();
                                 expect(expandSpy).not.toHaveBeenCalled();
                                 expect(collapseSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 makeAndSetRoot();
                                 var item = getItem('j11');
 
@@ -3023,7 +3023,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getOwner()).toBe(list);
                             });
 
-                            it("should have the itemConfig set", function() {
+                            it("should have the itemConfig set", function () {
                                 makeAndSetRoot({
                                     defaults: {
                                         testConfig: 12
@@ -3035,8 +3035,8 @@ describe("Ext.list.Tree", function() {
                             });
                         });
 
-                        describe("parent expanded: true", function() {
-                            it("should set expanded", function() {
+                        describe("parent expanded: true", function () {
+                            it("should set expanded", function () {
                                 makeAndSetRoot();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3048,7 +3048,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getExpanded()).toBe(false);
                             });
 
-                            it("should set expandable", function() {
+                            it("should set expandable", function () {
                                 makeAndSetRoot();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3060,7 +3060,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getExpandable()).toBe(true);
                             });
 
-                            it("should set leaf", function() {
+                            it("should set leaf", function () {
                                 makeAndSetRoot();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3072,7 +3072,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getLeaf()).toBe(false);
                             });
 
-                            it("should set the icon if iconClsProperty is specified", function() {
+                            it("should set the icon if iconClsProperty is specified", function () {
                                 newData[1].children[0].iconCls = 'iconB';
                                 newData[1].children[1].iconCls = 'iconC';
                                 makeAndSetRoot();
@@ -3086,7 +3086,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getIconCls()).toBe('iconC');
                             });
 
-                            it("should not set the icon if an iconClsProperty is not specified", function() {
+                            it("should not set the icon if an iconClsProperty is not specified", function () {
                                 newData[1].children[0].iconCls = 'iconB';
                                 newData[1].children[1].iconCls = 'iconC';
                                 makeAndSetRoot({
@@ -3104,7 +3104,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getIconCls()).toBe('');
                             });
 
-                            it("should set the text if a textProperty is specified", function() {
+                            it("should set the text if a textProperty is specified", function () {
                                 makeAndSetRoot();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3116,7 +3116,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getText()).toBe('XItem 2.2');
                             });
 
-                            it("should not set the text if an textProperty is not specified", function() {
+                            it("should not set the text if an textProperty is not specified", function () {
                                 makeAndSetRoot({
                                     defaults: {
                                         textProperty: ''
@@ -3132,7 +3132,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getText()).toBe('');
                             });
 
-                            it("should not call any template methods", function() {
+                            it("should not call any template methods", function () {
                                 makeAndSetRoot();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3150,14 +3150,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.logs.onNodeUpdate).toEqual([]);
                             });
 
-                            it("should not fire events", function() {
+                            it("should not fire events", function () {
                                 expect(insertSpy).not.toHaveBeenCalled();
                                 expect(removeSpy).not.toHaveBeenCalled();
                                 expect(expandSpy).not.toHaveBeenCalled();
                                 expect(collapseSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 makeAndSetRoot();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3171,7 +3171,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getOwner()).toBe(list);
                             });
 
-                            it("should have the itemConfig set", function() {
+                            it("should have the itemConfig set", function () {
                                 makeAndSetRoot({
                                     defaults: {
                                         testConfig: 12
@@ -3189,9 +3189,9 @@ describe("Ext.list.Tree", function() {
             });
 
             // Essentially the same as setting a new root node
-            describe("setting a new store", function() {
-                describe("cleanup", function() {
-                    it("should destroy the old items", function() {
+            describe("setting a new store", function () {
+                describe("cleanup", function () {
+                    it("should destroy the old items", function () {
                         sampleData = [{
                             id: 'i1',
                             text: 'Item 1',
@@ -3226,7 +3226,7 @@ describe("Ext.list.Tree", function() {
                             }
                         });
 
-                        Ext.Array.forEach(items, function(item) {
+                        Ext.Array.forEach(items, function (item) {
                             expect(item.destroyed).toBe(true);
                         });
 
@@ -3238,10 +3238,10 @@ describe("Ext.list.Tree", function() {
                     });
                 });
 
-                describe("adding new items", function() {
+                describe("adding new items", function () {
                     var newData;
 
-                    beforeEach(function() {
+                    beforeEach(function () {
                         newData = [{
                             id: 'j1',
                             text: 'XItem 1',
@@ -3266,7 +3266,7 @@ describe("Ext.list.Tree", function() {
                         }]
                     });
 
-                    afterEach(function() {
+                    afterEach(function () {
                         newData = null;
                     });
 
@@ -3282,30 +3282,30 @@ describe("Ext.list.Tree", function() {
                         store = list.getStore();
                     }
 
-                    describe("top level nodes", function() {
-                        describe("expanded: false, with children", function() {
-                            it("should set expanded", function() {
+                    describe("top level nodes", function () {
+                        describe("expanded: false, with children", function () {
+                            it("should set expanded", function () {
                                 makeAndSetStore();
                                 var item = getItem('j1');
                                 expect(item.logs.expanded).toEqual([]);
                                 expect(item.getExpanded()).toBe(false);
                             });
 
-                            it("should set expandable", function() {
+                            it("should set expandable", function () {
                                 makeAndSetStore();
                                 var item = getItem('j1');
-                                expect(item.logs.expandable).toEqual([true]); 
+                                expect(item.logs.expandable).toEqual([true]);
                                 expect(item.getExpandable()).toBe(true);
                             });
 
-                            it("should set leaf", function() {
+                            it("should set leaf", function () {
                                 makeAndSetStore();
                                 var item = getItem('j1');
-                                expect(item.logs.leaf).toEqual([false]); 
+                                expect(item.logs.leaf).toEqual([false]);
                                 expect(item.getLeaf()).toBe(false);
                             });
 
-                            it("should set the icon if iconClsProperty is specified", function() {
+                            it("should set the icon if iconClsProperty is specified", function () {
                                 newData[0].iconCls = 'iconA';
                                 makeAndSetStore();
                                 var item = getItem('j1');
@@ -3313,7 +3313,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('iconA');
                             });
 
-                            it("should not set the icon if an iconClsProperty is not specified", function() {
+                            it("should not set the icon if an iconClsProperty is not specified", function () {
                                 newData[0].iconCls = 'iconA';
                                 makeAndSetStore({
                                     defaults: {
@@ -3325,14 +3325,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('');
                             });
 
-                            it("should set the text if a textProperty is specified", function() {
+                            it("should set the text if a textProperty is specified", function () {
                                 makeAndSetStore();
                                 var item = getItem('j1');
                                 expect(item.logs.text).toEqual(['XItem 1']);
                                 expect(item.getText()).toBe('XItem 1');
                             });
 
-                            it("should not set the text if an textProperty is not specified", function() {
+                            it("should not set the text if an textProperty is not specified", function () {
                                 makeAndSetStore({
                                     defaults: {
                                         textProperty: ''
@@ -3343,7 +3343,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getText()).toBe('');
                             });
 
-                            it("should insert the child nodes", function() {
+                            it("should insert the child nodes", function () {
                                 makeAndSetStore();
                                 var item = getItem('j1');
                                 expect(item.logs.insertItem).toEqual([
@@ -3351,7 +3351,7 @@ describe("Ext.list.Tree", function() {
                                 ]);
                             });
 
-                            it("should not call any template methods", function() {
+                            it("should not call any template methods", function () {
                                 makeAndSetStore();
                                 var item = getItem('j1');
                                 expect(item.logs.onNodeCollapse).toEqual([]);
@@ -3361,14 +3361,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item.logs.onNodeUpdate).toEqual([]);
                             });
 
-                            it("should not fire events", function() {
+                            it("should not fire events", function () {
                                 expect(insertSpy).not.toHaveBeenCalled();
                                 expect(removeSpy).not.toHaveBeenCalled();
                                 expect(expandSpy).not.toHaveBeenCalled();
                                 expect(collapseSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 makeAndSetStore();
                                 var item = getItem('j1');
                                 expect(item.getNode()).toBe(byId('j1'));
@@ -3376,7 +3376,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getOwner()).toBe(list);
                             });
 
-                            it("should have the itemConfig set", function() {
+                            it("should have the itemConfig set", function () {
                                 makeAndSetStore({
                                     defaults: {
                                         testConfig: 12
@@ -3387,29 +3387,29 @@ describe("Ext.list.Tree", function() {
                             });
                         });
 
-                        describe("expanded: true, with children", function() {
-                            it("should be set expanded", function() {
+                        describe("expanded: true, with children", function () {
+                            it("should be set expanded", function () {
                                 makeAndSetStore();
                                 var item = getItem('j2');
                                 expect(item.logs.expanded).toEqual([true]);
                                 expect(item.getExpanded()).toBe(true);
                             });
 
-                            it("should set expandable", function() {
+                            it("should set expandable", function () {
                                 makeAndSetStore();
                                 var item = getItem('j2');
-                                expect(item.logs.expandable).toEqual([true]); 
+                                expect(item.logs.expandable).toEqual([true]);
                                 expect(item.getExpandable()).toBe(true);
                             });
 
-                            it("should set leaf", function() {
+                            it("should set leaf", function () {
                                 makeAndSetStore();
                                 var item = getItem('j2');
-                                expect(item.logs.leaf).toEqual([false]); 
+                                expect(item.logs.leaf).toEqual([false]);
                                 expect(item.getLeaf()).toBe(false);
                             });
 
-                            it("should set the icon if iconClsProperty is specified", function() {
+                            it("should set the icon if iconClsProperty is specified", function () {
                                 newData[1].iconCls = 'iconA';
                                 makeAndSetStore();
                                 var item = getItem('j2');
@@ -3417,7 +3417,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('iconA');
                             });
 
-                            it("should not set the icon if an iconClsProperty is not specified", function() {
+                            it("should not set the icon if an iconClsProperty is not specified", function () {
                                 newData[1].iconCls = 'iconA';
                                 makeAndSetStore({
                                     defaults: {
@@ -3429,14 +3429,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('');
                             });
 
-                            it("should set the text if a textProperty is specified", function() {
+                            it("should set the text if a textProperty is specified", function () {
                                 makeAndSetStore();
                                 var item = getItem('j2');
                                 expect(item.logs.text).toEqual(['XItem 2']);
                                 expect(item.getText()).toBe('XItem 2');
                             });
 
-                            it("should not set the text if an textProperty is not specified", function() {
+                            it("should not set the text if an textProperty is not specified", function () {
                                 makeAndSetStore({
                                     defaults: {
                                         textProperty: ''
@@ -3447,7 +3447,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getText()).toBe('');
                             });
 
-                            it("should insert the child nodes", function() {
+                            it("should insert the child nodes", function () {
                                 makeAndSetStore();
                                 var item = getItem('j2');
                                 expect(item.logs.insertItem).toEqual([
@@ -3456,7 +3456,7 @@ describe("Ext.list.Tree", function() {
                                 ]);
                             });
 
-                            it("should not call any template methods", function() {
+                            it("should not call any template methods", function () {
                                 makeAndSetStore();
                                 var item = getItem('j2');
                                 expect(item.logs.onNodeCollapse).toEqual([]);
@@ -3466,14 +3466,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item.logs.onNodeUpdate).toEqual([]);
                             });
 
-                            it("should not fire events", function() {
+                            it("should not fire events", function () {
                                 expect(insertSpy).not.toHaveBeenCalled();
                                 expect(removeSpy).not.toHaveBeenCalled();
                                 expect(expandSpy).not.toHaveBeenCalled();
                                 expect(collapseSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 makeAndSetStore();
                                 var item = getItem('j2');
                                 expect(item.getNode()).toBe(byId('j2'));
@@ -3481,7 +3481,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getOwner()).toBe(list);
                             });
 
-                            it("should have the itemConfig set", function() {
+                            it("should have the itemConfig set", function () {
                                 makeAndSetStore({
                                     defaults: {
                                         testConfig: 12
@@ -3493,30 +3493,30 @@ describe("Ext.list.Tree", function() {
                         });
                     });
 
-                    describe("child level nodes", function() {
-                        describe("parent expanded: false", function() {
-                            it("should set expanded", function() {
+                    describe("child level nodes", function () {
+                        describe("parent expanded: false", function () {
+                            it("should set expanded", function () {
                                 makeAndSetStore();
                                 var item = getItem('j11');
                                 expect(item.logs.expanded).toEqual([]);
                                 expect(item.getExpanded()).toBe(false);
                             });
 
-                            it("should set expandable", function() {
+                            it("should set expandable", function () {
                                 makeAndSetStore();
                                 var item = getItem('j11');
-                                expect(item.logs.expandable).toEqual([]); 
+                                expect(item.logs.expandable).toEqual([]);
                                 expect(item.getExpandable()).toBe(false);
                             });
 
-                            it("should set leaf", function() {
+                            it("should set leaf", function () {
                                 makeAndSetStore();
                                 var item = getItem('j11');
-                                expect(item.logs.leaf).toEqual([]); 
+                                expect(item.logs.leaf).toEqual([]);
                                 expect(item.getLeaf()).toBe(true);
                             });
 
-                            it("should set the icon if iconClsProperty is specified", function() {
+                            it("should set the icon if iconClsProperty is specified", function () {
                                 newData[0].children[0].iconCls = 'iconB';
                                 makeAndSetStore();
                                 var item = getItem('j11');
@@ -3525,7 +3525,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('iconB');
                             });
 
-                            it("should not set the icon if an iconClsProperty is not specified", function() {
+                            it("should not set the icon if an iconClsProperty is not specified", function () {
                                 newData[0].children[0].iconCls = 'iconB';
                                 makeAndSetStore({
                                     defaults: {
@@ -3538,7 +3538,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getIconCls()).toBe('');
                             });
 
-                            it("should set the text if a textProperty is specified", function() {
+                            it("should set the text if a textProperty is specified", function () {
                                 makeAndSetStore();
                                 var item = getItem('j11');
 
@@ -3546,7 +3546,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getText()).toBe('XItem 1.1');
                             });
 
-                            it("should not set the text if an textProperty is not specified", function() {
+                            it("should not set the text if an textProperty is not specified", function () {
                                 makeAndSetStore({
                                     defaults: {
                                         textProperty: ''
@@ -3558,7 +3558,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getText()).toBe('');
                             });
 
-                            it("should not call any template methods", function() {
+                            it("should not call any template methods", function () {
                                 makeAndSetStore();
                                 var item = getItem('j11');
 
@@ -3569,14 +3569,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item.logs.onNodeUpdate).toEqual([]);
                             });
 
-                            it("should not fire events", function() {
+                            it("should not fire events", function () {
                                 expect(insertSpy).not.toHaveBeenCalled();
                                 expect(removeSpy).not.toHaveBeenCalled();
                                 expect(expandSpy).not.toHaveBeenCalled();
                                 expect(collapseSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 makeAndSetStore();
                                 var item = getItem('j11');
 
@@ -3585,7 +3585,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item.getOwner()).toBe(list);
                             });
 
-                            it("should have the itemConfig set", function() {
+                            it("should have the itemConfig set", function () {
                                 makeAndSetStore({
                                     defaults: {
                                         testConfig: 12
@@ -3597,8 +3597,8 @@ describe("Ext.list.Tree", function() {
                             });
                         });
 
-                        describe("parent expanded: true", function() {
-                            it("should set expanded", function() {
+                        describe("parent expanded: true", function () {
+                            it("should set expanded", function () {
                                 makeAndSetStore();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3610,7 +3610,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getExpanded()).toBe(false);
                             });
 
-                            it("should set expandable", function() {
+                            it("should set expandable", function () {
                                 makeAndSetStore();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3622,7 +3622,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getExpandable()).toBe(true);
                             });
 
-                            it("should set leaf", function() {
+                            it("should set leaf", function () {
                                 makeAndSetStore();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3634,7 +3634,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getLeaf()).toBe(false);
                             });
 
-                            it("should set the icon if iconClsProperty is specified", function() {
+                            it("should set the icon if iconClsProperty is specified", function () {
                                 newData[1].children[0].iconCls = 'iconB';
                                 newData[1].children[1].iconCls = 'iconC';
                                 makeAndSetStore();
@@ -3648,7 +3648,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getIconCls()).toBe('iconC');
                             });
 
-                            it("should not set the icon if an iconClsProperty is not specified", function() {
+                            it("should not set the icon if an iconClsProperty is not specified", function () {
                                 newData[1].children[0].iconCls = 'iconB';
                                 newData[1].children[1].iconCls = 'iconC';
                                 makeAndSetStore({
@@ -3666,7 +3666,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getIconCls()).toBe('');
                             });
 
-                            it("should set the text if a textProperty is specified", function() {
+                            it("should set the text if a textProperty is specified", function () {
                                 makeAndSetStore();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3678,7 +3678,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getText()).toBe('XItem 2.2');
                             });
 
-                            it("should not set the text if an textProperty is not specified", function() {
+                            it("should not set the text if an textProperty is not specified", function () {
                                 makeAndSetStore({
                                     defaults: {
                                         textProperty: ''
@@ -3694,7 +3694,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getText()).toBe('')
                             });
 
-                            it("should not call any template methods", function() {
+                            it("should not call any template methods", function () {
                                 makeAndSetStore();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3712,14 +3712,14 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.logs.onNodeUpdate).toEqual([]);
                             });
 
-                            it("should not fire events", function() {
+                            it("should not fire events", function () {
                                 expect(insertSpy).not.toHaveBeenCalled();
                                 expect(removeSpy).not.toHaveBeenCalled();
                                 expect(expandSpy).not.toHaveBeenCalled();
                                 expect(collapseSpy).not.toHaveBeenCalled();
                             });
 
-                            it("should have the node, list and parent set", function() {
+                            it("should have the node, list and parent set", function () {
                                 makeAndSetStore();
                                 var item1 = getItem('j21'),
                                     item2 = getItem('j22');
@@ -3733,7 +3733,7 @@ describe("Ext.list.Tree", function() {
                                 expect(item2.getOwner()).toBe(list);
                             });
 
-                            it("should have the itemConfig set", function() {
+                            it("should have the itemConfig set", function () {
                                 makeAndSetStore({
                                     defaults: {
                                         testConfig: 12
@@ -3749,16 +3749,16 @@ describe("Ext.list.Tree", function() {
                     });
                 });
             });
-        });          
+        });
     });
 
-    describe("list methods", function() {
-        describe("getItem", function() {
-            beforeEach(function() {
+    describe("list methods", function () {
+        describe("getItem", function () {
+            beforeEach(function () {
                 makeList();
             });
 
-            it("should return the item matching the node", function() {
+            it("should return the item matching the node", function () {
                 var node = byId('i2'),
                     item = list.getItem(node);
 
@@ -3766,30 +3766,30 @@ describe("Ext.list.Tree", function() {
                 expect(item.xtype).toBe(list.getDefaults().xtype);
             });
 
-            it("should return null if the item does not exist", function() {
+            it("should return null if the item does not exist", function () {
                 var node = new Model(),
                     item = list.getItem(node);
 
                 expect(list.getItem(node)).toBeNull();
             });
 
-            it("should return null if no node is passed", function() {
+            it("should return null if no node is passed", function () {
                 expect(list.getItem(null)).toBeNull();
             });
 
-            it("should return null after an item was removed", function() {
+            it("should return null after an item was removed", function () {
                 var node = byId('i4');
                 root.removeChild(node);
                 expect(list.getItem(node)).toBeNull();
             });
 
-            it("should return null for a child when the parent was removed", function() {
+            it("should return null for a child when the parent was removed", function () {
                 var node = byId('i41');
                 root.removeChild(byId('i4'));
                 expect(list.getItem(node)).toBeNull();
             });
 
-            it("should return newly added items", function() {
+            it("should return newly added items", function () {
                 var node = root.appendChild({
                     id: 'i9'
                 }), item = list.getItem(node);
@@ -3798,7 +3798,7 @@ describe("Ext.list.Tree", function() {
                 expect(item.xtype).toBe(list.getDefaults().xtype);
             });
 
-            it("should return children of newly added items", function() {
+            it("should return children of newly added items", function () {
                 var node = root.appendChild({
                     id: 'i9',
                     children: [{
@@ -3812,9 +3812,9 @@ describe("Ext.list.Tree", function() {
         });
     });
 
-    describe("item methods", function() {
-        describe("expand", function() {
-            it("should call through to the node expand", function() {
+    describe("item methods", function () {
+        describe("expand", function () {
+            it("should call through to the node expand", function () {
                 makeList();
                 var node = byId('i1');
 
@@ -3825,8 +3825,8 @@ describe("Ext.list.Tree", function() {
             });
         });
 
-        describe("collapse", function() {
-            it("should call through to the node collapse", function() {
+        describe("collapse", function () {
+            it("should call through to the node collapse", function () {
                 makeList();
                 var node = byId('i1');
 
@@ -3837,18 +3837,18 @@ describe("Ext.list.Tree", function() {
             });
         });
 
-        describe("isExpanded", function() {
-            it("should return true if the node is expanded", function() {
+        describe("isExpanded", function () {
+            it("should return true if the node is expanded", function () {
                 makeList();
                 expect(getItem('i4').isExpanded()).toBe(true);
             });
 
-            it("should return false if the node is collapsed", function() {
+            it("should return false if the node is collapsed", function () {
                 makeList();
                 expect(getItem('i1').isExpanded()).toBe(false);
             });
 
-            it("should return false if the node is a leaf", function() {
+            it("should return false if the node is a leaf", function () {
                 sampleData[2].leaf = true;
                 makeList();
                 expect(getItem('i3').isExpanded()).toBe(false);
@@ -3856,8 +3856,8 @@ describe("Ext.list.Tree", function() {
         });
     });
 
-    describe("singleExpand", function() {
-        beforeEach(function() {
+    describe("singleExpand", function () {
+        beforeEach(function () {
             sampleData = [{
                 id: 'i1',
                 children: [{
@@ -3935,12 +3935,12 @@ describe("Ext.list.Tree", function() {
             }
         }
 
-        describe("with singleExpand: false", function() {
-            beforeEach(function() {
+        describe("with singleExpand: false", function () {
+            beforeEach(function () {
                 makeList();
             });
 
-            it("should not collapse other nodes when expanding", function() {
+            it("should not collapse other nodes when expanding", function () {
                 getItem('i1').expand();
                 expectExpanded('root', [true, false, false]);
                 expectExpanded('i1', [false, false, false]);
@@ -4015,14 +4015,14 @@ describe("Ext.list.Tree", function() {
             });
         });
 
-        describe("with singleExpand: true", function() {
-            beforeEach(function() {
+        describe("with singleExpand: true", function () {
+            beforeEach(function () {
                 makeList({
                     singleExpand: true
                 });
             });
 
-            it("should only allow 1 item to be expanded per level", function() {
+            it("should only allow 1 item to be expanded per level", function () {
                 getItem('i1').expand();
                 expectExpanded('root', [true, false, false]);
                 expectExpanded('i1', [false, false, false]);
@@ -4075,12 +4075,12 @@ describe("Ext.list.Tree", function() {
                 expectExpanded('i3', [false, false, true]);
             });
 
-            it("should collapse nodes before expanding", function() {
+            it("should collapse nodes before expanding", function () {
                 var order = [];
-                list.on('itemexpand', function(list, item) {
+                list.on('itemexpand', function (list, item) {
                     order.push(['e', item.getNode().id]);
                 });
-                list.on('itemcollapse', function(list, item) {
+                list.on('itemcollapse', function (list, item) {
                     order.push(['c', item.getNode().id]);
                 });
 
@@ -4103,10 +4103,10 @@ describe("Ext.list.Tree", function() {
     });
 
     // NB: These are CLASSIC SPECIFIC TESTS
-    (Ext.isModern ? xdescribe : describe)("sizing", function() {
+    (Ext.isModern ? xdescribe : describe)("sizing", function () {
         var ct, c, count;
 
-        beforeEach(function() {
+        beforeEach(function () {
             makeList({
                 renderTo: null
             });
@@ -4130,7 +4130,7 @@ describe("Ext.list.Tree", function() {
             count = ct.componentLayoutCounter;
         });
 
-        afterEach(function() {
+        afterEach(function () {
             c = ct = Ext.destroy(ct);
             count = 0;
         });
@@ -4139,11 +4139,11 @@ describe("Ext.list.Tree", function() {
             return list.element.getHeight();
         }
 
-        it("should provide an initial size", function() {
+        it("should provide an initial size", function () {
             expect(c.getHeight()).toBe(600 - listHeight());
         });
 
-        it("should update layout when a node is collapsed", function() {
+        it("should update layout when a node is collapsed", function () {
             var h = c.getHeight();
 
             byId('i4').collapse();
@@ -4152,7 +4152,7 @@ describe("Ext.list.Tree", function() {
             expect(ct.componentLayoutCounter).toBe(count + 1);
         });
 
-        it("should update layout when a node is expanded", function() {
+        it("should update layout when a node is expanded", function () {
             var h = c.getHeight();
 
             byId('i1').expand();
@@ -4161,7 +4161,7 @@ describe("Ext.list.Tree", function() {
             expect(ct.componentLayoutCounter).toBe(count + 1);
         });
 
-        it("should update when a node is added", function() {
+        it("should update when a node is added", function () {
             var h = c.getHeight();
             root.appendChild({
                 id: 'i9',
@@ -4172,7 +4172,7 @@ describe("Ext.list.Tree", function() {
             expect(ct.componentLayoutCounter).toBe(count + 1);
         });
 
-        it("should update when a node is removed", function() {
+        it("should update when a node is removed", function () {
             var h = c.getHeight();
             root.removeChild(byId('i1'));
             expect(c.getHeight()).toBeGreaterThan(h);
@@ -4181,19 +4181,19 @@ describe("Ext.list.Tree", function() {
         });
     });
 
-    describe("destruction", function() {
-        beforeEach(function() {
+    describe("destruction", function () {
+        beforeEach(function () {
             makeList();
         });
 
-        it("should not fire itemremove events", function() {
+        it("should not fire itemremove events", function () {
             var spy = jasmine.createSpy();
             list.on('itemremove', spy);
             list.destroy();
             expect(spy).not.toHaveBeenCalled();
         });
 
-        it("should unbind the store", function() {
+        it("should unbind the store", function () {
             list.destroy();
             expect(list.getStore()).toBeNull();
         });

@@ -28,8 +28,9 @@ describe('Ext.grid.plugin.RowEditing', function () {
 
         grid = new Ext.grid.Panel(Ext.apply({
             columns: [
-                {header: 'Name',  dataIndex: 'name', editor: 'textfield'},
-                {header: 'Email', dataIndex: 'email',
+                {header: 'Name', dataIndex: 'name', editor: 'textfield'},
+                {
+                    header: 'Email', dataIndex: 'email',
                     editor: {
                         xtype: 'textfield',
                         allowBlank: false
@@ -47,9 +48,9 @@ describe('Ext.grid.plugin.RowEditing', function () {
         view = grid.view;
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
+        loadStore = Ext.data.ProxyStore.prototype.load = function () {
             proxyStoreLoad.apply(this, arguments);
             if (synchronousLoad) {
                 this.flushLoad.apply(this, arguments);
@@ -65,14 +66,15 @@ describe('Ext.grid.plugin.RowEditing', function () {
         store = plugin = grid = view = column = Ext.destroy(grid);
     });
 
-    describe('Widget column', function() {
-        it('should work', function() {
+    describe('Widget column', function () {
+        it('should work', function () {
             makeGrid({
                 clicksToEdit: 2
             }, {
                 columns: [
-                    {header: 'Name',  dataIndex: 'name', editor: 'textfield'},
-                    {header: 'Email', dataIndex: 'email',
+                    {header: 'Name', dataIndex: 'name', editor: 'textfield'},
+                    {
+                        header: 'Email', dataIndex: 'email',
                         editor: {
                             xtype: 'textfield',
                             allowBlank: false
@@ -142,14 +144,16 @@ describe('Ext.grid.plugin.RowEditing', function () {
 
             makeGrid(null, {
                 columns: [
-                    {text: 'Foo', width: 50,
+                    {
+                        text: 'Foo', width: 50,
                         defaultRenderer: function () {
                             scope = this;
                             return 'some text';
                         }
                     },
-                    {header: 'Name',  dataIndex: 'name', editor: 'textfield'},
-                    {header: 'Email', dataIndex: 'email',
+                    {header: 'Name', dataIndex: 'name', editor: 'textfield'},
+                    {
+                        header: 'Email', dataIndex: 'email',
                         editor: {
                             xtype: 'textfield',
                             allowBlank: false
@@ -179,10 +183,10 @@ describe('Ext.grid.plugin.RowEditing', function () {
                     store: {
                         fields: ['name'],
                         data: [
-                            { name: 'Lisa' },
-                            { name: 'Bart' },
-                            { name: 'Homer' },
-                            { name: 'Marge' }
+                            {name: 'Lisa'},
+                            {name: 'Bart'},
+                            {name: 'Homer'},
+                            {name: 'Marge'}
                         ]
                     }
                 });
@@ -191,8 +195,9 @@ describe('Ext.grid.plugin.RowEditing', function () {
 
                 makeGrid(null, {
                     columns: [
-                        {header: 'Name',  dataIndex: 'name', editor: combo},
-                        {header: 'Email', dataIndex: 'email',
+                        {header: 'Name', dataIndex: 'name', editor: combo},
+                        {
+                            header: 'Email', dataIndex: 'email',
                             editor: {
                                 xtype: 'textfield',
                                 allowBlank: false
@@ -359,18 +364,19 @@ describe('Ext.grid.plugin.RowEditing', function () {
                 store: {
                     fields: ['name'],
                     data: [
-                        { name: 'Lisa' },
-                        { name: 'Bart' },
-                        { name: 'Homer' },
-                        { name: 'Marge' }
+                        {name: 'Lisa'},
+                        {name: 'Bart'},
+                        {name: 'Homer'},
+                        {name: 'Marge'}
                     ]
                 }
             });
 
             makeGrid(null, {
                 columns: [
-                    {header: 'Name',  dataIndex: 'name', editor: combo},
-                    {header: 'Email', dataIndex: 'email',
+                    {header: 'Name', dataIndex: 'name', editor: combo},
+                    {
+                        header: 'Email', dataIndex: 'email',
                         editor: {
                             xtype: 'textfield',
                             allowBlank: false
@@ -423,28 +429,28 @@ describe('Ext.grid.plugin.RowEditing', function () {
             editorContext = record = null;
         });
 
-        it('should be able to get the original value when canceling the edit', function() {
+        it('should be able to get the original value when canceling the edit', function () {
             column.getEditor().setValue('baz');
             plugin.cancelEdit();
 
             expect(editorContext.originalValues.name).toBe('Lisa');
         });
 
-        it('should be able to get the edited value when canceling the edit', function() {
+        it('should be able to get the edited value when canceling the edit', function () {
             column.getEditor().setValue('foo');
             plugin.cancelEdit();
 
             expect(editorContext.newValues.name).toBe('foo');
         });
 
-        it('should have different values for edited value and original value when canceling', function() {
+        it('should have different values for edited value and original value when canceling', function () {
             column.getEditor().setValue('foo');
             plugin.cancelEdit();
 
             expect(editorContext.newValues.name).not.toBe(editorContext.originalValues.name);
         });
 
-        it('should be able to capture falsey values when canceled', function() {
+        it('should be able to capture falsey values when canceled', function () {
             column.getEditor().setValue('');
             plugin.cancelEdit();
 
@@ -454,16 +460,16 @@ describe('Ext.grid.plugin.RowEditing', function () {
 
     describe('locked grid', function () {
         var suiteCfg = {
-            columns: [
-                {header: 'Name',  dataIndex: 'name', width: 100, locked: true, editor: true},
-                {header: 'Email', dataIndex: 'email', width: 100, editor: true},
-                {header: 'Phone', dataIndex: 'phone', width: 100, editor: true}
-            ],
-            plugins: {
-                ptype: 'rowediting'
-            }
-        },
-        node;
+                columns: [
+                    {header: 'Name', dataIndex: 'name', width: 100, locked: true, editor: true},
+                    {header: 'Email', dataIndex: 'email', width: 100, editor: true},
+                    {header: 'Phone', dataIndex: 'phone', width: 100, editor: true}
+                ],
+                plugins: {
+                    ptype: 'rowediting'
+                }
+            },
+            node;
 
         beforeEach(function () {
             makeGrid(null, suiteCfg);
@@ -522,8 +528,8 @@ describe('Ext.grid.plugin.RowEditing', function () {
 
                     makeGrid(null, Ext.applyIf({
                         features: {
-                            ftype : 'groupingsummary',
-                            groupHeaderTpl : '{name}'
+                            ftype: 'groupingsummary',
+                            groupHeaderTpl: '{name}'
                         },
                         plugins: ['bufferedrenderer'],
                         lockedGridConfig: null,

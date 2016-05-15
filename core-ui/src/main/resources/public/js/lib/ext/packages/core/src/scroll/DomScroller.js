@@ -8,7 +8,7 @@ Ext.define('Ext.scroll.DomScroller', {
 
     isDomScroller: true,
 
-    getMaxPosition: function() {
+    getMaxPosition: function () {
         var element = this.getElement(),
             x = 0,
             y = 0,
@@ -26,7 +26,7 @@ Ext.define('Ext.scroll.DomScroller', {
         };
     },
 
-    getMaxUserPosition: function() {
+    getMaxUserPosition: function () {
         var me = this,
             element = me.getElement(),
             x = 0,
@@ -49,7 +49,7 @@ Ext.define('Ext.scroll.DomScroller', {
         };
     },
 
-    getPosition: function() {
+    getPosition: function () {
         var me = this;
         if (me.positionDirty) {
             me.updateDomScrollPosition();
@@ -57,7 +57,7 @@ Ext.define('Ext.scroll.DomScroller', {
         return me.position;
     },
 
-    getSize: function() {
+    getSize: function () {
         var element = this.getElement(),
             size, dom;
 
@@ -77,21 +77,21 @@ Ext.define('Ext.scroll.DomScroller', {
         return size;
     },
 
-    updateElement: function(element, oldElement) {
+    updateElement: function (element, oldElement) {
         this.initXStyle();
         this.initYStyle();
     },
 
-    updateX: function(x) {
+    updateX: function (x) {
         this.initXStyle();
     },
 
-    updateY: function(y) {
+    updateY: function (y) {
         this.initYStyle();
     },
 
     privates: {
-        doScrollTo: function(x, y, animate) {
+        doScrollTo: function (x, y, animate) {
             // There is an IE8 override of this method; when making changes here
             // don't forget to update the override as well
             var me = this,
@@ -156,23 +156,23 @@ Ext.define('Ext.scroll.DomScroller', {
         },
 
         // rtl hook
-        getElementScroll: function(element) {
+        getElementScroll: function (element) {
             return element.getScroll();
         },
 
-        stopAnimation: function() {
+        stopAnimation: function () {
             var anim = this.getElement().getActiveAnimation();
             if (anim) {
                 anim.end();
             }
         }
     }
-}, function(DomScroller) {
+}, function (DomScroller) {
     // Ensure the global Ext scroll event fires when the document scrolls.
     // This is for when a non-viewport based app is used.
     // DOM scroll events are used for document scrolls.
     // The Viewport plugin destroys this Scroller at startup.
-    Ext.onDocumentReady(function() {
+    Ext.onDocumentReady(function () {
         DomScroller.document = new DomScroller({
             x: true,
             y: true,

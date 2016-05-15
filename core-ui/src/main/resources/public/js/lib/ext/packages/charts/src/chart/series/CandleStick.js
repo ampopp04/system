@@ -1,7 +1,7 @@
 /**
  * @class Ext.chart.series.CandleStick
  * @extends Ext.chart.series.Cartesian
- * 
+ *
  * Creates a candlestick or OHLC Chart.
  *
  *     @example
@@ -123,7 +123,7 @@ Ext.define('Ext.chart.series.CandleStick', {
 
     fieldCategoryY: ['Open', 'High', 'Low', 'Close'],
 
-    themeColorCount: function() {
+    themeColorCount: function () {
         return 2;
     }
 

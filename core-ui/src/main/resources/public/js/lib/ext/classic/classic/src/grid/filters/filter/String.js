@@ -1,7 +1,7 @@
 /**
  * The string grid filter allows you to create a filter selection that limits results
- * to values matching a particular string.  The filter can be set programmatically or via 
- * user input with a configurable {@link Ext.form.field.Text text field} in the filter section 
+ * to values matching a particular string.  The filter can be set programmatically or via
+ * user input with a configurable {@link Ext.form.field.Text text field} in the filter section
  * of the column header.
  *
  * Example String Filter Usage:
@@ -18,7 +18,7 @@
  *             {id: 5, show: 'Star Wars: Christmas Special'}
  *         ]
  *     });
- *   
+ *
  *     Ext.create('Ext.grid.Panel', {
  *         renderTo: Ext.getBody(),
  *         title: 'Sci-Fi Television',
@@ -44,7 +44,7 @@
  *                 }
  *             }
  *         }]
- *     }); 
+ *     });
  */
 Ext.define('Ext.grid.filters.filter.String', {
     extend: 'Ext.grid.filters.filter.SingleFilter',
@@ -103,7 +103,7 @@ Ext.define('Ext.grid.filters.filter.String', {
             scope: me,
             keyup: me.onValueChange,
             el: {
-                click: function(e) {
+                click: function (e) {
                     e.stopPropagation();
                 }
             }

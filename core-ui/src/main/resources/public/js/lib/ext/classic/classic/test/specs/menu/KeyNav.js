@@ -1,6 +1,6 @@
 describe('Ext.menu.KeyNav', function () {
     var menu;
-    
+
     function makeMenu(cfg) {
         menu = new Ext.menu.Menu(Ext.apply({
             text: 'Main Menu',
@@ -17,9 +17,9 @@ describe('Ext.menu.KeyNav', function () {
                 menu: {
                     items: [{
                         text: 'Next Level'
-                    },{
+                    }, {
                         text: 'Next Level'
-                    },{
+                    }, {
                         text: 'Next Level'
                     }]
                 }
@@ -30,13 +30,13 @@ describe('Ext.menu.KeyNav', function () {
             }]
         }, cfg));
     }
-    
+
     afterEach(function () {
         menu.hide();
         Ext.destroy(menu);
         menu = null;
     });
-    
+
     describe('enter key nav', function () {
         describe('href property', function () {
             // Note that the specs were failing in FF 24 without the waitsFor().

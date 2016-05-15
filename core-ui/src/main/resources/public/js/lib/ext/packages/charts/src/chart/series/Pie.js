@@ -108,13 +108,13 @@ Ext.define('Ext.chart.series.Pie', {
          * @cfg {Ext.chart.series.sprite.PieSlice/Object} highlightCfg
          * Default highlight config for the pie series.
          * Slides highlighted pie sector outward by default.
-         * 
-         * highlightCfg accepts as its value a config object (or array of configs) for a 
+         *
+         * highlightCfg accepts as its value a config object (or array of configs) for a
          * {@link Ext.chart.series.sprite.PieSlice pie sprite}.
-         * 
-         * 
+         *
+         *
          * Example config:
-         * 
+         *
          *     Ext.create('Ext.chart.PolarChart', {
          *         renderTo: document.body,
          *         width: 600,
@@ -423,18 +423,18 @@ Ext.define('Ext.chart.series.Pie', {
         }
 
         if (sprites) {
-            var store  = me.getStore(),
-                items  = store.getData().items,
+            var store = me.getStore(),
+                items = store.getData().items,
                 hidden = me.getHidden(),
-                i      = 0,
-                ln     = store.getCount();
+                i = 0,
+                ln = store.getCount();
 
             for (; i < ln; i++) {
-                if(!hidden[i]) {
+                if (!hidden[i]) {
                     // Fortunately, item's id equals its index in the instances list.
                     attr = sprites[i].attr;
 
-                    if (attr.startAngle <= angle &&  attr.endAngle >= angle) {
+                    if (attr.startAngle <= angle && attr.endAngle >= angle) {
                         return {
                             series: me,
                             sprite: sprites[i],
@@ -458,7 +458,7 @@ Ext.define('Ext.chart.series.Pie', {
             var center = me.getCenter(),
                 offsetX = me.getOffsetX(),
                 offsetY = me.getOffsetY(),
-                // Distance from the center of the series to the cursor.
+            // Distance from the center of the series to the cursor.
                 dx = x - center[0] + offsetX,
                 dy = y - center[1] + offsetY,
                 store = me.getStore(),
@@ -494,7 +494,7 @@ Ext.define('Ext.chart.series.Pie', {
     provideLegendInfo: function (target) {
         var me = this,
             store = me.getStore();
-        
+
         if (store) {
             var items = store.getData().items,
                 labelField = me.getLabel().getTemplate().getField(),
@@ -509,7 +509,7 @@ Ext.define('Ext.chart.series.Pie', {
                     fill = fill.stops && fill.stops[0].color;
                 }
                 target.push({
-                    name: labelField ? String(items[i].get(labelField))  : xField + ' ' + i,
+                    name: labelField ? String(items[i].get(labelField)) : xField + ' ' + i,
                     mark: fill || style.strokeStyle || 'black',
                     disabled: hidden[i],
                     series: me.getId(),

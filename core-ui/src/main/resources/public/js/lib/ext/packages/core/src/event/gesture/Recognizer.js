@@ -42,7 +42,7 @@ Ext.define('Ext.event.gesture.Recognizer', {
         callbackScope: null
     },
 
-    constructor: function(config) {
+    constructor: function (config) {
         this.initConfig(config);
         Ext.event.publisher.Gesture.instance.registerRecognizer(this);
     },
@@ -59,11 +59,11 @@ Ext.define('Ext.event.gesture.Recognizer', {
 
     onTouchCancel: Ext.emptyFn,
 
-    fail: function() {
+    fail: function () {
         return false;
     },
 
-    fire: function() {
+    fire: function () {
         this.getOnRecognized().apply(this.getCallbackScope(), arguments);
     },
 
@@ -72,7 +72,7 @@ Ext.define('Ext.event.gesture.Recognizer', {
     debugHooks: {
         $enabled: false,  // Disable by default
 
-        fail: function(msg) {
+        fail: function (msg) {
             Ext.log.info(this.$className + ' Gesture Failed: ' + msg);
             return false;
         }

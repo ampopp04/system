@@ -1,6 +1,6 @@
 /**
  * A Text Field Trigger that contains a {@link Ext.Component Component} or {@link
- * Ext.Widget Widget}.
+    * Ext.Widget Widget}.
  * @private
  */
 Ext.define('Ext.form.trigger.Component', {
@@ -19,7 +19,7 @@ Ext.define('Ext.form.trigger.Component', {
      * @readonly
      */
 
-    onFieldRender: function() {
+    onFieldRender: function () {
         var me = this,
             component = me.component;
 
@@ -34,7 +34,7 @@ Ext.define('Ext.form.trigger.Component', {
         component.render(me.el);
     },
 
-    destroy: function() {
+    destroy: function () {
         var component = this.component;
 
         if (component.isComponent || component.isWidget) {

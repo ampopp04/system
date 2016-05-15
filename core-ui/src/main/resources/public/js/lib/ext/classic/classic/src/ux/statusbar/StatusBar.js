@@ -103,7 +103,7 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
     /**
      * @cfg {String} [iconCls='']
      * @inheritdoc Ext.panel.Header#cfg-iconCls
-     * @localdoc **Note:** This CSS class will be **initially** set as the status bar 
+     * @localdoc **Note:** This CSS class will be **initially** set as the status bar
      * icon.  See also {@link #defaultIconCls} and {@link #busyIconCls}.
      *
      * Example usage:
@@ -130,19 +130,19 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
      * @cfg {String} cls
      * The base class applied to the containing element for this component on render.
      */
-    cls : 'x-statusbar',
+    cls: 'x-statusbar',
     /**
      * @cfg {String} busyIconCls
      * The default {@link #iconCls} applied when calling {@link #showBusy}.
      * It can be overridden at any time by passing the `iconCls` argument into {@link #showBusy}.
      */
-    busyIconCls : 'x-status-busy',
+    busyIconCls: 'x-status-busy',
     /**
      * @cfg {String} busyText
      * The default {@link #text} applied when calling {@link #showBusy}.
      * It can be overridden at any time by passing the `text` argument into {@link #showBusy}.
      */
-    busyText : 'Loading...',
+    busyText: 'Loading...',
     /**
      * @cfg {Number} autoClear
      * The number of milliseconds to wait after setting the status via
@@ -152,7 +152,7 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
      * be overridden by specifying a different `wait` value in {@link #setStatus}.
      * Calls to {@link #clearStatus} always clear the status bar immediately and ignore this value.
      */
-    autoClear : 5000,
+    autoClear: 5000,
 
     /**
      * @cfg {String} emptyText
@@ -162,14 +162,14 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
      * Use `''` if the toolbar should collapse in height vertically when no text is
      * specified and there are no other items in the toolbar.
      */
-    emptyText : '&#160;',
+    emptyText: '&#160;',
 
     /**
      * @private
      */
-    activeThreadId : 0,
+    activeThreadId: 0,
 
-    initComponent: function() {
+    initComponent: function () {
         var right = this.statusAlign === 'right';
 
         this.callParent(arguments);
@@ -234,7 +234,7 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
      * it will be used as the callback interval (in milliseconds), overriding the {@link #autoClear} value.
      * All other options will be defaulted as with the boolean option.  To customize any other options,
      * you can pass an object in the format:
-     * 
+     *
      * @param {Number} config.clear.wait The number of milliseconds to wait before clearing
      * (defaults to {@link #autoClear}).
      * @param {Boolean} config.clear.anim False to clear the status immediately once the callback
@@ -244,13 +244,13 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
      *
      * @return {Ext.ux.statusbar.StatusBar} this
      */
-    setStatus : function(o) {
+    setStatus: function (o) {
         var me = this;
 
         o = o || {};
         Ext.suspendLayouts();
         if (Ext.isString(o)) {
-            o = {text:o};
+            o = {text: o};
         }
         if (o.text !== undefined) {
             me.setText(o.text);
@@ -295,7 +295,7 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
      *
      * @return {Ext.ux.statusbar.StatusBar} this
      */
-    clearStatus : function(o) {
+    clearStatus: function (o) {
         o = o || {};
 
         var me = this,
@@ -316,7 +316,7 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
             statusEl.el.puff({
                 remove: false,
                 useDisplay: true,
-                callback: function() {
+                callback: function () {
                     statusEl.el.show();
                     me.setStatus({
                         text: text,
@@ -325,10 +325,10 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
                 }
             });
         } else {
-             me.setStatus({
-                 text: text,
-                 iconCls: iconCls
-             });
+            me.setStatus({
+                text: text,
+                iconCls: iconCls
+            });
         }
         return me;
     },
@@ -338,7 +338,7 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
      * @param {String} text (optional) The text to set (defaults to '')
      * @return {Ext.ux.statusbar.StatusBar} this
      */
-    setText : function(text) {
+    setText: function (text) {
         var me = this;
         me.activeThreadId++;
         me.text = text || '';
@@ -352,7 +352,7 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
      * Returns the current status text.
      * @return {String} The status text
      */
-    getText : function(){
+    getText: function () {
         return this.text;
     },
 
@@ -362,7 +362,7 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
      * @param {String} iconCls (optional) The icon class to set (defaults to '', and any current icon class is removed)
      * @return {Ext.ux.statusbar.StatusBar} this
      */
-    setIcon : function(cls) {
+    setIcon: function (cls) {
         var me = this;
 
         me.activeThreadId++;
@@ -394,9 +394,9 @@ Ext.define('Ext.ux.statusbar.StatusBar', {
      * {@link #busyIconCls} will be used in conjunction with all of the default options for {@link #setStatus}.
      * @return {Ext.ux.statusbar.StatusBar} this
      */
-    showBusy : function(o){
+    showBusy: function (o) {
         if (Ext.isString(o)) {
-            o = { text: o };
+            o = {text: o};
         }
         o = Ext.applyIf(o || {}, {
             text: this.busyText,

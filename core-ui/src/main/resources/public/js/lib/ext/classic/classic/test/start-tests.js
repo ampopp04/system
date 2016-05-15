@@ -1,4 +1,4 @@
-(function() {
+(function () {
     var env = jasmine.getEnv();
 
     if (!/local\-reporter=false/i.test(top.location.search)) {
@@ -8,7 +8,7 @@
     if (/disableTryCatch=true/i.test(top.location.search)) {
         this.jasmine.CATCH_EXCEPTIONS = false;
     }
-    
+
     if (/disableLeakChecks=true/i.test(top.location.search)) {
         this.jasmine.DISABLE_LEAK_CHECKS = true;
     }
@@ -23,7 +23,7 @@
         // https://code.google.com/p/selenium/issues/detail?id=8100
         Cmd.native.click(top.document.getElementById('collapseAll'));
 
-        Cmd.native.switchTo({frame: 'sandbox'}, function() {
+        Cmd.native.switchTo({frame: 'sandbox'}, function () {
             env.execute();
         });
     } else {

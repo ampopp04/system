@@ -19,7 +19,7 @@ Ext.define('Ext.app.bind.Stub', {
     validationKey: 'validation',
 
     statics: {
-        trackHadValue: function(value, owner, path, stub) {
+        trackHadValue: function (value, owner, path, stub) {
             var children = stub && stub.children,
                 child, key, hadValue;
 
@@ -51,7 +51,7 @@ Ext.define('Ext.app.bind.Stub', {
         var me = this,
             path = name;
 
-        me.callParent([ owner, name ]);
+        me.callParent([owner, name]);
         me.boundValue = null;
         if (parent) {
             parent.add(me);
@@ -62,8 +62,8 @@ Ext.define('Ext.app.bind.Stub', {
         me.hadValue = owner.hadValue[path];
         me.path = path;
     },
-    
-    destroy: function() {
+
+    destroy: function () {
         var me = this,
             formula = me.formula,
             parent = me.parent,
@@ -78,7 +78,7 @@ Ext.define('Ext.app.bind.Stub', {
         me.detachBound();
 
         me.parentValue = me.formula = me.storeBinding = null;
-        
+
         me.callParent();
     },
 
@@ -87,14 +87,14 @@ Ext.define('Ext.app.bind.Stub', {
         return parent && parent.descend([this.validationKey, this.name]).bind(callback, scope);
     },
 
-    bindValidationField: function(callback, scope) {
+    bindValidationField: function (callback, scope) {
         var parent = this.parent,
             name = this.name,
             lateBound = typeof callback === 'string',
             ret;
 
         if (parent) {
-            ret = parent.bind(function(value) {
+            ret = parent.bind(function (value) {
                 var field = null;
                 if (value && value.isModel) {
                     field = value.getField(name);
@@ -205,7 +205,7 @@ Ext.define('Ext.app.bind.Stub', {
 
         me.children = null;
 
-        return me.callParent([ replacement ]);
+        return me.callParent([replacement]);
     },
 
     isLoading: function () {
@@ -213,7 +213,7 @@ Ext.define('Ext.app.bind.Stub', {
             parent = me.parent,
             loading = false,
             associations, parentValue, value, loadSet;
-        
+
         if (parent && !(loading = parent.isLoading())) {
             parentValue = me.getParentValue();
             value = me.inspectValue(parentValue);
@@ -262,7 +262,7 @@ Ext.define('Ext.app.bind.Stub', {
         }
     },
 
-    isReadOnly: function() {
+    isReadOnly: function () {
         var formula = this.formula;
         return !!(formula && !formula.set);
     },
@@ -326,20 +326,20 @@ Ext.define('Ext.app.bind.Stub', {
         }
     },
 
-    onStoreLoad: function() {
+    onStoreLoad: function () {
         this.invalidate(true);
     },
 
-    afterLoad: function(record) {
+    afterLoad: function (record) {
         this.invalidate(true);
     },
 
-    afterCommit: function(record) {
+    afterCommit: function (record) {
         // Essentially the same as an edit, but we don't know what changed.
         this.afterEdit(record, null);
     },
 
-    afterEdit: function(record, modifiedFieldNames) {
+    afterEdit: function (record, modifiedFieldNames) {
         var children = this.children,
             len = modifiedFieldNames && modifiedFieldNames.length,
             associations = record.associations,
@@ -369,7 +369,7 @@ Ext.define('Ext.app.bind.Stub', {
         this.invalidate();
     },
 
-    afterReject: function(record) {
+    afterReject: function (record) {
         // Essentially the same as an edit, but we don't know what changed.
         this.afterEdit(record, null);
     },
@@ -420,7 +420,7 @@ Ext.define('Ext.app.bind.Stub', {
         me.formula = new Ext.app.bind.Formula(me, formula);
     },
 
-    react: function() {
+    react: function () {
         var me = this,
             bound = this.boundValue,
             children = me.children,
@@ -455,16 +455,16 @@ Ext.define('Ext.app.bind.Stub', {
     },
 
     privates: {
-        collect: function() {
+        collect: function () {
             var me = this,
                 result = me.callParent(),
                 storeBinding = me.storeBinding ? 1 : 0,
                 formula = me.formula ? 1 : 0;
-            
+
             return result + storeBinding + formula;
         },
 
-        getLinkFormulaStub: function() {
+        getLinkFormulaStub: function () {
             // Setting the value on a link backed by a formula should set the
             // formula. So we climb the hierarchy until we find the rootStub
             // and set it there if it be a formula.
@@ -474,8 +474,8 @@ Ext.define('Ext.app.bind.Stub', {
             }
             return stub.formula ? stub : null;
         },
-        
-        getParentValue: function() {
+
+        getParentValue: function () {
             var me = this;
             // Cache the value of the parent here. Inside onSchedule we clear the value
             // because it may be invalidated.
@@ -486,11 +486,11 @@ Ext.define('Ext.app.bind.Stub', {
             return me.parentValue;
         },
 
-        setStore: function(storeBinding) {
-          this.storeBinding = storeBinding;
+        setStore: function (storeBinding) {
+            this.storeBinding = storeBinding;
         },
 
-        inspectValue: function(parentData) {
+        inspectValue: function (parentData) {
             var me = this,
                 name = me.name,
                 current = me.boundValue,
@@ -544,7 +544,7 @@ Ext.define('Ext.app.bind.Stub', {
             return boundValue;
         },
 
-        detachBound: function() {
+        detachBound: function () {
             var me = this,
                 current = me.boundValue;
 
@@ -564,7 +564,7 @@ Ext.define('Ext.app.bind.Stub', {
                 storeBinding = me.storeBinding;
 
             me.callParent();
-        
+
             if (storeBinding) {
                 scheduler.sortItem(storeBinding);
             }

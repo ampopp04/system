@@ -24,17 +24,17 @@ Ext.define('Ext.sparkline.CanvasCanvas', {
         })()
     },
 
-    setWidth: function(width) {
+    setWidth: function (width) {
         this.callParent(arguments);
         this.owner.element.dom.width = width * (window.devicePixelRatio || 1);
     },
 
-    setHeight: function(height) {
+    setHeight: function (height) {
         this.callParent(arguments);
         this.owner.element.dom.height = height * (window.devicePixelRatio || 1);
     },
 
-    onOwnerUpdate: function() {
+    onOwnerUpdate: function () {
         var me = this;
 
         me.el = me.owner.element;

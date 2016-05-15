@@ -13,13 +13,13 @@ Ext.define('Ext.ux.ajax.XmlSimlet', {
      */
     xmlTpl: [
         '<{root}>\n',
-            '<tpl for="data">',
+        '<tpl for="data">',
         '    <{parent.record}>\n',
-                '<tpl for="parent.fields">',
+        '<tpl for="parent.fields">',
         '        <{name}>{[parent[values.name]]}</{name}>\n',
-                '</tpl>',
+        '</tpl>',
         '    </{parent.record}>\n',
-            '</tpl>',
+        '</tpl>',
         '</{root}>'
     ],
 

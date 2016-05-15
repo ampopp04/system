@@ -4,7 +4,7 @@
  * <p>Small helper class to make creating {@link Ext.data.Store}s from different domain JSON data easier.
  * A JsonPStore will be automatically configured with a {@link Ext.data.reader.Json} and a {@link Ext.data.proxy.JsonP JsonPProxy}.</p>
  * <p>A store configuration would be something like:<pre><code>
-var store = new Ext.data.JsonPStore({
+ var store = new Ext.data.JsonPStore({
     // store configs
     storeId: 'myStore',
 
@@ -17,7 +17,7 @@ var store = new Ext.data.JsonPStore({
 });
  * </code></pre></p>
  * <p>This store is configured to consume a returned object of the form:<pre><code>
-stcCallback({
+ stcCallback({
     images: [
         {name: 'Image one', url:'/GetImage.php?id=1', size:46.5, lastmod: new Date(2007, 10, 29)},
         {name: 'Image Two', url:'/GetImage.php?id=2', size:43.2, lastmod: new Date(2007, 10, 30)}
@@ -31,13 +31,13 @@ stcCallback({
  */
 Ext.define('Ext.data.JsonPStore', {
     extend: 'Ext.data.Store',
-    alias : 'store.jsonp',
+    alias: 'store.jsonp',
     requires: [
         'Ext.data.proxy.JsonP',
         'Ext.data.reader.Json'
     ],
 
-    constructor: function(config) {
+    constructor: function (config) {
         config = Ext.apply({
             proxy: {
                 type: 'jsonp',

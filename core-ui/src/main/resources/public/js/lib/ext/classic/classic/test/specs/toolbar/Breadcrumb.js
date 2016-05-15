@@ -1,11 +1,11 @@
-describe('Ext.toolbar.Breadcrumb', function() {
+describe('Ext.toolbar.Breadcrumb', function () {
     var store, breadcrumbBar, treeData;
 
     function createBreadcrumbBar(config) {
         // ARIA warnings and errors are expected
         spyOn(Ext.log, 'warn');
         spyOn(Ext.log, 'error');
-        
+
         breadcrumbBar = Ext.widget(Ext.apply({
             xtype: 'breadcrumb',
             renderTo: Ext.getBody(),
@@ -66,7 +66,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
         expect(numItemsCorrect).toBe(true);
 
         if (numItemsCorrect) {
-            node.bubble(function(node) {
+            node.bubble(function (node) {
                 var button = buttons.getAt(node.get('depth'));
 
                 // The button text should match the text of the tree node
@@ -91,7 +91,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
             expect(menuItems.getCount()).toBe(childNodes.length);
 
             // The text of the menu items should match the text of the child nodes
-            Ext.each(childNodes, function(childNode, index) {
+            Ext.each(childNodes, function (childNode, index) {
                 expect(menuItems.getAt(index).text).toBe(childNode.get('text'));
             });
         } else {
@@ -104,7 +104,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
         expect(breadcrumbBar.items.getAt(index).menu.isVisible()).toBe(visible);
     }
 
-    beforeEach(function() {
+    beforeEach(function () {
         treeData = {
             text: 'SSD',
             id: '/SSD',
@@ -113,18 +113,18 @@ describe('Ext.toolbar.Breadcrumb', function() {
                     text: 'bin',
                     id: '/SSD/bin',
                     children: [
-                        { id: '/SSD/bin/cp', text: 'cp', leaf: true },
-                        { id: '/SSD/bin/mv', text: 'mv', leaf: true },
-                        { id: '/SSD/bin/rm', text: 'rm', leaf: true }
+                        {id: '/SSD/bin/cp', text: 'cp', leaf: true},
+                        {id: '/SSD/bin/mv', text: 'mv', leaf: true},
+                        {id: '/SSD/bin/rm', text: 'rm', leaf: true}
                     ]
                 },
                 {
                     text: 'etc',
                     id: '/SSD/etc',
                     children: [
-                        { id: '/SSD/etc/apache2', text: 'apache2', leaf: true },
-                        { id: '/SSD/etc/bashrc', text: 'bashrc', leaf: true },
-                        { id: '/SSD/etc/hosts', text: 'hosts', leaf: true }
+                        {id: '/SSD/etc/apache2', text: 'apache2', leaf: true},
+                        {id: '/SSD/etc/bashrc', text: 'bashrc', leaf: true},
+                        {id: '/SSD/etc/hosts', text: 'hosts', leaf: true}
                     ]
                 },
                 {
@@ -135,18 +135,18 @@ describe('Ext.toolbar.Breadcrumb', function() {
                             text: 'bin',
                             id: '/SSD/usr/bin',
                             children: [
-                                { id: '/SSD/usr/bin/awk', text: 'awk', leaf: true },
-                                { id: '/SSD/usr/bin/grep', text: 'grep', leaf: true },
-                                { id: '/SSD/usr/bin/ssh', text: 'ssh', leaf: true }
+                                {id: '/SSD/usr/bin/awk', text: 'awk', leaf: true},
+                                {id: '/SSD/usr/bin/grep', text: 'grep', leaf: true},
+                                {id: '/SSD/usr/bin/ssh', text: 'ssh', leaf: true}
                             ]
                         },
                         {
                             text: 'lib',
                             id: '/SSD/usr/lib',
                             children: [
-                                { id: '/SSD/usr/lib/java', text: 'java', leaf: true },
-                                { id: '/SSD/usr/lib/python', text: 'python', leaf: true },
-                                { id: '/SSD/usr/lib/ruby', text: 'ruby', leaf: true }
+                                {id: '/SSD/usr/lib/java', text: 'java', leaf: true},
+                                {id: '/SSD/usr/lib/python', text: 'python', leaf: true},
+                                {id: '/SSD/usr/lib/ruby', text: 'ruby', leaf: true}
                             ]
                         }
                     ]
@@ -158,25 +158,25 @@ describe('Ext.toolbar.Breadcrumb', function() {
         });
     });
 
-    afterEach(function() {
+    afterEach(function () {
         Ext.destroy(breadcrumbBar, store);
         store = breadcrumbBar = treeData = null;
     });
 
-    describe("initial selection", function() {
-        it("should render with root node initially selected", function() {
+    describe("initial selection", function () {
+        it("should render with root node initially selected", function () {
             createBreadcrumbBar();
             expectSelection('/SSD');
         });
 
-        it("should render with root node initially selected if selection is 'root'", function() {
+        it("should render with root node initially selected if selection is 'root'", function () {
             createBreadcrumbBar({
                 selection: 'root'
             });
             expectSelection('/SSD');
         });
 
-        it("should render with no selection if selection is null", function() {
+        it("should render with no selection if selection is null", function () {
             createBreadcrumbBar({
                 selection: null
             });
@@ -185,13 +185,13 @@ describe('Ext.toolbar.Breadcrumb', function() {
         });
     });
 
-    describe("store", function() {
-        it("should accept a store instance", function() {
-           createBreadcrumbBar();
-           expect(breadcrumbBar.getStore()) .toBe(store);
+    describe("store", function () {
+        it("should accept a store instance", function () {
+            createBreadcrumbBar();
+            expect(breadcrumbBar.getStore()).toBe(store);
         });
 
-        it("should accept a store config", function() {
+        it("should accept a store config", function () {
             store.destroy();
             createBreadcrumbBar({
                 store: {
@@ -202,7 +202,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
             expect(breadcrumbBar.getStore().getRoot().get('text')).toBe('SSD');
         });
 
-        it("should accept a store id", function() {
+        it("should accept a store id", function () {
             store.destroy();
             store = new Ext.data.TreeStore({
                 root: treeData,
@@ -214,16 +214,16 @@ describe('Ext.toolbar.Breadcrumb', function() {
             expect(breadcrumbBar.getStore()).toBe(store);
         });
 
-        it("should be able to be created with no store", function() {
+        it("should be able to be created with no store", function () {
             store.destroy();
-            expect(function() {
+            expect(function () {
                 createBreadcrumbBar({
                     store: null
                 });
             }).not.toThrow();
         });
 
-        it("should be able to set the store later", function() {
+        it("should be able to set the store later", function () {
             createBreadcrumbBar({
                 store: null
             });
@@ -233,7 +233,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
             expectSelection('/SSD/bin');
         });
 
-        it("should be able to bind a new store", function() {
+        it("should be able to bind a new store", function () {
             createBreadcrumbBar();
             var oldStore = store;
             store = new Ext.data.TreeStore({
@@ -263,44 +263,44 @@ describe('Ext.toolbar.Breadcrumb', function() {
         });
     });
 
-    describe("navigation", function() {
-        beforeEach(function() {
+    describe("navigation", function () {
+        beforeEach(function () {
             createBreadcrumbBar();
         });
 
-        describe("using setSelection()", function() {
-            it("should select a node deeper in the hierarchy", function() {
+        describe("using setSelection()", function () {
+            it("should select a node deeper in the hierarchy", function () {
                 var node = store.getRoot().firstChild.childNodes[1];
                 breadcrumbBar.setSelection(node);
                 expectSelection('/SSD/bin/mv');
             });
 
-            it("should select a node above the currently selected node", function() {
+            it("should select a node above the currently selected node", function () {
                 breadcrumbBar.setSelection(store.getRoot().firstChild.firstChild);
                 breadcrumbBar.setSelection(store.getRoot().firstChild);
                 expectSelection('/SSD/bin');
             });
 
-            it("should select a node from a different branch of the heirarchy", function() {
+            it("should select a node from a different branch of the heirarchy", function () {
                 breadcrumbBar.setSelection(store.getRoot().firstChild.childNodes[1]);
                 breadcrumbBar.setSelection(store.getRoot().childNodes[2].childNodes[1].childNodes[1]);
                 expectSelection('/SSD/usr/lib/python');
             });
 
-            it("should select a node at a higher level than the selected node but in a different branch of the hierarchy", function() {
+            it("should select a node at a higher level than the selected node but in a different branch of the hierarchy", function () {
                 breadcrumbBar.setSelection(store.getRoot().childNodes[2].childNodes[1].childNodes[1]);
                 breadcrumbBar.setSelection(store.getRoot().childNodes[1]);
                 expectSelection('/SSD/etc');
             });
 
-            it("should set a null selection", function() {
+            it("should set a null selection", function () {
                 breadcrumbBar.setSelection(store.getRoot().childNodes[1]);
                 expectSelection('/SSD/etc');
                 breadcrumbBar.setSelection(null);
                 expect(breadcrumbBar.items.getCount()).toBe(0);
             });
 
-            it("should mantain selections correctly when changing parents", function() {
+            it("should mantain selections correctly when changing parents", function () {
                 breadcrumbBar.setSelection(store.getNodeById('/SSD/bin/cp'));
                 expectSelection('/SSD/bin/cp');
                 breadcrumbBar.setSelection(store.getNodeById('/SSD/etc'));
@@ -310,20 +310,20 @@ describe('Ext.toolbar.Breadcrumb', function() {
             });
         });
 
-        describe("using the UI", function() {
+        describe("using the UI", function () {
             var buttonProto = Ext.button.Button.prototype,
                 originalMenuClickBuffer;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 originalMenuClickBuffer = buttonProto.menuClickBuffer;
                 buttonProto.menuClickBuffer = 0;
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 buttonProto.menuClickBuffer = originalMenuClickBuffer;
             });
 
-            it("should navigate using the UI", function() {
+            it("should navigate using the UI", function () {
                 // open menu for /SSD
                 clickTrigger(0);
 
@@ -449,7 +449,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
             });
         });
 
-        it("should fire selectionchange when a node is selected", function() {
+        it("should fire selectionchange when a node is selected", function () {
             var spy = jasmine.createSpy(),
                 node = store.getRoot().childNodes[1].childNodes[1];
 
@@ -459,7 +459,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
             expect(spy).toHaveBeenCalledWith(breadcrumbBar, node, store.getRoot());
         });
 
-        it("should fire change when a node is selected", function() {
+        it("should fire change when a node is selected", function () {
             var spy = jasmine.createSpy(),
                 node = store.getRoot().childNodes[1].childNodes[1];
 
@@ -470,11 +470,11 @@ describe('Ext.toolbar.Breadcrumb', function() {
         });
     });
 
-    describe('selectionchange vs. change event', function() {
+    describe('selectionchange vs. change event', function () {
         var selectionchangeSpy,
             changeSpy;
 
-        beforeEach(function() {
+        beforeEach(function () {
             selectionchangeSpy = jasmine.createSpy();
             changeSpy = jasmine.createSpy();
             createBreadcrumbBar({
@@ -485,27 +485,27 @@ describe('Ext.toolbar.Breadcrumb', function() {
             });
         });
 
-        it('should fire selectionchange on render, but not change', function() {
+        it('should fire selectionchange on render, but not change', function () {
             expect(selectionchangeSpy.callCount).toBe(1);
             expect(changeSpy.callCount).toBe(0);
         });
     });
 
-    describe("view model selection", function() {
+    describe("view model selection", function () {
         var viewModel, spy;
 
-        beforeEach(function() {
+        beforeEach(function () {
             spy = jasmine.createSpy();
             viewModel = new Ext.app.ViewModel();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             viewModel = null;
         });
 
         function getById(id) {
             var found = null;
-            store.getRoot().cascadeBy(function(rec) {
+            store.getRoot().cascadeBy(function (rec) {
                 if (rec.id === id) {
                     found = rec;
                     return false;
@@ -514,8 +514,8 @@ describe('Ext.toolbar.Breadcrumb', function() {
             return found;
         }
 
-        describe("reference", function() {
-            beforeEach(function() {
+        describe("reference", function () {
+            beforeEach(function () {
                 createBreadcrumbBar({
                     viewModel: viewModel,
                     reference: 'navigation'
@@ -524,13 +524,13 @@ describe('Ext.toolbar.Breadcrumb', function() {
                 viewModel.notify();
             });
 
-            it("should publish the root by default", function() {
+            it("should publish the root by default", function () {
                 var args = spy.mostRecentCall.args;
                 expect(args[0]).toBe(getById('/SSD'));
                 expect(args[1]).toBeUndefined();
             });
 
-            it("should publish when the selection is changed", function() {
+            it("should publish when the selection is changed", function () {
                 var rec = getById('/SSD/bin/cp');
                 breadcrumbBar.setSelection(rec);
                 viewModel.notify();
@@ -539,7 +539,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
                 expect(args[1]).toBe(getById('/SSD'));
             });
 
-            it("should publish when the selection is cleared", function() {
+            it("should publish when the selection is cleared", function () {
                 breadcrumbBar.setSelection(null);
                 viewModel.notify();
                 var args = spy.mostRecentCall.args;
@@ -548,8 +548,8 @@ describe('Ext.toolbar.Breadcrumb', function() {
             });
         });
 
-        describe("two way binding", function() {
-            beforeEach(function() {
+        describe("two way binding", function () {
+            beforeEach(function () {
                 createBreadcrumbBar({
                     viewModel: viewModel,
                     bind: {
@@ -560,8 +560,8 @@ describe('Ext.toolbar.Breadcrumb', function() {
                 viewModel.notify();
             });
 
-            describe("changing the selection", function() {
-                it("should trigger the binding when adding a selection", function() {
+            describe("changing the selection", function () {
+                it("should trigger the binding when adding a selection", function () {
                     breadcrumbBar.setSelection(null);
                     viewModel.notify();
                     spy.reset();
@@ -573,7 +573,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
                     expect(args[1]).toBeNull();
                 });
 
-                it("should trigger the binding when changing the selection", function() {
+                it("should trigger the binding when changing the selection", function () {
                     var rec = getById('/SSD/bin/cp');
                     breadcrumbBar.setSelection(rec);
                     viewModel.notify();
@@ -582,7 +582,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
                     expect(args[1]).toBe(getById('/SSD'));
                 });
 
-                it("should trigger the binding when an item is deselected", function() {
+                it("should trigger the binding when an item is deselected", function () {
                     breadcrumbBar.setSelection(null);
                     viewModel.notify();
                     var args = spy.mostRecentCall.args;
@@ -591,8 +591,8 @@ describe('Ext.toolbar.Breadcrumb', function() {
                 });
             });
 
-            describe("changing the viewmodel value", function() {
-                it("should select the record when setting the value", function() {
+            describe("changing the viewmodel value", function () {
+                it("should select the record when setting the value", function () {
                     var rec = getById('/SSD/bin/cp');
                     breadcrumbBar.setSelection(null);
                     viewModel.notify();
@@ -601,14 +601,14 @@ describe('Ext.toolbar.Breadcrumb', function() {
                     expect(breadcrumbBar.getSelection()).toBe(rec);
                 });
 
-                it("should select the record when updating the value", function() {
+                it("should select the record when updating the value", function () {
                     var rec = getById('/SSD/bin/cp');
                     viewModel.set('foo', rec);
                     viewModel.notify();
                     expect(breadcrumbBar.getSelection()).toBe(rec);
                 });
 
-                it("should deselect when clearing the value", function() {
+                it("should deselect when clearing the value", function () {
                     viewModel.set('foo', null);
                     viewModel.notify();
                     expect(breadcrumbBar.getSelection()).toBeNull();
@@ -617,10 +617,10 @@ describe('Ext.toolbar.Breadcrumb', function() {
         });
     });
 
-    describe("reconfiguring the store", function() {
+    describe("reconfiguring the store", function () {
         var newStore;
 
-        beforeEach(function() {
+        beforeEach(function () {
             newStore = new Ext.data.TreeStore({
                 root: {
                     text: 'Root',
@@ -630,7 +630,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
                             text: 'child',
                             id: '/Root/child',
                             children: [
-                                { id: '/Root/child/grandchild', text: 'grandchild', leaf: true }
+                                {id: '/Root/child/grandchild', text: 'grandchild', leaf: true}
                             ]
                         }
                     ]
@@ -638,7 +638,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
             });
         });
 
-        it("should update the breadcrumb bar to be backed by the new store", function() {
+        it("should update the breadcrumb bar to be backed by the new store", function () {
             createBreadcrumbBar();
 
             // select a node other than root so we can be sure it changed back
@@ -658,15 +658,15 @@ describe('Ext.toolbar.Breadcrumb', function() {
         });
     });
 
-    describe("displayField", function() {
-        beforeEach(function() {
+    describe("displayField", function () {
+        beforeEach(function () {
             store = new Ext.data.TreeStore({
                 root: {
                     name: 'Root',
                     id: '/Root',
                     children: [
-                        { name: 'child1', id: '/Root/child1', leaf: true },
-                        { name: 'child2', id: '/Root/child2', leaf: true }
+                        {name: 'child1', id: '/Root/child1', leaf: true},
+                        {name: 'child2', id: '/Root/child2', leaf: true}
                     ]
                 }
             });
@@ -676,11 +676,11 @@ describe('Ext.toolbar.Breadcrumb', function() {
             });
         });
 
-        it("should use the displayField as the button text", function() {
+        it("should use the displayField as the button text", function () {
             expect(breadcrumbBar.items.getAt(0).text).toBe('Root');
         });
 
-        it("should use the displayField as the menu item text", function() {
+        it("should use the displayField as the menu item text", function () {
             clickTrigger(0);
             var menuItems = breadcrumbBar.items.getAt(0).menu.items;
             expect(menuItems.getAt(0).text).toBe('child1');
@@ -688,30 +688,30 @@ describe('Ext.toolbar.Breadcrumb', function() {
         });
     });
 
-    describe("useSplitButtons: false", function() {
-        beforeEach(function(){
+    describe("useSplitButtons: false", function () {
+        beforeEach(function () {
             createBreadcrumbBar({
                 useSplitButtons: false
             });
         });
 
-        it("should use menu buttons instead of split buttons", function() {
+        it("should use menu buttons instead of split buttons", function () {
             expect(breadcrumbBar.items.getAt(0).xtype).toBe('button');
         });
 
-        it("should not navigate when the button is clicked", function() {
+        it("should not navigate when the button is clicked", function () {
             breadcrumbBar.setSelection(store.getRoot().firstChild.firstChild);
             expectSelection('/SSD/bin/cp')
             clickButton(0);
             expectSelection('/SSD/bin/cp');
         });
 
-        it("should show the menu when the button is clicked", function() {
+        it("should show the menu when the button is clicked", function () {
             clickButton(0);
             expectMenuVisible(0, true);
         });
 
-        it("should not show the menu for leaf nodes", function() {
+        it("should not show the menu for leaf nodes", function () {
             breadcrumbBar.setSelection(store.getRoot().childNodes[1].childNodes[1]);
             expectSelection('/SSD/etc/bashrc');
             clickButton(2);
@@ -719,10 +719,10 @@ describe('Ext.toolbar.Breadcrumb', function() {
         });
     });
 
-    describe("showIcons", function() {
+    describe("showIcons", function () {
         var barIcon = 'resources/images/bar.gif';
-        
-        beforeEach(function() {
+
+        beforeEach(function () {
             store = new Ext.data.TreeStore({
                 root: {
                     name: 'Root',
@@ -744,19 +744,19 @@ describe('Ext.toolbar.Breadcrumb', function() {
                             text: 'child2',
                             id: '/Root/child2',
                             children: [
-                                { text: 'grandchild2', leaf: true }
+                                {text: 'grandchild2', leaf: true}
                             ]
                         }
                     ]
                 }
             });
         });
-        describe("null", function() {
-            beforeEach(function() {
+        describe("null", function () {
+            beforeEach(function () {
                 createBreadcrumbBar();
             });
 
-            it("should show user defined icons", function() {
+            it("should show user defined icons", function () {
                 var node = store.getRoot().firstChild.firstChild;
                 breadcrumbBar.setSelection(node);
 
@@ -766,7 +766,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
                 expect(breadcrumbBar.items.getAt(2).icon).toBe(barIcon);
             });
 
-            it("should not show default icons", function() {
+            it("should not show default icons", function () {
                 var node = store.getRoot().childNodes[1].firstChild;
                 breadcrumbBar.setSelection(node);
 
@@ -776,14 +776,14 @@ describe('Ext.toolbar.Breadcrumb', function() {
             });
         });
 
-        describe("true", function() {
-            beforeEach(function() {
+        describe("true", function () {
+            beforeEach(function () {
                 createBreadcrumbBar({
                     showIcons: true
                 });
             });
 
-            it("should show user defined icons", function() {
+            it("should show user defined icons", function () {
                 var node = store.getRoot().firstChild.firstChild;
                 breadcrumbBar.setSelection(node);
 
@@ -793,7 +793,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
                 expect(breadcrumbBar.items.getAt(2).icon).toBe(barIcon);
             });
 
-            it("should show default icons", function() {
+            it("should show default icons", function () {
                 var node = store.getRoot().childNodes[1].firstChild;
                 breadcrumbBar.setSelection(node);
 
@@ -803,14 +803,14 @@ describe('Ext.toolbar.Breadcrumb', function() {
             });
         });
 
-        describe("false", function() {
-            beforeEach(function() {
+        describe("false", function () {
+            beforeEach(function () {
                 createBreadcrumbBar({
                     showIcons: false
                 });
             });
 
-            it("should not show user defined icons", function() {
+            it("should not show user defined icons", function () {
                 var node = store.getRoot().firstChild.firstChild;
                 breadcrumbBar.setSelection(node);
 
@@ -818,7 +818,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
                 expect(breadcrumbBar.items.getAt(2).icon).toBeFalsy();
             });
 
-            it("should not show default icons", function() {
+            it("should not show default icons", function () {
                 var node = store.getRoot().childNodes[1].firstChild;
                 breadcrumbBar.setSelection(node);
 
@@ -829,15 +829,15 @@ describe('Ext.toolbar.Breadcrumb', function() {
         });
     });
 
-    describe("overflow", function() {
-        it("should use scroller overflow", function() {
+    describe("overflow", function () {
+        it("should use scroller overflow", function () {
             createBreadcrumbBar({
                 overflowHandler: 'scroller'
             });
             expect(breadcrumbBar.layout.overflowHandler instanceof Ext.layout.container.boxOverflow.Scroller).toBe(true);
         });
 
-        it("should not throw an exception when clicking on the scrollers", function() {
+        it("should not throw an exception when clicking on the scrollers", function () {
             store.destroy();
             var children = [],
                 i, item, scroller;
@@ -866,7 +866,7 @@ describe('Ext.toolbar.Breadcrumb', function() {
             if (!scroller) {
                 this.fail('Unable to find scroller element');
             }
-            expect(function() {
+            expect(function () {
                 jasmine.fireMouseEvent(scroller, 'click');
             }).not.toThrow();
         });

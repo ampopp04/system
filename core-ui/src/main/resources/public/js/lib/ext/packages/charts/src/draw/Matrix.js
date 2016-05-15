@@ -6,9 +6,9 @@
  *   1. Ext.draw.Matrix is not read only.
  *   2. Using Number as its components rather than floats.
  *
- * Using this class helps to reduce the severe numeric 
+ * Using this class helps to reduce the severe numeric
  * [problem with HTML Canvas and SVG transformation](http://stackoverflow.com/questions/8784405/large-numbers-in-html-canvas-translate-result-in-strange-behavior)
- * 
+ *
  * There's also no way to get current transformation matrix [in Canvas](http://stackoverflow.com/questions/7395813/html5-canvas-get-transform-matrix).
  */
 Ext.define('Ext.draw.Matrix', {
@@ -625,11 +625,11 @@ Ext.define('Ext.draw.Matrix', {
         var elements = this.elements;
 
         return elements[0] === 1 &&
-               elements[1] === 0 &&
-               elements[2] === 0 &&
-               elements[3] === 1 &&
-               elements[4] === 0 &&
-               elements[5] === 0;
+            elements[1] === 0 &&
+            elements[2] === 0 &&
+            elements[3] === 1 &&
+            elements[4] === 0 &&
+            elements[5] === 0;
     },
 
     /**
@@ -642,11 +642,11 @@ Ext.define('Ext.draw.Matrix', {
             myElements = this.elements;
 
         return myElements[0] === elements[0] &&
-               myElements[1] === elements[1] &&
-               myElements[2] === elements[2] &&
-               myElements[3] === elements[3] &&
-               myElements[4] === elements[4] &&
-               myElements[5] === elements[5];
+            myElements[1] === elements[1] &&
+            myElements[2] === elements[2] &&
+            myElements[3] === elements[3] &&
+            myElements[4] === elements[4] &&
+            myElements[5] === elements[5];
     },
 
     /**

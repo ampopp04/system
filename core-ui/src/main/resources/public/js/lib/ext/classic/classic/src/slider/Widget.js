@@ -9,13 +9,13 @@ Ext.define('Ext.slider.Widget', {
     // Required to pull in the styles
     requires: [
         'Ext.slider.Multi'
-    ], 
+    ],
 
     cachedConfig: {
         /**
-        * @cfg {Boolean} vertical
-        * Orients the slider vertically rather than horizontally.
-        */
+         * @cfg {Boolean} vertical
+         * Orients the slider vertically rather than horizontally.
+         */
         vertical: false
     },
 
@@ -33,13 +33,13 @@ Ext.define('Ext.slider.Widget', {
          * One more values for the position of the slider's thumb(s).
          */
         value: 0,
-        
+
         /**
          * @cfg {Number} minValue
          * The minimum value for any slider thumb.
          */
         minValue: 0,
-        
+
         /**
          * @cfg {Number} maxValue
          * The maximum value for any slider thumb.
@@ -99,7 +99,7 @@ Ext.define('Ext.slider.Widget', {
     // by applyValue when it passes the animate parameter to setThumbValue.
     animateOnSetValue: undefined,
 
-    applyValue: function(value) {
+    applyValue: function (value) {
         var me = this,
             animate = me.animateOnSetValue,
             i, len;
@@ -116,26 +116,26 @@ Ext.define('Ext.slider.Widget', {
         return value;
     },
 
-    updateVertical: function(vertical, oldVertical) {
+    updateVertical: function (vertical, oldVertical) {
         this.element.removeCls(Ext.baseCSSPrefix + 'slider-' + (oldVertical ? 'vert' : 'horz'));
-        this.element.addCls(   Ext.baseCSSPrefix + 'slider-' + (vertical    ? 'vert' : 'horz'));
+        this.element.addCls(Ext.baseCSSPrefix + 'slider-' + (vertical ? 'vert' : 'horz'));
     },
 
-    updateHeight: function(height, oldHeight) {
+    updateHeight: function (height, oldHeight) {
         this.callParent([height, oldHeight]);
         this.endEl.dom.style.height = this.innerEl.dom.style.height = '100%';
     },
 
-    cancelDrag: function(e) {
+    cancelDrag: function (e) {
         // prevent the touch scroller from scrolling when the slider is being dragged
         e.stopPropagation();
     },
 
-    getThumb: function(ordinal) {
+    getThumb: function (ordinal) {
         var me = this,
             thumbConfig,
             result = (me.thumbs || (me.thumbs = []))[ordinal];
-        
+
         if (!result) {
             thumbConfig = {
                 cls: me.thumbCls,
@@ -147,7 +147,7 @@ Ext.define('Ext.slider.Widget', {
         return result;
     },
 
-    getThumbPositionStyle: function() {
+    getThumbPositionStyle: function () {
         return this.getVertical() ? 'bottom' : (this.rtl && Ext.rtl ? 'right' : 'left');
     },
 
@@ -166,7 +166,7 @@ Ext.define('Ext.slider.Widget', {
 //        return me.callParent();
 //    },
 
-    update: function() {
+    update: function () {
         var me = this,
             values = me.getValue(),
             len = values.length,
@@ -177,7 +177,7 @@ Ext.define('Ext.slider.Widget', {
         }
     },
 
-    onMouseDown: function(e) {
+    onMouseDown: function (e) {
         var me = this,
             thumb,
             trackPoint = e.getXY(),
@@ -222,7 +222,7 @@ Ext.define('Ext.slider.Widget', {
      * Only changes the value if the click was within this.clickRange.
      * @param {Number} trackPoint local pixel offset **from the origin** (left for horizontal and bottom for vertical) along the Slider's axis at which the click event occured.
      */
-    onClickChange : function(trackPoint) {
+    onClickChange: function (trackPoint) {
         var me = this,
             thumb, index, value;
 
@@ -246,7 +246,7 @@ Ext.define('Ext.slider.Widget', {
      * @param {Number} trackPoint local pixel position along the Slider's axis to find the Thumb for
      * @return {Object} The closest thumb object and its distance from the click event
      */
-    getNearest: function(trackPoint) {
+    getNearest: function (trackPoint) {
         var me = this,
             clickValue = me.reversePixelValue(trackPoint),
             nearestDistance = me.getRange() + 5, //add a small fudge for the end of the slider
@@ -261,7 +261,7 @@ Ext.define('Ext.slider.Widget', {
         for (; i < len; i++) {
             thumb = thumbs[i];
             value = me.reversePercentageValue(parseInt(thumb.dom.style[me.getThumbPositionStyle()], 10));
-            dist  = Math.abs(value - clickValue);
+            dist = Math.abs(value - clickValue);
 
             if (Math.abs(dist) <= nearestDistance) {
                 nearest = thumb;
@@ -279,7 +279,7 @@ Ext.define('Ext.slider.Widget', {
      * range, which can result in the user not being able to move any of them.
      * @param {Ext.slider.Thumb} topThumb The thumb to move to the top
      */
-    promoteThumb: function(topThumb) {
+    promoteThumb: function (topThumb) {
         var thumbs = this.thumbStack || (this.thumbStack = Ext.Array.slice(this.thumbs)),
             ln = thumbs.length,
             zIndex = 10000, i;
@@ -318,13 +318,13 @@ Ext.define('Ext.slider.Widget', {
         }
     },
 
-    onMouseMove: function(e, thumb) {
+    onMouseMove: function (e, thumb) {
         this.doMouseMove(e, thumb, false);
     },
 
-    onMouseUp: function(e, thumb) {
+    onMouseUp: function (e, thumb) {
         var me = this;
-        
+
         me.doMouseMove(e, thumb, true);
         Ext.getDoc().un({
             scope: me,
@@ -334,7 +334,7 @@ Ext.define('Ext.slider.Widget', {
         delete me.animateOnSetValue; // expose "undefined" on prototype
     },
 
-    stopSelect : function(e) {
+    stopSelect: function (e) {
         e.stopEvent();
         return false;
     },
@@ -357,7 +357,7 @@ Ext.define('Ext.slider.Widget', {
      * @param {Boolean} [animate=true] Turn on or off animation
      * @return {Ext.slider.Multi} this
      */
-    setThumbValue : function(index, value, animate, changeComplete) {
+    setThumbValue: function (index, value, animate, changeComplete) {
         var me = this,
             thumb, thumbValue, len, i, values;
 
@@ -399,7 +399,7 @@ Ext.define('Ext.slider.Widget', {
      * @return {Number/Number[]} The current value of the slider at the given index, or an array of all thumb values if
      * no index is given.
      */
-    getValue : function(index) {
+    getValue: function (index) {
         var me = this,
             value;
 
@@ -420,7 +420,7 @@ Ext.define('Ext.slider.Widget', {
      * Returns an array of values - one for the location of each thumb
      * @return {Number[]} The set of thumb values
      */
-    getValues: function() {
+    getValues: function () {
         var me = this,
             values = [],
             i = 0,
@@ -437,7 +437,7 @@ Ext.define('Ext.slider.Widget', {
      * @private
      * move the thumb
      */
-    moveThumb: function(thumb, v, animate) {
+    moveThumb: function (thumb, v, animate) {
         var me = this,
             styleProp = me.getThumbPositionStyle(),
             to,
@@ -471,7 +471,7 @@ Ext.define('Ext.slider.Widget', {
      * @param {Number} value Raw number value
      * @return {Number} The raw value rounded to the correct d.p. and constrained within the set max and min values
      */
-    normalizeValue : function(v) {
+    normalizeValue: function (v) {
         var me = this,
             snapFn = me.zeroBasedSnapping ? 'snap' : 'snapInRange';
 
@@ -489,7 +489,7 @@ Ext.define('Ext.slider.Widget', {
      * If the point is outside the range of the Slider's track, the return value is `undefined`
      * @param {Number[]} xy The point to calculate the track point for
      */
-    getTrackpoint : function(xy) {
+    getTrackpoint: function (xy) {
         var me = this,
             vertical = me.getVertical(),
             sliderTrack = me.innerEl,
@@ -514,7 +514,7 @@ Ext.define('Ext.slider.Widget', {
      * @private
      * Given a value within this Slider's range, calculates a Thumb's percentage CSS position to map that value.
      */
-    calculateThumbPosition : function(v) {
+    calculateThumbPosition: function (v) {
         var me = this,
             pos = (v - me.getMinValue()) / me.getRange() * 100;
 
@@ -531,7 +531,7 @@ Ext.define('Ext.slider.Widget', {
      * the ratio is 2
      * @return {Number} The ratio of pixels to mapped values
      */
-    getRatio : function() {
+    getRatio: function () {
         var me = this,
             innerEl = me.innerEl,
             trackLength = me.getVertical() ? innerEl.getHeight() : innerEl.getWidth(),
@@ -540,7 +540,7 @@ Ext.define('Ext.slider.Widget', {
         return valueRange === 0 ? trackLength : (trackLength / valueRange);
     },
 
-    getRange: function() {
+    getRange: function () {
         return this.getMaxValue() - this.getMinValue();
     },
 
@@ -552,7 +552,7 @@ Ext.define('Ext.slider.Widget', {
      * @param {Number} pos The position along the slider to return a mapped value for
      * @return {Number} The mapped value for the given position
      */
-    reversePixelValue : function(pos) {
+    reversePixelValue: function (pos) {
         return this.getMinValue() + (pos / this.getRatio());
     },
 
@@ -564,18 +564,18 @@ Ext.define('Ext.slider.Widget', {
      * @param {Number} pos The percentage along the slider track to return a mapped value for
      * @return {Number} The mapped value for the given position
      */
-    reversePercentageValue : function(pos) {
+    reversePercentageValue: function (pos) {
         return this.getMinValue() + this.getRange() * (pos / 100);
     },
 
-    captureMouse: function(onMouseMove, onMouseUp, args, appendArgs) {
+    captureMouse: function (onMouseMove, onMouseUp, args, appendArgs) {
         var me = this,
             onMouseupWrap,
             listeners;
 
         onMouseMove = onMouseMove && Ext.Function.bind(onMouseMove, me, args, appendArgs);
-        onMouseUp   = onMouseUp   && Ext.Function.bind(onMouseUp,   me, args, appendArgs);
-        onMouseupWrap = function() {
+        onMouseUp = onMouseUp && Ext.Function.bind(onMouseUp, me, args, appendArgs);
+        onMouseupWrap = function () {
             Ext.getDoc().un(listeners);
             if (onMouseUp) {
                 onMouseUp.apply(me, arguments);

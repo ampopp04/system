@@ -8,7 +8,7 @@ Ext.define('Ext.layout.component.BoundList', {
 
     type: 'component',
 
-    beginLayout: function(ownerContext) {
+    beginLayout: function (ownerContext) {
         var me = this,
             owner = me.owner,
             toolbar = owner.pagingToolbar;
@@ -29,7 +29,7 @@ Ext.define('Ext.layout.component.BoundList', {
         ownerContext.listContext = ownerContext.getEl('listWrap');
     },
 
-    beginLayoutCycle: function(ownerContext){
+    beginLayoutCycle: function (ownerContext) {
         var owner = this.owner;
 
         this.callParent(arguments);
@@ -42,18 +42,18 @@ Ext.define('Ext.layout.component.BoundList', {
         }
     },
 
-    getLayoutItems: function() {
+    getLayoutItems: function () {
         var toolbar = this.owner.pagingToolbar;
         return toolbar ? [toolbar] : [];
     },
 
-    isValidParent: function() {
+    isValidParent: function () {
         // this only ever gets called with the toolbar, since it's rendered inside we
         // know the parent is always valid
         return true;
     },
 
-    finishedLayout: function(ownerContext) {
+    finishedLayout: function (ownerContext) {
         var me = this,
             xy = ownerContext.savedXY,
             owner = me.owner,
@@ -68,15 +68,15 @@ Ext.define('Ext.layout.component.BoundList', {
         listWrap.setScrollTop(scrollPos.top);
     },
 
-    measureContentWidth: function(ownerContext) {
+    measureContentWidth: function (ownerContext) {
         return this.owner.listWrap.getWidth();
     },
 
-    measureContentHeight: function(ownerContext) {
+    measureContentHeight: function (ownerContext) {
         return this.owner.listWrap.getHeight();
     },
 
-    publishInnerHeight: function(ownerContext, height) {
+    publishInnerHeight: function (ownerContext, height) {
         var toolbar = ownerContext.toolbarContext,
             toolbarHeight = 0;
 
@@ -91,7 +91,7 @@ Ext.define('Ext.layout.component.BoundList', {
         }
     },
 
-    calculateOwnerHeightFromContentHeight: function(ownerContext){
+    calculateOwnerHeightFromContentHeight: function (ownerContext) {
         var height = this.callParent(arguments),
             toolbar = ownerContext.toolbarContext;
 

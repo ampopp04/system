@@ -5,7 +5,7 @@
  * Access the global instance stored in {@link Ext.os} instead.
  * @private
  */
-Ext.env.OS = function(userAgent, platform, browserScope) {
+Ext.env.OS = function (userAgent, platform, browserScope) {
 // @define Ext.env.OS
 // @define Ext.os
 // @require Ext.Version
@@ -25,7 +25,7 @@ Ext.env.OS = function(userAgent, platform, browserScope) {
         if (prefixes.hasOwnProperty(i)) {
             prefix = prefixes[i];
 
-            match = userAgent.match(new RegExp('(?:'+prefix+')([^\\s;]+)'));
+            match = userAgent.match(new RegExp('(?:' + prefix + ')([^\\s;]+)'));
 
             if (match) {
                 name = names[i];
@@ -184,7 +184,7 @@ Ext.env.OS.prototype = {
     }
 };
 
-(function() {
+(function () {
     var navigation = Ext.global.navigator,
         userAgent = navigation.userAgent,
         OS = Ext.env.OS,
@@ -244,8 +244,8 @@ Ext.env.OS.prototype = {
             Ext.browser.is.WebView = !!Ext.browser.is.Ripple;
         }
         else if (osEnv.is.iPad || osEnv.is.RIMTablet || osEnv.is.Android3 ||
-                 Ext.browser.is.Silk ||
-                (osEnv.is.Android && userAgent.search(/mobile/i) === -1)) {
+            Ext.browser.is.Silk ||
+            (osEnv.is.Android && userAgent.search(/mobile/i) === -1)) {
             deviceType = 'Tablet';
         }
         else {

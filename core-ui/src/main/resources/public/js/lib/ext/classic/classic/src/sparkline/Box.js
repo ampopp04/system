@@ -22,69 +22,69 @@ Ext.define('Ext.sparkline.Box', {
          * @cfg {String} [boxLineColor=#000] The color of the box outline.
          */
         boxLineColor: '#000',
-        
+
         /**
          * @cfg {String} [boxFillColor=#cdf] The color of the box fill.
          */
         boxFillColor: '#cdf',
-        
+
         /**
          * @cfg {String} [whiskerColor=#000] The color of the whiskers.
          */
         whiskerColor: '#000',
-        
+
         /**
          * @cfg {String} [outlierLineColor=#333] The color of the outlier circles' outline.
          */
         outlierLineColor: '#333',
-        
+
         /**
          * @cfg {String} [outlierFillColor=#fff] The fill color of the outlier circles.
          */
         outlierFillColor: '#fff',
-        
+
         /**
          * @cfg {String} [medianColor=#f00] The color of the median line.
          */
         medianColor: '#f00',
-        
+
         /**
          * @cfg {Boolean} [showOutliers=true] Configure as `false` to not show outlier circles.
          */
         showOutliers: true,
-        
+
         /**
          * @cfg {Number} [outlierIQR=1.5] The inter-quartile range multipler used to calculate values that qualify as an outlier.
          */
         outlierIQR: 1.5,
-        
+
         /**
          * @cfg {Number} [spotRadius=1.5] The radius of the outlier circles.
          */
         spotRadius: 1.5,
-        
+
         /**
          * @cfg {Number} [target] If set, a crosshair will be drawn at the specified value point.
          */
         target: null,
-        
+
         /**
          * @cfg {Number} [targetColor=#4a2] The color of the crosshair drawn at the pointe specified by {@link #target}.
          */
         targetColor: '#4a2',
-        
+
         /**
          * @cfg {Number} [chartRangeMin] The minimum value to use for the range of Y values of the chart - Defaults to the minimum value supplied.
          */
         chartRangeMin: null,
-        
+
         /**
          * @cfg {Number} [chartRangeMax] The maximum value to use for the range of Y values of the chart - Defaults to the minimum value supplied.
          */
         chartRangeMax: null,
-                
+
         tipTpl: new Ext.XTemplate('{field:this.fields}: {value}', {
-            fields: function(v) {
+            fields: function (v) {
                 var fields = {
                     lq: 'Lower Quartile',
                     med: 'Median',
@@ -104,21 +104,21 @@ Ext.define('Ext.sparkline.Box', {
         var vl;
         if (q === 2) {
             vl = Math.floor(values.length / 2);
-            return values.length % 2 ? values[vl] : (values[vl-1] + values[vl]) / 2;
+            return values.length % 2 ? values[vl] : (values[vl - 1] + values[vl]) / 2;
         } else {
-            if (values.length % 2 ) { // odd
+            if (values.length % 2) { // odd
                 vl = (values.length * q + q) / 4;
-                return vl % 1 ? (values[Math.floor(vl)] + values[Math.floor(vl) - 1]) / 2 : values[vl-1];
+                return vl % 1 ? (values[Math.floor(vl)] + values[Math.floor(vl) - 1]) / 2 : values[vl - 1];
             } else { //even
                 vl = (values.length * q + 2) / 4;
-                return vl % 1 ? (values[Math.floor(vl)] + values[Math.floor(vl) - 1]) / 2 :  values[vl-1];
+                return vl % 1 ? (values[Math.floor(vl)] + values[Math.floor(vl) - 1]) / 2 : values[vl - 1];
 
             }
         }
     },
 
     // Ensure values is an array of numbers
-    applyValues: function(newValues) {
+    applyValues: function (newValues) {
         newValues = Ext.Array.map(Ext.Array.from(newValues), Number);
         this.disabled = !(newValues && newValues.length);
         return newValues;
@@ -133,21 +133,21 @@ Ext.define('Ext.sparkline.Box', {
 
     getRegionFields: function () {
         var result = [
-            { field: 'lq', value: this.quartiles[0] },
-            { field: 'med', value: this.quartiles[1] },
-            { field: 'uq', value: this.quartiles[2] }
+            {field: 'lq', value: this.quartiles[0]},
+            {field: 'med', value: this.quartiles[1]},
+            {field: 'uq', value: this.quartiles[2]}
         ];
         if (this.loutlier !== undefined) {
-            result.push({ field: 'lo', value: this.loutlier});
+            result.push({field: 'lo', value: this.loutlier});
         }
         if (this.routlier !== undefined) {
-            result.push({ field: 'ro', value: this.routlier});
+            result.push({field: 'ro', value: this.routlier});
         }
         if (this.lwhisker !== undefined) {
-            result.push({ field: 'lw', value: this.lwhisker});
+            result.push({field: 'lw', value: this.lwhisker});
         }
         if (this.rwhisker !== undefined) {
-            result.push({ field: 'rw', value: this.rwhisker});
+            result.push({field: 'rw', value: this.rwhisker});
         }
         return result;
     },
@@ -198,7 +198,9 @@ Ext.define('Ext.sparkline.Box', {
                 rwhisker = values[4];
             }
         } else {
-            values.sort(function (a, b) { return a - b; });
+            values.sort(function (a, b) {
+                return a - b;
+            });
             q1 = me.quartile(values, 1);
             q2 = me.quartile(values, 2);
             q3 = me.quartile(values, 3);

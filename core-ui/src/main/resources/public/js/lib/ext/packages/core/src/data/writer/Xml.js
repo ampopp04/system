@@ -5,16 +5,16 @@
  * The {@link #record} option is used to specify the element name for each record that will make up the XML document.
  */
 Ext.define('Ext.data.writer.Xml', {
-    
+
     /* Begin Definitions */
-    
+
     extend: 'Ext.data.writer.Writer',
     alternateClassName: 'Ext.data.XmlWriter',
-    
+
     alias: 'writer.xml',
-    
+
     /* End Definitions */
-    
+
     config: {
         /**
          * @cfg {String} documentRoot The name of the root element of the document. Defaults to <tt>'xmlData'</tt>.
@@ -25,19 +25,19 @@ Ext.define('Ext.data.writer.Xml', {
          * the selector includes the root element name, then you must configure this as `false`
          */
         documentRoot: 'xmlData',
-        
+
         /**
          * @cfg {String} defaultDocumentRoot The root to be used if {@link #documentRoot} is empty and a root is required
          * to form a valid XML document.
          */
         defaultDocumentRoot: 'xmlData',
-    
+
         /**
          * @cfg {String} header A header to use in the XML document (such as setting the encoding or version).
          * Defaults to <tt>''</tt>.
          */
         header: '',
-    
+
         /**
          * @cfg {String} record The name of the node to use for each record. Defaults to
          * the owning {@link Ext.data.proxy.Proxy Proxy}'s {@link Ext.data.reader.Xml Reader}'s
@@ -49,7 +49,7 @@ Ext.define('Ext.data.writer.Xml', {
     // To break simple XPath selectors like "SystemInfo>SystemName" into ["SystemInfo", "SystemName"]
     selectorRe: /[^>\s]+/g,
 
-    writeRecords: function(request, data) {
+    writeRecords: function (request, data) {
         var me = this,
             xml = [],
             i = 0,
@@ -57,23 +57,23 @@ Ext.define('Ext.data.writer.Xml', {
             root = me.getDocumentRoot(),
             recordName = me.getRecord(),
 
-            // Convert eg 'Items>Item' into ['Items', 'Item']
+        // Convert eg 'Items>Item' into ['Items', 'Item']
             record = recordName.match(this.selectorRe),
             recLen = record.length,
 
-            // Need a containing element if there are multiple data records and
-            // it's not a compound record selector
+        // Need a containing element if there are multiple data records and
+        // it's not a compound record selector
             needsRoot = data.length !== 1 && recLen === 1,
             transform;
-            
+
         transform = this.getTransform();
         if (transform) {
             data = transform(data, request);
         }
-        
+
         // may not exist
         xml.push(me.getHeader() || '');
-        
+
         if (!root && needsRoot) {
             root = me.getDefaultDocumentRoot();
         }
@@ -91,7 +91,7 @@ Ext.define('Ext.data.writer.Xml', {
         for (i = 0; i < len; ++i) {
             this.objectToElement(recordName, data[i], xml);
         }
-        
+
         // Close record nodes' wrapping, eg "</Items>" from record "Items>Item"->["Items", "Item"]
         for (i = recLen - 2; i > -1; i--) {
             xml.push('</', record[i], '>');
@@ -99,7 +99,7 @@ Ext.define('Ext.data.writer.Xml', {
         if (root) {
             xml.push('</', root, '>');
         }
-            
+
         request.setXmlData(xml.join(''));
         return request;
     },
@@ -128,13 +128,13 @@ Ext.define('Ext.data.writer.Xml', {
      *      <AgilentModel>E5505A</AgilentModel>
      *      <SerialNumber>US44101357</SerialNumber>
      *    </SystemComponent>
-     *    
+     *
      * @param {String} name The element name for the object.
      * @param {Object} o The object to serialize.
      * @param {Array} [output] The array into which to serialize the object.
      * @return {undefined}
      */
-    objectToElement: function(name, o, output) {
+    objectToElement: function (name, o, output) {
         var key,
             datum,
             subOutput = [],

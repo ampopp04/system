@@ -86,7 +86,7 @@ Ext.define('Ext.layout.container.Column', {
         setsWidth: 1,
         setsHeight: 0
     },
-    
+
     createsInnerCt: true,
 
     manageOverflow: true,
@@ -95,8 +95,8 @@ Ext.define('Ext.layout.container.Column', {
     // needs to read the size of items with a configured width.
     setsItemSize: true,
     needsItemSize: true,
-    
-    isItemShrinkWrap: function(item) {
+
+    isItemShrinkWrap: function (item) {
         return true;
     },
 

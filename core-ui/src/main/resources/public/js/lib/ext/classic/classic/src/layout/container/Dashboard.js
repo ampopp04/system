@@ -48,7 +48,7 @@ Ext.define('Ext.layout.container.Dashboard', {
 
     getSplitterConfig: function () {
         return {
-           xtype: 'columnsplitter'
+            xtype: 'columnsplitter'
         };
     },
 
@@ -58,9 +58,9 @@ Ext.define('Ext.layout.container.Dashboard', {
      * @param items
      * @return {Array|*}
      */
-    getColumns : function(items) {
+    getColumns: function (items) {
         var array = Ext.Array;
-        return array.filter(array.from(items), function(item) {
+        return array.filter(array.from(items), function (item) {
             return item.target && item.target.isSplitter !== true;
         });
     },
@@ -125,9 +125,9 @@ Ext.define('Ext.layout.container.Dashboard', {
             prev = child;
         }
 
-        if (rows.length ) {
+        if (rows.length) {
             me.syncFirstLast(
-                me.getColumns(rows[rows.length-1].items)
+                me.getColumns(rows[rows.length - 1].items)
             );
         }
     },
@@ -203,7 +203,7 @@ Ext.define('Ext.layout.container.Dashboard', {
                         ok = false;
                         owner.suspendLayouts();
                     }
-                    splitter = owner.add(index+1, me.getSplitterConfig());
+                    splitter = owner.add(index + 1, me.getSplitterConfig());
                 }
             } else {
                 if (item.isSplitter) {
@@ -247,9 +247,9 @@ Ext.define('Ext.layout.container.Dashboard', {
         items = Ext.Array.from(items);
         len = items.length;
 
-        for (i = 0; i < len; ++i ) {
+        for (i = 0; i < len; ++i) {
             item = items[i].target;
-            last = (i === len-1);
+            last = (i === len - 1);
 
             if (!i) { // if (first)
                 if (last) {

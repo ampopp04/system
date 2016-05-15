@@ -1,26 +1,26 @@
-describe("Ext-more", function() {
-    describe("Ext.id", function(){
+describe("Ext-more", function () {
+    describe("Ext.id", function () {
         var el;
-        describe("if element passed as first argument is different of document or window", function() {
-            beforeEach(function() {
+        describe("if element passed as first argument is different of document or window", function () {
+            beforeEach(function () {
                 el = document.createElement("div");
                 document.body.appendChild(el);
             });
 
-            afterEach(function(){
+            afterEach(function () {
                 Ext.getBody().dom.removeChild(el);
             });
 
-            it("should generate an unique id for the element with default prefix ext-element-", function() {
+            it("should generate an unique id for the element with default prefix ext-element-", function () {
                 expect(Ext.id(el)).toEqual("ext-element-" + Ext.idSeed);
             });
 
-            it("should generate an unique id for the element with custom prefix", function() {
+            it("should generate an unique id for the element with custom prefix", function () {
                 var prefix = "nico-yhwh";
                 expect(Ext.id(el, prefix)).toEqual(prefix + Ext.idSeed);
             });
 
-            it("should not override existing id", function() {
+            it("should not override existing id", function () {
                 var id = "unchanged";
                 el.id = id;
                 expect(Ext.id(el)).toEqual(id);
@@ -28,26 +28,26 @@ describe("Ext-more", function() {
         });
     });
 
-    describe("Ext.getBody", function() {
-        it("should return current document body as an Ext.Element", function() {
+    describe("Ext.getBody", function () {
+        it("should return current document body as an Ext.Element", function () {
             expect(Ext.getBody()).toEqual(Ext.get(document.body));
         });
     });
 
-    describe("Ext.getHead", function() {
-        it("should return current document head as an Ext.Element", function() {
+    describe("Ext.getHead", function () {
+        it("should return current document head as an Ext.Element", function () {
             expect(Ext.getHead()).toEqual(Ext.get(document.getElementsByTagName("head")[0]));
         });
     });
 
-    describe("Ext.getDoc", function() {
-        it("should return the current HTML document object as an Ext.element", function() {
+    describe("Ext.getDoc", function () {
+        it("should return the current HTML document object as an Ext.element", function () {
             expect(Ext.getDoc()).toEqual(Ext.get(document));
         });
     });
     if (Ext.Component) {
-        describe("Ext.getCmp", function() {
-            it("should return a component", function() {
+        describe("Ext.getCmp", function () {
+            it("should return a component", function () {
                 var cmp = new Ext.Component({id: 'foobar'});
                 expect(Ext.getCmp('foobar')).toBe(cmp);
                 cmp.destroy();
@@ -55,8 +55,8 @@ describe("Ext-more", function() {
         });
     }
     if (!Ext.isWindows && !Ext.isMac && !Ext.isLinux) {
-        describe("Ext.getOrientation", function() {
-            it("should return the current orientation of the mobile device", function() {
+        describe("Ext.getOrientation", function () {
+            it("should return the current orientation of the mobile device", function () {
                 if (window.innerHeight <= window.innerWidth) {
                     expect(Ext.getOrientation()).toEqual("landscape");
                 } else {
@@ -66,10 +66,10 @@ describe("Ext-more", function() {
         });
     }
 
-    describe("Ext.destroy", function() {
+    describe("Ext.destroy", function () {
         var o1, o2, o3;
 
-        beforeEach(function() {
+        beforeEach(function () {
             o1 = jasmine.createSpyObj("o1", ["destroy"]);
 
             o2 = jasmine.createSpyObj("o2", ["destroy"]);
@@ -78,19 +78,19 @@ describe("Ext-more", function() {
 
         });
 
-        it("should destroy an object", function() {
+        it("should destroy an object", function () {
             Ext.destroy(o1);
 
             expect(o1.destroy).toHaveBeenCalled();
         });
 
-        it("should not destroy an object without a destroy method", function() {
+        it("should not destroy an object without a destroy method", function () {
             Ext.destroy(o3);
 
             expect(o3.dest).not.toHaveBeenCalled();
         });
 
-        it("should destroy an array of objects", function() {
+        it("should destroy an array of objects", function () {
             Ext.destroy([o1, o2, o3]);
 
             expect(o1.destroy).toHaveBeenCalled();
@@ -98,7 +98,7 @@ describe("Ext-more", function() {
             expect(o3.dest).not.toHaveBeenCalled();
         });
 
-        it("should destroy multiple objects", function() {
+        it("should destroy multiple objects", function () {
             Ext.destroy(o1, o2, o3);
 
             expect(o1.destroy).toHaveBeenCalled();
@@ -106,7 +106,7 @@ describe("Ext-more", function() {
             expect(o3.dest).not.toHaveBeenCalled();
         });
 
-        it("should remove dom if object is an Ext.element", function() {
+        it("should remove dom if object is an Ext.element", function () {
             var el = Ext.getBody().createChild({id: "to_destroy"});
 
             Ext.destroy(el);
@@ -115,97 +115,97 @@ describe("Ext-more", function() {
         });
     });
 
-    describe("Ext.urlAppend", function() {
+    describe("Ext.urlAppend", function () {
         var url = "http://example.com/";
 
-        it("should manage question mark", function() {
+        it("should manage question mark", function () {
             expect(Ext.urlAppend(url, "test=1")).toEqual("http://example.com/?test=1");
         });
 
-        it("should manage ampersand", function() {
-            expect(Ext.urlAppend(url + "?test=1","foo=2")).toEqual("http://example.com/?test=1&foo=2");
+        it("should manage ampersand", function () {
+            expect(Ext.urlAppend(url + "?test=1", "foo=2")).toEqual("http://example.com/?test=1&foo=2");
         });
 
-        it("should return directly url if content is empty", function() {
+        it("should return directly url if content is empty", function () {
             expect(Ext.urlAppend(url)).toEqual(url);
         });
     });
 
-    describe("Ext.getDom", function() {
+    describe("Ext.getDom", function () {
         var el1;
 
-        beforeEach(function() {
+        beforeEach(function () {
             el1 = Ext.getBody().createChild({id: "elone"});
         });
 
-        afterEach(function() {
+        afterEach(function () {
             el1.destroy();
         });
 
-        it("should return a dom element if an Ext.element is passed as first argument", function() {
+        it("should return a dom element if an Ext.element is passed as first argument", function () {
             expect(Ext.getDom(el1)).toEqual(el1.dom);
         });
 
-        it("should return a dom element if the string (id) passed as first argument", function() {
+        it("should return a dom element if the string (id) passed as first argument", function () {
             expect(Ext.getDom("elone")).toEqual(el1.dom);
         });
     });
 
-    describe("Ext.removeNode", function() {
+    describe("Ext.removeNode", function () {
         var el, id, dom;
-        
-        beforeEach(function() {
+
+        beforeEach(function () {
             el = Ext.getBody().createChild({
                 tag: 'span',
                 html: 'foobar'
             });
-            
+
             id = el.id;
             dom = el.dom;
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             el = id = dom = null;
         });
-        
+
         if (Ext.isIE8) {
-            it("should schedule element for garbage collection", function() {
+            it("should schedule element for garbage collection", function () {
                 var queue = Ext.Element.destroyQueue,
                     len = queue.length;
-                
+
                 Ext.removeNode(dom);
-                
+
                 expect(queue.length).toBe(len + 1);
                 expect(queue[len]).toBe(dom);
             });
-            
-            it("should finally destroy the element after a timeout", function() {
-                runs(function() {
+
+            it("should finally destroy the element after a timeout", function () {
+                runs(function () {
                     Ext.removeNode(dom);
                 });
-                
+
                 // The timeout is hardcoded in Element override
                 waits(32);
-                
-                runs(function() {
+
+                runs(function () {
                     expect(dom.parentNode).toBeFalsy();
                 });
             });
         }
         else {
-            it("should remove a dom element from document", function() {
+            it("should remove a dom element from document", function () {
                 Ext.removeNode(dom);
                 expect(dom.parentNode).toBeFalsy();
             });
         }
 
-        it("should delete the cache reference", function() {
+        it("should delete the cache reference", function () {
             expect(Ext.cache[id]).toBeDefined();
             Ext.removeNode(el.dom);
             expect(Ext.cache[id]).toBeUndefined();
         });
-        
-        it("should remove all listeners from the dom element", function() {
+
+        it("should remove all listeners from the dom element", function () {
             var listener = jasmine.createSpy();
 
             el.on('mouseup', listener);
@@ -215,10 +215,10 @@ describe("Ext-more", function() {
         });
     });
 
-    describe("Ext.addBehaviors", function() {
+    describe("Ext.addBehaviors", function () {
         var listener, span1, span2, div1;
 
-        beforeEach(function() {
+        beforeEach(function () {
             span1 = Ext.getBody().createChild({
                 tag: 'span'
             });
@@ -234,13 +234,13 @@ describe("Ext-more", function() {
             listener = jasmine.createSpy();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             span1.destroy();
             span2.destroy();
             div1.destroy();
         });
 
-        it("should apply event listeners to elements by selectors", function() {
+        it("should apply event listeners to elements by selectors", function () {
             Ext.addBehaviors({
                 'span @mouseup': listener
             });
@@ -252,7 +252,7 @@ describe("Ext-more", function() {
             expect(listener.calls.length).toEqual(2);
         });
 
-        it("should manage multiple selectors", function() {
+        it("should manage multiple selectors", function () {
             Ext.addBehaviors({
                 'span, div.foo @mouseup': listener
             });
@@ -265,15 +265,15 @@ describe("Ext-more", function() {
         });
     });
 
-    xdescribe("Ext.getScrollBarWidth", function() {
-        it("should return a number between 10 and 40 (we assume that document is loaded)", function() {
+    xdescribe("Ext.getScrollBarWidth", function () {
+        it("should return a number between 10 and 40 (we assume that document is loaded)", function () {
             expect(Ext.getScrollBarWidth() > 10).toBe(true);
             expect(Ext.getScrollBarWidth() < 40).toBe(true);
         });
     });
 
-    describe('Ext.copyToIf', function() {
-        it('should not overwrite defined properties', function() {
+    describe('Ext.copyToIf', function () {
+        it('should not overwrite defined properties', function () {
             var dest = {
                 a: 1,
                 b: undefined
@@ -294,8 +294,8 @@ describe("Ext-more", function() {
         });
     });
 
-    describe('Ext.copyIf', function() {
-        it('should not overwrite existing properties', function() {
+    describe('Ext.copyIf', function () {
+        it('should not overwrite existing properties', function () {
             var dest = {
                 a: 1,
                 b: undefined
@@ -315,10 +315,10 @@ describe("Ext-more", function() {
         });
     });
 
-    describe("Ext.copyTo", function() {
+    describe("Ext.copyTo", function () {
         var src, dest;
 
-        beforeEach(function() {
+        beforeEach(function () {
             src = {
                 a: 1,
                 b: 2,
@@ -329,13 +329,13 @@ describe("Ext-more", function() {
             dest = {};
         });
 
-        afterEach(function() {
+        afterEach(function () {
             src = null;
             dest = null;
         });
 
-        describe("with an array of named properties", function() {
-            it("should copy a set of named properties fom the source object to the destination object.", function() {
+        describe("with an array of named properties", function () {
+            it("should copy a set of named properties fom the source object to the destination object.", function () {
                 Ext.copyTo(dest, src, ['a', 'b', 'e']);
 
                 expect(dest).toEqual({
@@ -345,8 +345,8 @@ describe("Ext-more", function() {
             });
         });
 
-        describe("with a string list of named properties", function() {
-            it("should copy a set of named properties fom the source object to the destination object.", function() {
+        describe("with a string list of named properties", function () {
+            it("should copy a set of named properties fom the source object to the destination object.", function () {
                 Ext.copyTo(dest, src, 'c,b,e');
                 expect(dest).toEqual({
                     b: 2,
@@ -354,9 +354,9 @@ describe("Ext-more", function() {
                 });
             });
         });
-        
-        describe('including prototype properties', function() {
-            var CopyToSource = function(obj){
+
+        describe('including prototype properties', function () {
+            var CopyToSource = function (obj) {
                 Ext.apply(this, obj);
             };
 
@@ -364,7 +364,7 @@ describe("Ext-more", function() {
                 prototypeProperty: "I'm from the prototype"
             };
 
-            beforeEach(function() {
+            beforeEach(function () {
                 src = new CopyToSource({
                     a: 1,
                     b: 2,
@@ -372,7 +372,7 @@ describe("Ext-more", function() {
                     d: 4
                 });
             });
-            it('should not copy prototype properties unless asked', function() {
+            it('should not copy prototype properties unless asked', function () {
                 Ext.copyTo(dest, src, 'a,nonExistent,prototypeProperty');
 
                 // There was only ONE property that could be copied over.
@@ -383,7 +383,7 @@ describe("Ext-more", function() {
                     a: 1
                 });
             });
-            it('should copy prototype properties when asked', function() {
+            it('should copy prototype properties when asked', function () {
                 Ext.copyTo(dest, src, 'a,nonExistent,prototypeProperty', true);
 
                 // There were TWO that could be copied over.
@@ -402,10 +402,10 @@ describe("Ext-more", function() {
         });
     });
 
-    describe("Ext.copy", function() {
+    describe("Ext.copy", function () {
         var src, dest;
 
-        beforeEach(function() {
+        beforeEach(function () {
             src = {
                 a: 1,
                 b: 2,
@@ -416,13 +416,13 @@ describe("Ext-more", function() {
             dest = {};
         });
 
-        afterEach(function() {
+        afterEach(function () {
             src = null;
             dest = null;
         });
 
-        describe("with an array of named properties", function() {
-            it("should copy a set of named properties fom the source object to the destination object.", function() {
+        describe("with an array of named properties", function () {
+            it("should copy a set of named properties fom the source object to the destination object.", function () {
                 Ext.copy(dest, src, ['a', 'b', 'e']);
 
                 expect(dest).toEqual({
@@ -432,8 +432,8 @@ describe("Ext-more", function() {
             });
         });
 
-        describe("with a string list of named properties", function() {
-            it("should copy a set of named properties fom the source object to the destination object.", function() {
+        describe("with a string list of named properties", function () {
+            it("should copy a set of named properties fom the source object to the destination object.", function () {
                 Ext.copy(dest, src, 'c,b,e');
                 expect(dest).toEqual({
                     b: 2,
@@ -441,9 +441,9 @@ describe("Ext-more", function() {
                 });
             });
         });
-        
-        describe('including prototype properties', function() {
-            var CopyToSource = function(obj){
+
+        describe('including prototype properties', function () {
+            var CopyToSource = function (obj) {
                 Ext.apply(this, obj)
             };
 
@@ -451,7 +451,7 @@ describe("Ext-more", function() {
                 prototypeProperty: "I'm from the prototype"
             };
 
-            beforeEach(function() {
+            beforeEach(function () {
                 src = new CopyToSource({
                     a: 1,
                     b: 2,
@@ -459,7 +459,7 @@ describe("Ext-more", function() {
                     d: 4
                 });
             });
-            it('should not copy prototype properties unless asked', function() {
+            it('should not copy prototype properties unless asked', function () {
                 Ext.copy(dest, src, 'a,nonExistent,prototypeProperty');
 
                 // There was only ONE property that could be copied over.
@@ -470,7 +470,7 @@ describe("Ext-more", function() {
                     a: 1
                 });
             });
-            it('should copy prototype properties when asked', function() {
+            it('should copy prototype properties when asked', function () {
                 Ext.copy(dest, src, 'a,nonExistent,prototypeProperty', true);
 
                 // There were TWO that could be copied over.
@@ -487,10 +487,10 @@ describe("Ext-more", function() {
         });
     });
 
-    describe("Ext.destroyMembers", function() {
+    describe("Ext.destroyMembers", function () {
         var obj, destroyable;
 
-        beforeEach(function(){
+        beforeEach(function () {
             destroyable = {
                 destroy: jasmine.createSpy()
             };
@@ -499,11 +499,11 @@ describe("Ext-more", function() {
                 b: 2,
                 c: 3,
                 d: 4,
-                me : destroyable
+                me: destroyable
             };
         });
 
-        it("should remove named properties from a passed object", function() {
+        it("should remove named properties from a passed object", function () {
             Ext.destroyMembers(obj, 'a', 'c', 'i');
             expect(obj).toEqual({
                 a: null,
@@ -514,15 +514,15 @@ describe("Ext-more", function() {
             });
         });
 
-        it("should attempt to destroy passed properties", function() {
+        it("should attempt to destroy passed properties", function () {
             Ext.destroyMembers(obj, 'a', 'c', 'me');
 
             expect(destroyable.destroy).toHaveBeenCalled();
         });
     });
 
-    describe('Ext.escapeId', function(){
-        it("should escape element id sequences with special characters", function(){
+    describe('Ext.escapeId', function () {
+        it("should escape element id sequences with special characters", function () {
             expect(Ext.escapeId('abcdef')).toBe('abcdef');
             expect(Ext.escapeId('.abcdef')).toBe('\\.abcdef');
             expect(Ext.escapeId('0a...')).toBe('\\0030 a\\.\\.\\.');
@@ -532,13 +532,13 @@ describe("Ext-more", function() {
             expect(Ext.escapeId('1<>234.567')).toBe('\\0031 \\<\\>234\\.567');
         });
     });
-    
-    describe("Ext.application", function() {
-        beforeEach(function() {
+
+    describe("Ext.application", function () {
+        beforeEach(function () {
             spyOn(Ext.Loader, 'setPath').andReturn();
         });
-        
-        afterEach(function() {
+
+        afterEach(function () {
             Ext.undefine('Test.$application');
             Ext.undefine('Test');
             try {
@@ -548,17 +548,17 @@ describe("Ext-more", function() {
                 window.Test = undefined;
             }
         });
-        
-        it("should set application path", function() {
+
+        it("should set application path", function () {
             Ext.application({
                 name: 'Test',
                 appFolder: 'fooFolder'
             });
-            
+
             expect(Ext.Loader.setPath).toHaveBeenCalledWith('Test', 'fooFolder');
         });
-        
-        it("should process appFolder and paths array", function() {
+
+        it("should process appFolder and paths array", function () {
             Ext.application({
                 name: 'Test',
                 appFolder: 'barFolder',
@@ -567,9 +567,9 @@ describe("Ext-more", function() {
                     qux: 'quxFolder'
                 }
             });
-            
+
             var args = Ext.Loader.setPath.argsForCall;
-            
+
             expect(args).toEqual([
                 ['Test', 'barFolder'],
                 ['baz', 'bazFolder'],
@@ -578,59 +578,59 @@ describe("Ext-more", function() {
         });
     });
 
-    describe("Ext.splitAndUnescape", function() {
+    describe("Ext.splitAndUnescape", function () {
         var fn = Ext.splitAndUnescape,
             result;
 
-        it("should return an empty array when origin string is empty", function() {
+        it("should return an empty array when origin string is empty", function () {
             result = fn('', ',');
 
             expect(result).toEqual([]);
         });
 
-        it("should return the origin when delimiter is empty", function() {
+        it("should return the origin when delimiter is empty", function () {
             result = fn('foo', '');
 
             expect(result).toEqual(['foo']);
         });
 
-        it("should split on delimiter", function() {
+        it("should split on delimiter", function () {
             result = fn('foo,bar', ',');
 
             expect(result).toEqual(['foo', 'bar']);
         });
 
-        it("should not split on escaped delimiter", function() {
+        it("should not split on escaped delimiter", function () {
             result = fn('foo\\,bar', ',');
 
             expect(result).toEqual(['foo,bar']);
         });
 
-        it("should not choke on a mix of escaped and unescaped delimiters", function() {
+        it("should not choke on a mix of escaped and unescaped delimiters", function () {
             result = fn('foo\\,bar,baz\\,qux', ',');
 
-            expect(result).toEqual(['foo,bar','baz,qux']);
+            expect(result).toEqual(['foo,bar', 'baz,qux']);
         });
 
-        it("should allow front unescaped delimiter", function() {
+        it("should allow front unescaped delimiter", function () {
             result = fn(',foo', ',');
 
             expect(result).toEqual(['', 'foo']);
         });
 
-        it("should allow dangling unescaped delimiter", function() {
+        it("should allow dangling unescaped delimiter", function () {
             result = fn('foo,', ',');
 
             expect(result).toEqual(['foo', '']);
         });
 
-        it("should allow front escaped delimiter", function() {
+        it("should allow front escaped delimiter", function () {
             result = fn('\\,foo', ',');
 
             expect(result).toEqual([',foo']);
         });
 
-        it("should allow dangling escaped delimiter", function() {
+        it("should allow dangling escaped delimiter", function () {
             result = fn('foo\\,', ',');
 
             expect(result).toEqual(['foo,']);

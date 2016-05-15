@@ -83,7 +83,7 @@ Ext.define('Ext.data.schema.Role', {
         }
     },
 
-    processUpdate: function() {
+    processUpdate: function () {
         Ext.raise('Only the "many" for an association may be processed. "' + this.role + '" is not valid.');
     },
 
@@ -100,7 +100,7 @@ Ext.define('Ext.data.schema.Role', {
      *
      * @private
      */
-    processLoad: function(store, associatedEntity, records, session) {
+    processLoad: function (store, associatedEntity, records, session) {
         return records;
     },
 
@@ -108,7 +108,7 @@ Ext.define('Ext.data.schema.Role', {
      * @method
      *
      * Check whether a record belongs to any stores when it is added to the session.
-     * 
+     *
      * @param {Ext.data.Session} session The session
      * @param {Ext.data.Model} record The model being added to the session
      * @private
@@ -119,10 +119,10 @@ Ext.define('Ext.data.schema.Role', {
      * Adopt the associated items when a record is adopted.
      * @param {Ext.data.Model} record The record being adopted.
      * @param {Ext.data.Session} session The session being adopted into
-     * 
+     *
      * @private
      */
-    adoptAssociated: function(record, session) {
+    adoptAssociated: function (record, session) {
         var other = this.getAssociatedItem(record);
         if (other) {
             session.adopt(other);
@@ -152,14 +152,14 @@ Ext.define('Ext.data.schema.Role', {
         if (isMany) {
             // For many-to-many associations each role has a field
             config.filters = [{
-                property  : me.inverse.field, // @TODO filterProperty
-                value     : id,
+                property: me.inverse.field, // @TODO filterProperty
+                value: id,
                 exactMatch: true
             }];
         } else if (foreignKeyName) {
             config.filters = [{
-                property  : foreignKeyName, // @TODO filterProperty
-                value     : id,
+                property: foreignKeyName, // @TODO filterProperty
+                value: id,
                 exactMatch: true
             }];
             config.foreignKeyName = foreignKeyName;
@@ -170,7 +170,7 @@ Ext.define('Ext.data.schema.Role', {
         }
 
         store = Ext.Factory.store(config);
-        
+
         me.onStoreCreate(store, session, id);
 
         if (foreignKeyName || (isMany && session)) {
@@ -253,7 +253,7 @@ Ext.define('Ext.data.schema.Role', {
             // We need to trigger a load or the store is already loading. Defer
             // callbacks until that happens
             if (load || store.isLoading()) {
-                store.on('load', function(store, records, success, operation) {
+                store.on('load', function (store, records, success, operation) {
                     args = [store, operation];
                     scope = scope || options.scope || inverseRecord;
 
@@ -284,37 +284,37 @@ Ext.define('Ext.data.schema.Role', {
 
         return store;
     },
-    
+
     /**
      * Gets the store/record associated with this role from an existing record.
      * Will only return if the value is loaded.
-     * 
+     *
      * @param {Ext.data.Model} rec The record
-     * 
+     *
      * @return {Ext.data.Model/Ext.data.Store} The associated item. `null` if not loaded.
      * @private
      */
-    getAssociatedItem: function(rec) {
+    getAssociatedItem: function (rec) {
         var key = this.isMany ? this.getStoreName() : this.getInstanceName();
         return rec[key] || null;
     },
 
     onDrop: Ext.emptyFn,
 
-    getReaderRoot: function() {
+    getReaderRoot: function () {
         var me = this;
 
         return me.associationKey ||
-              (me.associationKey = me.association.schema.getNamer().readerRoot(me.role));
+            (me.associationKey = me.association.schema.getNamer().readerRoot(me.role));
     },
-    
-    getReader: function() {
+
+    getReader: function () {
         var me = this,
             reader = me.reader,
             Model = me.cls,
             useSimpleAccessors = !me.associationKey,
             root = this.getReaderRoot();
-            
+
         if (reader && !reader.isReader) {
             if (Ext.isString(reader)) {
                 reader = {
@@ -328,17 +328,17 @@ Ext.define('Ext.data.schema.Role', {
                 type: me.defaultReaderType
             });
             reader = me.reader = Ext.createByAlias('reader.' + reader.type, reader);
-        }   
-        return reader; 
+        }
+        return reader;
     },
 
     getInstanceName: function () {
         var me = this;
         return me.instanceName ||
-               (me.instanceName = me.association.schema.getNamer().instanceName(me.role));
+            (me.instanceName = me.association.schema.getNamer().instanceName(me.role));
     },
 
-    getOldInstanceName: function() {
+    getOldInstanceName: function () {
         return this.oldInstanceName ||
             (this.oldInstanceName = '$old' + this.getInstanceName());
     },
@@ -346,10 +346,10 @@ Ext.define('Ext.data.schema.Role', {
     getStoreName: function () {
         var me = this;
         return me.storeName ||
-               (me.storeName = me.association.schema.getNamer().storeName(me.role));
+            (me.storeName = me.association.schema.getNamer().storeName(me.role));
     },
-    
-    constructReader: function(fromReader) {
+
+    constructReader: function (fromReader) {
         var me = this,
             reader = me.getReader(),
             Model = me.cls,
@@ -357,7 +357,7 @@ Ext.define('Ext.data.schema.Role', {
             root = me.getReaderRoot(),
             proxyReader,
             proxy;
-        
+
         // No reader supplied
         if (!reader) {
             proxy = Model.getProxy();
@@ -378,17 +378,17 @@ Ext.define('Ext.data.schema.Role', {
         }
         return reader;
     },
-    
+
     read: function (record, data, fromReader, readOptions) {
         var reader = this.constructReader(fromReader),
             root = reader.getRoot(data);
 
-        if (root) {            
+        if (root) {
             return reader.readRecords(root, readOptions, this._internalReadOptions);
         }
     },
 
-    getCallbackOptions: function(options, scope, defaultScope) {
+    getCallbackOptions: function (options, scope, defaultScope) {
         if (typeof options === 'function') {
             options = {
                 callback: options,
@@ -408,14 +408,14 @@ Ext.define('Ext.data.schema.Role', {
         // User. This method is called, however, given a Department (leftRecord) as the
         // start of this trek.
 
-        var me           = this,    // the "manager" role
-            cls          = me.cls,  // User
-            foreignKey   = me.association.getFieldName(),  // "managerId"
+        var me = this,    // the "manager" role
+            cls = me.cls,  // User
+            foreignKey = me.association.getFieldName(),  // "managerId"
             instanceName = me.getInstanceName(),  // "manager"
-            rightRecord  = leftRecord[instanceName], // = department.manager
-            reload       = options && options.reload,
-            done         = rightRecord !== undefined && !reload,
-            session      = leftRecord.session,
+            rightRecord = leftRecord[instanceName], // = department.manager
+            reload = options && options.reload,
+            done = rightRecord !== undefined && !reload,
+            session = leftRecord.session,
             foreignKeyId, args;
 
         if (!done) {

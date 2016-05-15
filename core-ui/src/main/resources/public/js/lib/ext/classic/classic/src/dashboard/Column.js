@@ -15,7 +15,7 @@ Ext.define('Ext.dashboard.Column', {
 
     layout: 'anchor',
 
-    isDashboardColumn : true,
+    isDashboardColumn: true,
 
     defaultType: 'dashboard-panel',
 
@@ -34,7 +34,7 @@ Ext.define('Ext.dashboard.Column', {
         // If we've just emptied this column.
         if (ownerCt && me.items.getCount() === 0) {
             // Collect remaining column siblings of the same row, when this one has gone.
-            remainingSiblings = Ext.Array.filter(ownerCt.query('>' + me.xtype+ '[rowIndex=' + me.rowIndex + ']'), function(c){
+            remainingSiblings = Ext.Array.filter(ownerCt.query('>' + me.xtype + '[rowIndex=' + me.rowIndex + ']'), function (c) {
                 return c !== me;
             });
             numRemaining = remainingSiblings.length;
