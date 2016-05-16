@@ -93,7 +93,6 @@ Ext.define('System.util.SessionMonitor', {
 
         if (inactive >= this.maxInactive) {
             this.stop();
-
             this.window.show();
             this.remaining = 60;  // seconds remaining.
             Ext.TaskManager.start(this.countDownTask);
@@ -139,5 +138,4 @@ Ext.define('System.util.SessionMonitor', {
             btn.fireEvent('click', btn);
         }
     }
-
 });

@@ -39,7 +39,9 @@ Ext.define('System.Application', {
     defaultToken: 'home',
 
     launch: function () {
-        Ext.widget('login-dialog', {
+        var loggedIn = localStorage.getItem("user");
+
+        Ext.widget(loggedIn ? 'app-main' : 'login-dialog', {
             renderTo: Ext.getBody(),
             bodyCls: "background-image:url('js/lib/resources/images/background/background1.jpg');"
         });

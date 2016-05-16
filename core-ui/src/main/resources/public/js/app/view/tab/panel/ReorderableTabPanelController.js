@@ -1,5 +1,6 @@
-Ext.define('System.controller.tab.panel.ReorderableTabPanelController', {
+Ext.define('System.view.tab.panel.ReorderableTabPanelController', {
     extend: 'Ext.app.ViewController',
+
     alias: 'controller.reorderable-tab-panel',
 
     counter: 0,
@@ -10,7 +11,6 @@ Ext.define('System.controller.tab.panel.ReorderableTabPanelController', {
             tab = tabPanel.add({
                 title: 'Tab ' + counter
             });
-
         tabPanel.setActiveTab(tab);
     }
 });

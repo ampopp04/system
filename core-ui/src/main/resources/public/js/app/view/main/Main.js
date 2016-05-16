@@ -6,16 +6,12 @@ Ext.define('System.view.main.Main', {
     xtype: 'app-main',
 
     requires: [
-        'System.view.main.Header',
+        'System.view.main.header.Header',
         'System.view.tab.panel.ReorderableTabPanel',
-        'System.view.main.MainController',
-        'System.view.main.MainModel',
+        'System.view.main.MainController'
     ],
 
     controller: 'main',
-    viewModel: {
-        type: 'main'
-    },
 
     layout: {
         type: 'border'

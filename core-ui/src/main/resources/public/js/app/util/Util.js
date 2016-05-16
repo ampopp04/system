@@ -5,11 +5,9 @@ Ext.define('System.util.Util', {
     ],
 
     statics: {
-
         required: '<span style="color:red;font-weight:bold" data-qtip="Required"> *</span>',
 
         decodeJSON: function (text) {
-
             var result = Ext.JSON.decode(text, true);
 
             if (!result) {
@@ -22,7 +20,6 @@ Ext.define('System.util.Util', {
         },
 
         showErrorMsg: function (text) {
-
             Ext.Msg.show({
                 title: 'Error!',
                 msg: text,
@@ -32,9 +29,7 @@ Ext.define('System.util.Util', {
         },
 
         handleFormFailure: function (action) {
-
-            var me = this,
-                result = System.util.Util.decodeJSON(action.response.responseText);
+            var me = this, result = System.util.Util.decodeJSON(action.response.responseText);
 
             switch (action.failureType) {
                 case Ext.form.action.Action.CLIENT_INVALID:

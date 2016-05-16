@@ -1,8 +1,12 @@
-Ext.define('System.view.main.Header', {
+Ext.define('System.view.main.header.Header', {
     extend: 'Ext.toolbar.Toolbar',
     xtype: 'appheader',
 
-    requires: [],
+    requires: [
+        'System.view.main.header.HeaderController'
+    ],
+
+    controller: 'header',
 
     ui: 'footer',
 

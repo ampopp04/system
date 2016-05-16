@@ -5,7 +5,7 @@ Ext.define('System.view.tab.panel.ReorderableTabPanel', {
 
     requires: [
         'Ext.ux.TabReorderer',
-        'System.controller.tab.panel.ReorderableTabPanelController'
+        'System.view.tab.panel.ReorderableTabPanelController'
     ],
 
     controller: 'reorderable-tab-panel',

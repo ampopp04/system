@@ -37,7 +37,12 @@ public class SystemSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     response.setStatus(HttpServletResponse.SC_OK);
                 }).and()
                 .csrf().disable()
-                .exceptionHandling().authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+                .exceptionHandling().authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+                .and()
+                .logout()
+                .logoutSuccessUrl("/")
+                .permitAll();
+        ;
     }
 
     @Autowired
