@@ -33,15 +33,12 @@ Ext.define('System.Application', {
     enableQuickTips: true,
 
     views: [],
-
     controllers: [],
-
     stores: [],
 
     defaultToken: 'home',
 
     launch: function () {
-
         Ext.widget('login-dialog', {
             renderTo: Ext.getBody(),
             bodyCls: "background-image:url('js/lib/resources/images/background/background1.jpg');"

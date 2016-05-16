@@ -18,20 +18,30 @@ Ext.define('System.view.main.Header', {
                     menu: {
                         items: [
                             {
-                                text: 'System Schema',
+                                text: 'Tasks',
+                                iconCls: 'x-fa fa-tasks'
+                            },
+                            {
+                                text: 'Beans',
+                                iconCls: 'x-fa fa-leaf'
+                            },
+                            '-',
+                            {
+                                text: 'Schema',
                                 iconCls: 'x-fa fa-database'
                             },
                             {
-                                text: 'System Bean',
-                                iconCls: 'x-fa fa-leaf'
-                            },
-                            {
-                                text: 'System Security',
+                                text: 'Security',
                                 iconCls: 'x-fa fa-lock'
                             },
+                            '-',
                             {
-                                text: 'System Logging',
+                                text: 'Logging',
                                 iconCls: 'x-fa fa-file'
+                            },
+                            {
+                                text: 'Statistics',
+                                iconCls: 'x-fa fa-line-chart '
                             }
                         ]
                     }
