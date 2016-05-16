@@ -4,8 +4,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.3.RELEASE")
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.3.RELEASE'
         classpath 'com.bmuschko:gradle-docker-plugin:2.6.8'
+        classpath 'com.github.robfletcher:compass-gradle-plugin:2.0.6'
     }
 }
 
@@ -27,6 +28,7 @@ subprojects {
     }
 
     apply from: "$rootDir/core-build/deploy/deployPlugin.gradle"
+    apply from: "$rootDir/core-build/web/sass.gradle"
 }
 
 task wrapper(type: Wrapper) {

@@ -15,7 +15,12 @@ gradle/
 log/
 target/
 build/
+gradlew
+gradlew.bat
 
 # IntelliJ Files #
 *.iml
 .idea
+
+#Sass Files#
+.sass-cache

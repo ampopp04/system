@@ -4133,6 +4133,13 @@
         "fashion"
       ],
       "path": "js/lib/resources/System-all_2.css"
+    },
+    {
+      "remote": false,
+      "exclude": [
+        "fashion"
+      ],
+      "path": "js/styles/all.css"
     }
   ],
   "cache": {

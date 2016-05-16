@@ -1,8 +1,6 @@
 @import "fontAwesome/font-awesome";
-@import "flagIcons";
 @import "iconColors";
 @import "fix";
-@import "ux/statusbar";
 
 /** loading screen */
 .x-mask.splashscreen {
@@ -28,7 +26,7 @@
 }
 
 .x-splash-icon {
-  background-image: url('images/app/System-logo.png') !important;
+  background-image: url('public/js/lib/resources/images/app/packt-logo.png') !important;
   margin-top: -30px;
   height: 70px;
 }
