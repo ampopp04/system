@@ -10,7 +10,17 @@ Ext.define('System.view.main.header.Header', {
 
     ui: 'footer',
 
-    items: ['->',
+    items: [
+        {
+            xtype: 'label',
+            cls: 'app-header-logo',
+            html: '<img src="../../../../js/lib/resources/images/app/icon_2.png">'
+        },
+        {
+            xtype: 'component',
+            cls: 'app-header-title',
+            html: 'SYS'
+        }, '->',
         {
             text: "Tools",
             iconCls: 'x-fa fa-cog',
