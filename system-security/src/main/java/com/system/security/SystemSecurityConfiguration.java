@@ -20,6 +20,7 @@ public class SystemSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
+                .antMatchers("/console/**").permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -38,7 +39,7 @@ public class SystemSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 }).and()
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-                .and()
+                .and().headers().frameOptions().disable().and()
                 .logout()
                 .logoutSuccessUrl("/")
                 .permitAll();
