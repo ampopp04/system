@@ -3,7 +3,6 @@ package com.system.util.collection;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -12,55 +11,47 @@ import static org.junit.Assert.assertNotNull;
 public class CollectionUtilsTest {
 
     @Test
-    public void iteratorNotNullTest() {
-        assertNotNull(CollectionUtils.getIterator(null));
+    public void iterableNotNullTest() {
+        List arrayList = null;
+        assertNotNull(CollectionUtils.getIterable(arrayList));
     }
 
     @Test
-    public void iteratorExistsTest() {
+    public void iterableExistsTest() {
         List<String> stringList = new ArrayList<>();
         stringList.add("test1");
         stringList.add("test2");
 
-        assertNotNull(CollectionUtils.getIterator(stringList));
+        assertNotNull(CollectionUtils.getIterable(stringList));
     }
 
     @Test
-    public void iteratorExists1Test() {
+    public void iterableExists1Test() {
         List<String> stringList = new ArrayList<>();
         stringList.add("test1");
 
-        assertNotNull(CollectionUtils.getIterator(stringList));
+        assertNotNull(CollectionUtils.getIterable(stringList));
     }
 
     @Test
-    public void iteratorSize1Test() {
+    public void iterableSize1Test() {
         List<String> stringList = new ArrayList<>();
         stringList.add("test1");
 
-        Iterator<String> iterator = CollectionUtils.getIterator(stringList);
-        assertNotNull(iterator);
+        Iterable<String> iterable = CollectionUtils.getIterable(stringList);
+        assertNotNull(iterable);
 
-        int i = 0;
-        for (; iterator.hasNext(); ++i)
-            iterator.next();
-
-        assertEquals(1, i);
+        assertEquals(1, CollectionUtils.getSize(iterable));
     }
 
     @Test
-    public void iteratorSize2Test() {
+    public void iterableSize2Test() {
         List<String> stringList = new ArrayList<>();
         stringList.add("test1");
         stringList.add("test2");
 
-        Iterator<String> iterator = CollectionUtils.getIterator(stringList);
-        assertNotNull(iterator);
-
-        int i = 0;
-        for (; iterator.hasNext(); ++i)
-            iterator.next();
-
-        assertEquals(2, i);
+        Iterable<String> iterable = CollectionUtils.getIterable(stringList);
+        assertNotNull(iterable);
+        assertEquals(2, CollectionUtils.getSize(iterable));
     }
 }
