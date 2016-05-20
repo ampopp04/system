@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <logger name="org.hibernate.type" level="ALL"/>
+    <logger name="org.hibernate" level="DEBUG"/>
+
+    <logger name="org.flywaydb.core.internal.dbsupport.SqlScript" level="DEBUG"/>
 </configuration>
