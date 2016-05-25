@@ -33,4 +33,6 @@ subprojects {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.13'
+    jarFile = "${project.projectDir}/core-build/gradle/wrapper/gradle-wrapper.jar"
+    scriptFile = "${project.projectDir}/core-build/gradlew"
 }

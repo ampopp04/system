@@ -1,13 +1,20 @@
 package com.system;
 
+
 import com.system.inversion.InversionContainer;
-import net.bytebuddy.agent.ByteBuddyAgent;
 
-
+/**
+ * The <class>SystemRunner</class> runs the application
+ *
+ * @author Andrew
+ */
 public class SystemRunner {
-
+    /**
+     * Run the application
+     *
+     * @param args
+     */
     public static void main(String[] args) {
-        EntityAgent.install(ByteBuddyAgent.install());
         InversionContainer.startInversion(args);
     }
 }

@@ -7,7 +7,13 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
-public class DateUtilsTest {
+/**
+ * The <class>DateUtilsTests</class> defines
+ * date related tests
+ *
+ * @author Andrew
+ */
+public class DateUtilsTests {
 
     @Test
     public void testGetToday() {

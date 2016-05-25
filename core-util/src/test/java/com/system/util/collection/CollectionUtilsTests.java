@@ -8,12 +8,17 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class CollectionUtilsTest {
+/**
+ * The <class>CollectionUtilsTests</class> defines
+ * collection related tests
+ *
+ * @author Andrew
+ */
+public class CollectionUtilsTests {
 
     @Test
     public void iterableNotNullTest() {
-        List arrayList = null;
-        assertNotNull(CollectionUtils.getIterable(arrayList));
+        assertNotNull(CollectionUtils.iterable((Object[]) null));
     }
 
     @Test
@@ -22,7 +27,7 @@ public class CollectionUtilsTest {
         stringList.add("test1");
         stringList.add("test2");
 
-        assertNotNull(CollectionUtils.getIterable(stringList));
+        assertNotNull(CollectionUtils.iterable(stringList));
     }
 
     @Test
@@ -30,7 +35,7 @@ public class CollectionUtilsTest {
         List<String> stringList = new ArrayList<>();
         stringList.add("test1");
 
-        assertNotNull(CollectionUtils.getIterable(stringList));
+        assertNotNull(CollectionUtils.iterable(stringList));
     }
 
     @Test
@@ -38,10 +43,10 @@ public class CollectionUtilsTest {
         List<String> stringList = new ArrayList<>();
         stringList.add("test1");
 
-        Iterable<String> iterable = CollectionUtils.getIterable(stringList);
+        Iterable<String> iterable = CollectionUtils.iterable(stringList);
         assertNotNull(iterable);
 
-        assertEquals(1, CollectionUtils.getSize(iterable));
+        assertEquals(1, CollectionUtils.size(iterable));
     }
 
     @Test
@@ -50,8 +55,8 @@ public class CollectionUtilsTest {
         stringList.add("test1");
         stringList.add("test2");
 
-        Iterable<String> iterable = CollectionUtils.getIterable(stringList);
+        Iterable<String> iterable = CollectionUtils.iterable(stringList);
         assertNotNull(iterable);
-        assertEquals(2, CollectionUtils.getSize(iterable));
+        assertEquals(2, CollectionUtils.size(iterable));
     }
 }

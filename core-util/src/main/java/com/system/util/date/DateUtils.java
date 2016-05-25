@@ -5,14 +5,24 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.util.Date;
 
+/**
+ * The <class>DateUtils</class> defines
+ * date related utility methods
+ *
+ * @author Andrew
+ */
 public class DateUtils {
-
-    public static final String BASIC_DATA_FORMAT = "dd-MMM-yyyy";
+    /**
+     * Default data format
+     */
+    public static final String BASIC_DATE_FORMAT = "dd-MMM-yyyy";
 
     /**
-     * Retrieve todays date as a string
+     * Retrieve current date as a string
+     *
+     * @return
      */
     public static String getToday() {
-        return DateFormatUtils.format(new Date(), BASIC_DATA_FORMAT);
+        return DateFormatUtils.format(new Date(), BASIC_DATE_FORMAT);
     }
 }

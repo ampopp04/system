@@ -12,10 +12,22 @@ import org.springframework.security.core.userdetails.User;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The <class>SystemSecurityConfiguration</class> defines
+ * the default configuration for this project
+ *
+ * @author Andrew
+ */
 @Configuration
 @EnableWebSecurity
 public class SystemSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    /**
+     * Configure the default security for this project
+     *
+     * @param httpSecurity
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -43,9 +55,14 @@ public class SystemSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessUrl("/")
                 .permitAll();
-        ;
     }
 
+    /**
+     * Configure the global  authentication settings
+     *
+     * @param auth
+     * @throws Exception
+     */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
