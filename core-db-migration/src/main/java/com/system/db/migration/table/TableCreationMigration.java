@@ -32,7 +32,7 @@ public abstract class TableCreationMigration extends BaseDataMigration {
      * @see Configuration#addAnnotatedClass(Class)
      */
     private void setEntityClasses(Configuration configuration) {
-        for (Class entityClass : getEntityClasses()) {
+        for (Class<? extends Object> entityClass : getEntityClasses()) {
             configuration.addAnnotatedClass(entityClass);
         }
     }
