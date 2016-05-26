@@ -43,7 +43,7 @@ Ext.define('System.view.login.Login', {
                     name: 'username',
                     fieldLabel: 'username',
                     maxLength: 25,
-                    value: 'apopp'
+                    value: 'ampopp04'
                 },
                 {
                     inputType: 'password',

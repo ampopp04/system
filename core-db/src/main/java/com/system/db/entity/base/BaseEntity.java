@@ -1,6 +1,7 @@
 package com.system.db.entity.base;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -20,7 +21,7 @@ public abstract class BaseEntity<T extends Number> implements com.system.db.enti
     //////////////////////////////////////////////////////////////////////
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private T id;
 
     ///////////////////////////////////////////////////////////////////////

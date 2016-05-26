@@ -1,5 +1,8 @@
 package com.system.util.collection;
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -59,5 +62,50 @@ public class CollectionUtils {
     @SafeVarargs
     public static <T> List<T> asList(T... values) {
         return values == null ? Collections.emptyList() : Arrays.asList(values);
+    }
+
+    /**
+     * Convert an maps values into a list by
+     * aggregating all of the values
+     *
+     * @param valuesMap
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> asList(Map<?, T> valuesMap) {
+        return valuesMap == null ? Collections.emptyList() : new ArrayList<>(valuesMap.values());
+    }
+
+    /**
+     * Convert a collection to an array
+     *
+     * @param collection
+     * @param <E>
+     * @return
+     */
+    public static <E> E[] asArray(Collection<E> collection) {
+        return empty(collection) ? ArrayUtils.toArray() : collection.toArray((E[]) Array.newInstance(firstElement(collection).getClass(), collection.size()));
+    }
+
+    /**
+     * Get the first element of the collection
+     *
+     * @param collection
+     * @param <E>
+     * @return NULL if empty else iterator first element
+     */
+    public static <E> E firstElement(Collection<E> collection) {
+        return empty(collection) ? null : collection.iterator().next();
+    }
+
+    /**
+     * Determines if the collection is null or size is zero
+     *
+     * @param collection
+     * @param <E>
+     * @return
+     */
+    public static <E> boolean empty(Collection<E> collection) {
+        return collection == null || collection.size() == 0;
     }
 }

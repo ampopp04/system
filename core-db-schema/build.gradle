@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':core-db-migration')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test:1.3.5.RELEASE')
+}

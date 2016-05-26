@@ -27,12 +27,13 @@ subprojects {
         mavenCentral()
     }
 
+    apply from: "$rootDir/core-build/test/test.gradle"
     apply from: "$rootDir/core-build/deploy/deployPlugin.gradle"
     apply from: "$rootDir/core-build/web/sass.gradle"
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.13'
-    jarFile = "${project.projectDir}/core-build/gradle/wrapper/gradle-wrapper.jar"
-    scriptFile = "${project.projectDir}/core-build/gradlew"
+    jarFile = "${project.projectDir}/gradle/wrapper/gradle-wrapper.jar"
+    scriptFile = "${project.projectDir}/gradlew"
 }

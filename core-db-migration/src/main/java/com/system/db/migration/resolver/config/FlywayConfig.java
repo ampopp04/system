@@ -1,6 +1,7 @@
 package com.system.db.migration.resolver.config;
 
-import com.system.db.migration.resolver.ApplicationContextAwareSpringJdbcMigrationResolver;
+import com.system.db.migration.resolver.callback.ApplicationContextAwareSpringJdbcCallbackResolver;
+import com.system.db.migration.resolver.migration.ApplicationContextAwareSpringJdbcMigrationResolver;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.internal.dbsupport.DbSupport;
 import org.flywaydb.core.internal.dbsupport.h2.H2DbSupport;
@@ -13,7 +14,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
@@ -27,7 +27,6 @@ import java.sql.SQLException;
  * @author Andrew
  */
 @Configuration
-@ComponentScan("db.migration")
 public class FlywayConfig {
 
     @Bean
@@ -66,6 +65,7 @@ public class FlywayConfig {
                         e.printStackTrace();
                     }
                     flyway.setResolvers(sqlMigrationResolver, resolver);
+                    flyway.setCallbacks(new ApplicationContextAwareSpringJdbcCallbackResolver(context).resolveCallbacks());
                 }
                 return o;
             }

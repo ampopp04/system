@@ -1,5 +1,6 @@
 package com.system.db.migration.config;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.PropertySource;
  * @see Configuration
  */
 @Configuration
+@ComponentScan("db.migration")
 @PropertySource(value = {"classpath:application-core-db-migration.properties"})
 public class DbMigrationConfig {
 }

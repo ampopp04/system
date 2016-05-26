@@ -1,7 +1,7 @@
 package com.system.db.repository;
 
 import com.system.db.entity.identity.EntityIdentity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
@@ -14,5 +14,5 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @see EntityIdentity
  */
 @NoRepositoryBean
-public interface BaseEntityRepository<T extends EntityIdentity> extends CrudRepository<T, T> {
+public interface BaseEntityRepository<T extends EntityIdentity> extends JpaRepository<T, T> {
 }
