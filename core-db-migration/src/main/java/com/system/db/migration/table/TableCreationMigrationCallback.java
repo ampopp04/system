@@ -1,10 +1,16 @@
 package com.system.db.migration.table;
 
+import com.system.db.entity.Entity;
+import com.system.db.migration.base.SystemMigration;
 import com.system.db.migration.callback.BaseMigrationCallback;
+import com.system.db.migration.resolver.executor.SystemMigrationExecutor;
+import com.system.util.collection.CollectionUtils;
 import org.flywaydb.core.api.MigrationInfo;
-import org.springframework.stereotype.Component;
+import org.flywaydb.core.api.resolver.MigrationExecutor;
+import org.flywaydb.core.internal.info.MigrationInfoImpl;
 
 import java.sql.Connection;
+import java.util.List;
 
 /**
  * The <class>TableCreationMigrationCallback</class> defines
@@ -13,28 +19,42 @@ import java.sql.Connection;
  * @author Andrew
  * @see TableCreationMigration
  */
-@Component
-public class TableCreationMigrationCallback extends BaseMigrationCallback {
+public abstract class TableCreationMigrationCallback extends BaseMigrationCallback {
 
-    /**
-     * Runs before each migration script is executed.
-     *
-     * @param connection A valid connection to the database.
-     * @param info       The current MigrationInfo for this migration.
-     */
-    @Override
-    public void beforeEachMigrate(Connection connection, MigrationInfo info) {
-        System.err.println("-------------------beforeEachMigrate");
+    protected abstract void afterTableCreation(Class<? extends Entity> tableEntityClass);
+
+    public TableCreationMigrationCallback() {
     }
 
     /**
-     * Runs after each migration script is executed.
+     * Iterates over each table entity being created to send to the callback
      *
-     * @param connection A valid connection to the database.
-     * @param info       The current MigrationInfo for this migration.
+     * @param connection
+     * @param info
      */
     @Override
     public void afterEachMigrate(Connection connection, MigrationInfo info) {
-        System.err.println("-------------------afterEachMigrate");
+        if (info instanceof MigrationInfoImpl) {
+            for (Class<? extends Entity> tableEntityClass : CollectionUtils.iterable(getTableCreationList((MigrationInfoImpl) info))) {
+                afterTableCreation(tableEntityClass);
+            }
+        }
+    }
+
+    /**
+     * Extracts out the table entities being created from the migration
+     *
+     * @param info
+     * @return
+     */
+    private List<Class<? extends Entity>> getTableCreationList(MigrationInfoImpl info) {
+        MigrationExecutor migrationExecutor = info.getResolvedMigration().getExecutor();
+        if (migrationExecutor instanceof SystemMigrationExecutor) {
+            SystemMigration systemMigration = ((SystemMigrationExecutor) migrationExecutor).getSystemMigration();
+            if (systemMigration instanceof TableCreationMigration) {
+                return ((TableCreationMigration) systemMigration).getEntityClasses();
+            }
+        }
+        return null;
     }
 }
