@@ -5,8 +5,6 @@ import com.system.db.entity.named.NamedEntity;
 import com.system.db.schema.datatype.SchemaDataType;
 import com.system.db.schema.table.SchemaTable;
 
-import javax.persistence.Entity;
-
 /**
  * The <class>SchemaTableColumn</class> defines database columns.
  * <p>
@@ -15,7 +13,6 @@ import javax.persistence.Entity;
  *
  * @author Andrew
  */
-@Entity
 public class SchemaTableColumn extends NamedEntity<Integer> {
 
     ///////////////////////////////////////////////////////////////////////

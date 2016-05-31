@@ -4,8 +4,6 @@ package com.system.db.schema.table.column.relationship;
 import com.system.db.entity.named.NamedEntity;
 import com.system.db.schema.table.column.SchemaTableColumn;
 
-import javax.persistence.Entity;
-
 /**
  * The <class>SchemaTableColumnRelationship</class> defines column relationships.
  * <p>
@@ -19,7 +17,6 @@ import javax.persistence.Entity;
  *
  * @author Andrew
  */
-@Entity
 public class SchemaTableColumnRelationship extends NamedEntity<Integer> {
 
     ///////////////////////////////////////////////////////////////////////
