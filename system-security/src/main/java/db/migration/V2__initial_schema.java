@@ -1,5 +1,6 @@
 package db.migration;
 
+import com.system.db.entity.Entity;
 import com.system.db.migration.table.TableCreationMigration;
 import com.system.security.privilege.SystemSecurityPrivilege;
 import com.system.security.privilege.SystemSecurityPrivilegeRepository;
@@ -12,7 +13,6 @@ import com.system.security.user.SystemSecurityUserRepository;
 import com.system.util.collection.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +30,6 @@ import java.util.List;
  * @author Andrew
  * @see com.system.security.user.SystemSecurityUser
  */
-@Component
 public class V2__initial_schema extends TableCreationMigration {
 
     ///////////////////////////////////////////////////////////////////////
@@ -53,8 +52,8 @@ public class V2__initial_schema extends TableCreationMigration {
     ////////                                                 Table Creation                                                  //////////
     //////////////////////////////////////////////////////////////////////
 
-    protected Class[] getEntityClasses() {
-        return new Class[]{SystemSecurityUser.class, SystemSecurityPrivilege.class, SystemSecurityRole.class};
+    protected List<Class<? extends Entity>> getEntityClasses() {
+        return CollectionUtils.asList(SystemSecurityUser.class, SystemSecurityPrivilege.class, SystemSecurityRole.class);
     }
 
     ///////////////////////////////////////////////////////////////////////

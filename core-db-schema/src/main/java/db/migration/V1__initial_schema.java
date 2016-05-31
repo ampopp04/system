@@ -1,6 +1,7 @@
 package db.migration;
 
 
+import com.system.db.entity.Entity;
 import com.system.db.migration.table.TableCreationMigration;
 import com.system.db.schema.datatype.SchemaDataType;
 import com.system.db.schema.datatype.SchemaDataTypeRepository;
@@ -9,7 +10,6 @@ import com.system.db.schema.table.column.SchemaTableColumn;
 import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationship;
 import com.system.util.collection.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,6 @@ import java.util.List;
  * @see SchemaTableColumn
  * @see SchemaTableColumnRelationship
  */
-@Component
 public class V1__initial_schema extends TableCreationMigration {
 
     ///////////////////////////////////////////////////////////////////////
@@ -42,8 +41,8 @@ public class V1__initial_schema extends TableCreationMigration {
     ////////                                                 Table Creation                                                  //////////
     //////////////////////////////////////////////////////////////////////
 
-    protected Class[] getEntityClasses() {
-        return new Class[]{SchemaDataType.class, SchemaTable.class, SchemaTableColumn.class, SchemaTableColumnRelationship.class};
+    protected List<Class<? extends Entity>> getEntityClasses() {
+        return CollectionUtils.asList(SchemaDataType.class, SchemaTable.class, SchemaTableColumn.class, SchemaTableColumnRelationship.class);
     }
 
     ///////////////////////////////////////////////////////////////////////
