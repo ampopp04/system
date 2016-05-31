@@ -1,11 +1,14 @@
 package com.system.db.migration.table;
 
+import com.system.db.entity.Entity;
 import com.system.db.migration.data.BaseDataMigration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.List;
 
 /**
  * The <class>TableCreationMigration</class> defines the entry point for
@@ -23,7 +26,7 @@ public abstract class TableCreationMigration extends BaseDataMigration {
      *
      * @return
      */
-    protected abstract Class[] getEntityClasses();
+    protected abstract List<Class<? extends Entity>> getEntityClasses();
 
     /**
      * Set the table creation entities to the configuration
@@ -32,9 +35,7 @@ public abstract class TableCreationMigration extends BaseDataMigration {
      * @see Configuration#addAnnotatedClass(Class)
      */
     private void setEntityClasses(Configuration configuration) {
-        for (Class<? extends Object> entityClass : getEntityClasses()) {
-            configuration.addAnnotatedClass(entityClass);
-        }
+        getEntityClasses().forEach(configuration::addAnnotatedClass);
     }
 
     /**
