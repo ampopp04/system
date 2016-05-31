@@ -4,8 +4,6 @@ package com.system.db.schema.datatype;
 import com.system.db.entity.named.NamedEntity;
 import com.system.db.schema.table.column.SchemaTableColumn;
 
-import javax.persistence.Entity;
-
 /**
  * The <class>SchemaDataType</class> defines data types
  * that map Java types to ANSI types
@@ -33,7 +31,6 @@ import javax.persistence.Entity;
  * Timestamp         	        java.util.Date or java.sql.Timestamp	    TIMESTAMP
  * Calendar	                 java.util.Calendar                                      	        TIMESTAMP
  */
-@Entity
 public class SchemaDataType extends NamedEntity<Short> {
     ///////////////////////////////////////////////////////////////////////
     ////////                                                     Properties                                                       //////////

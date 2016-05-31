@@ -3,8 +3,6 @@ package com.system.db.schema.table;
 
 import com.system.db.entity.named.NamedEntity;
 
-import javax.persistence.Entity;
-
 /**
  * The <class>SchemaTable</class> defines database tables.
  * <p>
@@ -13,12 +11,18 @@ import javax.persistence.Entity;
  *
  * @author Andrew
  */
-@Entity
 public class SchemaTable extends NamedEntity<Integer> {
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                     Properties                                                       //////////
     //////////////////////////////////////////////////////////////////////
+
+    /**
+     * The entity class path
+     * <p>
+     * Ex. com.system.security.user.SystemSecurityUser
+     */
+    private String entityClass;
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                              Default Constructor                                           //////////
@@ -31,4 +35,11 @@ public class SchemaTable extends NamedEntity<Integer> {
     ////////                                             Basic   Getter/Setters                                          //////////
     //////////////////////////////////////////////////////////////////////
 
+    public String getEntityClass() {
+        return entityClass;
+    }
+
+    public void setEntityClass(String entityClass) {
+        this.entityClass = entityClass;
+    }
 }
