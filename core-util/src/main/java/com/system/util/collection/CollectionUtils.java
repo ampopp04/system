@@ -84,7 +84,23 @@ public class CollectionUtils {
      * @return
      */
     public static <E> E[] asArray(Collection<E> collection) {
-        return empty(collection) ? ArrayUtils.toArray() : collection.toArray((E[]) Array.newInstance(firstElement(collection).getClass(), collection.size()));
+        return empty(collection) ? ArrayUtils.toArray() : collection.toArray((E[]) Array.newInstance(getRootSuperclass(firstElement(collection).getClass()), collection.size()));
+    }
+
+    /**
+     * Traverses the {@link Class} inheritance hierarchy and
+     * returns back the {@link Class} immediately prior to {@link Object}
+     * for the given {@link Class}
+     *
+     * @param clazz
+     * @return
+     */
+    private static Class<?> getRootSuperclass(Class<?> clazz) {
+        Class<?> superClass = clazz;
+        while (superClass != null && superClass.getSuperclass() != Object.class) {
+            superClass = superClass.getSuperclass();
+        }
+        return superClass;
     }
 
     /**

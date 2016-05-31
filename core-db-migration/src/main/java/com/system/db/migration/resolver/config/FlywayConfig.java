@@ -1,7 +1,7 @@
 package com.system.db.migration.resolver.config;
 
-import com.system.db.migration.resolver.callback.ApplicationContextAwareSpringJdbcCallbackResolver;
-import com.system.db.migration.resolver.migration.ApplicationContextAwareSpringJdbcMigrationResolver;
+import com.system.db.migration.resolver.migration.ApplicationContextAwareSystemMigrationResolver;
+import com.system.db.migration.resolver.migration.strategy.SystemMigrationStrategy;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.internal.dbsupport.DbSupport;
 import org.flywaydb.core.internal.dbsupport.h2.H2DbSupport;
@@ -30,6 +30,11 @@ import java.sql.SQLException;
 public class FlywayConfig {
 
     @Bean
+    public SystemMigrationStrategy getSystemMigrationStrategy() {
+        return new SystemMigrationStrategy();
+    }
+
+    @Bean
     public BeanPostProcessor postProcessFlyway(ApplicationContext context) {
         return new BeanPostProcessor() {
 
@@ -43,7 +48,7 @@ public class FlywayConfig {
                 if (o instanceof Flyway) {
                     Flyway flyway = (Flyway) o;
                     flyway.setSkipDefaultResolvers(true);
-                    ApplicationContextAwareSpringJdbcMigrationResolver resolver = new ApplicationContextAwareSpringJdbcMigrationResolver(
+                    ApplicationContextAwareSystemMigrationResolver resolver = new ApplicationContextAwareSystemMigrationResolver(
                             new Scanner(Thread.currentThread().getContextClassLoader()),
                             new Location("classpath:db/migration"),
                             context.getBean(org.flywaydb.core.api.configuration.FlywayConfiguration.class),
@@ -65,7 +70,6 @@ public class FlywayConfig {
                         e.printStackTrace();
                     }
                     flyway.setResolvers(sqlMigrationResolver, resolver);
-                    flyway.setCallbacks(new ApplicationContextAwareSpringJdbcCallbackResolver(context).resolveCallbacks());
                 }
                 return o;
             }

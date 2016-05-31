@@ -1,6 +1,7 @@
 package com.system.db.migration.base;
 
 
+import com.system.inversion.component.InversionComponent;
 import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -12,5 +13,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @author Andrew
  * @see SpringJdbcMigration#migrate(JdbcTemplate)
  */
-public abstract class BaseMigration implements SpringJdbcMigration {
+@InversionComponent
+public abstract class BaseMigration implements SystemMigration {
 }
