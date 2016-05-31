@@ -8,7 +8,7 @@ import net.bytebuddy.matcher.ElementMatchers;
 
 import java.lang.annotation.Inherited;
 
-import static com.system.manipulator.util.ManipulatorUtils.*;
+import static com.system.manipulator.util.ManipulatorUtils.addTransformation;
 
 /**
  * The <class>TransformerUtils</class> defines
@@ -44,7 +44,6 @@ public class TransformerUtils {
      * @param transformer
      */
     public static void transform(ElementMatcher.Junction<TypeDescription> classMatcher, AgentBuilder.Transformer transformer) {
-        installAgent(setDefaultAgentIgnores(getDefaultAgentBuilder()
-                .type(classMatcher).transform(transformer)));
+        addTransformation(classMatcher, transformer);
     }
 }
