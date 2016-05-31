@@ -6,7 +6,10 @@ import com.system.security.role.SystemSecurityRole;
 import com.system.security.user.detail.SystemSecurityUserDetail;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import java.util.Collection;
 
 
@@ -17,7 +20,6 @@ import java.util.Collection;
  * @author Andrew
  * @see SystemSecurityUserDetail
  */
-@Entity
 public class SystemSecurityUser extends BaseEntity<Long> {
 
     ///////////////////////////////////////////////////////////////////////

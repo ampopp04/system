@@ -4,7 +4,6 @@ package com.system.security.privilege;
 import com.system.db.entity.base.BaseEntity;
 import com.system.security.role.SystemSecurityRole;
 
-import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import java.util.Collection;
 
@@ -16,7 +15,6 @@ import java.util.Collection;
  * @author Andrew
  * @see SystemSecurityPrivileges
  */
-@Entity
 public class SystemSecurityPrivilege extends BaseEntity<Long> {
 
     ///////////////////////////////////////////////////////////////////////

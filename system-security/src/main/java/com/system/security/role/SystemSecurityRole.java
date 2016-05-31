@@ -5,7 +5,6 @@ import com.system.db.entity.base.BaseEntity;
 import com.system.security.privilege.SystemSecurityPrivilege;
 import com.system.security.user.SystemSecurityUser;
 
-import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -18,7 +17,6 @@ import java.util.Collection;
  *
  * @author Andrew
  */
-@Entity
 public class SystemSecurityRole extends BaseEntity<Long> {
 
     ///////////////////////////////////////////////////////////////////////
