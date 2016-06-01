@@ -14,7 +14,7 @@ import javax.persistence.MappedSuperclass;
  * @author Andrew
  */
 @MappedSuperclass
-public abstract class BaseEntity<T extends Number> implements com.system.db.entity.Entity<T> {
+public abstract class BaseEntity<ID extends Number> implements com.system.db.entity.Entity<ID> {
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                     Properties                                                       //////////
@@ -22,7 +22,7 @@ public abstract class BaseEntity<T extends Number> implements com.system.db.enti
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private T id;
+    private ID id;
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                        Advanced Getter/Setters                                       //////////
@@ -36,11 +36,11 @@ public abstract class BaseEntity<T extends Number> implements com.system.db.enti
     ////////                                             Basic Getter/Setters                                          //////////
     //////////////////////////////////////////////////////////////////////
 
-    public T getId() {
+    public ID getId() {
         return id;
     }
 
-    public void setId(T id) {
+    public void setId(ID id) {
         this.id = id;
     }
 }

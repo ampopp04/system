@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
  * @author Andrew
  */
 @MappedSuperclass
-public abstract class NamedEntity<T extends Number> extends BaseEntity<T> {
+public abstract class NamedEntity<ID extends Number> extends BaseEntity<ID> {
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                     Properties                                                       //////////

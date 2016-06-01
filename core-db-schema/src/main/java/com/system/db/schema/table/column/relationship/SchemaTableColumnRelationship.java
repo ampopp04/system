@@ -1,8 +1,11 @@
 package com.system.db.schema.table.column.relationship;
 
 
-import com.system.db.entity.named.NamedEntity;
+import com.system.db.entity.base.BaseEntity;
 import com.system.db.schema.table.column.SchemaTableColumn;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * The <class>SchemaTableColumnRelationship</class> defines column relationships.
@@ -17,7 +20,7 @@ import com.system.db.schema.table.column.SchemaTableColumn;
  *
  * @author Andrew
  */
-public class SchemaTableColumnRelationship extends NamedEntity<Integer> {
+public class SchemaTableColumnRelationship extends BaseEntity<Integer> {
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                     Properties                                                       //////////
@@ -26,10 +29,15 @@ public class SchemaTableColumnRelationship extends NamedEntity<Integer> {
     /**
      * Represents this Schema Table Column
      */
+    @ManyToOne
+    @JoinColumn(name = "schema_table_column_id")
     private SchemaTableColumn schemaTableColumn;
+
     /**
      * Represents which column this column is linked to
      */
+    @ManyToOne
+    @JoinColumn(name = "parent_schema_table_column_id")
     private SchemaTableColumn parentSchemaTableColumn;
 
     ///////////////////////////////////////////////////////////////////////

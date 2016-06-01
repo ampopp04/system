@@ -21,10 +21,27 @@ import java.util.List;
  */
 public abstract class TableCreationMigrationCallback extends BaseMigrationCallback {
 
+    ///////////////////////////////////////////////////////////////////////
+    ////////                                            Abstract Method Call                                           //////////
+    //////////////////////////////////////////////////////////////////////
+
+    /**
+     * Callback invoked after new table creation
+     *
+     * @param tableEntityClass is the new table being created
+     */
     protected abstract void afterTableCreation(Class<? extends Entity> tableEntityClass);
+
+    ///////////////////////////////////////////////////////////////////////
+    ////////                                                   Constructor                                                       //////////
+    //////////////////////////////////////////////////////////////////////
 
     public TableCreationMigrationCallback() {
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    ////////                                              Migration Callback                                               //////////
+    //////////////////////////////////////////////////////////////////////
 
     /**
      * Iterates over each table entity being created to send to the callback
@@ -40,6 +57,10 @@ public abstract class TableCreationMigrationCallback extends BaseMigrationCallba
             }
         }
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    ////////                                                    Getter Methods                                               //////////
+    //////////////////////////////////////////////////////////////////////
 
     /**
      * Extracts out the table entities being created from the migration

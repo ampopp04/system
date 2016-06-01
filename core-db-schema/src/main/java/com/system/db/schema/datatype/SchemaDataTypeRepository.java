@@ -11,4 +11,13 @@ import com.system.db.repository.BaseEntityRepository;
  * @see BaseEntityRepository
  */
 public interface SchemaDataTypeRepository extends BaseEntityRepository<SchemaDataType> {
+
+    /**
+     * Find SchemaDataType represented by a
+     * given fully qualified class name java type
+     *
+     * @param javaType
+     * @return
+     */
+    public SchemaDataType findByJavaType(String javaType);
 }

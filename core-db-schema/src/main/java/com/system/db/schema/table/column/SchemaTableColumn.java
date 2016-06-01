@@ -5,6 +5,9 @@ import com.system.db.entity.named.NamedEntity;
 import com.system.db.schema.datatype.SchemaDataType;
 import com.system.db.schema.table.SchemaTable;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 /**
  * The <class>SchemaTableColumn</class> defines database columns.
  * <p>
@@ -22,11 +25,15 @@ public class SchemaTableColumn extends NamedEntity<Integer> {
     /**
      * The table this column is associated with
      */
+    @ManyToOne
+    @JoinColumn(name = "schema_table_id")
     private SchemaTable schemaTable;
 
     /**
      * The type of data held within this column
      */
+    @ManyToOne
+    @JoinColumn(name = "schema_data_type_id")
     private SchemaDataType schemaDataType;
 
     ///////////////////////////////////////////////////////////////////////

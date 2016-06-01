@@ -11,9 +11,8 @@ import java.io.Serializable;
  * Any class  implementing this Entity is considered for database association
  *
  * @author Andrew
- * @see com.system.db.entity.agent.EntityAgent#getTransformer
  */
-public interface Entity<T extends Serializable> extends EntityIdentity<T> {
+public interface Entity<ID extends Serializable> extends EntityIdentity<ID> {
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                 Method Definitions                                          //////////

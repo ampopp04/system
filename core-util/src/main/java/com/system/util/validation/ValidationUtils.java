@@ -11,6 +11,7 @@ import org.apache.commons.lang3.Validate;
  * @author Andrew
  */
 public class ValidationUtils {
+
     /**
      * Asserts n1 greater than n2
      *
@@ -38,5 +39,16 @@ public class ValidationUtils {
      */
     public static void assertTrue(final boolean expression) {
         Validate.isTrue(expression);
+    }
+
+    /**
+     * Asserts that object is not null
+     *
+     * @param object    the object to check
+     * @param message   the {@link String#format(String, Object...)} exception message if invalid, not null
+     * @param msgValues the optional values for the formatted exception message
+     */
+    public static void assertNotNull(Object object, String message, Object... msgValues) {
+        Validate.notNull(object, message, msgValues);
     }
 }

@@ -1,9 +1,11 @@
 package com.system.util.collection;
 
+import com.system.util.compare.CompareUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * The <class>CollectionUtils</class> defines
@@ -25,6 +27,17 @@ public class CollectionUtils {
     }
 
     /**
+     * Retrieve map key iterator from a map. This will perform a null check.
+     *
+     * @param map
+     * @param <K>
+     * @return
+     */
+    public static <K> Iterable<K> iterable(Map<K, ?> map) {
+        return map == null ? Collections.emptyList() : map.keySet();
+    }
+
+    /**
      * Retrieve iterator from an array. This will perform a null check.
      *
      * @param collection
@@ -33,6 +46,22 @@ public class CollectionUtils {
      */
     public static <E> Iterable<E> iterable(E[] collection) {
         return collection == null ? Collections.emptyList() : new ArrayList<>(Arrays.asList(collection));
+    }
+
+    /**
+     * For a given iterable return the first element
+     * where the function applied against E is equal to value
+     *
+     * @param iterable
+     * @param function
+     * @param value
+     * @param <E>
+     * @return
+     */
+    public static <E> E firstEquals(Iterable<E> iterable, Function<E, ?> function, Object value) {
+        if (iterable == null) return null;
+        for (E element : iterable) if (CompareUtils.equals(function.apply(element), value)) return element;
+        return null;
     }
 
     /**
@@ -62,6 +91,18 @@ public class CollectionUtils {
     @SafeVarargs
     public static <T> List<T> asList(T... values) {
         return values == null ? Collections.emptyList() : Arrays.asList(values);
+    }
+
+    /**
+     * Convert an maps values into a list by
+     * aggregating all of the values
+     *
+     * @param keyMap
+     * @param <K>
+     * @return
+     */
+    public static <K> List<K> asKeyList(Map<K, ?> keyMap) {
+        return keyMap == null ? Collections.emptyList() : new ArrayList<>(keyMap.keySet());
     }
 
     /**

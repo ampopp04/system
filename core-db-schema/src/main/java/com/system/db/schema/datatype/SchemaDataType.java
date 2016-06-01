@@ -40,6 +40,20 @@ public class SchemaDataType extends NamedEntity<Short> {
      */
     private boolean numeric;
 
+    /**
+     * The sql type.
+     * <p>
+     * Ex. VARCHAR
+     */
+    private String sqlType;
+
+    /**
+     * The java type.
+     * <p>
+     * Ex. java.lang.String
+     */
+    private String javaType;
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                              Default Constructor                                           //////////
     //////////////////////////////////////////////////////////////////////
@@ -57,5 +71,21 @@ public class SchemaDataType extends NamedEntity<Short> {
 
     public void setNumeric(boolean numeric) {
         this.numeric = numeric;
+    }
+
+    public String getSqlType() {
+        return sqlType;
+    }
+
+    public void setSqlType(String sqlType) {
+        this.sqlType = sqlType;
+    }
+
+    public String getJavaType() {
+        return javaType;
+    }
+
+    public void setJavaType(String javaType) {
+        this.javaType = javaType;
     }
 }

@@ -78,39 +78,41 @@ public class V1__initial_schema extends TableCreationMigration {
         List<SchemaDataType> entityList = new ArrayList<>();
 
         //Numbers
-        entityList.add(newSchemaDataType("Integer", "Mapping between java.lang.Integer and INTEGER ANSI type", true));
-        entityList.add(newSchemaDataType("Long", "Mapping between java.lang.Long and BIGINT ANSI type", true));
-        entityList.add(newSchemaDataType("Short", "Mapping between java.lang.Short and SMALLINT ANSI type", true));
-        entityList.add(newSchemaDataType("Float", "Mapping between java.lang.Float and FLOAT ANSI type", true));
-        entityList.add(newSchemaDataType("Double", "Mapping between java.lang.Double and DOUBLE ANSI type", true));
-        entityList.add(newSchemaDataType("BigDecimal", "Mapping between java.math.BigDecimal and NUMERIC ANSI type", true));
+        entityList.add(newSchemaDataType("Integer", "Mapping between java.lang.Integer and INTEGER ANSI type", true, "INTEGER", "java.lang.Integer"));
+        entityList.add(newSchemaDataType("Long", "Mapping between java.lang.Long and BIGINT ANSI type", true, "BIGINT", "java.lang.Long"));
+        entityList.add(newSchemaDataType("Short", "Mapping between java.lang.Short and SMALLINT ANSI type", true, "SMALLINT", "java.lang.Short"));
+        entityList.add(newSchemaDataType("Float", "Mapping between java.lang.Float and FLOAT ANSI type", true, "FLOAT", "java.lang.Float"));
+        entityList.add(newSchemaDataType("Double", "Mapping between java.lang.Double and DOUBLE ANSI type", true, "DOUBLE", "java.lang.Double"));
+        entityList.add(newSchemaDataType("BigDecimal", "Mapping between java.math.BigDecimal and NUMERIC ANSI type", true, "NUMERIC", "java.math.BigDecimal"));
 
         //Dates
-        entityList.add(newSchemaDataType("Date", "Mapping between java.sql.Date and DATE ANSI type", false));
-        entityList.add(newSchemaDataType("Time", "Mapping between java.sql.Time and TIME ANSI type", false));
-        entityList.add(newSchemaDataType("Timestamp", "Mapping between java.util.Date or java.sql.Timestamp and TIMESTAMP ANSI type", false));
-        entityList.add(newSchemaDataType("Calendar", "Mapping between java.util.Calendar  and TIMESTAMP ANSI type", false));
+        entityList.add(newSchemaDataType("Date", "Mapping between java.sql.Date and DATE ANSI type", false, "DATE", "java.sql.Date"));
+        entityList.add(newSchemaDataType("Time", "Mapping between java.sql.Time and TIME ANSI type", false, "TIME", "java.sql.Time"));
+        entityList.add(newSchemaDataType("Timestamp", "Mapping between java.util.Date or java.sql.Timestamp and TIMESTAMP ANSI type", false, "TIMESTAMP", "java.sql.Timestamp"));
+        entityList.add(newSchemaDataType("Calendar", "Mapping between java.util.Calendar  and TIMESTAMP ANSI type", false, "TIMESTAMP", "java.util.Calendar"));
 
         //Other
-        entityList.add(newSchemaDataType("String", "Mapping between java.lang.String and VARCHAR ANSI type", false));
-        entityList.add(newSchemaDataType("Byte", "Mapping between java.lang.Byte and TINYINT ANSI type", false));
-        entityList.add(newSchemaDataType("Boolean", "Mapping between java.lang.Boolean and BIT ANSI type", false));
+        entityList.add(newSchemaDataType("String", "Mapping between java.lang.String and VARCHAR ANSI type", false, "VARCHAR", "java.lang.String"));
+        entityList.add(newSchemaDataType("Byte", "Mapping between java.lang.Byte and TINYINT ANSI type", false, "TINYINT", "java.lang.Byte"));
+        entityList.add(newSchemaDataType("Boolean", "Mapping between java.lang.Boolean and BIT ANSI type", false, "BIT", "java.lang.Boolean"));
 
         return entityList;
     }
 
-    private SchemaDataType newSchemaDataType(String name, String description, boolean numeric) {
+    private SchemaDataType newSchemaDataType(String name, String description, boolean numeric, String sqlType, String javaType) {
         SchemaDataType dataType = new SchemaDataType();
         dataType.setName(name);
         dataType.setDescription(description);
         dataType.setNumeric(numeric);
+        dataType.setSqlType(sqlType);
+        dataType.setJavaType(javaType);
         return dataType;
     }
-
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                             Basic   Getter/Setters                                          //////////
     //////////////////////////////////////////////////////////////////////
+
     public SchemaDataTypeRepository getSchemaDataTypeRepository() {
         return schemaDataTypeRepository;
     }

@@ -3,8 +3,15 @@ package com.system.util.clazz;
 import org.objectweb.asm.ClassReader;
 
 import java.io.*;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.Map;
 
+import static com.system.util.collection.CollectionUtils.firstEquals;
+import static com.system.util.collection.CollectionUtils.iterable;
 import static com.system.util.string.StringUtils.lineSeparatorToPeriod;
+import static org.apache.commons.lang3.reflect.TypeUtils.getTypeArguments;
 
 /**
  * The <class>ClassUtils</class> defines
@@ -13,6 +20,44 @@ import static com.system.util.string.StringUtils.lineSeparatorToPeriod;
  * @author Andrew
  */
 public class ClassUtils {
+
+    /**
+     * Arrays of primitive wrapper objects. Do not reorder this array
+     */
+    private static final Class[] wrappers = {
+            Integer.class, Double.class, Byte.class,
+            Boolean.class, Character.class, Void.class,
+            Short.class, Float.class, Long.class
+    };
+
+    /**
+     * Convert a primitive object to it's boxed Object representation.
+     * If this is not a primitive it simply returns it.
+     *
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T> wrapPrimitive(final Class<T> clazz) {
+        if (!clazz.isPrimitive()) return clazz;
+        final String name = clazz.getName();
+        final int c0 = name.charAt(0);
+        final int c2 = name.charAt(2);
+        final int mapper = (c0 + c0 + c0 + 5) & (118 - c2);
+        return (Class<T>) wrappers[mapper];
+    }
+
+    /**
+     * Converts a clazz to it's fully qualified name.
+     * Primitives return the wrapped Objects class name.
+     *
+     * @param clazz
+     * @return
+     */
+    public static String toClassName(Class clazz) {
+        return wrapPrimitive(clazz).getName();
+    }
 
     /**
      * Extract Class name from an {@link InputStream} representing a Class object
@@ -24,6 +69,19 @@ public class ClassUtils {
     public static String toClassName(InputStream classFileInputStream) throws IOException {
         return lineSeparatorToPeriod(getClassReader(classFileInputStream).getClassName());
     }
+
+    /**
+     * Returns back a classes runtime generic type arguments
+     * for a specific type identifier
+     *
+     * @param clazz
+     * @return
+     */
+    public static Type getGenericTypeArgument(Class clazz, TypeVariable<?> type) {
+        Map<TypeVariable<?>, Type> typeMap = getTypeArguments((ParameterizedType) clazz.getGenericSuperclass());
+        return typeMap.get(firstEquals(iterable(typeMap), TypeVariable::getName, type.getName()));
+    }
+
 
     /**
      * Converts a class object {@link InputStream} into a {@link ClassReader}

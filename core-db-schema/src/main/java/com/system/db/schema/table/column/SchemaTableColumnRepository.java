@@ -11,4 +11,14 @@ import com.system.db.repository.BaseEntityRepository;
  * @see BaseEntityRepository
  */
 public interface SchemaTableColumnRepository extends BaseEntityRepository<SchemaTableColumn> {
+
+    /**
+     * Find the SchemaTableColumn by name for
+     * a specific table
+     *
+     * @param schemaTableName
+     * @param name
+     * @return
+     */
+    public SchemaTableColumn findBySchemaTableNameAndName(String schemaTableName, String name);
 }

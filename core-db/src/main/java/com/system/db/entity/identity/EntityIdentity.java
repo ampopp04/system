@@ -9,9 +9,8 @@ import java.io.Serializable;
  * Any class  implementing this is considered to have an identifier
  *
  * @author Andrew
- * @see com.system.db.entity.agent.EntityAgent#getTransformer
  */
-public interface EntityIdentity<T extends Serializable> extends Serializable {
+public interface EntityIdentity<ID extends Serializable> extends Serializable {
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                 Method Definitions                                          //////////
@@ -22,13 +21,13 @@ public interface EntityIdentity<T extends Serializable> extends Serializable {
      *
      * @return
      */
-    public T getId();
+    public ID getId();
 
     /**
      * Set the ID
      *
      * @param id
      */
-    public void setId(T id);
+    public void setId(ID id);
 
 }
