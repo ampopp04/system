@@ -1,0 +1,8 @@
+
+image: qlik/gradle
+
+pipelines:
+  default:
+    - step:
+        script:
+          - gradle --console plain clean build
