@@ -1,7 +1,7 @@
 package com.system.db.schema.version;
 
 
-import com.system.db.repository.BaseEntityRepository;
+import com.system.db.repository.base.identity.EntityIdentityRepository;
 
 /**
  * The <class>SchemaVersionRepository</class> defines the
@@ -10,5 +10,5 @@ import com.system.db.repository.BaseEntityRepository;
  * @author Andrew
  * @see BaseEntityRepository
  */
-public interface SchemaVersionRepository extends BaseEntityRepository<SchemaVersion> {
+public interface SchemaVersionRepository extends EntityIdentityRepository<SchemaVersion> {
 }

@@ -2,8 +2,9 @@ package com.system.security.base;
 
 
 import com.system.db.migration.base.BaseIntegrationTest;
-import com.system.security.privilege.SystemSecurityPrivilegeRepository;
-import com.system.security.role.SystemSecurityRoleRepository;
+import com.system.db.repository.base.named.NamedEntityRepository;
+import com.system.security.privilege.SystemSecurityPrivilege;
+import com.system.security.role.SystemSecurityRole;
 import com.system.security.user.SystemSecurityUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,10 +22,10 @@ public abstract class BaseSecurityIntegrationTest extends BaseIntegrationTest {
     //////////////////////////////////////////////////////////////////////
 
     @Autowired
-    protected SystemSecurityPrivilegeRepository systemSecurityPrivilegeRepository;
+    protected NamedEntityRepository<SystemSecurityPrivilege> systemSecurityPrivilegeRepository;
 
     @Autowired
-    protected SystemSecurityRoleRepository systemSecurityRoleRepository;
+    protected NamedEntityRepository<SystemSecurityRole> systemSecurityRoleRepository;
 
     @Autowired
     protected SystemSecurityUserRepository systemSecurityUserRepository;

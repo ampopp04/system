@@ -30,8 +30,8 @@ public class MigrationSchemaTests extends BaseDbMigrationIntegrationTest {
 
         assertGreaterThan(size(schemaDataTypeRepository.findAll()), 10);
 
-        // assertGreaterThan(size(schemaTableRepository.findAll()), 0);
-        //assertGreaterThan(size(schemaTableColumnRepository.findAll()), 0);
-        //assertGreaterThan(size(schemaTableColumnRelationshipRepository.findAll()), 0);
+        assertGreaterThan(size(schemaTableRepository.findAll()), 0);
+        assertGreaterThan(size(schemaTableColumnRepository.findAll()), 0);
+        assertGreaterThan(size(schemaTableColumnRelationshipRepository.findAll()), 0);
     }
 }

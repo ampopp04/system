@@ -1,14 +1,14 @@
 package com.system.db.schema.table;
 
 
-import com.system.db.repository.BaseEntityRepository;
+import com.system.db.repository.base.entity.EntityRepository;
 
 /**
  * The <class>SchemaTableRepository</class> defines the
  * database access repository for the associated entity
  *
  * @author Andrew
- * @see BaseEntityRepository
+ * @see EntityRepository
  */
-public interface SchemaTableRepository extends BaseEntityRepository<SchemaTable> {
+public interface SchemaTableRepository extends EntityRepository<SchemaTable> {
 }

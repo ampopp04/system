@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author Andrew
  */
 @EnableJpaRepositories(basePackages = "com.system")
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @EntityScan(basePackages = "com.system")
 @PropertySource(value = {"classpath:application-core-db.properties"})
 @Configuration

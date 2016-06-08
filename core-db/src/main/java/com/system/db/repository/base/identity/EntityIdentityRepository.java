@@ -1,11 +1,12 @@
-package com.system.db.repository;
+package com.system.db.repository.base.identity;
 
 import com.system.db.entity.identity.EntityIdentity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
- * The <interface>BaseEntityRepository</interface> defines the
+ * The <interface>EntityIdentityRepository</interface> defines the
  * basic entity repository used by system
  * repositories to access entities from the database
  * <p>
@@ -14,5 +15,5 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @see EntityIdentity
  */
 @NoRepositoryBean
-public interface BaseEntityRepository<T extends EntityIdentity> extends JpaRepository<T, T> {
+public interface EntityIdentityRepository<T extends EntityIdentity> extends JpaRepository<T, T>, JpaSpecificationExecutor<T> {
 }

@@ -1,16 +1,16 @@
 package com.system.db.schema.table.column;
 
 
-import com.system.db.repository.BaseEntityRepository;
+import com.system.db.repository.base.entity.EntityRepository;
 
 /**
  * The <class>SchemaTableColumnRepository</class> defines the
  * database access repository for the associated entity
  *
  * @author Andrew
- * @see BaseEntityRepository
+ * @see EntityRepository
  */
-public interface SchemaTableColumnRepository extends BaseEntityRepository<SchemaTableColumn> {
+public interface SchemaTableColumnRepository extends EntityRepository<SchemaTableColumn> {
 
     /**
      * Find the SchemaTableColumn by name for

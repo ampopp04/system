@@ -4,6 +4,7 @@ package com.system.db.schema.table.processor;
 import com.system.db.entity.Entity;
 import com.system.db.entity.identity.EntityIdentity;
 import com.system.db.migration.table.TableCreationMigrationCallback;
+import com.system.db.repository.base.entity.SystemRepository;
 import com.system.db.schema.datatype.SchemaDataType;
 import com.system.db.schema.datatype.SchemaDataTypeRepository;
 import com.system.db.schema.table.SchemaTable;
@@ -11,7 +12,6 @@ import com.system.db.schema.table.SchemaTableRepository;
 import com.system.db.schema.table.column.SchemaTableColumn;
 import com.system.db.schema.table.column.SchemaTableColumnRepository;
 import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationship;
-import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationshipRepository;
 import com.system.util.collection.CollectionUtils;
 import com.system.util.validation.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class SchemaTableProcessor extends TableCreationMigrationCallback {
     protected SchemaTableColumnRepository schemaTableColumnRepository;
 
     @Autowired
-    protected SchemaTableColumnRelationshipRepository schemaTableColumnRelationshipRepository;
+    protected SystemRepository<SchemaTableColumnRelationship> schemaTableColumnRelationshipRepository;
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                 Callback Method                                              //////////

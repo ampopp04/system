@@ -45,7 +45,7 @@ public abstract class NamedEntity<ID extends Number> extends BaseEntity<ID> {
     //////////////////////////////////////////////////////////////////////
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -53,10 +53,10 @@ public abstract class NamedEntity<ID extends Number> extends BaseEntity<ID> {
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
-    public void setDescription(String lastname) {
-        this.description = lastname;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

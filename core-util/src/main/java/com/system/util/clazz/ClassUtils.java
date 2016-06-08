@@ -77,7 +77,7 @@ public class ClassUtils {
      * @param clazz
      * @return
      */
-    public static Type getGenericTypeArgument(Class clazz, TypeVariable<?> type) {
+    public static Type getGenericTypeArgument(Class<?> clazz, TypeVariable<?> type) {
         Map<TypeVariable<?>, Type> typeMap = getTypeArguments((ParameterizedType) clazz.getGenericSuperclass());
         return typeMap.get(firstEquals(iterable(typeMap), TypeVariable::getName, type.getName()));
     }

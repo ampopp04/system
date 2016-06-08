@@ -1,10 +1,11 @@
 package com.system.db.migration.base;
 
 
+import com.system.db.repository.base.entity.SystemRepository;
 import com.system.db.schema.datatype.SchemaDataTypeRepository;
 import com.system.db.schema.table.SchemaTableRepository;
 import com.system.db.schema.table.column.SchemaTableColumnRepository;
-import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationshipRepository;
+import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationship;
 import com.system.db.schema.version.SchemaVersionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,7 +32,7 @@ public abstract class BaseDbMigrationIntegrationTest extends BaseIntegrationTest
     protected SchemaTableColumnRepository schemaTableColumnRepository;
 
     @Autowired
-    protected SchemaTableColumnRelationshipRepository schemaTableColumnRelationshipRepository;
+    protected SystemRepository<SchemaTableColumnRelationship> schemaTableColumnRelationshipRepository;
 
     @Autowired
     protected SchemaVersionRepository schemaVersionRepository;
