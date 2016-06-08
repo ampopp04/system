@@ -1,7 +1,7 @@
 package com.system.security.role;
 
 
-import com.system.db.entity.base.BaseEntity;
+import com.system.db.entity.named.NamedEntity;
 import com.system.security.privilege.SystemSecurityPrivilege;
 import com.system.security.user.SystemSecurityUser;
 
@@ -17,7 +17,7 @@ import java.util.Collection;
  *
  * @author Andrew
  */
-public class SystemSecurityRole extends BaseEntity<Long> {
+public class SystemSecurityRole extends NamedEntity<Long> {
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                     Properties                                                       //////////
@@ -30,9 +30,6 @@ public class SystemSecurityRole extends BaseEntity<Long> {
     @JoinTable(joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
     private Collection<SystemSecurityPrivilege> privileges;
 
-    private String name;
-
-
     ///////////////////////////////////////////////////////////////////////
     ////////                                                       Constructor                                                   //////////
     //////////////////////////////////////////////////////////////////////
@@ -43,20 +40,12 @@ public class SystemSecurityRole extends BaseEntity<Long> {
 
     public SystemSecurityRole(final String name) {
         super();
-        this.name = name;
+        setName(name);
     }
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                             Basic   Getter/Setters                                          //////////
     //////////////////////////////////////////////////////////////////////
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
 
     public Collection<SystemSecurityUser> getUsers() {
         return users;
@@ -82,7 +71,7 @@ public class SystemSecurityRole extends BaseEntity<Long> {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         return result;
     }
 
@@ -98,7 +87,7 @@ public class SystemSecurityRole extends BaseEntity<Long> {
             return false;
         }
         final SystemSecurityRole role = (SystemSecurityRole) obj;
-        if (!role.equals(role.name)) {
+        if (!role.equals(role.getName())) {
             return false;
         }
         return true;
@@ -107,7 +96,7 @@ public class SystemSecurityRole extends BaseEntity<Long> {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Role [name=").append(name).append("]").append("[id=").append(getId()).append("]");
+        builder.append("Role [name=").append(getName()).append("]").append("[id=").append(getId()).append("]");
         return builder.toString();
     }
 }

@@ -2,11 +2,10 @@ package db.migration;
 
 import com.system.db.entity.Entity;
 import com.system.db.migration.table.TableCreationMigration;
+import com.system.db.repository.base.named.NamedEntityRepository;
 import com.system.security.privilege.SystemSecurityPrivilege;
-import com.system.security.privilege.SystemSecurityPrivilegeRepository;
 import com.system.security.privilege.SystemSecurityPrivileges;
 import com.system.security.role.SystemSecurityRole;
-import com.system.security.role.SystemSecurityRoleRepository;
 import com.system.security.role.SystemSecurityRoles;
 import com.system.security.user.SystemSecurityUser;
 import com.system.security.user.SystemSecurityUserRepository;
@@ -37,10 +36,10 @@ public class V2__initial_schema extends TableCreationMigration {
     //////////////////////////////////////////////////////////////////////
 
     @Autowired
-    private SystemSecurityPrivilegeRepository systemSecurityPrivilegeRepository;
+    private NamedEntityRepository<SystemSecurityPrivilege> systemSecurityPrivilegeRepository;
 
     @Autowired
-    private SystemSecurityRoleRepository systemSecurityRoleRepository;
+    private NamedEntityRepository<SystemSecurityRole> systemSecurityRoleRepository;
 
     @Autowired
     private SystemSecurityUserRepository systemSecurityUserRepository;

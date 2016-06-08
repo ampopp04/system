@@ -21,12 +21,20 @@ import java.util.List;
  */
 public abstract class TableCreationMigration extends BaseDataMigration {
 
+    ///////////////////////////////////////////////////////////////////////
+    ////////                                              Abstract Methods                                                //////////
+    //////////////////////////////////////////////////////////////////////
+
     /**
      * Returns the array of classes for which tables should be created for
      *
      * @return
      */
     protected abstract List<Class<? extends Entity>> getEntityClasses();
+
+    ///////////////////////////////////////////////////////////////////////
+    ////////                                               Migration Methods                                             //////////
+    //////////////////////////////////////////////////////////////////////
 
     /**
      * Set the table creation entities to the configuration
