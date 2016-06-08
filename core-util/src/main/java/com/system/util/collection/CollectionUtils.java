@@ -5,7 +5,11 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
+
+import static com.system.util.stream.StreamUtils.stream;
+import static com.system.util.stream.StreamUtils.streamIterate;
 
 /**
  * The <class>CollectionUtils</class> defines
@@ -24,6 +28,17 @@ public class CollectionUtils {
      */
     public static <E> Iterable<E> iterable(Collection<E> collection) {
         return collection == null ? Collections.emptyList() : collection;
+    }
+
+    /**
+     * Iterates on elements within a collection applying the supplied action against each element
+     *
+     * @param collection
+     * @param action
+     * @param <E>
+     */
+    public static <E> void iterate(Iterable<E> collection, Consumer<? super E> action) {
+        streamIterate(stream(collection), action);
     }
 
     /**
