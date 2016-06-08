@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.query.JpaEntityGraph;
 import org.springframework.data.jpa.repository.support.CrudMethodMetadata;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
@@ -227,23 +226,17 @@ public class SystemRepositoryImpl<T extends BaseEntity> implements SystemReposit
         return this.entityType.getBindableJavaType();
     }
 
-    protected JpaEntityGraph getEntityGraph() {
-        String fallbackName = getEntityInformation().getEntityName() + "." + metadata.getMethod().getName();
-        return new JpaEntityGraph(metadata.getEntityGraph(), fallbackName);
-    }
-
     public JpaEntityInformation getEntityInformation() {
         return JpaEntityInformationSupport.getEntityInformation(getDomainClass(), em);
     }
 
     protected TypedQuery<T> getQuery(Specification<T> spec, Pageable pageable) {
-
         Sort sort = pageable == null ? null : pageable.getSort();
         return getQuery(spec, sort);
     }
 
     protected TypedQuery<T> getQuery(Specification<T> spec, Sort sort) {
-        return QueryUtils.getQuery(spec, sort, getMetadata(), getEm(), getEntityGraph(), getDomainClass());
+        return QueryUtils.getQuery(spec, sort, getMetadata(), getEm(), getDomainClass());
     }
 
     public String getEntityTypeName() {

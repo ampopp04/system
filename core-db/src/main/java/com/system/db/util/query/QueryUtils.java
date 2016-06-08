@@ -5,23 +5,18 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.query.Jpa21Utils;
-import org.springframework.data.jpa.repository.query.JpaEntityGraph;
 import org.springframework.data.jpa.repository.support.CrudMethodMetadata;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.data.jpa.repository.query.QueryUtils.*;
 
@@ -114,23 +109,6 @@ public class QueryUtils {
         return total;
     }
 
-    /**
-     * Returns a {@link Map} with the query hints based on the current {@link CrudMethodMetadata} and potential
-     * {@link org.springframework.data.jpa.repository.EntityGraph} information.
-     *
-     * @return
-     */
-    public static Map<String, Object> getQueryHints(CrudMethodMetadata metadata, EntityManager em, JpaEntityGraph entityGraph, Class<?> entityType) {
-        if (metadata.getEntityGraph() == null) {
-            return metadata.getQueryHints();
-        }
-
-        Map<String, Object> hints = new HashMap<>();
-        hints.putAll(metadata.getQueryHints());
-        hints.putAll(Jpa21Utils.tryGetFetchGraphHints(em, entityGraph, entityType));
-        return hints;
-    }
-
 
     /**
      * Creates a {@link TypedQuery} for the given {@link Specification} and {@link Sort}.
@@ -139,7 +117,7 @@ public class QueryUtils {
      * @param sort can be {@literal null}.
      * @return
      */
-    public static <T> TypedQuery<T> getQuery(Specification<T> spec, Sort sort, CrudMethodMetadata metadata, EntityManager em, JpaEntityGraph entityGraph, Class<T> entityType) {
+    public static <T> TypedQuery<T> getQuery(Specification<T> spec, Sort sort, CrudMethodMetadata metadata, EntityManager em, Class<T> entityType) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(entityType);
 
@@ -150,7 +128,7 @@ public class QueryUtils {
             query.orderBy(toOrders(sort, root, builder));
         }
 
-        return applyRepositoryMethodMetadata(metadata, em.createQuery(query), em, entityGraph, entityType);
+        return applyRepositoryMethodMetadata(metadata, em.createQuery(query));
     }
 
     /**
@@ -178,22 +156,12 @@ public class QueryUtils {
         return root;
     }
 
-    private static <T> TypedQuery<T> applyRepositoryMethodMetadata(CrudMethodMetadata metadata, TypedQuery<T> query, EntityManager em, JpaEntityGraph entityGraph, Class<T> entityType) {
+    private static <T> TypedQuery<T> applyRepositoryMethodMetadata(CrudMethodMetadata metadata, TypedQuery<T> query) {
         if (metadata == null) {
             return query;
         }
 
         LockModeType type = metadata.getLockModeType();
-        TypedQuery<T> toReturn = type == null ? query : query.setLockMode(type);
-
-        applyQueryHints(toReturn, metadata, em, entityGraph, entityType);
-
-        return toReturn;
-    }
-
-    private static void applyQueryHints(Query query, CrudMethodMetadata metadata, EntityManager em, JpaEntityGraph entityGraph, Class<?> entityType) {
-        for (Map.Entry<String, Object> hint : QueryUtils.getQueryHints(metadata, em, entityGraph, entityType).entrySet()) {
-            query.setHint(hint.getKey(), hint.getValue());
-        }
+        return type == null ? query : query.setLockMode(type);
     }
 }
