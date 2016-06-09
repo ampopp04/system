@@ -10,7 +10,6 @@ import com.system.bean.variable.definition.SystemBeanVariableDefinition;
 import com.system.bean.variable.definition.modifier.type.SystemBeanVariableDefinitionModifierType;
 import com.system.db.entity.Entity;
 import com.system.db.migration.table.TableCreationMigration;
-import com.system.db.repository.base.entity.SystemRepository;
 import com.system.db.repository.base.named.NamedEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,7 +32,7 @@ public class V3__initial_schema extends TableCreationMigration {
     //////////////////////////////////////////////////////////////////////
 
     @Autowired
-    private SystemRepository<SystemBeanDefinitionType> systemBeanDefinitionTypeRepository;
+    private NamedEntityRepository<SystemBeanDefinitionType> systemBeanDefinitionTypeRepository;
 
     @Autowired
     private NamedEntityRepository<SystemBeanModifierType> systemBeanModifierTypeRepository;
