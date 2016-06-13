@@ -42,6 +42,17 @@ public class CollectionUtils {
     }
 
     /**
+     * Iterates on elements within an iterator applying the supplied action against each element
+     *
+     * @param iterator
+     * @param action
+     * @param <E>
+     */
+    public static <E> void iterate(Iterator<E> iterator, Consumer<? super E> action) {
+        streamIterate(stream(iterator), action);
+    }
+
+    /**
      * Retrieve map key iterator from a map. This will perform a null check.
      *
      * @param map
@@ -179,5 +190,19 @@ public class CollectionUtils {
      */
     public static <E> boolean empty(Collection<E> collection) {
         return collection == null || collection.size() == 0;
+    }
+
+    /**
+     * Add an element to a collection safely. This
+     * skips NULL elements.
+     *
+     * @param collection
+     * @param element
+     * @param <E>
+     */
+    public static <E> void add(Collection<E> collection, E element) {
+        if (element != null && collection != null) {
+            collection.add(element);
+        }
     }
 }

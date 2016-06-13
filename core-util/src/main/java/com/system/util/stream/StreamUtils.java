@@ -1,5 +1,8 @@
 package com.system.util.stream;
 
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -34,5 +37,16 @@ public class StreamUtils {
      */
     public static <T> Stream<T> stream(Iterable<T> collection) {
         return (collection == null) ? Stream.empty() : StreamSupport.stream(collection.spliterator(), false);
+    }
+
+    /**
+     * Convert an iterator into a stream
+     *
+     * @param iterator
+     * @param <T>
+     * @return
+     */
+    public static <T> Stream<T> stream(Iterator<T> iterator) {
+        return (iterator == null) ? Stream.empty() : StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED), false);
     }
 }

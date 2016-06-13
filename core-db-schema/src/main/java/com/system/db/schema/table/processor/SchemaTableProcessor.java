@@ -5,10 +5,10 @@ import com.system.db.entity.Entity;
 import com.system.db.entity.identity.EntityIdentity;
 import com.system.db.migration.table.TableCreationMigrationCallback;
 import com.system.db.repository.base.entity.SystemRepository;
+import com.system.db.repository.base.named.NamedEntityRepository;
 import com.system.db.schema.datatype.SchemaDataType;
 import com.system.db.schema.datatype.SchemaDataTypeRepository;
 import com.system.db.schema.table.SchemaTable;
-import com.system.db.schema.table.SchemaTableRepository;
 import com.system.db.schema.table.column.SchemaTableColumn;
 import com.system.db.schema.table.column.SchemaTableColumnRepository;
 import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationship;
@@ -52,7 +52,7 @@ public class SchemaTableProcessor extends TableCreationMigrationCallback {
     protected SchemaDataTypeRepository schemaDataTypeRepository;
 
     @Autowired
-    protected SchemaTableRepository schemaTableRepository;
+    protected NamedEntityRepository<SchemaTable> schemaTableRepository;
 
     @Autowired
     protected SchemaTableColumnRepository schemaTableColumnRepository;

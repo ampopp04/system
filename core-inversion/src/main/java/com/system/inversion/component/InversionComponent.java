@@ -1,5 +1,6 @@
 package com.system.inversion.component;
 
+import com.system.inversion.util.InversionUtils;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.*;
@@ -10,7 +11,7 @@ import java.lang.annotation.*;
  * denote components.  Traditionally you would have to annotate your object with {@linkComponent}
  * for spring component scanning to pick it up.
  * <p>
- * Ex. @ComponentScan(basePackages = "com.system",
+ * Ex. @ComponentScan(basePackages = {@link InversionUtils#SYSTEM_PACKAGE_ROOT},
  * includeFilters = @ComponentScan.Filter(InversionComponent.class))
  * <p>
  * Allows for defining {@link InversionComponent} as if it were equal to {@link Component}

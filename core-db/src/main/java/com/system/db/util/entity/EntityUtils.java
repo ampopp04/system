@@ -1,6 +1,15 @@
 package com.system.db.util.entity;
 
-import java.beans.Introspector;
+import org.springframework.core.env.Environment;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.system.inversion.util.InversionUtils.getResourceProperties;
+import static com.system.util.collection.CollectionUtils.iterable;
+import static com.system.util.collection.CollectionUtils.iterate;
+import static com.system.util.string.StringUtils.contains;
+import static com.system.util.string.StringUtils.removeBefore;
 
 /**
  * The <class>EntityUtils</class> defines
@@ -11,18 +20,20 @@ import java.beans.Introspector;
 public class EntityUtils {
 
     /**
-     * Denotes the postfix name for a repository
-     */
-    public static final String ENTITY_REPOSITORY_POSTFIX = "Repository";
-
-    /**
-     * Converts a entity name into it's associated repository name
+     * Get all Jpa specific properties from the supplied environment
      *
-     * @param entityName
+     * @param env
      * @return
      */
-    public static String getRepositoryName(String entityName) {
-        String repositoryBeanName = entityName + ENTITY_REPOSITORY_POSTFIX;
-        return Introspector.decapitalize(repositoryBeanName);
+    public static Map<String, Object> getJpaProperties(Environment env) {
+        Map<String, Object> propertyMap = new HashMap<>();
+        Map<String, Object> resourcePropertyMap = getResourceProperties(env);
+        iterate(iterable(resourcePropertyMap), (k) -> {
+            if (contains(k, "hibernate")) {
+                propertyMap.put(removeBefore(k, "hibernate"), resourcePropertyMap.get(k));
+            }
+        });
+
+        return propertyMap;
     }
 }

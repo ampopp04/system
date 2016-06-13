@@ -49,6 +49,17 @@ public class ClassUtils {
     }
 
     /**
+     * Determines if the cls is assignable to the toClass
+     *
+     * @param cls
+     * @param toClass
+     * @return
+     */
+    public static boolean isAssignable(final Class<?> cls, final Class<?> toClass) {
+        return org.apache.commons.lang3.ClassUtils.isAssignable(cls, toClass);
+    }
+
+    /**
      * Converts a clazz to it's fully qualified name.
      * Primitives return the wrapped Objects class name.
      *
@@ -82,7 +93,6 @@ public class ClassUtils {
         return typeMap.get(firstEquals(iterable(typeMap), TypeVariable::getName, type.getName()));
     }
 
-
     /**
      * Converts a class object {@link InputStream} into a {@link ClassReader}
      *
@@ -108,10 +118,27 @@ public class ClassUtils {
      * @return
      */
     public static Class forNameSafe(String className) {
+        Class clazz = forNameOrNull(className);
+        if (clazz == null) {
+            clazz = Object.class;
+        }
+        return clazz;
+    }
+
+    /**
+     * Loads the {@link Class} represented by the className param.
+     * <p>
+     * If this class cannot be found it will return back null
+     * instead of throwing an exception
+     *
+     * @param className
+     * @return
+     */
+    public static Class forNameOrNull(String className) {
         try {
             return Class.forName(className);
         } catch (Throwable e) {
-            return Object.class;
+            return null;
         }
     }
 

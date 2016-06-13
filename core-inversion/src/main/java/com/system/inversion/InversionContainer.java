@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.type.classreading.SimpleMetadataReaderFactory;
 
+import static com.system.inversion.util.InversionUtils.SYSTEM_PACKAGE_ROOT;
 import static com.system.manipulator.interceptor.util.InterceptorUtils.classInterceptor;
 
 /**
@@ -19,8 +20,8 @@ import static com.system.manipulator.interceptor.util.InterceptorUtils.classInte
  * @see InversionComponent
  * @see InterceptorUtils#classInterceptor
  */
-@SpringBootApplication(scanBasePackages = "com.system")
-@ComponentScan(basePackages = "com.system",
+@SpringBootApplication(scanBasePackages = SYSTEM_PACKAGE_ROOT)
+@ComponentScan(basePackages = SYSTEM_PACKAGE_ROOT,
         includeFilters = @ComponentScan.Filter(InversionComponent.class))
 public class InversionContainer {
 

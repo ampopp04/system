@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.persistence.metamodel.EntityType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,7 +49,7 @@ public class SystemRepositoryImpl<T extends BaseEntity> implements SystemReposit
     /**
      * The type of entity this repository executes queries for
      */
-    protected EntityType entityType;
+    protected Class entityType;
 
     /**
      * Used to provide lock mode for query execution against this entity type
@@ -65,7 +64,7 @@ public class SystemRepositoryImpl<T extends BaseEntity> implements SystemReposit
     }
 
     ///////////////////////////////////////////////////////////////////////
-    ////////                                               Find One  Methods                                            //////////
+    ////////                                               Find One Methods                                            //////////
     /////////////////////////////////////////////////////////////////////
 
     public T findOne(Specification<T> spec) {
@@ -223,7 +222,7 @@ public class SystemRepositoryImpl<T extends BaseEntity> implements SystemReposit
     /////////////////////////////////////////////////////////////////////
 
     protected Class<T> getDomainClass() {
-        return this.entityType.getBindableJavaType();
+        return this.entityType;
     }
 
     public JpaEntityInformation getEntityInformation() {
@@ -240,7 +239,7 @@ public class SystemRepositoryImpl<T extends BaseEntity> implements SystemReposit
     }
 
     public String getEntityTypeName() {
-        return getEntityType().getName();
+        return getEntityType().getSimpleName();
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -255,11 +254,11 @@ public class SystemRepositoryImpl<T extends BaseEntity> implements SystemReposit
         this.em = em;
     }
 
-    public EntityType getEntityType() {
+    public Class getEntityType() {
         return entityType;
     }
 
-    public void setEntityType(EntityType entityType) {
+    public void setEntityType(Class entityType) {
         this.entityType = entityType;
     }
 
