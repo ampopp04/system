@@ -2,9 +2,7 @@ package com.system.db.util.repository;
 
 import com.system.db.entity.named.NamedEntity;
 import com.system.db.repository.base.entity.SystemRepository;
-import com.system.db.repository.base.entity.SystemRepositoryImpl;
 import com.system.db.repository.base.named.NamedEntityRepository;
-import com.system.db.repository.base.named.NamedEntityRepositoryImpl;
 import com.system.util.clazz.ClassUtils;
 
 import static com.system.util.string.StringUtils.decapitalize;
@@ -61,16 +59,13 @@ public class RepositoryUtils {
     }
 
     /**
-     * Returns back either the associated Repository or Repository Implementation for
+     * Returns the Repository interface class for
      * a given entity type
      *
      * @param entityType
-     * @param interfaceNotImpl
      * @return
      */
-    public static Class getRepositoryClass(Class<?> entityType, boolean interfaceNotImpl) {
-        return (interfaceNotImpl)
-                ? (ClassUtils.isAssignable(entityType, NamedEntity.class) ? NamedEntityRepository.class : SystemRepository.class)
-                : (ClassUtils.isAssignable(entityType, NamedEntity.class) ? NamedEntityRepositoryImpl.class : SystemRepositoryImpl.class);
+    public static Class getRepositoryClass(Class<?> entityType) {
+        return ClassUtils.isAssignable(entityType, NamedEntity.class) ? NamedEntityRepository.class : SystemRepository.class;
     }
 }

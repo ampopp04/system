@@ -56,6 +56,6 @@ public class SystemRepositoryConfigurationUtils {
         String repositoryBeanName = getRepositoryName(entityType);
         String repositoryInterfaceName = getRepositoryInterfaceName(entityType);
         return (!registry.containsBeanDefinition(repositoryBeanName) && !preprocessedRepositoryNameList.contains(repositoryInterfaceName))
-                ? registerRepositoryImplBeanDefinition(registry, repositoryBeanName, entityType) : null;
+                ? registerRepositoryImplBeanDefinition(entityType) : null;
     }
 }
