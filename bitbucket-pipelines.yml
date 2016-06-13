@@ -1,5 +1,0 @@
-pipelines:
-  default:
-    - step:
-        script:
-          - echo "It's Pipelines, baby!"
