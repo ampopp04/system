@@ -3838,28 +3838,28 @@
       ],
       "alternates": []
     },
-    "System.view.main.List": {
+    "System.view.application.main.List": {
       "idx": 35,
       "alias": [
         "widget.mainlist"
       ],
       "alternates": []
     },
-    "System.view.main.Main": {
+    "System.view.application.main.Main": {
       "idx": 38,
       "alias": [
         "widget.app-main"
       ],
       "alternates": []
     },
-    "System.view.main.MainController": {
+    "System.view.application.main.MainController": {
       "idx": 36,
       "alias": [
         "controller.main"
       ],
       "alternates": []
     },
-    "System.view.main.MainModel": {
+    "System.view.application.main.MainModel": {
       "idx": 37,
       "alias": [
         "viewmodel.main"
@@ -4120,6 +4120,27 @@
     }
   ],
   "css": [
+    {
+      "remote": false,
+      "exclude": [
+        "fashion"
+      ],
+      "path": "js/lib/resources/css/theme-triton-all.css"
+    },
+    {
+      "remote": false,
+      "exclude": [
+        "fashion"
+      ],
+      "path": "js/lib/resources/css/theme-triton-all_1.css"
+    },
+    {
+      "remote": false,
+      "exclude": [
+        "fashion"
+      ],
+      "path": "js/lib/resources/css/theme-triton-all_2.css"
+    },
     {
       "remote": false,
       "exclude": [

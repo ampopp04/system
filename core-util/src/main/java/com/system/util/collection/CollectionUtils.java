@@ -20,6 +20,38 @@ import static com.system.util.stream.StreamUtils.streamIterate;
 public class CollectionUtils {
 
     /**
+     * Create our standard empty ArrayList
+     *
+     * @return
+     */
+    public static List newList() {
+        return new ArrayList<>();
+    }
+
+    /**
+     * Creates our standard empty HashMap
+     *
+     * @return
+     */
+    public static Map newMap() {
+        return new HashMap<>();
+    }
+
+    /**
+     * Returns a new list if the provided one is null
+     *
+     * @param list
+     * @param <E>
+     * @return
+     */
+    public static <E> List<E> newListIfNull(List<E> list) {
+        if (list == null) {
+            return newList();
+        }
+        return list;
+    }
+
+    /**
      * Retrieve iterator from a collection. This will perform a null check.
      *
      * @param collection
@@ -116,7 +148,7 @@ public class CollectionUtils {
      */
     @SafeVarargs
     public static <T> List<T> asList(T... values) {
-        return values == null ? Collections.emptyList() : Arrays.asList(values);
+        return values == null ? Collections.emptyList() : new ArrayList<>(Arrays.asList(values));
     }
 
     /**

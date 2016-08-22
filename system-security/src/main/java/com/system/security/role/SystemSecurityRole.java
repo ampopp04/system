@@ -27,7 +27,7 @@ public class SystemSecurityRole extends NamedEntity<Long> {
     private Collection<SystemSecurityUser> users;
 
     @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+    @JoinTable(joinColumns = @JoinColumn(name = "role_id", referencedColumnName = ID_TYPE_NAME_LOWERCASE), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = ID_TYPE_NAME_LOWERCASE))
     private Collection<SystemSecurityPrivilege> privileges;
 
     ///////////////////////////////////////////////////////////////////////

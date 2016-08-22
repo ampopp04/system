@@ -15,4 +15,12 @@ import org.springframework.data.repository.NoRepositoryBean;
  */
 @NoRepositoryBean
 public interface EntityRepository<T extends BaseEntity> extends EntityIdentityRepository<T> {
+
+    /**
+     * Find entity by id
+     *
+     * @param id
+     * @return
+     */
+    public T findById(Integer id);
 }

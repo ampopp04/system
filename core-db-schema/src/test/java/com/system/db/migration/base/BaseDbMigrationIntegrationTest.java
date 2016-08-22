@@ -2,8 +2,9 @@ package com.system.db.migration.base;
 
 
 import com.system.db.repository.base.entity.SystemRepository;
+import com.system.db.repository.base.named.NamedEntityRepository;
 import com.system.db.schema.datatype.SchemaDataTypeRepository;
-import com.system.db.schema.table.SchemaTableRepository;
+import com.system.db.schema.table.SchemaTable;
 import com.system.db.schema.table.column.SchemaTableColumnRepository;
 import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationship;
 import com.system.db.schema.version.SchemaVersionRepository;
@@ -26,7 +27,7 @@ public abstract class BaseDbMigrationIntegrationTest extends BaseIntegrationTest
     protected SchemaDataTypeRepository schemaDataTypeRepository;
 
     @Autowired
-    protected SchemaTableRepository schemaTableRepository;
+    protected NamedEntityRepository<SchemaTable> schemaTableRepository;
 
     @Autowired
     protected SchemaTableColumnRepository schemaTableColumnRepository;

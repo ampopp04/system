@@ -40,6 +40,14 @@ public class SchemaTableColumnRelationship extends BaseEntity<Integer> {
     @JoinColumn(name = "parent_schema_table_column_id")
     private SchemaTableColumn parentSchemaTableColumn;
 
+    /**
+     * The default display column to use for rendering.  The parentSchemaTableColumn references
+     * the parents ID column where this column references the column that should be used for display purposes
+     */
+    @ManyToOne
+    @JoinColumn(name = "parent_display_schema_table_column_id")
+    private SchemaTableColumn parentDisplaySchemaTableColumn;
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                              Default Constructor                                           //////////
     //////////////////////////////////////////////////////////////////////
@@ -66,5 +74,13 @@ public class SchemaTableColumnRelationship extends BaseEntity<Integer> {
 
     public void setParentSchemaTableColumn(SchemaTableColumn parentSchemaTableColumn) {
         this.parentSchemaTableColumn = parentSchemaTableColumn;
+    }
+
+    public SchemaTableColumn getParentDisplaySchemaTableColumn() {
+        return parentDisplaySchemaTableColumn;
+    }
+
+    public void setParentDisplaySchemaTableColumn(SchemaTableColumn parentDisplaySchemaTableColumn) {
+        this.parentDisplaySchemaTableColumn = parentDisplaySchemaTableColumn;
     }
 }

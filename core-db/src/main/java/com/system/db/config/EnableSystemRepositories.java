@@ -1,6 +1,7 @@
 package com.system.db.config;
 
 
+import com.system.db.repository.factory.SystemRepositoryFactoryBean;
 import com.system.db.repository.registrar.SystemRepositoryDefinitionRegistrar;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.annotation.ComponentScan;
@@ -89,7 +90,7 @@ public @interface EnableSystemRepositories {
      *
      * @return
      */
-    Class<?> repositoryFactoryBeanClass() default JpaRepositoryFactoryBean.class;
+    Class<?> repositoryFactoryBeanClass() default SystemRepositoryFactoryBean.class;
 
     /**
      * Configure the repository base class to be used to create repository proxies for this particular configuration.

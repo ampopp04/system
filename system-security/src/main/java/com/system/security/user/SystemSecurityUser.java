@@ -42,7 +42,7 @@ public class SystemSecurityUser extends BaseEntity<Long> {
     private boolean enabled;
 
     @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JoinTable(joinColumns = @JoinColumn(name = "user_id", referencedColumnName = ID_TYPE_NAME_LOWERCASE), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = ID_TYPE_NAME_LOWERCASE))
     private Collection<SystemSecurityRole> roles;
 
     ///////////////////////////////////////////////////////////////////////

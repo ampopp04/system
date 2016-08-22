@@ -4,13 +4,15 @@ import com.system.db.entity.Entity;
 import com.system.db.migration.base.SystemMigration;
 import com.system.db.migration.callback.BaseMigrationCallback;
 import com.system.db.migration.resolver.executor.SystemMigrationExecutor;
-import com.system.util.collection.CollectionUtils;
 import org.flywaydb.core.api.MigrationInfo;
 import org.flywaydb.core.api.resolver.MigrationExecutor;
 import org.flywaydb.core.internal.info.MigrationInfoImpl;
 
 import java.sql.Connection;
 import java.util.List;
+
+import static com.system.util.collection.CollectionUtils.iterable;
+import static com.system.util.collection.CollectionUtils.iterate;
 
 /**
  * The <class>TableCreationMigrationCallback</class> defines
@@ -32,6 +34,18 @@ public abstract class TableCreationMigrationCallback extends BaseMigrationCallba
      */
     protected abstract void afterTableCreation(Class<? extends Entity> tableEntityClass);
 
+    /**
+     * After all tables have been created for the migration we can then iterate over them all again to perform
+     * additional logic
+     * <p>
+     * This is useful for when we need to handle cases where table creations depend on all others being created
+     *
+     * @param tableEntityClass
+     */
+    protected void afterTableCreationSecondPass(Class<? extends Entity> tableEntityClass) {
+    }
+
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                                   Constructor                                                       //////////
     //////////////////////////////////////////////////////////////////////
@@ -52,9 +66,8 @@ public abstract class TableCreationMigrationCallback extends BaseMigrationCallba
     @Override
     public void afterEachMigrate(Connection connection, MigrationInfo info) {
         if (info instanceof MigrationInfoImpl) {
-            for (Class<? extends Entity> tableEntityClass : CollectionUtils.iterable(getTableCreationList((MigrationInfoImpl) info))) {
-                afterTableCreation(tableEntityClass);
-            }
+            iterate(iterable(getTableCreationList((MigrationInfoImpl) info)), (tableEntityClass) -> afterTableCreation(tableEntityClass));
+            iterate(iterable(getTableCreationList((MigrationInfoImpl) info)), (tableEntityClass) -> afterTableCreationSecondPass(tableEntityClass));
         }
     }
 

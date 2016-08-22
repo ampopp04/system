@@ -3,8 +3,11 @@ package com.system.manipulator.object.creation.util;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.annotation.AnnotationDescription;
 import net.bytebuddy.description.type.TypeDescription;
+import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 
+import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
 import static com.system.util.collection.CollectionUtils.iterable;
@@ -33,6 +36,34 @@ public class ObjectCreationUtils {
                 .name(interfaceName)
                 .make()
                 .load(interfaceClass.getClassLoader(), ClassReloadingStrategy.fromInstalledAgent())
+                .getLoaded();
+    }
+
+    /**
+     * Create an interface by interface name with the provided set of public methods
+     *
+     * @param interfaceName
+     * @param methodList
+     * @param classLoader
+     * @return
+     */
+    public static Class<?> createInterfaceWithPublicMethods(String interfaceName, List<java.lang.reflect.Method> methodList, ClassLoader classLoader) {
+        DynamicType.Builder<?> byteBuddyBuilder = new ByteBuddy()
+                .makeInterface();
+
+        DynamicType.Builder.MethodDefinition.ReceiverTypeDefinition methodBuilder = null;
+
+        for (Method method : methodList) {
+            if (methodBuilder == null) {
+                methodBuilder = byteBuddyBuilder.defineMethod(method.getName(), method.getReturnType(), method.getModifiers()).withoutCode();
+            } else {
+                methodBuilder = methodBuilder.defineMethod(method.getName(), method.getReturnType(), method.getModifiers()).withoutCode();
+            }
+        }
+        return methodBuilder
+                .name(interfaceName)
+                .make()
+                .load(classLoader, ClassReloadingStrategy.fromInstalledAgent())
                 .getLoaded();
     }
 

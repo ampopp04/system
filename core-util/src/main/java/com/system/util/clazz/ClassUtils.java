@@ -6,10 +6,10 @@ import java.io.*;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.util.HashMap;
 import java.util.Map;
 
-import static com.system.util.collection.CollectionUtils.firstEquals;
-import static com.system.util.collection.CollectionUtils.iterable;
+import static com.system.util.collection.CollectionUtils.*;
 import static com.system.util.string.StringUtils.lineSeparatorToPeriod;
 import static org.apache.commons.lang3.reflect.TypeUtils.getTypeArguments;
 
@@ -88,9 +88,57 @@ public class ClassUtils {
      * @param clazz
      * @return
      */
+    public static Type getGenericTypeArgument(Class<?> clazz, String typeName) {
+        Map<String, Type> typeMap = getAllGenericTypeArguments(clazz);
+        return typeMap.get(typeName);
+    }
+
+    public static Map<String, Type> getAllGenericTypeArguments(Class<?> clazz) {
+        final Map<String, Type> typeMap = new HashMap<>();
+
+        if (clazz == Object.class) {
+            return typeMap;
+        }
+        typeMap.putAll(getAllGenericTypeArguments(clazz.getSuperclass()));
+        typeMap.putAll(getGenericTypeArguments(clazz));
+
+        return typeMap;
+    }
+
+    /**
+     * Returns the generic type arguments of a given class
+     *
+     * @param clazz
+     * @return
+     */
+    public static Map<String, Type> getGenericTypeArguments(Class<?> clazz) {
+        final Map<String, Type> typeMap = newMap();
+        if (clazz == null) {
+            return typeMap;
+        } else if (clazz.getGenericSuperclass() instanceof ParameterizedType) {
+            Map<TypeVariable<?>, Type> typeVarMap = getTypeArguments((ParameterizedType) clazz.getGenericSuperclass());
+            iterate(iterable(typeVarMap), (k) -> typeMap.put(k.getName(), typeVarMap.get(k)));
+        } else {
+            iterate(iterable(clazz.getGenericInterfaces()), (type) -> {
+                if (type instanceof ParameterizedType) {
+                    Map<TypeVariable<?>, Type> typeVarMap = getTypeArguments((ParameterizedType) type);
+                    iterate(iterable(typeVarMap), (k) -> typeMap.put(k.getName(), typeVarMap.get(k)));
+                }
+            });
+        }
+        return typeMap;
+    }
+
+    /**
+     * Returns back a classes runtime generic type arguments
+     * for a specific type identifier
+     *
+     * @param clazz
+     * @return
+     */
+
     public static Type getGenericTypeArgument(Class<?> clazz, TypeVariable<?> type) {
-        Map<TypeVariable<?>, Type> typeMap = getTypeArguments((ParameterizedType) clazz.getGenericSuperclass());
-        return typeMap.get(firstEquals(iterable(typeMap), TypeVariable::getName, type.getName()));
+        return getGenericTypeArgument(clazz, type.getTypeName());
     }
 
     /**

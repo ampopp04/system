@@ -3,6 +3,8 @@ package com.system.db.schema.table.column;
 
 import com.system.db.repository.base.entity.EntityRepository;
 
+import java.util.List;
+
 /**
  * The <class>SchemaTableColumnRepository</class> defines the
  * database access repository for the associated entity
@@ -21,4 +23,13 @@ public interface SchemaTableColumnRepository extends EntityRepository<SchemaTabl
      * @return
      */
     public SchemaTableColumn findBySchemaTableNameAndName(String schemaTableName, String name);
+
+    /**
+     * Find the SchemaTableColumns for
+     * a specific table
+     *
+     * @param schemaTableName
+     * @return
+     */
+    public List<SchemaTableColumn> findBySchemaTableName(String schemaTableName);
 }

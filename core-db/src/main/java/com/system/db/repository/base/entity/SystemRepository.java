@@ -9,7 +9,6 @@ import org.springframework.data.repository.NoRepositoryBean;
  * for a given entity type
  *
  * @author Andrew
- * @see SystemRepositoryImpl
  */
 @NoRepositoryBean
 public interface SystemRepository<T extends BaseEntity> extends EntityRepository<T> {

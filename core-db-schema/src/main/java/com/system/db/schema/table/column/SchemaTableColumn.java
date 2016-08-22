@@ -4,6 +4,7 @@ package com.system.db.schema.table.column;
 import com.system.db.entity.named.NamedEntity;
 import com.system.db.schema.datatype.SchemaDataType;
 import com.system.db.schema.table.SchemaTable;
+import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationship;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -36,6 +37,13 @@ public class SchemaTableColumn extends NamedEntity<Integer> {
     @JoinColumn(name = "schema_data_type_id")
     private SchemaDataType schemaDataType;
 
+    /**
+     * If this is a foreign key column then this will denote the relationship reference
+     */
+    @ManyToOne
+    @JoinColumn(name = "schema_table_column_relationship_id")
+    private SchemaTableColumnRelationship schemaTableColumnRelationship;
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                              Default Constructor                                           //////////
     //////////////////////////////////////////////////////////////////////
@@ -44,7 +52,15 @@ public class SchemaTableColumn extends NamedEntity<Integer> {
     }
 
     ///////////////////////////////////////////////////////////////////////
-    ////////                                             Basic   Getter/Setters                                          //////////
+    ////////                                        Advanced  Getter/Setters                                      //////////
+    //////////////////////////////////////////////////////////////////////
+
+    public String getDisplayFieldPath() {
+        return getSchemaTableColumnRelationship() != null && getSchemaTableColumnRelationship().getParentDisplaySchemaTableColumn() != null ? getName() + "." + getSchemaTableColumnRelationship().getParentDisplaySchemaTableColumn().getName() : getName();
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ////////                                             Basic  Getter/Setters                                          //////////
     //////////////////////////////////////////////////////////////////////
 
     public SchemaTable getSchemaTable() {
@@ -61,5 +77,13 @@ public class SchemaTableColumn extends NamedEntity<Integer> {
 
     public void setSchemaDataType(SchemaDataType schemaDataType) {
         this.schemaDataType = schemaDataType;
+    }
+
+    public SchemaTableColumnRelationship getSchemaTableColumnRelationship() {
+        return schemaTableColumnRelationship;
+    }
+
+    public void setSchemaTableColumnRelationship(SchemaTableColumnRelationship schemaTableColumnRelationship) {
+        this.schemaTableColumnRelationship = schemaTableColumnRelationship;
     }
 }

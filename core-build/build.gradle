@@ -13,6 +13,11 @@ buildscript {
 subprojects {
     apply plugin: 'java'
 
+    tasks.withType(JavaCompile) {
+        // this subproject requires -parameters option
+        options.compilerArgs << '-parameters'
+    }
+
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 

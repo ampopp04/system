@@ -7,8 +7,10 @@ import net.bytebuddy.description.annotation.AnnotationDescription;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.data.repository.RepositoryDefinition;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
+import static com.system.db.entity.identity.EntityIdentity.ID_TYPE_NAME_UPPERCASE;
 import static com.system.db.util.repository.RepositoryUtils.getRepositoryClass;
 import static com.system.db.util.repository.RepositoryUtils.getRepositoryInterfaceName;
 
@@ -52,11 +54,15 @@ public class RepositoryRegistrationUtils {
      */
     public static Class createEntityRepositoryInterface(Class<?> entityType) {
         AnnotationDescription repositoryRestResource = ObjectCreationUtils.buildAnnotationDescription(REPOSITORY_REST_RESOURCE, null);
-        AnnotationDescription repositoryDefinition = ObjectCreationUtils.buildAnnotationDescription(REPOSITORY_DEFINITION_ANNOTATION, new HashMap<String, Class<?>>() {{
-            put("domainClass", entityType);
-            put("idClass", entityType);
-        }});
-
+        AnnotationDescription repositoryDefinition = null;
+        try {
+            repositoryDefinition = ObjectCreationUtils.buildAnnotationDescription(REPOSITORY_DEFINITION_ANNOTATION, new HashMap<String, Class<?>>() {{
+                put("domainClass", entityType);
+                put("idClass", (Class<? extends Serializable>) ClassUtils.getGenericTypeArgument(entityType, ID_TYPE_NAME_UPPERCASE));
+            }});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ObjectCreationUtils.extendInterface(getRepositoryInterfaceName(entityType), getRepositoryClass(entityType), entityType, repositoryDefinition, repositoryRestResource);
     }
 }

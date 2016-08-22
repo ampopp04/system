@@ -2,6 +2,7 @@ package com.system.db.migration.table;
 
 import com.system.db.entity.Entity;
 import com.system.db.migration.data.BaseDataMigration;
+import com.system.db.migration.table.configuration.TableConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.dialect.Dialect;
@@ -32,6 +33,14 @@ public abstract class TableCreationMigration extends BaseDataMigration {
      */
     protected abstract List<Class<? extends Entity>> getEntityClasses();
 
+    private static final TableConfiguration configuration = new TableConfiguration();
+
+    static {
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        configuration.setNamingStrategy(ImprovedNamingStrategy.INSTANCE);
+        configuration.generateSchemaCreationScript(Dialect.getDialect(configuration.getProperties()));
+    }
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                               Migration Methods                                             //////////
     //////////////////////////////////////////////////////////////////////
@@ -55,8 +64,12 @@ public abstract class TableCreationMigration extends BaseDataMigration {
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         //Perform table creation
-        SchemaExport export = new SchemaExport(getConfiguration(), jdbcTemplate.getDataSource().getConnection());
-        export.create(true, true);
+        TableConfiguration config = getConfigurationWithEntities();
+
+        SchemaExport export = new SchemaExport(config, jdbcTemplate.getDataSource().getConnection());
+        export.execute(true, true, false, true);
+
+        config.addMigratedEntities(getEntityClasses());
 
         //Perform any data insertion
         super.migrate(jdbcTemplate);
@@ -66,15 +79,15 @@ public abstract class TableCreationMigration extends BaseDataMigration {
      * Create the hibernate configuration used to perform the underlying table creation sql
      *
      * @return
-     * @see Configuration
+     * @see TableConfiguration
      */
-    private Configuration getConfiguration() {
-        Configuration configuration = new Configuration();
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-        setEntityClasses(configuration);
-
-        configuration.setNamingStrategy(ImprovedNamingStrategy.INSTANCE);
-        configuration.generateSchemaCreationScript(Dialect.getDialect(configuration.getProperties()));
+    private TableConfiguration getConfiguration() {
         return configuration;
+    }
+
+    private TableConfiguration getConfigurationWithEntities() {
+        TableConfiguration config = getConfiguration();
+        setEntityClasses(config);
+        return config;
     }
 }
