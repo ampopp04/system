@@ -12,6 +12,6 @@ buildscript { scriptHandler ->
 //Configure the gradle wrapper for use to generated a contained gradle installation
 task wrapper(type: Wrapper) {
     gradleVersion = project.gradleWrapperVersion
-    jarFile = "${project.projectDir}/src/main/gradle/wrapper/gradle-wrapper.jar"
-    scriptFile = "${project.projectDir}/src/main/gradlew"
+    jarFile = "$rootDir/core-build//src/main/gradle/wrapper/gradle-wrapper.jar"
+    scriptFile = "$rootDir/core-build/src/main/gradlew"
 }
