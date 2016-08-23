@@ -1,7 +1,12 @@
 buildscript {
     repositories {
-        mavenCentral()
-        jcenter()
+        maven {
+            credentials {
+                username 'dev'
+                password 'dev'
+            }
+            url "http://54.235.230.59:8081/repository/System"
+        }
     }
     dependencies {
         classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE'

@@ -9,9 +9,9 @@ import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.io.support.ResourcePropertySource;
 import org.springframework.core.type.filter.AssignableTypeFilter;
-import org.springframework.web.context.support.StandardServletEnvironment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,7 +112,7 @@ public class InversionUtils {
      */
     public static Map<String, Object> getResourceProperties(Environment env) {
         List<ResourcePropertySource> resourcePropertySourceList = new ArrayList<>();
-        iterate(((StandardServletEnvironment) env).getPropertySources().iterator(), (propertySource) -> {
+        iterate(((StandardEnvironment) env).getPropertySources().iterator(), (propertySource) -> {
             if (propertySource instanceof ResourcePropertySource) {
                 resourcePropertySourceList.add((ResourcePropertySource) propertySource);
             }
