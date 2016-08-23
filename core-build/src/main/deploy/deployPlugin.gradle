@@ -4,7 +4,7 @@ if (project.name.endsWith(INVERSION_PROJECT_POSTFIX)) {
         apply plugin: 'com.bmuschko.docker-java-application'
 
         docker {
-            url = 'https://192.168.59.103:2376'
+            url = project.dockerUrl
             certPath = new File(System.properties['user.home'], '.boot2docker/certs/boot2docker-vm')
         }
     }

@@ -1,0 +1,12 @@
+apply plugin: 'com.bmuschko.nexus'
+
+nexus {
+    sign = false
+    repositoryUrl = project.publishRepositoryUrl
+    snapshotRepositoryUrl = project.publishSnapshotRepositoryUrl
+}
+extraArchive {
+    sources = true
+    tests = false
+    javadoc = false
+}

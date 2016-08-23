@@ -1,0 +1,11 @@
+if (project.name.endsWith(BUILD_PROJECT_POSTFIX)) {
+    //Rewire the build projects structure so the build jar artifact includes
+    // the build files
+    sourceSets {
+        main {
+            resources {
+                srcDir 'src/main'
+            }
+        }
+    }
+}
