@@ -15,7 +15,8 @@ gradle/
 log/
 target/
 build/
-
+gradlew
+gradlew.bat
 
 # IntelliJ Files #
 *.iml
