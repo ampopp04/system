@@ -35,7 +35,7 @@ public class InversionUtils {
     /**
      * The base package used by our application
      */
-    public static final String SYSTEM_PACKAGE_ROOT = "com.system";
+    public static final String SYSTEM_PACKAGE_ROOT = "com";
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                   Util Methods                                                      //////////

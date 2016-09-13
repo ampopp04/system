@@ -74,19 +74,19 @@ public class V6__main_toolbar_assignments extends BaseDataMigration {
 
     @Override
     protected void insertData() {
-        getUiComponentAssignmentRepository().save(getSystemBeanUiComponentAssignmentList(
+        getUiComponentAssignmentRepository().save(getUiComponentAssignmentList(
                 SchemaDataType.class, SchemaTable.class, SchemaTableColumn.class, SchemaTableColumnRelationship.class));
 
-        getUiComponentAssignmentRepository().save(getSystemBeanUiComponentAssignmentList(
+        getUiComponentAssignmentRepository().save(getUiComponentAssignmentList(
                 SystemBeanDefinitionType.class, SystemBeanDefinition.class, SystemBeanType.class,
                 SystemBeanModifierType.class,
                 SystemBeanVariableDefinition.class, SystemBeanVariableDefinitionModifierType.class,
                 SystemBean.class, SystemBeanVariable.class));
 
-        getUiComponentAssignmentRepository().save(getSystemBeanUiComponentAssignmentList(
+        getUiComponentAssignmentRepository().save(getUiComponentAssignmentList(
                 SystemSecurityUser.class, SystemSecurityPrivilege.class, SystemSecurityRole.class));
 
-        getUiComponentAssignmentRepository().save(getSystemBeanUiComponentAssignmentList(UiComponentType.class,
+        getUiComponentAssignmentRepository().save(getUiComponentAssignmentList(UiComponentType.class,
                 UiComponentDefinition.class, UiComponent.class,
                 UiComponentConfigAttribute.class, UiComponentConfig.class,
                 UiComponentAssignment.class));
@@ -96,7 +96,7 @@ public class V6__main_toolbar_assignments extends BaseDataMigration {
     ////////                                      Ui Component Assignments                                     //////////
     //////////////////////////////////////////////////////////////////////
 
-    private List<UiComponentAssignment> getSystemBeanUiComponentAssignmentList(Class<? extends BaseEntity>... entityClasses) {
+    private List<UiComponentAssignment> getUiComponentAssignmentList(Class<? extends BaseEntity>... entityClasses) {
         List<UiComponentAssignment> assignmentList = newList();
         UiComponentType panelComponentType = getUiComponentTypeRepository().findByName(PANEL_COMPONENT_TYPE);
 

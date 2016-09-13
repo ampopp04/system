@@ -1,0 +1,27 @@
+///////////////////////////////////////////////////////////////////////
+////////                                              Apply Build Plugin                                               //////////
+/////////////////////////////////////////////////////////////////////
+apply plugin: 'com.system.build'
+
+group = project.group
+
+///////////////////////////////////////////////////////////////////////
+////////                              Define Repository Plugin Location                              //////////
+/////////////////////////////////////////////////////////////////////
+
+buildscript { scriptHandler ->
+    repositories { maven { credentials {} } }
+    repositories.maven.credentials.username = "${nexusUsername}"
+    repositories.maven.credentials.password = "${nexusPassword}"
+    repositories.maven.url = "${repositoryUrl}"
+    dependencies {
+        classpath group: 'com.system', name: 'core-build', version: '1.0'
+    }
+}
+
+///////////////////////////////////////////////////////////////////////
+////////                           Gradle Wrapper Executor Configuration                     //////////
+/////////////////////////////////////////////////////////////////////
+task wrapper(type: Wrapper) {
+    gradleVersion = project.gradleWrapperVersion
+}

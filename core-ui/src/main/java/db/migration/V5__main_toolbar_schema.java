@@ -144,7 +144,7 @@ public class V5__main_toolbar_schema extends BaseDataMigration {
                         newPairList(
                                 newPair("text", "'Beans'"),
                                 newPair("iconCls", "'x-fa fa-leaf'"),
-                                newPair("handler", getBeanFunctionHandler())
+                                newPair(null, getSystemBeanToolbar())
                         ),
                         newPairList(
                                 newPair(null, "'-'")
@@ -180,6 +180,29 @@ public class V5__main_toolbar_schema extends BaseDataMigration {
         return rootToolbarMenu;
     }
 
+    private UiComponentConfigAttribute getSystemBeanToolbar() {
+        return
+                createToolbarMenu("System Bean Toolbar Menu", "The system bean toolbar menu",
+                        newPairList(
+                                newPair("text", "'Instances'"),
+                                newPair("iconCls", "'x-fa fa-leaf'"),
+                                newPair("handler", getBeanInstanceFunctionHandler())
+                        ),
+                        newPairList(
+                                newPair("text", "'Variables'"),
+                                newPair("iconCls", "'x-fa fa-leaf'"),
+                                newPair("handler", getBeanVariableFunctionHandler())
+                        ),
+                        newPairList(
+                                newPair(null, "'-'")
+                        ),
+                        newPairList(
+                                newPair("text", "'Types'"),
+                                newPair("iconCls", "'x-fa fa-leaf'"),
+                                newPair("handler", getBeanTypeFunctionHandler())
+                        ));
+    }
+
 
     private String getSchemaFunctionHandler() {
         return createSchemaTabGridSystemWindow("System Schema", SchemaTable.class, SchemaTableColumn.class, SchemaTableColumnRelationship.class, SchemaDataType.class);
@@ -193,12 +216,21 @@ public class V5__main_toolbar_schema extends BaseDataMigration {
         return createSchemaTabGridSystemWindow("System Security", SystemSecurityUser.class, SystemSecurityPrivilege.class, SystemSecurityRole.class);
     }
 
-    private String getBeanFunctionHandler() {
-        return createSchemaTabGridSystemWindow("System Bean", SystemBeanDefinitionType.class, SystemBeanDefinition.class, SystemBeanType.class,
-                SystemBeanModifierType.class,
-                SystemBeanVariableDefinition.class, SystemBeanVariableDefinitionModifierType.class,
-                SystemBean.class, SystemBeanVariable.class);
+    private String getBeanInstanceFunctionHandler() {
+        return createSchemaTabGridSystemWindow("System Bean", SystemBean.class, SystemBeanType.class, SystemBeanDefinition.class);
     }
+
+
+    private String getBeanVariableFunctionHandler() {
+        return createSchemaTabGridSystemWindow("System Bean", SystemBeanVariableDefinition.class, SystemBeanVariable.class);
+    }
+
+    private String getBeanTypeFunctionHandler() {
+        return createSchemaTabGridSystemWindow("Bean Type", SystemBeanDefinitionType.class,
+                SystemBeanModifierType.class,
+                SystemBeanVariableDefinitionModifierType.class);
+    }
+
 
     private UiComponentConfigAttribute createToolbarMenu(String name, String description, PairList<String, ?>... pairList) {
         UiComponent rootMenuComponent = createUiComponent(name, description, getUiComponentTypeRepository().findByName(TOOLBAR_MENU_COMPONENT_TYPE));

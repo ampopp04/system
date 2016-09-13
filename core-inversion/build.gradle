@@ -1,11 +1,3 @@
-project.rootProject.getAllprojects().
-        findAll { it.name.endsWith(INVERSION_PROJECT_POSTFIX) }.
-        each {
-            project(it.path) {
-                apply plugin: 'spring-boot'
-            }
-        };
-
 dependencies {
     compile project(':core-manipulator')
 

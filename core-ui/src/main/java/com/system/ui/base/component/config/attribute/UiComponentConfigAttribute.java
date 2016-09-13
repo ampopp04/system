@@ -39,6 +39,11 @@ public class UiComponentConfigAttribute extends BaseEntity<Integer> {
     @Column(length = 65000)
     private String value;
 
+    /**
+     * Defines the order this attribute is applied relative to any others
+     */
+    private Integer displayOrder;
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                                       Methods                                                        //////////
     /////////////////////////////////////////////////////////////////////
@@ -65,5 +70,13 @@ public class UiComponentConfigAttribute extends BaseEntity<Integer> {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(Integer displayOrder) {
+        this.displayOrder = displayOrder;
     }
 }

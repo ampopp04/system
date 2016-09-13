@@ -1,9 +1,0 @@
-subprojects {
-    apply from: "$rootDir/core-build/src/main/code/java.gradle"
-    apply from: "$rootDir/core-build/src/main/repository/repository.gradle"
-    apply from: "$rootDir/core-build/src/main/test/test.gradle"
-    apply from: "$rootDir/core-build/src/main/deploy/deployPlugin.gradle"
-    apply from: "$rootDir/core-build/src/main/web/sass.gradle"
-    apply from: "$rootDir/core-build/src/main/repository/publish.gradle"
-    apply from: "$rootDir/core-build/src/main/config/buildConfig.gradle"
-}

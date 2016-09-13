@@ -23,6 +23,11 @@ public class SystemBeanType extends NamedEntity<Integer> {
     @JoinColumn(name = "system_bean_definition_id")
     private SystemBeanDefinition systemBeanDefinition;
 
+    /**
+     * Represents the fully qualified package and class name
+     */
+    private String className;
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                              Default Constructor                                           //////////
     //////////////////////////////////////////////////////////////////////
@@ -40,5 +45,13 @@ public class SystemBeanType extends NamedEntity<Integer> {
 
     public void setSystemBeanDefinition(SystemBeanDefinition systemBeanDefinition) {
         this.systemBeanDefinition = systemBeanDefinition;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 }

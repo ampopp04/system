@@ -4,5 +4,3 @@ rootProject.projectDir.eachFile groovy.io.FileType.DIRECTORIES, {
         include it.name
     }
 }
-//Reroute the root-level build file into a sub-folder for cleanliness
-rootProject.buildFileName = 'core-build/src/main/build.gradle'

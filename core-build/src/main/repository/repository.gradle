@@ -1,5 +1,0 @@
-repositories { maven { credentials {} } }
-repositories.maven.credentials.username = "${nexusUsername}"
-repositories.maven.credentials.password = "${nexusPassword}"
-repositories.maven.url = "${repositoryUrl}"
-ext.systemRepo = repositories

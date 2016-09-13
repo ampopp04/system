@@ -1,5 +1,7 @@
 package com.system.db.util.entity;
 
+import com.system.db.entity.Entity;
+import com.system.util.clazz.ClassUtils;
 import org.springframework.core.env.Environment;
 
 import java.util.HashMap;
@@ -36,4 +38,15 @@ public class EntityUtils {
 
         return propertyMap;
     }
+
+    /**
+     * Returns whether a class is assignable to our Entity interface
+     *
+     * @param clazz
+     * @return
+     */
+    public static boolean isEntityClass(Class clazz) {
+        return ClassUtils.isAssignable(clazz, Entity.class);
+    }
+
 }

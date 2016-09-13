@@ -1,7 +1,0 @@
-//Core external plugins used for the execution of the build process
-ext.dependencyPlugins = {
-    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE'
-    classpath 'com.bmuschko:gradle-docker-plugin:2.6.8'
-    classpath 'com.github.robfletcher:compass-gradle-plugin:2.0.6'
-    classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-}

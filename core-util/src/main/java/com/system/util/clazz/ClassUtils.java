@@ -3,6 +3,7 @@ package com.system.util.clazz;
 import org.objectweb.asm.ClassReader;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -232,5 +233,25 @@ public class ClassUtils {
                 return 0;
             }
         };
+    }
+
+    /**
+     * Return all declared fields on a class
+     *
+     * @param clazz
+     * @return
+     */
+    public static Field[] getClassFields(Class clazz) {
+        return clazz.getDeclaredFields();
+    }
+
+    /**
+     * Returns the first direct interface of the given class or null if it doesn't exist
+     *
+     * @param clazz
+     * @return
+     */
+    public static Class getFirstInterfaceOfClass(Class clazz) {
+        return clazz == null || clazz.getInterfaces() == null ? null : clazz.getInterfaces()[0];
     }
 }

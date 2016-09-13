@@ -3,6 +3,7 @@ package com.system.bean.variable.definition;
 import com.system.bean.type.SystemBeanType;
 import com.system.bean.variable.definition.modifier.type.SystemBeanVariableDefinitionModifierType;
 import com.system.db.entity.named.NamedEntity;
+import com.system.db.schema.table.SchemaTable;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,9 +24,21 @@ public class SystemBeanVariableDefinition extends NamedEntity<Integer> {
     ////////                                                     Properties                                                       //////////
     //////////////////////////////////////////////////////////////////////
 
+    /**
+     * Represents the name of the backing variable within the defining class
+     */
+    private String variableName;
+
     @ManyToOne
     @JoinColumn(name = "system_bean_type_id")
     private SystemBeanType systemBeanType;
+
+    /**
+     * If populated, defines this variable to be an entity within an existing schema table
+     */
+    @ManyToOne
+    @JoinColumn(name = "schema_table_id")
+    private SchemaTable schemaTable;
 
     @OneToMany(mappedBy = "systemBeanVariableDefinition")
     private Collection<SystemBeanVariableDefinitionModifierType> SystemBeanVariableDefinitionModifierTypes;
@@ -55,5 +68,21 @@ public class SystemBeanVariableDefinition extends NamedEntity<Integer> {
 
     public void setSystemBeanVariableDefinitionModifierTypes(Collection<SystemBeanVariableDefinitionModifierType> systemBeanVariableDefinitionModifierTypes) {
         SystemBeanVariableDefinitionModifierTypes = systemBeanVariableDefinitionModifierTypes;
+    }
+
+    public String getVariableName() {
+        return variableName;
+    }
+
+    public void setVariableName(String variableName) {
+        this.variableName = variableName;
+    }
+
+    public SchemaTable getSchemaTable() {
+        return schemaTable;
+    }
+
+    public void setSchemaTable(SchemaTable schemaTable) {
+        this.schemaTable = schemaTable;
     }
 }
