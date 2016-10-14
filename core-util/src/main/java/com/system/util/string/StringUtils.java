@@ -92,7 +92,6 @@ public class StringUtils {
      * @param replacement  the String to replace it with, may be null
      * @return the text with any replacements processed,
      * {@code null} if null String input
-     * @see #replace(String text, String searchString, String replacement, int max)
      */
     public static String replace(final String text, final String searchString, final String replacement) {
         return org.apache.commons.lang3.StringUtils.replace(text, searchString, replacement);
@@ -154,7 +153,7 @@ public class StringUtils {
      * @return
      */
     public static String lineSeparatorToPeriod(String str) {
-        return str.replace(File.separator, ".");
+        return str.replace("/", ".");
     }
 
 
