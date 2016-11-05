@@ -3,6 +3,10 @@ package com.system.db.schema.table;
 
 import com.system.db.entity.named.NamedEntity;
 
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 /**
  * The <class>SchemaTable</class> defines database tables.
  * <p>
@@ -11,6 +15,10 @@ import com.system.db.entity.named.NamedEntity;
  *
  * @author Andrew
  */
+@Table(
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})},
+        indexes = {@Index(columnList = "name")}
+)
 public class SchemaTable extends NamedEntity<Integer> {
 
     ///////////////////////////////////////////////////////////////////////

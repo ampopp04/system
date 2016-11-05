@@ -6,8 +6,7 @@ import com.system.db.schema.datatype.SchemaDataType;
 import com.system.db.schema.table.SchemaTable;
 import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationship;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * The <class>SchemaTableColumn</class> defines database columns.
@@ -17,6 +16,10 @@ import javax.persistence.ManyToOne;
  *
  * @author Andrew
  */
+@Table(
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"schema_table_id", "name"})},
+        indexes = {@Index(columnList = "name")}
+)
 public class SchemaTableColumn extends NamedEntity<Integer> {
 
     ///////////////////////////////////////////////////////////////////////

@@ -3,6 +3,7 @@
 /////////////////////////////////////////////////////////////////////
 apply plugin: 'com.system.build'
 
+version = '1.0'
 group = project.group
 
 ///////////////////////////////////////////////////////////////////////
@@ -15,7 +16,7 @@ buildscript { scriptHandler ->
     repositories.maven.credentials.password = "${nexusPassword}"
     repositories.maven.url = "${repositoryUrl}"
     dependencies {
-        classpath group: 'com.system', name: 'core-build', version: '1.0'
+        classpath group: 'com.system', name: 'build', version: '1.0'
     }
 }
 

@@ -158,8 +158,8 @@ Ext.define('System.util.system.UiComponentUtils', {
          * @returns {*}
          */
         convertUiComponentConfigAttribute: function (uiComponentConfigAttribute, jsonObject) {
-            var key = uiComponentConfigAttribute.key;
-            var value = uiComponentConfigAttribute.value;
+            var key = uiComponentConfigAttribute.attributeKey;
+            var value = uiComponentConfigAttribute.attributeValue;
 
             if (Ext.isString(value)) {
                 value = Ext.decode(value);

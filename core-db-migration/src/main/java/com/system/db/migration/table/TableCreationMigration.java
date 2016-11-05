@@ -3,13 +3,19 @@ package com.system.db.migration.table;
 import com.system.db.entity.Entity;
 import com.system.db.migration.data.BaseDataMigration;
 import com.system.db.migration.table.configuration.TableConfiguration;
+import com.system.db.util.entity.EntityUtils;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
+
+import static com.system.util.collection.CollectionUtils.iterable;
+import static com.system.util.collection.CollectionUtils.iterate;
 
 /**
  * The <class>TableCreationMigration</class> defines the entry point for
@@ -23,6 +29,15 @@ import java.util.List;
 public abstract class TableCreationMigration extends BaseDataMigration {
 
     ///////////////////////////////////////////////////////////////////////
+    ////////                                              Properties                                                //////////
+    //////////////////////////////////////////////////////////////////////
+
+    private TableConfiguration configuration;
+
+    @Autowired
+    private Environment environment;
+
+    ///////////////////////////////////////////////////////////////////////
     ////////                                              Abstract Methods                                                //////////
     //////////////////////////////////////////////////////////////////////
 
@@ -32,14 +47,6 @@ public abstract class TableCreationMigration extends BaseDataMigration {
      * @return
      */
     protected abstract List<Class<? extends Entity>> getEntityClasses();
-
-    private static final TableConfiguration configuration = new TableConfiguration();
-
-    static {
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-        configuration.setNamingStrategy(ImprovedNamingStrategy.INSTANCE);
-        configuration.generateSchemaCreationScript(Dialect.getDialect(configuration.getProperties()));
-    }
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                               Migration Methods                                             //////////
@@ -51,8 +58,13 @@ public abstract class TableCreationMigration extends BaseDataMigration {
      * @param configuration
      * @see Configuration#addAnnotatedClass(Class)
      */
-    private void setEntityClasses(Configuration configuration) {
-        getEntityClasses().forEach(configuration::addAnnotatedClass);
+    private void setEntityClasses(TableConfiguration configuration) {
+        List<Class<? extends Entity>> entityClassList = getEntityClasses();
+        iterate(iterable(entityClassList), entityClass -> {
+            configuration.addAnnotatedClass(entityClass);
+        });
+
+        configuration.addDependentPersistentClasses(entityClassList);
     }
 
     /**
@@ -82,6 +94,12 @@ public abstract class TableCreationMigration extends BaseDataMigration {
      * @see TableConfiguration
      */
     private TableConfiguration getConfiguration() {
+        if (configuration == null) {
+            configuration = new TableConfiguration();
+            configuration.setProperties(EntityUtils.getJpaProperties(environment));
+            configuration.setNamingStrategy(ImprovedNamingStrategy.INSTANCE);
+            configuration.generateSchemaCreationScript(Dialect.getDialect(configuration.getProperties()));
+        }
         return configuration;
     }
 

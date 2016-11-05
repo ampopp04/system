@@ -153,8 +153,8 @@ public class UiCreationUtils {
     public static UiComponentConfigAttribute createUiComponentConfigAttribute(UiComponent uiComponent, String key, String value) {
         UiComponentConfigAttribute uiComponentConfigAttribute = new UiComponentConfigAttribute();
         uiComponentConfigAttribute.setUiComponent(uiComponent);
-        uiComponentConfigAttribute.setKey(key);
-        uiComponentConfigAttribute.setValue(value);
+        uiComponentConfigAttribute.setAttributeKey(key);
+        uiComponentConfigAttribute.setAttributeValue(value);
         return uiComponentConfigAttribute;
     }
 

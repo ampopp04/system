@@ -4,8 +4,8 @@ import com.system.db.entity.Entity;
 import com.system.util.clazz.ClassUtils;
 import org.springframework.core.env.Environment;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import static com.system.inversion.util.InversionUtils.getResourceProperties;
 import static com.system.util.collection.CollectionUtils.iterable;
@@ -27,16 +27,22 @@ public class EntityUtils {
      * @param env
      * @return
      */
-    public static Map<String, Object> getJpaProperties(Environment env) {
-        Map<String, Object> propertyMap = new HashMap<>();
+    public static Properties getJpaProperties(Environment env) {
+        Properties properties = new Properties();
         Map<String, Object> resourcePropertyMap = getResourceProperties(env);
         iterate(iterable(resourcePropertyMap), (k) -> {
             if (contains(k, "hibernate")) {
-                propertyMap.put(removeBefore(k, "hibernate"), resourcePropertyMap.get(k));
+                properties.put(removeBefore(k, "hibernate"), resourcePropertyMap.get(k));
             }
         });
 
-        return propertyMap;
+        if (resourcePropertyMap.containsKey("spring.datasource.url")) {
+            properties.put("hibernate.dialect", "com.system.db.dialect.SystemMySQLDialect");
+        } else {
+            properties.put("hibernate.dialect", "com.system.db.dialect.SystemH2Dialect");
+        }
+
+        return properties;
     }
 
     /**

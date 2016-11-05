@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 
 /**
  * The <class>UiComponentConfigAttribute</class> defines a
- * key value attribute pair.  If the value is null then the value will be
+ * key attributeValue attribute pair.  If the attributeValue is null then the attributeValue will be
  * the UiComponent which allows for a rich set of attributes.
  *
  * @author Andrew
@@ -24,20 +24,20 @@ public class UiComponentConfigAttribute extends BaseEntity<Integer> {
     /**
      * The key defining the attribute for the UI.
      */
-    private String key;
+    private String attributeKey;
 
     /**
-     * Either the UiComponent for a nested value or the provided value.
+     * Either the UiComponent for a nested attributeValue or the provided attributeValue.
      */
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "ui_component_id")
     private UiComponent uiComponent;
 
     /**
-     * The string value to use instead of a UiComponent if specified.
+     * The string attributeValue to use instead of a UiComponent if specified.
      */
-    @Column(length = 65000)
-    private String value;
+    @Column(length = 65000, columnDefinition = "TEXT")
+    private String attributeValue;
 
     /**
      * Defines the order this attribute is applied relative to any others
@@ -56,20 +56,20 @@ public class UiComponentConfigAttribute extends BaseEntity<Integer> {
         this.uiComponent = uiComponent;
     }
 
-    public String getKey() {
-        return key;
+    public String getAttributeKey() {
+        return attributeKey;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setAttributeKey(String attributeKey) {
+        this.attributeKey = attributeKey;
     }
 
-    public String getValue() {
-        return value;
+    public String getAttributeValue() {
+        return attributeValue;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setAttributeValue(String attributeValue) {
+        this.attributeValue = attributeValue;
     }
 
     public Integer getDisplayOrder() {

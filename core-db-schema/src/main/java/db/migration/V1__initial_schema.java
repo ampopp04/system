@@ -103,7 +103,7 @@ public class V1__initial_schema extends TableCreationMigration {
         SchemaDataType dataType = new SchemaDataType();
         dataType.setName(name);
         dataType.setDescription(description);
-        dataType.setNumeric(numeric);
+        dataType.setNumber(numeric);
         dataType.setSqlType(sqlType);
         dataType.setJavaType(javaType);
         return dataType;

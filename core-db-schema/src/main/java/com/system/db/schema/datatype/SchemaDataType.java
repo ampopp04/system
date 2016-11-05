@@ -36,9 +36,9 @@ public class SchemaDataType extends NamedEntity<Short> {
     ////////                                                     Properties                                                       //////////
     //////////////////////////////////////////////////////////////////////
     /**
-     * Denotes whether this is a numeric data type or otherwise
+     * Denotes whether this is a number data type or otherwise
      */
-    private boolean numeric;
+    private boolean number;
 
     /**
      * The sql type.
@@ -65,12 +65,12 @@ public class SchemaDataType extends NamedEntity<Short> {
     ////////                                             Basic Getter/Setters                                          //////////
     //////////////////////////////////////////////////////////////////////
 
-    public boolean isNumeric() {
-        return numeric;
+    public boolean isNumber() {
+        return number;
     }
 
-    public void setNumeric(boolean numeric) {
-        this.numeric = numeric;
+    public void setNumber(boolean number) {
+        this.number = number;
     }
 
     public String getSqlType() {

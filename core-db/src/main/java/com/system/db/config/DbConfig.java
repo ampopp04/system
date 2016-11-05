@@ -40,7 +40,7 @@ public class DbConfig {
         lef.setDataSource(dataSource);
         lef.setJpaVendorAdapter(jpaVendorAdapter);
         lef.setPackagesToScan(SYSTEM_PACKAGE_ROOT);
-        lef.setJpaPropertyMap(getJpaProperties(env));
+        lef.setJpaProperties(getJpaProperties(env));
         lef.afterPropertiesSet();
         return lef.getObject();
     }
