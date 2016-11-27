@@ -5,8 +5,12 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.mapping.Table;
 
+import javax.persistence.ManyToMany;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import static com.system.util.collection.CollectionUtils.iterable;
 import static com.system.util.collection.CollectionUtils.newList;
@@ -61,7 +65,7 @@ public class TableConfiguration extends Configuration {
 
     public void addDependentPersistentClasses(List<Class<? extends Entity>> entityClassList) {
         for (Class<? extends Entity> entityClass : iterable(entityClassList)) {
-            for (Class<? extends Entity> clazz : iterable(getDependentPersistentClassList(entityClass, new ArrayList<>()))) {
+            for (Class<? extends Entity> clazz : iterable(getDependentPersistentClassList(entityClass, new HashSet<>()))) {
                 if (!entityClassList.contains(clazz)) {
                     this.dependentEntityNames.add(ImprovedNamingStrategy.INSTANCE.classToTableName(clazz.getSimpleName()));
                     this.addAnnotatedClass(clazz);
@@ -70,24 +74,48 @@ public class TableConfiguration extends Configuration {
         }
     }
 
-
-    public List<Class<? extends Entity>> getDependentPersistentClassList(Class<? extends Entity> entity, List<Class<? extends Entity>> dependentEntityList) {
+    public Set<Class<? extends Entity>> getDependentPersistentClassList(Class<? extends Entity> entity, Set<Class<? extends Entity>> dependentEntitySet) {
         for (Field field : iterable(entity.getDeclaredFields())) {
-            if (Entity.class.isAssignableFrom(field.getType())) {
-                Class<? extends Entity> dependentEntity = (Class<? extends Entity>) field.getType();
-                if (dependentEntityList.contains(dependentEntity)) {
-                    //Cycle detected, we are done...
-                    return dependentEntityList;
-                }
-
-                dependentEntityList.add(dependentEntity);
-                dependentEntityList.addAll(getDependentPersistentClassList(dependentEntity, dependentEntityList));
-            }
+            handleFieldTypeDependencies(field, dependentEntitySet);
+            handleFieldAnnotationTypeDependencies(field, dependentEntitySet);
         }
 
-        return dependentEntityList;
+        return dependentEntitySet;
     }
 
+    private void handleFieldAnnotationTypeDependencies(Field field, Set<Class<? extends Entity>> dependentEntitySet) {
+        ManyToMany[] annotations = field.getAnnotationsByType(ManyToMany.class);
+
+        if (annotations != null) {
+            for (ManyToMany annotation : annotations) {
+                Class clazz = annotation.targetEntity();
+                if (clazz != null) {
+                    if (Entity.class.isAssignableFrom(clazz)) {
+                        Class<? extends Entity> dependentEntity = (Class<? extends Entity>) clazz;
+                        if (dependentEntitySet.contains(dependentEntity)) {
+                            //Cycle;
+                        }
+
+                        dependentEntitySet.add(dependentEntity);
+                        dependentEntitySet.addAll(getDependentPersistentClassList(dependentEntity, dependentEntitySet));
+                    }
+                }
+            }
+        }
+    }
+
+    private void handleFieldTypeDependencies(Field field, Set<Class<? extends Entity>> dependentEntitySet) {
+        if (Entity.class.isAssignableFrom(field.getType())) {
+            Class<? extends Entity> dependentEntity = (Class<? extends Entity>) field.getType();
+            if (dependentEntitySet.contains(dependentEntity)) {
+                //Cycle detected, we are done...
+                return;
+            }
+
+            dependentEntitySet.add(dependentEntity);
+            dependentEntitySet.addAll(getDependentPersistentClassList(dependentEntity, dependentEntitySet));
+        }
+    }
 
     private boolean tablePreviouslyMigrated(String tableName) {
         return migratedEntityNames.contains(tableName);
