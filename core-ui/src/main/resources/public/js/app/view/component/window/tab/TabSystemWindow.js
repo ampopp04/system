@@ -38,6 +38,7 @@ Ext.define('System.view.component.window.tab.TabSystemWindow', {
 
 
     listeners: {
+
         /**
          * Enable drag and drop of the window by clicking on the main
          * tab panel header bar
@@ -51,13 +52,15 @@ Ext.define('System.view.component.window.tab.TabSystemWindow', {
                 var me = this,
                     ddConfig, dd;
 
-                ddConfig = Ext.applyIf({
-                    el: me.el,
-                    delegate: '#' + form.items.items[0].tabBar.id
-                }, me.draggable);
+                if (me.draggable) {
+                    ddConfig = Ext.applyIf({
+                        el: me.el,
+                        delegate: '#' + form.items.items[0].tabBar.id
+                    }, me.draggable);
 
-                dd = me.dd = new Ext.util.ComponentDragger(me, ddConfig);
-                me.relayEvents(dd, ['dragstart', 'drag', 'dragend']);
+                    dd = me.dd = new Ext.util.ComponentDragger(me, ddConfig);
+                    me.relayEvents(dd, ['dragstart', 'drag', 'dragend']);
+                }
             }
         }
     }

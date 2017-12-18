@@ -18,7 +18,6 @@ Ext.define('System.util.application.SessionMonitor', {
     lastActive: null,
     maxInactive: 1000 * 60 * 15,  // 15 minutes of inactivity allowed; set it to 1 for testing.
     remaining: 0,
-    ui: Ext.getBody(),
 
     /**
      * Dialog to display expiration message and count-down timer.

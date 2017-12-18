@@ -35,7 +35,7 @@ import static com.system.util.collection.CollectionUtils.asList;
  * @see UiComponentConfig
  * @see UiComponentConfigAttribute
  */
-public class V4__initial_schema extends TableCreationMigration {
+public class V11__initial_schema extends TableCreationMigration {
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                     Properties                                                       //////////
@@ -62,7 +62,7 @@ public class V4__initial_schema extends TableCreationMigration {
 
     @Override
     protected void insertData() {
-        getUiComponentTypeRepository().save(getDefinitionTypeList());
+        getUiComponentTypeRepository().saveAll(getDefinitionTypeList());
     }
 
     private List<UiComponentType> getDefinitionTypeList() {

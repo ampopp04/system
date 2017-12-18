@@ -15,4 +15,6 @@ import java.util.List;
 public interface UiComponentConfigProjection {
 
     public List<UiComponentConfigAttributeProjection> getUiComponentConfigAttributeList();
+
+    public Integer getId();
 }

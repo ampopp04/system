@@ -7,7 +7,8 @@
 Ext.define('System.util.application.ErrorUtils', {
 
     requires: [
-        'System.util.application.UserUtils'
+        'System.util.application.UserUtils',
+        'System.util.application.Util'
     ],
 
     ///////////////////////////////////////////////////////////////////////
@@ -24,9 +25,39 @@ Ext.define('System.util.application.ErrorUtils', {
         dataRequestErrorCheck: function (success, errorMsg, statusCode) {
             if (!success) {
                 if (statusCode == 401) {
-                    System.util.application.UserUtils.logout();
+                    System.util.application.Util.showToast("Session Expired. Logging out.");
+                    System.util.application.UserUtils.onLogoutSuccess();
                 } else {
-                    System.util.application.ErrorUtils.showErrorMsg(errorMsg);
+                    var decodedErrorMsg = errorMsg;
+
+                    try {
+                        decodedErrorMsg = Ext.JSON.decode(errorMsg);
+                    } catch (e) {
+                    }
+
+                    if (decodedErrorMsg.apierror) {
+                        decodedErrorMsg = decodedErrorMsg.apierror;
+                    }
+
+                    var message = "System error, retry again shortly.";
+
+                    if (decodedErrorMsg) {
+
+                        if (decodedErrorMsg.subErrors && decodedErrorMsg.subErrors.length > 0) {
+                            message = decodedErrorMsg.subErrors[(decodedErrorMsg.subErrors.length - 1)].message;
+
+                        } else {
+                            message = decodedErrorMsg.message;
+
+                            if (decodedErrorMsg.debugMessage) {
+                                message = message + ' Technical Error [' + decodedErrorMsg.debugMessage + '].';
+                            }
+
+                        }
+
+                    }
+
+                    System.util.application.ErrorUtils.showErrorMsg(message);
                 }
             }
         },
@@ -36,12 +67,7 @@ Ext.define('System.util.application.ErrorUtils', {
          * @param text
          */
         showErrorMsg: function (text) {
-            Ext.Msg.show({
-                title: 'Error!',
-                msg: text,
-                icon: Ext.Msg.ERROR,
-                buttons: Ext.Msg.OK
-            });
+            System.util.application.Util.showErrorMessage(text);
         }
     }
 });

@@ -8,7 +8,8 @@ Ext.define('System.view.component.window.tab.grid.TabGridSystemWindow', {
     extend: 'System.view.component.window.tab.TabSystemWindow',
 
     requires: [
-        'System.view.component.panel.grid.BaseSystemGridPanel'
+        'System.view.component.panel.grid.BaseSystemGridPanel',
+        'System.view.component.panel.grid.ParentSearchCallerGridPanel'
     ],
 
     ///////////////////////////////////////////////////////////////////////
@@ -26,14 +27,18 @@ Ext.define('System.view.component.window.tab.grid.TabGridSystemWindow', {
      */
     initComponent: function () {
         var me = this;
-        me.tabs = [];
 
-        me.tabs.forEach(function (tab) {
-            Ext.apply(tab, {
-                xtype: 'base-system-grid-panel',
-                modelName: tab.modelName
-            })
-        });
+        if (me.tabs) {
+            me.tabs.forEach(function (tab) {
+                var xtypeValue = tab.parentSearchCaller ? 'parent-search-caller-grid-panel' : 'base-system-grid-panel';
+
+                Ext.apply(tab, {
+                    parentSearchCaller: tab.parentSearchCaller,
+                    xtype: xtypeValue,
+                    modelName: tab.modelName
+                })
+            });
+        }
 
         me.callParent();
     }

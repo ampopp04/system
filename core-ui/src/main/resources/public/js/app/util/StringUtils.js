@@ -94,7 +94,7 @@ Ext.define('System.util.StringUtils', {
          * @returns {*}
          */
         startsWith: function (str, startsWithStr) {
-            return str.startsWith(startsWithStr);
+            return Ext.String.startsWith(str, startsWithStr);
         }
     }
 });

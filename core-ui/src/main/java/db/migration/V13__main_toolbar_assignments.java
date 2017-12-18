@@ -11,12 +11,29 @@ import com.system.bean.variable.definition.SystemBeanVariableDefinition;
 import com.system.bean.variable.definition.modifier.type.SystemBeanVariableDefinitionModifierType;
 import com.system.db.entity.base.BaseEntity;
 import com.system.db.migration.data.BaseDataMigration;
-import com.system.db.repository.base.entity.SystemRepository;
 import com.system.db.repository.base.named.NamedEntityRepository;
 import com.system.db.schema.datatype.SchemaDataType;
 import com.system.db.schema.table.SchemaTable;
 import com.system.db.schema.table.column.SchemaTableColumn;
 import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationship;
+import com.system.export.SystemExport;
+import com.system.export.content.definition.SystemExportContentDefinition;
+import com.system.export.definition.SystemExportDefinition;
+import com.system.export.definition.type.SystemExportDefinitionType;
+import com.system.export.destination.SystemExportDestination;
+import com.system.export.destination.type.SystemExportDestinationType;
+import com.system.export.file.type.SystemExportFileType;
+import com.system.export.generator.SystemExportGenerator;
+import com.system.export.generator.content.SystemExportGeneratorContent;
+import com.system.export.generator.type.SystemExportGeneratorType;
+import com.system.export.task.SystemExportTask;
+import com.system.export.task.assignment.SystemExportTaskAssignment;
+import com.system.export.task.content.SystemExportTaskContent;
+import com.system.export.task.history.SystemExportTaskHistory;
+import com.system.export.task.status.SystemExportTaskStatus;
+import com.system.export.template.SystemExportTemplate;
+import com.system.export.template.type.SystemExportTemplateType;
+import com.system.export.variable.SystemExportVariableMapping;
 import com.system.security.privilege.SystemSecurityPrivilege;
 import com.system.security.role.SystemSecurityRole;
 import com.system.security.user.SystemSecurityUser;
@@ -45,7 +62,7 @@ import static com.system.util.collection.Pair.newPair;
  *
  * @author Andrew
  */
-public class V6__main_toolbar_assignments extends BaseDataMigration {
+public class V13__main_toolbar_assignments extends BaseDataMigration {
 
     private static final Map<Class<? extends BaseEntity>, String> entityIconMap;
 
@@ -66,7 +83,7 @@ public class V6__main_toolbar_assignments extends BaseDataMigration {
     private NamedEntityRepository<UiComponentType> uiComponentTypeRepository;
 
     @Autowired
-    private SystemRepository uiComponentAssignmentRepository;
+    private NamedEntityRepository<UiComponentAssignment> uiComponentAssignmentRepository;
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                  Data Insertion                                                   //////////
@@ -74,22 +91,31 @@ public class V6__main_toolbar_assignments extends BaseDataMigration {
 
     @Override
     protected void insertData() {
-        getUiComponentAssignmentRepository().save(getUiComponentAssignmentList(
+        getUiComponentAssignmentRepository().saveAll(getUiComponentAssignmentList(
                 SchemaDataType.class, SchemaTable.class, SchemaTableColumn.class, SchemaTableColumnRelationship.class));
 
-        getUiComponentAssignmentRepository().save(getUiComponentAssignmentList(
+        getUiComponentAssignmentRepository().saveAll(getUiComponentAssignmentList(
                 SystemBeanDefinitionType.class, SystemBeanDefinition.class, SystemBeanType.class,
                 SystemBeanModifierType.class,
                 SystemBeanVariableDefinition.class, SystemBeanVariableDefinitionModifierType.class,
                 SystemBean.class, SystemBeanVariable.class));
 
-        getUiComponentAssignmentRepository().save(getUiComponentAssignmentList(
+        getUiComponentAssignmentRepository().saveAll(getUiComponentAssignmentList(
                 SystemSecurityUser.class, SystemSecurityPrivilege.class, SystemSecurityRole.class));
 
-        getUiComponentAssignmentRepository().save(getUiComponentAssignmentList(UiComponentType.class,
+        getUiComponentAssignmentRepository().saveAll(getUiComponentAssignmentList(UiComponentType.class,
                 UiComponentDefinition.class, UiComponent.class,
                 UiComponentConfigAttribute.class, UiComponentConfig.class,
                 UiComponentAssignment.class));
+
+        getUiComponentAssignmentRepository().saveAll(getUiComponentAssignmentList(
+                SystemExportTaskStatus.class, SystemExportTask.class,
+                SystemExportTaskContent.class,
+                SystemExportTaskAssignment.class, SystemExportTemplate.class, SystemExportTemplateType.class, SystemExportFileType.class,
+                SystemExportDefinitionType.class, SystemExportDefinition.class, SystemExport.class,
+                SystemExportVariableMapping.class, SystemExportDestinationType.class, SystemExportDestination.class, SystemExportTaskHistory.class, SystemExportContentDefinition.class, SystemExportGeneratorContent.class
+                , SystemExportGeneratorType.class, SystemExportGenerator.class
+        ));
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -115,7 +141,7 @@ public class V6__main_toolbar_assignments extends BaseDataMigration {
     private Pair<String, String>[] getDefaultEntityPairList(Class<? extends BaseEntity> entityClass) {
         List<Pair<String, String>> pairList = asList(
                 newPair("title", "'" + StringUtils.addSpaceOnCapitialLetters(entityClass.getSimpleName()) + "'"),
-                newPair("modelName", "'" + entityClass.getSimpleName() + "s'"));
+                newPair("modelName", "'" + getPluralTable(entityClass.getSimpleName()) + "'"));
 
         if (entityIconMap.containsKey(entityClass)) {
             pairList.add(newPair("iconCls", "'" + entityIconMap.get(entityClass) + "'"));
@@ -125,6 +151,15 @@ public class V6__main_toolbar_assignments extends BaseDataMigration {
         pairs = pairList.toArray(pairs);
 
         return pairs;
+    }
+
+    private String getPluralTable(String tableName) {
+        if (tableName.endsWith("History")) {
+            return tableName.replace("History", "Histories");
+        } else if (tableName.endsWith("Status")) {
+            return tableName + "es";
+        }
+        return tableName + "s";
     }
 
     private UiComponentAssignment assignComponentToSchemaTable(String tableName, UiComponent uiComponent) {
@@ -156,11 +191,11 @@ public class V6__main_toolbar_assignments extends BaseDataMigration {
         this.schemaTableRepository = schemaTableRepository;
     }
 
-    public SystemRepository getUiComponentAssignmentRepository() {
+    public NamedEntityRepository<UiComponentAssignment> getUiComponentAssignmentRepository() {
         return uiComponentAssignmentRepository;
     }
 
-    public void setUiComponentAssignmentRepository(SystemRepository uiComponentAssignmentRepository) {
+    public void setUiComponentAssignmentRepository(NamedEntityRepository<UiComponentAssignment> uiComponentAssignmentRepository) {
         this.uiComponentAssignmentRepository = uiComponentAssignmentRepository;
     }
 }

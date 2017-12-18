@@ -45,8 +45,7 @@ Ext.define('System.view.application.login.Login', {
                 anchor: '100%',
                 labelWidth: 70,
                 allowBlank: false,
-                vtype: 'alphanum',
-                minLength: 3,
+                minLength: 1,
                 msgTarget: 'side',
                 enableKeyEvents: true,
                 fieldStyle: 'background-color: #ffffff; background-image: none;',
@@ -66,7 +65,6 @@ Ext.define('System.view.application.login.Login', {
                     name: 'password',
                     id: 'password',
                     maxLength: 15,
-                    vtype: 'alphanum',
                     fieldStyle: 'font-family: FontAwesome',
                     emptyText: '\uF023 Password',
                     listeners: {
@@ -79,7 +77,7 @@ Ext.define('System.view.application.login.Login', {
                 {
                     xtype: 'toolbar',
                     dock: 'bottom',
-                    style: 'background-color: #ffffff; background-image: none;',
+                    style: 'background-color: #ffffff; background-image: none; border-width: 0px !important; border-bottom-width: 0px !important; padding: 6px 0px 5px 8px;',
                     items: [
                         {
                             xtype: 'tbfill'
@@ -88,7 +86,10 @@ Ext.define('System.view.application.login.Login', {
                             xtype: 'button',
                             itemId: 'submit',
                             formBind: true,
-                            style: 'background-color: #ffffff; background-image: none;',
+                            style: {
+                                'background-color': '#ffffff',
+                                'background-image': 'none'
+                            },
                             iconCls: 'fa fa-sign-in fa-lg',
                             text: 'Login',
                             listeners: {

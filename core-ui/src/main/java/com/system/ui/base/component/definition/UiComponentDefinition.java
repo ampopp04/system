@@ -7,10 +7,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.util.List;
+import java.util.Set;
 
 import static com.system.util.collection.CollectionUtils.add;
-import static com.system.util.collection.CollectionUtils.newList;
+import static com.system.util.collection.CollectionUtils.asSet;
+import static javax.persistence.FetchType.EAGER;
 
 /**
  * The <class>UiComponentDefinition</class> defines a
@@ -45,8 +46,8 @@ public class UiComponentDefinition extends UiBase<Integer> {
     /**
      * A set of required classes that are used within this definition.
      */
-    @ElementCollection
-    private List<String> requires;
+    @ElementCollection(fetch = EAGER)
+    private Set<String> requires;
 
     /**
      * This UiComponent defines the underlying structure of this definition.
@@ -63,14 +64,14 @@ public class UiComponentDefinition extends UiBase<Integer> {
         add(getRequires(), require);
     }
 
-    public List<String> getRequires() {
+    public Set<String> getRequires() {
         if (requires == null) {
-            setRequires(newList());
+            setRequires(asSet());
         }
         return requires;
     }
 
-    public void setRequires(List<String> requires) {
+    public void setRequires(Set<String> requires) {
         this.requires = requires;
     }
 

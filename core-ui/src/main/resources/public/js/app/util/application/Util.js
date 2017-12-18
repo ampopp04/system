@@ -7,8 +7,7 @@
 Ext.define('System.util.application.Util', {
 
     requires: [
-        'Ext.window.Toast',
-        'System.util.application.ErrorUtils'
+        'Ext.window.Toast'
     ],
 
     ///////////////////////////////////////////////////////////////////////
@@ -37,38 +36,69 @@ Ext.define('System.util.application.Util', {
         },
 
         /**
-         * Handle a form submit server failure
-         *
-         * @param action
-         */
-        handleFormFailure: function (action) {
-            var me = this, result = System.util.application.Util.decodeJSON(action.response.responseText);
-
-            switch (action.failureType) {
-                case Ext.form.action.Action.CLIENT_INVALID:
-                    System.util.application.ErrorUtils.showErrorMsg('Form fields may not be submitted with invalid values');
-                    break;
-                case Ext.form.action.Action.CONNECT_FAILURE:
-                    System.util.application.ErrorUtils.showErrorMsg(action.response.responseText);
-                    break;
-                case Ext.form.action.Action.SERVER_INVALID:
-                    System.util.application.ErrorUtils.showErrorMsg(result.msg);
-            }
-        },
-
-        /**
          * Show a toast
          *
          * @param text
          */
         showToast: function (text) {
-            Ext.toast({
-                html: text,
-                closable: false,
-                align: 't',
-                slideInDuration: 400,
-                minWidth: 400
+            if (!Ext.ComponentQuery.query('#systemToast').length) {
+                Ext.toast({
+                    itemId: 'systemToast',
+                    html: text,
+                    closable: false,
+                    align: 't'
+                });
+            }
+        },
+
+        doShowMessage: function (title, text, icon, buttons, fn, scope) {
+            Ext.MessageBox.show({
+                title: title,
+                message: text,
+                buttons: buttons || Ext.MessageBox.OK,
+
+                //multiline: true,
+
+                fn: function () {
+                    if (fn) {
+                        Ext.callback(fn, scope, arguments);
+                    }
+                },
+                scope: scope,
+
+                width: null,
+                height: null,
+
+                maxHeight: '500',
+                maxWidth: '200',
+
+                onRender: function (ct, pos) {
+                    //Call superclass
+                    this.callParent(arguments);
+                    if (this.getHeight() > this.maxHeight) {
+                        this.setHeight(this.maxHeight);
+                    }
+                    if (this.getWidth() > this.maxWidth) {
+                        this.setWidth(this.maxWidth);
+                    }
+                    this.center();
+                }
+
             });
+
+        },
+
+        showInfoMessage: function (text) {
+            System.util.application.Util.doShowMessage("Info", text);
+        },
+
+        showErrorMessage: function (text) {
+            System.util.application.Util.doShowMessage("Error", text, Ext.MessageBox.ERROR);
+        },
+
+        showConfirmationMessage: function (text, fn, scope) {
+            System.util.application.Util.doShowMessage("Confirm", text, Ext.MessageBox.QUESTION, Ext.MessageBox.OKCANCEL, fn, scope);
         }
+        
     }
 });

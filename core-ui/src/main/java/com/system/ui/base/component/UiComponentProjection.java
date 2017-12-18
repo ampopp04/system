@@ -20,4 +20,6 @@ public interface UiComponentProjection {
     public String getName();
 
     public String getDescription();
+
+    public Integer getId();
 }

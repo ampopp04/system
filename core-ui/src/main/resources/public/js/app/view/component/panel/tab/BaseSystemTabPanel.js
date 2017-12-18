@@ -8,7 +8,7 @@ Ext.define('System.view.component.panel.tab.BaseSystemTabPanel', {
     extend: 'Ext.tab.Panel',
 
     requires: [
-        'Ext.ux.TabScrollerMenu'
+        //  'Ext.ux.TabScrollerMenu'
     ],
 
     ///////////////////////////////////////////////////////////////////////
@@ -17,6 +17,7 @@ Ext.define('System.view.component.panel.tab.BaseSystemTabPanel', {
 
     xtype: 'base-system-tab-panel',
     region: 'center'
+
 
     /**
      * Broken : EXTJS-13538 Ext.ux.TabScrollerMenu does not work with Ext JS 5.0

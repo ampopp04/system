@@ -17,7 +17,9 @@ Ext.define('System.view.system.detail.form.panel.BaseDetailFormPanel', {
         'System.util.StringUtils',
         'System.util.data.StoreUtils',
         'System.view.component.field.SystemFieldComboBox',
-        'System.view.component.field.SystemFieldText'
+        'System.view.component.field.SystemFieldText',
+        'System.view.component.field.SystemFieldCurrency',
+        'System.view.component.field.SystemFileField'
     ],
 
     ///////////////////////////////////////////////////////////////////////
@@ -27,10 +29,46 @@ Ext.define('System.view.system.detail.form.panel.BaseDetailFormPanel', {
     xtype: 'base-detail-form-panel',
     controller: 'baseDetailFormPanelController',
 
+    /**
+     * Default filter values used to set or filter various
+     * fields on this form panel.
+     *
+     * They are represented in filter form but will be applied directly
+     * as values to any non-combo box. If the property is a combo box
+     * then it will be used to set the filterBy values on the combo.
+     *
+     * Ex.
+     *
+     * [{
+            "operator": "=",
+            "value": 4,
+            "property": "fkEntityId"
+        }, {
+            "operator": "=",
+            "value": 12,
+            "property": "systemEntityNoteType.schemaTableColumn.id"
+        }]
+     *
+     */
+    newEntityDetailWindowDefaultValueFilters: undefined,
+    /*
+        //bodyPadding: 10,
+    //  frame: true,
+    scrollable: true,
+    layout: 'form',
+    // consider layout: 'fit'
+    // layout: {type: 'vbox', align: 'stretch'},
+
+    //fieldDefaults: {},
+     */
+
     bodyPadding: 10,
     frame: true,
-
+    scrollable: true,
+    // consider layout: 'fit'
     layout: {type: 'vbox', align: 'stretch'},
+
+    trackResetOnLoad: true,
 
     fieldDefaults: {},
 
@@ -47,24 +85,100 @@ Ext.define('System.view.system.detail.form.panel.BaseDetailFormPanel', {
      * This method acts as the constructor to each instance of this object.
      * Provided the record to construct from this method will build the fields for this detail form
      */
-    initComponent: function () {
-        var me = this;
-        var rec = this.config.viewModel.data.rec;
-        var fields = rec.getFields();
-        me.fieldDefaults.labelWidth = me.calculateLabelWidth(fields);
 
-        var items = [];
+    constructor: function (config) {
+        var me = this;
+        var fields = config.fieldSet;
+        me.newEntityDetailWindowDefaultValueFilters = config.newEntityDetailWindowDefaultValueFilters;
+
+        var items = me.items;
+
+        if (fields && fields.length > 0) {
+            me.fieldDefaults.labelWidth = me.calculateLabelWidth(fields);
+        }
+
+        if (items == undefined) {
+            items = [];
+        }
 
         fields.forEach(function (field) {
-            var field = field.reference ?
-            {xtype: 'system-field-combo-box', field: field} :
-            {xtype: 'system-field-text', field: field};
+            var uiFieldConfiguration = field.uiFieldConfiguration == undefined ? {} : field.uiFieldConfiguration;
 
-            items.push(field);
+            var item = field.reference ?
+                {
+                    xtype: 'system-field-combo-box',
+                    valueField: 'id',
+                    displayField: field.displayFieldName,
+                    name: field.name,
+                    fieldLabel: field.fieldDisplayLabel,
+                    store: System.util.data.StoreUtils.lookupStoreByName(field.reference.type + 'Store')
+                } :
+                {
+                    xtype: 'system-field-text',
+                    name: field.name,
+                    fieldLabel: field.fieldDisplayLabel,
+                    hidden: field.name == 'id' ? true : false
+                };
+
+            item.schemaTableColumn = field.schemaTableColumn;
+            items.push(me.setNewEntityDetailWindowDefaultValueFilters(me.adjustCheckboxLabel(Ext.apply(item, uiFieldConfiguration))));
         });
 
-        me.items = items;
-        me.callParent();
+        //Erase the default value filters once they are set of their associated fields
+        me.newEntityDetailWindowDefaultValueFilters = undefined;
+        delete config['newEntityDetailWindowDefaultValueFilters'];
+
+        config.items = items;
+        me.callParent([config]);
+    },
+
+    setNewEntityDetailWindowDefaultValueFilters: function (formField) {
+        var me = this;
+
+        if (me.newEntityDetailWindowDefaultValueFilters) {
+            me.newEntityDetailWindowDefaultValueFilters.forEach(function (defaultFilterValue) {
+                var formFieldName = formField.name;
+                var filterFormFieldPath = defaultFilterValue.property;
+
+                //If our property starts with the name of this form field then this filter is for that field
+                if (System.util.StringUtils.startsWith(filterFormFieldPath, formFieldName)) {
+                    if (formField.xtype == 'system-field-combo-box') {
+                        //This is a combo box filter so we need to apply this filter to it's defaultLoadFilters
+
+                        //The defaultFilterValue filterFormFieldPath contains the name of this formField
+                        //Remove the name and the . which will leave you with the actual path we want to filter on
+                        var comboLoadFilter = Ext.apply(Ext.clone(defaultFilterValue), {property: System.util.StringUtils.replace(filterFormFieldPath, formFieldName + '.', '')});
+
+                        //Add the filter to the combo box, account for multiple filters being possible
+                        if (Ext.isArray(formField.defaultLoadFilters)) {
+                            formField.defaultLoadFilters.push(comboLoadFilter);
+                        } else {
+                            formField.defaultLoadFilters = [comboLoadFilter];
+                        }
+
+                    } else {
+                        //Not a combo box filter so it's just a raw value we should set
+                        // since this is a simple entity like a text, text area, checkbox, numberfield, etc
+                        formField.value = defaultFilterValue.value;
+                    }
+                }
+
+            });
+
+        }
+
+        return formField;
+    },
+
+    adjustCheckboxLabel: function (formField) {
+        if (formField && formField.xtype == 'checkbox') {
+            var fieldLabel = formField.fieldLabel;
+            if (fieldLabel && formField.boxLabel == undefined) {
+                formField.boxLabel = fieldLabel;
+                formField.hideLabel = true;
+            }
+        }
+        return formField;
     },
 
     /**
@@ -84,25 +198,6 @@ Ext.define('System.view.system.detail.form.panel.BaseDetailFormPanel', {
             }
         });
 
-        return maxLabelWidth * 9;
-    },
-
-    /**
-     * Because of the way the record array names are constructed we need to adjust them
-     * to follow the naming convention of our passed in records object so we can dynamically access the data
-     */
-    initItems: function () {
-        var me = this;
-        me.callParent();
-
-        var rec = me.config.viewModel.data.rec;
-
-        for (var property in rec) {
-            if (rec.hasOwnProperty(property) && System.util.StringUtils.startsWith(property, '_')) {
-                rec.data[System.util.StringUtils.removeFirstCharacter(property)] = rec[property].data;
-            }
-        }
-
-        this.loadRecord(rec);
+        return maxLabelWidth * 8;
     }
 });

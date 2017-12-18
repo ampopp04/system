@@ -6,7 +6,7 @@
   /**
    * The version of the application.
    */
-  "version": "1.0.0.0",
+  "version": "1.0.0.2",
   /**
    * The relative path to the application's markup file (html, jsp, asp, etc.).
    */
@@ -63,7 +63,7 @@
       /**
        * Disable resource inliner. Production builds enable this by default.
        */
-      "enable": false
+      "enable": true
     }
   },
   /**
@@ -109,7 +109,7 @@
      *      +-----------------+
      */
     "etc": [
-      "sass/etc/all.scss"
+      "sass/etc/all.scss "
     ],
     /**
      * Comma-separated list of folders containing Sass variable definitions
@@ -198,7 +198,7 @@
    */
   "js": [
     {
-      "path": "${framework.dir}/js/lib/ext/ext-all-rtl-debug.js"
+      "path": "${framework.dir}/js/lib/ext/ext-all.js"
     },
     {
       "path": "js/app.js",
@@ -255,11 +255,7 @@
     //   - other: a string (such as the build.timestamp shown here) to allow
     //     requests to be cached for this build.
     //
-    "cache": false,
-    // When "cache" is not true, this value is the request parameter used
-    // to control caching.
-    //
-    "cacheParam": "_dc"
+    "cache": true
   },
   /**
    * Settings specific to production builds.
@@ -374,7 +370,7 @@
   "output": {
     "base": "${workspace.build.dir}/${build.environment}/${app.name}",
     "appCache": {
-      "enable": false
+      "enable": true
     }
   },
   /**
@@ -394,7 +390,7 @@
   */
 
   "cache": {
-    "enable": false,
+    "enable": true,
     "deltas": true
   },
   /**
@@ -479,5 +475,5 @@
    * Uniquely generated id for this application, used as prefix for localStorage keys.
    * Normally you should never change this value.
    */
-  "id": "48895063-11bb-4a9d-8097-87d1018ef421"
+  "id": "48895063-11bb-4a9d-8097-87d1018ef423"
 }

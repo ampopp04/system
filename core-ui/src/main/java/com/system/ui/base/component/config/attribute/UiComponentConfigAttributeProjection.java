@@ -17,4 +17,6 @@ public interface UiComponentConfigAttributeProjection {
     public String getAttributeKey();
 
     public String getAttributeValue();
+
+    public Integer getId();
 }

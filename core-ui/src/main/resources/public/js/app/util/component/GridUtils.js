@@ -23,11 +23,19 @@ Ext.define('System.util.component.GridUtils', {
          * @param columns
          * @param storeCallback
          */
-        createSystemModelAndStore: function (modelName, columns, storeCallback) {
-            System.util.data.ModelUtils.createSystemModelForColumns(modelName, columns, function (model) {
-                System.util.data.StoreUtils.createSystemStore(modelName);
-                storeCallback(System.util.data.StoreUtils.lookupStore(modelName));
-            });
+        createSystemModelAndStore: function (modelName, columns, storeCallback, modelOverrides) {
+            var storeName = System.util.data.StoreUtils.getStoreName(modelName.$className ? modelName.$className : modelName);
+            var storeExists = System.util.data.StoreUtils.lookupStoreByName(storeName);
+
+            if (storeExists) {
+                return storeCallback(storeExists);
+            } else {
+                System.util.data.ModelUtils.createSystemModelForColumns(modelName, columns, function (model) {
+                    System.util.data.StoreUtils.getOrCreateStore(model, storeCallback);
+                }, undefined, modelOverrides);
+            }
+
+
         },
 
         /**
@@ -44,7 +52,8 @@ Ext.define('System.util.component.GridUtils', {
          * @returns {*[]}
          */
         getDefaultGridPlugins: function () {
-            return [System.util.component.GridUtils.rowEditingPlugin(), System.util.component.GridUtils.gridFiltersPlugin()];
+            //System.util.component.GridUtils.rowEditingPlugin(),
+            return System.util.component.GridUtils.gridFiltersPlugin();
         },
 
         /**

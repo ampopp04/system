@@ -19,7 +19,9 @@ Ext.define('System.view.application.main.Main', {
     //////////////////////////////////////////////////////////////////////
 
     style: 'background-image: none; background-color: #F5F5F5;',
-    plugins: 'viewport', xtype: 'app-main', controller: 'main',
+    plugins: 'viewport',
+    xtype: 'app-main',
+    controller: 'main',
     layout: {type: 'border'},
 
     ///////////////////////////////////////////////////////////////////////

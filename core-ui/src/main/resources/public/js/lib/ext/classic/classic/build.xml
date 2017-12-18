@@ -156,7 +156,7 @@ var Ext = Ext || {};
                     concatenate
                         ${concat.options}
                         ${build.compress}
-                        -output-file=${build.dir}/ext-all.js
+                        -output-file=${build.dir}/ext-all-rtl-debug.js
                     and
             ]]>
         </x-compile>

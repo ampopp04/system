@@ -16,14 +16,26 @@ Ext.define('System.store.base.BaseStore', {
         storeId: 'DEFINE-ME'
     },
 
-    ///////////////////////////////////////////////////////////////////////
-    ////////                                        Optional Properties                                                //////////
-    /////////////////////////////////////////////////////////////////////
+    //Default page size rows to query from the server
+    pageSize: 50,
+
+    //For special cases we can increase our row load size
+    // Ex. Export a grid to a file, increase to maxPageSize and reload
+    // to have all rows to download to file.
+    maxPageSize: 10000,
 
     autoLoad: true,
     autoSync: true,
 
+    remoteFilter: true,
+    remoteSort: true,
+
+    ///////////////////////////////////////////////////////////////////////
+    ////////                                        Optional Properties                                                //////////
+    /////////////////////////////////////////////////////////////////////
+
     listeners: {
+
         /**
          * Before we load any data from the server we need to append a request parameter
          * called dynamicProjectionFields for each field being requested.
@@ -42,20 +54,30 @@ Ext.define('System.store.base.BaseStore', {
                 operation._params = params;
             }
 
-            if (params.projection) {
-                return;
+            System.util.data.StoreUtils.addProjectionParams(params, store);
+        },
+
+        beforesync: function (options, eOpts, a, b, c) {
+            if (options.update) {
+                options.update.forEach(function (recordUpdate) {
+                    recordUpdate.systemPreviousValues = recordUpdate.data;
+                    recordUpdate.data = System.util.data.RecordUtils.transformRecordLayout(recordUpdate.data, recordUpdate.proxy.getModel());
+                });
             }
 
-            var requestFields = undefined;
-            store.model.fields.forEach(function (field) {
-                var fieldName = field.name;
+            if (options.create) {
+                options.create.forEach(function (recordUpdate) {
+                    recordUpdate.systemPreviousValues = recordUpdate.data;
+                    recordUpdate.data = System.util.data.RecordUtils.transformRecordLayout(recordUpdate.data, recordUpdate.proxy.getModel());
+                });
+            }
 
-                if (fieldName) {
-                    requestFields = (requestFields) ? requestFields + ',' + fieldName : fieldName;
-                }
-            });
-
-            params.projection = 'dynamicProjectionFields:' + requestFields + '';
+            if (options.destroy) {
+                options.destroy.forEach(function (recordUpdate) {
+                    recordUpdate.systemPreviousValues = recordUpdate.data;
+                    recordUpdate.data = undefined;
+                });
+            }
         }
     }
 });

@@ -16,6 +16,12 @@ Ext.define('System.view.component.field.SystemFieldText', {
     xtype: 'system-field-text',
     //field: DEFINE-THE-FIELD
 
+    //If this field has a value set upon load then mask this field as
+    // it should not be allowed to change
+    maskIfInitialValueExists: false,
+    //If we are to mask the field then we only mask the text area
+    maskElement: 'inputWrap',
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                                          Methods                                                       //////////
     //////////////////////////////////////////////////////////////////////
@@ -25,12 +31,19 @@ Ext.define('System.view.component.field.SystemFieldText', {
      */
     initComponent: function () {
         var me = this;
-        var field = me.field;
-
-        me.xtype = 'textfield';
-        me.fieldLabel = System.util.StringUtils.insertSpaceBeforeCapitals(System.util.StringUtils.capitalize(field.name));
-        me.name = field.name;
-
         me.callParent();
+    },
+
+    resetOriginalValue: function () {
+
+        this.originalValue = this.getValue();
+        this.checkDirty();
+
+        if (this.maskIfInitialValueExists && !Ext.isEmpty(this.originalValue)) {
+            //Mask and hide all triggers except the detail page trigger
+            this.mask();
+        }
+
     }
+
 });

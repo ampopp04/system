@@ -8,7 +8,8 @@ Ext.define('System.util.system.UiComponentUtils', {
 
     requires: [
         'System.util.component.GridColumnUtils',
-        'System.util.data.StoreUtils'
+        'System.util.data.StoreUtils',
+        'System.util.system.SchemaUtils'
     ],
 
     ///////////////////////////////////////////////////////////////////////
@@ -55,14 +56,22 @@ Ext.define('System.util.system.UiComponentUtils', {
 
             System.util.component.GridColumnUtils.getStoreByModelName(modelName,
                 function (store) {
+
                     System.util.data.StoreUtils.queryStoreByEntityName(store, entityName,
                         function (records, operation, success) {
-                            Ext.syncRequire(System.util.system.UiComponentUtils.convertUiComponentDefinitionDataToJs(records[0]),
+
+                            System.util.system.UiComponentUtils.convertUiComponentDefinitionDataToJs(records[0],
                                 function () {
-                                    Ext.widget('app-main', {
-                                        renderTo: Ext.getBody()
+
+                                    Ext.create('Ext.container.Container', {
+                                        items: [{
+                                            requires: ['System.view.application.main.Main'],
+                                            xtype: 'app-main'
+                                        }]
                                     });
+
                                 });
+
                         }, projection);
                 });
         },
@@ -73,7 +82,7 @@ Ext.define('System.util.system.UiComponentUtils', {
          * @param uiComponentDefinitionData
          * @returns {*}
          */
-        convertUiComponentDefinitionDataToJs: function (uiComponentDefinitionData) {
+        convertUiComponentDefinitionDataToJs: function (uiComponentDefinitionData, callback) {
             var uiComponentDefinition = uiComponentDefinitionData.data;
 
             var name = uiComponentDefinition.name;
@@ -92,8 +101,7 @@ Ext.define('System.util.system.UiComponentUtils', {
 
             }, System.util.system.UiComponentUtils.convertUiComponentDataToJsConfig(uiComponent));
 
-            Ext.define(name, config);
-            return name;
+            Ext.define(name, config, callback);
         },
 
         /**
@@ -162,7 +170,12 @@ Ext.define('System.util.system.UiComponentUtils', {
             var value = uiComponentConfigAttribute.attributeValue;
 
             if (Ext.isString(value)) {
-                value = Ext.decode(value);
+                try {
+                    value = Ext.decode(value);
+                } catch (e) {
+                    value == null;
+                    console.log(e);
+                }
             }
 
             if (value == null) {

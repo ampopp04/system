@@ -18,4 +18,10 @@ public interface UiComponentAssignmentProjection {
     public SchemaTable getSchemaTable();
 
     public Integer getFkFieldId();
+
+    public String getName();
+
+    public String getDescription();
+
+    public Integer getId();
 }

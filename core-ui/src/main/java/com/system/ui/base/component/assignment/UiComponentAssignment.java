@@ -5,6 +5,7 @@ import com.system.ui.base.UiBase;
 import com.system.ui.base.component.UiComponent;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -21,14 +22,15 @@ public class UiComponentAssignment extends UiBase<Integer> {
     ////////                                                     Properties                                                       //////////
     /////////////////////////////////////////////////////////////////////
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(optional = false, cascade = {CascadeType.ALL})
     @JoinColumn(name = "ui_component_id")
     private UiComponent uiComponent;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "schema_table_id")
     private SchemaTable schemaTable;
 
+    @Column(nullable = false)
     private Integer fkFieldId;
 
     ///////////////////////////////////////////////////////////////////////

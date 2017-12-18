@@ -101,7 +101,7 @@ Ext.define('System.view.application.login.LoginController', {
      */
     onLoginFailure: function (form, action) {
         this.getView().unmask();
-        System.util.application.Util.handleFormFailure(action);
+        System.util.application.ErrorUtils.showErrorMsg("Incorrect username and/or password. Try again or contact your administrator.")
     },
 
     /**

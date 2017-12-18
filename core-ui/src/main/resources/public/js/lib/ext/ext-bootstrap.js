@@ -8,7 +8,7 @@
  *  - Query string has `debug` parameter passed (http://foo/test.html?debug)
  *
  * If none of the above is true or the `nodebug` query string parameter is present (http://foo/test.html?nodebug),
- * ext-all.js will be loaded.
+ * ext-all.js will be loaded. Change this to force debug JS to be deployed.
  */
 (function () {
     var scripts = document.getElementsByTagName('script'),
@@ -59,6 +59,8 @@
         //nodebug is present in the query string
         isDevelopment = false;
     }
+
+    isDevelopment = false;
 
     document.write('<script type="text/javascript" charset="UTF-8" src="' +
         path + 'build/ext-all' + (isDevelopment ? '-debug' : '') + '.js"></script>');

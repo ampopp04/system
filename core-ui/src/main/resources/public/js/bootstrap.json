@@ -3983,7 +3983,7 @@
   "js": [
     {
       "isSdk": true,
-      "path": "js/lib/ext/ext-all-rtl-debug.js"
+      "path": "js/lib/ext/ext-all.js"
     },
     {
       "bootstrap": true,
@@ -4173,15 +4173,15 @@
     }
   },
   "name": "System",
-  "version": "1.0.0.0",
+  "version": "1.0.0.2",
   "framework": "ext",
   "toolkit": "classic",
   "theme": "theme-triton",
   "loader": {
-    "cache": "20160510090533",
+    "cache": "20160510090535",
     "cacheParam": "_dc"
   },
-  "id": "48895063-11bb-4a9d-8097-87d1018ef421",
+  "id": "48895063-11bb-4a9d-8097-87d1018ef423",
   "profile": "",
   "hash": "488e10b3cd2046d3ebc2eea9ba87ee40d6d4af8f",
   "resources": {

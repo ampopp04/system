@@ -18,7 +18,9 @@ Ext.define('System.view.system.window.SchemaTabGridSystemWindow', {
 
     xtype: 'schema-tab-grid-system-window',
 
+    //Required or Optional Parameters
     // title: 'DEFINE-ME',//tableNames: [],
+    detailFormWindow: undefined,
 
     /**
      * When we show this window add the tabs for
@@ -85,9 +87,18 @@ Ext.define('System.view.system.window.SchemaTabGridSystemWindow', {
      */
     addTab: function (tab) {
         var me = this;
-        me.items.items[0].add(Ext.apply(tab, {
-            xtype: 'base-system-grid-panel'
+        var windowPanel = me.items.items[0];
+        var xtypeValue = tab.parentSearchCaller ? 'parent-search-caller-grid-panel' : 'base-system-grid-panel';
+
+        windowPanel.add(Ext.apply(tab, {
+            parentSearchCaller: tab.parentSearchCaller,
+            detailFormWindow: this.detailFormWindow,
+            xtype: xtypeValue
         }));
+
+        if (windowPanel.activeTab != 0) {
+            windowPanel.setActiveTab(0);
+        }
     }
 });
 

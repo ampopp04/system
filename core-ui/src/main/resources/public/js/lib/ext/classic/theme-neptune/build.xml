@@ -9,7 +9,7 @@
     <import file="${basedir}/.sencha/test/test-impl.xml"/>
 
     <!--
-    The following targets can be provided to inject logic before and/or after key steps
+    The following targets can be provided to inject logic before and/or after property steps
     of the build process:
 
         The "init-local" target is used to initialize properties that may be personalized

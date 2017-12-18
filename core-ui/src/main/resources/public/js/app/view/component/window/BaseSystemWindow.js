@@ -19,7 +19,7 @@ Ext.define('System.view.component.window.BaseSystemWindow', {
     autoShow: true,
     layout: {type: 'fit'},
     headerPosition: 'right',
-    width: 900, minWidth: 350, height: 600,
+    width: 900, minWidth: 550, height: 600,
     header: {titlePosition: 2, titleAlign: 'center'}
 });
 

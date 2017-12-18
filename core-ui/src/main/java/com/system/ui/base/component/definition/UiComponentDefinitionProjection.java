@@ -27,4 +27,6 @@ public interface UiComponentDefinitionProjection {
     public String getController();
 
     public UiComponentProjection getUiComponent();
+
+    public Integer getId();
 }

@@ -15,6 +15,24 @@ import com.system.db.schema.datatype.SchemaDataType;
 import com.system.db.schema.table.SchemaTable;
 import com.system.db.schema.table.column.SchemaTableColumn;
 import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationship;
+import com.system.export.SystemExport;
+import com.system.export.content.definition.SystemExportContentDefinition;
+import com.system.export.definition.SystemExportDefinition;
+import com.system.export.definition.type.SystemExportDefinitionType;
+import com.system.export.destination.SystemExportDestination;
+import com.system.export.destination.type.SystemExportDestinationType;
+import com.system.export.file.type.SystemExportFileType;
+import com.system.export.generator.SystemExportGenerator;
+import com.system.export.generator.content.SystemExportGeneratorContent;
+import com.system.export.generator.type.SystemExportGeneratorType;
+import com.system.export.task.SystemExportTask;
+import com.system.export.task.assignment.SystemExportTaskAssignment;
+import com.system.export.task.content.SystemExportTaskContent;
+import com.system.export.task.history.SystemExportTaskHistory;
+import com.system.export.task.status.SystemExportTaskStatus;
+import com.system.export.template.SystemExportTemplate;
+import com.system.export.template.type.SystemExportTemplateType;
+import com.system.export.variable.SystemExportVariableMapping;
 import com.system.security.privilege.SystemSecurityPrivilege;
 import com.system.security.role.SystemSecurityRole;
 import com.system.security.user.SystemSecurityUser;
@@ -38,14 +56,14 @@ import static com.system.util.collection.PairList.newPairList;
  *
  * @author Andrew
  */
-public class V5__main_toolbar_schema extends BaseDataMigration {
+public class V12__main_toolbar_schema extends BaseDataMigration {
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                     Properties                                                       //////////
     /////////////////////////////////////////////////////////////////////
 
     @Autowired
-    private NamedEntityRepository uiComponentDefinitionRepository;
+    private NamedEntityRepository<UiComponentDefinition> uiComponentDefinitionRepository;
 
     @Autowired
     private NamedEntityRepository<UiComponentType> uiComponentTypeRepository;
@@ -56,7 +74,7 @@ public class V5__main_toolbar_schema extends BaseDataMigration {
 
     @Override
     protected void insertData() {
-        getUiComponentDefinitionRepository().save(getDataEntities());
+        getUiComponentDefinitionRepository().saveAll(getDataEntities());
     }
 
     private List<UiComponentDefinition> getDataEntities() {
@@ -147,6 +165,11 @@ public class V5__main_toolbar_schema extends BaseDataMigration {
                                 newPair(null, getSystemBeanToolbar())
                         ),
                         newPairList(
+                                newPair("text", "'Exports'"),
+                                newPair("iconCls", "'x-fa fa-file-text-o'"),
+                                newPair(null, getSystemExportToolbar())
+                        ),
+                        newPairList(
                                 newPair(null, "'-'")
                         ),
                         newPairList(
@@ -203,6 +226,59 @@ public class V5__main_toolbar_schema extends BaseDataMigration {
                         ));
     }
 
+    private UiComponentConfigAttribute getSystemExportToolbar() {
+        return
+                createToolbarMenu("System Export Toolbar Menu", "The system export toolbar menu",
+
+                        newPairList(
+                                newPair("text", "'Tasks'"),
+                                newPair("iconCls", "'x-fa fa-file-code-o'"),
+                                newPair("handler", getExportTaskFunctionHandler())
+                        ),
+                        newPairList(
+                                newPair(null, "'-'")
+                        ),
+                        newPairList(
+                                newPair("text", "'Templates'"),
+                                newPair("iconCls", "'x-fa fa-file-code-o'"),
+                                newPair("handler", getExportTemplateFunctionHandler())
+                        ),
+                        newPairList(
+                                newPair(null, "'-'")
+                        ),
+                        newPairList(
+                                newPair("text", "'Exports'"),
+                                newPair("iconCls", "'x-fa fa-file-code-o'"),
+                                newPair("handler", getExportFunctionHandler())
+                        ),
+                        newPairList(
+                                newPair("text", "'Destinations'"),
+                                newPair("iconCls", "'x-fa fa-file-code-o'"),
+                                newPair("handler", getExportDestinationsFunctionHandler())
+                        ),
+                        newPairList(
+                                newPair(null, "'-'")
+                        ),
+                        newPairList(
+                                newPair("text", "'History'"),
+                                newPair("iconCls", "'x-fa fa-file-code-o'"),
+                                newPair("handler", getExportHistoryFunctionHandler())
+                        ),
+                        newPairList(
+                                newPair(null, "'-'")
+                        ),
+                        newPairList(
+                                newPair("text", "'Content'"),
+                                newPair("iconCls", "'x-fa fa-file-code-o'"),
+                                newPair("handler", getExportContentFunctionHandler())
+                        ),
+                        newPairList(
+                                newPair("text", "'Generators'"),
+                                newPair("iconCls", "'x-fa fa-file-code-o'"),
+                                newPair("handler", getExportGeneratorsFunctionHandler())
+                        )
+                );
+    }
 
     private String getSchemaFunctionHandler() {
         return createSchemaTabGridSystemWindow("System Schema", SchemaTable.class, SchemaTableColumn.class, SchemaTableColumnRelationship.class, SchemaDataType.class);
@@ -216,10 +292,50 @@ public class V5__main_toolbar_schema extends BaseDataMigration {
         return createSchemaTabGridSystemWindow("System Security", SystemSecurityUser.class, SystemSecurityPrivilege.class, SystemSecurityRole.class);
     }
 
+    /**
+     * System Export Handlers - Start (Tasks, Templates, Exports, Destinations, History, Content, Generators)
+     */
+
+
+    private String getExportTaskFunctionHandler() {
+        return createSchemaTabGridSystemWindow("Tasks", SystemExportTaskStatus.class, SystemExportTask.class,
+                SystemExportTaskContent.class,
+                SystemExportTaskAssignment.class);
+    }
+
+    private String getExportTemplateFunctionHandler() {
+        return createSchemaTabGridSystemWindow("Templates", SystemExportTemplate.class, SystemExportTemplateType.class);
+    }
+
+    private String getExportFunctionHandler() {
+        return createSchemaTabGridSystemWindow("Exports", SystemExportFileType.class,
+                SystemExportDefinitionType.class, SystemExportDefinition.class, SystemExport.class,
+                SystemExportVariableMapping.class);
+    }
+
+    private String getExportDestinationsFunctionHandler() {
+        return createSchemaTabGridSystemWindow("Destinations", SystemExportDestinationType.class, SystemExportDestination.class);
+    }
+
+    private String getExportHistoryFunctionHandler() {
+        return createSchemaTabGridSystemWindow("Task History", SystemExportTaskHistory.class);
+    }
+
+    private String getExportContentFunctionHandler() {
+        return createSchemaTabGridSystemWindow("Generated Content", SystemExportContentDefinition.class, SystemExportGeneratorContent.class);
+    }
+
+    private String getExportGeneratorsFunctionHandler() {
+        return createSchemaTabGridSystemWindow("Export Generators", SystemExportGeneratorType.class, SystemExportGenerator.class);
+    }
+
+    /**
+     * System Export Handlers - End
+     */
+
     private String getBeanInstanceFunctionHandler() {
         return createSchemaTabGridSystemWindow("System Bean", SystemBean.class, SystemBeanType.class, SystemBeanDefinition.class);
     }
-
 
     private String getBeanVariableFunctionHandler() {
         return createSchemaTabGridSystemWindow("System Bean", SystemBeanVariableDefinition.class, SystemBeanVariable.class);
@@ -273,12 +389,11 @@ public class V5__main_toolbar_schema extends BaseDataMigration {
     ////////                                             Basic   Getter/Setters                                          //////////
     //////////////////////////////////////////////////////////////////////
 
-
-    public NamedEntityRepository getUiComponentDefinitionRepository() {
+    public NamedEntityRepository<UiComponentDefinition> getUiComponentDefinitionRepository() {
         return uiComponentDefinitionRepository;
     }
 
-    public void setUiComponentDefinitionRepository(NamedEntityRepository uiComponentDefinitionRepository) {
+    public void setUiComponentDefinitionRepository(NamedEntityRepository<UiComponentDefinition> uiComponentDefinitionRepository) {
         this.uiComponentDefinitionRepository = uiComponentDefinitionRepository;
     }
 

@@ -132,7 +132,7 @@
                     -out=${bootstrap.example.json}
                 and
                 microload
-                    -operation=microloader
+                    -operator=microloader
                     -microloaderPath=${build.slicer.microloader.file}
                     -bootPath=${build.boot.file}
                     -out=${bootstrap.example.js}
