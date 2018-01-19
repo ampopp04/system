@@ -1,7 +1,6 @@
 package com.system.db.migration.data;
 
 import com.system.db.migration.base.BaseMigration;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * The <class>BaseDataMigration</class> defines the entry point for
@@ -22,11 +21,10 @@ public abstract class BaseDataMigration extends BaseMigration {
     /**
      * Insert data into the migration
      *
-     * @param jdbcTemplate
      * @throws Exception
      */
     @Override
-    public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
+    public void migrate() throws Exception {
         insertData();
     }
 }

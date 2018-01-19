@@ -14,3 +14,60 @@ dependencies {
 
     compile group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0'
 }
+
+task concatenateCss() {
+    doLast {
+        def systemAllOne = new File('src/main/resources/public/resources/System-all_1.css')
+        def systemAllTwo = new File('src/main/resources/public/resources/System-all_2.css')
+
+        def systemAllOneOverride = new File('src/main/resources/public/resources/System-all-override_1.css')
+        def systemAllTwoOverride = new File('src/main/resources/public/resources/System-all-override_2.css')
+
+        systemAllOne << systemAllOneOverride.text
+        systemAllTwo << systemAllTwoOverride.text
+    }
+}
+
+task buildExtJs(type: Exec) {
+    workingDir "src/main/resources/src"
+    // -testing
+    commandLine 'sencha app build'.tokenize()
+}
+
+task fullBuildAndPublish(dependsOn: buildExtJs) {
+    group 'application'
+}
+
+task findUiCachedJar(dependsOn: ['build', 'generatePomFileForMavenJavaPublication', 'publishMavenJavaPublicationToMavenRepository']) {
+    doLast {
+        new ByteArrayOutputStream().withStream { os ->
+            def result = exec {
+                workingDir "/Users/Andrew/.gradle/caches/"
+                executable 'find'
+                args '.', '-type', "d", '-name', "core-ui", '-prune', '-print'
+                standardOutput = os
+            }
+            ext.uiCachedJar = os.toString()
+        }
+    }
+}
+
+task deleteUiCachedJar {
+    dependsOn findUiCachedJar
+    doLast {
+        new ByteArrayOutputStream().withStream { os ->
+            def result = exec {
+                workingDir "/Users/Andrew/.gradle/caches/"
+                executable 'rm'
+                def uiFiles = findUiCachedJar.uiCachedJar.tokenize()
+                uiFiles.add(0, '-rf')
+                args uiFiles
+                standardOutput = os
+            }
+            ext.deletedUiCachedJar = os.toString()
+        }
+    }
+}
+
+buildExtJs.finalizedBy concatenateCss
+concatenateCss.finalizedBy deleteUiCachedJar

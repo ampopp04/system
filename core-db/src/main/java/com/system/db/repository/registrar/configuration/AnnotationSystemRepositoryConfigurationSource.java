@@ -6,18 +6,20 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource;
+import org.springframework.data.util.Streamable;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.system.db.util.repository.SystemRepositoryConfigurationUtils.processCustomEntities;
 import static com.system.util.collection.CollectionUtils.*;
 import static com.system.util.string.StringUtils.substringAfterLastDot;
 
 /**
- * The <interface>AnnotationSystemRepositoryConfigurationSource</interface> sub-classes
+ * The <class>AnnotationSystemRepositoryConfigurationSource</class> sub-classes
  * {@link AnnotationRepositoryConfigurationSource} to intercept the
  * {@link AnnotationRepositoryConfigurationSource#getCandidates} method
  * to inject system made repository candidates
@@ -35,6 +37,7 @@ public class AnnotationSystemRepositoryConfigurationSource extends AnnotationRep
      */
     private BeanDefinitionRegistry registry;
 
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                                    Constructor                                                      //////////
     //////////////////////////////////////////////////////////////////////
@@ -43,13 +46,14 @@ public class AnnotationSystemRepositoryConfigurationSource extends AnnotationRep
      * Creates a new {@link AnnotationRepositoryConfigurationSource} from the given {@link AnnotationMetadata} and
      * annotation.
      *
-     * @param metadata
+     * @param metadata       must not be {@literal null}.
      * @param annotation     must not be {@literal null}.
      * @param resourceLoader must not be {@literal null}.
      * @param environment
+     * @param registry
      */
-    public AnnotationSystemRepositoryConfigurationSource(BeanDefinitionRegistry registry, AnnotationMetadata metadata, Class<? extends Annotation> annotation, ResourceLoader resourceLoader, Environment environment) {
-        super(metadata, annotation, resourceLoader, environment);
+    public AnnotationSystemRepositoryConfigurationSource(AnnotationMetadata metadata, Class<? extends Annotation> annotation, ResourceLoader resourceLoader, Environment environment, BeanDefinitionRegistry registry) {
+        super(metadata, annotation, resourceLoader, environment, registry);
         this.registry = registry;
     }
 
@@ -64,10 +68,10 @@ public class AnnotationSystemRepositoryConfigurationSource extends AnnotationRep
      * @return
      */
     @Override
-    public Collection<BeanDefinition> getCandidates(ResourceLoader loader) {
-        Collection<BeanDefinition> result = super.getCandidates(loader);
+    public Streamable<BeanDefinition> getCandidates(ResourceLoader loader) {
+        List<BeanDefinition> result = super.getCandidates(loader).stream().collect(Collectors.toList());
         result.addAll(processCustomEntities(registry, beanDefinitionListToNameList(result)));
-        return result;
+        return Streamable.of(result);
     }
 
     ///////////////////////////////////////////////////////////////////////

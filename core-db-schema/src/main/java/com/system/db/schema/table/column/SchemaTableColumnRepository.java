@@ -2,6 +2,7 @@ package com.system.db.schema.table.column;
 
 
 import com.system.db.repository.base.entity.EntityRepository;
+import com.system.db.repository.base.named.NamedEntityRepository;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Andrew
  * @see EntityRepository
  */
-public interface SchemaTableColumnRepository extends EntityRepository<SchemaTableColumn> {
+public interface SchemaTableColumnRepository extends NamedEntityRepository<SchemaTableColumn> {
 
     /**
      * Find the SchemaTableColumn by name for

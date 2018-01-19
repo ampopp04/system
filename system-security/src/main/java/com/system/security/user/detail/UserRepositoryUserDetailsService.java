@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.system.util.collection.CollectionUtils.iterate;
+
 /**
  * The <class>UserRepositoryUserDetailsService</class> defines
  * loadUserByUsername which determines if a specific
@@ -57,7 +59,7 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
             if (user == null) {
                 throw new UsernameNotFoundException("No user found with username: " + username);
             }
-            return new SystemSecurityUserDetail(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
+            return new SystemSecurityUserDetail(user.getUsername(), user.getPassword(), user.getEnabled(), true, true, true, getAuthorities(user.getRoles()));
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
@@ -70,38 +72,8 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
      * @return
      */
     public final Collection<? extends GrantedAuthority> getAuthorities(final Collection<SystemSecurityRole> roles) {
-        return getGrantedAuthorities(getPrivileges(roles));
-    }
-
-    /**
-     * Get privilege names for specified roles
-     *
-     * @param roles
-     * @return
-     */
-    private final List<String> getPrivileges(final Collection<SystemSecurityRole> roles) {
-        final List<String> privileges = new ArrayList<String>();
-        final List<SystemSecurityPrivilege> collection = new ArrayList<>();
-        for (final SystemSecurityRole role : roles) {
-            collection.addAll(role.getPrivileges());
-        }
-        for (final SystemSecurityPrivilege item : collection) {
-            privileges.add(item.getName());
-        }
-        return privileges;
-    }
-
-    /**
-     * Create GrantedAuthority holds for specified privileges
-     *
-     * @param privileges
-     * @return
-     */
-    private final List<GrantedAuthority> getGrantedAuthorities(final List<String> privileges) {
         final List<GrantedAuthority> authorities = new ArrayList<>();
-        for (final String privilege : privileges) {
-            authorities.add(new SimpleGrantedAuthority(privilege));
-        }
+        iterate(roles, role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
         return authorities;
     }
 }

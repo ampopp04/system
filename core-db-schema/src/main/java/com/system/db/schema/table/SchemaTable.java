@@ -32,6 +32,17 @@ public class SchemaTable extends NamedEntity<Integer> {
      */
     private String entityClass;
 
+    /**
+     * Determines whether entities associated to this table should
+     * be cached by default
+     */
+    private Boolean cacheEnabled = false;
+
+    /**
+     * Allow items to be cached for 9 hours by default
+     */
+    private Integer cacheTimeToLiveInSeconds = 32400;
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                              Default Constructor                                           //////////
     //////////////////////////////////////////////////////////////////////
@@ -49,5 +60,21 @@ public class SchemaTable extends NamedEntity<Integer> {
 
     public void setEntityClass(String entityClass) {
         this.entityClass = entityClass;
+    }
+
+    public Boolean getCacheEnabled() {
+        return cacheEnabled;
+    }
+
+    public void setCacheEnabled(Boolean cacheEnabled) {
+        this.cacheEnabled = cacheEnabled;
+    }
+
+    public Integer getCacheTimeToLiveInSeconds() {
+        return cacheTimeToLiveInSeconds;
+    }
+
+    public void setCacheTimeToLiveInSeconds(Integer cacheTimeToLiveInSeconds) {
+        this.cacheTimeToLiveInSeconds = cacheTimeToLiveInSeconds;
     }
 }

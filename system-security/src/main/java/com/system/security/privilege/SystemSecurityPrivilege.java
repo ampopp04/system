@@ -45,7 +45,7 @@ public class SystemSecurityPrivilege extends NamedEntity<Long> {
         return roles;
     }
 
-    public void setRoles(final Collection<SystemSecurityRole> roles) {
+    public void setRoles(Collection<SystemSecurityRole> roles) {
         this.roles = roles;
     }
 

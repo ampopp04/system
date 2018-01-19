@@ -24,7 +24,7 @@ public class TransformerUtils {
      * @param annotationToAddTo
      */
     public static void addInheritedAnnotationToAnnotation(Class annotationToAddTo) {
-        transform(ElementMatchers.isSubTypeOf(annotationToAddTo), (builder, typeDescription, classloader) -> builder.annotateType(AnnotationDescription.Builder.ofType(Inherited.class).build()));
+        transform(ElementMatchers.isSubTypeOf(annotationToAddTo), (builder, typeDescription, classLoader, module) -> builder.annotateType(AnnotationDescription.Builder.ofType(Inherited.class).build()));
     }
 
     /**
@@ -34,7 +34,8 @@ public class TransformerUtils {
      * @param subTypeClass
      */
     public static void addAnnotationToClass(Class annotationToAdd, Class subTypeClass) {
-        transform(ElementMatchers.isSubTypeOf(subTypeClass).and(ElementMatchers.not(ElementMatchers.isAbstract())), (builder, typeDescription, classloader) -> builder.annotateType(AnnotationDescription.Builder.ofType(annotationToAdd).build()));
+        transform(ElementMatchers.isSubTypeOf(subTypeClass).and(ElementMatchers.not(ElementMatchers.isAbstract())),
+                (builder, typeDescription, classLoader, module) -> builder.annotateType(AnnotationDescription.Builder.ofType(annotationToAdd).build()));
     }
 
     /**

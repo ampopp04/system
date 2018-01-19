@@ -1,9 +1,9 @@
 package com.system.db.entity.base;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
 
 /**
  * The <class>BaseEntity</class> defines the base entity
@@ -14,6 +14,8 @@ import javax.persistence.MappedSuperclass;
  * @author Andrew
  */
 @MappedSuperclass
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public abstract class BaseEntity<ID extends Number> implements com.system.db.entity.Entity<ID> {
 
     ///////////////////////////////////////////////////////////////////////
@@ -21,7 +23,7 @@ public abstract class BaseEntity<ID extends Number> implements com.system.db.ent
     /////////////////////////////////////////////////////////////////////
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ID id;
 
     ///////////////////////////////////////////////////////////////////////

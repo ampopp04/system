@@ -5,10 +5,11 @@ import org.springframework.core.MethodParameter;
 import org.springframework.data.mapping.context.PersistentEntities;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.repository.support.Repositories;
-import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.data.rest.core.projection.ProjectionDefinitions;
+import org.springframework.data.rest.core.support.SelfLinkProvider;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.config.PersistentEntityResourceAssemblerArgumentResolver;
+import org.springframework.data.rest.webmvc.mapping.Associations;
 import org.springframework.data.rest.webmvc.support.PersistentEntityProjector;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -29,35 +30,40 @@ public class DynamicEntityResourceArgumentResolver extends PersistentEntityResou
     ////////                                                     Properties                                                       //////////
     /////////////////////////////////////////////////////////////////////
 
-    private final PersistentEntities entities;
-    private final EntityLinks entityLinks;
+    private PersistentEntities entities;
+    private final SelfLinkProvider linkProvider;
     private final ProjectionDefinitions projectionDefinitions;
     private final ProjectionFactory projectionFactory;
-    private final ResourceMappings mappings;
+    private final Associations links;
 
     ///////////////////////////////////////////////////////////////////////
-    ////////                                                        Methods                                                       //////////
+    ////////                                                 Constructor                                                       //////////
     /////////////////////////////////////////////////////////////////////
 
     /**
      * Creates a new {@link PersistentEntityResourceAssemblerArgumentResolver} for the given {@link Repositories},
      * {@link EntityLinks}, {@link ProjectionDefinitions} and {@link ProjectionFactory}.
      *
-     * @param entities              must not be {@literal null}.
-     * @param entityLinks           must not be {@literal null}.
-     * @param projectionDefinitions must not be {@literal null}.
-     * @param projectionFactory     must not be {@literal null}.
-     * @param mappings
+     * @param entities
+     * @param linkProvider
+     * @param projectionDefinitions
+     * @param projectionFactory
+     * @param links
      */
-    public DynamicEntityResourceArgumentResolver(PersistentEntities entities, EntityLinks entityLinks, ProjectionDefinitions projectionDefinitions, ProjectionFactory projectionFactory, ResourceMappings mappings) {
-        super(entities, entityLinks, projectionDefinitions, projectionFactory, mappings);
+    public DynamicEntityResourceArgumentResolver(PersistentEntities entities, SelfLinkProvider linkProvider, ProjectionDefinitions projectionDefinitions, ProjectionFactory projectionFactory, Associations links) {
+        super(entities, linkProvider, projectionDefinitions, projectionFactory, links);
 
         this.entities = entities;
-        this.entityLinks = entityLinks;
+        this.linkProvider = linkProvider;
         this.projectionDefinitions = projectionDefinitions;
         this.projectionFactory = projectionFactory;
-        this.mappings = mappings;
+        this.links = links;
+
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    ////////                                                     Methods                                                          //////////
+    /////////////////////////////////////////////////////////////////////
 
     /**
      * Resolve the arguments via a dynamic entity projector
@@ -75,8 +81,8 @@ public class DynamicEntityResourceArgumentResolver extends PersistentEntityResou
 
         String projectionParameter = webRequest.getParameter(projectionDefinitions.getParameterName());
         PersistentEntityProjector projector = new DynamicEntityProjector(projectionDefinitions, projectionFactory,
-                projectionParameter, mappings);
+                projectionParameter, links.getMappings());
 
-        return new PersistentEntityResourceAssembler(entities, entityLinks, projector, mappings);
+        return new PersistentEntityResourceAssembler(entities, projector, links, linkProvider);
     }
 }

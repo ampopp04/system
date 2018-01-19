@@ -20,7 +20,7 @@ public class SystemBean extends NamedEntity<Integer> {
 
     @ManyToOne
     @JoinColumn(name = "system_bean_type_id")
-    private SystemBeanType SystemBeanType;
+    private SystemBeanType systemBeanType;
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                              Default Constructor                                           //////////
@@ -29,15 +29,24 @@ public class SystemBean extends NamedEntity<Integer> {
     public SystemBean() {
     }
 
+    public static SystemBean newInstance(String name, String description, SystemBeanType systemBeanType) {
+        SystemBean entity = new SystemBean();
+        entity.setName(name);
+        entity.setDescription(description);
+        entity.setSystemBeanType(systemBeanType);
+        return entity;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                             Basic   Getter/Setters                                          //////////
     //////////////////////////////////////////////////////////////////////
 
-    public com.system.bean.type.SystemBeanType getSystemBeanType() {
-        return SystemBeanType;
+    public SystemBeanType getSystemBeanType() {
+        return systemBeanType;
     }
 
-    public void setSystemBeanType(com.system.bean.type.SystemBeanType systemBeanType) {
-        SystemBeanType = systemBeanType;
+    public void setSystemBeanType(SystemBeanType systemBeanType) {
+        this.systemBeanType = systemBeanType;
     }
+
 }

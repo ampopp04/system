@@ -6,6 +6,7 @@ import com.system.db.repository.base.named.NamedEntityRepository;
 import com.system.util.clazz.ClassUtils;
 
 import static com.system.util.string.StringUtils.decapitalize;
+import static com.system.util.string.StringUtils.substringAfterLastDot;
 
 /**
  * The <class>RepositoryUtils</class> defines
@@ -35,7 +36,7 @@ public class RepositoryUtils {
      * @return
      */
     public static String getRepositoryName(Class<?> entityType) {
-        return decapitalize(getRepositoryInterfaceName(entityType));
+        return decapitalize(substringAfterLastDot(getRepositoryInterfaceName(entityType)));
     }
 
     /**
@@ -45,7 +46,7 @@ public class RepositoryUtils {
      * @return
      */
     public static String getRepositoryInterfaceName(Class<?> entityType) {
-        return entityType.getSimpleName() + ENTITY_REPOSITORY_POSTFIX;
+        return entityType.getName() + ENTITY_REPOSITORY_POSTFIX;
     }
 
     /**
@@ -55,7 +56,7 @@ public class RepositoryUtils {
      * @return
      */
     public static String getRepositoryImplName(Class<?> entityType) {
-        return entityType.getSimpleName() + ENTITY_REPOSITORY_POSTFIX + "impl";
+        return entityType.getName() + ENTITY_REPOSITORY_POSTFIX + "impl";
     }
 
     /**
@@ -67,5 +68,13 @@ public class RepositoryUtils {
      */
     public static Class getRepositoryClass(Class<?> entityType) {
         return ClassUtils.isAssignable(entityType, NamedEntity.class) ? NamedEntityRepository.class : SystemRepository.class;
+    }
+
+    /**
+     * Determines if the provided class is of
+     * the SystemRepository class type
+     */
+    public static boolean isSystemRepositoryClass(Class repositoryClass) {
+        return repositoryClass == SystemRepository.class;
     }
 }

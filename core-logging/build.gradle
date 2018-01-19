@@ -1,3 +1,5 @@
 dependencies {
-    compile project(':core-util')
+    compile 'com.system:core-util:1.0'
+
+    compile('org.springframework.boot:spring-boot-starter-logging')
 }

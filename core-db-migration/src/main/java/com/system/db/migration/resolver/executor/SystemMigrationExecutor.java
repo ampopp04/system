@@ -3,7 +3,6 @@ package com.system.db.migration.resolver.executor;
 
 import com.system.db.migration.base.SystemMigration;
 import org.flywaydb.core.api.FlywayException;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import java.sql.Connection;
 
@@ -24,8 +23,7 @@ public class SystemMigrationExecutor implements org.flywaydb.core.api.resolver.M
     @Override
     public void execute(Connection connection) {
         try {
-            systemMigration.migrate(new org.springframework.jdbc.core.JdbcTemplate(
-                    new SingleConnectionDataSource(connection, true)));
+            systemMigration.migrate();
         } catch (Exception e) {
             throw new FlywayException("Migration failed !", e);
         }

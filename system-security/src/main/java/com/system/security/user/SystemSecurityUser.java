@@ -1,7 +1,7 @@
 package com.system.security.user;
 
 
-import com.system.db.entity.base.BaseEntity;
+import com.system.db.entity.named.NamedEntity;
 import com.system.security.role.SystemSecurityRole;
 import com.system.security.user.detail.SystemSecurityUserDetail;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -20,7 +20,7 @@ import java.util.Collection;
  * @author Andrew
  * @see SystemSecurityUserDetail
  */
-public class SystemSecurityUser extends BaseEntity<Long> {
+public class SystemSecurityUser extends NamedEntity<Integer> {
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                     Properties                                                       //////////
@@ -36,12 +36,18 @@ public class SystemSecurityUser extends BaseEntity<Long> {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @NotEmpty(message = "Password is required.")
+    private String distinguishedName;
+
+    private String userPrincipalName;
+
     private String password;
 
-    private boolean enabled;
+    private Boolean enabled;
 
-    @ManyToMany
+    @Column(length = 5000)
+    private String memberOf;
+
+    @ManyToMany(targetEntity = SystemSecurityRole.class)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id", referencedColumnName = ID_TYPE_NAME_LOWERCASE), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = ID_TYPE_NAME_LOWERCASE))
     private Collection<SystemSecurityRole> roles;
 
@@ -55,12 +61,14 @@ public class SystemSecurityUser extends BaseEntity<Long> {
     }
 
     public SystemSecurityUser(SystemSecurityUser securityUser) {
-        this.firstName = securityUser.firstName;
-        this.lastName = securityUser.lastName;
-        this.username = securityUser.username;
-        this.password = securityUser.password;
-        this.enabled = securityUser.enabled;
-        this.roles = securityUser.roles;
+        this.setFirstName(securityUser.firstName);
+        this.setLastName(securityUser.lastName);
+        this.setUsername(securityUser.username);
+        this.setPassword(securityUser.password);
+        this.setEnabled(securityUser.enabled);
+        this.setDistinguishedName(securityUser.distinguishedName);
+        this.setRoles(securityUser.roles);
+        this.setUserPrincipalName(securityUser.userPrincipalName);
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -73,6 +81,8 @@ public class SystemSecurityUser extends BaseEntity<Long> {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+        String lastName = getLastName();
+        setName(firstName + (lastName == null ? "" : (" " + getLastName())));
     }
 
     public String getLastName() {
@@ -81,6 +91,8 @@ public class SystemSecurityUser extends BaseEntity<Long> {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+        String firstName = getFirstName();
+        setName((firstName == null ? "" : (getFirstName() + " ")) + lastName);
     }
 
     public String getUsername() {
@@ -91,6 +103,14 @@ public class SystemSecurityUser extends BaseEntity<Long> {
         this.username = username;
     }
 
+    public String getDistinguishedName() {
+        return distinguishedName;
+    }
+
+    public void setDistinguishedName(String distinguishedName) {
+        this.distinguishedName = distinguishedName;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -99,11 +119,11 @@ public class SystemSecurityUser extends BaseEntity<Long> {
         this.password = password;
     }
 
-    public boolean isEnabled() {
+    public Boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -113,6 +133,22 @@ public class SystemSecurityUser extends BaseEntity<Long> {
 
     public void setRoles(Collection<SystemSecurityRole> roles) {
         this.roles = roles;
+    }
+
+    public String getUserPrincipalName() {
+        return userPrincipalName;
+    }
+
+    public void setUserPrincipalName(String userPrincipalName) {
+        this.userPrincipalName = userPrincipalName;
+    }
+
+    public String getMemberOf() {
+        return memberOf;
+    }
+
+    public void setMemberOf(String memberOf) {
+        this.memberOf = memberOf;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -145,10 +181,18 @@ public class SystemSecurityUser extends BaseEntity<Long> {
         return true;
     }
 
+
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("User [firstName=").append(firstName).append("]").append("[lastName=").append(lastName).append("]").append("[username").append(getUsername()).append("]");
-        return builder.toString();
+        final StringBuilder sb = new StringBuilder("SystemSecurityUser{");
+        sb.append("super='").append(super.toString()).append('\'');
+        sb.append("firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", distinguishedName='").append(distinguishedName).append('\'');
+        sb.append(", userPrincipalName='").append(userPrincipalName).append('\'');
+        sb.append(", enabled=").append(enabled);
+        sb.append('}');
+        return sb.toString();
     }
 }

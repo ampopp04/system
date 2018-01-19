@@ -84,7 +84,7 @@ public class ApplicationContextAwareSystemMigrationResolver implements Migration
             }
 
             String prefix = resolvedMigration1.substring(0, 1);
-            Pair info = MigrationInfoHelper.extractVersionAndDescription(resolvedMigration1, prefix, "__", "");
+            Pair info = MigrationInfoHelper.extractVersionAndDescription(resolvedMigration1, prefix, "__", "", false);
             version1 = (MigrationVersion) info.getLeft();
             description = (String) info.getRight();
         }

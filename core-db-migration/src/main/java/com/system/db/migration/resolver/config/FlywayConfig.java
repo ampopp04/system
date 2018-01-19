@@ -2,12 +2,14 @@ package com.system.db.migration.resolver.config;
 
 import com.system.db.migration.resolver.migration.ApplicationContextAwareSystemMigrationResolver;
 import com.system.db.migration.resolver.migration.strategy.SystemMigrationStrategy;
+import com.zaxxer.hikari.HikariDataSource;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.internal.dbsupport.DbSupport;
 import org.flywaydb.core.internal.dbsupport.h2.H2DbSupport;
 import org.flywaydb.core.internal.dbsupport.mysql.MySQLDbSupport;
 import org.flywaydb.core.internal.resolver.sql.SqlMigrationResolver;
 import org.flywaydb.core.internal.util.Location;
+import org.flywaydb.core.internal.util.Locations;
 import org.flywaydb.core.internal.util.PlaceholderReplacer;
 import org.flywaydb.core.internal.util.scanner.Scanner;
 import org.springframework.beans.BeansException;
@@ -56,16 +58,21 @@ public class FlywayConfig {
 
                     SqlMigrationResolver sqlMigrationResolver = null;
                     try {
+                        Flyway config = new Flyway();
+
+                        config.setEncoding("UTF-8");
+                        config.setSqlMigrationPrefix("V");
+                        config.setRepeatableSqlMigrationPrefix("R");
+                        config.setSqlMigrationSeparator("__");
+                        config.setSqlMigrationSuffix(".sql");
+
                         sqlMigrationResolver = new SqlMigrationResolver(
                                 getDbSupport(),
                                 new Scanner(Thread.currentThread().getContextClassLoader()),
-                                new Location("classpath:db/migration"),
+                                new Locations("classpath:db/migration"),
                                 PlaceholderReplacer.NO_PLACEHOLDERS,
-                                "UTF-8",
-                                "V",
-                                "R",
-                                "__",
-                                ".sql");
+                                config
+                        );
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -76,7 +83,7 @@ public class FlywayConfig {
 
             private DbSupport getDbSupport() throws SQLException {
                 DataSource dataSource = context.getBean(DataSource.class);
-                if (((org.apache.tomcat.jdbc.pool.DataSource) dataSource).getDriverClassName().equals("org.h2.Driver")) {
+                if (((HikariDataSource) dataSource).getDriverClassName().equals("org.h2.Driver")) {
                     return new H2DbSupport(dataSource.getConnection());
                 } else {
                     return new MySQLDbSupport(dataSource.getConnection());

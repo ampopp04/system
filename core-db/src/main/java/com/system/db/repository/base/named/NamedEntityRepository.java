@@ -14,7 +14,7 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @see NamedEntity
  */
 @NoRepositoryBean
-public interface NamedEntityRepository<T extends NamedEntity> extends SystemRepository<T> {
+public interface NamedEntityRepository<T extends NamedEntity> extends SystemRepository<T, Integer> {
 
     /**
      * Find entity by name

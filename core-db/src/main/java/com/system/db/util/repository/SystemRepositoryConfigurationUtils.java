@@ -15,6 +15,7 @@ import static com.system.db.util.repository.RepositoryUtils.getRepositoryName;
 import static com.system.inversion.util.InversionUtils.getAssignableClassList;
 import static com.system.util.collection.CollectionUtils.add;
 import static com.system.util.collection.CollectionUtils.iterate;
+import static com.system.util.string.StringUtils.capitalize;
 
 /**
  * The <class>SystemRepositoryConfigurationUtils</class> defines
@@ -55,7 +56,7 @@ public class SystemRepositoryConfigurationUtils {
     private static BeanDefinition processEntityType(BeanDefinitionRegistry registry, Class<?> entityType, List<String> preprocessedRepositoryNameList) {
         String repositoryBeanName = getRepositoryName(entityType);
         String repositoryInterfaceName = getRepositoryInterfaceName(entityType);
-        return (!registry.containsBeanDefinition(repositoryBeanName) && !preprocessedRepositoryNameList.contains(repositoryInterfaceName))
+        return (!registry.containsBeanDefinition(repositoryBeanName) && !preprocessedRepositoryNameList.contains(capitalize(repositoryBeanName)))
                 ? registerRepositoryImplBeanDefinition(entityType) : null;
     }
 }

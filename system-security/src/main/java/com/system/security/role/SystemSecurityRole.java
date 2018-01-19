@@ -26,7 +26,7 @@ public class SystemSecurityRole extends NamedEntity<Long> {
     @ManyToMany(mappedBy = "roles")
     private Collection<SystemSecurityUser> users;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = SystemSecurityPrivilege.class)
     @JoinTable(joinColumns = @JoinColumn(name = "role_id", referencedColumnName = ID_TYPE_NAME_LOWERCASE), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = ID_TYPE_NAME_LOWERCASE))
     private Collection<SystemSecurityPrivilege> privileges;
 
@@ -51,7 +51,7 @@ public class SystemSecurityRole extends NamedEntity<Long> {
         return users;
     }
 
-    public void setUsers(final Collection<SystemSecurityUser> users) {
+    public void setUsers(Collection<SystemSecurityUser> users) {
         this.users = users;
     }
 
@@ -62,6 +62,7 @@ public class SystemSecurityRole extends NamedEntity<Long> {
     public void setPrivileges(Collection<SystemSecurityPrivilege> privileges) {
         this.privileges = privileges;
     }
+
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                              Comparison Methods                                         //////////

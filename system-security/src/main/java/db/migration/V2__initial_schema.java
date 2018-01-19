@@ -61,9 +61,9 @@ public class V2__initial_schema extends TableCreationMigration {
 
     @Override
     protected void insertData() {
-        systemSecurityPrivilegeRepository.save(getPrivilegeDataEntities());
-        systemSecurityRoleRepository.save(getRoleDataEntities());
-        systemSecurityUserRepository.save(getUserDataEntities());
+        getSystemSecurityPrivilegeRepository().saveAll(getPrivilegeDataEntities());
+        getSystemSecurityRoleRepository().saveAll(getRoleDataEntities());
+        getSystemSecurityUserRepository().saveAll(getUserDataEntities());
     }
 
     private List<SystemSecurityPrivilege> getPrivilegeDataEntities() {
@@ -81,9 +81,12 @@ public class V2__initial_schema extends TableCreationMigration {
 
     private List<SystemSecurityUser> getUserDataEntities() {
         SystemSecurityRole adminRole = systemSecurityRoleRepository.findByName(SystemSecurityRoles.ROLE_ADMIN.toString());
+        SystemSecurityRole userRole = systemSecurityRoleRepository.findByName(SystemSecurityRoles.ROLE_USER.toString());
+
         List<SystemSecurityUser> entityList = new ArrayList<>();
 
-        entityList.add(newSystemSecurityUser("Andrew", "Popp", "ampopp04", "password", Arrays.asList(adminRole)));
+        entityList.add(newSystemSecurityUser("Andrew", "Popp", "ampopp04", "password", Arrays.asList(adminRole, userRole)));
+        entityList.add(newSystemSecurityUser("John", "Doe", "testuser", "password", Arrays.asList(adminRole, userRole)));
 
         return entityList;
     }
@@ -98,14 +101,54 @@ public class V2__initial_schema extends TableCreationMigration {
         return securityRole;
     }
 
-    private SystemSecurityUser newSystemSecurityUser(String firstName, String lastName, String username, String password, Collection<SystemSecurityRole> roles) {
+    private SystemSecurityUser newSystemSecurityUser(String firstName, String lastName, String username, String password, Collection<SystemSecurityRole> roles, String distinguishedName, String userPrincipalName) {
         SystemSecurityUser user = new SystemSecurityUser();
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setPassword(passwordEncoder.encode(password));
+        if (password != null) {
+            user.setPassword(passwordEncoder.encode(password));
+        }
         user.setUsername(username);
         user.setRoles(roles);
         user.setEnabled(true);
+        user.setDistinguishedName(distinguishedName);
+        user.setUserPrincipalName(userPrincipalName);
         return user;
+    }
+
+    private SystemSecurityUser newSystemSecurityUser(String firstName, String lastName, String username, String password, Collection<SystemSecurityRole> roles) {
+        return newSystemSecurityUser(firstName, lastName, username, password, roles, null, null);
+    }
+
+    public NamedEntityRepository<SystemSecurityPrivilege> getSystemSecurityPrivilegeRepository() {
+        return systemSecurityPrivilegeRepository;
+    }
+
+    public void setSystemSecurityPrivilegeRepository(NamedEntityRepository<SystemSecurityPrivilege> systemSecurityPrivilegeRepository) {
+        this.systemSecurityPrivilegeRepository = systemSecurityPrivilegeRepository;
+    }
+
+    public NamedEntityRepository<SystemSecurityRole> getSystemSecurityRoleRepository() {
+        return systemSecurityRoleRepository;
+    }
+
+    public void setSystemSecurityRoleRepository(NamedEntityRepository<SystemSecurityRole> systemSecurityRoleRepository) {
+        this.systemSecurityRoleRepository = systemSecurityRoleRepository;
+    }
+
+    public SystemSecurityUserRepository getSystemSecurityUserRepository() {
+        return systemSecurityUserRepository;
+    }
+
+    public void setSystemSecurityUserRepository(SystemSecurityUserRepository systemSecurityUserRepository) {
+        this.systemSecurityUserRepository = systemSecurityUserRepository;
+    }
+
+    public PasswordEncoder getPasswordEncoder() {
+        return passwordEncoder;
+    }
+
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 }

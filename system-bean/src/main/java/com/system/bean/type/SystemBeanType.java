@@ -35,6 +35,15 @@ public class SystemBeanType extends NamedEntity<Integer> {
     public SystemBeanType() {
     }
 
+    public static SystemBeanType newInstance(String name, String description, SystemBeanDefinition systemBeanDefinition, String className) {
+        SystemBeanType entity = new SystemBeanType();
+        entity.setName(name);
+        entity.setDescription(description);
+        entity.setSystemBeanDefinition(systemBeanDefinition);
+        entity.setClassName(className);
+        return entity;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     ////////                                             Basic   Getter/Setters                                          //////////
     //////////////////////////////////////////////////////////////////////
@@ -54,4 +63,5 @@ public class SystemBeanType extends NamedEntity<Integer> {
     public void setClassName(String className) {
         this.className = className;
     }
+
 }

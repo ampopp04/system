@@ -8,6 +8,7 @@ import com.system.db.schema.datatype.SchemaDataTypeRepository;
 import com.system.db.schema.table.SchemaTable;
 import com.system.db.schema.table.column.SchemaTableColumn;
 import com.system.db.schema.table.column.relationship.SchemaTableColumnRelationship;
+import com.system.db.schema.version.SchemaVersion;
 import com.system.util.collection.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -42,7 +43,7 @@ public class V1__initial_schema extends TableCreationMigration {
     //////////////////////////////////////////////////////////////////////
 
     protected List<Class<? extends Entity>> getEntityClasses() {
-        return CollectionUtils.asList(SchemaDataType.class, SchemaTable.class, SchemaTableColumn.class, SchemaTableColumnRelationship.class);
+        return CollectionUtils.asList(SchemaVersion.class, SchemaDataType.class, SchemaTable.class, SchemaTableColumn.class, SchemaTableColumnRelationship.class);
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -51,7 +52,7 @@ public class V1__initial_schema extends TableCreationMigration {
 
     @Override
     protected void insertData() {
-        getSchemaDataTypeRepository().save(CollectionUtils.iterable(getDataEntities()));
+        getSchemaDataTypeRepository().saveAll((getDataEntities()));
     }
 
     /**
@@ -66,6 +67,7 @@ public class V1__initial_schema extends TableCreationMigration {
      * String	                        java.lang.String	                                                VARCHAR
      * <p>
      * Byte	                            byte or java.lang.Byte	                                TINYINT
+     * Byte[]                          [Ljava.lang.Byte;                                             BLOB
      * <p>
      * Boolean	                    boolean or java.lang.Boolean	                    BIT
      * <p>
@@ -86,7 +88,10 @@ public class V1__initial_schema extends TableCreationMigration {
         entityList.add(newSchemaDataType("BigDecimal", "Mapping between java.math.BigDecimal and NUMERIC ANSI type", true, "NUMERIC", "java.math.BigDecimal"));
 
         //Dates
-        entityList.add(newSchemaDataType("Date", "Mapping between java.sql.Date and DATE ANSI type", false, "DATE", "java.sql.Date"));
+        entityList.add(newSchemaDataType("LocalDateTime", "Mapping between java.time.LocalDateTime and TIMESTAMP ANSI type", false, "TIMESTAMP", "java.time.LocalDateTime"));
+        entityList.add(newSchemaDataType("LocalDate", "Mapping between java.time.LocalDateTime and TIMESTAMP ANSI type", false, "TIMESTAMP", "java.time.LocalDate"));
+        entityList.add(newSchemaDataType("LocalTime", "Mapping between java.time.LocalDateTime and TIMESTAMP ANSI type", false, "TIMESTAMP", "java.time.LocalTime"));
+
         entityList.add(newSchemaDataType("Time", "Mapping between java.sql.Time and TIME ANSI type", false, "TIME", "java.sql.Time"));
         entityList.add(newSchemaDataType("Timestamp", "Mapping between java.util.Date or java.sql.Timestamp and TIMESTAMP ANSI type", false, "TIMESTAMP", "java.sql.Timestamp"));
         entityList.add(newSchemaDataType("Calendar", "Mapping between java.util.Calendar  and TIMESTAMP ANSI type", false, "TIMESTAMP", "java.util.Calendar"));
@@ -94,6 +99,7 @@ public class V1__initial_schema extends TableCreationMigration {
         //Other
         entityList.add(newSchemaDataType("String", "Mapping between java.lang.String and VARCHAR ANSI type", false, "VARCHAR", "java.lang.String"));
         entityList.add(newSchemaDataType("Byte", "Mapping between java.lang.Byte and TINYINT ANSI type", false, "TINYINT", "java.lang.Byte"));
+        entityList.add(newSchemaDataType("ByteArray", "Mapping between java.lang.Byte Array and BLOB ANSI type", false, "BLOB", "[B"));
         entityList.add(newSchemaDataType("Boolean", "Mapping between java.lang.Boolean and BIT ANSI type", false, "BIT", "java.lang.Boolean"));
 
         return entityList;

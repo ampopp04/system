@@ -6,11 +6,13 @@ import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Map;
 
+import static com.system.util.collection.CollectionUtils.asKeyList;
 import static com.system.util.collection.CollectionUtils.iterable;
+
 
 /**
  * The <class>ObjectCreationUtils</class> defines
@@ -29,9 +31,21 @@ public class ObjectCreationUtils {
      * @param genericTypeVariable - allows specifying the bounds of an interface with a generic type
      * @return
      */
-    public static Class<?> extendInterface(String interfaceName, Class interfaceClass, Class genericTypeVariable, AnnotationDescription... annotationDescriptions) {
+    public static Class<?> extendInterface(String interfaceName, Class interfaceClass, Class genericTypeVariable, Class genericTypeVariableTwo, AnnotationDescription... annotationDescriptions) {
+        Class[] parameterTypes = null;
+
+        if (genericTypeVariableTwo != null) {
+            parameterTypes = new Class[]{
+                    genericTypeVariable, genericTypeVariableTwo
+            };
+        } else {
+            parameterTypes = new Class[]{
+                    genericTypeVariable
+            };
+        }
+
         return new ByteBuddy()
-                .makeInterface(TypeDescription.Generic.Builder.parameterizedType(interfaceClass, genericTypeVariable).build())
+                .makeInterface(TypeDescription.Generic.Builder.parameterizedType(interfaceClass, parameterTypes).build())
                 .annotateType(annotationDescriptions)
                 .name(interfaceName)
                 .make()
@@ -43,21 +57,24 @@ public class ObjectCreationUtils {
      * Create an interface by interface name with the provided set of public methods
      *
      * @param interfaceName
-     * @param methodList
+     * @param methodAnnotationMap
      * @param classLoader
      * @return
      */
-    public static Class<?> createInterfaceWithPublicMethods(String interfaceName, List<java.lang.reflect.Method> methodList, ClassLoader classLoader) {
+    public static Class<?> createInterfaceWithPublicMethods(String interfaceName, Map<java.lang.reflect.Method, Annotation[]> methodAnnotationMap, ClassLoader classLoader) {
         DynamicType.Builder<?> byteBuddyBuilder = new ByteBuddy()
                 .makeInterface();
 
-        DynamicType.Builder.MethodDefinition.ReceiverTypeDefinition methodBuilder = null;
+        DynamicType.Builder.MethodDefinition methodBuilder = null;
 
-        for (Method method : methodList) {
+        for (Method method : asKeyList(methodAnnotationMap)) {
             if (methodBuilder == null) {
                 methodBuilder = byteBuddyBuilder.defineMethod(method.getName(), method.getReturnType(), method.getModifiers()).withoutCode();
             } else {
                 methodBuilder = methodBuilder.defineMethod(method.getName(), method.getReturnType(), method.getModifiers()).withoutCode();
+            }
+            if (methodAnnotationMap.get(method) != null) {
+                methodBuilder = methodBuilder.annotateMethod(methodAnnotationMap.get(method));
             }
         }
         return methodBuilder

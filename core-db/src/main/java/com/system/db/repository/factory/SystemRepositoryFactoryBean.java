@@ -14,6 +14,15 @@ import javax.persistence.EntityManager;
 public class SystemRepositoryFactoryBean extends JpaRepositoryFactoryBean {
 
     /**
+     * Creates a new {@link JpaRepositoryFactoryBean} for the given repository interface.
+     *
+     * @param repositoryInterface must not be {@literal null}.
+     */
+    public SystemRepositoryFactoryBean(Class repositoryInterface) {
+        super(repositoryInterface);
+    }
+
+    /**
      * Returns a {@link RepositoryFactorySupport}.
      *
      * @param entityManager

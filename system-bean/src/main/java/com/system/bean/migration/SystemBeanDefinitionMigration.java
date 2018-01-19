@@ -76,7 +76,7 @@ public abstract class SystemBeanDefinitionMigration extends BaseDataMigration {
     private List<SystemBeanVariableDefinition> createOrGetBeanVariableDefinitions(SystemBeanType systemBeanType) {
         List<SystemBeanVariableDefinition> variableDefinitionList = retrieveSystemBeanVariableDefinitionList();
         CollectionUtils.iterate(CollectionUtils.iterable(variableDefinitionList), (variableDefinition) -> variableDefinition.setSystemBeanType(systemBeanType));
-        systemBeanVariableDefinitionRepository.save(variableDefinitionList);
+        systemBeanVariableDefinitionRepository.saveAll(variableDefinitionList);
 
         return variableDefinitionList;
     }

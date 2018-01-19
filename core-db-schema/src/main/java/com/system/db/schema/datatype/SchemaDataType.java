@@ -4,6 +4,8 @@ package com.system.db.schema.datatype;
 import com.system.db.entity.named.NamedEntity;
 import com.system.db.schema.table.column.SchemaTableColumn;
 
+import javax.persistence.Column;
+
 /**
  * The <class>SchemaDataType</class> defines data types
  * that map Java types to ANSI types
@@ -31,14 +33,15 @@ import com.system.db.schema.table.column.SchemaTableColumn;
  * Timestamp         	        java.util.Date or java.sql.Timestamp	    TIMESTAMP
  * Calendar	                 java.util.Calendar                                      	        TIMESTAMP
  */
-public class SchemaDataType extends NamedEntity<Short> {
+public class SchemaDataType extends NamedEntity<Integer> {
     ///////////////////////////////////////////////////////////////////////
     ////////                                                     Properties                                                       //////////
     //////////////////////////////////////////////////////////////////////
     /**
      * Denotes whether this is a number data type or otherwise
      */
-    private boolean number;
+    @Column(nullable = false)
+    private Boolean number;
 
     /**
      * The sql type.
@@ -65,11 +68,11 @@ public class SchemaDataType extends NamedEntity<Short> {
     ////////                                             Basic Getter/Setters                                          //////////
     //////////////////////////////////////////////////////////////////////
 
-    public boolean isNumber() {
+    public Boolean getNumber() {
         return number;
     }
 
-    public void setNumber(boolean number) {
+    public void setNumber(Boolean number) {
         this.number = number;
     }
 
@@ -88,4 +91,5 @@ public class SchemaDataType extends NamedEntity<Short> {
     public void setJavaType(String javaType) {
         this.javaType = javaType;
     }
+
 }

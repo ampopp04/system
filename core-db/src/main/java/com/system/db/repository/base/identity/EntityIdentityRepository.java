@@ -1,9 +1,10 @@
 package com.system.db.repository.base.identity;
 
 import com.system.db.entity.identity.EntityIdentity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import com.system.db.repository.base.entity.BaseEntityRepository;
 import org.springframework.data.repository.NoRepositoryBean;
+
+import java.io.Serializable;
 
 /**
  * The <interface>EntityIdentityRepository</interface> defines the
@@ -15,5 +16,5 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @see EntityIdentity
  */
 @NoRepositoryBean
-public interface EntityIdentityRepository<T extends EntityIdentity> extends JpaRepository<T, T>, JpaSpecificationExecutor<T> {
+public interface EntityIdentityRepository<T extends EntityIdentity, ID extends Serializable> extends BaseEntityRepository<T, ID> {
 }

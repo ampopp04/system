@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
+import static com.system.util.string.StringUtils.isEmpty;
+
 /**
  * The <class>SystemSecurityUserDetail</class> defines
  * a holder for our user details to be used throughout the system
@@ -16,11 +18,8 @@ import java.util.Collection;
  */
 public class SystemSecurityUserDetail extends User {
 
-    public SystemSecurityUserDetail(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
+    public SystemSecurityUserDetail(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+        super(username, isEmpty(password) ? "passwordHidden" : password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
 
-    public SystemSecurityUserDetail(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-    }
 }

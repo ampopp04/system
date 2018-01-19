@@ -5,13 +5,15 @@ import com.system.util.string.StringUtils;
 import org.springframework.data.rest.core.config.ProjectionDefinitionConfiguration;
 import org.springframework.data.rest.core.projection.ProjectionDefinitions;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static com.system.util.collection.CollectionUtils.iterate;
-import static com.system.util.collection.CollectionUtils.newList;
+import static com.system.util.collection.CollectionUtils.newMap;
 import static com.system.util.string.StringUtils.*;
 
 
@@ -125,17 +127,19 @@ public class DynamicProjectionUtils {
      * @param primaryMethodNames
      * @return
      */
-    public static List<Method> getGetterMethodsFromPrimaryNames(Object source, Collection<String> primaryMethodNames) {
-        List<Method> matchedMethodList = newList();
+    public static Map<Method, Annotation[]> getGetterMethodsFromPrimaryNames(Object source, Collection<String> primaryMethodNames) {
+        Map<Method, Annotation[]> matchedMethodAnnotationMap = newMap();
 
         iterate(primaryMethodNames, (methodName) -> {
             try {
-                matchedMethodList.add(source.getClass().getMethod(convertPropertyNameToGetterMethodName(methodName)));
+                Field field = org.apache.commons.lang3.reflect.FieldUtils.getField(source.getClass(), methodName, true);
+                Annotation[] annotations = field == null ? new Annotation[0] : field.getDeclaredAnnotations();
+                matchedMethodAnnotationMap.put(source.getClass().getMethod(convertPropertyNameToGetterMethodName(methodName)), annotations == null ? new Annotation[0] : annotations);
             } catch (NoSuchMethodException e) {
             }
         });
 
-        return matchedMethodList;
+        return matchedMethodAnnotationMap;
     }
 
     /**

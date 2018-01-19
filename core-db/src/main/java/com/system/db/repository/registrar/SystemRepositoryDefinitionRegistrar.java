@@ -21,7 +21,7 @@ import java.lang.annotation.Annotation;
  * <p>
  * If the base repository retrieval methods are not sufficient these repositories can be extended
  * in which case no auto-injection will take place as it is assumed these entity specific repositories will take
- * precedent.
+ * precedence.
  *
  * @author Andrew
  * @see AnnotationSystemRepositoryConfigurationSource
@@ -52,11 +52,13 @@ public class SystemRepositoryDefinitionRegistrar extends RepositoryBeanDefinitio
         // Guard against calls for sub-classes
         if (annotationMetadata.getAnnotationAttributes(getAnnotation().getName()) == null) return;
 
-        AnnotationRepositoryConfigurationSource configurationSource = new AnnotationSystemRepositoryConfigurationSource(registry, annotationMetadata, getAnnotation(), resourceLoader, environment);
+        AnnotationRepositoryConfigurationSource configurationSource = new AnnotationSystemRepositoryConfigurationSource(annotationMetadata, getAnnotation(), resourceLoader, environment, registry);
         RepositoryConfigurationExtension extension = getExtension();
         RepositoryConfigurationUtils.exposeRegistration(extension, registry, configurationSource);
 
-        (new RepositoryConfigurationDelegate(configurationSource, resourceLoader, environment)).registerRepositoriesIn(registry, extension);
+        RepositoryConfigurationDelegate delegate = new RepositoryConfigurationDelegate(configurationSource, resourceLoader, environment);
+
+        delegate.registerRepositoriesIn(registry, extension);
     }
 
     ///////////////////////////////////////////////////////////////////////

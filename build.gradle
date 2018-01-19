@@ -3,14 +3,12 @@
 /////////////////////////////////////////////////////////////////////
 apply plugin: 'com.system.build'
 
-version = '1.0'
-group = project.group
-
 ///////////////////////////////////////////////////////////////////////
 ////////                              Define Repository Plugin Location                              //////////
 /////////////////////////////////////////////////////////////////////
-
 buildscript { scriptHandler ->
+    repositories.mavenLocal()
+
     repositories { maven { credentials {} } }
     repositories.maven.credentials.username = "${nexusUsername}"
     repositories.maven.credentials.password = "${nexusPassword}"

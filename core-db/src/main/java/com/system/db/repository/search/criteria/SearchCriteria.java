@@ -13,17 +13,21 @@ public class SearchCriteria {
     ////////                                                     Properties                                                       //////////
     //////////////////////////////////////////////////////////////////////
 
-    private String key;
-    private String operation;
-    private Object value;
+    private String property;
+    private String operator;
+    private String value;
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                    Constructor                                                      //////////
     //////////////////////////////////////////////////////////////////////
 
-    public SearchCriteria(String key, String operation, Object value) {
-        this.key = key;
-        this.operation = operation;
+    public SearchCriteria() {
+        super();
+    }
+
+    public SearchCriteria(String property, String operator, String value) {
+        this.property = property;
+        this.operator = operator;
         this.value = value;
     }
 
@@ -31,27 +35,27 @@ public class SearchCriteria {
     ////////                                                  Getter/Setters                                                  //////////
     //////////////////////////////////////////////////////////////////////
 
-    public String getKey() {
-        return key;
+    public String getProperty() {
+        return property;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setProperty(String property) {
+        this.property = property;
     }
 
-    public String getOperation() {
-        return operation;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setOperation(String operation) {
-        this.operation = operation;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
-    public Object getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Object value) {
+    public void setValue(String value) {
         this.value = value;
     }
 }

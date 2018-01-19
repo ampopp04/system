@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 
 /**
  * The <class>SystemMigrationStrategy</class> defines the migration
- * strategy to use for execution system migrations
+ * strategy to use for executing system migrations
  *
  * @author Andrew
  */
@@ -21,6 +21,8 @@ public class SystemMigrationStrategy implements FlywayMigrationStrategy {
     public void migrate(Flyway flyway) {
         flyway.setSkipDefaultCallbacks(true);
         flyway.setCallbacks(new ApplicationContextAwareSpringJdbcCallbackResolver(context).resolveCallbacks());
+        flyway.setBaselineOnMigrate(true);
+        flyway.setBaselineVersionAsString("0");
         flyway.migrate();
     }
 }

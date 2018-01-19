@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <logger name="com.system" level="DEBUG"/>
+
+    <logger name="org.springframework.ldap" level="DEBUG"/>
+    <logger name="org.springframework.security.ldap" level="DEBUG"/>
+
+</included>

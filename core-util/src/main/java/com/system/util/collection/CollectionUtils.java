@@ -152,6 +152,18 @@ public class CollectionUtils {
     }
 
     /**
+     * Convert array to set
+     *
+     * @param values
+     * @param <T>
+     * @return
+     */
+    @SafeVarargs
+    public static <T> Set<T> asSet(T... values) {
+        return values == null ? Collections.emptySet() : new HashSet<>(Arrays.asList(values));
+    }
+
+    /**
      * Convert an maps values into a list by
      * aggregating all of the values
      *

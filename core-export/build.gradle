@@ -1,0 +1,16 @@
+dependencies {
+    compile 'com.system:core-ws:1.0'
+    testCompile 'com.system:core-db-schema-tests:1.0'
+    testCompile 'com.system:system-security-tests:1.0'
+    compile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.springframework:spring-core:5.0.0.RELEASE')
+    compile group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0'
+
+    compile('com.haulmont.yarg:yarg:2.0.9')
+    compile('org.openoffice:juh:4.1.2')
+    compile('org.openoffice:jurt:4.1.2')
+    compile('org.openoffice:ridl:4.1.2')
+    compile('org.openoffice:unoil:4.1.2')
+
+    compile group: 'org.ow2.asm', name: 'asm', version: '6.0_BETA'
+}

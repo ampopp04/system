@@ -37,7 +37,7 @@ public class ManipulatorUtils {
     private static AgentBuilder AGENT_BUILDER = new AgentBuilder.Default(BYTE_BUDDY)
             // .with(toSystemError())
             .with(AgentBuilder.RedefinitionStrategy.REDEFINITION)
-            .with(AgentBuilder.InitializationStrategy.SelfInjection.EAGER)
+            .with(new AgentBuilder.InitializationStrategy.SelfInjection.Eager())
             .with(AgentBuilder.TypeStrategy.Default.REDEFINE);
 
     /**

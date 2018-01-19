@@ -37,9 +37,9 @@ public class EntityTransformer implements PriorityOrdered, SpringApplicationRunL
     //////////////////////////////////////////////////////////////////////
 
     @Override
-    public void started() {
-
+    public void starting() {
     }
+
 
     @Override
     public void environmentPrepared(ConfigurableEnvironment environment) {

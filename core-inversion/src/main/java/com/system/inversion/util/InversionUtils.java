@@ -2,15 +2,16 @@ package com.system.inversion.util;
 
 import com.system.util.clazz.ClassUtils;
 import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.factory.annotation.AnnotatedGenericBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.io.support.ResourcePropertySource;
+import org.springframework.core.type.StandardAnnotationMetadata;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 
 import java.util.ArrayList;
@@ -96,8 +97,8 @@ public class InversionUtils {
      * @return
      */
     public static BeanDefinition createBeanDefinition(Class classType, MutablePropertyValues properties) {
-        RootBeanDefinition definition = new RootBeanDefinition();
-        definition.setBeanClassName(classType.getName());
+        StandardAnnotationMetadata annotationMetadata = new StandardAnnotationMetadata(classType);
+        AnnotatedGenericBeanDefinition definition = new AnnotatedGenericBeanDefinition(annotationMetadata);
         definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_NAME);
         definition.setLazyInit(true);
         definition.setPropertyValues(properties);

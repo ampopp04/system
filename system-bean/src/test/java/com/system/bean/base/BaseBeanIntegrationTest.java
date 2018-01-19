@@ -3,7 +3,7 @@ package com.system.bean.base;
 
 import com.system.bean.definition.type.SystemBeanDefinitionType;
 import com.system.db.migration.base.BaseIntegrationTest;
-import com.system.db.repository.base.entity.SystemRepository;
+import com.system.db.repository.base.named.NamedEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -20,5 +20,5 @@ public abstract class BaseBeanIntegrationTest extends BaseIntegrationTest {
     //////////////////////////////////////////////////////////////////////
 
     @Autowired
-    protected SystemRepository<SystemBeanDefinitionType> systemBeanDefinitionTypeRepository;
+    protected NamedEntityRepository<SystemBeanDefinitionType> systemBeanDefinitionTypeRepository;
 }

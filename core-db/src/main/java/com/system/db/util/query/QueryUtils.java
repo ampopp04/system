@@ -62,7 +62,7 @@ public class QueryUtils {
      * @return
      */
     public static <T> Page<T> readPage(TypedQuery<T> query, Pageable pageable, Specification<T> spec, EntityManager em, Class<T> entityType) {
-        query.setFirstResult(pageable.getOffset());
+        query.setFirstResult((int) pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());
 
         Long total = executeCountQuery(getCountQuery(spec, em, entityType));

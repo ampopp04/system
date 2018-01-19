@@ -34,6 +34,7 @@ public class EntityUtils {
             if (contains(k, "hibernate")) {
                 properties.put(removeBefore(k, "hibernate"), resourcePropertyMap.get(k));
             }
+            properties.put(k, resourcePropertyMap.get(k));
         });
 
         if (resourcePropertyMap.containsKey("spring.datasource.url")) {

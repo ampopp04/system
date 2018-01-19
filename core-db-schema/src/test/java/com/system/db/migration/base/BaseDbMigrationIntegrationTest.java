@@ -33,7 +33,7 @@ public abstract class BaseDbMigrationIntegrationTest extends BaseIntegrationTest
     protected SchemaTableColumnRepository schemaTableColumnRepository;
 
     @Autowired
-    protected SystemRepository<SchemaTableColumnRelationship> schemaTableColumnRelationshipRepository;
+    protected SystemRepository<SchemaTableColumnRelationship, Integer> schemaTableColumnRelationshipRepository;
 
     @Autowired
     protected SchemaVersionRepository schemaVersionRepository;

@@ -1,7 +1,6 @@
 package com.system.util.string;
 
 import java.beans.Introspector;
-import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -39,6 +38,30 @@ public class StringUtils {
      */
     public static boolean contains(String str, String searchStr) {
         return org.apache.commons.lang3.StringUtils.contains(str, searchStr);
+    }
+
+    /**
+     * Returns whether a string is empty or not.
+     * <p>
+     * Empty is defined as "" or null
+     *
+     * @param s - the string to check
+     * @return - if it is empty: "" or null
+     */
+    public static boolean isEmpty(String s) {
+        return org.apache.commons.lang3.StringUtils.isEmpty(s);
+    }
+
+    /**
+     * Returns whether a string is not empty or not.
+     * <p>
+     * Empty is defined as "" or null
+     *
+     * @param s - the string to check
+     * @return - if it is not empty: not "" and not null
+     */
+    public static boolean isNotEmpty(String s) {
+        return org.apache.commons.lang3.StringUtils.isNotEmpty(s);
     }
 
     /**

@@ -2,7 +2,6 @@ package com.system.inversion;
 
 import com.system.inversion.component.InversionComponent;
 import com.system.inversion.intercept.SimpleClasspathMetadataReaderFactory;
-import com.system.manipulator.interceptor.util.InterceptorUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;

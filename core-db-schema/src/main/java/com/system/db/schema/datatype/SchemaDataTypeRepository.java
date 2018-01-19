@@ -10,7 +10,7 @@ import com.system.db.repository.base.entity.EntityRepository;
  * @author Andrew
  * @see EntityRepository
  */
-public interface SchemaDataTypeRepository extends EntityRepository<SchemaDataType> {
+public interface SchemaDataTypeRepository extends EntityRepository<SchemaDataType, Integer> {
 
     /**
      * Find SchemaDataType represented by a

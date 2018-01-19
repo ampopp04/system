@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="com/system/logging/config/system-logging-base.xml"/>
+    <!--
+<logger name="com.system" level="INFO"/>
+<logger name="org.springframework.security" level="INFO"/>
+<logger name="org.springframework.ldap" level="INFO"/>
+
+<logger name="javax.naming" level="INFO"/>
+<logger name="com.sun.jndi" level="INFO"/>
+
+UsernamePasswordAuthenticationFilter
+ecurityUserDetailActiveDirectoryProvider
+AbstractContextSource
+DefaultSpringSecurityContextSource
+BindAuthenticator
+SpringSecurityLdapTemplate
+FilterBasedLdapUserSearch
+-->
+</configuration>

@@ -59,9 +59,9 @@ public class V3__initial_schema extends TableCreationMigration {
 
     @Override
     protected void insertData() {
-        systemBeanDefinitionTypeRepository.save(getSystemBeanDefinitionTypeList());
-        systemBeanModifierTypeRepository.save(getSystemBeanModifierTypeList());
-        systemBeanDefinitionRepository.save(getSystemBeanDefinitionList());
+        systemBeanDefinitionTypeRepository.saveAll(getSystemBeanDefinitionTypeList());
+        systemBeanModifierTypeRepository.saveAll(getSystemBeanModifierTypeList());
+        systemBeanDefinitionRepository.saveAll(getSystemBeanDefinitionList());
     }
 
     public List<SystemBeanDefinitionType> getSystemBeanDefinitionTypeList() {

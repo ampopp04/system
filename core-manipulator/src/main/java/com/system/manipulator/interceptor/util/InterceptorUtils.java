@@ -27,8 +27,7 @@ public class InterceptorUtils {
      */
     public static void methodInterceptor(Class fromClass, String fromClassMethodName, Class interceptorClass) {
         TransformerUtils.transform(ElementMatchers.isSubTypeOf(fromClass).and(ElementMatchers.not(ElementMatchers.isAbstract().or(ElementMatchers.isInterface()))),
-                (builder, typeDescription, classloader) -> builder.method(ElementMatchers.named(fromClassMethodName))
-                        .intercept(MethodDelegation.to(interceptorClass)));
+                (builder, typeDescription, classLoader, module) -> builder.method(ElementMatchers.named(fromClassMethodName)).intercept(MethodDelegation.to(interceptorClass)));
     }
 
     /**

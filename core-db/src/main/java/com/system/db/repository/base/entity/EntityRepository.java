@@ -4,6 +4,8 @@ import com.system.db.entity.base.BaseEntity;
 import com.system.db.repository.base.identity.EntityIdentityRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
+import java.io.Serializable;
+
 /**
  * The <interface>EntityRepository</interface> defines the
  * basic entity repository used by system
@@ -14,13 +16,5 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @see BaseEntity
  */
 @NoRepositoryBean
-public interface EntityRepository<T extends BaseEntity> extends EntityIdentityRepository<T> {
-
-    /**
-     * Find entity by id
-     *
-     * @param id
-     * @return
-     */
-    public T findById(Integer id);
+public interface EntityRepository<T extends BaseEntity, ID extends Serializable> extends EntityIdentityRepository<T, ID> {
 }

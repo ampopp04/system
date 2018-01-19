@@ -11,8 +11,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import static com.system.db.entity.identity.EntityIdentity.ID_TYPE_NAME_UPPERCASE;
-import static com.system.db.util.repository.RepositoryUtils.getRepositoryClass;
-import static com.system.db.util.repository.RepositoryUtils.getRepositoryInterfaceName;
+import static com.system.db.util.repository.RepositoryUtils.*;
 
 /**
  * The <class>RepositoryRegistrationUtils</class> defines
@@ -55,14 +54,24 @@ public class RepositoryRegistrationUtils {
     public static Class createEntityRepositoryInterface(Class<?> entityType) {
         AnnotationDescription repositoryRestResource = ObjectCreationUtils.buildAnnotationDescription(REPOSITORY_REST_RESOURCE, null);
         AnnotationDescription repositoryDefinition = null;
+        Class entityRepositoryInterfaceClass = null;
+
         try {
-            repositoryDefinition = ObjectCreationUtils.buildAnnotationDescription(REPOSITORY_DEFINITION_ANNOTATION, new HashMap<String, Class<?>>() {{
+
+            final Class<? extends Serializable> idType = (Class<? extends Serializable>) ClassUtils.getGenericTypeArgument(entityType, ID_TYPE_NAME_UPPERCASE);
+
+                    repositoryDefinition = ObjectCreationUtils.buildAnnotationDescription(REPOSITORY_DEFINITION_ANNOTATION, new HashMap<String, Class<?>>() {{
                 put("domainClass", entityType);
-                put("idClass", (Class<? extends Serializable>) ClassUtils.getGenericTypeArgument(entityType, ID_TYPE_NAME_UPPERCASE));
+                put("idClass", idType);
+
             }});
+
+            Class repositoryClass = getRepositoryClass(entityType);
+
+            entityRepositoryInterfaceClass = ObjectCreationUtils.extendInterface(getRepositoryInterfaceName(entityType), repositoryClass, entityType, (isSystemRepositoryClass(repositoryClass)) ? idType : null, repositoryDefinition, repositoryRestResource);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ObjectCreationUtils.extendInterface(getRepositoryInterfaceName(entityType), getRepositoryClass(entityType), entityType, repositoryDefinition, repositoryRestResource);
+        return entityRepositoryInterfaceClass;
     }
 }

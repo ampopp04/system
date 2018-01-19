@@ -2,10 +2,9 @@ package com.system.db.migration.schema;
 
 
 import com.system.db.migration.base.BaseDbMigrationIntegrationTest;
+import org.flywaydb.test.annotation.FlywayTest;
 import org.junit.Test;
-
-import static com.system.util.collection.CollectionUtils.size;
-import static com.system.util.validation.ValidationUtils.assertGreaterThan;
+import org.springframework.data.domain.Pageable;
 
 /**
  * The <class>MigrationSchemaTests</class> defines the initial
@@ -13,25 +12,25 @@ import static com.system.util.validation.ValidationUtils.assertGreaterThan;
  *
  * @author Andrew
  */
+
+@FlywayTest(invokeBaselineDB = true, invokeCleanDB = false, locationsForMigrate = {"classpath:db/migration"})
 public class MigrationSchemaTests extends BaseDbMigrationIntegrationTest {
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                                     Properties                                                       //////////
     //////////////////////////////////////////////////////////////////////
 
-
     ///////////////////////////////////////////////////////////////////////
     ////////                                                                Tests                                                       //////////
     //////////////////////////////////////////////////////////////////////
 
     @Test
-    public void testSchemaTableSize() throws Exception {
-        assertGreaterThan(size(schemaVersionRepository.findAll()), 0);
-
-        assertGreaterThan(size(schemaDataTypeRepository.findAll()), 10);
-
-        assertGreaterThan(size(schemaTableRepository.findAll()), 0);
-        assertGreaterThan(size(schemaTableColumnRepository.findAll()), 0);
-        assertGreaterThan(size(schemaTableColumnRelationshipRepository.findAll()), 0);
+    @FlywayTest(invokeBaselineDB = true, invokeCleanDB = false, locationsForMigrate = {"classpath:db/migration"})
+    public void testAdvancedNullPropertySearch() throws Exception {
+        schemaTableColumnRepository.findAll(
+                "[{\"operator\":\"\",\"value\":\"nam\",\"property\":\"null-all-property\"}]",
+                2,
+                null,
+                Pageable.unpaged());
     }
 }

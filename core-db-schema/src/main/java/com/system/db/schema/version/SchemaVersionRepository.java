@@ -8,7 +8,6 @@ import com.system.db.repository.base.identity.EntityIdentityRepository;
  * database access repository for the associated entity
  *
  * @author Andrew
- * @see BaseEntityRepository
  */
-public interface SchemaVersionRepository extends EntityIdentityRepository<SchemaVersion> {
+public interface SchemaVersionRepository extends EntityIdentityRepository<SchemaVersion, String> {
 }

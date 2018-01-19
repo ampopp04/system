@@ -78,4 +78,9 @@ public class DynamicEntityProjector extends PersistentEntityProjector {
 
         return projectionType == null ? source : factory.createProjection(projectionType, source);
     }
+
+    @Override
+    public Object projectExcerpt(Object source) {
+        return project(source);
+    }
 }
