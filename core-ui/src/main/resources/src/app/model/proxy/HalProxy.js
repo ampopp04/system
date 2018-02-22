@@ -34,7 +34,6 @@ Ext.define('System.model.proxy.HalProxy', {
     startParam: false,
     noCache: false,
 
-
     headers: {'Accept': 'application/json'},
     reader: {type: 'halJson'},
     writer: {type: 'halJsonWriter'},

@@ -29,6 +29,12 @@ Ext.define('System.view.component.panel.grid.BaseSystemGridPanel', {
     modelOverrides: undefined,
 
     /**
+     * Defines whether this grid automatically allows a delete entity button
+     * to be displayed in the toolbar: ( - ) icon.
+     */
+    deleteEntityAllowed: true,
+
+    /**
      * Determines whether or not to add the tools menu to this grid.
      * See System.util.component.ToolbarUtils.addToolsMenu
      */
@@ -185,7 +191,6 @@ Ext.define('System.view.component.panel.grid.BaseSystemGridPanel', {
 
         System.util.component.GridUtils.createSystemModelAndStore(modelName, columns, function (store) {
 
-            // me.configureAdditionalStoreProperties(store, me);
             me.reconfigure(store, columns);
 
             me.addDocked([
@@ -201,17 +206,6 @@ Ext.define('System.view.component.panel.grid.BaseSystemGridPanel', {
 
         }, me.modelOverrides);
 
-    },
-
-    configureAdditionalStoreProperties: function (store, grid) {
-        var groupField = grid.groupByField;
-
-        if (groupField) {
-            //Add group field if grouping feature is enabled
-            store.group(grid.createGrouper(groupField, grid));
-        }
-
-        //Then eventually remove it in destroy or something???
     },
 
     createGrouper: function (groupField, grid) {

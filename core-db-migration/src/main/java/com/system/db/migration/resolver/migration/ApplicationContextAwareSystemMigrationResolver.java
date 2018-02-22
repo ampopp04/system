@@ -5,7 +5,6 @@ import com.system.db.migration.resolver.executor.SystemMigrationExecutor;
 import org.flywaydb.core.api.FlywayException;
 import org.flywaydb.core.api.MigrationType;
 import org.flywaydb.core.api.MigrationVersion;
-import org.flywaydb.core.api.configuration.FlywayConfiguration;
 import org.flywaydb.core.api.migration.MigrationChecksumProvider;
 import org.flywaydb.core.api.migration.MigrationInfoProvider;
 import org.flywaydb.core.api.resolver.MigrationResolver;
@@ -14,10 +13,8 @@ import org.flywaydb.core.internal.resolver.MigrationInfoHelper;
 import org.flywaydb.core.internal.resolver.ResolvedMigrationComparator;
 import org.flywaydb.core.internal.resolver.ResolvedMigrationImpl;
 import org.flywaydb.core.internal.util.ClassUtils;
-import org.flywaydb.core.internal.util.Location;
 import org.flywaydb.core.internal.util.Pair;
 import org.flywaydb.core.internal.util.StringUtils;
-import org.flywaydb.core.internal.util.scanner.Scanner;
 import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public class ApplicationContextAwareSystemMigrationResolver implements Migration
 
     private final ApplicationContext applicationContext;
 
-    public ApplicationContextAwareSystemMigrationResolver(Scanner scanner, Location location, FlywayConfiguration configuration, ApplicationContext applicationContext) {
+    public ApplicationContextAwareSystemMigrationResolver(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 

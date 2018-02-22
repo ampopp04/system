@@ -2,7 +2,8 @@ dependencies {
     compile 'com.system:core-manipulator:1.0'
 
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-security:")
+    //Actuator is nice to have but adds a ton of overhead
     //compile("org.springframework.boot:spring-boot-starter-actuator")
 
     compile("org.springframework.boot:spring-boot-starter-test")

@@ -8,7 +8,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.ldap.authentication.AbstractLdapAuthenticationProvider;
 import org.springframework.security.ldap.authentication.BindAuthenticator;
@@ -19,6 +18,8 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+
+import static com.system.util.string.StringUtils.isEmpty;
 
 public class SystemSecurityUserDetailActiveDirectoryProvider extends AbstractLdapAuthenticationProvider {
 
@@ -117,10 +118,10 @@ public class SystemSecurityUserDetailActiveDirectoryProvider extends AbstractLda
         final SystemSecurityUser user = systemSecurityUserRepository.findByUsername(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("No System user found with username: " + username);
+            return username;
         }
 
-        return user.getDistinguishedName();
+        return isEmpty(user.getDistinguishedName()) ? username : user.getDistinguishedName();
     }
 
 }

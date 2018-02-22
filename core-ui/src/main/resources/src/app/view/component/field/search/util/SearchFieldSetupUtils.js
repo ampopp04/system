@@ -34,20 +34,16 @@ Ext.define('System.view.component.field.search.util.SearchFieldSetupUtils', {
 
                 if (existingStore) {
                     searchField.parentEntity.store = existingStore;
-                    System.view.component.field.search.util.SearchFieldSetupUtils.storeLoadListenerSetup(searchField, searchField.parentEntity, searchField.parentEntity.store);
+                    System.view.component.field.search.util.SearchFieldSetupUtils.storeLoadListenerSetup(searchField.parentEntity, searchField.parentEntity.store);
                 } else {
                     Ext.data.StoreManager.addListener('add', System.view.component.field.search.util.SearchFieldSetupUtils.storeNameLoadListener, searchField);
                 }
 
             }
             else if (searchField.parentEntity.store && searchField.parentEntity.store.storeId != 'ext-empty-store') {
-
-                System.view.component.field.search.util.SearchFieldSetupUtils.storeLoadListenerSetup(searchField, searchField.parentEntity, searchField.parentEntity.store);
-
+                System.view.component.field.search.util.SearchFieldSetupUtils.storeLoadListenerSetup(searchField.parentEntity, searchField.parentEntity.store);
             } else {
-
                 searchField.parentEntity.addListener('reconfigure', System.view.component.field.search.util.SearchFieldSetupUtils.storeLoadListenerSetup, searchField);
-
             }
 
         },
@@ -58,21 +54,24 @@ Ext.define('System.view.component.field.search.util.SearchFieldSetupUtils', {
          * this load listener callback will get activated because of it's setup
          * in this function.  Specifically calling highlightSearchResults.
          */
-        storeLoadListenerSetup: function (searchField, parentEntity, store) {
-            var store = store;
-
-            if (parentEntity && parentEntity.store && parentEntity.store.$className) {
-                store = parentEntity.store;
-            }
+        storeLoadListenerSetup: function (parentEntity, configuredStore) {
+            var searchField = parentEntity ? parentEntity.searchField : undefined;
 
             if (this.xtype == 'system-search-field') {
                 searchField = this;
             }
 
-            if (store && store.$className) {
-                store.addListener('load', System.view.component.field.search.util.SearchFieldRenderUtils.highlightSearchResults, searchField);
-                searchField.initSearch(searchField);
+            if (configuredStore == undefined && searchField) {
+                configuredStore = searchField.parentEntity.store;
             }
+
+            if (configuredStore == undefined || searchField == undefined) {
+                //Store is not fully loaded yet in a manual setting
+                return;
+            }
+
+            configuredStore.addListener('load', System.view.component.field.search.util.SearchFieldRenderUtils.highlightSearchResults, searchField);
+            searchField.initSearch(searchField);
         },
 
         /**
@@ -96,7 +95,7 @@ Ext.define('System.view.component.field.search.util.SearchFieldSetupUtils', {
             if (Ext.isString(store) && store == key) {
                 //Store was created and added before our parent even knows
                 me.parentEntity.store = newStore;
-                System.view.component.field.search.util.SearchFieldSetupUtils.storeLoadListenerSetup(me, me.parentEntity, me.parentEntity.store);
+                System.view.component.field.search.util.SearchFieldSetupUtils.storeLoadListenerSetup.call(me, me.parentEntity, newStore);
             }
 
         }

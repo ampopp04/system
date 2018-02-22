@@ -13,17 +13,6 @@ Ext.define('System.view.component.plugin.AutoSizeColumn', function () {
         },
 
         onViewRefresh: function (view) {
-            var ancestor;
-
-            // There might be a hidden ancestor in the ownership hierarchy.
-            // In this case, auto-sizing should be postponed until ancestor is shown.
-            /*  if (ancestor = this.getCmp().up('[hidden]')) {
-                  ancestor.on('show', function () {
-                      this.autoSizeColumns();
-                  }, this, {single: true});
-                  return;
-              }*/
-
             this.autoSizeColumns();
         },
 
@@ -31,25 +20,14 @@ Ext.define('System.view.component.plugin.AutoSizeColumn', function () {
          * @inheritdoc
          */
         init: function (grid) {
-            // var view = grid.getView(),
-            //     store = grid.getStore();
-
             this.setCmp(grid);
             this.getCmp().getView().on('refresh', this.onViewRefresh, this);
-            this.getCmp().up('base-system-tab-panel').on('beforetabchange', this.onViewRefresh, this);
 
-            //  store.on('clear', onStoreClear, this);
-            //store.on('load', onViewRefresh, this);
+            var tabPanel = this.getCmp().up('base-system-tab-panel');
 
-            //    grid.on('afteritemexpand', onViewRefresh, this);
-            //grid.on('focus', onViewRefresh, this);
-
-            // view.on('refresh', onViewRefresh, this);
-
-            //  view.onBindStore = Ext.Function.createSequence(view.onBindStore, onBindStore);
-            // view.onUnbindStore = Ext.Function.createSequence(view.onUnbindStore, onUnbindStore);
-
-            //    this.enable();
+            if (tabPanel) {
+                this.getCmp().up('base-system-tab-panel').on('beforetabchange', this.onViewRefresh, this);
+            }
         },
 
         /**

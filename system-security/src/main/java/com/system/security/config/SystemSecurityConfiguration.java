@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.autoconfigure.security.StaticResourceRequest;
@@ -28,6 +29,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.ldap.userdetails.LdapUserDetailsMapper;
+import org.springframework.security.web.header.HeaderWriter;
+import org.springframework.security.web.header.writers.CacheControlHeadersWriter;
+import org.springframework.security.web.header.writers.DelegatingRequestMatcherHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -80,6 +88,12 @@ public class SystemSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private SystemSecurityUserRepository systemSecurityUserRepository;
 
+    @Bean
+    public HeaderWriter selectiveCacheControlHeaderWriter() {
+        RequestMatcher paths = new OrRequestMatcher(new AntPathRequestMatcher("/api/**"), new AntPathRequestMatcher("/ajax/**"));
+        return new DelegatingRequestMatcherHeaderWriter(paths, new CacheControlHeadersWriter());
+    }
+
     /**
      * Configure the default security for this project
      *
@@ -116,6 +130,7 @@ public class SystemSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and().headers().frameOptions().disable()
+                .cacheControl().disable().addHeaderWriter(selectiveCacheControlHeaderWriter())
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
@@ -161,9 +176,15 @@ public class SystemSecurityConfiguration extends WebSecurityConfigurerAdapter {
         SystemSecurityUserDetailActiveDirectoryProvider provider = new SystemSecurityUserDetailActiveDirectoryProvider(AD_URL, AD_MANAGER_DN, AD_MANAGER_PASSWORD, systemSecurityUserRepository);
 
         provider.setUseAuthenticationRequestCredentials(true);
-        provider.setUserDetailsContextMapper(new SystemSecurityUserDetailsContextMapper(userDetailsService()));
+        provider.setUserDetailsContextMapper(systemSecurityUserDetailsLdapContextMapper(userDetailsService()));
 
         return provider;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public LdapUserDetailsMapper systemSecurityUserDetailsLdapContextMapper(UserDetailsService userDetailsService) {
+        return new SystemSecurityUserDetailsContextMapper(userDetailsService);
     }
 
     @Override

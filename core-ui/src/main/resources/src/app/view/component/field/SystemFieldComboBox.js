@@ -73,6 +73,10 @@ Ext.define('System.view.component.field.SystemFieldComboBox', {
             System.util.component.GridColumnUtils.getStoreByModelName(modelName,
                 function (store, scope) {
                     scope.bindStore(System.util.data.StoreUtils.createNewStore(store), true, true);
+                    if (scope.value == undefined && scope.config && scope.config.value) {
+                        //Value was set before this store was initialized so we must set the value now that the store is created
+                        scope.setValue(scope.config.value);
+                    }
                 }, me);
 
         } else {
@@ -80,7 +84,6 @@ Ext.define('System.view.component.field.SystemFieldComboBox', {
         }
 
         this.callParent(arguments);
-        //this.pickerId = (this.getId() + "_" + this.fieldLabel + "_" + this.name + "_Picker").replace(/ /g, '');
     },
 
     triggers: {
@@ -183,22 +186,7 @@ Ext.define('System.view.component.field.SystemFieldComboBox', {
 
             store.addListener('load', function () {
 
-                if (this.defaultLoadFilters == undefined) {
-                    return;
-                }
-
-                if (this.defaultLoadFiltersApplied) {
-
-                    this.defaultLoadFilters.forEach(function (defaultLoadFilter) {
-                        if (!Ext.isEmpty(defaultLoadFilter.value)) {
-                            var filterIdPrefix = defaultLoadFilter.property ? defaultLoadFilter.property : defaultLoadFilter.value;
-                            this.store.removeFilter(this.getFilterId(filterIdPrefix));
-                        }
-                    }, this);
-
-                    this.defaultLoadFilters = undefined;
-
-                } else {
+                if (this.defaultLoadFiltersApplied == undefined) {
 
                     if (this.store.getTotalCount() > 0) {
                         this.setValue(this.store.last());

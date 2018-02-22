@@ -116,6 +116,7 @@ public class SchemaTableColumn extends NamedEntity<Integer> {
      * {xtype: 'templatecolumn', tpl: '{department} ({seniority})'}
      * Note: templatecolumn pulls the data as references from the model
      */
+    @Column(length = 1000)
     private String uiColumnConfiguration;
 
     /**
@@ -164,6 +165,7 @@ public class SchemaTableColumn extends NamedEntity<Integer> {
      * radiofield            {Ext.field.Radio}
      * Note: Circle checkbox
      */
+    @Column(length = 1000)
     private String uiFieldConfiguration;
 
     /**

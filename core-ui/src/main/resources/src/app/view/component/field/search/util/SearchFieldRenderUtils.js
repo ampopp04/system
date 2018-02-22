@@ -28,21 +28,12 @@ Ext.define('System.view.component.field.search.util.SearchFieldRenderUtils', {
             var me = this;
             var filteredStore = me.parentEntity.store;
 
-            /* if (Ext.isEmpty(me.getValueRecords())) {
-                 //No search field values configured
-                 // don't bother iterating over the records to highlight results
-                 //since no search field values have been entered
-                 return;
-             }*/
-
             filteredStore.each(function (record, idx) {
 
                 var node = me.parentEntity.view.getNode(record);
                 System.view.component.field.search.util.SearchFieldRenderUtils.highlightNode(node, me);
 
                 if (record.isExpandable && record.isExpandable() && record.childNodes) {
-
-                    record.expand(true); // If we get here that means the server found something of interest
 
                     Ext.Array.forEach(record.childNodes, function (childNode) {
                         var childNodeView = me.parentEntity.view.getNode(childNode);

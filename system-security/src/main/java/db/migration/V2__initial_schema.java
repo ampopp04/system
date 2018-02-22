@@ -85,8 +85,9 @@ public class V2__initial_schema extends TableCreationMigration {
 
         List<SystemSecurityUser> entityList = new ArrayList<>();
 
-        entityList.add(newSystemSecurityUser("Andrew", "Popp", "ampopp04", "password", Arrays.asList(adminRole, userRole)));
-        entityList.add(newSystemSecurityUser("John", "Doe", "testuser", "password", Arrays.asList(adminRole, userRole)));
+        entityList.add(newSystemSecurityUser("Andrew", "Popp", "ampopp04", "password", Arrays.asList(adminRole, userRole), true));
+        entityList.add(newSystemSecurityUser("John", "Doe", "testuser", "password", Arrays.asList(adminRole, userRole), true));
+        entityList.add(newSystemSecurityUser("Tom", "Smith", "testnormaluser", "password", Arrays.asList(userRole), false));
 
         return entityList;
     }
@@ -101,7 +102,7 @@ public class V2__initial_schema extends TableCreationMigration {
         return securityRole;
     }
 
-    private SystemSecurityUser newSystemSecurityUser(String firstName, String lastName, String username, String password, Collection<SystemSecurityRole> roles, String distinguishedName, String userPrincipalName) {
+    private SystemSecurityUser newSystemSecurityUser(String firstName, String lastName, String username, String password, Collection<SystemSecurityRole> roles, String distinguishedName, String userPrincipalName, boolean admin) {
         SystemSecurityUser user = new SystemSecurityUser();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -110,14 +111,15 @@ public class V2__initial_schema extends TableCreationMigration {
         }
         user.setUsername(username);
         user.setRoles(roles);
+        user.setAdmin(admin);
         user.setEnabled(true);
         user.setDistinguishedName(distinguishedName);
         user.setUserPrincipalName(userPrincipalName);
         return user;
     }
 
-    private SystemSecurityUser newSystemSecurityUser(String firstName, String lastName, String username, String password, Collection<SystemSecurityRole> roles) {
-        return newSystemSecurityUser(firstName, lastName, username, password, roles, null, null);
+    private SystemSecurityUser newSystemSecurityUser(String firstName, String lastName, String username, String password, Collection<SystemSecurityRole> roles, boolean admin) {
+        return newSystemSecurityUser(firstName, lastName, username, password, roles, null, null, admin);
     }
 
     public NamedEntityRepository<SystemSecurityPrivilege> getSystemSecurityPrivilegeRepository() {

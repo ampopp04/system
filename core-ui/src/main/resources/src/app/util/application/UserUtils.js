@@ -53,7 +53,7 @@ Ext.define('System.util.application.UserUtils', {
             } catch (e) {
                 console.log(e);
             } finally {
-                window.location.reload();
+                window.location.reload(true);
             }
         },
 

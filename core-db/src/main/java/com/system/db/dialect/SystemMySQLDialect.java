@@ -5,8 +5,8 @@ import org.hibernate.dialect.MySQL5Dialect;
 /**
  * The <class>SystemMySQLDialect</class> defines
  * an overridden version of the MySQL5Dialect
- * that changes the query sequence table string to be upper-case
- * to fit with Spring table access conventions.
+ * that can be used to change default values
+ * for the System implementation.
  *
  * @author Andrew
  * @see org.hibernate.cfg.ImprovedNamingStrategy
@@ -25,8 +25,4 @@ public class SystemMySQLDialect extends MySQL5Dialect {
     ////////                                                        Getter/Setters                                            //////////
     //////////////////////////////////////////////////////////////////////
 
-    @Override
-    public String getQuerySequencesString() {
-        return super.getQuerySequencesString().replace("information_schema", "INFORMATION_SCHEMA");
-    }
 }

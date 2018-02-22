@@ -43,18 +43,20 @@ Ext.define('System.util.component.ToolbarUtils', {
          * @returns {{dock: string, xtype: string, padding: number, items: *[]}}
          */
         defaultAddAndDeleteToolbar: function (scope) {
+            var items = [];
+
+            items.push(System.util.component.ToolbarUtils.addButton(scope));
+            if (scope.deleteEntityAllowed == undefined || scope.deleteEntityAllowed == true) {
+                items.push(System.util.component.ToolbarUtils.deleteButton(scope));
+            }
+            items.push('-');
+            items.push({xtype: 'base-system-settings-menu-button-field'});
+
             return {
                 dock: 'left',
                 xtype: 'toolbar',
                 padding: 0,
-                items: [
-                    System.util.component.ToolbarUtils.addButton(scope),
-                    System.util.component.ToolbarUtils.deleteButton(scope),
-                    '-',
-                    {
-                        xtype: 'base-system-settings-menu-button-field'
-                    }
-                ]
+                items: items
             };
         },
 
@@ -118,6 +120,9 @@ Ext.define('System.util.component.ToolbarUtils', {
 
                         //1) Group by systemExportTask.systemExportTaskType.name
                         var taskAssignmentsByType = records.reduce(function (r, a) {
+                            if (a.data.active == false) {
+                                return r;
+                            }
                             var taskTypeName = System.util.component.ToolbarUtils.getObjectPropertyByPath(a, '_systemExportTask._systemExportTaskType.data.name');
                             r[taskTypeName] = r[taskTypeName] || [];
                             r[taskTypeName].push(a);

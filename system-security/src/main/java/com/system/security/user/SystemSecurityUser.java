@@ -47,6 +47,8 @@ public class SystemSecurityUser extends NamedEntity<Integer> {
     @Column(length = 5000)
     private String memberOf;
 
+    private Boolean admin = false;
+
     @ManyToMany(targetEntity = SystemSecurityRole.class)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id", referencedColumnName = ID_TYPE_NAME_LOWERCASE), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = ID_TYPE_NAME_LOWERCASE))
     private Collection<SystemSecurityRole> roles;
@@ -69,6 +71,7 @@ public class SystemSecurityUser extends NamedEntity<Integer> {
         this.setDistinguishedName(securityUser.distinguishedName);
         this.setRoles(securityUser.roles);
         this.setUserPrincipalName(securityUser.userPrincipalName);
+        this.setAdmin(securityUser.getAdmin());
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -151,7 +154,14 @@ public class SystemSecurityUser extends NamedEntity<Integer> {
         this.memberOf = memberOf;
     }
 
-    ///////////////////////////////////////////////////////////////////////
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+///////////////////////////////////////////////////////////////////////
     ////////                                              Comparison Methods                                         //////////
     //////////////////////////////////////////////////////////////////////
 

@@ -51,7 +51,7 @@ public class SystemExportTaskAssignment extends NamedEntity<Integer> {
      * Defines whether this assignment is active and should be taken into consideration
      * when executing tasks derived from this assignment.
      */
-    private boolean active;
+    private Boolean active;
 
     ///////////////////////////////////////////////////////////////////////
     ////////                                              Default Constructor                                           //////////
@@ -88,11 +88,11 @@ public class SystemExportTaskAssignment extends NamedEntity<Integer> {
         this.fkFieldId = fkFieldId;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 }

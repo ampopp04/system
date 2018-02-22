@@ -5,10 +5,7 @@ import com.system.export.content.definition.SystemExportContentDefinition;
 import com.system.export.file.type.SystemExportFileType;
 import com.system.export.generator.SystemExportGenerator;
 
-import javax.persistence.Basic;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
 

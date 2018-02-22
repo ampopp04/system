@@ -10,20 +10,20 @@ dependencies {
 
      // runtime('org.springframework.boot:spring-boot-devtools')*/
 
-    compile('org.springframework:spring-context:5.0.0.RELEASE')
-    compile('org.springframework:spring-core:5.0.0.RELEASE')
+    compile('org.springframework:spring-context:' + springCoreVersion)
+    compile('org.springframework:spring-core:' + springCoreVersion)
     compile('org.aspectj:aspectjweaver:1.8.11')
     compile('com.fasterxml:classmate:1.3.1')
-    compile('org.springframework:spring-web:5.0.0.RELEASE')
-    compile('org.springframework:spring-beans:5.0.0.RELEASE')
-    compile('org.springframework:spring-webmvc:5.0.0.RELEASE')
+    compile('org.springframework:spring-web:' + springCoreVersion)
+    compile('org.springframework:spring-beans:' + springCoreVersion)
+    compile('org.springframework:spring-webmvc:' + springCoreVersion)
     compile('org.slf4j:slf4j-api:1.7.25')
     compile('com.fasterxml.jackson.core:jackson-annotations:2.9.1')
-    compile('org.springframework:spring-aop:5.0.0.RELEASE')
-    compile('org.springframework.data:spring-data-commons:2.0.0.RELEASE')
-    compile('org.springframework:spring-tx:5.0.0.RELEASE')
-    compile('org.springframework:spring-jcl:5.0.0.RELEASE')
-    compile('org.springframework:spring-expression:5.0.0.RELEASE')
+    compile('org.springframework:spring-aop:' + springCoreVersion)
+    compile('org.springframework.data:spring-data-commons:2.0.3.RELEASE')
+    compile('org.springframework:spring-tx:' + springCoreVersion)
+    compile('org.springframework:spring-jcl:' + springCoreVersion)
+    compile('org.springframework:spring-expression:' + springCoreVersion)
 
     compile group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0'
 

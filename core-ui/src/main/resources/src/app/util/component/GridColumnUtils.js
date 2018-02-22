@@ -151,24 +151,25 @@ Ext.define('System.util.component.GridColumnUtils', {
             if (column.reference) {
                 return Ext.apply(column, {
                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                        var resultValue = undefined;
 
                         if (metaData && metaData.column && metaData.column.reference) {
 
                             var displayFieldName = metaData.column.displayFieldName;
 
                             if (displayFieldName && value && (typeof value.get === 'function') && value.get(displayFieldName)) {
-                                return value.get(displayFieldName);
+                                resultValue = value.get(displayFieldName);
                             }
 
-                            if (value == undefined && metaData.record) {
+                            if (resultValue == undefined && value == undefined && metaData.record) {
                                 var recordData = metaData.record['_' + metaData.column.dataIndex];
 
                                 if (recordData) {
                                     if (recordData.data[displayFieldName]) {
-                                        return recordData.data[displayFieldName];
+                                        resultValue = recordData.data[displayFieldName];
                                     }
                                     else if (recordData.data.name) {
-                                        return recordData.data.name;
+                                        resultValue = recordData.data.name;
                                     } else {
                                         value = recordData.data.id;
                                     }
@@ -176,7 +177,7 @@ Ext.define('System.util.component.GridColumnUtils', {
 
                             }
 
-                            if (value) {
+                            if (resultValue == undefined && value) {
                                 var columnStore = System.util.data.StoreUtils.lookupStoreByName(metaData.column.reference + 'Store');
                                 if (columnStore) {
 
@@ -194,21 +195,21 @@ Ext.define('System.util.component.GridColumnUtils', {
                                             var previousEntityValues = record.systemPreviousValues[metaData.column.dataIndex];
 
                                             if (previousEntityValues && previousEntityValues.id == value) {
-                                                return previousEntityValues.get(displayFieldName);
+                                                resultValue = previousEntityValues.get(displayFieldName);
                                             }
                                         }
                                     }
 
                                     //Lets check to see if this record exists in the store, if it does then use it
-                                    if (columnStoreRecord && columnStoreRecord.data) {
+                                    if (resultValue == undefined && columnStoreRecord && columnStoreRecord.data) {
                                         record.data[metaData.column.dataIndex] = columnStoreRecord;
                                         record['_' + metaData.column.dataIndex] = columnStoreRecord;
                                         record[metaData.column.dataIndex] = columnStoreRecord;
 
                                         if (columnStoreRecord.data[displayFieldName]) {
-                                            return columnStoreRecord.data[displayFieldName];
+                                            resultValue = columnStoreRecord.data[displayFieldName];
                                         } else if (columnStoreRecord.data.name) {
-                                            return columnStoreRecord.data.name;
+                                            resultValue = columnStoreRecord.data.name;
                                         }
 
                                     }
@@ -216,13 +217,26 @@ Ext.define('System.util.component.GridColumnUtils', {
                                 }
                             }
                         }
+
+                        if (resultValue != undefined) {
+                            value = resultValue;
+                        }
+
+                        /**
+                         * Allow for extending this renderer to adjust the display
+                         * value within a given column
+                         */
+                        if (metaData.column.displayRenderer) {
+                            value = metaData.column.displayRenderer(value, metaData, record, rowIndex, colIndex, store, view);
+                        }
+
                         return value;
                     }
                 });
             }
             return column;
         },
-
+        
         /**
          * For a set of Schema Table Columns
          * convert this meta-data into the actual grid columns

@@ -98,22 +98,26 @@ Ext.define('System.view.system.detail.form.panel.BaseDetailFormPanel', {
 
         fields.forEach(function (field) {
             var uiFieldConfiguration = field.uiFieldConfiguration == undefined ? {} : field.uiFieldConfiguration;
+            var item;
 
-            var item = field.reference ?
-                {
+            if (field.reference) {
+                var fieldStore = System.util.data.StoreUtils.lookupStore(field.reference.type);
+                item = {
                     xtype: 'system-field-combo-box',
                     valueField: 'id',
                     displayField: field.displayFieldName,
                     name: field.name,
                     fieldLabel: field.fieldDisplayLabel,
-                    store: field.store ? field.store : field.reference.type + 'Store'
-                } :
-                {
+                    store: fieldStore ? fieldStore : field.reference.type + 'Store'
+                };
+            } else {
+                item = {
                     xtype: 'system-field-text',
                     name: field.name,
                     fieldLabel: field.fieldDisplayLabel,
                     hidden: field.name == 'id' ? true : false
                 };
+            }
 
             item.schemaTableColumn = field.schemaTableColumn;
             items.push(me.setEntityValueFromRecord(me.setNewEntityDetailWindowDefaultValueFilters(me.adjustCheckboxLabel(Ext.apply(item, uiFieldConfiguration))), initialRecord));

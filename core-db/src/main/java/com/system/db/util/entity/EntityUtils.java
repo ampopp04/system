@@ -23,9 +23,6 @@ public class EntityUtils {
 
     /**
      * Get all Jpa specific properties from the supplied environment
-     *
-     * @param env
-     * @return
      */
     public static Properties getJpaProperties(Environment env) {
         Properties properties = new Properties();
@@ -39,6 +36,7 @@ public class EntityUtils {
 
         if (resourcePropertyMap.containsKey("spring.datasource.url")) {
             properties.put("hibernate.dialect", "com.system.db.dialect.SystemMySQLDialect");
+            properties.put("spring.h2.console.enabled", "false");
         } else {
             properties.put("hibernate.dialect", "com.system.db.dialect.SystemH2Dialect");
         }
@@ -48,9 +46,6 @@ public class EntityUtils {
 
     /**
      * Returns whether a class is assignable to our Entity interface
-     *
-     * @param clazz
-     * @return
      */
     public static boolean isEntityClass(Class clazz) {
         return ClassUtils.isAssignable(clazz, Entity.class);

@@ -4,10 +4,7 @@ import com.system.db.entity.named.NamedEntity;
 import com.system.export.file.type.SystemExportFileType;
 import com.system.export.template.type.SystemExportTemplateType;
 
-import javax.persistence.Basic;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
 

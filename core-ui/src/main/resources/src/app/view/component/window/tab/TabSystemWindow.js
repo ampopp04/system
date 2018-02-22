@@ -32,15 +32,60 @@ Ext.define('System.view.component.window.tab.TabSystemWindow', {
             config.tabs = [];
         }
 
-        config.items = Ext.apply({
+        config.tabs = this.initializeLazyTabItems(config.tabs);
+
+        var tabConfiguration = Ext.apply({
             xtype: 'base-system-tab-panel'
         }, {items: config.tabs});
+
+        var tabConfig = config.tabConfig;
+
+        if (tabConfig) {
+            tabConfiguration = Ext.apply(tabConfiguration, tabConfig);
+        }
+
+        config.items = tabConfiguration;
 
         this.callParent([config]);
 
         Ext.resumeLayouts(true);
     },
 
+    initializeLazyTabItems: function (tabs) {
+        if (tabs) {
+            var updatedTabs = [];
+
+            tabs.forEach(function (tab) {
+                updatedTabs.push(this.createLazyTabItem(tab));
+            }, this);
+
+            return updatedTabs;
+        }
+
+        return tabs;
+    },
+
+    createLazyTabItem: function (tab) {
+        var title = tab.title;
+        delete tab.title;
+
+        return {
+
+            title: title,
+
+            layout: 'fit',
+            plugins: {
+                lazyitems: {
+                    layout: 'fit',
+                    items: [
+                        Ext.apply({}, tab)
+                    ]
+                }
+            }
+
+        };
+
+    },
 
     listeners: {
 

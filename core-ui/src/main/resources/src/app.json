@@ -246,12 +246,10 @@
     },
     {
       "path": "resources/System-all-override_1.css",
-      "update": "full",
       "includeInBundle": true
     },
     {
       "path": "resources/System-all-override_2.css",
-      "update": "full",
       "includeInBundle": true
     }
   ],
@@ -268,7 +266,7 @@
     //   - other: a string (such as the build.timestamp shown here) to allow
     //     requests to be cached for this build.
     //
-    "cache": false,
+    "cache": true,
     // When "cache" is not true, this value is the request parameter used
     // to control caching.
     //
@@ -278,55 +276,19 @@
    * Settings specific to production builds.
    */
   "production": {
-    "output": {
-      "appCache": {
-        "enable": true,
-        "path": "cache.appcache"
-      }
-    },
-    "loader": {
-      "cache": "${build.timestamp}"
-    },
-    "cache": {
-      "enable": true
-    },
     "compressor": {
-      "type": "yui"
+      "type": "cmd"
     }
   },
   /**
    * Settings specific to testing builds.
    */
   "testing": {
-    "output": {
-      "appCache": {
-        "enable": true,
-        "path": "cache.appcache"
-      }
-    },
-    "loader": {
-      "cache": "${build.timestamp}"
-    },
-    "cache": {
-      "enable": true
-    }
   },
   /**
    * Settings specific to development builds.
    */
   "development": {
-    "output": {
-      "appCache": {
-        "enable": true,
-        "path": "cache.appcache"
-      }
-    },
-    "loader": {
-      "cache": "${build.timestamp}"
-    },
-    "cache": {
-      "enable": true
-    }
   },
   /**
    * Controls the output structure of development-mode (bootstrap) artifacts. May
@@ -408,8 +370,11 @@
 
   "output": {
     "base": "../public",
+    "manifest": {
+      "embed": true
+    },
     "appCache": {
-      "enable": false
+      "enable": true
     }
   },
   /**
@@ -428,8 +393,7 @@
   *   }
   */
   "cache": {
-    "enable": false,
-    "deltas": true
+    "enable": true
   },
   /**
    * Used to automatically generate cache.manifest (HTML 5 application cache manifest)
@@ -440,21 +404,7 @@
      * List of items in the CACHE MANIFEST section
      */
     "cache": [
-      "index.html",
-      "app.js",
-      "resources/System-all_1.css",
-      "resources/System-all_2.css",
-      "resources/System-all-override_1.css",
-      "resources/System-all-override_2.css",
-      "resources/fonts/OpenSans-Regular.ttf",
-      "resources/fonts/OpenSans-Light.ttf",
-      "resources/font-ext/fonts/ExtJS.ttf",
-      "resources/font-ext/fonts/ExtJS.eot",
-      "resources/font-ext/fonts/ExtJS.woff",
-      "resources/font-ext/fonts/ExtJS.svg",
-      "resources/font-awesome/fonts/fontawesome-webfont.woff2",
-      "resources/images/loadmask/loading.gif",
-      "resources/images/form/exclamation.png"
+      "index.html"
     ],
     /**
      * List of items in the NETWORK section
@@ -472,10 +422,10 @@
    * property of the "output" object. Folders specified in this list will be deeply copied.
    */
   "resources": [
-    {
+    /*{
       "path": "resources",
       "output": "shared"
-    }
+    }*/
   ],
   /**
    * Directory path to store all previous production builds. Note that the content
@@ -508,5 +458,5 @@
    * Uniquely generated id for this application, used as prefix for localStorage keys.
    * Normally you should never change this value.
    */
-  "id": "711886a6-b652-464a-b9a0-09ee1593d18f"
+  "id": "711886a6-b652-464a-b9a0-09ee1593d24A"
 }

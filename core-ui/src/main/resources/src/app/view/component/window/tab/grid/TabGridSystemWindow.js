@@ -1,6 +1,6 @@
 /**
  * The <class>System.view.component.window.tab.grid.TabGridSystemWindow</class> defines
- *  a basic tabed window that inserts a base system grid panel within each tab.
+ *  a basic tabbed window that inserts a base system grid panel within each tab.
  *
  * @author Andrew
  */
@@ -58,6 +58,7 @@ Ext.define('System.view.component.window.tab.grid.TabGridSystemWindow', {
         });
 
     }
+
 });
 
 

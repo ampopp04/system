@@ -436,12 +436,15 @@ Ext.define('System.util.data.StoreUtils', {
          */
         getStoreFetchCallback: function (store, extendedUrl, params) {
             return function (records, operation, success) {
+
                 if (success) {
                     System.util.data.StoreUtils.doCacheRemoteQueryStoreRecords(records, store, extendedUrl, params);
-                    if (this.scopedCallBack) {
-                        this.scopedCallBack(records, operation, success, this.scope);
-                    }
                 }
+
+                if (this.scopedCallBack) {
+                    this.scopedCallBack(records, operation, success, this.scope);
+                }
+
             };
         },
 
