@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 /**
  * The <class>System.store.base.BaseStore</class> defines
  * the base store to use to hold all the data of each of the models.

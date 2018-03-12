@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 /**
  * The <class>System.view.system.detail.window.DetailFormWindow</class> defines
  * the basic detail for window. This is the window that is used when drilling into entities.

@@ -1,7 +1,13 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 dependencies {
-    compile 'com.system:core-ws:1.0'
+    compile 'com.system:system-note:1.0'
+
     testCompile 'com.system:core-db-schema-tests:1.0'
     testCompile 'com.system:system-security-tests:1.0'
+
     compile('org.springframework.boot:spring-boot-starter-test')
     compile('org.springframework:spring-core:' + springCoreVersion)
     compile group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0'

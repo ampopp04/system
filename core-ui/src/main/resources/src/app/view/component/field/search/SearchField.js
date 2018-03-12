@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 /**
  * The <class>System.view.component.field.search.SearchField</class> defines
  *  a search field combo box that can easily be added to any grid or entity within the system.

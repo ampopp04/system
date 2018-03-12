@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 /**
  * The <class>System.model.proxy.writer.HalJsonWriter</class> defines
  * the hal proxy writer for encoding json messages in the hal format

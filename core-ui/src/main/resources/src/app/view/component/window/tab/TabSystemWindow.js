@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 /**
  * The <class>System.view.component.window.tab.TabSystemWindow</class> defines
  *  the basic tab system window. This is the lowest base level tabed window.

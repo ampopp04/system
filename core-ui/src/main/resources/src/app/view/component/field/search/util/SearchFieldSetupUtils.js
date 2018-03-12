@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 /**
  * The <class>System.view.component.field.search.util.SearchFieldSetupUtils</class> defines
  *  search field specific utility methods. These are used in assisting the

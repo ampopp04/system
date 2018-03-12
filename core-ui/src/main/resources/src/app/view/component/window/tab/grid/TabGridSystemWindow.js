@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 /**
  * The <class>System.view.component.window.tab.grid.TabGridSystemWindow</class> defines
  *  a basic tabbed window that inserts a base system grid panel within each tab.

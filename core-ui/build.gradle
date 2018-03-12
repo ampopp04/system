@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 dependencies {
     compile 'com.system:core-export:1.0'
 
@@ -14,59 +18,3 @@ dependencies {
 
     compile group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0'
 }
-
-task concatenateCss() {
-    doLast {
-        def systemAllOne = new File(uiResourcesPath + '' + systemAllOneCssPath)
-        def systemAllTwo = new File(uiResourcesPath + '' + systemAllTwoCssPath)
-
-        def systemAllOneOverride = new File(uiResourcesPath + '' + systemAllOneOverrideCssPath)
-        def systemAllTwoOverride = new File(uiResourcesPath + '' + systemAllTwoOverrideCssPath)
-
-        systemAllOne << systemAllOneOverride.text
-        systemAllTwo << systemAllTwoOverride.text
-    }
-}
-
-task buildExtJs(type: Exec) {
-    workingDir uiWorkingDir
-    commandLine buildExtJsCommand.tokenize()
-}
-
-task fullBuildAndPublish(dependsOn: buildExtJs) {
-    group 'application'
-}
-
-task findUiCachedJar(dependsOn: ['build', 'generatePomFileForMavenJavaPublication', 'publishMavenJavaPublicationToMavenRepository']) {
-    doLast {
-        new ByteArrayOutputStream().withStream { os ->
-            def result = exec {
-                workingDir gradleCachesPath
-                executable cacheSystemFindCommand
-                args cacheSystemFindCommandArgs
-                standardOutput = os
-            }
-            ext.uiCachedJar = os.toString()
-        }
-    }
-}
-
-task deleteUiCachedJar {
-    dependsOn findUiCachedJar
-    doLast {
-        new ByteArrayOutputStream().withStream { os ->
-            def result = exec {
-                workingDir gradleCachesPath
-                executable cacheSystemDeleteCommand
-                def uiFiles = findUiCachedJar.uiCachedJar.tokenize()
-                uiFiles.add(0, '-rf')
-                args uiFiles
-                standardOutput = os
-            }
-            ext.deletedUiCachedJar = os.toString()
-        }
-    }
-}
-
-buildExtJs.finalizedBy concatenateCss
-concatenateCss.finalizedBy deleteUiCachedJar

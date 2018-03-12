@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+  -->
+
 <configuration>
     <include resource="com/system/logging/config/system-logging-base.xml"/>
     <!--

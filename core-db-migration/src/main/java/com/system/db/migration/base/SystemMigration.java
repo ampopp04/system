@@ -1,5 +1,11 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 package com.system.db.migration.base;
 
+
+import javax.transaction.Transactional;
 
 /**
  * The <class>SystemMigration</class> defines a database
@@ -14,5 +20,6 @@ public interface SystemMigration {
      *
      * @throws Exception when the migration failed.
      */
+    @Transactional
     void migrate() throws Exception;
 }

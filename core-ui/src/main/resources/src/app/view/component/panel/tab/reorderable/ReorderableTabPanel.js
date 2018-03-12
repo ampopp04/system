@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 /**
  * The <class>System.view.component.panel.tab.reorderable.ReorderableTabPanel</class> defines
  *  a tab panel that can have tabs that can be moved and reordered

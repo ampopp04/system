@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 /**
  * The <class>System.util.component.GridColumnUtils</class> defines
  * utility methods for managing and dynamically creating grid columns

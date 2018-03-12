@@ -1,3 +1,7 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
 /**
  * The <class>System.view.system.detail.form.panel.BaseDetailFormPanelController</class> defines
  * the controller methods for the System.view.system.detail.form.panel.BaseDetailFormPanel

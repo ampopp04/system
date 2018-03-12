@@ -1,0 +1,9 @@
+/*
+ * Copyright 2018, Andrew Popp, All rights reserved. Email ampopp04@gmail.com for commercial licensing use and pricing
+ */
+
+dependencies {
+    compile 'com.system:system-expression:1.0'
+    
+    compile('org.springframework.boot:spring-boot-starter-test')
+}
