@@ -8,7 +8,6 @@ import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.annotation.AnnotationDescription;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
-import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -53,7 +52,7 @@ public class ObjectCreationUtils {
                 .annotateType(annotationDescriptions)
                 .name(interfaceName)
                 .make()
-                .load(interfaceClass.getClassLoader(), ClassReloadingStrategy.fromInstalledAgent())
+                .load(interfaceClass.getClassLoader())
                 .getLoaded();
     }
 
@@ -84,7 +83,7 @@ public class ObjectCreationUtils {
         return methodBuilder
                 .name(interfaceName)
                 .make()
-                .load(classLoader, ClassReloadingStrategy.fromInstalledAgent())
+                .load(classLoader)
                 .getLoaded();
     }
 
@@ -118,7 +117,7 @@ public class ObjectCreationUtils {
                 .implement(interfaceImplementations)
                 .name(className)
                 .make()
-                .load(baseClass.getClassLoader(), ClassReloadingStrategy.fromInstalledAgent())
+                .load(baseClass.getClassLoader())
                 .getLoaded();
     }
 }
