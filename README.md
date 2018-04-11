@@ -2,6 +2,13 @@
 
 The Java Enterprise System Framework is the backbone for rapidly creating, testing, and deploying enterprise quality full-stack Java 9 applications. It is very generic and flexible while also being designed for rigorous enterprise application development. It is best suited for internally consumed applications but this is by no means a strict requirement.
 
+## NOTE
+
+This is a framework, please use the system-framework-example project for running and deploying an enterprise example instance.
+
+[System Framework Example - Basic Project Management](https://github.com/ampopp04/system-framework-example)
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -14,7 +21,11 @@ The only major framework you will need is ExtJS. We are using an opensource lice
 a possible UI solution that is fully dynamically generated. It is dynamically generated based on a UI database schema populated
 via DTO analysis.
 
-#####ExtJs
+##### Java 9
+
+This project requires Java 9.
+
+##### ExtJs
 The frontend UI is created using Javascript and a framework called ExtJS. To
 compile the frontend UI code you will need the Sencha cmd tool installed. This
 allows the build process to use this tool to build the UI code for you automatically.
@@ -23,7 +34,7 @@ https://www.sencha.com/products/extjs/cmd-download/
 Click Download with JRE Included and install the tool.
 ```
 
-#####Gradle
+##### Gradle
 Gradle is the actual build tool. It does many tasks related to deployment. I have
 created a single simple task for full deployments called “fullDeployableBuild” this
 will build the UI code and compile all of the java code into a single runnable zip
@@ -35,7 +46,7 @@ It also integrated with the next tool “IntelliJ IDEA” and allows you to clic
 I have included the Gradle tool within the source code itself so you do not need to
 download it independently.
 
-#####IntelliJ IDEA
+##### IntelliJ IDEA
 IntelliJ IDEA is an integrated development environment (IDE). This is like Visual
 Studio for Visual Basic. It is a tool that allows you to easily code and create
 applications written primarily in Java/Javascript while being fully integrated with
@@ -48,7 +59,7 @@ https://www.jetbrains.com/idea/download/
 Download and install, configure to have Gradle build
 ```
 
-#####MySQL
+##### MySQL
 MySQL database is used to store all of the database related tables and data.
 This is not required to be installed on a development instance and is primarily
 used for production.
@@ -68,7 +79,7 @@ There are three main ways to run a new instance.
 * You can use Docker images
 * You can use standard bat/sh zip distribution deployments with embedded tomcat
 
-Below details these options in details.
+Below details these options in detail.
 
 #### Running Locally
 
@@ -88,7 +99,7 @@ Under the runner module you can see a Gradle tasks folder labeled docker. This d
 
 Below shows a simplified non-docker deployment approach.
 
-####Standard bat/sh Deployments
+#### Standard bat/sh Deployments
 
 To run the application in your development environment go to the Gradle Projects tab
 and click runner:bootRun under applications.
@@ -104,9 +115,7 @@ Take it and unzip it on the server.
 Using a text editor open up the bin folder file
 runner.bat (on Windows) and set
 ```
-DEFAULT_JVM_OPTS=-Duser.timezone=UTC -d64 -server -Xmx4g -Xms4G
--XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20
--XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70
+DEFAULT_JVM_OPTS=--add-modules java.xml.bind -Duser.timezone=UTC -d64 -server -Xmx4g -Xms4G -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70
 ```
 
 Replace %CMD_LINE_ARGS% with
