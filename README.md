@@ -4,9 +4,9 @@ The Java Enterprise System Framework is the backbone for rapidly creating, testi
 
 ## NOTE
 
-This is a framework, please use the system-framework-example project for running and deploying an enterprise example instance.
+This is a framework, please use the job-tracker project for running and deploying an enterprise example instance.
 
-[System Framework Example - Basic Project Management](https://github.com/ampopp04/system-framework-example)
+[System Framework Example - Basic Project Management](https://github.com/ampopp04/job-tracker)
 
 
 ## Getting Started
@@ -193,3 +193,69 @@ This section are one liners that describe what each module encapsulates.
 * system-export - Generic and flexible export module for executing any sort of task across any sort of transport and managing it
 * core-ui - The UI database schema that is used to dynamically generate the UI based on metadata from the database
 * runner - A basic runner that is not required but can be used to show the UI of the administrative management sections
+
+## Screenshots
+
+
+Login view of the application
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2011.53.26%20AM.png?raw=true?raw=true)
+
+Main backend admin dashboard
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2011.57.46%20AM.png?raw=true?raw=true)
+
+
+Display of tools menu options
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2011.58.03%20AM.png?raw=true?raw=true)
+
+
+Display of the inversion of control schema architecture entity data along with the grid tools related to exporting and importing entities along with dynamic reporting
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2011.58.55%20AM.png?raw=true?raw=true)
+
+
+View of the backend security user and it’s detail page
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2012.00.19%20PM.png?raw=true?raw=true)
+
+
+Display of a more complex detail page and creating a new entity that is an export template for generating reports
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2012.02.18%20PM.png?raw=true?raw=true)
+
+
+Show of the combo box, supports autosearch/autocomplete, paging, drill into to see the detail window of the associated entity (arrow in box), the magnifying glass brings up an advanced search window to find and select the entity you want to populate in this combo box
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2012.02.25%20PM.png?raw=true?raw=true)
+
+
+File type detail drill in
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2012.02.48%20PM.png?raw=true?raw=true)
+
+
+Advanced search showing a search highlighting example. You find what you want, then click the arrow towards the door and it auto populates the previous windows combo box
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2012.03.20%20PM.png?raw=true?raw=true)
+
+
+Generic and flexible expression management section
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2012.05.01%20PM.png?raw=true?raw=true)
+
+
+An example of a freemarker or spEL expression along with it’s details. This example shows an expression that has a child expression resolution path. The child and parent expressions are used for complex chaining. System beans and other entities in the system may evaluate these expressions against various entities in the system
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2012.06.26%20PM.png?raw=true?raw=true)
+
+
+A view of an expression assigned to a specific database entity within the system. This is where the power of the database inversion of control data shines through. This allows assignment of expressions to specific entities and the type of operation that gets performed under specific conditions.
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2012.07.21%20PM.png?raw=true?raw=true)
+
+
+Another view of the advanced search for combo boxes
+
+![Alt text](https://github.com/ampopp04/system/blob/master/runner/src/main/resources/screenshots/Screen%20Shot%202018-04-11%20at%2012.08.02%20PM.png?raw=true?raw=true)
