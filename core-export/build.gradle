@@ -18,5 +18,5 @@ dependencies {
     compile('org.openoffice:ridl:4.1.2')
     compile('org.openoffice:unoil:4.1.2')
 
-    compile group: 'org.ow2.asm', name: 'asm', version: '6.0_BETA'
+    compile group: 'org.ow2.asm', name: 'asm', version: '6.1.1'
 }

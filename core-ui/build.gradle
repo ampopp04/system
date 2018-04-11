@@ -5,6 +5,7 @@
 dependencies {
     compile 'com.system:core-export:1.0'
 
+    compile('javax.xml.bind:jaxb-api:2.3.0')
     compile('org.springframework:spring-context:' + springCoreVersion)
     compile('org.springframework:spring-core:' + springCoreVersion)
     compile('org.aspectj:aspectjweaver:1.8.11')

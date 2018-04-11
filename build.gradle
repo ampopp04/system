@@ -7,6 +7,18 @@
 /////////////////////////////////////////////////////////////////////
 apply plugin: 'com.system.build'
 
+ext {
+    if (project.hasProperty('jvmArgs')) {
+        applicationDefaultJvmArgs = (project.jvmArgs.split("\\s+") as List)
+    }
+}
+subprojects {
+    test {
+        if (project.hasProperty('jvmArgs')) {
+            jvmArgs = (project.jvmArgs.split("\\s+") as List)
+        }
+    }
+}
 ///////////////////////////////////////////////////////////////////////
 ////////                              Define Repository Plugin Location                              //////////
 /////////////////////////////////////////////////////////////////////
